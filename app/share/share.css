@@ -1,0 +1,67 @@
+.ld_share .lds_qzone{background-position:0 -52px}
+.ld_share .lds_tsina{background-position:0 -104px}
+.ld_share .lds_baidu{background-position:0 -2600px}
+.ld_share .lds_renren{background-position:0 -208px}
+.ld_share .lds_tqq{background-position:0 -260px}
+.ld_share .lds_kaixin001{background-position:0 -312px}
+.ld_share .lds_tqf{background-position:0 -364px}
+.ld_share .lds_hi{background-position:0 -416px}
+.ld_share .lds_douban{background-position:0 -468px}
+.ld_share .lds_tsohu{background-position:0 -520px}
+.ld_share .lds_msn{background-position:0 -572px}
+.ld_share .lds_qq{background-position:0 -624px}
+.ld_share .lds_taobao{background-position:0 -676px}
+.ld_share .lds_tieba{background-position:0 -728px}
+.ld_share .lds_sohu{background-position:0 -780px}
+.ld_share .lds_t163{background-position:0 -832px}
+.ld_share .lds_qy{background-position:0 -884px}
+.ld_share .lds_tfh{background-position:0 -936px}
+.ld_share .lds_hx{background-position:0 -988px}
+.ld_share .lds_fx{background-position:0 -1040px}
+.ld_share .lds_ff{background-position:0 -1092px}
+.ld_share .lds_xg{background-position:0 -1144px}
+.ld_share .lds_ty{background-position:0 -1196px}
+.ld_share .lds_s51{background-position:0 -1248px}
+.ld_share .lds_fbook{background-position:0 -1352px}
+.ld_share .lds_twi{background-position:0 -1404px}
+.ld_share .lds_ms{background-position:0 -1456px}
+.ld_share .lds_deli{background-position:0 -1508px}
+.ld_share .lds_s139{background-position:0 -1560px}
+.ld_share .lds_linkedin{background-position:0 -1664px}
+.ld_share .lds_meilishuo{background-position:0 -1716px}
+.ld_share .lds_mogujie{background-position:0 -1768px}
+.ld_share .lds_diandian{background-position:0 -1820px}
+.ld_share .lds_huaban{background-position:0 -1872px}
+.ld_share .lds_leho{background-position:0 -1924px}
+.ld_share .lds_share189{background-position:0 -1976px}
+.ld_share .lds_duitang{background-position:0 -2028px}
+.ld_share .lds_youdao{background-position:0 -2080px}
+.ld_share .lds_ifeng{background-position:0 -2132px}
+.ld_share .lds_wealink{background-position:0 -2184px}
+.ld_share .lds_tuita{background-position:0 -2236px}
+.ld_share .lds_copy{background-position:0 -2288px}
+.ld_share .lds_mail{background-position:0 -2340px}
+.ld_share .lds_print{background-position:0 -2392px}
+.ld_share .lds_mshare{background-position:0 -2444px}
+.ld_share .lds_sqq{background-position:0 -2652px}
+.ld_share .lds_sdo{background-position:0 -2704px}
+.ld_share .lds_qingbiji{background-position:0 -2756px}
+.ld_share .lds_people{background-position:0 -2808px}
+.ld_share .lds_kanshou{background-position:0 -2860px}
+.ld_share .lds_xinhua{background-position:0 -2912px}
+.ld_share .lds_yaolan{background-position:0 -2964px}
+.ld_share .lds_thx{background-position:0 -2496px}
+.ld_share .lds_bdhome{background-position:0 -156px}
+.ld_share .lds_bdxc{background-position:0 -2548px}
+.ld_share .lds_bdysc{background-position:0 -3068px}
+.ld_share .lds_isohu{background-position:0 -3016px}
+.ld_share .lds_more{background-position:0 0}
+.ld_share .lds_ibaidu{background-position:0 -3120px}
+.ld_share .lds_weixin{background-position:0 -1612px}
+.ld_share .lds_iguba{background-position:0 -1300px}
+.ld_share{zoom:1;width:360px;margin:12px auto;}
+.ld_share:after{content:".";visibility:hidden;display:block;height:0;clear:both}
+.ld_share a,.ld_share .lds_more{float:left;font-size:18px;padding-left:25px;line-height:24px;height:24px;
+background-image:url(icons_0_24.png?v=4c3f13b3.png);background-repeat:no-repeat;cursor:pointer;margin:6px 6px 6px 0}
+.ld_share a:hover{color:#333;opacity:.8;filter:alpha(opacity=80)}
+.ld_share .lds_more{color:#333;float:left}

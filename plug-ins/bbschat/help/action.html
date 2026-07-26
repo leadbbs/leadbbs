@@ -1,0 +1,41 @@
+<HTML>
+<HEAD>
+	<TITLE>LeadBBS Chat 聊天动作</TITLE>
+	<META http-equiv=Content-Type content="text/html; charset=gb2312">
+	<STYLE type=text/css>
+	P {FONT-SIZE: 12px; MARGIN: 0px; TEXT-INDENT: 24px; LINE-HEIGHT: 18px;}
+	.bianxian {BORDER-RIGHT: #ffffff 1px solid; BORDER-LEFT: #ffffff 1px solid}
+	A {COLOR: #ffcc00; TEXT-DECORATION: none}
+	body{font-size:9pt;font-family: 宋体;}
+	p{font-size:9pt;}
+	td{font-size:9pt;}
+	li{font-size:9pt;margin-left: 0pt;}
+	ul{font-size:9pt;margin-left: 20pt;}
+	textarea{font-size:9pt;}
+	input{font-size:9pt;height:20;}
+	select{font-size:9pt; height:20;}
+	a{text-transform: none; text-decoration: none; color: white;}
+	a:hover {color: #888888;}
+	</STYLE>
+	<META content="LeadBBS论坛,ASP论坛,商业版,计数器,统计系统,dotNet,asp.Net,源代码下载,组件,免费代码,ASP,数据库,SQL,文章,入门" name=keywords>
+	<META content="LeadBBS论坛,ASP论坛,计数器,统计系统,dotNet,asp.Net,源代码下载,组件,免费代码,ASP,数据库,SQL,文章,入门" name=description>
+	<META content="MSHTML 6.00.2800.1276" name=GENERATOR>
+</HEAD>
+<BODY leftMargin=0 topMargin=0 marginheight="0" marginwidth="0">
+<Script Language=Javascript src="../inc/morefun.js"></Script>
+<br><br><p><b><u>LeadBBS Chat 聊天动作命令列表</u></b>
+<script language=javascript>
+function c_help_viewaction()
+{
+	for(var n=0;n<c_dil;n++)
+	{
+		document.write("<br><br><P>" + (n+1) + ". <b><span style=cursor:hand onclick='opener.$id(\"input\").value=\"" + c_di[n][0].split(" ")[0] + "\";'>" + c_di[n][0] + "</span></b>");
+		document.write("<br>&nbsp; &nbsp; - " + c_di[n][1]);
+		document.write("<br>&nbsp; &nbsp; - " + c_di[n][2]);
+		document.write("<br>&nbsp; &nbsp; - " + c_di[n][3]);
+	}
+}
+c_help_viewaction();
+</script>
+</BODY>
+</HTML>

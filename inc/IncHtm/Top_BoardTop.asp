@@ -1,0 +1,168 @@
+<%
+Dim Top_BoardTop_UpdateTime
+Top_BoardTop_UpdateTime = "2014/4/12 19:22:02"
+
+Sub Top_BoardTop_View
+
+%>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table_in">
+	<tr class=tbinhead>
+		<td wdith=8% ><div class=value>&nbsp;</div></td>
+		<td width=77% ><div class=value>版面</div></td>
+		<td wdith=15% ><div class=value>发帖</div></td>
+	</tr>
+	<tr>
+		<td class=tdbox>1</td>
+		<td class=tdbox>
+			<a href=../b/forum-200-1.html>论坛讨论专区</a></td>
+		<td class=tdbox>514862</td>
+		</tr>	<tr>
+		<td class=tdbox>2</td>
+		<td class=tdbox>
+			<a href=../b/forum-230-1.html>ASP讨论区</a></td>
+		<td class=tdbox>481186</td>
+		</tr>	<tr>
+		<td class=tdbox>3</td>
+		<td class=tdbox>
+			<a href=../b/forum-333-1.html>开心灌水</a></td>
+		<td class=tdbox>355445</td>
+		</tr>	<tr>
+		<td class=tdbox>4</td>
+		<td class=tdbox>
+			<a href=../b/forum-10-1.html>风格美化</a></td>
+		<td class=tdbox>291150</td>
+		</tr>	<tr>
+		<td class=tdbox>5</td>
+		<td class=tdbox>
+			<a href=../b/forum-125-1.html>贴图漫画</a></td>
+		<td class=tdbox>110609</td>
+		</tr>	<tr>
+		<td class=tdbox>6</td>
+		<td class=tdbox>
+			<a href=../b/forum-100-1.html>雷霆二</a></td>
+		<td class=tdbox>81017</td>
+		</tr>	<tr>
+		<td class=tdbox>7</td>
+		<td class=tdbox>
+			<a href=../b/forum-2200-1.html>情人岛</a></td>
+		<td class=tdbox>78807</td>
+		</tr>	<tr>
+		<td class=tdbox>8</td>
+		<td class=tdbox>
+			<a href=../b/forum-2-1.html>站长交流</a></td>
+		<td class=tdbox>65500</td>
+		</tr>	<tr>
+		<td class=tdbox>9</td>
+		<td class=tdbox>
+			<a href=../b/forum-8-1.html>插件和增强</a></td>
+		<td class=tdbox>55759</td>
+		</tr>	<tr>
+		<td class=tdbox>10</td>
+		<td class=tdbox>
+			<a href=../b/forum-120-1.html>谈天说地</a></td>
+		<td class=tdbox>52586</td>
+		</tr>	<tr>
+		<td class=tdbox>11</td>
+		<td class=tdbox>
+			<a href=../b/forum-205-1.html>dotNet技术</a></td>
+		<td class=tdbox>24924</td>
+		</tr>	<tr>
+		<td class=tdbox>12</td>
+		<td class=tdbox>
+			<a href=../b/forum-210-1.html>其它源代码</a></td>
+		<td class=tdbox>24192</td>
+		</tr>	<tr>
+		<td class=tdbox>13</td>
+		<td class=tdbox>
+			<a href=../b/forum-260-1.html>电脑爱好者</a></td>
+		<td class=tdbox>21916</td>
+		</tr>	<tr>
+		<td class=tdbox>14</td>
+		<td class=tdbox>
+			<a href=../b/forum-115-1.html>音乐无限</a></td>
+		<td class=tdbox>18946</td>
+		</tr>	<tr>
+		<td class=tdbox>15</td>
+		<td class=tdbox>
+			<a href=../b/forum-900-1.html>论坛建议区</a></td>
+		<td class=tdbox>17540</td>
+		</tr>	<tr>
+		<td class=tdbox>16</td>
+		<td class=tdbox>
+			<a href=../b/forum-950-1.html>版主交流区</a></td>
+		<td class=tdbox>12518</td>
+		</tr>	<tr>
+		<td class=tdbox>17</td>
+		<td class=tdbox>
+			<a href=../b/forum-119-1.html>影视地带</a></td>
+		<td class=tdbox>7239</td>
+		</tr>	<tr>
+		<td class=tdbox>18</td>
+		<td class=tdbox>
+			<a href=../b/forum-300-1.html>八十年代</a></td>
+		<td class=tdbox>7043</td>
+		</tr>	<tr>
+		<td class=tdbox>19</td>
+		<td class=tdbox>
+			<a href=../b/forum-400-1.html>体育专区</a></td>
+		<td class=tdbox>6948</td>
+		</tr>	<tr>
+		<td class=tdbox>20</td>
+		<td class=tdbox>
+			<a href=../b/forum-220-1.html>技术精华区</a></td>
+		<td class=tdbox>6619</td>
+		</tr>	<tr>
+		<td class=tdbox>21</td>
+		<td class=tdbox>
+			<a href=../b/forum-222-1.html>JAVA技术</a></td>
+		<td class=tdbox>5623</td>
+		</tr>	<tr>
+		<td class=tdbox>22</td>
+		<td class=tdbox>
+			<a href=../b/forum-270-1.html>服务器技术/网络安全</a></td>
+		<td class=tdbox>4726</td>
+		</tr>	<tr>
+		<td class=tdbox>23</td>
+		<td class=tdbox>
+			<a href=../b/forum-212-1.html>PHP学习</a></td>
+		<td class=tdbox>3814</td>
+		</tr>	<tr>
+		<td class=tdbox>24</td>
+		<td class=tdbox>
+			<a href=../b/forum-520-1.html>专业服务区</a></td>
+		<td class=tdbox>3293</td>
+		</tr>	<tr>
+		<td class=tdbox>25</td>
+		<td class=tdbox>
+			<a href=../b/forum-208-1.html>论坛空间服务</a></td>
+		<td class=tdbox>1972</td>
+		</tr>	<tr>
+		<td class=tdbox>26</td>
+		<td class=tdbox>
+			<a href=../b/forum-1234-1.html>测试版面</a></td>
+		<td class=tdbox>1127</td>
+		</tr>	<tr>
+		<td class=tdbox>27</td>
+		<td class=tdbox>
+			<a href=../b/forum-116-1.html>LeadBBS电台</a></td>
+		<td class=tdbox>1083</td>
+		</tr>	<tr>
+		<td class=tdbox>28</td>
+		<td class=tdbox>
+			<a href=../b/forum-110-1.html>雷霆像册</a></td>
+		<td class=tdbox>772</td>
+		</tr>	<tr>
+		<td class=tdbox>29</td>
+		<td class=tdbox>
+			<a href=../b/forum-925-1.html>网站公告区</a></td>
+		<td class=tdbox>637</td>
+		</tr>	<tr>
+		<td class=tdbox>30</td>
+		<td class=tdbox>
+			<a href=../b/forum-117-1.html>极速找歌</a></td>
+		<td class=tdbox>451</td>
+		</tr>	</table>
+<%
+
+End Sub
+%>

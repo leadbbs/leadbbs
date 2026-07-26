@@ -1,0 +1,19 @@
+# Helicon Ape version 3.1.0.124
+
+RewriteEngine on
+#RewriteBase /
+RewriteCond %{QUERY_STRING} (.+)?
+RewriteRule ^([a-z0-9\/\\_]*)boards-?([0-9]+)?.html$ $1boards.asp?assort=$2&%1 [L,NC]
+RewriteCond %{QUERY_STRING} (.+)?
+RewriteRule ^([a-z0-9\/\\_]*)a/topic-([0-9]+)-([0-9]+)-([0-9]+)-?([0-9]+)?\.html$ $1a/a.asp\?b=$2&id=$3&aq=$4&q=$5&%1 [L,NC]
+RewriteCond %{QUERY_STRING} (.+)?
+RewriteRule ^([a-z0-9\/\\_]*)b/forum-([0-9]+)-([0-9]+)\.html$ $1b/b.asp\?b=$2&q=$3&%1 [L,NC]
+RewriteCond %{QUERY_STRING} (.+)?
+RewriteRule ^([a-z0-9\/\\_]*)user/([0-9]+)-?([a-z]+)?\.html$ $1user/lookuserinfo.asp\?id=$2&evol=$3&%1 [L,NC]
+RewriteCond %{QUERY_STRING} (.+)?
+RewriteRule ^([a-z0-9\/\\_]*)user/my-?([a-z]+)?\.html$ $1user/lookuserinfo.asp\?evol=$2&%1 [L,NC]
+SetEnv mod_developer secure-key-376920634
+
+
+
+

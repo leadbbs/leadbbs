@@ -1,0 +1,1 @@
+document.write("截止2007-3-13 2:28:26，至少有<b><font color=Red class=RedFont>62118</font></b>个网站安装了LeadBBS。");

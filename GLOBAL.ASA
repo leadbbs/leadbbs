@@ -1,0 +1,42 @@
+<SCRIPT LANGUAGE="VBScript" RUNAT="Server">
+
+Sub Application_OnStart
+
+
+End Sub
+Sub Application_OnEnd
+
+End Sub
+
+Sub Session_OnEnd
+
+	Dim DEF_MasterCookies,User,Chat_MaxCache
+	DEF_MasterCookies = "as"
+	Chat_MaxCache = 50
+
+	If isArray(Session(DEF_MasterCookies & "UDT")) = False Then
+		Exit Sub
+	End If
+	User = Session(DEF_MasterCookies & "UDT")(1)
+	
+	If isArray(Application(DEF_MasterCookies & "_Chat_S_Data_" & User)) Then
+		Application.Contents.Remove(DEF_MasterCookies & "_Chat_S_Data_" & User)
+		Application.Contents.Remove(DEF_MasterCookies & "_Chat_S_Index_" & User)
+		Application.Contents.Remove(DEF_MasterCookies & "_Chat_S_ID_" & User)
+		Application.Contents.Remove(DEF_MasterCookies & "_Chat_S_LMT_" & User)
+		Application.Contents.Remove(DEF_MasterCookies & "_Chat_S_Name_" & User)
+		
+		Dim Temp,Index
+		Temp =  Application(DEF_MasterCookies & "_Chat_World")
+		Index = Application(DEF_MasterCookies & "_Chat_World_Index")
+		Index = Index + 1
+		If Index > Chat_MaxCache - 1 Then Index = 0
+		Temp(Index) = "8 " & User
+		Application.Lock
+		Application(DEF_MasterCookies & "_Chat_World_Index") = Index
+		Application(DEF_MasterCookies & "_Chat_World") = Temp
+		Application.UnLock
+	End If
+
+End Sub
+</SCRIPT>

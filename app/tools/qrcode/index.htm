@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body table{font-size: 12px;padding:20px;}
+input{
+height:32px;line-height:32px;width:320px;padding:0 8px;font-size:14px;
+border-right:#add2cc 1px solid;border-top:#add2cc 1px solid;border-left:#add2cc 1px solid;border-bottom:#add2cc 1px solid}
+textarea{width:420px;height:150px;border:1px #7acef4 solid;overflow-y:auto;padding:12px;}
+.qrcode_size,.qrcode_size_sel,#getcode{display:block;padding:6px;border:1px #7acef4 solid;border-radius:5%;font-size:14px;text-align:center;float:left;
+margin-right:16px;
+}
+.qrcode_size,#getcode{background:#eee;}
+.qrcode_size_sel{background:#7acef4;color:white;}
+a{color:#0d7fb3;text-decoration:none;}
+a:hover{text-decoration:none;color:#333;}
+
+/*ajax window*/
+.layer_ajaxitem{width:420px;height:auto;text-align:left;float:left;border:0px #ABC9E7 solid;padding:6px;position: absolute;z-index:80;background:#ABC9E7;display:none;}
+.ajaxitemtitle{width:100%;padding-top:15px;background:#ffffff;}
+.ajaxitemtitle .title{float:left;margin-left:20px;font-weight:bold;color:#0055aa;font-size:11pt;padding-left: 20px; background: url(../images/style/0/ajaxitemtitle.gif) no-repeat 0 0px;}
+.layer_ajaxmsg{width:300px;height:auto;text-align:left;float:left;border:1px #ABC9E7 solid;padding:1px;position: absolute;z-index:90;background:url(../../../images/style/0/overlay_msgbody.png);display:none;}
+.layer_alertmsg{min-width:35px;height:auto;text-align:left;float:left;border:1px #ABC9E7 solid;padding:5px;position: absolute;z-index:90;background:url(../../../images/style/0/overlay_alertmsg.png);display:none;}
+.layer_alertmsg a{margin:5px;}
+.ajaxbox{text-align:left;padding:20px;margin-top:4px;margin-bottom:4px;line-height:1.7;}
+.ajaxbox .title{font-weight:bold;padding-top:6px;}
+.ajaxbox .value2{padding-top:6px;line-height:1.6;}
+.layer_ajaxitem a{color:#0055aa;}
+.layer_close a{margin-right:13px;cursor:pointer; width:15px;height:15px;background: url(../../../images/style/0/layer_close.gif) no-repeat;float: right;}
+.layer_close a:hover{background-position: 100% -15px;float: right;}
+.ajaxitembody{background:#ffffff;padding-bottom:10px;float:left;width:100%;_overflow /*5.5*/:visible;}
+.overlay{position:absolute;z-index:70;width:100%;background:url(../../../images/style/0/overlay.png);top:0;left:0;display:none;}
+.ajaxloading{cursor:pointer; width:32px;height:32px;background: url(../../../images/style/0/ajax_loader.gif) no-repeat; margin:12px 6px 12px 10px;float: left;}
+/* ie6 ie5.5 */* html .overlay { filter:alpha(opacity=50);}
+.fire:after { content:".";
+display:block;
+height:0;
+clear:both;
+visibility:hidden;
+}
+.unsel{outline: none;-moz-user-select: none;}
+</style>
+<script src="../../../inc/js/jquery.js"></script>
+<script src="../../../inc/js/common.js"></script>
+<script src="../../share/jquery.qrcode.min.js"></script>
+</head>
+<body>
+<script language="JavaScript">
+var size = 200;
+
+function toUtf8(str) {
+	var out, i, len, c;
+	out = "";
+	len = str.length;
+	for(i = 0; i < len; i++) {
+	c = str.charCodeAt(i);
+	if ((c >= 0x0001) && (c <= 0x007F)) {
+		out += str.charAt(i);
+	} else if (c > 0x07FF) {
+		out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+		out += String.fromCharCode(0x80 | ((c >>  6) & 0x3F));
+		out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
+	} else {
+		out += String.fromCharCode(0xC0 | ((c >>  6) & 0x1F));
+		out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
+	}
+	}
+	return out;
+}
+
+function getcode()
+{
+	if($("#code").val().length>512)
+	{
+		alert("过长，不能超过512字");
+		return false;
+	}
+	var str = toUtf8($("#code").val());
+	var win = window.parent||window;
+				win.layer_view("二维码生成结果",this,size+120,'','anc_delbody',"HTML:<table style='margin:16px 0;width:100%;text-align:left;'><tr><td align=center valign=middle><span id=ldshare_wenxin></span><br><br>打开微信，点击底部的发现，使用<br>扫一扫即可将内容分享至朋友圈。</td></tr></table>","",1,"",1,0,"setCenterDiv($('#anc_delbody'))");
+				if(Browser.is_ie_lower||Browser.ie9)
+				$('#ldshare_wenxin', win.document).qrcode({
+					render: "table", 
+					width: size, 
+					height:size, 
+					text: str
+				});
+				else
+				$('#ldshare_wenxin', win.document).qrcode({
+					width: size, 
+					height:size, 
+					text: str
+				});
+				return false;
+}
+
+
+function codesize(s,obj)
+{
+	size = s;
+	$(".qrcode_size_sel").attr("class","qrcode_size");
+	$(obj).attr("class","qrcode_size_sel")
+}
+</script>
+
+	<script languange="Javascript" src="Convert.js"></script>
+	<p>请输入要生成二维码的内容（比如网址，或其它内容）
+	</p>
+	<p>
+	<textarea type=input id=code name=code></textarea>
+	</p>
+	<a href=# onclick="codesize(200,this)" class="qrcode_size_sel">生成大小: 200</a>
+	<a href=# onclick="codesize(400,this)" class="qrcode_size">400</a>
+	<a href=# onclick="codesize(800,this)" class="qrcode_size">800</a>
+	
+	<a href=# onclick="getcode()" id="getcode">生成二维码</a>
+</body>
+</html>

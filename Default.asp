@@ -1,0 +1,3 @@
+<%
+Response.Redirect "Boards.asp"
+%>制作中，日后再来访...
