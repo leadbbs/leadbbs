@@ -1,6 +1,6 @@
 
 var colortb={
-// ÊÇ·ñÓĞĞ§ÑÕÉ«Öµ
+// æ˜¯å¦æœ‰æ•ˆé¢œè‰²å€¼
 IsColor:function(color){
 	var temp=color;
 	if (temp=="") return true;
@@ -20,14 +20,14 @@ DrRGB:"",
 hexch :['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'],
 
 
-// ·µ»ØÓĞ±³¾°ÑÕÉ«ÊôĞÔµÄ¶ÔÏó
+// è¿”å›æœ‰èƒŒæ™¯é¢œè‰²å±æ€§çš„å¯¹è±¡
 GetParent:function (obj){
 	while(obj!=null && obj.tagName!="TD" && obj.tagName!="TR" && obj.tagName!="TH" && obj.tagName!="table")
 		obj=obj.parentElement;
 	return obj;
 },
 
-// ·µ»Ø±êÇ©ÃûµÄÑ¡¶¨¿Ø¼ş
+// è¿”å›æ ‡ç­¾åçš„é€‰å®šæ§ä»¶
 GetControl:function (obj, sTag){
 	obj=obj.item(0);
 	if (obj.tagName==sTag){
@@ -36,7 +36,7 @@ GetControl:function (obj, sTag){
 	return null;
 },
 
-// ÊıÖµ×ªÎªRGB16½øÖÆÑÕÉ«¸ñÊ½
+// æ•°å€¼è½¬ä¸ºRGB16è¿›åˆ¶é¢œè‰²æ ¼å¼
 N2Color:function (c){
 	c = c.toString(16);
 	switch (c.length) {
@@ -108,7 +108,7 @@ EndColor:function (){
 selcolor_done:function (color)
 {
 	if (!this.IsColor(color)){
-		alert('ÎŞĞ§µÄÑÕÉ«Öµ£¡');
+		alert('æ— æ•ˆçš„é¢œè‰²å€¼ï¼');
 		return;
 	}
 
@@ -164,12 +164,12 @@ wc:function (r, g, b, n){
 },
 
 
-// Ä¬ÈÏÏÔÊ¾Öµ
+// é»˜è®¤æ˜¾ç¤ºå€¼
 inittable:function(){	
 	switch (editor_sAction) {
-	case "forecolor":	// ×ÖÌåÇ°¾°É«
+	case "forecolor":	// å­—ä½“å‰æ™¯è‰²
 		this.sel_obj = "editor_selcolor";
-		this.sTitle = "×ÖÌåÇ°¾°É«";
+		this.sTitle = "å­—ä½“å‰æ™¯è‰²";
 		if(Browser.ie)
 		{
 			this.oSelection = this.edt_doc.selection.createRange();
@@ -179,9 +179,9 @@ inittable:function(){
 			this.oSelection = this.edt_win.getSelection();
 		if (this.color) this.color = this.N2Color(this.color);
 		break;
-	case "backcolor":	// ×ÖÌå±³¾°É«
+	case "backcolor":	// å­—ä½“èƒŒæ™¯è‰²
 		this.sel_obj = "editor_selcolor";
-		this.sTitle = "×ÖÌå±³¾°É«";
+		this.sTitle = "å­—ä½“èƒŒæ™¯è‰²";
 		if(Browser.ie)
 		{this.oSelection = this.edt_doc.selection.createRange();
 		this.color = this.oSelection.queryCommandValue("BackColor");
@@ -191,9 +191,9 @@ inittable:function(){
 		if (this.color2){this.color2 = this.N2Color(this.color2);}else{this.color2="#000000";}
 		break;
 	case "bordercolor":
-	case "bgcolor":		// ¶ÔÏó±³¾°É«
+	case "bgcolor":		// å¯¹è±¡èƒŒæ™¯è‰²
 		this.sel_obj = "editor_selcolor";
-		this.sTitle = "¶ÔÏó±³¾°É«";
+		this.sTitle = "å¯¹è±¡èƒŒæ™¯è‰²";
 		break;
 	default:
 		break;
@@ -204,7 +204,7 @@ inittable:function(){
 	
 	var cnum = [1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0];
 	var wstr="";
-	wstr+='<table border=0 cellPadding=0 style=\"cursor: move;\" onmousedown=\"LD.move.mousedown(this.parentNode,event);\"><tbody><tr><td><div id=selcolortitle unselectable=on>Ñ¡ÔñÑÕÉ«</div>';
+	wstr+='<table border=0 cellPadding=0 style=\"cursor: move;\" onmousedown=\"LD.move.mousedown(this.parentNode,event);\"><tbody><tr><td><div id=selcolortitle unselectable=on>é€‰æ‹©é¢œè‰²</div>';
 	wstr+='<table border=0 cellPadding=0 cellSpacing=0 id=ColorTable height=120 width=240 style="CURSOR: pointer">';
 	
 	for(i = 0; i < 16; i ++){

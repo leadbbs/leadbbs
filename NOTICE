@@ -1,0 +1,46 @@
+# NOTICE — third-party components and their terms
+
+Read this before deploying, forking or redistributing. This repository is a **port**, not an
+original work: the great majority of the code in it was written by someone else.
+
+## LeadBBS 9.2 — the forum itself
+
+The first commit of this repository is LeadBBS 9.2 exactly as distributed in `leadbbs92.zip`,
+committed untouched so the porting diff is auditable. Everything outside `test/`, `docs/`,
+`tools/`, `.github/`, `LICENSE`, `NOTICE` and this repository's `README.md` derives from it.
+
+**LeadBBS is not free software.** Its own installer states that the program is protected by
+copyright and that commercial use requires a purchased licence
+(`install/scripts/install_fun.asp`). The upstream project (leadbbs.com) has been dormant for
+years and we have not been able to obtain a statement of terms from its authors.
+
+What that means for you:
+
+- This repository is published so the porting work — the AxonASP divergence catalogue, the
+  test suite, the fixes — is available to others. It is **not** a grant of rights to LeadBBS
+  itself, and none of the contributors here can give you one.
+- If you intend to run LeadBBS commercially, the licensing question is yours to resolve with
+  the copyright holder, exactly as it would be if you had downloaded the original zip.
+- If you are the copyright holder and want this repository changed or taken down, open an
+  issue or contact the repository owner; we will act on it.
+
+## AxonASP — the runtime
+
+AxonASP (G3pix Ltda) is the Classic ASP engine this port targets. It is licensed under the
+**Mozilla Public License 2.0** and is not redistributed here — you install it separately.
+
+  Source and releases: https://github.com/guimaraeslucas/axonasp
+  Project page:        https://g3pix.com.br/axonasp
+
+## Ruffle — the Flash emulator
+
+`inc/ruffle/` vendors the Ruffle player, used by the `flash_gold` plugin so its legacy SWF
+still runs. Ruffle is dual-licensed **MIT / Apache-2.0**.
+
+  https://ruffle.rs — https://github.com/ruffle-rs/ruffle
+
+## Other bundled assets
+
+Upstream LeadBBS bundles jQuery, various editor scripts, icon sets and emoticons under
+`inc/js/`, `a/inc/`, `images/` and `plug-ins/`. Their individual licences are as shipped by
+their authors; they have not been altered by this port.

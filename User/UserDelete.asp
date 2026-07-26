@@ -1,24 +1,24 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/Board_popfun.asp -->
-<!-- #include file=inc/UserTopic.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Board_popfun.asp"-->
+<!--#include file="inc/UserTopic.asp"-->
 <%
 DEF_BBS_HomeUrl = "../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
 GBL_ID = GBL_UserID
 GBL_CHK_TempStr = ""
-SiteHead(DEF_SiteNameString & " - ÓÃ»§Çø")
-UpdateOnlineUserAtInfo GBL_board_ID,"ÓÃ»§×ÔÎÒÉ¾³ı"
+SiteHead(DEF_SiteNameString & " - ç”¨æˆ·åŒº")
+UpdateOnlineUserAtInfo GBL_board_ID,"ç”¨æˆ·è‡ªæˆ‘åˆ é™¤"
 
 If GBL_ID=0 Then
-	GBL_CHK_TempStr = GBL_CHK_TempStr & "ÄúÃ»ÓĞµÇÂ¼!<br>" & VbCrLf
+	GBL_CHK_TempStr = GBL_CHK_TempStr & "æ‚¨æ²¡æœ‰ç™»å½•!<br>" & VbCrLf
 End If
 
-UserTopicTopInfo
-DisplayUserNavigate("ÓÃ»§×ÔÎÒÉ¾³ı")
+UserTopicTopInfo()
+DisplayUserNavigate("ç”¨æˆ·è‡ªæˆ‘åˆ é™¤")
 
-GBL_CHK_TempStr = "<br><b>Ç§Íò²»Òª×ÔÉ±!</b>"
+GBL_CHK_TempStr = "<br><b>åƒä¸‡ä¸è¦è‡ªæ€!</b>"
 If GBL_CHK_Flag=1 Then
 	If GBL_CHK_TempStr="" Then
 	Else%>
@@ -36,17 +36,17 @@ Else%>
 	<td>
 	<%
 	If Request("submitflag")="" Then
-		Response.Write "<br><b>ÇëÏÈµÇÂ¼</b>"
+		Response.Write "<br><b>è¯·å…ˆç™»å½•</b>"
 	Else
 		Response.Write "<br><p align=left><font color=ff0000 class=redfont><b>" & GBL_CHK_TempStr & "</b></font>"
 	End If
-	DisplayLoginForm
+	DisplayLoginForm()
 	Response.Write "</p>"%>
 	</td>
 	</tr>
 	</table>
 <%End If
-UserTopicBottomInfo
-closeDataBase
-SiteBottom
+UserTopicBottomInfo()
+closeDataBase()
+SiteBottom()
 If GBL_ShowBottomSure = 1 Then Response.Write GBL_SiteBottomString%>

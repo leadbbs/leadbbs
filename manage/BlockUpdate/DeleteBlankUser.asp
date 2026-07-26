@@ -3,9 +3,9 @@ Sub DeleteBlank_page
 
 	If GBL_UserID > 0 and GBL_CHK_Flag = 1 and GBL_CHK_TempStr = "" Then
 		If Request("dflag") <> "upload" Then
-			DeleteBlankUser
+			DeleteBlankUser()
 		Else
-			DeleteUploadBlock
+			DeleteUploadBlock()
 		End If
 	Else
 		Response.Write ""
@@ -15,21 +15,21 @@ End sub
 
 sub DeleteBlankUser()
 
-	If CheckSupervisorUserName = 0 or GBL_UserID = 0 Then Exit sub
+	If CheckSupervisorUserName() = 0 or GBL_UserID = 0 Then Exit sub
 
 	If Request("SureFlag") <> "E72ksiOkw2" Then
 		%>
 			<p><form action=UpdateUnderWritePrintColumn.asp method=post>
-			<b><font color=ff0000 class=redfont>ÔÙ´ÎÈ·ÈÏĞÅÏ¢£ºÈ·¶¨É¾³ıÎŞÈÎºÎ·¢ÌûÔÚÒ»¸öÔÂÇ°×¢²áÇÒÔÚÏßÊ±¼äµÍÓÚ100µÄÓÃ»§<br>
+			<b><font color=ff0000 class=redfont>å†æ¬¡ç¡®è®¤ä¿¡æ¯ï¼šç¡®å®šåˆ é™¤æ— ä»»ä½•å‘å¸–åœ¨ä¸€ä¸ªæœˆå‰æ³¨å†Œä¸”åœ¨çº¿æ—¶é—´ä½äº100çš„ç”¨æˆ·<br>
 			<br>
 			<input type=hidden name=SureFlag value="E72ksiOkw2">
 			<input type=hidden name=flag value="<%=htmlencode(GBL_MANAGE_Flag)%>">
 			
-			<input type=submit value=È·¶¨É¾³ı class=fmbtn>
+			<input type=submit value=ç¡®å®šåˆ é™¤ class=fmbtn>
 			</form>
 		<%
 	Else	
-		'Response.Write "<span style='font-size:9pt;'>¿ªÊ¼É¾³ıÎŞÊµ¼Ê·¢Ìû¼°" & DEF_PointsName(4) & "Ğ¡ÓÚ100µÄÓÃ»§(»ÒÉ«±íÊ¾ÂÔ¹ıÉ¾³ı£¬ºÚÉ«±íÊ¾É¾³ıÓÃ»§)£º"
+		'Response.Write "<span style='font-size:9pt;'>å¼€å§‹åˆ é™¤æ— å®é™…å‘å¸–åŠ" & DEF_PointsName(4) & "å°äº100çš„ç”¨æˆ·(ç°è‰²è¡¨ç¤ºç•¥è¿‡åˆ é™¤ï¼Œé»‘è‰²è¡¨ç¤ºåˆ é™¤ç”¨æˆ·)ï¼š"
 	
 		Dim RecordCount,CountIndex
 		SQL = "Select count(*) from LeadBBS_User where OnlineTime<100"
@@ -51,14 +51,14 @@ sub DeleteBlankUser()
 		Application.UnLock
 		If Request("executepage") = "" Then
 		%>
-		<p style="font-size:9pt" id="bartitle1">ÏÂÃæÉ¨ÃèÔÊĞíÉ¾³ıµÄÓÃ»§£¬¹²ÓĞ<%=RecordCount%>¸öÓÃ»§´ıÉ¨Ãè
+		<p style="font-size:9pt" id="bartitle1">ä¸‹é¢æ‰«æå…è®¸åˆ é™¤çš„ç”¨æˆ·ï¼Œå…±æœ‰<%=RecordCount%>ä¸ªç”¨æˆ·å¾…æ‰«æ
 	
 		<table width="400" cellspacing="0" cellpadding="0" style="border:#006600 1px solid;">
 			<tr> 
 				<td>
 				<td><img src=../pic/progressbar.gif width=0 height=16 id=img1 name=img1 align=middle>
 		</td></tr></table> <span id=txt1 name=txt1 style="font-size:9pt">0</span><span style="font-size:9pt">%</span>
-		<span id=tm1 name=tm1 style="font-size:9pt">ÕıÔÚ¹ÀËãĞèÒªÊ±¼ä...</span>
+		<span id=tm1 name=tm1 style="font-size:9pt">æ­£åœ¨ä¼°ç®—éœ€è¦æ—¶é—´...</span>
 		<script src="<%=DEF_BBS_HomeUrl%>inc/js/bar.js?ver=<%=DEF_Jer%>" type="text/javascript"></script>
 		<script>
 			Upl_url = "Io_Info.asp?id=<%=Urlencode(GBL_CHK_User)%>";
@@ -132,9 +132,9 @@ sub DeleteBlankUser()
 				Application.Contents.Remove("Io_" & GBL_CHK_User)
 			End If
 		Loop
-		ReloadStatisticData
+		ReloadStatisticData()
 		%>
-		¹²ÓĞ<%=DeleteNum%>¸öÓÃ»§±»É¾³ı(°üÀ¨ÉÏ´«¸½¼ş)
+		å…±æœ‰<%=DeleteNum%>ä¸ªç”¨æˆ·è¢«åˆ é™¤(åŒ…æ‹¬ä¸Šä¼ é™„ä»¶)
 		<%Application.Contents.Remove("Io_" & GBL_CHK_User)
 	End If
 
@@ -149,7 +149,7 @@ Function DeleteUploadInfo(DelUserID)
 
 	Dim TempNum
 	If DEF_FSOString = "" Then
-		'Response.Write " <font color=Red class=redfont>²»Ö§³ÖFSO£¬ÂÔ¹ı¸½¼şÉ¾³ı£®</font>"
+		'Response.Write " <font color=Red class=redfont>ä¸æ”¯æŒFSOï¼Œç•¥è¿‡é™„ä»¶åˆ é™¤ï¼</font>"
 	Else
 		Do while EndFlag = 0
 			SQL = sql_select("Select ID,PhotoDir,SPhotoDir from LeadBBS_Upload where UserID=" & DelUserID & " and ID>" & NowID & " order by ID ASC",100)
@@ -167,13 +167,13 @@ Function DeleteUploadInfo(DelUserID)
 					NowID = Rs(0)
 					Rs.MoveNext
 				Loop
-				'Response.Write "¡ö"
+				'Response.Write "â– "
 				Rs.Close
 				Set Rs = Nothing
 				CALL LDExeCute("Delete from LeadBBS_Upload where UserID=" & DelUserID & " and ID<=" & NowID,1)
 				CALL LDExeCute("update LeadBBS_SiteInfo set UploadNum=UploadNum-" & TempNum,1)
 				CALL LDExeCute("Update LeadBBS_User Set UploadNum=UploadNum-" & TempNum & " where id=" & DelUserID,1)
-				Response.Write " <font color=Red class=redfont>É¾³ı" & TempNum & "¸ö¸½¼ş</font>"
+				Response.Write " <font color=Red class=redfont>åˆ é™¤" & TempNum & "ä¸ªé™„ä»¶</font>"
 			End If
 		Loop
 		
@@ -185,7 +185,7 @@ Function DeleteUploadInfo(DelUserID)
 		Else
 			If Rs("PhotoDir") <> "" Then DeleteFiles(Server.Mappath(DEF_BBS_HomeUrl & DEF_BBS_UploadPhotoUrl & "face/" & Rs("PhotoDir")))
 			If Rs("SPhotoDir") <> "" Then DeleteFiles(Server.Mappath(DEF_BBS_HomeUrl & DEF_BBS_UploadPhotoUrl & "face/" & Rs("SPhotoDir")))
-			'Response.Write "¡ö"
+			'Response.Write "â– "
 			Rs.Close
 			Set Rs = Nothing
 			CALL LDExeCute("Delete from LeadBBS_UserFace where UserID=" & DelUserID,1)
@@ -201,24 +201,24 @@ sub DeleteUploadBlock
 	LastDate = Request("LastDate")
 	If Request("SureFlag") = "sure" Then
 		If isTrueDate(FirstDate) = 0 Then
-			GBL_CHK_TempStr = "<br>ÆğÊ¼ÈÕÆÚ´íÎó,ÇëÕıÈ·ÌîĞ´,±ØĞëÎªÈÕÆÚ¸ñÊ½!<br>"
+			GBL_CHK_TempStr = "<br>èµ·å§‹æ—¥æœŸé”™è¯¯,è¯·æ­£ç¡®å¡«å†™,å¿…é¡»ä¸ºæ—¥æœŸæ ¼å¼!<br>"
 		ElseIf isTrueDate(LastDate) = 0 Then
-			GBL_CHK_TempStr = "<br>ÖÕÖ¹ÈÕÆÚ´íÎó,ÇëÕıÈ·ÌîĞ´,±ØĞëÎªÈÕÆÚ¸ñÊ½!<br>"
+			GBL_CHK_TempStr = "<br>ç»ˆæ­¢æ—¥æœŸé”™è¯¯,è¯·æ­£ç¡®å¡«å†™,å¿…é¡»ä¸ºæ—¥æœŸæ ¼å¼!<br>"
 		End If
 	End If
 	If Request("SureFlag") <> "E72ksiOkw2" or GBL_CHK_TempStr <> "" Then
 	%>
-		<p style="font-size:9pt">É¾³ıÖ¸¶¨Ê±¼äÖ®¼äµÄ¸½¼ş(ÏÖÔÚÈÕÆÚ<%=now%>)</p>
+		<p style="font-size:9pt">åˆ é™¤æŒ‡å®šæ—¶é—´ä¹‹é—´çš„é™„ä»¶(ç°åœ¨æ—¥æœŸ<%=now%>)</p>
 		<%If GBL_CHK_TempStr <> "" Then Response.Write "<b style=font-size:9pt><font color=red class=redfont>" & GBL_CHK_TempStr & "</font></b>"%>
 		<form name=DellClientForm action=UpdateUnderWritePrintColumn.asp method=post style="font-size:9pt">
 			<input type=hidden name=dflag value="upload">
 			<input type=hidden name=SureFlag value="E72ksiOkw2">
 			<input type=hidden name=flag value="<%=htmlencode(GBL_MANAGE_Flag)%>">
-			É¾³ıÈÕÆÚ<input name=firstDate value="<%=htmlencode(firstDate)%>">ÖÁÈÕÆÚ
-			<input name=LastDate value="<%=htmlencode(LastDate)%>">Ö®¼äµÄ¸½¼ş
-			<p><b>È·ÈÏÒªÉ¾³ıÖ¸¶¨ÈÕÆÚÖ®¼äµÄ¸½¼şÂğ£¿</b>
-			<p><input type=submit value=È·¶¨ class=fmbtn style="font-size:9pt">
-			<input type=button value=²»É¾ onclick="javascript:window.close();" class=fmbtn style="font-size:9pt">
+			åˆ é™¤æ—¥æœŸ<input name=firstDate value="<%=htmlencode(firstDate)%>">è‡³æ—¥æœŸ
+			<input name=LastDate value="<%=htmlencode(LastDate)%>">ä¹‹é—´çš„é™„ä»¶
+			<p><b>ç¡®è®¤è¦åˆ é™¤æŒ‡å®šæ—¥æœŸä¹‹é—´çš„é™„ä»¶å—ï¼Ÿ</b>
+			<p><input type=submit value=ç¡®å®š class=fmbtn style="font-size:9pt">
+			<input type=button value=ä¸åˆ  onclick="javascript:window.close();" class=fmbtn style="font-size:9pt">
 		</form>
 	<%
 	Else
@@ -245,7 +245,7 @@ sub DeleteUploadBlock
 		
 		If Request("executepage") = "" Then
 		%>
-		<p style="font-size:9pt">ÏÂÃæÉ¨Ãè¸½ºÏÌõ¼şµÄ¸½¼ş£¬¹²ÓĞ<%=RecordCount%>¸ö¸½¼ş´ıÉ¾³ı,Èç¹û·şÎñÆ÷²»Ö§³ÖFSO½«ÎŞ·¨É¾³ıÓ²ÅÌÉÏµÄÎÄ¼ş
+		<p style="font-size:9pt">ä¸‹é¢æ‰«æé™„åˆæ¡ä»¶çš„é™„ä»¶ï¼Œå…±æœ‰<%=RecordCount%>ä¸ªé™„ä»¶å¾…åˆ é™¤,å¦‚æœæœåŠ¡å™¨ä¸æ”¯æŒFSOå°†æ— æ³•åˆ é™¤ç¡¬ç›˜ä¸Šçš„æ–‡ä»¶
 	
 		<table width="400" border="0" cellspacing="1" cellpadding="1">
 			<tr> 
@@ -254,7 +254,7 @@ sub DeleteUploadBlock
 			<tr> 
 				<td bgcolor=ffffff height=9><img src=../pic/progressbar.gif width=0 height=16 id=img1 name=img1 align=middle></td></tr></table>
 		</td></tr></table> <span id=txt1 name=txt1 style="font-size:9pt">0</span><span style="font-size:9pt">%</span>
-		<span id=tm1 name=tm1 style="font-size:9pt">ÕıÔÚ¹ÀËãĞèÒªÊ±¼ä...</span>
+		<span id=tm1 name=tm1 style="font-size:9pt">æ­£åœ¨ä¼°ç®—éœ€è¦æ—¶é—´...</span>
 		<script src="<%=DEF_BBS_HomeUrl%>inc/js/bar.js?ver=<%=DEF_Jer%>" type="text/javascript"></script>
 		<script>
 			Upl_url = "Io_Info.asp?id=<%=Urlencode(GBL_CHK_User)%>";
@@ -275,7 +275,7 @@ sub DeleteUploadBlock
 		EndFlag = 0
 
 		If DEF_FSOString = "" Then
-			Response.Write " <font color=Red class=redfont>²»Ö§³ÖFSO£¬ÂÔ¹ı¸½¼şÉ¾³ı£®</font>"
+			Response.Write " <font color=Red class=redfont>ä¸æ”¯æŒFSOï¼Œç•¥è¿‡é™„ä»¶åˆ é™¤ï¼</font>"
 		Else
 		
 			Dim GetData,N
@@ -316,11 +316,11 @@ sub DeleteUploadBlock
 			Loop
 		End If
 		%>
-		Íê³É
+		å®Œæˆ
 		<%
 		Application.Contents.Remove("Io_" & GBL_CHK_User)
 	End If
-	ReloadStatisticData
+	ReloadStatisticData()
 
 End sub
 
@@ -332,7 +332,7 @@ Function DeleteFiles(path)
     Set fs = Server.CreateObject(DEF_FSOString)
 	If err <> 0 Then
 		Err.Clear
-		'Response.Write "<br>·şÎñÆ÷²»Ö§³ÖFSO£¬Ó²ÅÌÎÄ¼şÎ´É¾³ı£®"
+		'Response.Write "<br>æœåŠ¡å™¨ä¸æ”¯æŒFSOï¼Œç¡¬ç›˜æ–‡ä»¶æœªåˆ é™¤ï¼"
 		Exit Function
 	End If
     If fs.FileExists(path) Then

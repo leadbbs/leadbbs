@@ -33,7 +33,7 @@
 			}
 			else
 			{
-				alert("´íÎó!´ËÍ¼Ïñ´úºÅ²»´æÔÚ!");
+				alert("é”™è¯¯!æ­¤å›¾åƒä»£å·ä¸å­˜åœ¨!");
 				$id("faceimg").src=user_DEF_BBS_HomeUrl + 'images/blank.gif';
 				$id("LeadBBSFm").Form_userphoto.value='';
 				ValidationPassed = false;
@@ -41,7 +41,7 @@
 		}
 		else
 		{
-			alert("´íÎó!´ËÍ¼Ïñ´úºÅ²»´æÔÚ!\nÍ¼Ïñ´úºÅ±ØĞëÊÇ4Î»Êı" + (user_DEF_faceMaxNum.toString().length>4?"»òÒÔÉÏ":"") + ",±ÈÈç 0001 ,×î´óÎª" + user_DEF_faceMaxNum);
+			alert("é”™è¯¯!æ­¤å›¾åƒä»£å·ä¸å­˜åœ¨!\nå›¾åƒä»£å·å¿…é¡»æ˜¯4ä½æ•°" + (user_DEF_faceMaxNum.toString().length>4?"æˆ–ä»¥ä¸Š":"") + ",æ¯”å¦‚ 0001 ,æœ€å¤§ä¸º" + user_DEF_faceMaxNum);
 			$id("faceimg").src=user_DEF_BBS_HomeUrl + 'images/blank.gif';
 			$id("LeadBBSFm").Form_userphoto.value='';
 			ValidationPassed = false;
@@ -56,7 +56,7 @@
 		{
 			if (! isnum(obj.Form_FaceWidth.value))
 			{
-				alert("×Ô¶¨ÒåÍ·Ïñ¿í¶È±ØĞëÊÇÊı×Ö£¡\n");
+				alert("è‡ªå®šä¹‰å¤´åƒå®½åº¦å¿…é¡»æ˜¯æ•°å­—ï¼\n");
 				obj.Form_FaceWidth.focus();
 				return;
 			}
@@ -64,7 +64,7 @@
 			{
 				if(obj.Form_FaceWidth.value<20 || obj.Form_FaceWidth.value>user_DEF_AllFaceMaxWidth)
 				{
-					alert("×Ô¶¨ÒåÍ·Ïñ¿í¶È±ØĞëÔÚ20-" + user_DEF_AllFaceMaxWidth + "Ö®¼ä£¡\n");
+					alert("è‡ªå®šä¹‰å¤´åƒå®½åº¦å¿…é¡»åœ¨20-" + user_DEF_AllFaceMaxWidth + "ä¹‹é—´ï¼\n");
 					obj.Form_FaceWidth.focus();
 					return;
 				}
@@ -75,7 +75,7 @@
 		{
 			if (! isnum(obj.Form_FaceHeight.value))
 			{
-				alert("×Ô¶¨ÒåÍ·Ïñ¸ß¶È±ØĞëÊÇÊı×Ö£¡\n");
+				alert("è‡ªå®šä¹‰å¤´åƒé«˜åº¦å¿…é¡»æ˜¯æ•°å­—ï¼\n");
 				obj.Form_FaceHeight.focus();
 				return;
 			}
@@ -83,7 +83,7 @@
 			{
 				if(obj.Form_FaceHeight.value<20 || obj.Form_FaceHeight.value>user_DEF_AllFaceMaxWidth*2)
 				{
-					alert("×Ô¶¨ÒåÍ·Ïñ¸ß¶È±ØĞëÔÚ20-" + user_DEF_AllFaceMaxWidth*2 + "Ö®¼ä£¡\n");
+					alert("è‡ªå®šä¹‰å¤´åƒé«˜åº¦å¿…é¡»åœ¨20-" + user_DEF_AllFaceMaxWidth*2 + "ä¹‹é—´ï¼\n");
 					obj.Form_FaceHeight.focus();
 					return;
 				}
@@ -103,7 +103,7 @@
 	{
 		if(obj.Form_username.value=="")
 		{
-			alert("ÇëÊäÈëÄãµÄÓÃ»§Ãû!\n");
+			alert("è¯·è¾“å…¥ä½ çš„ç”¨æˆ·å!\n");
 			ValidationPassed = false;
 			obj.Form_username.focus();
 			return;
@@ -111,7 +111,7 @@
 		
 		if(obj.Form_username.value.length<(user_DEF_ShortestUserName/2))
 		{
-			alert("ÓÃ»§Ãû³¤¶ÈÖÁÉÙĞèÒª" + user_DEF_ShortestUserName + "¸ö×Ö·û!\n");
+			alert("ç”¨æˆ·åé•¿åº¦è‡³å°‘éœ€è¦" + user_DEF_ShortestUserName + "ä¸ªå­—ç¬¦!\n");
 			ValidationPassed = false;
 			obj.Form_username.focus();
 			return;
@@ -119,7 +119,7 @@
 
 		if(obj.Form_mail.value=="")
 		{
-			alert("ÇëÊäÈëÄãµÄÕæÊµÓÊÏäµØÖ·£¡\n");
+			alert("è¯·è¾“å…¥ä½ çš„çœŸå®é‚®ç®±åœ°å€ï¼\n");
 			ValidationPassed = false;
 			obj.Form_mail.focus();
 			return;
@@ -127,7 +127,7 @@
 
 		if(obj.Form_password1.value=="")
 		{
-			alert("ÇëÊäÈëÄãµÄÃÜÂë!\n");
+			alert("è¯·è¾“å…¥ä½ çš„å¯†ç !\n");
 			ValidationPassed = false;
 			obj.Form_password1.focus();
 			return;
@@ -135,7 +135,7 @@
 
 		if(obj.Form_password2.value=="")
 		{
-			alert("ÇëÊäÈëÄãµÄÑéÖ¤ÃÜÂë£¡\n");
+			alert("è¯·è¾“å…¥ä½ çš„éªŒè¯å¯†ç ï¼\n");
 			ValidationPassed = false;
 			obj.Form_password2.focus();
 			return;
@@ -143,7 +143,7 @@
 
 		if(obj.Form_password1.value!=obj.Form_password2.value)
 		{
-			alert("ÄãµÄÁ½´ÎÃÜÂëÊäÈë²»ÏàÍ¬£¡\n");
+			alert("ä½ çš„ä¸¤æ¬¡å¯†ç è¾“å…¥ä¸ç›¸åŒï¼\n");
 			ValidationPassed = false;
 			obj.Form_password1.focus();
 			return;
@@ -151,7 +151,7 @@
 
 		if(obj.Form_Question.value=="")
 		{
-			alert("ÇëÊäÈëÃÜÂëÌáÊ¾!\n");
+			alert("è¯·è¾“å…¥å¯†ç æç¤º!\n");
 			ValidationPassed = false;
 			obj.Form_Question.focus();
 			return;
@@ -159,7 +159,7 @@
 
 		if(obj.Form_Answer.value=="")
 		{
-			alert("ÇëÊäÈëÌáÊ¾´ğ°¸!\n");
+			alert("è¯·è¾“å…¥æç¤ºç­”æ¡ˆ!\n");
 			ValidationPassed = false;
 			obj.Form_Answer.focus();
 			return;
@@ -169,7 +169,7 @@
 		{
 			if (! isnum(obj.Form_oicq.value))
 			{
-				alert("Î¹,ÄãÌîÈëÁË£Ñ£Ñ¿òÖĞÌîÈëÁË¶«Î÷,µ«ÄãµÄ£Ñ£ÑºÅÂëÔõÃ´²»ÊÇÊı×Ö?\n");
+				alert("å–‚,ä½ å¡«å…¥äº†ï¼±ï¼±æ¡†ä¸­å¡«å…¥äº†ä¸œè¥¿,ä½†ä½ çš„ï¼±ï¼±å·ç æ€ä¹ˆä¸æ˜¯æ•°å­—?\n");
 				ValidationPassed = false;
 				obj.Form_oicq.focus();
 				return;
@@ -180,7 +180,7 @@
 		{
 			if (! isnum(obj.Form_byear.value))
 			{
-				alert("Î¹,ÄãÌîÈëÁËÄãµÄ³öÉúÄê,µ«ÄãµÄÄê·İÔõÃ´²»ÊÇÊı×Ö£¡\n");
+				alert("å–‚,ä½ å¡«å…¥äº†ä½ çš„å‡ºç”Ÿå¹´,ä½†ä½ çš„å¹´ä»½æ€ä¹ˆä¸æ˜¯æ•°å­—ï¼\n");
 				ValidationPassed = false;
 				obj.Form_byear.focus();
 				return;
@@ -191,7 +191,7 @@
 		{
 			if (! isnum(obj.Form_bmonth.value))
 			{
-				alert("Î¹,ÄãÌîÈëÁËÄãµÄ³öÉúÔÂ,µ«ÄãµÄÔÂ·İÔõÃ´²»ÊÇÊı×Ö£¡\n");
+				alert("å–‚,ä½ å¡«å…¥äº†ä½ çš„å‡ºç”Ÿæœˆ,ä½†ä½ çš„æœˆä»½æ€ä¹ˆä¸æ˜¯æ•°å­—ï¼\n");
 				ValidationPassed = false;
 				obj.Form_bmonth.focus();
 				return;
@@ -202,7 +202,7 @@
 		{
 			if (! isnum(obj.Form_bday.value))
 			{
-				alert("Î¹,ÄãÌîÈëÁËÄãµÄ³öÉúÈÕ,µ«ÄãµÄ³öÉúÈÕÔõÃ´²»ÊÇÊı×Ö£¡\n");
+				alert("å–‚,ä½ å¡«å…¥äº†ä½ çš„å‡ºç”Ÿæ—¥,ä½†ä½ çš„å‡ºç”Ÿæ—¥æ€ä¹ˆä¸æ˜¯æ•°å­—ï¼\n");
 				ValidationPassed = false;
 				obj.Form_bday.focus();
 				return;
@@ -213,7 +213,7 @@
 		{
 			if (! isnum(obj.Form_bday.value))
 			{
-				alert("ÓÃ»§Í¼Ïñ,Ö»ÄÜÊÇ001-318Ö®¼äµÄÊı×Ö£¡\n");
+				alert("ç”¨æˆ·å›¾åƒ,åªèƒ½æ˜¯001-318ä¹‹é—´çš„æ•°å­—ï¼\n");
 				ValidationPassed = false;
 				obj.Form_bday.focus();
 				return;
@@ -222,7 +222,7 @@
 		
 		if(obj.Form_Underwrite.value.length>255)
 		{
-			alert("ÓÃ»§Ç©ÃûÄÚÈİÒªĞ¡ÓÚ255¸ö×Ö·û!\n");
+			alert("ç”¨æˆ·ç­¾åå†…å®¹è¦å°äº255ä¸ªå­—ç¬¦!\n");
 			ValidationPassed = false;
 			obj.Form_Underwrite.focus();
 			return;
@@ -233,7 +233,7 @@
 			{
 				if (! isnum(obj.Form_FaceWidth.value))
 				{
-					alert("×Ô¶¨ÒåÍ·Ïñ¿í¶È±ØĞëÊÇÊı×Ö£¡\n");
+					alert("è‡ªå®šä¹‰å¤´åƒå®½åº¦å¿…é¡»æ˜¯æ•°å­—ï¼\n");
 					ValidationPassed = false;
 					obj.Form_FaceWidth.focus();
 					return;
@@ -242,7 +242,7 @@
 				{
 					if(obj.Form_FaceWidth.value<20 || obj.Form_FaceWidth.value>user_DEF_AllFaceMaxWidth)
 					{
-						alert("×Ô¶¨ÒåÍ·Ïñ¿í¶È±ØĞëÔÚ20-" + user_DEF_AllFaceMaxWidth + "Ö®¼ä£¡\n");
+						alert("è‡ªå®šä¹‰å¤´åƒå®½åº¦å¿…é¡»åœ¨20-" + user_DEF_AllFaceMaxWidth + "ä¹‹é—´ï¼\n");
 						ValidationPassed = false;
 						obj.Form_FaceWidth.focus();
 						return;
@@ -254,7 +254,7 @@
 			{
 				if (! isnum(obj.Form_FaceHeight.value))
 				{
-					alert("×Ô¶¨ÒåÍ·Ïñ¸ß¶È±ØĞëÊÇÊı×Ö£¡\n");
+					alert("è‡ªå®šä¹‰å¤´åƒé«˜åº¦å¿…é¡»æ˜¯æ•°å­—ï¼\n");
 					ValidationPassed = false;
 					obj.Form_FaceHeight.focus();
 					return;
@@ -263,7 +263,7 @@
 				{
 					if(obj.Form_FaceHeight.value<20 || obj.Form_FaceHeight.value>user_DEF_AllFaceMaxWidth*2)
 					{
-						alert("×Ô¶¨ÒåÍ·Ïñ¸ß¶È±ØĞëÔÚ20-" + user_DEF_AllFaceMaxWidth*2 + "Ö®¼ä£¡\n");
+						alert("è‡ªå®šä¹‰å¤´åƒé«˜åº¦å¿…é¡»åœ¨20-" + user_DEF_AllFaceMaxWidth*2 + "ä¹‹é—´ï¼\n");
 						ValidationPassed = false;
 						obj.Form_FaceHeight.focus();
 						return;
@@ -275,7 +275,7 @@
 		if(user_ShowTestNumber>2)
 		if(obj.ForumNumber.value=="")
 		{
-			alert("ÇëÊäÈëÑéÖ¤Âë!\n");
+			alert("è¯·è¾“å…¥éªŒè¯ç !\n");
 			ValidationPassed = false;
 			obj.ForumNumber.focus();
 			return;
@@ -302,7 +302,7 @@
 	{
 		if(str.replace(/(^\s*)|(\s*$)/g,"")==""||str=="")
 		{
-			$id("reg_check_" + item).innerHTML="<span class=redfont>´ËÏî±ØĞëÌîĞ´¡£</span>"
+			$id("reg_check_" + item).innerHTML="<span class=redfont>æ­¤é¡¹å¿…é¡»å¡«å†™ã€‚</span>"
 			return;
 		}
 		getAJAX(user_DEF_RegisterFile,"checkflag=1&checkitem=" + item + "&checkvalue=" + escape(str),"reg_check_" + item);

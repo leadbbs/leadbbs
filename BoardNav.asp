@@ -1,5 +1,5 @@
-<!-- #include file=inc/BBSsetup.asp -->
-<!-- #include file=inc/Board_Popfun.asp -->
+<!--#include file="inc/BBSsetup.asp"-->
+<!--#include file="inc/Board_Popfun.asp"-->
 <%siteHead("     ")%>
 <body class="tbframe">
 <script type="text/javascript">
@@ -18,12 +18,12 @@ function assortswap(id,obj)
 }
 </script>
 <div class="framecontent fire">
-	<div class="title">ÂÛÌ³µ¼º½</div>
+	<div class="title">è®ºå›å¯¼èˆª</div>
 	<div class="chn" id="OUT0s" style="DISPLAY: none">
 	</div>
 	<%DisplayBoardList%>
 	<br />
-	<a href="#" onclick="top.location=parent.r_top.document.location;">ÍË³ö¼Ü¿òä¯ÀÀ</a>
+	<a href="#" onclick="top.location=parent.r_top.document.location;">é€€å‡ºæ¶æ¡†æµè§ˆ</a>
 </div>
 </body></html>
 
@@ -31,7 +31,7 @@ function assortswap(id,obj)
 <%
 Sub DisplayBoardList
 
-	OpenDatabase
+	OpenDatabase()
 	Dim Rs,GetData,BoardNum
 	Set Rs = Server.CreateObject("ADODB.RecordSet")
 	Set Rs = LDExeCute("Select BoardID,BoardAssort,BoardName,LeadBBS_Assort.AssortName from LeadBBS_Boards left join LeadBBS_Assort on LeadBBS_Assort.AssortID=LeadBBS_Boards.BoardAssort where LeadBBS_Boards.HiddenFlag = 0 order by LeadBBS_Assort.AssortID,LeadBBS_Boards.OrderID ASC",0)
@@ -70,6 +70,6 @@ Sub DisplayBoardList
 		Next
 		Response.Write "</ul></div>"
 	End If
-	CloseDatabase
+	CloseDatabase()
 
 End Sub%>

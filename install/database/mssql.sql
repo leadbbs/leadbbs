@@ -531,16 +531,16 @@ CREATE NONCLUSTERED INDEX [IX_LeadBBS_Plug_Card_ExpiresDate] ON [dbo].[LeadBBS_P
 ) ON [PRIMARY]
 GO
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'USER',N'dbo', N'TABLE',N'LeadBBS_Plug_Card', N'COLUMN',N'CardID'))
-EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'ø®∫≈(NŒª ˝)' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_Plug_Card', @level2type=N'COLUMN',@level2name=N'CardID'
+EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'Âç°Âè∑(N‰ΩçÊï∞)' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_Plug_Card', @level2type=N'COLUMN',@level2name=N'CardID'
 GO
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'USER',N'dbo', N'TABLE',N'LeadBBS_Plug_Card', N'COLUMN',N'CardType'))
-EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'1-≥‰ª˝∑÷ 2-≥‰≤∆∏ª 3-≥‰Õ˛Õ˚ 4-≥‰æ≠—È' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_Plug_Card', @level2type=N'COLUMN',@level2name=N'CardType'
+EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'1-ÂÖÖÁßØÂàÜ 2-ÂÖÖË¥¢ÂØå 3-ÂÖÖÂ®ÅÊúõ 4-ÂÖÖÁªèÈ™å' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_Plug_Card', @level2type=N'COLUMN',@level2name=N'CardType'
 GO
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'USER',N'dbo', N'TABLE',N'LeadBBS_Plug_Card', N'COLUMN',N'ExpiresDate'))
-EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'µΩ∆⁄ ±º‰' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_Plug_Card', @level2type=N'COLUMN',@level2name=N'ExpiresDate'
+EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'Âà∞ÊúüÊó∂Èó¥' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_Plug_Card', @level2type=N'COLUMN',@level2name=N'ExpiresDate'
 GO
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'USER',N'dbo', N'TABLE',N'LeadBBS_Plug_Card', N'COLUMN',N'CardPoints'))
-EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'≥‰÷µµ„ ˝ ∑÷±”–1 2 5 10 25 50 100 500 1000 10000' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_Plug_Card', @level2type=N'COLUMN',@level2name=N'CardPoints'
+EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'ÂÖÖÂÄºÁÇπÊï∞ ÂàÜÂà´Êúâ1 2 5 10 25 50 100 500 1000 10000' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_Plug_Card', @level2type=N'COLUMN',@level2name=N'CardPoints'
 GO
 IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[LeadBBS_Opinion]') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
 BEGIN
@@ -1022,13 +1022,13 @@ CREATE NONCLUSTERED INDEX [IX_jd_news_classid] ON [dbo].[article_newsarticle]
 ) ON [PRIMARY]
 GO
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'USER',N'dbo', N'TABLE',N'article_newsarticle', N'COLUMN',N'ndatetime'))
-EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'∑¢±Ì ±º‰' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'article_newsarticle', @level2type=N'COLUMN',@level2name=N'ndatetime'
+EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'ÂèëË°®Êó∂Èó¥' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'article_newsarticle', @level2type=N'COLUMN',@level2name=N'ndatetime'
 GO
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'USER',N'dbo', N'TABLE',N'article_newsarticle', N'COLUMN',N'modifytime'))
-EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'’˚¿Ì ±º‰' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'article_newsarticle', @level2type=N'COLUMN',@level2name=N'modifytime'
+EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'Êï¥ÁêÜÊó∂Èó¥' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'article_newsarticle', @level2type=N'COLUMN',@level2name=N'modifytime'
 GO
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'USER',N'dbo', N'TABLE',N'article_newsarticle', N'COLUMN',N'Hits'))
-EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'◊Ó∫Û∑√Œ IP' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'article_newsarticle', @level2type=N'COLUMN',@level2name=N'Hits'
+EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'ÊúÄÂêéËÆøÈóÆIP' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'article_newsarticle', @level2type=N'COLUMN',@level2name=N'Hits'
 GO
 IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[LeadBBS_FriendUser]') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
 BEGIN
@@ -1296,16 +1296,16 @@ CREATE NONCLUSTERED INDEX [IX_AsphouseBBS_Assort_AssortName] ON [dbo].[LeadBBS_A
 ) ON [PRIMARY]
 GO
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'USER',N'dbo', N'TABLE',N'LeadBBS_Assort', N'COLUMN',N'AssortID'))
-EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'∑÷¿‡ID∫≈£¨ID∫≈ø…“‘”…’æ≥§ ‰»Î' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_Assort', @level2type=N'COLUMN',@level2name=N'AssortID'
+EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'ÂàÜÁ±ªIDÂè∑ÔºåIDÂè∑ÂèØ‰ª•Áî±Á´ôÈïøËæìÂÖ•' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_Assort', @level2type=N'COLUMN',@level2name=N'AssortID'
 GO
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'USER',N'dbo', N'TABLE',N'LeadBBS_Assort', N'COLUMN',N'AssortName'))
-EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'∑÷¿‡√˚≥∆£¨ø…“‘ π”√HTML' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_Assort', @level2type=N'COLUMN',@level2name=N'AssortName'
+EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'ÂàÜÁ±ªÂêçÁß∞ÔºåÂèØ‰ª•‰ΩøÁî®HTML' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_Assort', @level2type=N'COLUMN',@level2name=N'AssortName'
 GO
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'USER',N'dbo', N'TABLE',N'LeadBBS_Assort', N'COLUMN',N'AssortMaster'))
-EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'«¯∞Ê÷˜√˚µ•' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_Assort', @level2type=N'COLUMN',@level2name=N'AssortMaster'
+EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'Âå∫Áâà‰∏ªÂêçÂçï' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_Assort', @level2type=N'COLUMN',@level2name=N'AssortMaster'
 GO
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'USER',N'dbo', N'TABLE',N'LeadBBS_Assort', N'COLUMN',N'AssortLimit'))
-EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'∑÷¿‡œﬁ÷∆≤Œ ˝' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_Assort', @level2type=N'COLUMN',@level2name=N'AssortLimit'
+EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'ÂàÜÁ±ªÈôêÂà∂ÂèÇÊï∞' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_Assort', @level2type=N'COLUMN',@level2name=N'AssortLimit'
 GO
 IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[LeadBBS_Assessor]') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
 BEGIN
@@ -1379,22 +1379,22 @@ CREATE NONCLUSTERED INDEX [IX_LeadBBS_AppLogin_UserID] ON [dbo].[LeadBBS_AppLogi
 ) ON [PRIMARY]
 GO
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'USER',N'dbo', N'TABLE',N'LeadBBS_AppLogin', N'COLUMN',N'UserID'))
-EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'≤Œ”¶_user±‡∫≈,»ÙŒ¥∞Û∂®Œ™0' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_AppLogin', @level2type=N'COLUMN',@level2name=N'UserID'
+EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'ÂèÇÂ∫î_userÁºñÂè∑,Ëã•Êú™ÁªëÂÆö‰∏∫0' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_AppLogin', @level2type=N'COLUMN',@level2name=N'UserID'
 GO
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'USER',N'dbo', N'TABLE',N'LeadBBS_AppLogin', N'COLUMN',N'appid'))
-EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'œ‡”¶∆ΩÃ®∂‘”¶µ«¬º”√ªßµƒ±Í ∂' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_AppLogin', @level2type=N'COLUMN',@level2name=N'appid'
+EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'Áõ∏Â∫îÂπ≥Âè∞ÂØπÂ∫îÁôªÂΩïÁî®Êà∑ÁöÑÊ†áËØÜ' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_AppLogin', @level2type=N'COLUMN',@level2name=N'appid'
 GO
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'USER',N'dbo', N'TABLE',N'LeadBBS_AppLogin', N'COLUMN',N'GuestName'))
-EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'ªÒ»°µƒƒ¨»œ”√ªß√˚' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_AppLogin', @level2type=N'COLUMN',@level2name=N'GuestName'
+EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'Ëé∑ÂèñÁöÑÈªòËÆ§Áî®Êà∑Âêç' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_AppLogin', @level2type=N'COLUMN',@level2name=N'GuestName'
 GO
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'USER',N'dbo', N'TABLE',N'LeadBBS_AppLogin', N'COLUMN',N'appType'))
-EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'∂‘”¶ºØ≥…µƒ∆ΩÃ®,±»»ÁQQµ«¬ºŒ™100' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_AppLogin', @level2type=N'COLUMN',@level2name=N'appType'
+EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'ÂØπÂ∫îÈõÜÊàêÁöÑÂπ≥Âè∞,ÊØîÂ¶ÇQQÁôªÂΩï‰∏∫100' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_AppLogin', @level2type=N'COLUMN',@level2name=N'appType'
 GO
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'USER',N'dbo', N'TABLE',N'LeadBBS_AppLogin', N'COLUMN',N'ndatetime'))
-EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'∞Û∂® ±º‰' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_AppLogin', @level2type=N'COLUMN',@level2name=N'ndatetime'
+EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'ÁªëÂÆöÊó∂Èó¥' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_AppLogin', @level2type=N'COLUMN',@level2name=N'ndatetime'
 GO
 IF NOT EXISTS (SELECT * FROM ::fn_listextendedproperty(N'MS_Description' , N'USER',N'dbo', N'TABLE',N'LeadBBS_AppLogin', N'COLUMN',N'IPAddress'))
-EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'≤Ÿ◊˜IP' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_AppLogin', @level2type=N'COLUMN',@level2name=N'IPAddress'
+EXEC dbo.sp_addextendedproperty @name=N'MS_Description', @value=N'Êìç‰ΩúIP' , @level0type=N'USER',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'LeadBBS_AppLogin', @level2type=N'COLUMN',@level2name=N'IPAddress'
 GO
 IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[LeadBBS_Announce_Hide]') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
 BEGIN
@@ -4577,11 +4577,11 @@ END
 
 END
 GO
-IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[DF_LeadBBS_Skin_–°æ÷±Ì∏ÒŒ≤≤ø¥˙¬Î]') AND type = 'D')
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[DF_LeadBBS_Skin_Â∞èÂ±ÄË°®Ê†ºÂ∞æÈÉ®‰ª£Á†Å]') AND type = 'D')
 BEGIN
-IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_LeadBBS_Skin_–°æ÷±Ì∏ÒŒ≤≤ø¥˙¬Î]') AND type = 'D')
+IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_LeadBBS_Skin_Â∞èÂ±ÄË°®Ê†ºÂ∞æÈÉ®‰ª£Á†Å]') AND type = 'D')
 BEGIN
-ALTER TABLE [dbo].[LeadBBS_Skin] ADD  CONSTRAINT [DF_LeadBBS_Skin_–°æ÷±Ì∏ÒŒ≤≤ø¥˙¬Î]  DEFAULT ('') FOR [SmallTableBottom]
+ALTER TABLE [dbo].[LeadBBS_Skin] ADD  CONSTRAINT [DF_LeadBBS_Skin_Â∞èÂ±ÄË°®Ê†ºÂ∞æÈÉ®‰ª£Á†Å]  DEFAULT ('') FOR [SmallTableBottom]
 END
 
 
@@ -4861,7 +4861,7 @@ IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[DF_asp
 BEGIN
 IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_asphouse_User_sex]') AND type = 'D')
 BEGIN
-ALTER TABLE [dbo].[LeadBBS_User] ADD  CONSTRAINT [DF_asphouse_User_sex]  DEFAULT ('√‹') FOR [Sex]
+ALTER TABLE [dbo].[LeadBBS_User] ADD  CONSTRAINT [DF_asphouse_User_sex]  DEFAULT ('ÂØÜ') FOR [Sex]
 END
 
 
@@ -5127,11 +5127,11 @@ END
 
 END
 GO
-IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[DF_LeadBBS_User_æ´ª™ ˝]') AND type = 'D')
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[DF_LeadBBS_User_Á≤æÂçéÊï∞]') AND type = 'D')
 BEGIN
-IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_LeadBBS_User_æ´ª™ ˝]') AND type = 'D')
+IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_LeadBBS_User_Á≤æÂçéÊï∞]') AND type = 'D')
 BEGIN
-ALTER TABLE [dbo].[LeadBBS_User] ADD  CONSTRAINT [DF_LeadBBS_User_æ´ª™ ˝]  DEFAULT (0) FOR [AnnounceGood]
+ALTER TABLE [dbo].[LeadBBS_User] ADD  CONSTRAINT [DF_LeadBBS_User_Á≤æÂçéÊï∞]  DEFAULT (0) FOR [AnnounceGood]
 END
 
 
@@ -5419,5 +5419,5 @@ END
 GO
 if not exists (select * from leadbbs_setup where RID=1002 and ClassNum=0)
 begin
-INSERT INTO leadbbs_setup(RID,ValueStr,ClassNum,saveData) VALUES (1002, '20140422004', 0, 'ƒ⁄≤ø∞Ê±æ∫≈') 
+INSERT INTO leadbbs_setup(RID,ValueStr,ClassNum,saveData) VALUES (1002, '20140422004', 0, 'ÂÜÖÈÉ®ÁâàÊú¨Âè∑') 
 end

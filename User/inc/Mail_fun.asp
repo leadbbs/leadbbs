@@ -1,16 +1,16 @@
 <%
-'jmail.message·½Ê½·¢ËÍ
-const DEF_MAIL_smtpUser = "" 'µ±ÓÊ¼ş·şÎñÆ÷Ê¹ÓÃSMTP·¢ĞÅÑéÖ¤Ê±ÉèÖÃµÄµÇÂ¼ÕÊ»§¡£
-const DEF_MAIL_smtpPass = "" 'Ê¹ÓÃSMTP·¢ĞÅÑéÖ¤Ê±ÉèÖÃµÄµÇÂ¼ÃÜÂë¡£
-const DEF_MAIL_smtpHost = "" 'ÓÊ¼ş·şÎñÆ÷µØÖ·(IP»òÓòÃû)
-const DEF_MAIL_FromName = "LeadBBS" '·¢¼şÈËµÄÃû³Æ£¬¿ÉÒÔÌîĞ´ÄúÍøÕ¾µÄÃû³Æ
+'jmail.messageæ–¹å¼å‘é€
+const DEF_MAIL_smtpUser = "" 'å½“é‚®ä»¶æœåŠ¡å™¨ä½¿ç”¨SMTPå‘ä¿¡éªŒè¯æ—¶è®¾ç½®çš„ç™»å½•å¸æˆ·ã€‚
+const DEF_MAIL_smtpPass = "" 'ä½¿ç”¨SMTPå‘ä¿¡éªŒè¯æ—¶è®¾ç½®çš„ç™»å½•å¯†ç ã€‚
+const DEF_MAIL_smtpHost = "" 'é‚®ä»¶æœåŠ¡å™¨åœ°å€(IPæˆ–åŸŸå)
+const DEF_MAIL_FromName = "LeadBBS" 'å‘ä»¶äººçš„åç§°ï¼Œå¯ä»¥å¡«å†™æ‚¨ç½‘ç«™çš„åç§°
 
-const DEF_SMS_UID = "" 'ÖĞ¹ú189µçĞÅÌìÒíµÄAppid»òÍø½¨ÊÖ»ú¶ÌĞÅ·¢ËÍUID£¬ÌìÒíÉêÇë: <a href=http://open.189.cn/ target=_blank>http://open.189.cn/</a>, Íø½¨ÉêÇë: <a href=http://sms.webchinese.cn/ target=_blank>http://sms.webchinese.cn/</a>
-const DEF_SMS_KEY = "" '189ÌìÒíµÄApp Secret »ò Íø½¨ÊÖ»ú¶ÌĞÅ·¢ËÍKEY (ÈôÊÇÖĞ¹úÌìÒí£¬È·±£×Ô¼ºÓĞ¶ÌĞÅÑéÖ¤ÂëÄÜÁ¦)
+const DEF_SMS_UID = "" 'ä¸­å›½189ç”µä¿¡å¤©ç¿¼çš„Appidæˆ–ç½‘å»ºæ‰‹æœºçŸ­ä¿¡å‘é€UIDï¼Œå¤©ç¿¼ç”³è¯·: <a href=http://open.189.cn/ target=_blank>http://open.189.cn/</a>, ç½‘å»ºç”³è¯·: <a href=http://sms.webchinese.cn/ target=_blank>http://sms.webchinese.cn/</a>
+const DEF_SMS_KEY = "" '189å¤©ç¿¼çš„App Secret æˆ– ç½‘å»ºæ‰‹æœºçŸ­ä¿¡å‘é€KEY (è‹¥æ˜¯ä¸­å›½å¤©ç¿¼ï¼Œç¡®ä¿è‡ªå·±æœ‰çŸ­ä¿¡éªŒè¯ç èƒ½åŠ›)
 
 if len(DEF_SMS_UID)>15 and len(DEF_SMS_KEY) = 32 then
 %>
-<!-- #include file=../../inc/sha1.asp -->
+<!--#include file="../../inc/sha1.asp"-->
 <%
 end if
 
@@ -18,9 +18,9 @@ class tianyi_send_class
 
 	public function tianyi_send(phone,randcode)
 	
-		dim access_token,tmp 'client_credentials»ñÈ¡µÄaccess_token£¬ÎŞĞèopenid
-		dim tmp_token '¶ÌĞÅÑéÖ¤Âë·¢ËÍ3·ÖÄÚÓĞĞ§µÄtoken
-		dim timestamp 'Ê±¼ä´Á£¬¸ñÊ½Îª£ºyyyy-MM-dd hh:mm:ss
+		dim access_token,tmp 'client_credentialsè·å–çš„access_tokenï¼Œæ— éœ€openid
+		dim tmp_token 'çŸ­ä¿¡éªŒè¯ç å‘é€3åˆ†å†…æœ‰æ•ˆçš„token
+		dim timestamp 'æ—¶é—´æˆ³ï¼Œæ ¼å¼ä¸ºï¼šyyyy-MM-dd hh:mm:ss
 		timestamp = restoretime(getTimeValue(DEF_Now))
 		
 		tmp = getaccesstoken(0)
@@ -182,7 +182,7 @@ Function SendJmail_Message(Email,Topic,MailBody)
 	msg.FromName = DEF_MAIL_FromName
 	msg.AddRecipient Email
 	msg.Subject = Topic
-	msg.Charset="gb2312"
+	msg.Charset="utf-8"
 	msg.ContentType = "text/html"
 	msg.Body = MailBody
 	msg.Priority = 1
@@ -198,18 +198,18 @@ Function SendJmail_Message(Email,Topic,MailBody)
 
 End Function
 
-'·¢ËÍsms¶ÌĞÅ
+'å‘é€smsçŸ­ä¿¡
 Function SendSMS_Message(stel,MailBody,AttestNumber,resetcode)
 
 	dim tel : tel = stel
 	
 	if CheckMobilePhone(tel) = false then
-		SendSMS_Message = -7777 'ºÅÂë´íÎó
+		SendSMS_Message = -7777 'å·ç é”™è¯¯
 		exit function
 	end if
 	tel = fix(ccur(tel))
 
-	'ÌìÒíÖ»ÄÜ·¢ËÍÒ»¸öÑéÖ¤Âë
+	'å¤©ç¿¼åªèƒ½å‘é€ä¸€ä¸ªéªŒè¯ç 
 	if len(DEF_SMS_UID)>15 and len(DEF_SMS_KEY) = 32 then
 		dim tianyisend_class
 		set tianyisend_class = new tianyi_send_class
@@ -225,14 +225,14 @@ Function SendSMS_Message(stel,MailBody,AttestNumber,resetcode)
 		exit function
 	end if
 
-	'Íø½¨ÔÊĞí×Ô¶¨Òå£¬¿ÉÈÎÒâ·¢ËÍ
+	'ç½‘å»ºå…è®¸è‡ªå®šä¹‰ï¼Œå¯ä»»æ„å‘é€
 	dim url
 	if DEF_SMS_UID = "" then
-		SendSMS_Message = -9999 'Î´ÉèÖÃSMS
+		SendSMS_Message = -9999 'æœªè®¾ç½®SMS
 		exit function
 	end if
 	if len(MailBody)>70 then
-		SendSMS_Message = -8888 '¶ÌĞÅÄÚÈİ¹ı³¤
+		SendSMS_Message = -8888 'çŸ­ä¿¡å†…å®¹è¿‡é•¿
 		exit function
 	end if
 		
@@ -263,7 +263,7 @@ Function RequestUrl(url)
 
 End Function
 
-	'Post·½·¨ÇëÇóurl,»ñÈ¡ÇëÇóÄÚÈİ
+	'Postæ–¹æ³•è¯·æ±‚url,è·å–è¯·æ±‚å†…å®¹
 	Private Function RequestUrl_post(url,data)
 		dim XmlObj
 		'Set XmlObj = Server.CreateObject(CheckXml())
@@ -297,7 +297,7 @@ Function BytesToBstr(body)
 		.Write body 
 		.Position = 0
 		.Type = 2
-		.Charset = "GB2312"
+		.Charset = "utf-8"
 		
 		if request.querystring("utf8") = "1" then
 			Response.Charset="UTF-8"
@@ -311,7 +311,7 @@ Function BytesToBstr(body)
 	
 End Function
 
-'jmail.smtpmail·¢ËÍ
+'jmail.smtpmailå‘é€
 Function SendJmail(Email,Topic,MailBody)
 
 	If DEF_MAIL_smtpUser <> "" Then
@@ -323,11 +323,11 @@ Function SendJmail(Email,Topic,MailBody)
 	Set JMail = Server.CreateObject("JMail.SMTPMail")
 	JMail.LazySend = true
 	JMail.silent = false
-	JMail.Charset = "gb2312"
+	JMail.Charset = "utf-8"
 	JMail.ContentType = "text/html"
-	JMail.Sender = "mail377234@yourmail.com" '¸ÄÎªÄãµÄÓÊÏä
-	JMail.ReplyTo = "mail377234@yourmail.com" '¸ÄÎªÄãµÄÓÊÏä
-	JMail.SenderName = "LeadBBSÓÊ¼ş·¢ËÍ"
+	JMail.Sender = "mail377234@yourmail.com" 'æ”¹ä¸ºä½ çš„é‚®ç®±
+	JMail.ReplyTo = "mail377234@yourmail.com" 'æ”¹ä¸ºä½ çš„é‚®ç®±
+	JMail.SenderName = "LeadBBSé‚®ä»¶å‘é€"
 	JMail.Subject = Topic
 	JMail.SimpleLayout = true
 	JMail.Body = MailBody
@@ -350,38 +350,38 @@ Function SendEasyMail(Email,Topic,MailBody,TextBody)
 	dim Mailsend
 	set Mailsend = Server.CreateObject("easymail.Mailsend")
 	Dim Tid,Un
-	Un = "qfy@yp.cn"  'ÄúµÄÓÊ¼ş·şÎñÆ÷µÇÂ¼Ãû£¬²»ĞèÒªÃÜÂë
+	Un = "qfy@yp.cn"  'æ‚¨çš„é‚®ä»¶æœåŠ¡å™¨ç™»å½•åï¼Œä¸éœ€è¦å¯†ç 
 
 	Dim EI
 	Set EI = server.CreateObject("easymail.Users")
 	Tid = EI.Login(un)
 	Set EI = Nothing
-	Mailsend.createnew Un,Tid 'ÓÊÏäÕËºÅ,ÁÙÊ±ID
-	Mailsend.CharSet = "gb2312"  '±àÂë
-	Mailsend.MailName = "LeadBBS"  '·¢¼şÈËÃû
+	Mailsend.createnew Un,Tid 'é‚®ç®±è´¦å·,ä¸´æ—¶ID
+	Mailsend.CharSet = "utf-8"  'ç¼–ç 
+	Mailsend.MailName = "LeadBBS"  'å‘ä»¶äººå
 
-	Mailsend.EM_BackAddress = "" 'ÓÊ¼ş»Ø¸´µØÖ·
-	Mailsend.EM_Bcc = "" '°µËÍµØÖ·
-	Mailsend.EM_Cc = "" '³­ËÍµØÖ·
-	Mailsend.EM_OrMailName = "" 'Ô­ÓÊ¼şÃû
-	Mailsend.EM_Priority = "Normal" 'ÓÊ¼şÖØÒª¶È	
-	Mailsend.EM_ReadBack = false 'ÊÇ·ñ¶ÁÈ¡È·ÈÏ,¹ÒºÅĞÅ(ÏŞ±¾ÏµÍ³ÄÚÓÃ»§)	
-	Mailsend.EM_SignNo = -1  'Ê¹ÓÃÇ©ÃûµÄĞòºÅ
+	Mailsend.EM_BackAddress = "" 'é‚®ä»¶å›å¤åœ°å€
+	Mailsend.EM_Bcc = "" 'æš—é€åœ°å€
+	Mailsend.EM_Cc = "" 'æŠ„é€åœ°å€
+	Mailsend.EM_OrMailName = "" 'åŸé‚®ä»¶å
+	Mailsend.EM_Priority = "Normal" 'é‚®ä»¶é‡è¦åº¦	
+	Mailsend.EM_ReadBack = false 'æ˜¯å¦è¯»å–ç¡®è®¤,æŒ‚å·ä¿¡(é™æœ¬ç³»ç»Ÿå†…ç”¨æˆ·)	
+	Mailsend.EM_SignNo = -1  'ä½¿ç”¨ç­¾åçš„åºå·
 	
-	Mailsend.EM_Subject = Topic 'Ö÷Ìâ
-	Mailsend.EM_Text = TextBody 'ÄÚÈİ
-	Mailsend.EM_HTML_Text = MailBody 'HTMLÓÊ¼şÄÚÈİ
-	Mailsend.useRichEditer = true '·¢ËÍµÄÊÇ·ñÎªHTML¸ñÊ½ÓÊ¼ş
+	Mailsend.EM_Subject = Topic 'ä¸»é¢˜
+	Mailsend.EM_Text = TextBody 'å†…å®¹
+	Mailsend.EM_HTML_Text = MailBody 'HTMLé‚®ä»¶å†…å®¹
+	Mailsend.useRichEditer = true 'å‘é€çš„æ˜¯å¦ä¸ºHTMLæ ¼å¼é‚®ä»¶
 
-	Mailsend.EM_TimerSend = ""  '¶¨Ê±·¢ËÍµÄÊ±¼ä
-	Mailsend.EM_To = Email 'ÊÕ¼şÈËµØÖ·
-	Mailsend.ForwardAttString = "" '×ª·¢ÓÊ¼şÊ±µÄÔ­¸½¼ş
+	Mailsend.EM_TimerSend = ""  'å®šæ—¶å‘é€çš„æ—¶é—´
+	Mailsend.EM_To = Email 'æ”¶ä»¶äººåœ°å€
+	Mailsend.ForwardAttString = "" 'è½¬å‘é‚®ä»¶æ—¶çš„åŸé™„ä»¶
 
-	Mailsend.AddFromAttFileString = "" 'Ìí¼Ó×ÔÍøÂç´æ´¢ÖĞµÄÎÄ¼şÃû
+	Mailsend.AddFromAttFileString = "" 'æ·»åŠ è‡ªç½‘ç»œå­˜å‚¨ä¸­çš„æ–‡ä»¶å
 
-	Mailsend.SystemMessage = false 'ÊÇ·ñÊÇÏµÍ³ÓÊ¼ş
+	Mailsend.SystemMessage = false 'æ˜¯å¦æ˜¯ç³»ç»Ÿé‚®ä»¶
 
-	Mailsend.SendBackup = false 'ÊÇ·ñ±£´æ·¢ËÍÓÊ¼ş
+	Mailsend.SendBackup = false 'æ˜¯å¦ä¿å­˜å‘é€é‚®ä»¶
 	
 	If Mailsend.Send() = false Then
 		SendEasyMail = 0
@@ -396,7 +396,7 @@ Function SendCDOMail(Email,Topic,TextBody)
 
 	dim  objCDOMail
 	Set objCDOMail = Server.CreateObject("CDONTS.NewMail")
-	objCDOMail.From ="mail377234@yourmail.com" '¸ÄÎªÄãµÄÓÊÏä
+	objCDOMail.From ="mail377234@yourmail.com" 'æ”¹ä¸ºä½ çš„é‚®ç®±
 	objCDOMail.To = Email
 	objCDOMail.Subject = Topic
 

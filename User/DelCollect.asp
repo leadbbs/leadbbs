@@ -1,9 +1,9 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/Board_Popfun.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../"
-InitDatabase
-UpdateOnlineUserAtInfo GBL_board_ID,"É¾³ýÊÕ¼þÐÅÏ¢"
+InitDatabase()
+UpdateOnlineUserAtInfo GBL_board_ID,"åˆ é™¤æ”¶ä»¶ä¿¡æ¯"
 Dim GBL_ID,Form_ID
 
 Dim DelID
@@ -19,10 +19,10 @@ Form_ID = GBL_ID
 Form_ID = cCur(Form_ID)
 If Form_ID < 0 Then Form_ID = 0
 If Form_ID=0 Then
-	GBL_CHK_TempStr = GBL_CHK_TempStr & "ÄãÃ»ÓÐµÇÂ¼<br>" & VbCrLf
+	GBL_CHK_TempStr = GBL_CHK_TempStr & "ä½ æ²¡æœ‰ç™»å½•<br>" & VbCrLf
 End If
 
-siteHead("   É¾³ýÊÕ²ØÌû×Ó")%>
+siteHead("   åˆ é™¤æ”¶è—å¸–å­")%>
 <script language=javascript>
 	window.moveTo(window.screen.width/2-225,window.screen.height/2-18);
 </script>
@@ -35,7 +35,7 @@ siteHead("   É¾³ýÊÕ²ØÌû×Ó")%>
 	If GBL_CHK_TempStr = "" Then
 		ClearFlag = Request("ClearFlag")
 		If ClearFlag = "dkeJje5" or ClearFlag = "dkeJje6" Then
-			If GBL_UserID<1 or CheckSupervisorUserName = 0 or ClearFlag = "dkeJje5" Then
+			If GBL_UserID<1 or CheckSupervisorUserName() = 0 or ClearFlag = "dkeJje5" Then
 				SQL = "delete from LeadBBS_CollectAnc where UserID=" & GBL_UserID
 			Else
 				SQL = "delete from LeadBBS_CollectAnc"
@@ -43,7 +43,7 @@ siteHead("   É¾³ýÊÕ²ØÌû×Ó")%>
 
 			If Request.Form("DeleteSureFlag")="dk9@dl9s92lw_SWxl" Then
 				%>
-				³É¹¦É¾³ýËùÓÐÊÕ²ØÌû×Ó!
+				æˆåŠŸåˆ é™¤æ‰€æœ‰æ”¶è—å¸–å­!
 				<%
 				CALL LDExeCute(SQL,1)
 			Else
@@ -52,15 +52,15 @@ siteHead("   É¾³ýÊÕ²ØÌû×Ó")%>
 					<input type=hidden name=DeleteSureFlag value="dk9@dl9s92lw_SWxl">
 					<input type=hidden name=ClearFlag value="<%=htmlencode(ClearFlag)%>">
 					<input type=hidden name=DelID value="<%=htmlencode(DelID)%>">
-					<b><%If GBL_UserID<1 or CheckSupervisorUserName = 0 or ClearFlag = "dkeJje5" Then%>È·ÈÏÒªÉ¾³ýÄúµÄËùÓÐÊÕ²ØÌû×ÓÂð£¿É¾³ýºó½«²»ÄÜ»Ö¸´£¡<%Else
-					%><font color=Red class=redfont>ÄúÊÇ¹ÜÀíÔ±£¬È·¶¨ÒªÉ¾³ýËùÓÐÈËµÄÊÕ²ØÌû×ÓÂð£¬É¾³ýºó½«ÎÞ·¨»Ö¸´£¡</font><%End If%></b>
-					<p><input type=submit value=È·¶¨ class=fmbtn>
-					<input type=button value=²»É¾ onclick="javascript:window.close();" class=fmbtn>
+					<b><%If GBL_UserID<1 or CheckSupervisorUserName() = 0 or ClearFlag = "dkeJje5" Then%>ç¡®è®¤è¦åˆ é™¤æ‚¨çš„æ‰€æœ‰æ”¶è—å¸–å­å—ï¼Ÿåˆ é™¤åŽå°†ä¸èƒ½æ¢å¤ï¼<%Else
+					%><font color=Red class=redfont>æ‚¨æ˜¯ç®¡ç†å‘˜ï¼Œç¡®å®šè¦åˆ é™¤æ‰€æœ‰äººçš„æ”¶è—å¸–å­å—ï¼Œåˆ é™¤åŽå°†æ— æ³•æ¢å¤ï¼</font><%End If%></b>
+					<p><input type=submit value=ç¡®å®š class=fmbtn>
+					<input type=button value=ä¸åˆ  onclick="javascript:window.close();" class=fmbtn>
 				</form>
 				<%
 			End If
 		Else
-			If GBL_UserID<1 or CheckSupervisorUserName = 0 Then
+			If GBL_UserID<1 or CheckSupervisorUserName() = 0 Then
 				SQL = sql_select("Select * from LeadBBS_CollectAnc where UserID=" & GBL_UserID & " and id=" & DelID,1)
 			Else
 				SQL = sql_select("Select * from LeadBBS_CollectAnc where id=" & DelID,1)
@@ -69,13 +69,13 @@ siteHead("   É¾³ýÊÕ²ØÌû×Ó")%>
 			If Rs.Eof Then
 				Rs.Close
 				Set Rs = Nothing
-				Response.Write "ÕÒ²»µ½¼ÇÂ¼£¡<br>" & VbCrLf
+				Response.Write "æ‰¾ä¸åˆ°è®°å½•ï¼<br>" & VbCrLf
 			Else
 				Rs.Close
 				Set Rs = Nothing
 				If Request.Form("DeleteSureFlag")="dk9@dl9s92lw_SWxl" Then
 					%>
-					³É¹¦É¾³ý±àºÅÎª<font color=ff0000 class=redfont><%=DelID%></font>µÄÊÕ²ØÌû×Ó!
+					æˆåŠŸåˆ é™¤ç¼–å·ä¸º<font color=ff0000 class=redfont><%=DelID%></font>çš„æ”¶è—å¸–å­!
 					<%
 					CALL LDExeCute("Delete from LeadBBS_CollectAnc where id=" & DelID,1)
 				Else
@@ -84,9 +84,9 @@ siteHead("   É¾³ýÊÕ²ØÌû×Ó")%>
 						<input type=hidden name=DeleteSureFlag value="dk9@dl9s92lw_SWxl">
 						<input type=hidden name=ClearFlag value="<%=htmlencode(ClearFlag)%>">
 						<input type=hidden name=DelID value="<%=htmlencode(DelID)%>">
-						<b>È·ÈÏÒªÉ¾³ý±àºÅÎª<font color=ff0000 class=redfont><%=DelID%></font>µÄÊÕ²ØÌû×ÓÂð£¿</b>
-						<p><input type=submit value=È·¶¨ class=fmbtn>
-						<input type=button value=²»É¾ onclick="javascript:window.close();" class=fmbtn>
+						<b>ç¡®è®¤è¦åˆ é™¤ç¼–å·ä¸º<font color=ff0000 class=redfont><%=DelID%></font>çš„æ”¶è—å¸–å­å—ï¼Ÿ</b>
+						<p><input type=submit value=ç¡®å®š class=fmbtn>
+						<input type=button value=ä¸åˆ  onclick="javascript:window.close();" class=fmbtn>
 					</form>
 					<%
 				End If
@@ -107,5 +107,5 @@ siteHead("   É¾³ýÊÕ²ØÌû×Ó")%>
 </table>
 <%
 
-closeDataBase
+closeDataBase()
 %>

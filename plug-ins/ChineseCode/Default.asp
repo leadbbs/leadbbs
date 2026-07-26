@@ -1,23 +1,23 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../../User/inc/UserTopic.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../../User/inc/UserTopic.asp"-->
 <%
 DEF_BBS_homeUrl="../../"
 
-Main
+Main()
 
 Sub Main
 
-	BBS_SiteHead DEF_SiteNameString & " - ²å¼ş",0,"<span class=navigate_string_step>²å¼ş</span>"
+	BBS_SiteHead DEF_SiteNameString & " - æ’ä»¶",0,"<span class=navigate_string_step>æ’ä»¶</span>"
 	UserTopicTopInfo("plug")
 
 	If GBL_CHK_User = "" then
-		Response.write "<div class=alert>ÄúÃ»ÓĞÊ¹ÓÃ´Ë¹¦ÄÜµÄÈ¨ÏŞ£¬ÇëÏÈµÇÂ½»òÕß×¢²áÎªÂÛÌ³»áÔ±¡£</div>"
+		Response.write "<div class=alert>æ‚¨æ²¡æœ‰ä½¿ç”¨æ­¤åŠŸèƒ½çš„æƒé™ï¼Œè¯·å…ˆç™»é™†æˆ–è€…æ³¨å†Œä¸ºè®ºå›ä¼šå‘˜ã€‚</div>"
 	Else
-		Main_ChineseCode
+		Main_ChineseCode()
 	End If
-	UserTopicBottomInfo
-	SiteBottom
+	UserTopicBottomInfo()
+	SiteBottom()
 
 End Sub
 
@@ -27,39 +27,39 @@ Sub Main_ChineseCode
 	<script>
 	var PLUG = [{
 	"id":1,
-	"name":"ºº×Ö¼òÌå·±Ìå×ª»»",
+	"name":"æ±‰å­—ç®€ä½“ç¹ä½“è½¬æ¢",
 	"url":"ChineseCode.htm",
 	"width":"500px",
 	"height":"400px",
-	"desc":"ÔÊĞí¼´Ê±½«ºº×Ö½øĞĞ¼ò·±Ìå×ª»»£®"
+	"desc":"å…è®¸å³æ—¶å°†æ±‰å­—è¿›è¡Œç®€ç¹ä½“è½¬æ¢ï¼"
 	},{
 	"id":2,
-	"name":"ÍòÄêÀú",
+	"name":"ä¸‡å¹´å†",
 	"url":"cal/cal.htm",
 	"width":"540px",
 	"height":"475px",
-	"desc":"Ö§³ÖÅ©Àú¼°»ù±¾½ÚÈÕ²é¿´£®"
+	"desc":"æ”¯æŒå†œå†åŠåŸºæœ¬èŠ‚æ—¥æŸ¥çœ‹ï¼"
 	},{
 	"id":3,
-	"name":"»Æ½ğ¿ó¹¤",
+	"name":"é»„é‡‘çŸ¿å·¥",
 	"url":"../flash_gold/default.asp?appflag=1",
 	"width":"580px",
 	"height":"900px",
-	"desc":"Ğ¡ÓÎÏ·£¬¿ìÀ´´´ÔìÄúµÄÍÚ¿ó¼ÇÂ¼°É£®"
+	"desc":"å°æ¸¸æˆï¼Œå¿«æ¥åˆ›é€ æ‚¨çš„æŒ–çŸ¿è®°å½•å§ï¼"
 	},{
 	"id":4,
-	"name":"ÁÄÌìÊÒ",
+	"name":"èŠå¤©å®¤",
 	"url":"../bbschat/default.asp?appflag=1",
 	"width":"500px",
 	"height":"900px",
-	"desc":"ÂÛÌ³×¨ÓÃÁÄÌìÊÒ£¬¼´Ê±²é¿´»áÔ±·¢Ìû¼°ÉÏÏÂÏßµÈÇé¿ö£¬ÔÊĞí¼´Ê±ÎÄ×ÖÁÄÌì£®"
+	"desc":"è®ºå›ä¸“ç”¨èŠå¤©å®¤ï¼Œå³æ—¶æŸ¥çœ‹ä¼šå‘˜å‘å¸–åŠä¸Šä¸‹çº¿ç­‰æƒ…å†µï¼Œå…è®¸å³æ—¶æ–‡å­—èŠå¤©ï¼"
 	},{
 	"id":5,
-	"name":"ÌæÎÄÕÂ¼ÓÉÏÆ´Òô",
+	"name":"æ›¿æ–‡ç« åŠ ä¸Šæ‹¼éŸ³",
 	"url":"../pinyin/default.htm",
 	"width":"100%",
 	"height":"900px",
-	"desc":"ÔÊĞí½«Ò»ÆªÎÄÕÂ¼ÓÉÏÍêÕûµÄÆ´Òô£¬·½±ãÑ§Ï°ÖĞÎÄµÄÅóÓÑÀÊ¶Á£®"
+	"desc":"å…è®¸å°†ä¸€ç¯‡æ–‡ç« åŠ ä¸Šå®Œæ•´çš„æ‹¼éŸ³ï¼Œæ–¹ä¾¿å­¦ä¹ ä¸­æ–‡çš„æœ‹å‹æœ—è¯»ï¼"
 	}];
 	</script>
 	<style>

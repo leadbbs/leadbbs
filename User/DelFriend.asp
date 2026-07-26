@@ -1,9 +1,9 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/Board_Popfun.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../"
-InitDatabase
-UpdateOnlineUserAtInfo GBL_board_ID,"ȡ����ע"
+InitDatabase()
+UpdateOnlineUserAtInfo GBL_board_ID,"取消关注"
 Dim GBL_ID,Form_ID
 
 Dim DelID
@@ -19,10 +19,10 @@ Form_ID = GBL_ID
 Form_ID = cCur(Form_ID)
 If Form_ID < 0 Then Form_ID = 0
 If Form_ID=0 Then
-	GBL_CHK_TempStr = GBL_CHK_TempStr & "��û�е�¼<br>" & VbCrLf
+	GBL_CHK_TempStr = GBL_CHK_TempStr & "你没有登录<br>" & VbCrLf
 End If
 
-siteHead("   ȡ����ע")%>
+siteHead("   取消关注")%>
 <script language=javascript>
 	window.moveTo(window.screen.width/2-225,window.screen.height/2-18);
 </script>
@@ -35,7 +35,7 @@ siteHead("   ȡ����ע")%>
 	If GBL_CHK_TempStr = "" Then
 		ClearFlag = Request("ClearFlag")
 		If ClearFlag = "dkeJje5" or ClearFlag = "dkeJje6" Then
-			If GBL_UserID<1 or CheckSupervisorUserName = 0 or ClearFlag = "dkeJje5" Then
+			If GBL_UserID<1 or CheckSupervisorUserName() = 0 or ClearFlag = "dkeJje5" Then
 				SQL = "delete from LeadBBS_FriendUser where UserID=" & GBL_UserID
 			Else
 				SQL = "delete from LeadBBS_FriendUser"
@@ -43,7 +43,7 @@ siteHead("   ȡ����ע")%>
 
 			If Request.Form("DeleteSureFlag")="dk9@dl9s92lw_SWxl" Then
 				%>
-				�ɹ�ȡ�����й�ע!
+				成功取消所有关注!
 				<%
 				CALL LDExeCute(SQL,1)
 			Else
@@ -52,14 +52,14 @@ siteHead("   ȡ����ע")%>
 					<input type=hidden name=DeleteSureFlag value="dk9@dl9s92lw_SWxl">
 					<input type=hidden name=ClearFlag value="<%=htmlencode(ClearFlag)%>">
 					<input type=hidden name=DelID value="<%=htmlencode(DelID)%>">
-					<b>ȷ��Ҫȡ�����й�ע��ȡ���󽫲��ָܻ���</b>
-					<p><input type=submit value=ȷ�� class=fmbtn>
-					<input type=button value=���� onclick="javascript:window.close();" class=fmbtn>
+					<b>确认要取消所有关注吗？取消后将不能恢复！</b>
+					<p><input type=submit value=确定 class=fmbtn>
+					<input type=button value=不了 onclick="javascript:window.close();" class=fmbtn>
 				</form>
 				<%
 			End If
 		Else
-			If GBL_UserID<1 or CheckSupervisorUserName = 0 Then
+			If GBL_UserID<1 or CheckSupervisorUserName() = 0 Then
 				SQL = sql_select("Select * from LeadBBS_FriendUser where UserID=" & GBL_UserID & " and id=" & DelID,1)
 			Else
 				SQL = sql_select("Select * from LeadBBS_FriendUser where id=" & DelID,1)
@@ -68,13 +68,13 @@ siteHead("   ȡ����ע")%>
 			If Rs.Eof Then
 				Rs.Close
 				Set Rs = Nothing
-				Response.Write "�Ҳ�����¼��<br>" & VbCrLf
+				Response.Write "找不到记录！<br>" & VbCrLf
 			Else
 				Rs.Close
 				Set Rs = Nothing
 				If Request.Form("DeleteSureFlag")="dk9@dl9s92lw_SWxl" Then
 					%>
-					�ɹ�ȡ���Ա��Ϊ<font color=ff0000 class=redfont><%=DelID%></font>��Ta�Ĺ�ע!
+					成功取消对编号为<font color=ff0000 class=redfont><%=DelID%></font>的Ta的关注!
 					<%
 					CALL LDExeCute("Delete from LeadBBS_FriendUser where ID=" & DelID,1)
 				Else
@@ -83,9 +83,9 @@ siteHead("   ȡ����ע")%>
 						<input type=hidden name=DeleteSureFlag value="dk9@dl9s92lw_SWxl">
 						<input type=hidden name=ClearFlag value="<%=htmlencode(ClearFlag)%>">
 						<input type=hidden name=DelID value="<%=htmlencode(DelID)%>">
-						<b>ȷ��Ҫȡ����ע���Ϊ<font color=ff0000 class=redfont><%=DelID%></font>��Ta��</b>
-						<p><input type=submit value=ȷ�� class=fmbtn>
-						<input type=button value=���� onclick="javascript:window.close();" class=fmbtn>
+						<b>确认要取消关注编号为<font color=ff0000 class=redfont><%=DelID%></font>的Ta吗？</b>
+						<p><input type=submit value=确定 class=fmbtn>
+						<input type=button value=不了 onclick="javascript:window.close();" class=fmbtn>
 					</form>
 					<%
 				End If
@@ -106,5 +106,5 @@ siteHead("   ȡ����ע")%>
 </table>
 <%
 
-closeDataBase
+closeDataBase()
 %>

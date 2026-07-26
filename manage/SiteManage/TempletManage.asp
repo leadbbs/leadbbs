@@ -1,11 +1,11 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-checkSupervisorPass
+checkSupervisorPass()
 
 Dim Action
 Action = Left(Request("Action"),14)
@@ -17,29 +17,29 @@ Dim LMT_TempletFlag,Form_TempletName,Form_TempletString(4),Form_MaxTempletID
 LMT_TempletFlag = 0
 
 Dim LMT_TempletFlagData,LMT_TempletFlagDataNum
-LMT_TempletFlagData = Array("°æÃæÁĞ±íÄ£°å","Ìû×ÓÁĞ±íÄ£°å","Ìû×ÓÄÚÈİÄ£°å","±£Áô")
+LMT_TempletFlagData = Array("ç‰ˆé¢åˆ—è¡¨æ¨¡æ¿","å¸–å­åˆ—è¡¨æ¨¡æ¿","å¸–å­å†…å®¹æ¨¡æ¿","ä¿ç•™")
 LMT_TempletFlagDataNum = Ubound(LMT_TempletFlagData,1)
 
 Dim LMT_ID
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
 
-frame_TopInfo
-DisplayUserNavigate("ÂÛÌ³Ä£°å¹ÜÀí")%>
-<div class=frameline><a href=TempletManage.asp>¹ÜÀíÂÛÌ³Ä£°å</a>
-<a href=TempletManage.asp?action=Join>Ìí¼ÓÂÛÌ³Ä£°å</a>
+frame_TopInfo()
+DisplayUserNavigate("è®ºå›æ¨¡æ¿ç®¡ç†")%>
+<div class=frameline><a href=TempletManage.asp>ç®¡ç†è®ºå›æ¨¡æ¿</a>
+<a href=TempletManage.asp?action=Join>æ·»åŠ è®ºå›æ¨¡æ¿</a>
 </div><%If GBL_CHK_Flag=1 Then
 	Select Case Action:
-		Case "Join": Join
-		Case "Modify": Join
-		Case "Delete": Delete
-		Case "Manage": Manage
+		Case "Join": Join()
+		Case "Modify": Join()
+		Case "Delete": Delete()
+		Case "Manage": Manage()
 	End Select
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Function Join
@@ -49,32 +49,32 @@ Function Join
 		If isNumeric(LMT_ID) = 0 Then LMT_ID = -1
 		LMT_ID = Fix(cCur(LMT_ID))
 		If LMT_ID < 0 or CheckTempletIDExist(LMT_ID) = 0 Then
-			Response.Write "<div class=alert>±à¼­µÄÄ£°å²»´æÔÚ!</div>" & VbCrLf
+			Response.Write "<div class=alert>ç¼–è¾‘çš„æ¨¡æ¿ä¸å­˜åœ¨!</div>" & VbCrLf
 			Exit Function
 		End If
 	End If
 	%>
 	<div class=frameline><b><%
 	If Action = "Modify" Then
-		Response.Write "±à¼­"
+		Response.Write "ç¼–è¾‘"
 	Else
-		Response.Write "Ìí¼Ó"
-	End If%>ÂÛÌ³Ä£°å</b></div><%
+		Response.Write "æ·»åŠ "
+	End If%>è®ºå›æ¨¡æ¿</b></div><%
 	GBL_CHK_TempStr = ""
 	If Request("submitflag")="LKOkxk2" Then
-		If CheckFormData=0 Then
-			Response.Write "<div class=alert>´íÎóĞÅÏ¢£º" & GBL_CHK_TempStr & "</div>" & VbCrLf
-			DisplayJoinForm
+		If CheckFormData()=0 Then
+			Response.Write "<div class=alert>é”™è¯¯ä¿¡æ¯ï¼š" & GBL_CHK_TempStr & "</div>" & VbCrLf
+			DisplayJoinForm()
 	       	Else
-			If UpdateTemplet = 0 Then
-				Response.Write "<div class=alert>²åÈë³ö´í£º" & GBL_CHK_TempStr & "</div>" & VbCrLf
-				DisplayJoinForm
+			If UpdateTemplet() = 0 Then
+				Response.Write "<div class=alert>æ’å…¥å‡ºé”™ï¼š" & GBL_CHK_TempStr & "</div>" & VbCrLf
+				DisplayJoinForm()
 			Else
-				Response.Write "<div class=alert>³É¹¦²Ù×÷!</div>" & VbCrLf
+				Response.Write "<div class=alert>æˆåŠŸæ“ä½œ!</div>" & VbCrLf
 			End If
 		End If
 	Else
-		DisplayJoinForm
+		DisplayJoinForm()
 	End If
 
 End Function
@@ -83,17 +83,17 @@ Function DisplayJoinForm
 
 	Dim TempN
 	If Action = "Modify" Then
-		DisplayModifyForm
+		DisplayModifyForm()
 		Exit Function
 	End If%>
 	<form action=TempletManage.asp method=post name=form1 id=form1>
 	<table border=0 cellpadding=0 cellspacing=0 width="100%" class=frame_table>
 	<tr>
-		<td class=tdbox width=120>Ä£°åÃû³Æ:</td><td class=tdbox><input name=Form_TempletName maxlength=50 value="<%=htmlencode(Form_TempletName)%>" class=fminpt></td>
+		<td class=tdbox width=120>æ¨¡æ¿åç§°:</td><td class=tdbox><input name=Form_TempletName maxlength=50 value="<%=htmlencode(Form_TempletName)%>" class=fminpt></td>
 	</tr>
 	<tr valign=top>
 		<td class=tdbox width=80>
-			Ä£°åÆôÓÃ£º<br>²»¹´Ñ¡Ôò±íÊ¾²»ÆôÓÃ</td>
+			æ¨¡æ¿å¯ç”¨ï¼š<br>ä¸å‹¾é€‰åˆ™è¡¨ç¤ºä¸å¯ç”¨</td>
 		<td class=tdbox align=left><%
 			for TempN = 0 to LMT_TempletFlagDataNum%>	 
 			<input type="checkbox" class=fmchkbox name="Limit<%=TempN+1%>" value="1"<%If GetBinarybit(LMT_TempletFlag,TempN+1) = 1 Then
@@ -114,7 +114,7 @@ Function DisplayJoinForm
 			<input name=LMT_GoodNum type=hidden value="0">
 			<input name=action type=hidden value="Join">
 			<input name=submitflag type=hidden value="LKOkxk2">
-			<input type=submit value="Ìá½»" class=fmbtn> <input type=reset value="È¡Ïû" class=fmbtn>
+			<input type=submit value="æäº¤" class=fmbtn> <input type=reset value="å–æ¶ˆ" class=fmbtn>
 		</td>
 	</tr>
 	</table></form>
@@ -128,11 +128,11 @@ Function DisplayModifyForm
 	<form action=TempletManage.asp method=post name=form1 id=form1>
 	<table border=0 cellpadding=0 cellspacing=0 width=100% class=frame_table>
 	<tr>
-		<td class=tdbox width=120>Ä£°åÃû³Æ:</td><td class=tdbox><input name=Form_TempletName maxlength=50 value="<%=htmlencode(Form_TempletName)%>" class=fminpt></td>
+		<td class=tdbox width=120>æ¨¡æ¿åç§°:</td><td class=tdbox><input name=Form_TempletName maxlength=50 value="<%=htmlencode(Form_TempletName)%>" class=fminpt></td>
 	</tr>
 	<tr valign=top>
 		<td class=tdbox width=80>
-			Ä£°åÆôÓÃ£º<br>²»¹´Ñ¡Ôò±íÊ¾²»ÆôÓÃ</td>
+			æ¨¡æ¿å¯ç”¨ï¼š<br>ä¸å‹¾é€‰åˆ™è¡¨ç¤ºä¸å¯ç”¨</td>
 		<td class=tdbox align=left><%
 			for TempN = 0 to LMT_TempletFlagDataNum%>	 
 			<input type="checkbox" class=fmchkbox name="Limit<%=TempN+1%>" value="1"<%If GetBinarybit(LMT_TempletFlag,TempN+1) = 1 Then
@@ -153,7 +153,7 @@ Function DisplayModifyForm
 			<input name=action type=hidden value="Modify">
 			<input name=submitflag type=hidden value="LKOkxk2">
 			<input name=ID type=hidden value="<%=LMT_ID%>">
-			<input type=submit value="Ìá½»" class=fmbtn> <input type=reset value="È¡Ïû" class=fmbtn>
+			<input type=submit value="æäº¤" class=fmbtn> <input type=reset value="å–æ¶ˆ" class=fmbtn>
 		</td>
 	</tr>
 	</table></form>
@@ -191,20 +191,20 @@ Function CheckFormData
 	Next
 
 	If Form_TempletName = "" or Len(Form_TempletName) > 50 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: Ä£°åÃû³Æ±ØĞëÌîĞ´<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: æ¨¡æ¿åç§°å¿…é¡»å¡«å†™<br>" & VbCrLf
 		CheckFormData = 0
 		Exit Function
 	End If
 
 	If inStr(LCase(Form_TempletName),"/") or inStr(LCase(Form_TempletName),"\") or inStr(LCase(Form_TempletName),"""") or inStr(LCase(Form_TempletName),"<script") or inStr(LCase(Form_TempletName),"<\script") or inStr(LCase(Form_TempletName),"</script") Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: Ä£°åÃû³Æ²»ÄÜ°üº¬ÓĞ/\""¼°JSµÈ×Ö·û<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: æ¨¡æ¿åç§°ä¸èƒ½åŒ…å«æœ‰/\""åŠJSç­‰å­—ç¬¦<br>" & VbCrLf
 		CheckFormData = 0
 		Exit Function
 	End If
 
 	For TempN = 0 to LMT_TempletFlagDataNum
 		If inStr(LCase(Form_TempletString(TempN)),"<%") > 0 or inStr(LCase(Form_TempletString(TempN)),"include") > 0 or inStr(LCase(Form_TempletString(TempN)),"<script") > 0 or inStr(LCase(Form_TempletString(TempN)),"<\script") > 0 or inStr(LCase(Form_TempletString(TempN)),"</script") > 0 Then
-			GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: " & LMT_TempletFlagData(tempN) & "²»ÔÊĞí²åÈëjsµÈÆäËü±àÂë£¡<br>" & VbCrLf
+			GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: " & LMT_TempletFlagData(tempN) & "ä¸å…è®¸æ’å…¥jsç­‰å…¶å®ƒç¼–ç ï¼<br>" & VbCrLf
 			CheckFormData = 0
 			Exit Function
 		End If
@@ -242,7 +242,7 @@ Function UpdateTemplet
 	End If
 	For TempN = 0 to LMT_TempletFlagDataNum
 		If Form_TempletString(TempN) <> "" Then
-			WriteTempletFile LMT_ID,TempN,Form_TempletString(TempN)
+			Call WriteTempletFile(LMT_ID,TempN,Form_TempletString(TempN))
 		Else
 			DeleteFiles(Server.Mappath("../../inc/Templet/" & LMT_ID & "_" & TempN & ".JS"))
 		End If
@@ -256,9 +256,9 @@ Sub WriteTempletFile(TempletID,TempN,TempStr)
 
 	ADODB_SaveToFile TempStr,"../../inc/Templet/" & TempletID & "_" & TempN & ".JS"
 	If GBL_CHK_TempStr = "" Then
-		Response.Write "<div class=alertdone>2.³É¹¦Íê³ÉÉèÖÃ£¡</div>"
+		Response.Write "<div class=alertdone>2.æˆåŠŸå®Œæˆè®¾ç½®ï¼</div>"
 	Else
-		%><%=GBL_CHK_TempStr%><br>·şÎñÆ÷²»Ö§³ÖÔÚÏßĞ´ÈëÎÄ¼ş¹¦ÄÜ£¬ÇëÊ¹ÓÃFTPµÈ¹¦ÄÜ£¬½«<span Class=redfont><%="inc/Templet/" & TempletID & "_" & TempN & ".JS"%></span>ÎÄ¼şÌæ»»³É¿òÖĞÄÚÈİ(×¢Òâ±¸·İ)<p>
+		%><%=GBL_CHK_TempStr%><br>æœåŠ¡å™¨ä¸æ”¯æŒåœ¨çº¿å†™å…¥æ–‡ä»¶åŠŸèƒ½ï¼Œè¯·ä½¿ç”¨FTPç­‰åŠŸèƒ½ï¼Œå°†<span Class=redfont><%="inc/Templet/" & TempletID & "_" & TempN & ".JS"%></span>æ–‡ä»¶æ›¿æ¢æˆæ¡†ä¸­å†…å®¹(æ³¨æ„å¤‡ä»½)<p>
 		<textarea name="fileContent" cols="80" rows="30" class=fmtxtra><%=Server.htmlencode(TempStr)%></textarea><%
 		GBL_CHK_TempStr = ""
 	End If
@@ -283,7 +283,7 @@ Sub ReloadTempletStyle(TempletID)
 
 End Sub
 
-Rem ¼ì²âÄ£°å±àºÅIDÊÇ·ñ´æÔÚ
+Rem æ£€æµ‹æ¨¡æ¿ç¼–å·IDæ˜¯å¦å­˜åœ¨
 Function CheckTempletIDExist(ID)
 
 	Dim Rs,TempN
@@ -314,21 +314,21 @@ Function Manage
 	function s(ID,TempletName,TempletFlag)
 	{
 		if(ID=="")return;
-		document.write("<tr><td class=tdbox>µÚ" + ID + "Ä£°å</td>");
+		document.write("<tr><td class=tdbox>ç¬¬" + ID + "æ¨¡æ¿</td>");
 		document.write("<td class=tdbox><a href=TempletManage.asp?action=Modify&ID=" + ID + ">" + TempletName + "</a></td>");
 		document.write("<td class=tdbox><a href=TempletManage.asp?action=Modify&ID=" + ID + ">" + TempletFlag + "</a></td>");
-		document.write("<td class=tdbox><a href=TempletManage.asp?action=Delete&ID=" + ID + ">É¾³ı</a></td></tr>");
+		document.write("<td class=tdbox><a href=TempletManage.asp?action=Delete&ID=" + ID + ">åˆ é™¤</a></td></tr>");
 	}
 	</script>
 	
-			<div class=frameline><b>ÂÛÌ³Ä£°å¹ÜÀí</b></div>
+			<div class=frameline><b>è®ºå›æ¨¡æ¿ç®¡ç†</b></div>
 			<table border=0 cellpadding=0 cellspacing=0 width=100% class=frame_table>
 			<tbody>
 			<tr class=frame_tbhead>
-				<td width=60><div class=value>±àºÅ</div></td>
-				<td><div class=value>Ãû³Æ(ĞŞ¸Ä)</div></td>
-				<td><div class=value>×´Ì¬</div></td>
-				<td><div class=value>É¾³ı</div></td>
+				<td width=60><div class=value>ç¼–å·</div></td>
+				<td><div class=value>åç§°(ä¿®æ”¹)</div></td>
+				<td><div class=value>çŠ¶æ€</div></td>
+				<td><div class=value>åˆ é™¤</div></td>
 			</tr>
 				<%
 	Dim Rs,SQL
@@ -339,7 +339,7 @@ Function Manage
 	Dim GetData
 	If Not rs.Eof Then
 		Response.Write "<script language=javascript>" & VbCrLf & "s("""
-		Response.Write Rs.GetString(,,""",""",""");" & VbCrLf & "s(""","")
+		Response.Write RsGetString(Rs,""",""",""");" & VbCrLf & "s(""","")
 		%>","","","");
 		</script>
 		<%
@@ -361,7 +361,7 @@ Function Delete
 	ID = Fix(cCur(ID))
 	If Request.Form("DeleteSuer")="E72ksiOkw2" Then
 		If DeleteTemplet(ID) > 0 Then
-			Response.Write "<p><font color=008800 class=greenfont><b>ÒÑ¾­³É¹¦É¾³ı±àºÅÎª" & ID & "µÄÂÛÌ³Ä£°å£¡</b></font></p>"
+			Response.Write "<p><font color=008800 class=greenfont><b>å·²ç»æˆåŠŸåˆ é™¤ç¼–å·ä¸º" & ID & "çš„è®ºå›æ¨¡æ¿ï¼</b></font></p>"
 		Else
 			Response.Write "<p><font color=ff0000 class=redfont><b>" & GBL_CHK_TempStr & "</b></font></p>"
 		End If
@@ -369,15 +369,15 @@ Function Delete
 		%>
 		<form action=TempletManage.asp method=post>
 		<div class=frameline>
-		<div class=alert>×¢Òâ£º´Ë²Ù×÷½«É¾³ıÂÛÌ³Ä£°å</div>
-		È·ÈÏĞÅÏ¢£º ÕæµÄÒªÉ¾³ı´ËÂÛÌ³Ä£°åÂğ£¿</div>
+		<div class=alert>æ³¨æ„ï¼šæ­¤æ“ä½œå°†åˆ é™¤è®ºå›æ¨¡æ¿</div>
+		ç¡®è®¤ä¿¡æ¯ï¼š çœŸçš„è¦åˆ é™¤æ­¤è®ºå›æ¨¡æ¿å—ï¼Ÿ</div>
 		
 		<input type=hidden name=Action value="Delete">
 		<input type=hidden name=ID value="<%=urlencode(ID)%>">
 		<input type=hidden name=DeleteSuer value="E72ksiOkw2">
 		
 		<div class=frameline>
-		<input type=submit value=È·¶¨É¾³ı class=fmbtn>
+		<input type=submit value=ç¡®å®šåˆ é™¤ class=fmbtn>
 		</div>
 		</form>
 	<%End If
@@ -390,7 +390,7 @@ Function DeleteTemplet(ID)
 	Dim Rs,BoardID
 	Set Rs = LDExeCute(sql_select("select ID from LeadBBS_Templet where ID=" & ID,1),0)
 	If Rs.Eof Then
-		GBL_CHK_TempStr = "´íÎó£¬²»´æÔÚ´Ë×¨ÌâÇø£®"
+		GBL_CHK_TempStr = "é”™è¯¯ï¼Œä¸å­˜åœ¨æ­¤ä¸“é¢˜åŒºï¼"
 		DeleteTemplet = 0
 		Rs.Close
 		Set Rs = Nothing
@@ -406,7 +406,7 @@ End Function
 Function DeleteFiles(path)
 
 	If DEF_FSOString = "" Then
-		Response.Write "<br>·şÎñÆ÷²»Ö§³ÖFSO£¬Ó²ÅÌÎÄ¼şÎ´É¾³ı£®"
+		Response.Write "<br>æœåŠ¡å™¨ä¸æ”¯æŒFSOï¼Œç¡¬ç›˜æ–‡ä»¶æœªåˆ é™¤ï¼"
 		Exit Function
 	End If
     On error resume next
@@ -414,7 +414,7 @@ Function DeleteFiles(path)
     Set fs = Server.CreateObject(DEF_FSOString)
 	If err <> 0 Then
 		Err.Clear
-		Response.Write "<br>·şÎñÆ÷²»Ö§³ÖFSO£¬Ó²ÅÌÎÄ¼şÎ´É¾³ı£®"
+		Response.Write "<br>æœåŠ¡å™¨ä¸æ”¯æŒFSOï¼Œç¡¬ç›˜æ–‡ä»¶æœªåˆ é™¤ï¼"
 		Exit Function
 	End If
     If fs.FileExists(path) Then
@@ -424,6 +424,6 @@ Function DeleteFiles(path)
       DeleteFiles = 0
     End If
     Set fs = Nothing
-    Response.Write "<br>É¾³ıÎÄ¼ş³É¹¦£®"
+    Response.Write "<br>åˆ é™¤æ–‡ä»¶æˆåŠŸï¼"
 
 End Function         %>

@@ -7,16 +7,16 @@
 		GetData(15,n) = cCur(GetData(15,n))
 		If GetData(15,n) > 0 Then
 			If GetBinarybit(GetData(37,n),10) = 1 Then
-				tmp1 = "<span class=""name"">Ö°Îñ</span><span class=""bluefont value"">" & DEF_PointsName(6) & "</span>"
+				tmp1 = "<span class=""name"">èŒåŠ¡</span><span class=""bluefont value"">" & DEF_PointsName(6) & "</span>"
 				MasterF = 1
 			ElseIf GetBinarybit(GetData(37,n),14) = 1 Then
-				tmp1 = "<span class=""name"">Ö°Îñ</span><span class=""bluefont value"">" & DEF_PointsName(7) & "</span>"
+				tmp1 = "<span class=""name"">èŒåŠ¡</span><span class=""bluefont value"">" & DEF_PointsName(7) & "</span>"
 				MasterF = 1
 			ElseIf GetBinarybit(GetData(37,n),8) = 1 Then
-				tmp1 = "<span class=""name"">Ö°Îñ</span><span class=""bluefont value"">" & DEF_PointsName(8) & "</span>"
+				tmp1 = "<span class=""name"">èŒåŠ¡</span><span class=""bluefont value"">" & DEF_PointsName(8) & "</span>"
 				MasterF = 1
 			ElseIf GetBinarybit(GetData(37,n),2) = 1 Then
-				tmp1 = "<span class=""name"">»áÔ±</span><span  class=""greenfont value"">" & DEF_PointsName(5) & "</span>"
+				tmp1 = "<span class=""name"">ä¼šå‘˜</span><span  class=""greenfont value"">" & DEF_PointsName(5) & "</span>"
 			End If
 		End If%>
 	<div id="anc_table_div_<%=GetData(0,n)%>" class="anc_table_div">
@@ -29,7 +29,7 @@
 		<td width="<%=DEF_BBS_LeftTDWidth%>" class="tdleft a_userinfotd">
 			<div class="a_author"><%
 		
-		If GetData(14,n) = "[LeadBBS]" Then GetData(14,n) = "ÏµÍ³"
+		If GetData(14,n) = "[LeadBBS]" Then GetData(14,n) = "ç³»ç»Ÿ"
 		If GetData(15,n) > 0 Then
 			Response.Write "<a href=""" & DEF_BBS_HomeUrl & "User/" & RW_User(GetData(15,n),"","","") & """ class=""uname""><b>" & htmlencode(GetTrueName(GetData(14,n),GetData(BoundNum,n))) & "</b></a>"
 		Else
@@ -53,29 +53,29 @@
 		End If
 
 
-		If GetData(14,n) = "ÓÎ¿Í" and GetData(15,n) = 0 Then OnlineFlag = 1
+		If GetData(14,n) = "æ¸¸å®¢" and GetData(15,n) = 0 Then OnlineFlag = 1
 		Response.Write "<img src=""" & DEF_BBS_HomeUrl & "images/" & GBL_DefineImage & "sxmg/"
 		Select Case GetData(31,n)
-		Case "Å®"
+		Case "å¥³"
 			If OnlineFlag = 1 Then
-				Response.Write "FeMale.gif"" title=""ÃÀÅ®£¬ÔÚ"
+				Response.Write "FeMale.gif"" title=""ç¾å¥³ï¼Œåœ¨"
 			Else
-				Response.Write "OfFeMale.gif"" title=""ÃÀÅ®£¬Àë"
+				Response.Write "OfFeMale.gif"" title=""ç¾å¥³ï¼Œç¦»"
 			End If
-		Case "ÄĞ"
+		Case "ç”·"
 			If OnlineFlag = 1 Then
-				Response.Write "Male.gif"" title=""Ë§¸ç£¬ÔÚ"
+				Response.Write "Male.gif"" title=""å¸…å“¥ï¼Œåœ¨"
 			Else
-				Response.Write "OfMale.gif"" title=""Ë§¸ç£¬Àë"
+				Response.Write "OfMale.gif"" title=""å¸…å“¥ï¼Œç¦»"
 			End If
 		Case Else
 			If OnlineFlag = 1 Then
-				Response.Write "Male.gif"" title=""ÔÚ"
+				Response.Write "Male.gif"" title=""åœ¨"
 			Else
-				Response.Write "OfMale.gif"" title=""Àë"
+				Response.Write "OfMale.gif"" title=""ç¦»"
 			End If
 		End Select
-		Response.Write "Ïß"" class=""a_seximg"" alt=""ÔÚÏßÇé¿ö"" />"
+		Response.Write "çº¿"" class=""a_seximg"" alt=""åœ¨çº¿æƒ…å†µ"" />"
 		
 		GetData(1,n) = ccur(GetData(1,n))
 		%>
@@ -84,28 +84,28 @@
 			<div class="a_ancinfobox fire">
 			<div class="a_ancinfo">
 				<ul>
-				<%If cCur(GetData(9,n)) > 0 Then Response.Write "<li><img src=""../images/" & GBL_DefineImage & "bf/face" & GetData(9,n) & ".gif"" align=""absmiddle"" alt=""±íÇé"" /></li>"%>
+				<%If cCur(GetData(9,n)) > 0 Then Response.Write "<li><img src=""../images/" & GBL_DefineImage & "bf/face" & GetData(9,n) & ".gif"" align=""absmiddle"" alt=""è¡¨æƒ…"" /></li>"%>
 				<li><em><%=ConvertTimeString(RestoreTime(GetData(10,n)))%></em></li>
-				<%If CheckSupervisorUserName = 1 Then%><li><em><%=GetData(19,n)%></em></li><%End If%>
-				<%If GetData(1,n) = 0 Then%><li>ÔÄ¶Á£º<%=GetData(12,n)%>´Î</li><%End If%>
+				<%If CheckSupervisorUserName() = 1 Then%><li><em><%=GetData(19,n)%></em></li><%End If%>
+				<%If GetData(1,n) = 0 Then%><li>é˜…è¯»ï¼š<%=GetData(12,n)%>æ¬¡</li><%End If%>
 				<%
 
 
 		If A_NotReplay <> 1 Then
 			If GetData(1,n) <> 0 then
-				Response.Write "<li><a href=""a2.asp?b=" & GBL_board_ID & "&amp;ID=" & GetData(0,n) & "&amp;submitflag=first&amp;repost=1"" title=""ÒıÓÃ»Ø¸´´ËÌû"">ÒıÓÃ</a></li>"
+				Response.Write "<li><a href=""a2.asp?b=" & GBL_board_ID & "&amp;ID=" & GetData(0,n) & "&amp;submitflag=first&amp;repost=1"" title=""å¼•ç”¨å›å¤æ­¤å¸–"">å¼•ç”¨</a></li>"
 			else
-				Response.Write "<li><a href=""#announce_reply"">»Ø¸´</a></li>"
+				Response.Write "<li><a href=""#announce_reply"">å›å¤</a></li>"
 			end if
 		end if
 		If GetData(15,n) > 0 then
 			if tonum(request.querystring("uid"),0) <= 0 then
 		%>
-			<li><a href="<%=RW_a(GBL_Board_ID,A_RootIDBak,1,A_Q,"&uid=" & GetData(15,n))%>">Ö»¿´´ËÈË</a></li>
+			<li><a href="<%=RW_a(GBL_Board_ID,A_RootIDBak,1,A_Q,"&uid=" & GetData(15,n))%>">åªçœ‹æ­¤äºº</a></li>
 		<%
 			else
 		%>
-			<li><a href="<%=RW_a(GBL_Board_ID,A_RootIDBak,1,A_Q,"")%>">²é¿´È«²¿</a></li>
+			<li><a href="<%=RW_a(GBL_Board_ID,A_RootIDBak,1,A_Q,"")%>">æŸ¥çœ‹å…¨éƒ¨</a></li>
 		<%
 			end if
 		end if
@@ -113,13 +113,13 @@
 		
 		If GBL_CHK_User <> "" Then
 			If GetBinarybit(GBL_CHK_UserLimit,6) = 0 Then
-			%><li class="layerico"><a href="Processor.asp?action=MakeGood&amp;b=<%=GBL_Board_ID%>&amp;ID=<%=GetData(0,n)%>" onclick="return(a_command('ÆÀÆÀÌû×Ó',this,'MakeGood&b=<%=GBL_Board_ID%>&ID=<%=GetData(0,n)%>'));" title="Ìû×ÓÆÀ·Ö»ò¾«»ª">ÆÀÌû</a></li><%
+			%><li class="layerico"><a href="Processor.asp?action=MakeGood&amp;b=<%=GBL_Board_ID%>&amp;ID=<%=GetData(0,n)%>" onclick="return(a_command('è¯„è¯„å¸–å­',this,'MakeGood&b=<%=GBL_Board_ID%>&ID=<%=GetData(0,n)%>'));" title="å¸–å­è¯„åˆ†æˆ–ç²¾å">è¯„å¸–</a></li><%
 			End If
 		End If
 
 		If GBL_CHK_User <> "" and (GBL_BoardMasterFlag >= 5 or GetData(14,n) = GBL_CHK_User) Then
-			Response.Write "<li><a href=""Editannounce.asp?b=" & GBL_board_ID & "&amp;ID=" & GetData(0,n) & """ title=""±à¼­Ìû×ÓÄÚÈİ"">±à¼­</a></li>"
-			%><li><a href="Processor.asp?action=TypeSet&b=<%=GBL_Board_ID%>&ID=<%=GetData(0,n)%>" onclick="return(a_command('Ìû×Ó£º×ÛºÏ¹ÜÀí',this,'TypeSet&b=<%=GBL_Board_ID%>&ID=<%=GetData(0,n)%>'));" title="¸ü¶àµÄµ¥Ìû²Ù×÷¹¦ÄÜ">¹ÜÀí</a></li><%
+			Response.Write "<li><a href=""Editannounce.asp?b=" & GBL_board_ID & "&amp;ID=" & GetData(0,n) & """ title=""ç¼–è¾‘å¸–å­å†…å®¹"">ç¼–è¾‘</a></li>"
+			%><li><a href="Processor.asp?action=TypeSet&b=<%=GBL_Board_ID%>&ID=<%=GetData(0,n)%>" onclick="return(a_command('å¸–å­ï¼šç»¼åˆç®¡ç†',this,'TypeSet&b=<%=GBL_Board_ID%>&ID=<%=GetData(0,n)%>'));" title="æ›´å¤šçš„å•å¸–æ“ä½œåŠŸèƒ½">ç®¡ç†</a></li><%
 		End If
 
 		If GBL_CHK_User <> "" and GBL_BoardMasterFlag >= 5 Then
@@ -135,7 +135,7 @@
 					End If
 				End If
 				Index = Index + 1
-				%><a href="Processor.asp?action=<%=Tmp3%>" onclick="return(a_command('É¾³ıÌû×Ó',this,'<%=Tmp3%>'));" title="É¾³ı´ËÌû">É¾³ı</a></li><%
+				%><a href="Processor.asp?action=<%=Tmp3%>" onclick="return(a_command('åˆ é™¤å¸–å­',this,'<%=Tmp3%>'));" title="åˆ é™¤æ­¤å¸–">åˆ é™¤</a></li><%
 			End If
 		End If
 		
@@ -147,14 +147,14 @@
 		Response.Write "<div class=""a_floor""><a name=F" & GetData(0,n) & "></a><span class=layerico><span class=""clicktext"" onclick=""var clipdata='';clipdata='"
 		Response.Write LD_GetUrl(1)
 		Response.Write "a/" & RW_a(GBL_board_ID,GetData(0,n),1,0,"")
-		response.Write "';copyClipboard('text',clipdata,'Ìû×ÓÄÚÈİ³É¹¦¸´ÖÆÖÁ¼ôÌû°å!','" & DEF_BBS_HomeUrl & "',this);"" title=""µã»÷¸´ÖÆ´ËÌûµØÖ·"">"
+		response.Write "';copyClipboard('text',clipdata,'å¸–å­å†…å®¹æˆåŠŸå¤åˆ¶è‡³å‰ªå¸–æ¿!','" & DEF_BBS_HomeUrl & "',this);"" title=""ç‚¹å‡»å¤åˆ¶æ­¤å¸–åœ°å€"">"
 		If GetData(1,n) = 0 Then
-			Response.Write "<b>Â¥Ö÷</b>"
+			Response.Write "<b>æ¥¼ä¸»</b>"
 		Else
 			If A_ParentID = 0 or R_ID > 0 Then
-				Response.Write "<b>" & page*DEF_TopicContentMaxListNum+i & "</b>Â¥"
+				Response.Write "<b>" & page*DEF_TopicContentMaxListNum+i & "</b>æ¥¼"
 			else
-				'Response.Write "<b>Â¥²ã</b>"
+				'Response.Write "<b>æ¥¼å±‚</b>"
 			end if
 		End If
 		Response.Write "</span></span></div>"
@@ -174,7 +174,7 @@
 		Else
 			Response.Write """" & DEF_BBS_HomeUrl & "images/face/" & string(4-len(cstr(GetData(22,n))),"0")&GetData(22,n) & ".gif"""
 		End If
-		Response.Write " alt=""Í·Ïñ"" /></li>"
+		Response.Write " alt=""å¤´åƒ"" /></li>"
 		If (Not isNull(GetData(44,n))) and GetData(44,n) <> "" Then Response.write "<li><span class=""grayfont"">" & htmlencode(GetData(44,n)) & "</span></li>"
 
 		'If len(GetData(29,n))=14 Then
@@ -189,7 +189,7 @@
 		'End If
 
 		if ccur(GetData(23,N))  > DEF_UserLevelNum then GetData(23,N) = DEF_UserLevelNum
-		Response.Write "<li class=""level"" title=""¼¶±ğ " & DEF_UserLevelString(GetData(23,N)) & """><span class=""userlevel" & GetData(23,N) & """><img src=""" & DEF_BBS_HomeUrl & "images/" & GBL_DefineImage & "lvstar/level" & GetData(23,N) & ".gif"" class=""a_levelimg"" alt=""¼¶±ğ"" /></span></li>"
+		Response.Write "<li class=""level"" title=""çº§åˆ« " & DEF_UserLevelString(GetData(23,N)) & """><span class=""userlevel" & GetData(23,N) & """><img src=""" & DEF_BBS_HomeUrl & "images/" & GBL_DefineImage & "lvstar/level" & GetData(23,N) & ".gif"" class=""a_levelimg"" alt=""çº§åˆ«"" /></span></li>"
 
 		Response.Write "</ul>"
 		
@@ -200,19 +200,19 @@
 		
 		'If trim(GetData(24,n))<>"" Then
 		'	If Left(lcase(GetData(24,n)),4)<>"http" Then GetData(24,n) = "http://" & GetData(24,n)
-		'	Response.Write " <a href=""" & htmlencode(GetData(24,n)) & """ target=""_blank""><img src=""../images/" & GBL_DefineImage & "home.gif"" title=""taµÄÖ÷Ò³"" class=""absmiddle"" /></a>"
+		'	Response.Write " <a href=""" & htmlencode(GetData(24,n)) & """ target=""_blank""><img src=""../images/" & GBL_DefineImage & "home.gif"" title=""taçš„ä¸»é¡µ"" class=""absmiddle"" /></a>"
 		'End if
 		
 		'If GetData(20,n)<>"" and (ccur(GetData(43,n)) = 1) Then
-		'	Response.Write "<a href=""mailto:" & GetData(20,n) & """ target=""_blank""><img src=""../images/" & GBL_DefineImage & "mail.gif"" alt=""¸ø´ËÓÃ»§·¢ÓÊ¼ş"" class=""absmiddle"" /></a>"
+		'	Response.Write "<a href=""mailto:" & GetData(20,n) & """ target=""_blank""><img src=""../images/" & GBL_DefineImage & "mail.gif"" alt=""ç»™æ­¤ç”¨æˆ·å‘é‚®ä»¶"" class=""absmiddle"" /></a>"
 		'End if
 		
 		'If isNull(GetData(21,n)) or GetData(21,n)="" Then GetData(21,n)=0
-		'If cCur(GetData(21,n))>=10000 Then Response.Write "<a href=""http://search.tencent.com/cgi-bin/friend/user_show_info?ln=" & GetData(21,n) & """ target=""_blank""><img src=""../images/" & GBL_DefineImage & "oicq.gif"" title=""²é¿´QQ×ÊÁÏ"" class=""absmiddle"" /></a>"
+		'If cCur(GetData(21,n))>=10000 Then Response.Write "<a href=""http://search.tencent.com/cgi-bin/friend/user_show_info?ln=" & GetData(21,n) & """ target=""_blank""><img src=""../images/" & GBL_DefineImage & "oicq.gif"" title=""æŸ¥çœ‹QQèµ„æ–™"" class=""absmiddle"" /></a>"
 		If GBL_CHK_User <> "" and GetData(15,n) > 0 Then
-			%> <a href="Processor.asp?action=AddFriend&FriendName=<%=UrlEncode(GetTrueNameID(GetData(14,n),GetData(BoundNum,n),GetData(15,n)))%>&FriendNameID=<%=GetData(BoundNum-1,n)%>&b=<%=GBL_Board_ID%>&ID=<%=GetData(0,n)%>" onclick="return(a_msg(this,'<%Response.Write "AddFriend&FriendName=" & UrlEncode(GetTrueName(GetData(14,n),GetData(BoundNum,n)))%>&FriendNameID=<%=GetData(BoundNum-1,n)%>&SureFlag=1'));"><img src="../images/<%=GBL_DefineImage%>friend.gif" title="¹Ø×¢Ta" class="absmiddle" /></a><%
+			%> <a href="Processor.asp?action=AddFriend&FriendName=<%=UrlEncode(GetTrueNameID(GetData(14,n),GetData(BoundNum,n),GetData(15,n)))%>&FriendNameID=<%=GetData(BoundNum-1,n)%>&b=<%=GBL_Board_ID%>&ID=<%=GetData(0,n)%>" onclick="return(a_msg(this,'<%Response.Write "AddFriend&FriendName=" & UrlEncode(GetTrueName(GetData(14,n),GetData(BoundNum,n)))%>&FriendNameID=<%=GetData(BoundNum-1,n)%>&SureFlag=1'));"><img src="../images/<%=GBL_DefineImage%>friend.gif" title="å…³æ³¨Ta" class="absmiddle" /></a><%
 		End If
-		If GetData(15,n) > 0 Then Response.Write "<a href=""" & DEF_BBS_HomeUrl & "User/SendMessage.asp?SdM_ToUser=" & urlencode(GetTrueNameID(GetData(14,n),GetData(BoundNum,n),GetData(15,n))) & "&sdM_ToUserID=" & GetData(BoundNum-1,n) & """ onclick=""return(sendprivatemsg(this,'" & DEF_BBS_HomeUrl & "'));""><img src=""../images/" & GBL_DefineImage & "message.GIF"" title=""¸ø" & htmlencode(GetTrueName(GetData(14,n),GetData(BoundNum,n))) & "·¢ÏûÏ¢"" class=""absmiddle"" /></a>"
+		If GetData(15,n) > 0 Then Response.Write "<a href=""" & DEF_BBS_HomeUrl & "User/SendMessage.asp?SdM_ToUser=" & urlencode(GetTrueNameID(GetData(14,n),GetData(BoundNum,n),GetData(15,n))) & "&sdM_ToUserID=" & GetData(BoundNum-1,n) & """ onclick=""return(sendprivatemsg(this,'" & DEF_BBS_HomeUrl & "'));""><img src=""../images/" & GBL_DefineImage & "message.GIF"" title=""ç»™" & htmlencode(GetTrueName(GetData(14,n),GetData(BoundNum,n))) & "å‘æ¶ˆæ¯"" class=""absmiddle"" /></a>"
 		Response.Write "</span></li></ul>"
 		Response.Write "<ul class=""info_3 medal"">"
 		
@@ -224,14 +224,14 @@
 		Response.Write "<ul class=""info_two"">"
 		If GetData(15,n) > 0 Then
 			If tmp1 <> "" Then Response.Write "<li>" & tmp1 & "</li>"
-			'Response.write "<li><span class=""name"">¼¶±ğ</span><span class=""value"">" & DEF_UserLevelString(GetData(23,N)) & "</span></li>"
+			'Response.write "<li><span class=""name"">çº§åˆ«</span><span class=""value"">" & DEF_UserLevelString(GetData(23,N)) & "</span></li>"
 
 			GetData(47,n) = cCur(GetData(47,n))
 			If GetData(47,n) <> 0 Then
 				If GetData(47,n) < 0 Then
 					GetData(47,n) = GetData(47,n)
 				Else
-					GetData(47,n) = "<span class=""bluefont value"">£«" & GetData(47,n) & "</span>"
+					GetData(47,n) = "<span class=""bluefont value"">ï¼‹" & GetData(47,n) & "</span>"
 				End If
 				Response.write "<li><span class=""name"">" & DEF_PointsName(2) & "</span><span class=""value"">" & GetData(47,n) & "</span></li>"
 			End If
@@ -239,8 +239,8 @@
 
 			Response.Write "<li><span class=""name"">" & DEF_PointsName(0) & "</span><span class=""value"">" & GetData(26,n) & "</span></li>"
 			Response.Write "<li><span class=""name"">" & DEF_PointsName(4) & "</span><span class=""value"">" & CLng(cCur(GetData(28,n))/60) & "</span></li>"
-			Response.Write "<li><span class=""name"">ÎÄÕÂ</span><span class=""value"">" & GetData(33,n) & "</span></li>"
-			Response.Write "<li><span class=""name"">×¢²á</span><span class=""value"">" & Mid(RestoreTime(GetData(30,n)),1,10) & "</span></li>"
+			Response.Write "<li><span class=""name"">æ–‡ç« </span><span class=""value"">" & GetData(33,n) & "</span></li>"
+			Response.Write "<li><span class=""name"">æ³¨å†Œ</span><span class=""value"">" & Mid(RestoreTime(GetData(30,n)),1,10) & "</span></li>"
 		End If
 		Response.Write "</ul>"
 		%>

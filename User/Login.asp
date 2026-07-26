@@ -1,7 +1,7 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/User_Setup.asp -->
-<!-- #include file=../inc/Board_Popfun.asp -->
-<!-- #include file=inc/UserTopic.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/User_Setup.asp"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
+<!--#include file="inc/UserTopic.asp"-->
 <%
 Response.Expires = 0 
 Response.ExpiresAbsolute = DEF_Now - 1
@@ -12,7 +12,7 @@ Response.CacheControl = "no-cache"
 DEF_BBS_HomeUrl = "../"
 Dim AjaxFlag
 
-Main
+Main()
 
 Sub Main
 
@@ -23,30 +23,34 @@ Sub Main
 	End If
 	Select Case Request("action")
 		Case "logout":
-			Main_Logout
+			Main_Logout()
 		Case "hidden":
-			Main_Hidden
+			Main_Hidden()
 		Case "err":
 			BBS_SiteHead DEF_SiteNameString & " - Error",0,"Error"
 			Boards_Body_Head("")
-			Global_ErrMsg(Request.QueryString("err"))
-			Boards_Body_Bottom
-			SiteBottom
+			' Global_ErrMsg writes its argument raw, because most callers pass it markup
+			' (LimitBoardStringData embeds a login link, for instance). This is the ONE caller
+			' whose argument comes straight off the URL, so escape it here at the boundary â€”
+			' otherwise /User/Login.asp?action=err&err=<script>â€¦ is a reflected XSS.
+			Global_ErrMsg(htmlencode(Left(Request.QueryString("err"),500)))
+			Boards_Body_Bottom()
+			SiteBottom()
 		Case Else
-			Main_login	
+			Main_login()
 	End Select
 
 End Sub
 
 Sub Main_login
 
-	OpenDatabase
-	GBL_UserID = CheckPass
+	OpenDatabase()
+	GBL_UserID = CheckPass()
 	
 	If AjaxFlag = 0 Then
-		BBS_SiteHead DEF_SiteNameString & " - µÇÂ¼",0,"<span class=navigate_string_step>µÇÂ¼</span>"
+		BBS_SiteHead DEF_SiteNameString & " - ç™»å½•",0,"<span class=navigate_string_step>ç™»å½•</span>"
 		
-		UpdateOnlineUserAtInfo GBL_board_ID,"µÇÂ¼"
+		UpdateOnlineUserAtInfo GBL_board_ID,"ç™»å½•"
 	
 		Boards_Body_Head("")
 		%>
@@ -57,31 +61,31 @@ Sub Main_login
 	<%
 	End If
 	If GBL_CHK_Flag=1 and Request("R")<>"Yes" Then		
-		If CheckWriteEventSpace = 0 Then
-			Processor_LoginMsg "ÄúµÄ²Ù×÷¹ıÆµ£¬(µÇÂ¼Ì«Æµ)ÉÔºòÔÙÊÔ!","login_title",""
+		If CheckWriteEventSpace() = 0 Then
+			Processor_LoginMsg "æ‚¨çš„æ“ä½œè¿‡é¢‘ï¼Œ(ç™»å½•å¤ªé¢‘)ç¨å€™å†è¯•!","login_title",""
 		Else		
-			UpdateUserLevel
-			LoginAccuessFul
+			UpdateUserLevel()
+			LoginAccuessFul()
 		End If
 	Else
 		If Request("submitflag")="" Then
 			DisplayLoginForm("")
 		Else
 			If AjaxFlag = 1 Then
-				If GBL_CHK_TempStr = "" Then GBL_CHK_TempStr = "µÇÂ¼ĞÅÏ¢´íÎó£¬»òÊÇµÇÂ½Ê§°Ü´ÎÊı¹ı¶à¡£"
+				If GBL_CHK_TempStr = "" Then GBL_CHK_TempStr = "ç™»å½•ä¿¡æ¯é”™è¯¯ï¼Œæˆ–æ˜¯ç™»é™†å¤±è´¥æ¬¡æ•°è¿‡å¤šã€‚"
 				Processor_LoginMsg GBL_CHK_TempStr,"login_title","submit_disable($id('login_form'),1);"
 			Else
 				DisplayLoginForm(GBL_CHK_TempStr)
 			End If
 		End If
 	End If
-	closeDataBase
+	closeDataBase()
 	%>
 	</div>
 	<%
 	If AjaxFlag = 0 Then
-		Boards_Body_Bottom
-		SiteBottom
+		Boards_Body_Bottom()
+		SiteBottom()
 	End If
 
 End Sub
@@ -93,24 +97,24 @@ Sub LoginAccuessFul
 	If u = "" Then u = "../Boards.asp"
 	
 	If AjaxFlag = 1 Then
-		Processor_LoginMsg "<div class=""ajaxbox""><div class=""title"">ÄúÒÑ¾­³É¹¦µÇÂ¼£¬±¾Ò³ÃæÉÔºó½«·µ»Ø×Ô¶¯Ë¢ĞÂ£®</div><div class=""value2""><a href=""" & u & """>ÄúÒ²¿ÉÒÔµã»÷´Ë´¦Á¢¼´Ë¢ĞÂ¡£</a></div></div>","anc_delbody","setTimeout(""document.location.href='" & u & "'"",1000);"
+		Processor_LoginMsg "<div class=""ajaxbox""><div class=""title"">æ‚¨å·²ç»æˆåŠŸç™»å½•ï¼Œæœ¬é¡µé¢ç¨åå°†è¿”å›è‡ªåŠ¨åˆ·æ–°ï¼</div><div class=""value2""><a href=""" & u & """>æ‚¨ä¹Ÿå¯ä»¥ç‚¹å‡»æ­¤å¤„ç«‹å³åˆ·æ–°ã€‚</a></div></div>","anc_delbody","setTimeout(""document.location.href='" & u & "'"",1000);"
 		Exit Sub
 	End If
 	
 	%>
 
-	ÄúÒÑ¾­³É¹¦µÇÂ¼£¬±¾Ò³Ãæ½«ÔÚ5Ãëºó×Ô¶¯·µ»ØÆäËüÊ×Ò³£¬¿ÉÒÔ¼ÌĞøÑ¡ÔñÒÔÏÂ²Ù×÷£º</b>
+	æ‚¨å·²ç»æˆåŠŸç™»å½•ï¼Œæœ¬é¡µé¢å°†åœ¨5ç§’åè‡ªåŠ¨è¿”å›å…¶å®ƒé¦–é¡µï¼Œå¯ä»¥ç»§ç»­é€‰æ‹©ä»¥ä¸‹æ“ä½œï¼š</b>
 	<p>
-	- <a href=<%=DEF_BBS_HomeUrl%>>·µ»ØÂÛÌ³Ê×Ò³</a>
+	- <a href=<%=DEF_BBS_HomeUrl%>>è¿”å›è®ºå›é¦–é¡µ</a>
 	<br><br>
 	<table border="0" cellspacing="0" cellpadding="0">
 	<tr><td>-&nbsp;</td><td>
-	<!-- #include file=../inc/IncHtm/BoardJump.asp -->
+	<!--#include file="../inc/IncHtm/BoardJump.asp"-->
 	</td></tr></table>
 	<%
 	If u <> "" Then
 	%><br>
-	- ·µ»Ø<a href="<%=htmlencode(u)%>"><%=htmlencode(u)%></a><%
+	- è¿”å›<a href="<%=htmlencode(u)%>"><%=htmlencode(u)%></a><%
 	End If%>
 	
 	<script language=javascript>
@@ -126,21 +130,21 @@ Sub LoginAccuessFul
 	End If
 	
 	Response.Clear
-	CloseDatabase
+	CloseDatabase()
 	Response.Redirect u%>"; 
 				}
 				setTimeout("a_topage()",1000);
 				</script>
 	<br>
 	<%If DEF_RepeatLoginTimeOut > 0 and DEF_RepeatLoginTimeOut < DEF_UserOnlineTimeOut Then
-		Response.write "<br>×¢Òâ£ºÂÛÌ³ÒÑ¿ªÆô·ÀÖØ¸´µÇÂ¼¹¦ÄÜ£¬µÇÂ¼ºó£¬ÆäËüÈË½«ÎŞÈ¨Ê¹ÓÃÄúµÄÕËºÅ"
+		Response.write "<br>æ³¨æ„ï¼šè®ºå›å·²å¼€å¯é˜²é‡å¤ç™»å½•åŠŸèƒ½ï¼Œç™»å½•åï¼Œå…¶å®ƒäººå°†æ— æƒä½¿ç”¨æ‚¨çš„è´¦å·"
 	End If
     
 End Sub
 
 Sub Main_Logout
 
-	initDatabase
+	initDatabase()
 	If Request.Form("sure")="1" Then
 		Dim UserID
 		Dim Rs
@@ -169,10 +173,10 @@ Sub Main_Logout
 				End If
 			Next
 			GBL_AppType = ""
-			Pub_ClearCookie
+			Pub_ClearCookie()
 		Else
 			GBL_AppType = ""
-			Pub_ClearCookie
+			Pub_ClearCookie()
 			'Response.Cookies(DEF_MasterCookies & "_" & GBL_UserID).Expires = Date - 1
 			'Response.Cookies(DEF_MasterCookies & "_" & GBL_UserID).Domain = DEF_AbsolutHome
 			'Response.Cookies(DEF_MasterCookies & "Time").Expires = Date - 1
@@ -184,12 +188,12 @@ Sub Main_Logout
 		
 		UpdateOnlineUserInfo(" from LeadBBS_onlineUser where sessionID=" & session.sessionID)
 		If GBL_UserID > 0 Then UpdateOnlineUserInfo(" from LeadBBS_onlineUser where UserID=" & GBL_UserID)
-		SetActiveUserCount
+		SetActiveUserCount()
 		session.abandon
 		If UserID > 0 Then
 			CALL LDExeCute("Update LeadBBS_User set LastDoingTime=" & GetTimeValue(DateAdd("s", 0-DEF_UserOnlineTimeOut, DEF_Now)) & " where ID=" & UserID,1)
 		End If
-		closeDatabase
+		closeDatabase()
 		
 		Dim u
 		u = filterUrlstr(Request("u"))
@@ -204,30 +208,30 @@ Sub Main_Logout
 		End If
 		If u = "" Then u = DEF_BBS_HomeUrl & "Boards.asp"
 		GBL_CheckPassDoneFlag = 0
-		closedatabase
-		initdatabase
-		checkpass
+		closedatabase()
+		initdatabase()
+		checkpass()
 		If AjaxFlag = 0 Then 
 			Response.Redirect DEF_BBS_HomeUrl & "Boards.asp"
 		Else
-			Processor_LoginMsg "<div class=""ajaxbox""><div class=""title"">ÄúÒÑ¾­³É¹¦ÍË³ö£¬±¾Ò³ÃæÉÔºó½«×Ô¶¯Ë¢ĞÂ¡£</div><div class=""value2""><a href=""" & u & """>µã»÷´Ë´¦Á¢¼´Ë¢ĞÂ¡£</a></div></div>","anc_delbody",""
+			Processor_LoginMsg "<div class=""ajaxbox""><div class=""title"">æ‚¨å·²ç»æˆåŠŸé€€å‡ºï¼Œæœ¬é¡µé¢ç¨åå°†è‡ªåŠ¨åˆ·æ–°ã€‚</div><div class=""value2""><a href=""" & u & """>ç‚¹å‡»æ­¤å¤„ç«‹å³åˆ·æ–°ã€‚</a></div></div>","anc_delbody",""
 		End If
 	Else
-		BBS_SiteHead DEF_SiteNameString & " - ÍË³ö",0,"<span class=navigate_string_step>ÍË³ö</span>"
+		BBS_SiteHead DEF_SiteNameString & " - é€€å‡º",0,"<span class=navigate_string_step>é€€å‡º</span>"
 		Boards_Body_Head("")
 		%>
 		<div class='alertbox fire'>
 		<form name=DellClientForm action=Login.asp?action=logout method=post>
 			<input type=hidden name=sure value="1">
-			<div class=title>ÇëÈ·ÈÏÍË³ö, ÈçÒª¼ÌĞøÇë°´È·¶¨.</div>
-			<div class=value2><input class=fmchkbox type="checkbox" name="clearck" value="1" checked>Í¬Ê±Çå¿Õ±¾Õ¾COOKIEĞÅÏ¢</div>
+			<div class=title>è¯·ç¡®è®¤é€€å‡º, å¦‚è¦ç»§ç»­è¯·æŒ‰ç¡®å®š.</div>
+			<div class=value2><input class=fmchkbox type="checkbox" name="clearck" value="1" checked>åŒæ—¶æ¸…ç©ºæœ¬ç«™COOKIEä¿¡æ¯</div>
 			<br>
-			<div class=value2><input type=submit value=È·¶¨ class="fmbtn btn_2"></div>
+			<div class=value2><input type=submit value=ç¡®å®š class="fmbtn btn_2"></div>
 		</form>
 		<%
-		closeDataBase
-		Boards_Body_Bottom
-		SiteBottom
+		closeDataBase()
+		Boards_Body_Bottom()
+		SiteBottom()
 		If GBL_ShowBottomSure = 1 Then Response.Write GBL_SiteBottomString
 	End If
 
@@ -235,19 +239,19 @@ End Sub
 
 Sub Main_Hidden
 
-	initDatabase
+	initDatabase()
 
 	GBL_CHK_TempStr = ""
 	
 	Dim ShowFlagString
 	If GBL_CHK_ShowFlag = 1 Then
-		ShowFlagString = "ÉÏÏß"
+		ShowFlagString = "ä¸Šçº¿"
 	Else
-		ShowFlagString = "ÒşÉí"
+		ShowFlagString = "éšèº«"
 	End If
 	If AjaxFlag = 0 Then BBS_SiteHead DEF_SiteNameString & " - " & ShowFlagString,0,"<span class=navigate_string_step>" & ShowFlagString & "</span>"
 	
-	If GBL_UserID=0 Then GBL_CHK_TempStr = GBL_CHK_TempStr & "ÄúÃ»ÓĞµÇÂ¼!" & VbCrLf
+	If GBL_UserID=0 Then GBL_CHK_TempStr = GBL_CHK_TempStr & "æ‚¨æ²¡æœ‰ç™»å½•!" & VbCrLf
 	
 	Dim u
 	u = filterUrlstr(Request("u"))
@@ -275,18 +279,18 @@ Sub Main_Hidden
 		%>
 		<form name=DellClientForm action=Login.asp?action=hidden method=post>
 			<input type=hidden name=sure value="1">
-			<div class=title>Çë°´È·¶¨¼ÌĞø¡£</div>
+			<div class=title>è¯·æŒ‰ç¡®å®šç»§ç»­ã€‚</div>
 			<input type=hidden value="<%Response.Write htmlencode(u)%>" name=u>
-			<div class=value2><input type=submit value=È·¶¨ class="fmbtn btn_2">
+			<div class=value2><input type=submit value=ç¡®å®š class="fmbtn btn_2">
 		</form>
 		<%
 	Else
 		If DEF_EnableUserHidden = 1 Then
 			If GBL_CHK_Flag=1 Then
-				If ShowFlagString = "ÒşÉí" Then
+				If ShowFlagString = "éšèº«" Then
 					CALL LDExeCute("Update LeadBBS_User Set ShowFlag=1 where ID=" & GBL_UserID,1)
 					UpdateSessionValue 3,1,0
-					CALL LDExeCute("Update LeadBBS_OnlineUser Set HiddenFlag=0,UserName='ÒşÉíÓÃ»§' where UserID=" & GBL_UserID,1)
+					CALL LDExeCute("Update LeadBBS_OnlineUser Set HiddenFlag=0,UserName='éšèº«ç”¨æˆ·' where UserID=" & GBL_UserID,1)
 				Else
 					CALL LDExeCute("Update LeadBBS_User Set ShowFlag=0 where ID=" & GBL_UserID,1)
 					UpdateSessionValue 3,0,0
@@ -294,36 +298,36 @@ Sub Main_Hidden
 				End If
 				
 				If AjaxFlag = 1 Then
-					Processor_LoginMsg "<div class=""title"">ÄúÒÑ¾­³É¹¦" & ShowFlagString & "£¬±¾Ò³ÃæÉÔºó½«×Ô¶¯Ë¢ĞÂ¡£</div><div class=""value2""><a href=""" & u & """>ÄúÒ²¿ÉÒÔµã»÷´Ë´¦Á¢¼´Ë¢ĞÂ¡£</a></div>","anc_delbody",""
+					Processor_LoginMsg "<div class=""title"">æ‚¨å·²ç»æˆåŠŸ" & ShowFlagString & "ï¼Œæœ¬é¡µé¢ç¨åå°†è‡ªåŠ¨åˆ·æ–°ã€‚</div><div class=""value2""><a href=""" & u & """>æ‚¨ä¹Ÿå¯ä»¥ç‚¹å‡»æ­¤å¤„ç«‹å³åˆ·æ–°ã€‚</a></div>","anc_delbody",""
 				Else
-					Response.Write "<p>ÄúÒÑ¾­³É¹¦" & ShowFlagString
+					Response.Write "<p>æ‚¨å·²ç»æˆåŠŸ" & ShowFlagString
 					If u <> "" Then Response.Redirect u
 				End If
 			Else
 				If Request("submitflag")="" Then
-					DisplayLoginForm("ÇëÏÈµÇÂ¼")
+					DisplayLoginForm("è¯·å…ˆç™»å½•")
 				Else
 					DisplayLoginForm(GBL_CHK_TempStr)
 				End If
 			End If
 		Else%>
 			<div class=alert>
-				ÂÛÌ³ÒÑ¾­½ûÖ¹Ê¹ÓÃÒşÉí¹¦ÄÜ
+				è®ºå›å·²ç»ç¦æ­¢ä½¿ç”¨éšèº«åŠŸèƒ½
 			</div>
 		<%End If
 	End If
 	%>
 	</div>
 	<%
-	closeDataBase
+	closeDataBase()
 	If AjaxFlag = 0 Then
-		Boards_Body_Bottom
-		SiteBottom
+		Boards_Body_Bottom()
+		SiteBottom()
 	End If
 
 End Sub
 
-Rem µ±ÓÃ»§µÇÂ¼Ê±£¬ĞèÒª¸üĞÂÒ»Ğ©ĞÅÏ¢£¬±ÈÈç×îºóµÇÂ¼Ê±¼äµÈ
+Rem å½“ç”¨æˆ·ç™»å½•æ—¶ï¼Œéœ€è¦æ›´æ–°ä¸€äº›ä¿¡æ¯ï¼Œæ¯”å¦‚æœ€åç™»å½•æ—¶é—´ç­‰
 Function UpdateUserLevel
 
 	Dim Temp_N,IP,SessionID,Prevtime
@@ -333,7 +337,7 @@ Function UpdateUserLevel
 	Prevtime = GetTimeValue(DEF_Now)
 
 	If GBL_CHK_ShowFlag = 1 and DEF_EnableUserHidden = 1 Then
-		Temp_N = "ÒşÉíÓÃ»§"
+		Temp_N = "éšèº«ç”¨æˆ·"
 	Else
 		If GBL_UserID > 0 Then
 			Temp_N = GBL_CHK_User
@@ -344,7 +348,7 @@ Function UpdateUserLevel
 	Dim OnlineID,CountFlag,TmpSessionID,OnlineUserID,tmp,i
 	
 	If GBL_CHK_ShowFlag = 1 and DEF_EnableUserHidden = 1 Then
-		i = "ÒşÉíÓÃ»§"
+		i = "éšèº«ç”¨æˆ·"
 		tmp = 0
 	Else
 		If GBL_UserID > 0 Then
@@ -369,7 +373,7 @@ Function UpdateUserLevel
 		Set Rs = Nothing
 		If CountFlag = 1 Then
 			UpdateOnlineUserInfo("from LeadBBS_onlineUser where UserID=" & GBL_UserID & " and ID<>" & OnlineID)
-			SetActiveUserCount
+			SetActiveUserCount()
 		End if
 
 		If GBL_UserID > 0 and OnlineID > 0 Then
@@ -385,10 +389,10 @@ Function UpdateUserLevel
 			Rs.close
 			Set Rs = Nothing
 			UpdateOnlineUserInfo("from LeadBBS_onlineUser where SessionID=" & cCur(SessionID))
-			CALL LDExeCute("insert into LeadBBS_onlineUser(SessionID,UserID,LastDoingTime,IP,StartTime,AtBoardID,AtUrl,AtInfo,Browser,System,UserName,HiddenFlag,LastRndNumber) values(" & cCur(SessionID) & "," & cCur(GBL_UserID) & "," & GetTimeValue(DEF_Now) & ",'" & GBL_IPAddress & "'," & GetTimeValue(DEF_Now) & ",0,'" & Replace(Left(Request.Servervariables("SCRIPT_NAME") & "?" & Request.QueryString,255),"'","''") & "','ÆäËüÒ³Ãæ','" & Left(Replace(GetSBInfo(1),"'","''"),30) & "','" & Left(Replace(GetSBInfo(2),"'","''"),30) & "','" & Replace(i,"'","''") & "'," & cCur(tmp) & "," & (Fix(Timer) mod 9999) & ")",1)
+			CALL LDExeCute("insert into LeadBBS_onlineUser(SessionID,UserID,LastDoingTime,IP,StartTime,AtBoardID,AtUrl,AtInfo,Browser,System,UserName,HiddenFlag,LastRndNumber) values(" & cCur(SessionID) & "," & cCur(GBL_UserID) & "," & GetTimeValue(DEF_Now) & ",'" & GBL_IPAddress & "'," & GetTimeValue(DEF_Now) & ",0,'" & Replace(Left(Request.Servervariables("SCRIPT_NAME") & "?" & Request.QueryString,255),"'","''") & "','å…¶å®ƒé¡µé¢','" & Left(Replace(GetSBInfo(1),"'","''"),30) & "','" & Left(Replace(GetSBInfo(2),"'","''"),30) & "','" & Replace(i,"'","''") & "'," & cCur(tmp) & "," & (Fix(Timer) mod 9999) & ")",1)
 
-			If GBL_CHK_User <> "" and GBL_UserID > 0 and CheckSupervisorUserName = 1 Then
-				CALL LDExeCute("insert into LeadBBS_Log(LogType,LogTime,LogInfo,UserName,IP,BoardID) Values(51," & GetTimeValue(DEF_Now) & ",'¹ÜÀíÔ±µÇÂ¼ÂÛÌ³.','" & Replace(Replace(htmlencode(Left(GBL_CHK_User,14)),"\","\\"),"'","''") & "','" & Replace(GBL_IPAddress,"'","''") & "'," & GBL_Board_ID & ")",1)
+			If GBL_CHK_User <> "" and GBL_UserID > 0 and CheckSupervisorUserName() = 1 Then
+				CALL LDExeCute("insert into LeadBBS_Log(LogType,LogTime,LogInfo,UserName,IP,BoardID) Values(51," & GetTimeValue(DEF_Now) & ",'ç®¡ç†å‘˜ç™»å½•è®ºå›.','" & Replace(Replace(htmlencode(Left(GBL_CHK_User,14)),"\","\\"),"'","''") & "','" & Replace(GBL_IPAddress,"'","''") & "'," & GBL_Board_ID & ")",1)
 			End If
 
 			Application.Lock

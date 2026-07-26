@@ -1,31 +1,31 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
-<!-- #include file=inc/ForumBoard_fun.asp -->
-<!-- #include file=../../inc/Limit_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
+<!--#include file="inc/ForumBoard_fun.asp"-->
+<!--#include file="../../inc/Limit_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
-DisplayUserNavigate("Ìí¼ÓÂÛÌ³°æÃæ")
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
+DisplayUserNavigate("æ·»åŠ è®ºå›ç‰ˆé¢")
 If GBL_CHK_Flag=1 Then
-	LoginAccuessFul
+	LoginAccuessFul()
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Function LoginAccuessFul
 
 %>
-<b>Ìí¼Ó°æÃæ</b>
+<b>æ·»åŠ ç‰ˆé¢</b>
           <%
           GBL_CHK_TempStr = ""
           If Request.Form("submitflag")="LKOkxk2" Then
@@ -43,19 +43,19 @@ Function LoginAccuessFul
 		GBL_OtherLimit_Part1 = Left(Request.Form("GBL_OtherLimit_Part1"),14)
 		GBL_OtherLimit_Part2 = Left(Request.Form("GBL_OtherLimit_Part2"),14)
 
-          	If CheckFormForumBoardData=0 Then
-          		Response.Write "<div class=alert>Êý¾Ý²»ÄÜÍ¨¹ý£º" & GBL_CHK_TempStr & "</div>" & VbCrLf
-          		DisplayJoinForm
+          	If CheckFormForumBoardData()=0 Then
+          		Response.Write "<div class=alert>æ•°æ®ä¸èƒ½é€šè¿‡ï¼š" & GBL_CHK_TempStr & "</div>" & VbCrLf
+          		DisplayJoinForm()
           	Else
-          		If InsertForumBoard = 0 Then
-          			Response.Write "<div class=alert>²åÈë³ö´í£º" & GBL_CHK_TempStr & "</div>" & VbCrLf
-          			DisplayJoinForm
+          		If InsertForumBoard() = 0 Then
+          			Response.Write "<div class=alert>æ’å…¥å‡ºé”™ï¼š" & GBL_CHK_TempStr & "</div>" & VbCrLf
+          			DisplayJoinForm()
           		Else
-          			Response.Write "<div class=alertdone>Ìí¼Ó³É¹¦!</div>" & VbCrLf
+          			Response.Write "<div class=alertdone>æ·»åŠ æˆåŠŸ!</div>" & VbCrLf
           		End If
           	End If
           Else
-          	DisplayJoinForm
+          	DisplayJoinForm()
           End If
 
 End Function
@@ -92,33 +92,33 @@ Function DisplayJoinForm%>
           <form action=ForumBoardJoin.asp method=post name=form1 id=form1>
           <table border=0 cellpadding=0 cellspacing=0 width="100%" class=frame_table>
           <tr>
-          	<td class=tdbox width=120>ÂÛÌ³°æÃæ±àºÅ:</td>
-          	<td class=tdbox><input name=GBL_BoardID value="<%=htmlencode(GBL_BoardID)%>" class=fminpt>(±àºÅ444Êô»ØÊÕÕ¾°æÃæ×¨ÓÃ,ÆäËü°æÃæÎðÓÃ)
+          	<td class=tdbox width=120>è®ºå›ç‰ˆé¢ç¼–å·:</td>
+          	<td class=tdbox><input name=GBL_BoardID value="<%=htmlencode(GBL_BoardID)%>" class=fminpt>(ç¼–å·444å±žå›žæ”¶ç«™ç‰ˆé¢ä¸“ç”¨,å…¶å®ƒç‰ˆé¢å‹¿ç”¨)
           	<input name=submitflag type=hidden value="LKOkxk2"></td>
           </tr>
           <tr>
-          	<td class=tdbox>ÂÛÌ³°æÃæÃû³Æ:</td><td class=tdbox><input name=GBL_BoardName value="<%=htmlencode(GBL_BoardName)%>" class=fminpt>(Ö§³Öhtml)</td>
+          	<td class=tdbox>è®ºå›ç‰ˆé¢åç§°:</td><td class=tdbox><input name=GBL_BoardName value="<%=htmlencode(GBL_BoardName)%>" class=fminpt>(æ”¯æŒhtml)</td>
           </tr>
           <tr>
-          	<td class=tdbox>°æÃæ·ÖÀà±àºÅ:</td><td class=tdbox><select name=GBL_BoardAssort><option value=0>ÇëÑ¡Ôñ·ÖÀà</option><%DisplayForumAssortList%></select></td>
+          	<td class=tdbox>ç‰ˆé¢åˆ†ç±»ç¼–å·:</td><td class=tdbox><select name=GBL_BoardAssort><option value=0>è¯·é€‰æ‹©åˆ†ç±»</option><%DisplayForumAssortList()%></select></td>
           </tr>
           <tr>
-          	<td class=tdbox>°æÃæ¼òµ¥ÃèÊö:<br>¿ÉÒÔÊ¹ÓÃHTML</td><td class=tdbox><textarea name=GBL_BoardIntro rows=3 cols=41 class=fmtxtra><%If GBL_BoardIntro <> "" Then Response.Write VbCrLf & htmlEncode(GBL_BoardIntro)%></textarea></td>
+          	<td class=tdbox>ç‰ˆé¢ç®€å•æè¿°:<br>å¯ä»¥ä½¿ç”¨HTML</td><td class=tdbox><textarea name=GBL_BoardIntro rows=3 cols=41 class=fmtxtra><%If GBL_BoardIntro <> "" Then Response.Write VbCrLf & htmlEncode(GBL_BoardIntro)%></textarea></td>
           </tr>
           <tr>
-          	<td class=tdbox>×îºó·¢±íÓÃ»§:</td><td class=tdbox><input name=GBL_LastWriter value="<%=htmlencode(GBL_LastWriter)%>" maxlength=20 class=fminpt></td>
+          	<td class=tdbox>æœ€åŽå‘è¡¨ç”¨æˆ·:</td><td class=tdbox><input name=GBL_LastWriter value="<%=htmlencode(GBL_LastWriter)%>" maxlength=20 class=fminpt></td>
           </tr>
           <tr>
-          	<td class=tdbox>×îºó·¢±íÊ±¼ä:</td><td class=tdbox><input name=GBL_LastWriteTime value="<%=htmlencode(GBL_LastWriteTime)%>" maxlength=50 class=fminpt></td>
+          	<td class=tdbox>æœ€åŽå‘è¡¨æ—¶é—´:</td><td class=tdbox><input name=GBL_LastWriteTime value="<%=htmlencode(LngStr(GBL_LastWriteTime))%>" maxlength=50 class=fminpt></td>
           </tr>
           <tr>
-          	<td class=tdbox>ÂÛÌ³×ÜÖ÷ÌâÊý:</td><td class=tdbox><input name=GBL_TopicNum value="<%=htmlencode(GBL_TopicNum)%>" maxlength=20 class=fminpt></td>
+          	<td class=tdbox>è®ºå›æ€»ä¸»é¢˜æ•°:</td><td class=tdbox><input name=GBL_TopicNum value="<%=htmlencode(GBL_TopicNum)%>" maxlength=20 class=fminpt></td>
           </tr>
           <tr>
-          	<td class=tdbox>ÂÛÌ³×ÜÌû×ÓÊý:</td><td class=tdbox><input name=GBL_AnnounceNum value="<%=htmlencode(GBL_AnnounceNum)%>" maxlength=20 class=fminpt></td>
+          	<td class=tdbox>è®ºå›æ€»å¸–å­æ•°:</td><td class=tdbox><input name=GBL_AnnounceNum value="<%=htmlencode(GBL_AnnounceNum)%>" maxlength=20 class=fminpt></td>
           </tr>
           <tr>
-          	<td class=tdbox>ÂÛÌ³ÏÔÊ¾×´Ì¬:</td><td class=tdbox>
+          	<td class=tdbox>è®ºå›æ˜¾ç¤ºçŠ¶æ€:</td><td class=tdbox>
 			<select name="GBL_HiddenFlag">
 			<%
 		Dim TempN
@@ -130,7 +130,7 @@ Function DisplayJoinForm%>
 			</select></td>
           </tr>
           <tr>
-          	<td class=tdbox>°æÃæÄ¬ÈÏ·ç¸ñ:</td><td class=tdbox>
+          	<td class=tdbox>ç‰ˆé¢é»˜è®¤é£Žæ ¼:</td><td class=tdbox>
 			<select name="GBL_BoardStyle">
 			<%
 		If GBL_BoardStyle = "" or inStr(GBL_BoardStyle,",") > 0 or isNumeric(GBL_BoardStyle) = 0 Then GBL_BoardStyle=0
@@ -141,13 +141,13 @@ Function DisplayJoinForm%>
 			</select></td>
           </tr>
           <tr>
-          	<td class=tdbox>ÂÛÌ³·ÃÎÊÃÜÂë:</td><td class=tdbox><input name=GBL_ForumPass value="<%=htmlencode(GBL_ForumPass)%>" maxlength=20 class=fminpt>(ÓÃ»§½øÈë´Ë°æÃæÐèÒªÊäÈëÏàÓ¦µÄÃÜÂë)</td>
+          	<td class=tdbox>è®ºå›è®¿é—®å¯†ç :</td><td class=tdbox><input name=GBL_ForumPass value="<%=htmlencode(GBL_ForumPass)%>" maxlength=20 class=fminpt>(ç”¨æˆ·è¿›å…¥æ­¤ç‰ˆé¢éœ€è¦è¾“å…¥ç›¸åº”çš„å¯†ç )</td>
           </tr>
           <tr>
-          	<td class=tdbox><%=DEF_PointsName(8)%>ÁÐ±í:</td><td class=tdbox><input name=GBL_MasterList value="<%=htmlencode(GBL_MasterList)%>" maxlength=250 size=28 class=fminpt>(¶ººÅ·Ö¸ô,È«Ìå°æÖ÷ÌîÐ´<span style="cursor:hand" onclick="document.form1.GBL_MasterList.value='?LeadBBS?';">?LeadBBS?</span>)</td>
+          	<td class=tdbox><%=DEF_PointsName(8)%>åˆ—è¡¨:</td><td class=tdbox><input name=GBL_MasterList value="<%=htmlencode(GBL_MasterList)%>" maxlength=250 size=28 class=fminpt>(é€—å·åˆ†éš”,å…¨ä½“ç‰ˆä¸»å¡«å†™<span style="cursor:hand" onclick="document.form1.GBL_MasterList.value='?LeadBBS?';">?LeadBBS?</span>)</td>
 	      </tr>
 		<tr>
-			<td class=tdbox width=80>ÂÛÌ³È¨ÏÞÏÞÖÆ:</td>
+			<td class=tdbox width=80>è®ºå›æƒé™é™åˆ¶:</td>
 			<td class=tdbox valign=top><%
 		for TempN = 0 to LimitBoardStringDataNum%>	 
 				<input type="checkbox" class=fmchkbox name="Limit<%=TempN+1%>" value="1"<%If GetBinarybit(GBL_BoardLimit,TempN+1) = 1 Then
@@ -158,20 +158,20 @@ Function DisplayJoinForm%>
 				<%Next%></td>
 		</tr>
 	<tr>
-		<td class=tdbox width=80>¸ü¶à·ÃÎÊÏÞÖÆ:</td>
+		<td class=tdbox width=80>æ›´å¤šè®¿é—®é™åˆ¶:</td>
 		<td class=tdbox valign=top>
 			<Select name=GBL_OtherLimit_Part1>
-				<option value=0<%If GBL_OtherLimit_Part1 = 0 Then Response.Write " selected"%>>====ÎÞÏÞÖÆ====</option>
-				<option value=1<%If GBL_OtherLimit_Part1 = 1 Then Response.Write " selected"%>>ÐèÒª<%=DEF_PointsName(0)%></option>
-				<option value=2<%If GBL_OtherLimit_Part1 = 2 Then Response.Write " selected"%>>ÐèÒª<%=DEF_PointsName(4)%>[ÔÚÏßÊ±¼ä]</option>
-				<option value=3<%If GBL_OtherLimit_Part1 = 3 Then Response.Write " selected"%>>ÐèÒª<%=DEF_PointsName(1)%></option>
-				<option value=4<%If GBL_OtherLimit_Part1 = 4 Then Response.Write " selected"%>>ÐèÒª<%=DEF_PointsName(2)%></option>
+				<option value=0<%If GBL_OtherLimit_Part1 = 0 Then Response.Write " selected"%>>====æ— é™åˆ¶====</option>
+				<option value=1<%If GBL_OtherLimit_Part1 = 1 Then Response.Write " selected"%>>éœ€è¦<%=DEF_PointsName(0)%></option>
+				<option value=2<%If GBL_OtherLimit_Part1 = 2 Then Response.Write " selected"%>>éœ€è¦<%=DEF_PointsName(4)%>[åœ¨çº¿æ—¶é—´]</option>
+				<option value=3<%If GBL_OtherLimit_Part1 = 3 Then Response.Write " selected"%>>éœ€è¦<%=DEF_PointsName(1)%></option>
+				<option value=4<%If GBL_OtherLimit_Part1 = 4 Then Response.Write " selected"%>>éœ€è¦<%=DEF_PointsName(2)%></option>
 			</select>
 			<input name=GBL_OtherLimit_Part2 value="<%=htmlencode(GBL_OtherLimit_Part2)%>" maxlength=12 size=12 class=fminpt>
 		</td>
 	</tr>
           <tr>
-          	<td class=tdbox><input type=submit value="Ìá½»" class=fmbtn> <input type=reset value="È¡Ïû" class=fmbtn></td>
+          	<td class=tdbox><input type=submit value="æäº¤" class=fmbtn> <input type=reset value="å–æ¶ˆ" class=fmbtn></td>
           </tr>
           </table></form>
 <%End Function%>

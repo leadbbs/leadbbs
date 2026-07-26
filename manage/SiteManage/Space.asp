@@ -1,24 +1,24 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Upload_Setup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Upload_Setup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
 GBL_ID = GBL_UserID
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
-DisplayUserNavigate("ÂÛÌ³¿Õ¼äÕ¼ÓÃÇé¿ö")
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
+DisplayUserNavigate("è®ºå›ç©ºé—´å ç”¨æƒ…å†µ")
 If GBL_CHK_Flag=1 Then
-	LoginAccuessFul
+	LoginAccuessFul()
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Function LoginAccuessFul%>
@@ -26,12 +26,12 @@ Function LoginAccuessFul%>
 <table width="97%" border="0" cellspacing="0" cellpadding="0">
 <tr>
 	<td>
-	<%If CheckSupervisorUserName = 1 Then%>
-              <%DisplaySystemInfo%>
+	<%If CheckSupervisorUserName() = 1 Then%>
+              <%DisplaySystemInfo()%>
               <br><br>
 	<%Else%>
 	       <p><br>
-              ÒÑ¾­³É¹¦µÇÂ¼£¡<br></p>
+              å·²ç»æˆåŠŸç™»å½•ï¼<br></p>
               <br><br>
               
 	<%End If%>
@@ -45,7 +45,7 @@ Function LoginAccuessFul%>
 Function DisplaySystemInfo
 
 	If Request.QueryString("need") = "1" and DEF_UsedDataBase = 0 Then
-		DisplaySQLDatabaseSize
+		DisplaySQLDatabaseSize()
 		Exit Function
 	End If
 
@@ -78,22 +78,22 @@ Function DisplaySystemInfo
 		End If
 		Set fso = Nothing
 	Else
-		Response.Write "<br><br><font color=Red class=redfont>ÂÛÌ³¹Ø±ÕFSO¹¦ÄÜ£¬²é¿´Õ¼ÓÃ¿Õ¼äÊ§°Ü£®</font><br>" & VbCrLf
+		Response.Write "<br><br><font color=Red class=redfont>è®ºå›å…³é—­FSOåŠŸèƒ½ï¼ŒæŸ¥çœ‹å ç”¨ç©ºé—´å¤±è´¥ï¼</font><br>" & VbCrLf
 		BBS_Space = 0
 		Upload_Space = 0
 		Database_Space = 0
 		Exit Function
 	End If
 
-	'Response.Write "ÂÛÌ³Ä¿Â¼×ÜÕ¼ÓÃ¿Õ¼ä£º<font color=red class=redfont>" & PrintSpaceValue(BBS_Space) & "</font> [" & BBS_Space & " Bytes]<br>"
-	'Response.Write "ÉÏ´«ÎÄ¼ş×ÜÕ¼ÓÃ¿Õ¼ä£º<font color=red class=redfont>" & PrintSpaceValue(Upload_Space) & "</font> [" & Upload_Space & " Bytes]<br>"
+	'Response.Write "è®ºå›ç›®å½•æ€»å ç”¨ç©ºé—´ï¼š<font color=red class=redfont>" & PrintSpaceValue(BBS_Space) & "</font> [" & BBS_Space & " Bytes]<br>"
+	'Response.Write "ä¸Šä¼ æ–‡ä»¶æ€»å ç”¨ç©ºé—´ï¼š<font color=red class=redfont>" & PrintSpaceValue(Upload_Space) & "</font> [" & Upload_Space & " Bytes]<br>"
 	select case DEF_UsedDataBase
 		case 1:
-			Response.Write "<div class=frameline>ÂÛÌ³Êı¾İ¿âÎÄ¼ş´óĞ¡£º<span class=redfont>" & PrintSpaceValue(Database_Space) & "</span> [" & Database_Space & " Bytes]</div>"
+			Response.Write "<div class=frameline>è®ºå›æ•°æ®åº“æ–‡ä»¶å¤§å°ï¼š<span class=redfont>" & PrintSpaceValue(Database_Space) & "</span> [" & Database_Space & " Bytes]</div>"
 		case 0:
-			DisplaySQLDatabaseSize
+			DisplaySQLDatabaseSize()
 		case 2:
-			DisplayMySQLDatabaseSize
+			DisplayMySQLDatabaseSize()
 	End select
 
 End Function
@@ -114,13 +114,13 @@ Function DisplaySQLDatabaseSize
 		Set Rs = Server.CreateObject("ADODB.RecordSet")
 		Set Rs = LDExeCute("exec sp_databases",0)
 		%>
-		<div class="frameline">·şÎñÆ÷¸÷Êı¾İ¿âÕ¼ÓÃ¿Õ¼äÈçÏÂ£º</div>
+		<div class="frameline">æœåŠ¡å™¨å„æ•°æ®åº“å ç”¨ç©ºé—´å¦‚ä¸‹ï¼š</div>
 		<%
 		Count = 0
 		Do while Not Rs.Eof
 			If Rs(0) = DBName Then
 				%>
-				<div class="frameline">Êı¾İ¿â<span class=bluefont><%=Rs(0)%></span>£¬Õ¼ÓÃ¿Õ¼ä<span class=greenfont><%=Rs(1)%></span>KB</div>
+				<div class="frameline">æ•°æ®åº“<span class=bluefont><%=Rs(0)%></span>ï¼Œå ç”¨ç©ºé—´<span class=greenfont><%=Rs(1)%></span>KB</div>
 				<%
 				Count = cCur(Rs(1))
 				Exit Do
@@ -129,7 +129,7 @@ Function DisplaySQLDatabaseSize
 		Loop
 		Rs.Close
 		Set Rs = Nothing%>
-		<div class="frameline">×Ü¹²Õ¼ÓÃ¿Õ¼ä<%=Count%>KB</div><%
+		<div class="frameline">æ€»å…±å ç”¨ç©ºé—´<%=Count%>KB</div><%
 
 End Function
 
@@ -150,7 +150,7 @@ Sub DisplayMySQLDatabaseSize
 		call LDExeCute(SQL,1)
 		Set Rs = LDExeCute("SELECT TABLE_NAME,DATA_LENGTH FROM  TABLES  WHERE table_schema='" & replace(DBName,"'","''") & "'",0)
 		%>
-		<div class="frameline">Êı¾İ¿â¸÷±íÕ¼ÓÃ¿Õ¼äÈçÏÂ£º</div>
+		<div class="frameline">æ•°æ®åº“å„è¡¨å ç”¨ç©ºé—´å¦‚ä¸‹ï¼š</div>
 		<%
 		Count = 0
 		dim size
@@ -162,14 +162,14 @@ Sub DisplayMySQLDatabaseSize
 				size = FormatNumber(size,0,-1)
 			End If
 			%>
-			<div class="frameline"><span class=bluefont><%=Rs(0)%></span>£¬Õ¼ÓÃ¿Õ¼ä <span class=greenfont><%=size%> </span>MB</div>
+			<div class="frameline"><span class=bluefont><%=Rs(0)%></span>ï¼Œå ç”¨ç©ºé—´ <span class=greenfont><%=size%> </span>MB</div>
 			<%
 			Count = Count + cCur(Rs(1))
 			Rs.MoveNext
 		Loop
 		Rs.Close
 		Set Rs = Nothing%>
-		<div class="frameline">×Ü¹²Õ¼ÓÃ¿Õ¼ä <%=FormatNumber(Count/1024/1024,0,-1)%> MB</div><%
+		<div class="frameline">æ€»å…±å ç”¨ç©ºé—´ <%=FormatNumber(Count/1024/1024,0,-1)%> MB</div><%
 
 End Sub
 

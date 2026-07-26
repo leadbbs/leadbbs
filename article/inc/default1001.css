@@ -16,7 +16,7 @@ width:100%;
 cursor:pointer;
 float:left;
 display:block;
-height:35px;color:#b3b3b3;font-weight:bold;font-size:15px;font-family:"Microsoft YaHei","΢���ź�";
+height:35px;color:#b3b3b3;font-weight:bold;font-size:15px;font-family:"Microsoft YaHei","微软雅黑";
 
  line-height:35px;
  padding-left:10px;
@@ -313,7 +313,7 @@ float: none;border-bottom:#bcddec 1px dotted;padding:2px 9px 1px 5px;cursor:poin
 }
 
 
-.layer_item a,layer_itemactive a{outline: none;font-family:"΢���ź�";font-weight:bold;font-size:15px;}
+.layer_item a,layer_itemactive a{outline: none;font-family:"微软雅黑";font-weight:bold;font-size:15px;}
 
 .layer_item2 .title a{float:left;margin-top:0px;height:35px;display: block; min-width:107px;*width:107px;padding:0px;
 /*background: url(../../wzyoyo/file/menu_bg1.png) no-repeat 100% 50%;*/
@@ -348,7 +348,7 @@ border: #d3e6d4 0px solid; display: none;
 .layer_onclickitem {float:left;border:1px #d3e6d4 solid;padding:10px;position: absolute;z-index:991;background:#f3faf6;display:none;}
 .layer_onclickitem a{color:##111111;}
 .layer_onclickitem a:hover{color:#827c31;}
-.layer_item2 a,.layer_item3 a{outline: none;font-family:"΢���ź�";font-weight:bold;font-size:15px;
+.layer_item2 a,.layer_item3 a{outline: none;font-family:"微软雅黑";font-weight:bold;font-size:15px;
 color:white;}
 
 .navactive{border-top: #F4E6D1 1px solid;border-right: #F4E6D1 1px solid;border-left:#F4E6D1 1px solid; padding-right: 6px; padding-left: 6px; padding-bottom: 0px; overflow: hidden; line-height: 20px; padding-top: 0px; height: 20px; float: left;
@@ -977,8 +977,8 @@ border-bottom:1px #121 dashed;
 }
 .cms_listnews .topic {display: inline-block;*display: inline;zoom:1;text-overflow: ellipsis;width:80%;overflow:hidden;white-space: nowrap;word-wrap:normal;}
 .cms_listnews .time{margin-left:22px;float:right;display: inline-block;*display: inline;}
-.cms_listnews a{color:#121;font-family:"Verdana","΢���ź�";}
-.cms_listnews a:hover{color:#8b3a1e;font-family:"Verdana","΢���ź�";}
+.cms_listnews a{color:#121;font-family:"Verdana","微软雅黑";}
+.cms_listnews a:hover{color:#8b3a1e;font-family:"Verdana","微软雅黑";}
 
 .cms_listnews li.piclist{margin-right:15px;}
 .cms_listnews li.piclist{float:left;}
@@ -995,4 +995,4 @@ ul.childclass{ margin:10px 10px 10px 0px;list-style:none ;}
 ul.childclass li{padding:4px;float:left;background:#d7ffc7;margin:3px;display:block;
 border-radius:4px;}
 
-ul.childclass a{color:#121;font-family:"Verdana","΢���ź�";}
+ul.childclass a{color:#121;font-family:"Verdana","微软雅黑";}

@@ -1,26 +1,26 @@
-<!-- #include file=../../inc/BBSSetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSSetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 Server.ScriptTimeOut = 600
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
 Dim GBL_EXEString
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
-DisplayUserNavigate("±¸·İAccessÊı¾İ¿â")
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
+DisplayUserNavigate("å¤‡ä»½æ•°æ®åº“")
 If GBL_CHK_Flag=1 Then
-	LoginAccuessFul
+	LoginAccuessFul()
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 
@@ -31,19 +31,19 @@ function Copyfiles(tempsource,tempend)
     Set fs = Server.CreateObject(DEF_FSOString)
 
     If fs.FileExists(tempend) then
-       Response.Write "Ä¿±ê±¸·İÎÄ¼ş" & tempend & "ÒÑ´æÔÚ£¬ÇëÏÈÉ¾³ı!"
+       Response.Write "ç›®æ ‡å¤‡ä»½æ–‡ä»¶" & tempend & "å·²å­˜åœ¨ï¼Œè¯·å…ˆåˆ é™¤!"
        Set fs=nothing
        Exit Function
     End If
     
     If fs.FileExists(tempsource) then
     Else
-       Response.Write "Òª¸´ÖÆµÄÔ´Êı¾İ¿âÎÄ¼ş"&tempsource&"²»´æÔÚ!"
+       Response.Write "è¦å¤åˆ¶çš„æºæ•°æ®åº“æ–‡ä»¶"&tempsource&"ä¸å­˜åœ¨!"
        Set fs=nothing
        Exit Function
     End If
     fs.CopyFile tempsource,tempend
-    Response.Write "ÒÑ¾­³É¹¦¸´ÖÆÎÄ¼ş"&tempsource&"µ½"&tempend&"!"
+    Response.Write "å·²ç»æˆåŠŸå¤åˆ¶æ–‡ä»¶"&tempsource&"åˆ°"&tempend&"!"
     Set fs = Nothing
 
 end function
@@ -56,7 +56,7 @@ Function DeleteFiles(path)
 	Set fs = Server.CreateObject(DEF_FSOString)
 	If err <> 0 Then
 		Err.Clear
-		Response.Write "<br>·şÎñÆ÷²»Ö§³ÖFSO£¬Ó²ÅÌ±¸·İÎÄ¼şÎ´É¾³ı£®"
+		Response.Write "<br>æœåŠ¡å™¨ä¸æ”¯æŒFSOï¼Œç¡¬ç›˜å¤‡ä»½æ–‡ä»¶æœªåˆ é™¤ï¼"
 		Exit Function
 	End If
 	If fs.FileExists(path) Then
@@ -72,46 +72,50 @@ End Function
 Function LoginAccuessFul
 
 	If DEF_FSOString = "" Then
-		Response.Write "<p><b>·şÎñÆ÷²»Ö§³Ö´Ë¹¦ÄÜ!</b></p>"
+		Response.Write "<p><b>æœåŠ¡å™¨ä¸æ”¯æŒæ­¤åŠŸèƒ½!</b></p>"
+		Exit Function
+	End If
+	If DEF_UsedDataBase = 2 Then
+		Call LoginAccuessFul_MySQL()
 		Exit Function
 	End If
 	If DEF_UsedDataBase <> 1 Then
-		Response.Write "<p><b>´Ë¹¦ÄÜ½ö¶ÔAccessÊı¾İ¿âÓĞĞ§!</b></p>"
+		Response.Write "<p><b>æ­¤åŠŸèƒ½ä»…å¯¹ Access / MySQL æ•°æ®åº“æœ‰æ•ˆ!</b></p>"
 		Exit Function
 	End If
 	Dim action
 	action = Request.Form("action")
 	If action <> "backup" and action <> "delbackup" and action <> "CompactDatabase" Then action = ""
 	If action = "" Then
-		DisplayStringForm
+		DisplayStringForm()
 	Else
 		If action = "backup" Then
-			Response.Write "<p><br><br>±¸·İÊı¾İ¿â¿ªÊ¼£¬ÍøÕ¾ÔİÍ£Ò»ÇĞÓÃ»§µÄÇ°Ì¨²Ù×÷......<br>"
+			Response.Write "<p><br><br>å¤‡ä»½æ•°æ®åº“å¼€å§‹ï¼Œç½‘ç«™æš‚åœä¸€åˆ‡ç”¨æˆ·çš„å‰å°æ“ä½œ......<br>"
 			Application.Lock
 			application(DEF_MasterCookies & "SiteEnableFlagzoieiu") = 0
-			application(DEF_MasterCookies & "SiteDisbleWhyszoieiu") = "ÂÛÌ³ÔİÍ£ÖĞ£¬ÇëÉÔºò¼¸·ÖÖÓºóÔÙÀ´..."
+			application(DEF_MasterCookies & "SiteDisbleWhyszoieiu") = "è®ºå›æš‚åœä¸­ï¼Œè¯·ç¨å€™å‡ åˆ†é’Ÿåå†æ¥..."
 			Application.UnLock
-			CloseDatabase
+			CloseDatabase()
 			Copyfiles Server.Mappath(DEF_BBS_HomeUrl & DEF_AccessDatabase),Server.Mappath(DEF_BBS_HomeUrl & DEF_AccessDatabase & ".BAK")
-			OpenDatabase
-			Response.write "<p>±¸·İÍê³É..."
+			OpenDatabase()
+			Response.write "<p>å¤‡ä»½å®Œæˆ..."
 			Application.Lock
 			application(DEF_MasterCookies & "SiteEnableFlagzoieiu") = 1
 			application(DEF_MasterCookies & "SiteDisbleWhyszoieiu") = ""
 			Application.UnLock
-			Response.write "<p>ÍøÕ¾»Ö¸´Õı³£·ÃÎÊ..."
+			Response.write "<p>ç½‘ç«™æ¢å¤æ­£å¸¸è®¿é—®..."
 		ElseIf action = "delbackup" Then
-			Response.Write "<p><br><br>½«É¾³ı±¸·İÊı¾İÎªÎÄ¼ş£¬Èç¹û´æÔÚ½«É¾³ı...<br>"
+			Response.Write "<p><br><br>å°†åˆ é™¤å¤‡ä»½æ•°æ®ä¸ºæ–‡ä»¶ï¼Œå¦‚æœå­˜åœ¨å°†åˆ é™¤...<br>"
 			Deletefiles(Server.Mappath(DEF_BBS_HomeUrl & DEF_AccessDatabase & ".temp"))
 			If Deletefiles(Server.Mappath(DEF_BBS_HomeUrl & DEF_AccessDatabase & ".BAK")) = 1 Then
-				Response.write "<p>³É¹¦É¾³ı..."
+				Response.write "<p>æˆåŠŸåˆ é™¤..."
 			Else
-				Response.write "<p>±¸·İÎÄ¼ş²»´æÔÚ£¬²»ĞèÒªÉ¾³ı..."
+				Response.write "<p>å¤‡ä»½æ–‡ä»¶ä¸å­˜åœ¨ï¼Œä¸éœ€è¦åˆ é™¤..."
 			End If
 		Else
-			CompactDatabase
+			CompactDatabase()
 		End If
-		Response.Write "<p><br><b>²Ù×÷Íê³É£¬<a href=BackupDatabase.asp>µã»÷ÕâÀï·µ»Ø</a></b>"
+		Response.Write "<p><br><b>æ“ä½œå®Œæˆï¼Œ<a href=BackupDatabase.asp>ç‚¹å‡»è¿™é‡Œè¿”å›</a></b>"
 	End If
 
 End Function
@@ -134,49 +138,49 @@ End Function
 Function CompactDatabase
 
 	on error resume next
-	CloseDatabase
+	CloseDatabase()
 	Dim fs, Engine
 	Set fs = CreateObject(DEF_FSOString)
 	If fs.FileExists(Server.Mappath(DEF_BBS_HomeUrl & DEF_AccessDatabase)) Then
-		Response.Write "<p><br><br>Ñ¹ËõÊı¾İ¿â¿ªÊ¼£¬ÍøÕ¾ÔİÍ£Ò»ÇĞÓÃ»§µÄÇ°Ì¨²Ù×÷......<br>"
+		Response.Write "<p><br><br>å‹ç¼©æ•°æ®åº“å¼€å§‹ï¼Œç½‘ç«™æš‚åœä¸€åˆ‡ç”¨æˆ·çš„å‰å°æ“ä½œ......<br>"
 		Application.Lock
 		'Application.Contents.RemoveAll()
-		FreeApplicationMemory
+		FreeApplicationMemory()
 		application(DEF_MasterCookies & "SiteEnableFlagzoieiu") = 0
-		application(DEF_MasterCookies & "SiteDisbleWhyszoieiu") = "ÂÛÌ³ÔİÍ£ÖĞ£¬ÇëÉÔºò¼¸·ÖÖÓºóÔÙÀ´..."
+		application(DEF_MasterCookies & "SiteDisbleWhyszoieiu") = "è®ºå›æš‚åœä¸­ï¼Œè¯·ç¨å€™å‡ åˆ†é’Ÿåå†æ¥..."
 		Application.UnLock
 		Set Engine = CreateObject("JRO.JetEngine")
 		Engine.CompactDatabase "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & Server.Mappath(DEF_BBS_HomeUrl & DEF_AccessDatabase), "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & Server.Mappath(DEF_BBS_HomeUrl & DEF_AccessDatabase & ".temp")
 		If Err Then
-			Response.Write "<font color=red class=redfont>Êı¾İ¿âÑ¹ËõÊ§°Ü£¬¿ÉÄÜ¿Õ¼ä²»Ö§³Ö´Ë²Ù×÷£¡</font>"
+			Response.Write "<font color=red class=redfont>æ•°æ®åº“å‹ç¼©å¤±è´¥ï¼Œå¯èƒ½ç©ºé—´ä¸æ”¯æŒæ­¤æ“ä½œï¼</font>"
 			err.Clear
 			Exit Function
 		End If
 		fs.CopyFile Server.Mappath(DEF_BBS_HomeUrl & DEF_AccessDatabase & ".temp"),Server.Mappath(DEF_BBS_HomeUrl & DEF_AccessDatabase)
 		If Err Then
-			Response.Write "<font color=red class=redfont>Êı¾İ¿âÑ¹Ëõ³É¹¦£¬µ«ÎŞ·¨Ìæ»»Ô­Êı¾İ¿â£¬Ñ¹Ëõ³É¹¦ºóµÄÊı¾İ¿âÃûÎª " &  Server.Mappath(DEF_BBS_HomeUrl & DEF_AccessDatabase) & ".temp </font>"
+			Response.Write "<font color=red class=redfont>æ•°æ®åº“å‹ç¼©æˆåŠŸï¼Œä½†æ— æ³•æ›¿æ¢åŸæ•°æ®åº“ï¼Œå‹ç¼©æˆåŠŸåçš„æ•°æ®åº“åä¸º " &  Server.Mappath(DEF_BBS_HomeUrl & DEF_AccessDatabase) & ".temp </font>"
 			err.Clear
 			Exit Function
 		End If
 		fs.DeleteFile(Server.Mappath(DEF_BBS_HomeUrl & DEF_AccessDatabase & ".temp"))
 		If Err Then
-			Response.Write "<font color=red class=redfont>Êı¾İ¿âÑ¹Ëõ³É¹¦£¬²¢ÇÒÌæ»»Ô­Êı¾İ¿â³É¹¦£¬µ«É¾³ıÁÙÊ±ÎÄ¼şÊ§°Ü£¬ÇëÊÖ¶¯É¾³ıÊı¾İ¿âÄ¿Â¼ÏÂÃæµÄ.tempÎÄ¼ş£¡</font>"
+			Response.Write "<font color=red class=redfont>æ•°æ®åº“å‹ç¼©æˆåŠŸï¼Œå¹¶ä¸”æ›¿æ¢åŸæ•°æ®åº“æˆåŠŸï¼Œä½†åˆ é™¤ä¸´æ—¶æ–‡ä»¶å¤±è´¥ï¼Œè¯·æ‰‹åŠ¨åˆ é™¤æ•°æ®åº“ç›®å½•ä¸‹é¢çš„.tempæ–‡ä»¶ï¼</font>"
 			err.Clear
 			Exit Function
 		End If
 		Set fs = Nothing
 		Set Engine = nothing
-		Response.write "<p>Ñ¹ËõÊı¾İ¿âÍê³É..."
+		Response.write "<p>å‹ç¼©æ•°æ®åº“å®Œæˆ..."
 		Application.Lock
 		application(DEF_MasterCookies & "SiteEnableFlagzoieiu") = 1
 		application(DEF_MasterCookies & "SiteDisbleWhyszoieiu") = ""
 		Application.UnLock
-		Response.write "<p>ÍøÕ¾»Ö¸´Õı³£·ÃÎÊ..."
+		Response.write "<p>ç½‘ç«™æ¢å¤æ­£å¸¸è®¿é—®..."
 	Else
 		Set fs = Nothing
-		Response.Write "<p><br><br>Êı¾İ¿âÃû³Æ»òÂ·¾¶²»ÕıÈ·. Ñ¹ËõÊ§°Ü!" & vbCrLf
+		Response.Write "<p><br><br>æ•°æ®åº“åç§°æˆ–è·¯å¾„ä¸æ­£ç¡®. å‹ç¼©å¤±è´¥!" & vbCrLf
 	End If
-	OpenDatabase
+	OpenDatabase()
 
 End Function
 
@@ -184,56 +188,55 @@ Function DisplayStringForm
 
 %>
 <p>
-	Êı¾İ¿â½«×Ô¶¯±¸·İ³ÉBAKÎÄ¼ş£¬±¸·İÊı¾İÊ±½«ÔİÍ£ÍøÕ¾µÄÈÎºÎ·ÃÎÊ¡£<br>
-	±¸·İÊ±¼äÒÀÊı¾İ¿â´óĞ¡¶ø¶¨¡£Èç¹û·şÎñÆ÷¿Õ¼ä²»×ã£¬¿ÉÄÜ»áÒıÆğÊ§°Ü¡£<br>
-	·şÎñÆ÷Ä¿Ç°µÄÊı¾İ¿â´æÔÚÓÚ <b><a href="<%=DEF_BBS_HomeUrl & DEF_AccessDatabase%>"><%=DEF_AccessDatabase%></a></b><br>
-	µã»÷±¸·İ£¬ÏµÍ³½«×Ô¶¯±¸·İµ½ÎÄ¼ş <b><a href="<%=DEF_BBS_HomeUrl & DEF_AccessDatabase & ".BAK"%>"><%=DEF_AccessDatabase & ".BAK"%></a></b><br>
-	<font color=red class=redfont>Èç¹û±¸·İÎÄ¼şÒÑ¾­´æÔÚÇëÏÈÉ¾³ı£¬·ñÔò²»ÄÜ¿ªÊ¼±¸·İ¡£<br>
-	Çë×¢ÒâÔÚ±¸·İºó£¬ÏÂÔØÊı¾İ¿âµ½±¾µØ£¬È»ºóÉ¾³ı±¸·İµÄÊı¾İ¿â£¬ÒÔ·À±»ÈË¶ñÒâÏÂÔØ¡£</font>
+	æ•°æ®åº“å°†è‡ªåŠ¨å¤‡ä»½æˆBAKæ–‡ä»¶ï¼Œå¤‡ä»½æ•°æ®æ—¶å°†æš‚åœç½‘ç«™çš„ä»»ä½•è®¿é—®ã€‚<br>
+	å¤‡ä»½æ—¶é—´ä¾æ•°æ®åº“å¤§å°è€Œå®šã€‚å¦‚æœæœåŠ¡å™¨ç©ºé—´ä¸è¶³ï¼Œå¯èƒ½ä¼šå¼•èµ·å¤±è´¥ã€‚<br>
+	æœåŠ¡å™¨ç›®å‰çš„æ•°æ®åº“å­˜åœ¨äº <b><a href="<%=DEF_BBS_HomeUrl & DEF_AccessDatabase%>"><%=DEF_AccessDatabase%></a></b><br>
+	ç‚¹å‡»å¤‡ä»½ï¼Œç³»ç»Ÿå°†è‡ªåŠ¨å¤‡ä»½åˆ°æ–‡ä»¶ <b><a href="<%=DEF_BBS_HomeUrl & DEF_AccessDatabase & ".BAK"%>"><%=DEF_AccessDatabase & ".BAK"%></a></b><br>
+	<font color=red class=redfont>å¦‚æœå¤‡ä»½æ–‡ä»¶å·²ç»å­˜åœ¨è¯·å…ˆåˆ é™¤ï¼Œå¦åˆ™ä¸èƒ½å¼€å§‹å¤‡ä»½ã€‚<br>
+	è¯·æ³¨æ„åœ¨å¤‡ä»½åï¼Œä¸‹è½½æ•°æ®åº“åˆ°æœ¬åœ°ï¼Œç„¶ååˆ é™¤å¤‡ä»½çš„æ•°æ®åº“ï¼Œä»¥é˜²è¢«äººæ¶æ„ä¸‹è½½ã€‚</font>
 	<p>
 	<form action=BackupDatabase.asp method=post>
 		<input type=hidden name=action value="backup">
-		<input type=submit value=¿ªÊ¼±¸·İÊı¾İ¿â class=fmbtn>
+		<input type=submit value=å¼€å§‹å¤‡ä»½æ•°æ®åº“ class=fmbtn>
 	</form>	
 	
 	<form action=BackupDatabase.asp method=post>
 		<input type=hidden name=action value="delbackup">
-		<input type=submit value=É¾³ı±¸·İÊı¾İ¿â class=fmbtn>
+		<input type=submit value=åˆ é™¤å¤‡ä»½æ•°æ®åº“ class=fmbtn>
 	</form>
 	
 	<form action=BackupDatabase.asp method=post>
 		<input type=hidden name=action value="CompactDatabase">
-		<input type=submit value=Ñ¹Ëõ²¢ĞŞ¸´Êı¾İ¿â class=fmbtn>
+		<input type=submit value=å‹ç¼©å¹¶ä¿®å¤æ•°æ®åº“ class=fmbtn>
 	</form>
 	
 	
-	<b><a href="<%=DEF_BBS_HomeUrl & DEF_AccessDatabase & ".BAK"%>">ÏÂÔØ±¸·İÊı¾İ¿â<%=DEF_AccessDatabase & ".BAK"%></a>
+	<b><a href="<%=DEF_BBS_HomeUrl & DEF_AccessDatabase & ".BAK"%>">ä¸‹è½½å¤‡ä»½æ•°æ®åº“<%=DEF_AccessDatabase & ".BAK"%></a>
 	</b>
 	<p>
-	<font color=red class=redfont>×¢Òâ£¬ÏÂÔØÊı¾İ¿â±ØĞëÑ¡Ôñ¡°±¸·İµÄÊı¾İ¿â¡±¡£<br>
-	µ±Ç°ÍøÕ¾ÔÚÔËĞĞ£¬ÏÂÔØµ±Ç°Ê¹ÓÃµÄÊı¾İ¿â¿ÉÄÜ½«»áÊÇËğ»µµÄ¡£</font>
-	<p>£Ğ£Ó£ºÈç¹û(±¸·İ)Êı¾İ¿â²¢·Ç·ÅÓÚWEBÏÂÃæ£¬ÊÇ²»ÄÜÖ±½ÓÏÂÔØµÄ£¬ÇëµÇÂ¼ftp·şÎñÆ÷½øĞĞÏÂ´«¡£
-	<p><font color=Red class=redfont>¾¯¸æ£º<b>Ñ¹Ëõ²¢ĞŞ¸ÄÊı¾İ¿â</b>¹¦ÄÜ±ØÈ»»áµ¼ÖÂÂÛÌ³ÖØĞÂÆô¶¯£¬²¢ÔİÍ£ÂÛÌ³µÄÔËĞĞ£¬½¨ÒéÊ¹ÓÃ±¸·İÊı¾İ¿â¹¦ÄÜ£¬²¢ÏÂÔØ±¸·İºÃµÄÊı¾İ¿â£¬ÔÚ±¾µØÊ¹ÓÃAccess»òÆäËüÈí¼şÑ¹ËõºóÔÙ×÷ÉÏ´«Ìæ»»Êı¾İ¿â¡£ÆÚ¼ä²Ù×÷£¬Îñ±Ø±£Ö¤ÂÛÌ³´¦ÓÚ¹Ø±Õ×´Ì¬£¨Ê¹ÓÃÂÛÌ³ÖØÆô¹¦ÄÜ¹Ø±Õ£¬²¢ÇÒÔÚÆä¼ä²»·ÃÎÊÈÎºÎ¹ÜÀíÒ³Ãæ£©¡£Èç¹û·¢ÏÖÔÚÑ¹ËõÊı¾İ¿âºó²»ÄÜÉÏ´«Ìæ»»Êı¾İ¿âÎÄ¼ş£¬½¨ÒéÔÙ´ÎÊ¹ÓÃ¹Ø±ÕÂÛÌ³¹¦ÄÜ¡£
+	<font color=red class=redfont>æ³¨æ„ï¼Œä¸‹è½½æ•°æ®åº“å¿…é¡»é€‰æ‹©â€œå¤‡ä»½çš„æ•°æ®åº“â€ã€‚<br>
+	å½“å‰ç½‘ç«™åœ¨è¿è¡Œï¼Œä¸‹è½½å½“å‰ä½¿ç”¨çš„æ•°æ®åº“å¯èƒ½å°†ä¼šæ˜¯æŸåçš„ã€‚</font>
+	<p>ï¼°ï¼³ï¼šå¦‚æœ(å¤‡ä»½)æ•°æ®åº“å¹¶éæ”¾äºWEBä¸‹é¢ï¼Œæ˜¯ä¸èƒ½ç›´æ¥ä¸‹è½½çš„ï¼Œè¯·ç™»å½•ftpæœåŠ¡å™¨è¿›è¡Œä¸‹ä¼ ã€‚
+	<p><font color=Red class=redfont>è­¦å‘Šï¼š<b>å‹ç¼©å¹¶ä¿®æ”¹æ•°æ®åº“</b>åŠŸèƒ½å¿…ç„¶ä¼šå¯¼è‡´è®ºå›é‡æ–°å¯åŠ¨ï¼Œå¹¶æš‚åœè®ºå›çš„è¿è¡Œï¼Œå»ºè®®ä½¿ç”¨å¤‡ä»½æ•°æ®åº“åŠŸèƒ½ï¼Œå¹¶ä¸‹è½½å¤‡ä»½å¥½çš„æ•°æ®åº“ï¼Œåœ¨æœ¬åœ°ä½¿ç”¨Accessæˆ–å…¶å®ƒè½¯ä»¶å‹ç¼©åå†ä½œä¸Šä¼ æ›¿æ¢æ•°æ®åº“ã€‚æœŸé—´æ“ä½œï¼ŒåŠ¡å¿…ä¿è¯è®ºå›å¤„äºå…³é—­çŠ¶æ€ï¼ˆä½¿ç”¨è®ºå›é‡å¯åŠŸèƒ½å…³é—­ï¼Œå¹¶ä¸”åœ¨å…¶é—´ä¸è®¿é—®ä»»ä½•ç®¡ç†é¡µé¢ï¼‰ã€‚å¦‚æœå‘ç°åœ¨å‹ç¼©æ•°æ®åº“åä¸èƒ½ä¸Šä¼ æ›¿æ¢æ•°æ®åº“æ–‡ä»¶ï¼Œå»ºè®®å†æ¬¡ä½¿ç”¨å…³é—­è®ºå›åŠŸèƒ½ã€‚
 <%
 
 End Function
 
 Function FreeApplicationMemory
 
-	Response.Write "<p><b>ÊÍ·ÅÂÛÌ³Êı¾İÁĞ±í£º</b><table>" & VbCrLf
+	Response.Write "<p><b>é‡Šæ”¾è®ºå›æ•°æ®åˆ—è¡¨ï¼š</b><table>" & VbCrLf
 	Dim Thing
 	For Each Thing in Application.Contents
 		If Left(Thing,Len(DEF_MasterCookies)) = DEF_MasterCookies Then
 			Response.Write "<tr><td><font color=Gray class=grayfont>" & thing & "</font></td><td>&nbsp;"
 			If isObject(Application.Contents(Thing)) Then
 				Application.Contents(Thing).close
-				Set Application.Contents(Thing) = Nothing
+				' AxonASP: `Set <indexed> = Nothing` on Application.Contents(x) won't compile; null-assign instead
 				Application.Contents(Thing) = null
-				Response.Write "¶ÔÏó³É¹¦¹Ø±Õ"
+				Response.Write "å¯¹è±¡æˆåŠŸå…³é—­"
 			ElseIf isArray(Application.Contents(Thing)) Then
-				Set Application.Contents(Thing) = Nothing
 				Application.Contents(Thing) = null
-				Response.Write "Êı×é³É¹¦ÊÍ·Å"
+				Response.Write "æ•°ç»„æˆåŠŸé‡Šæ”¾"
 			Else
 				Response.Write htmlencode(Application.Contents(Thing))
 				Application.Contents(Thing) = null
@@ -243,4 +246,228 @@ Function FreeApplicationMemory
 	Next
 	Response.Write "</table>"
 
-End Function%>
+End Function
+
+' ===================== MySQL / MariaDB backup (AxonASP adaptation) =====================
+' The original page only knows how to copy/compact an Access .mdb. On the MySQL/MariaDB
+' backend we instead export a plain SQL dump (SHOW CREATE TABLE + escaped INSERTs) with a
+' pure-ASP mini-mysqldump, written to data/backup/ and offered for download.
+
+Function LoginAccuessFul_MySQL
+
+	Dim action : action = Request.Form("action")
+	If action = "sqlbackup" Then
+		Call Backup_MySQL()
+		Response.Write "<p><br><b>æ“ä½œå®Œæˆï¼Œ<a href=BackupDatabase.asp>ç‚¹å‡»è¿™é‡Œè¿”å›</a></b>"
+	ElseIf action = "delsqlbackup" Then
+		Call Delete_MySQL_Backup(Request.Form("f"))
+		Response.Write "<p><br><b>æ“ä½œå®Œæˆï¼Œ<a href=BackupDatabase.asp>ç‚¹å‡»è¿™é‡Œè¿”å›</a></b>"
+	Else
+		Call DisplayMySQLForm()
+	End If
+
+End Function
+
+Function MySQL_BackupDir
+	MySQL_BackupDir = Server.MapPath(DEF_BBS_HomeUrl & "data/backup")
+End Function
+
+Function SqlEscape(v)
+	If IsNull(v) Then
+		SqlEscape = "NULL"
+	ElseIf IsNumeric(v) And InStr(TypeName(v),"String") = 0 And InStr(TypeName(v),"Date") = 0 Then
+		' AxonASP returns MySQL BIGINT as Double -> avoid scientific notation for whole numbers
+		If v = Int(v + 0) Then
+			SqlEscape = Replace(FormatNumber(v, 0), ",", "")
+		Else
+			SqlEscape = CStr(v)
+		End If
+	Else
+		Dim s : s = CStr(v)
+		s = Replace(s, "\", "\\")
+		s = Replace(s, "'", "\'")
+		s = Replace(s, Chr(13), "\r")
+		s = Replace(s, Chr(10), "\n")
+		s = Replace(s, Chr(0), "")
+		SqlEscape = "'" & s & "'"
+	End If
+End Function
+
+Sub Backup_MySQL
+
+	On Error Resume Next
+	Dim fso : Set fso = Server.CreateObject(DEF_FSOString)
+	Dim d : d = MySQL_BackupDir()
+	If Not fso.FolderExists(d) Then fso.CreateFolder(d)
+	Dim ts : ts = Replace(FormatNumber(GetTimeValue(DEF_Now), 0), ",", "")
+	Dim fname : fname = "leadbbs_" & ts & ".sql"
+	Dim fpath : fpath = d & "/" & fname
+
+	Dim Rs, tables(), nt
+	nt = -1
+	ReDim tables(500)
+	Set Rs = LDExeCute("SHOW TABLES", 0)
+	Do While Not Rs.Eof
+		nt = nt + 1
+		tables(nt) = Rs(0) & ""
+		Rs.MoveNext
+	Loop
+	Rs.Close : Set Rs = Nothing
+
+	Response.Write "<p><br>å¼€å§‹å¤‡ä»½ MySQL/MariaDB æ•°æ®åº“ï¼ˆå…± " & (nt + 1) & " å¼ è¡¨ï¼‰...<br>"
+
+	Dim S : Set S = Server.CreateObject("ADODB.Stream")
+	S.Type = 2 : S.Charset = "utf-8" : S.Open
+	S.WriteText "-- LeadBBS MySQL/MariaDB backup " & Now & VbCrLf
+	S.WriteText "SET NAMES utf8mb4;" & VbCrLf
+	S.WriteText "SET FOREIGN_KEY_CHECKS=0;" & VbCrLf & VbCrLf
+
+	Dim i, RsC, RsD, line, j, nc, rows
+	For i = 0 To nt
+		S.WriteText "-- ---------- Table `" & tables(i) & "` ----------" & VbCrLf
+		S.WriteText "DROP TABLE IF EXISTS `" & tables(i) & "`;" & VbCrLf
+		Set RsC = LDExeCute("SHOW CREATE TABLE `" & tables(i) & "`", 0)
+		If Not RsC.Eof Then S.WriteText (RsC(1) & "") & ";" & VbCrLf
+		RsC.Close : Set RsC = Nothing
+
+		Set RsD = LDExeCute("SELECT * FROM `" & tables(i) & "`", 0)
+		nc = -1
+		If Not RsD.Eof Then nc = RsD.Fields.Count - 1
+		rows = 0
+		Do While Not RsD.Eof
+			line = "INSERT INTO `" & tables(i) & "` VALUES ("
+			For j = 0 To nc
+				If j > 0 Then line = line & ","
+				line = line & SqlEscape(RsD.Fields(j).Value)
+			Next
+			S.WriteText line & ");" & VbCrLf
+			rows = rows + 1
+			RsD.MoveNext
+		Loop
+		RsD.Close : Set RsD = Nothing
+		S.WriteText VbCrLf
+		Response.Write "&nbsp;&nbsp;" & tables(i) & " (" & rows & " è¡Œ)<br>"
+	Next
+	S.WriteText "SET FOREIGN_KEY_CHECKS=1;" & VbCrLf
+	S.SaveToFile fpath, 2
+	S.Close : Set S = Nothing
+
+	If Err Then
+		Response.Write "<font color=red class=redfont>å¤‡ä»½å‡ºé”™ï¼š" & Err.Description & "</font>"
+		Err.Clear
+	Else
+		Call Backup_ManifestAdd(fname)
+		Response.Write "<p><b>å¤‡ä»½å®Œæˆ</b>ï¼Œå·²ä¿å­˜åˆ° <b>data/backup/" & fname & "</b>"
+	End If
+	Set fso = Nothing
+
+End Sub
+
+Function DisplayMySQLForm
+	%>
+	<p>å°†å½“å‰ MySQL/MariaDB æ•°æ®åº“å¯¼å‡ºä¸ºä¸€ä¸ª SQL æ–‡ä»¶ï¼ˆå«å»ºè¡¨è¯­å¥ä¸æ•°æ®ï¼‰ï¼Œå¯ä¸‹è½½åˆ°æœ¬åœ°ä¿å­˜æˆ–ç”¨äºæ¢å¤ã€‚<br>
+	å¤‡ä»½æ–‡ä»¶ä¿å­˜åœ¨æœåŠ¡å™¨çš„ <b>data/backup/</b> ç›®å½•ä¸‹ã€‚<br>
+	<font color=red class=redfont>è¯·åœ¨å¤‡ä»½ååŠæ—¶ä¸‹è½½å¹¶åˆ é™¤æœåŠ¡å™¨ä¸Šçš„å¤‡ä»½æ–‡ä»¶ï¼Œä»¥é˜²è¢«æ¶æ„ä¸‹è½½ã€‚</font>
+	<p>
+	<form action=BackupDatabase.asp method=post>
+		<input type=hidden name=action value="sqlbackup">
+		<input type=submit value="å¯¼å‡ºå¤‡ä»½ SQL æ–‡ä»¶" class=fmbtn>
+	</form>
+	<p><b>å·²æœ‰çš„å¤‡ä»½æ–‡ä»¶ï¼š</b>
+	<%
+	Dim fso2 : Set fso2 = Server.CreateObject(DEF_FSOString)
+	Dim d2 : d2 = MySQL_BackupDir()
+	Dim any2 : any2 = 0
+	Dim names2 : names2 = Backup_FileNames()
+	If names2 <> "" Then
+		Dim nm, arr2, i2
+		arr2 = Split(names2, "|")
+		For i2 = 0 To UBound(arr2)
+			nm = arr2(i2)
+			If nm <> "" Then
+				any2 = 1
+				Dim sz2 : sz2 = 0
+				If fso2.FileExists(d2 & "/" & nm) Then sz2 = fso2.GetFile(d2 & "/" & nm).Size
+				%><br><a href="<%=DEF_BBS_HomeUrl%>data/backup/<%=nm%>"><%=nm%></a> (<%=sz2%> å­—èŠ‚)
+				<form action=BackupDatabase.asp method=post style="display:inline;margin-left:8px;">
+				<input type=hidden name=action value="delsqlbackup"><input type=hidden name=f value="<%=nm%>">
+				<input type=submit value="åˆ é™¤" class=fmbtn></form><%
+			End If
+		Next
+	End If
+	If any2 = 0 Then Response.Write "<br>ï¼ˆæš‚æ— å¤‡ä»½æ–‡ä»¶ï¼‰"
+	Set fso2 = Nothing
+	%>
+	<%
+End Function
+
+
+' ---------------------------------------------------------------------------
+' AxonASP #33: FileSystemObject caches a folder's listing. GetFolder(dir).Files
+' returns the snapshot taken at the first enumeration, so a dump written during
+' this server lifetime is INVISIBLE to the listing until a restart â€” you could
+' create a backup and then neither download nor delete it. FileExists/GetFile
+' are NOT affected, so keep our own manifest and stat each entry live.
+' ---------------------------------------------------------------------------
+Function Backup_ManifestPath
+	Backup_ManifestPath = MySQL_BackupDir() & "/index.txt"
+End Function
+
+Sub Backup_ManifestAdd(fname)
+	On Error Resume Next
+	Dim fso : Set fso = Server.CreateObject(DEF_FSOString)
+	Dim f : Set f = fso.OpenTextFile(Backup_ManifestPath(), 8, True)
+	f.WriteLine fname
+	f.Close
+	Set fso = Nothing
+End Sub
+
+' Names from the manifest that still exist on disk, newest first, plus anything the
+' (possibly stale) folder listing knows about that the manifest does not.
+Function Backup_FileNames
+	On Error Resume Next
+	Dim fso : Set fso = Server.CreateObject(DEF_FSOString)
+	Dim seen : seen = "|"
+	Dim outp : outp = ""
+	Dim mp : mp = Backup_ManifestPath()
+	If fso.FileExists(mp) Then
+		Dim f : Set f = fso.OpenTextFile(mp, 1)
+		Dim line
+		Do While Not f.AtEndOfStream
+			line = Trim(f.ReadLine)
+			If line <> "" And InStr(seen, "|" & line & "|") = 0 Then
+				If fso.FileExists(MySQL_BackupDir() & "/" & line) Then
+					seen = seen & line & "|"
+					outp = line & "|" & outp
+				End If
+			End If
+		Loop
+		f.Close
+	End If
+	Dim d : d = MySQL_BackupDir()
+	If fso.FolderExists(d) Then
+		Dim f3
+		For Each f3 In fso.GetFolder(d).Files
+			If LCase(f3.Name) <> "index.txt" And InStr(seen, "|" & f3.Name & "|") = 0 Then
+				seen = seen & f3.Name & "|"
+				outp = outp & f3.Name & "|"
+			End If
+		Next
+	End If
+	Set fso = Nothing
+	Backup_FileNames = outp
+End Function
+
+Sub Delete_MySQL_Backup(fname)
+	On Error Resume Next
+	' guard against path traversal - only a bare filename in the backup dir
+	If fname = "" Or InStr(fname, "..") > 0 Or InStr(fname, "/") > 0 Or InStr(fname, "\") > 0 Then Exit Sub
+	Dim fso : Set fso = Server.CreateObject(DEF_FSOString)
+	Dim p : p = MySQL_BackupDir() & "/" & fname
+	If fso.FileExists(p) Then
+		fso.DeleteFile p, True
+		Response.Write "<p>å·²åˆ é™¤å¤‡ä»½æ–‡ä»¶ " & fname
+	End If
+	Set fso = Nothing
+End Sub
+%>

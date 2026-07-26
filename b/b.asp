@@ -1,15 +1,15 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/Limit_Fun.asp -->
-<!-- #include file=inc/Board_fun.asp -->
-<!-- #include file=../inc/Fun/ViewOnline_fun.asp -->
-<!-- #include file=inc/SmallList.asp -->
-<!-- #include file=../inc/Templet/HTML/Normal_0.asp -->
-<!-- #include file=../inc/Fun/VierAnc_Fun.asp -->
-<!-- #include file=../inc/IncHtm/Boards_Side.asp -->
-<!-- #include file=../inc/IncHtm/Boards_Side_Setup2.asp -->
-<!-- #include file=../inc/UBBCode_Setup.asp -->
-<!-- #include file=../article/inc/splitpage_fun.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/Limit_Fun.asp"-->
+<!--#include file="inc/Board_fun.asp"-->
+<!--#include file="../inc/Fun/ViewOnline_fun.asp"-->
+<!--#include file="inc/SmallList.asp"-->
+<!--#include file="../inc/Templet/HTML/Normal_0.asp"-->
+<!--#include file="../inc/Fun/VierAnc_Fun.asp"-->
+<!--#include file="../inc/IncHtm/Boards_Side.asp"-->
+<!--#include file="../inc/IncHtm/Boards_Side_Setup2.asp"-->
+<!--#include file="../inc/UBBCode_Setup.asp"-->
+<!--#include file="../article/inc/splitpage_fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../"
 Dim Boards_dis_assortStr
@@ -22,19 +22,19 @@ Dim LMT_Simple : LMT_Simple = 0
 Sub DisplayBoard_HTML_MastList(s,num,flag)
 
 	If "?LeadBBS?" = s Then
-		Response.Write "È«Ìå" & DEF_PointsName(8)
+		Response.Write "å…¨ä½“" & DEF_PointsName(8)
 	Else
 		If s = "" or s = null Then
-			Response.Write flag & "£ºÎŞ"
+			Response.Write flag & "ï¼šæ— "
 			Exit Sub
 		End If
 		Dim ss,n,m
 		ss = Split(s,",")
 		m = Ubound(ss,1)
 		If m >= num Then
-			%><%=flag%>£º<%
+			%><%=flag%>ï¼š<%
 		Else%>
-			<%=flag%>£º<%
+			<%=flag%>ï¼š<%
 		End If
 		For n = 0 to m
 			If n >= num Then Exit For
@@ -48,7 +48,7 @@ Sub DisplayBoard_HTML_MastList(s,num,flag)
 				<div class="layer_iteminfo">
 				<ul class="menu_list">
 					<%
-			Response.Write "<li><b>¸ü¶à" & flag & "</b></li>"
+			Response.Write "<li><b>æ›´å¤š" & flag & "</b></li>"
 			Dim t
 			t = n
 			For n = t to m
@@ -68,7 +68,7 @@ Function LoginAccuessFul
 
 	GBL_CHK_TempStr = ""
 	If GBL_board_ID = 0 and EFlag = 0 Then
-		Global_ErrMsg "ÂÛÌ³²»´æÔÚ´Ë°æÃæ£¬Çë·µ»ØÊ×Ò³ÖØĞÂ·ÃÎÊ¡£" & VbCrLf
+		Global_ErrMsg "è®ºå›ä¸å­˜åœ¨æ­¤ç‰ˆé¢ï¼Œè¯·è¿”å›é¦–é¡µé‡æ–°è®¿é—®ã€‚" & VbCrLf
 		GBL_SiteBottomString = ""
 		Exit Function
 	End If
@@ -76,7 +76,7 @@ Function LoginAccuessFul
 		Global_ErrMsg GBL_CHK_TempStr
 		GBL_SiteBottomString = ""
 	Else
-		DisplayAnnouncesSplitPages
+		DisplayAnnouncesSplitPages()
 	End If
 
 End Function
@@ -142,7 +142,7 @@ Sub DisplayBoard_HTML(BoardNum,Blist)
 		If ForumPass <> "" Then ForumPass = "leadbbs"
 		GetData(9,0) = cCur(GetData(9,0))
 		If GBL_CheckLimitTitle(ForumPass,GetData(9,0),GetData(36,0),GetData(8,0)) = 1 Then
-			GetData(20,0) = "ÒÑÉèÖÃÎªÒş²Ø"
+			GetData(20,0) = "å·²è®¾ç½®ä¸ºéšè—"
 			GetData(3,0) = ""
 		End If
 		GetData(1,0) = GBL_Board_ID
@@ -151,7 +151,7 @@ Sub DisplayBoard_HTML(BoardNum,Blist)
 		'If GetBinarybit(GBL_Board_BoardLimit,19) = 0 Then
 			If GetData(8,0) = 0 Then
 				If ShowFlag = 0 Then
-					Global_TableHead
+					Global_TableHead()
 					ShowFlag = 1
 				End If
 				CALL BoardClass.DisplayBoard_HTML_Fun(BoardID,GetData(1,0),GetData(0,0),GetData(2,0),GetData(3,0),GetData(4,0),GetData(29,0),GetData(30,0),ForumPass,GetData(19,0),Replace(GetData(20,0),"<","&lt;"),GetData(10,0),GetData(9,0),GetData(14,0),GetData(31,0),GetData(32,0),GetData(21,0),GetData(22,0),GetData(23,0),0,GetData(27,0),Replace(GetData(35,0),"<","&lt;"))
@@ -159,7 +159,7 @@ Sub DisplayBoard_HTML(BoardNum,Blist)
 		Else
 			
 			If ShowFlag = 0 Then
-				Global_TableHead
+				Global_TableHead()
 				ShowFlag = 1
 			End If
 			CALL BoardClass.DisplayBoard_HTML_Fun_Simple(BoardID,GetData(1,0),GetData(0,0),GetData(2,0),GetData(3,0),GetData(4,0),GetData(29,0),GetData(30,0),ForumPass,GetData(19,0),Replace(GetData(20,0),"<","&lt;"),GetData(10,0),GetData(9,0),GetData(14,0),GetData(31,0),GetData(32,0),GetData(21,0),GetData(22,0),GetData(23,0),0,GetData(27,0),Replace(GetData(35,0),"<","&lt;"))
@@ -170,7 +170,7 @@ Sub DisplayBoard_HTML(BoardNum,Blist)
 	Set BoardClass = Nothing
 	If ShowFlag = 1 Then
 		Response.Write "</table></div></div>"
-		Global_TableBottom
+		Global_TableBottom()
 	End If
 
 End Sub
@@ -194,7 +194,7 @@ Sub DisplayBoard(Blist)
 
 	If BoardNum = -1 Then
 	Else
-		Boards_CloseAssort
+		Boards_CloseAssort()
 		CALL DisplayBoard_HTML(BoardNum,Blist)
 	End If
 
@@ -226,11 +226,12 @@ End Sub
 
 Sub B_Main(PassFormStr)
 
-dim class_page '°æ¹æ½öµÚÒ»Ò³ÏÔÊ¾
+dim class_page 'ç‰ˆè§„ä»…ç¬¬ä¸€é¡µæ˜¾ç¤º
 class_page = toNum(request.querystring("page"),0)
 if class_page = 0 then class_page = toNum(request.querystring("q"),0)
 
-if LMT_Simple = 0 then 'start simple check%>
+if LMT_Simple = 0 then 'start simple check
+%>
 	<script src="<%=DEF_BBS_HomeUrl%>a/inc/leadcode.js<%=DEF_Jer%>" type="text/javascript"></script>
 	<script language="JavaScript" type="text/javascript">
 	var GBL_domain="|<%=DEF_AbsolutHome%>|<%=DEF_SafeUrl%>|";
@@ -286,8 +287,8 @@ if LMT_Simple = 0 then 'start simple check%>
 	</script>
 	<div class="boardnavlist">
 		<div class="user_itemlist">
-			<div class="navtitle" oncontextmenu="$(this).parent().parent().hide();$('#nav_tmp').remove();return false;">°æ¿éµ¼º½</div>
-			<!-- #include file=../inc/incHtm/BoardJump2.asp -->
+			<div class="navtitle" oncontextmenu="$(this).parent().parent().hide();$('#nav_tmp').remove();return false;">ç‰ˆå—å¯¼èˆª</div>
+			<!--#include file="../inc/incHtm/BoardJump2.asp"-->
 		</div>
 	</div>
 	<script>
@@ -319,17 +320,17 @@ end if 'end simple
 			<%
 					Response.Write "<li>"
 					If EFlag < 0 Then
-						Response.Write "<b>È«²¿</b>"
+						Response.Write "<b>å…¨éƒ¨</b>"
 					Else
-						Response.Write "<a href=""" & RW_b(GBL_board_ID,1,"") & """>È«²¿</a>"
+						Response.Write "<a href=""" & RW_b(GBL_board_ID,1,"") & """>å…¨éƒ¨</a>"
 					End If
 					Response.Write "</li>"
 					If GBL_Board_GoodNum > 0 Then
 						Response.Write "<li>"
 						If EFlag = 0 Then
-							Response.Write "<b>¾«»ªÌû</b>"
+							Response.Write "<b>ç²¾åå¸–</b>"
 						Else
-							Response.Write "<a href=""" & RW_b(GBL_board_ID,1,"&e=0") & """>¾«»ªÌû</a>"
+							Response.Write "<a href=""" & RW_b(GBL_board_ID,1,"&e=0") & """>ç²¾åå¸–</a>"
 						End If
 						Response.Write "</li>"
 					End If
@@ -340,20 +341,20 @@ end if 'end simple
 						%><li><a href="<%=RW_b(GBL_board_ID,1,"&e=1")%>" onclick="ShowOnline('followAssort','swap_assort',2);return false;">
 							<span class="swap_ol<%If GetBinarybit(GBL_Board_BoardLimit,18) = 0 Then Response.Write "_close"%>" id="swap_assort"><%
 						If EFlag > 0 Then
-							Response.Write "<b>×¨Ìâ</b>"
+							Response.Write "<b>ä¸“é¢˜</b>"
 						Else
-							Response.Write "×¨Ìâ"
+							Response.Write "ä¸“é¢˜"
 						End If
 						%></span></a></li><%
 					End If
 				If GetBinarybit(DEF_Sideparameter,6) = 1 Then
 				%><li><a href="<%=RW_b(GBL_board_ID,1,"&e=1")%>" onclick="ShowOnline('follow0','swap_ol',1);return false;">
 				
-					<span class="swap_ol<%If DEF_DisplayOnlineUser = 1 or DEF_DisplayOnlineUser = 3 Then Response.Write "_close"%>" id="swap_ol">ÔÚÏß<%=GetActiveUserNumber(GBL_Board_ID)%>ÈË</span></a>
+					<span class="swap_ol<%If DEF_DisplayOnlineUser = 1 or DEF_DisplayOnlineUser = 3 Then Response.Write "_close"%>" id="swap_ol">åœ¨çº¿<%=GetActiveUserNumber(GBL_Board_ID)%>äºº</span></a>
 					</li>
 				<%end if%>
 					<li>
-					Ö÷Ìâ: <%=GBL_Board_TopicNum%> / Ìû×Ó: <%=GBL_Board_AnnounceNum%></li></ul>
+					ä¸»é¢˜: <%=GBL_Board_TopicNum%> / å¸–å­: <%=GBL_Board_AnnounceNum%></li></ul>
 			</div>
 			<div class="b_anc_master">
 				<%DisplayBoard_HTML_MastList GBL_Board_MasterList,3,DEF_PointsName(8) %>
@@ -366,7 +367,8 @@ end if 'end simple
 			end if 'end simple
 			End If
 			
-			if LMT_Simple = 0 then 'start simple%>
+			if LMT_Simple = 0 then 'start simple
+%>
 	<script type="text/javascript" language="JavaScript">
 	<!--
 	function ShowOnline(obj,swap,ol){
@@ -406,12 +408,12 @@ end if 'end simple
 				<%End If%>
 				<%If DEF_DisplayOnlineUser = 2 Then%>
 					<div class="b_box fire" id="follow0" style="display: block">
-				          <%DisplayUserOnline GBL_Board_ID,"../"%>
+				          <%DisplayUserOnline() GBL_Board_ID,"../"%>
 					</div><%
 				End If
 			end if
 			end if 'end simple
-			LoginAccuessFul
+			LoginAccuessFul()
 		End If
 	Else
 		response.write PassFormStr
@@ -447,12 +449,12 @@ sub displayboard_info(flag)
 	if flag = 0 then
 		if v = 1 then
 		%>
-		<a href="javascript:;" onclick="ShowOnline('b_logo_info','swap_b_info',999);return false;" class="swap_ol<%If close = "c" Then Response.Write "_close"%>" id="swap_b_info">°æ¹æ</a>
+		<a href="javascript:;" onclick="ShowOnline('b_logo_info','swap_b_info',999);return false;" class="swap_ol<%If close = "c" Then Response.Write "_close"%>" id="swap_b_info">ç‰ˆè§„</a>
 		
 		<%
 		end if
 		if instr("," & GBL_Board_MasterList & ",","," & GBL_CHK_User & ",") or GBL_BoardMasterFlag >= 5 then%>
-		<a href="<%=DEF_BBS_HomeUrl%>a/editannounce.asp?b=<%=gbl_board_id%>&id=-1" class="b_edit_boardinfo">±à¼­°æ¹æ</a>
+		<a href="<%=DEF_BBS_HomeUrl%>a/editannounce.asp?b=<%=gbl_board_id%>&id=-1" class="b_edit_boardinfo">ç¼–è¾‘ç‰ˆè§„</a>
 		<%
 		end if
 	else
@@ -559,13 +561,13 @@ Sub Main
 		LMT_action = ""
 	else
 		GBL_Board_ID = 0
-		EString = "Ìû×Ó"
+		EString = "å¸–å­"
 	end if
 
 	GBL_CHK_PWdFlag = 0
 	GBL_CHK_GuestFlag = 0
-	initDatabase
-	CheckisBoardMaster
+	initDatabase()
+	CheckisBoardMaster()
 	GBL_CHK_TempStr = ""
 	Select Case Request.form("ol")
 		Case "3"
@@ -575,38 +577,38 @@ Sub Main
 			SmallList.DisplayAnnouncesSplit
 			Set SmallList = Nothing
 		End If
-		CloseDataBase
+		CloseDataBase()
 		Exit Sub
 	Case "1"
-		GetStyleInfo
-		If GBL_CHK_TempStr = "" Then DisplayUserOnline GBL_Board_ID,"../"
-		CloseDataBase
+		GetStyleInfo()
+		If GBL_CHK_TempStr = "" Then DisplayUserOnline() GBL_Board_ID,"../"
+		CloseDataBase()
 		Exit Sub
 	Case "2"
-		GetStyleInfo
+		GetStyleInfo()
 		If GBL_CHK_TempStr = "" Then DisplayTopicAssort
-		CloseDataBase
+		CloseDataBase()
 		Exit Sub
 	Case "side":
 		Boars_Side_Box("")
-		CloseDatabase
+		CloseDatabase()
 		Exit Sub
 	End Select
 
 	EFlag = Request.QueryString("E")
 	If EFlag = "1" Then
 		EFlag = 1
-		EString = "×¨Ìâ"
+		EString = "ä¸“é¢˜"
 		EUrlString = "&E=1"
 	ElseIf EFlag = "0" Then
 		EFlag = 0
-		EString = "¾«»ªÌû"
+		EString = "ç²¾åå¸–"
 		EUrlString = ""
 	Else
 		EFlag = -1
 		if LMT_action = "" then EString = ""
 		EUrlString = ""
-		If CheckSystem = 1 Then
+		If CheckSystem() = 1 Then
 			Response.Redirect Get_MobileUrl(DEF_BBS_HomeUrl,1,GBL_Board_ID,request.QueryString("id"),-5)
 		End If
 	End If
@@ -620,7 +622,7 @@ Sub Main
 	If EID > 0 Then EName = GetEName(EID)
 	If EName = "" Then EID = 0
 	If EID > 0 Then
-		EString = "<span class=""navigate_string_step""><a href=""" & RW_b(GBL_board_ID,1,"&e=1") & """><span>×¨Ìâ</span></a></span><span class=""navigate_string_step""><a href=javascript:;><span>" & EName & "</span></a></span>"
+		EString = "<span class=""navigate_string_step""><a href=""" & RW_b(GBL_board_ID,1,"&e=1") & """><span>ä¸“é¢˜</span></a></span><span class=""navigate_string_step""><a href=javascript:;><span>" & EName & "</span></a></span>"
 	Else
 		If EString <> "" Then EString = "<span class=""navigate_string_step""><a href=javascript:;><span>" & EString & "</span></a></span>"
 	End If
@@ -653,13 +655,13 @@ if LMT_Simple = 0 then 'start simple
 	End If
 end if 'end simple
 	Dim PassFormStr
-	PassFormStr = CheckAccessLimit
+	PassFormStr = CheckAccessLimit()
 
 	B_Main(PassFormStr)
 
-	CloseDataBase
+	CloseDataBase()
 if LMT_Simple = 0 then 'start simple
-	Boards_Body_Bottom
+	Boards_Body_Bottom()
 	If GBL_CHK_TempStr <> "" Then
 		If GBL_ShowBottomSure = 0 Then GBL_SiteBottomString = ""
 	End If
@@ -725,7 +727,7 @@ End Function
 Sub ReloadTopicAssort(BoardID)
 
 	Dim Rs
-	Set Rs = LDExeCute("select ID,AssortName,0,0,0 from LeadBBS_GoodAssort where BoardID=" & BoardID & " Order by BoardID,OrderID",0)
+	Set Rs = LDExeCute("select ID,AssortName,0,0 as c0_dup2,0 as c0_dup3 from LeadBBS_GoodAssort where BoardID=" & BoardID & " Order by BoardID,OrderID",0)
 	If Not Rs.Eof Then
 		Application.Lock
 		Application(DEF_MasterCookies & "BoardInfo" & BoardID & "_TI") = Rs.GetRows(-1)
@@ -772,7 +774,7 @@ End Sub
 Sub Boars_Side_Box_MakeFile(side)
 
 	If side <> "_close" Then	
-		Response.Write SideBoard_GetContent
+		Response.Write SideBoard_GetContent()
 	End If
 
 End Sub
@@ -783,5 +785,5 @@ Sub Boars_Side_Box(side)
 
 End Sub
 
-Main
+Main()
 %>

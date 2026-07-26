@@ -4,6 +4,11 @@ Dim Letter(30)
 
 sub initfont
 
+' README §42: AxonASP's Scripting.Dictionary stores an array BY REFERENCE; classic VBScript
+' stores a COPY. Every Font.Add below hands it the same module-level Letter array, so all 31
+' glyphs aliased one another and ended up holding whatever the last letter wrote — all zeros.
+' The captcha drew no characters at all as a result. Add a copy instead.
+
 Set Font = Server.CreateObject("Scripting.Dictionary")
 Letter(0) = "000000000000000"
 Letter(1) = "000000000001000"
@@ -35,7 +40,7 @@ Letter(26) = "011000000000000"
 Letter(27) = "010000000000000"
 Letter(28) = "000000000000000"
 Letter(29) = "000000000000000"
-Font.Add "A", Letter
+AddLetter("A")
 
 Letter(1) = "0000000000000000"
 Letter(2) = "0000000000000000"
@@ -66,7 +71,7 @@ Letter(26) = "0000000000000000"
 Letter(27) = "0000000000000000"
 Letter(28) = "0000000000000000"
 Letter(29) = "0000000000000000"
-Font.Add "B", Letter
+AddLetter("B")
 
 Letter(0) = "00000000000000"
 Letter(1) = "00000000000000"
@@ -98,7 +103,7 @@ Letter(26) = "00000000000000"
 Letter(27) = "00000000000000"
 Letter(28) = "00000000000000"
 Letter(29) = "00000000000000"
-Font.Add "C", Letter
+AddLetter("C")
 
 Letter(0) = "00000000000000"
 Letter(1) = "00000000000000"
@@ -130,7 +135,7 @@ Letter(26) = "00000000000000"
 Letter(27) = "00000000000000"
 Letter(28) = "00000000000000"
 Letter(29) = "00000000000000"
-Font.Add "D", Letter
+AddLetter("D")
 
 Letter(0) = "0000000000000000"
 Letter(1) = "0000000000000000"
@@ -162,7 +167,7 @@ Letter(26) = "0000000000000000"
 Letter(27) = "0000000000000000"
 Letter(28) = "0000000000000000"
 Letter(29) = "0000000000000000"
-Font.Add "E", Letter
+AddLetter("E")
 
 Letter(0) = "0000000000000000"
 Letter(1) = "0000001111111110"
@@ -194,7 +199,7 @@ Letter(26) = "0000000000000000"
 Letter(27) = "0000000000000000"
 Letter(28) = "0000000000000000"
 Letter(29) = "0000000000000000"
-Font.Add "F", Letter
+AddLetter("F")
 
 Letter(0) = "0000000000000"
 Letter(1) = "0000000000000"
@@ -226,7 +231,7 @@ Letter(26) = "0000000000000"
 Letter(27) = "0000000000000"
 Letter(28) = "0000000000000"
 Letter(29) = "0000000000000"
-Font.Add "G", Letter
+AddLetter("G")
 
 Letter(0) = "0000000000000000"
 Letter(1) = "0000000000000000"
@@ -258,7 +263,7 @@ Letter(26) = "0000000000000000"
 Letter(27) = "0000000000000000"
 Letter(28) = "0000000000000000"
 Letter(29) = "0000000000000000"
-Font.Add "H", Letter
+AddLetter("H")
 
 Letter(0) = "000000000000000"
 Letter(1) = "000000000000000"
@@ -290,7 +295,7 @@ Letter(26) = "000000000000000"
 Letter(27) = "000000000000000"
 Letter(28) = "000000000000000"
 Letter(29) = "000000000000000"
-Font.Add "I", Letter
+AddLetter("I")
 
 Letter(0) = "00000000000000000"
 Letter(1) = "00000000000000000"
@@ -322,7 +327,7 @@ Letter(26) = "00000000000000000"
 Letter(27) = "00000000000000000"
 Letter(28) = "00000000000000000"
 Letter(29) = "00000000000000000"
-Font.Add "J", Letter
+AddLetter("J")
 
 Letter(0) = "000011000000000"
 Letter(1) = "000111000000111"
@@ -354,7 +359,7 @@ Letter(26) = "000000000000000"
 Letter(27) = "000000000000000"
 Letter(28) = "000000000000000"
 Letter(29) = "000000000000000"
-Font.Add "K", Letter
+AddLetter("K")
 
 Letter(0) = "000000000000"
 Letter(1) = "000000000000"
@@ -386,7 +391,7 @@ Letter(26) = "000000000000"
 Letter(27) = "000000000000"
 Letter(28) = "000000000000"
 Letter(29) = "000000000000"
-Font.Add "L", Letter
+AddLetter("L")
 
 Letter(0) = "0000000000000000"
 Letter(1) = "0000000000000000"
@@ -418,7 +423,7 @@ Letter(26) = "0000000000000000"
 Letter(27) = "0000000000000000"
 Letter(28) = "0000000000000000"
 Letter(29) = "0000000000000000"
-Font.Add "M", Letter
+AddLetter("M")
 
 Letter(0) = "00000000000000"
 Letter(1) = "00000000000001"
@@ -450,7 +455,7 @@ Letter(26) = "00000000000000"
 Letter(27) = "00000000000000"
 Letter(28) = "00000000000000"
 Letter(29) = "00000000000000"
-Font.Add "N", Letter
+AddLetter("N")
 
 Letter(0) = "0000000000000000"
 Letter(1) = "0000000000000000"
@@ -482,7 +487,7 @@ Letter(26) = "0000000000000000"
 Letter(27) = "0000000000000000"
 Letter(28) = "0000000000000000"
 Letter(29) = "0000000000000000"
-Font.Add "O", Letter
+AddLetter("O")
 
 
 Letter(0) = "000000000000"
@@ -515,7 +520,7 @@ Letter(26) = "000000000000"
 Letter(27) = "000000000000"
 Letter(28) = "000000000000"
 Letter(29) = "000000000000"
-Font.Add "P", Letter
+AddLetter("P")
 
 Letter(0) = "0000000000000000"
 Letter(1) = "0000000000000000"
@@ -547,7 +552,7 @@ Letter(26) = "0000000000000000"
 Letter(27) = "0000000000000000"
 Letter(28) = "0000000000000000"
 Letter(29) = "0000000000000000"
-Font.Add "Q", Letter
+AddLetter("Q")
 
 Letter(0) = "0000000000000"
 Letter(1) = "0000000000000"
@@ -579,7 +584,7 @@ Letter(26) = "0000000000000"
 Letter(27) = "0000000000000"
 Letter(28) = "0000000000000"
 Letter(29) = "0000000000000"
-Font.Add "R", Letter
+AddLetter("R")
 
 Letter(0) = "000000000000"
 Letter(1) = "000000000000"
@@ -611,7 +616,7 @@ Letter(26) = "000000000000"
 Letter(27) = "000000000000"
 Letter(28) = "000000000000"
 Letter(29) = "000000000000"
-Font.Add "S", Letter
+AddLetter("S")
 
 Letter(0) = "0000000000000000"
 Letter(1) = "0000000000000000"
@@ -643,7 +648,7 @@ Letter(26) = "0000000000000000"
 Letter(27) = "0000000000000000"
 Letter(28) = "0000000000000000"
 Letter(29) = "0000000000000000"
-Font.Add "T", Letter
+AddLetter("T")
 
 Letter(0) = "0000000000000"
 Letter(1) = "0000000000011"
@@ -675,7 +680,7 @@ Letter(26) = "0000000000000"
 Letter(27) = "0000000000000"
 Letter(28) = "0000000000000"
 Letter(29) = "0000000000000"
-Font.Add "U", Letter
+AddLetter("U")
 
 Letter(0) = "0000000000001"
 Letter(1) = "0000000000011"
@@ -707,7 +712,7 @@ Letter(26) = "0000000000000"
 Letter(27) = "0000000000000"
 Letter(28) = "0000000000000"
 Letter(29) = "0000000000000"
-Font.Add "V", Letter
+AddLetter("V")
 
 Letter(0) = "000000000000"
 Letter(1) = "000000000000"
@@ -739,7 +744,7 @@ Letter(26) = "000000000000"
 Letter(27) = "000000000000"
 Letter(28) = "000000000000"
 Letter(29) = "000000000000"
-Font.Add "W", Letter
+AddLetter("W")
 
 Letter(0) = "0000000000000000"
 Letter(1) = "0000000000000000"
@@ -771,7 +776,7 @@ Letter(26) = "0000000000000000"
 Letter(27) = "0000000000000000"
 Letter(28) = "0000000000000000"
 Letter(29) = "0000000000000000"
-Font.Add "X", Letter
+AddLetter("X")
 
 Letter(0) = "00000000000000000"
 Letter(1) = "00000000000000000"
@@ -803,7 +808,7 @@ Letter(26) = "00000000000000000"
 Letter(27) = "00000000000000000"
 Letter(28) = "00000000000000000"
 Letter(29) = "00000000000000000"
-Font.Add "Y", Letter
+AddLetter("Y")
 
 Letter(0) = "0000000000000000"
 Letter(1) = "0000000000000000"
@@ -835,7 +840,7 @@ Letter(26) = "0000000000000000"
 Letter(27) = "0000000000000000"
 Letter(28) = "0000000000000000"
 Letter(29) = "0000000000000000"
-Font.Add "Z", Letter
+AddLetter("Z")
 
 Letter(0) = "000000000000000"
 Letter(1) = "000000000000000"
@@ -867,7 +872,7 @@ Letter(26) = "000000000000000"
 Letter(27) = "000000000000000"
 Letter(28) = "000000000000000"
 Letter(29) = "000000000000000"
-Font.Add "0", Letter
+AddLetter("0")
 
 Letter(0) =  "0000000000000"
 Letter(1) =  "0000000000000"
@@ -899,7 +904,7 @@ Letter(26) = "0000000000000"
 Letter(27) = "0000000000000"
 Letter(28) = "0000000000000"
 Letter(29) = "0000000000000"
-Font.Add "1", Letter
+AddLetter("1")
 
 Letter(0) = "0000000000000000"
 Letter(1) = "0000000000000000"
@@ -931,7 +936,7 @@ Letter(26) = "0000000000000000"
 Letter(27) = "0000000000000000"
 Letter(28) = "0000000000000000"
 Letter(29) = "0000000000000000"
-Font.Add "2", Letter
+AddLetter("2")
 
 Letter(0) = "000000000000000"
 Letter(1) = "000000011100000"
@@ -963,7 +968,7 @@ Letter(26) = "000000000000000"
 Letter(27) = "000000000000000"
 Letter(28) = "000000000000000"
 Letter(29) = "000000000000000"
-Font.Add "3", Letter
+AddLetter("3")
 
 Letter(0) = "0000000000000000"
 Letter(1) = "0000000000000000"
@@ -995,7 +1000,7 @@ Letter(26) = "0000000000000000"
 Letter(27) = "0000000000000000"
 Letter(28) = "0000000000000000"
 Letter(29) = "0000000000000000"
-Font.Add "4", Letter
+AddLetter("4")
 
 Letter(0) = "0000000000000"
 Letter(1) = "0000000000000"
@@ -1027,7 +1032,7 @@ Letter(26) = "0000000000000"
 Letter(27) = "0000000000000"
 Letter(28) = "0000000000000"
 Letter(29) = "0000000000000"
-Font.Add "5", Letter
+AddLetter("5")
 
 Letter(0) = "00000000000"
 Letter(1) = "00000000000"
@@ -1059,7 +1064,7 @@ Letter(26) = "00000000000"
 Letter(27) = "00000000000"
 Letter(28) = "00000000000"
 Letter(29) = "00000000000"
-Font.Add "6", Letter
+AddLetter("6")
 
 Letter(0) = "00000000000"
 Letter(1) = "00000000000"
@@ -1091,7 +1096,7 @@ Letter(26) = "00000000000"
 Letter(27) = "00000000000"
 Letter(28) = "00000000000"
 Letter(29) = "00000000000"
-Font.Add "7", Letter
+AddLetter("7")
 
 Letter(0) = "000000000000"
 Letter(1) = "000000000000"
@@ -1123,7 +1128,7 @@ Letter(26) = "000000000000"
 Letter(27) = "000000000000"
 Letter(28) = "000000000000"
 Letter(29) = "000000000000"
-Font.Add "8", Letter
+AddLetter("8")
 
 Letter(0) = "00000000000"
 Letter(1) = "00000111100"
@@ -1155,7 +1160,7 @@ Letter(26) = "00000000000"
 Letter(27) = "00000000000"
 Letter(28) = "00000000000"
 Letter(29) = "00000000000"
-Font.Add "9", Letter
+AddLetter("9")
 
 
 Letter(0) = "000000000"
@@ -1188,14 +1193,25 @@ Letter(26) = "000000000"
 Letter(27) = "000000000"
 Letter(28) = "000000000"
 Letter(29) = "000000000"
-Font.Add " ", Letter
+AddLetter(" ")
 
 end sub
+
+Sub AddLetter(sKey)
+
+	' Store a STRING, not an array or an object. AxonASP's Dictionary keeps an array by
+	' reference (§42) — handing it this routine's local left every entry pointing at storage
+	' that no longer existed once the routine returned — and storing an object here did not
+	' round-trip either. A delimited scalar always does, and canvas.asp reads a row back with
+	' FontRow(), so the 31 rows of each glyph survive intact.
+	Dim sGlyph, iCopy
+	sGlyph = ""
+	For iCopy = 0 To 30
+		If iCopy > 0 Then sGlyph = sGlyph & "|"
+		sGlyph = sGlyph & Letter(iCopy)
+	Next
+	Font.Add sKey, sGlyph
+
+End Sub
+
 %>
-
-
-
-
-
-
-

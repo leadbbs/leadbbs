@@ -1,22 +1,22 @@
 <%
-	'¹¦ÄÜ£º¸¶¿î¹ı³ÌÖĞ·şÎñÆ÷Í¨ÖªÒ³Ãæ
-	'°æ±¾£º2.0
-	'ÈÕÆÚ£º2008-10-24
-	'×÷Õß£ºÖ§¸¶±¦¹«Ë¾ÏúÊÛ²¿¼¼ÊõÖ§³ÖÍÅ¶Ó
-	'ÁªÏµ£º0571-26888888
-	'°æÈ¨£ºÖ§¸¶±¦¹«Ë¾
+	'åŠŸèƒ½ï¼šä»˜æ¬¾è¿‡ç¨‹ä¸­æœåŠ¡å™¨é€šçŸ¥é¡µé¢
+	'ç‰ˆæœ¬ï¼š2.0
+	'æ—¥æœŸï¼š2008-10-24
+	'ä½œè€…ï¼šæ”¯ä»˜å®å…¬å¸é”€å”®éƒ¨æŠ€æœ¯æ”¯æŒå›¢é˜Ÿ
+	'è”ç³»ï¼š0571-26888888
+	'ç‰ˆæƒï¼šæ”¯ä»˜å®å…¬å¸
 %>
 
 <!--#include file="alipayto/Alipay_md5.asp"-->
 <%
-    key="o48habnndc8yr4jtyf9g1p02hlt7fs7h"         'Ö§¸¶±¦°²È«½ÌÑĞÂë
-    partner="2088002030498170"     'Ö§¸¶±¦ºÏ×÷id 
+    key=""         'æ”¯ä»˜å®å®‰å…¨æ•™ç ”ç 
+    partner=""     'æ”¯ä»˜å®åˆä½œid 
  
-	out_trade_no	=DelStr(Request.Form("out_trade_no"))      '»ñÈ¡¶¨µ¥ºÅ
-    total_fee		=DelStr(Request.Form("total_fee"))         '»ñÈ¡Ö§¸¶µÄ×Ü¼Û¸ñ
-	'ÈçĞè»ñÈ¡ÆäËü²ÎÊı£¬¿ÉÌîĞ´ ²ÎÊı =DelStr(Request.Form("»ñÈ¡²ÎÊıÃû"))
+	out_trade_no	=DelStr(Request.Form("out_trade_no"))      'è·å–å®šå•å·
+    total_fee		=DelStr(Request.Form("total_fee"))         'è·å–æ”¯ä»˜çš„æ€»ä»·æ ¼
+	'å¦‚éœ€è·å–å…¶å®ƒå‚æ•°ï¼Œå¯å¡«å†™ å‚æ•° =DelStr(Request.Form("è·å–å‚æ•°å"))
 	
-'*******************ÅĞ¶ÏÏûÏ¢ÊÇ²»ÊÇÖ§¸¶±¦·¢³ö***********************
+'*******************åˆ¤æ–­æ¶ˆæ¯æ˜¯ä¸æ˜¯æ”¯ä»˜å®å‘å‡º***********************
 alipayNotifyURL = "http://notify.alipay.com/trade/notify_query.do?"
 alipayNotifyURL = alipayNotifyURL &"partner=" & partner & "&notify_id=" & request.Form("notify_id")
 	Set Retrieval = Server.CreateObject("Msxml2.ServerXMLHTTP.3.0")
@@ -27,7 +27,7 @@ alipayNotifyURL = alipayNotifyURL &"partner=" & partner & "&notify_id=" & reques
 	Set Retrieval = Nothing
 '*******************************************************************
 
-'*******************»ñÈ¡Ö§¸¶±¦POST¹ıÀ´Í¨ÖªÏûÏ¢**********************
+'*******************è·å–æ”¯ä»˜å®POSTè¿‡æ¥é€šçŸ¥æ¶ˆæ¯**********************
 For Each varItem in Request.Form
 	mystr=varItem&"="&Request.Form(varItem)&"^"&mystr
 Next 
@@ -36,7 +36,7 @@ If mystr<>"" Then
 End If 
 mystr = SPLIT(mystr, "^")
 Count=ubound(mystr)
-'¶Ô²ÎÊıÅÅĞò
+'å¯¹å‚æ•°æ’åº
 For i = Count TO 0 Step -1
 	minmax = mystr( 0 )
 	minmaxSlot = 0
@@ -53,7 +53,7 @@ For i = Count TO 0 Step -1
 		mystr( i ) = temp
 	End If
 Next
-'¹¹Ôìmd5ÕªÒª×Ö·û´®
+'æ„é€ md5æ‘˜è¦å­—ç¬¦ä¸²
 For j = 0 To Count Step 1
 	value = SPLIT(mystr( j ), "=")
 	If  value(1)<>"" And value(0)<>"sign" And value(0)<>"sign_type"  Then
@@ -67,10 +67,10 @@ Next
 md5str=md5str&key
 mysign=md5(md5str)
 
-'*************************½»Ò××´Ì¬·µ»Ø´¦Àí*************************
+'*************************äº¤æ˜“çŠ¶æ€è¿”å›å¤„ç†*************************
 If mysign=request.Form("sign") And ResponseTxt="true" Then 	
 	If request.Form("trade_status") = "TRADE_FINISHED" Then 
-		'ÔÚ´Ë´¦Ìí¼Ó£º¸¶¿î³É¹¦,¸üĞÂÊı¾İ¿âÓï¾ä  
+		'åœ¨æ­¤å¤„æ·»åŠ ï¼šä»˜æ¬¾æˆåŠŸ,æ›´æ–°æ•°æ®åº“è¯­å¥  
 	 	returnTxt	= "success"
 	Else
 		returnTxt	= "fail"
@@ -80,8 +80,8 @@ Else
 response.write "fail"
 End If 
 '*******************************************************************
- 'Ğ´ÎÄ±¾£¬·½±ã²âÊÔ£¨¿´ÍøÕ¾ĞèÇó£¬Ò²¿ÉÒÔ¸Ä³É´æÈëÊı¾İ¿â£©
-TOEXCELLR=TOEXCELLR&md5str&"MD5½á¹û:"&mysign&"="&request.Form("sign")&"--ResponseTxt:"&ResponseTxt
+ 'å†™æ–‡æœ¬ï¼Œæ–¹ä¾¿æµ‹è¯•ï¼ˆçœ‹ç½‘ç«™éœ€æ±‚ï¼Œä¹Ÿå¯ä»¥æ”¹æˆå­˜å…¥æ•°æ®åº“ï¼‰
+TOEXCELLR=TOEXCELLR&md5str&"MD5ç»“æœ:"&mysign&"="&request.Form("sign")&"--ResponseTxt:"&ResponseTxt
 set fs= createobject("scripting.filesystemobject") 
 set ts=fs.createtextfile(server.MapPath("alipayto/Notify_DATA/"&replace(now(),":","")&".txt"),true)
 
@@ -98,7 +98,7 @@ Function DelStr(Str)
 	DelStr	= Replace(DelStr,"'","")
 	DelStr	= Replace(DelStr,"&","")
 	DelStr	= Replace(DelStr," ","")
-	DelStr	= Replace(DelStr,"¡¡","")
+	DelStr	= Replace(DelStr,"ã€€","")
 	DelStr	= Replace(DelStr,"%20","")
 	DelStr	= Replace(DelStr,"--","")
 	DelStr	= Replace(DelStr,"==","")

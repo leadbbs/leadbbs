@@ -200,12 +200,12 @@ function convertcode(str)
 	
 	str = str.replace(/\[collapse(=[^\]]{1,50})?\]\s*(?:<br\s*\/?>)*\s*(.+?)\s*(?:<br\s*\/?>)*\s*\[\/collapse\]/gi,function($0,$1,$2){
 		if ($1)$1='<b class="grayfont">'+$1.substr(1)+' ...</b>'
-		else $1 = '<b class="grayfont">µã»÷ÏÔÊ¾Òş²ØµÄÄÚÈİ ...</b>'
+		else $1 = '<b class="grayfont">ç‚¹å‡»æ˜¾ç¤ºéšè—çš„å†…å®¹ ...</b>'
 		return "<div style='border-top:1px solid #fff;border-bottom:1px solid #fff'><button style='font-size:12px;line-height:normal;padding:2px 5px 0px 5px;margin-right:5px;' onclick='this.parentNode.style.display=\"none\";this.parentNode.nextSibling.style.display=\"block\";' type='button'><b>+</b></button>"+$1+"</div><div style='border-top:1px solid #fff;border-bottom:1px solid #fff;display:none'>"+$2+"</div>"
 		});
 	//str = str.replace(/\[@(.{2,20}?)\]/gi,function($0,$1){ return" <a href='"+HU+"user/lookuserinfo.asp?name="+escape($1)+"' data-ajax=false class='username'>&#64;"+$1+"</a> " } );//[@]
 
-	//str = str.replace(/\@([^\ \¡¡\.\"\'\[\]\(\)\<\>\&\\\/]{2,20})/gi,function($0,$1){ return" <a href='"+HU+"user/lookuserinfo.asp?name="+escape($1)+"' data-ajax=false class='username'>@"+$1+"</a>" } );//[@]
+	//str = str.replace(/\@([^\ \ã€€\.\"\'\[\]\(\)\<\>\&\\\/]{2,20})/gi,function($0,$1){ return" <a href='"+HU+"user/lookuserinfo.asp?name="+escape($1)+"' data-ajax=false class='username'>@"+$1+"</a>" } );//[@]
 
 	str = str.replace(/( |\n|\r|\t|\v|\<br\>|\uff1a|\:|\u3000|\>\])(http:\/\/|ftp:\/\/|https:\/\/|mms:\/\/|rtsp:\/\/|www.)([^# \f\n\r\t\v\<\u3000]*)/gi,function($0,$1,$2,$3){var u=$2;if(u.substr(0,4).toLowerCase()=='www.')u='http://'+u;return($1+getlink(url_filter(u+$3),$2+$3,0,true));});
 	str = str.replace(/^(http:\/\/|ftp:\/\/|https:\/\/|mms:\/\/|rtsp:\/\/|www.)([^# \f\n\r\t\v\<\u3000]*)/gi,function($0,$1,$2){var u=$1;if(u.substr(0,4).toLowerCase()=='www.')u='http://'+u;return(getlink(url_filter(u+$2),$1+$2,0,true));});
@@ -805,7 +805,7 @@ function lrc_getfiledata(url)
 		}
 	}
 	C.open("GET", HU + "a/proxy.asp?u=" + escape(url), false,"","");
-	C.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=gb2312");
+	C.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=utf-8");
 	C.send("");
 	return(a);
 };
@@ -1194,7 +1194,7 @@ function lrc_start(obj,tt,auto,w,h){
 					return time;
 				});
 				}else{
-					$(".content").html("Ã»ÓĞ×ÖÄ»");
+					$(".content").html("æ²¡æœ‰å­—å¹•");
 				}
 		},
 		canplay:function(event){
@@ -1213,10 +1213,10 @@ function lrc_start(obj,tt,auto,w,h){
 				
 			},
 			play: function(event) {
-				//µã»÷¿ªÊ¼·½·¨µ÷ÓÃlrc¡£start¸è´Ê·½·¨ ·µ»ØÊ±¼ätime
+				//ç‚¹å‡»å¼€å§‹æ–¹æ³•è°ƒç”¨lrcã€‚startæ­Œè¯æ–¹æ³• è¿”å›æ—¶é—´time
 				
 				if(event.jPlayer.status.currentTime==0){
-					//$("#jquery_jplayer_1").jPlayer("pause",1); //´ËĞĞÖØ²¥½«»áÔİÍ£
+					//$("#jquery_jplayer_1").jPlayer("pause",1); //æ­¤è¡Œé‡æ’­å°†ä¼šæš‚åœ
 				}
 				
 				if($(obj).find(".lrc_content")[0])
@@ -1232,7 +1232,7 @@ function lrc_start(obj,tt,auto,w,h){
 					return time;
 				});
 				}else{
-					$(".content").html("Ã»ÓĞ×ÖÄ»");
+					$(".content").html("æ²¡æœ‰å­—å¹•");
 				}
 			},
 			repeat: function(event) {
@@ -1266,8 +1266,8 @@ function lrc_start(obj,tt,auto,w,h){
 				}
 			},
 			error: function(event){alert('\u597D\u65E0\u52A9\u7684\u8D76\u811A\uFF0C\u64AD\u653E\u5931\u8D25\uFF0C\u518D\u8BD5\u4E00\u6B21\u5427\uFF01');},
-		swfPath: HU+"inc/js/jplayer/js",  		//´æ·Åjplayer.swfµÄ¾ö¶¨Â·¾¶
-		solution:"html, flash", //Ö§³ÖµÄÒ³Ãæ
+		swfPath: HU+"inc/js/jplayer/js",  		//å­˜æ”¾jplayer.swfçš„å†³å®šè·¯å¾„
+		solution:"html, flash", //æ”¯æŒçš„é¡µé¢
 		size:size,
 		supplied: filetype
 	});

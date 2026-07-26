@@ -1,12 +1,12 @@
-<!-- #include file=cms_setup.asp -->
-<!-- #include file=splitpage_fun.asp -->
-<!-- #include file=form_fun.asp -->
-<!-- #include file=sideinfo_fun.asp -->
-<!-- #include file=../../inc/ubbcode.asp -->
-<!-- #include file=cache_fun.asp -->
+<!--#include file="cms_setup.asp"-->
+<!--#include file="splitpage_fun.asp"-->
+<!--#include file="form_fun.asp"-->
+<!--#include file="sideinfo_fun.asp"-->
+<!--#include file="../../inc/ubbcode.asp"-->
+<!--#include file="cache_fun.asp"-->
 <%
-Const article_SiteName = "ÂÛÌ³×ÛºÏĞÅÏ¢"
-Dim DEF_pageHeader : DEF_pageHeader = "<" & "%" & "@ LANGUAGE=" & "VBScript CodePage=936%" & ">" & VbCrLf & "<" & "%Response.Charset = ""gb2312""%" & ">"
+Const article_SiteName = "è®ºå›ç»¼åˆä¿¡æ¯"
+Dim DEF_pageHeader : DEF_pageHeader = "<" & "%" & "@ LANGUAGE=" & "VBScript CodePage=65001%" & ">" & VbCrLf & "<" & "%Response.Charset = ""utf-8""%" & ">"
 dim Form_UpFlag,init_Upload
 Form_UpFlag = 0
 init_Upload = 0
@@ -20,12 +20,12 @@ end if
 Sub article_SiteHead(headString)
 	
 	Dim Temp
-	GetStyleInfo
+	GetStyleInfo()
 	%>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"  xml:lang="zh-CN" lang="zh-CN">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="description" content="<%=htmlencode(DEF_GBL_Description)%>" />
 	<title>
 		<%
@@ -39,7 +39,8 @@ Sub article_SiteHead(headString)
 		end if%>
 	</title>
 	<link rel="stylesheet" id="css" type="text/css" href="<%=DEF_BBS_homeUrl%>article/inc/default<%
-	'If GBL_Board_BoardStyle > 0 Then Response.Write GBL_Board_BoardStyle%>.css" title="cssfile" />
+	'If GBL_Board_BoardStyle > 0 Then Response.Write GBL_Board_BoardStyle
+%>.css" title="cssfile" />
 	<script type="text/javascript">
 	<!--
 	var DEF_MasterCookies = "<%=htmlencode(DEF_MasterCookies)%>";
@@ -63,41 +64,41 @@ Sub article_SiteHead(headString)
 <%
 if GBL_UserID = 0 Then
  %><ul class="list_line">
-		<li><a href="<%=DEF_BBS_HomeUrl%>user/<%=DEF_RegisterFile%>">×¢²á</a></li>
-		<li><a href="<%=DEF_BBS_HomeUrl%>user/Login.asp" onclick="return(pub_command('µÇÂ¼',this,'anc_delbody','&dir=<%=DEF_BBS_HomeUrl%>'<%
+		<li><a href="<%=DEF_BBS_HomeUrl%>user/<%=DEF_RegisterFile%>">æ³¨å†Œ</a></li>
+		<li><a href="<%=DEF_BBS_HomeUrl%>user/Login.asp" onclick="return(pub_command('ç™»å½•',this,'anc_delbody','&dir=<%=DEF_BBS_HomeUrl%>'<%
 		If GetBinarybit(DEF_Sideparameter,10) = 1 Then
 			response.write ",'',560,''"
-		end if%>));">µÇÂ¼</a></li>
+		end if%>));">ç™»å½•</a></li>
 		</ul>
  <%
 Else
 	If GBL_CHK_User <> "" Then
 		Response.Write "<span class='head_hellowords'>"
 		Select Case Hour(DEF_Now)
-		Case 0,1:Response.Write "ÎçÒ¹"
-		Case 2,3,4:Response.Write "ÉîÒ¹"
-		Case 5,6,7:Response.Write "ÔçÉÏ"
-		Case 8,9,10:Response.Write "ÉÏÎç"
-		Case 11,12:Response.Write "ÖĞÎç"
-		Case 13,14,15,16,17,18:Response.Write "ÏÂÎç"
-		Case 19,20:Response.Write "»Æ»è"
-		Case 21,22,23:Response.Write "ÍíÉÏ"
+		Case 0,1:Response.Write "åˆå¤œ"
+		Case 2,3,4:Response.Write "æ·±å¤œ"
+		Case 5,6,7:Response.Write "æ—©ä¸Š"
+		Case 8,9,10:Response.Write "ä¸Šåˆ"
+		Case 11,12:Response.Write "ä¸­åˆ"
+		Case 13,14,15,16,17,18:Response.Write "ä¸‹åˆ"
+		Case 19,20:Response.Write "é»„æ˜"
+		Case 21,22,23:Response.Write "æ™šä¸Š"
 		End Select
-	%>ºÃ£¬
+	%>å¥½ï¼Œ
 	</span>
 	<%	If GBL_CHK_Pass = "" Then%>
-			<%=htmlEncode(GetTrueName(GBL_CHK_User,GBL_CHK_TrueName))%> <a href="<%=DEF_BBS_HomeUrl%>User/<%=DEF_RegisterFile%>?action=bind" style="position:relative;" title="ÄúĞèÒª°ó¶¨»òÍêÉÆÕÊºÅĞÅÏ¢."><img src="<%=DEF_BBS_HomeUrl%>images/app/<%=GBL_AppType%>.gif" border="0" style="position:absolute;" /><span style="padding-left:18px;">ÍêÉÆ/°ó¶¨ÕÊºÅ</span></a>
+			<%=htmlEncode(GetTrueName(GBL_CHK_User,GBL_CHK_TrueName))%> <a href="<%=DEF_BBS_HomeUrl%>User/<%=DEF_RegisterFile%>?action=bind" style="position:relative;" title="æ‚¨éœ€è¦ç»‘å®šæˆ–å®Œå–„å¸å·ä¿¡æ¯."><img src="<%=DEF_BBS_HomeUrl%>images/app/<%=GBL_AppType%>.gif" border="0" style="position:absolute;" /><span style="padding-left:18px;">å®Œå–„/ç»‘å®šå¸å·</span></a>
 	<%	Else
 	%>
 	<span class="head_hellouser">
 		<%=htmlEncode(GetTrueName(GBL_CHK_User,GBL_CHK_TrueName))%> <%
-		if Check_jdsupervisor = 1 Then%>
-		<a href="<%=DEF_BBS_HomeUrl%><%=DEF_ManageDir%>/">[½øÈë¹ÜÀí]</a> 
+		if Check_jdsupervisor() = 1 Then%>
+		<a href="<%=DEF_BBS_HomeUrl%><%=DEF_ManageDir%>/">[è¿›å…¥ç®¡ç†]</a> 
 		<%End if%>
 	</span><%
 		End If
 		If GBL_CHK_Flag = 1 or (GBL_CHK_User <> "" and GBL_AppType <> "") Then
-			%><a href="<%=DEF_BBS_HomeUrl%>User/login.asp?action=logout" onclick="return(pub_msg(this,'layer_ajaxmsg','&sure=1','setTimeout(\'document.location.reload();\',1000);'));" class="head_logout">ÍË³ö</a><%
+			%><a href="<%=DEF_BBS_HomeUrl%>User/login.asp?action=logout" onclick="return(pub_msg(this,'layer_ajaxmsg','&sure=1','setTimeout(\'document.location.reload();\',1000);'));" class="head_logout">é€€å‡º</a><%
 		End If
 	End If
 End If
@@ -116,15 +117,16 @@ classid = tonum(request.querystring("classid"),0)
 						response.write "cms_top_sel"
 					else
 						response.write "cms_top_item"
-					end if%>" href=<%=DEF_BBS_HomeUrl%>index.asp id="nav_indexpage"><span class="head_item_title">Ê×Ò³</span></a>
+					end if%>" href=<%=DEF_BBS_HomeUrl%>index.asp id="nav_indexpage"><span class="head_item_title">é¦–é¡µ</span></a>
 				</div>
 				<%
 				dim cmscacheClass
 				set cmscacheClass = new cms_cache_Class
 				cmscacheClass.CMS_NAVIGATECLASS
 				set cmscacheClass = nothing
-				'response.write article_view_newsClass("listflag=1 or listflag=2",classid)%>
-				<!--<a class="cms_top_item" href=<%=DEF_BBS_HomeUrl%>boards.asp>ÂÛÌ³</a>	-->
+				'response.write article_view_newsClass("listflag=1 or listflag=2",classid)
+%>
+				<!--<a class="cms_top_item" href=<%=DEF_BBS_HomeUrl%>boards.asp>è®ºå›</a>	-->
 
 		</div>
 	</div>
@@ -142,9 +144,9 @@ Sub cms_DisplayBBSNavigate(Str)
 	<div class="area">
 		<div class="navigate_sty">
 			<div class="navigate_string">
-			<a name=home>µ±Ç°Î»ÖÃ£º</a>
+			<a name=home>å½“å‰ä½ç½®ï¼š</a>
 			<%
-			Response.Write "<a href=" & DEF_BBS_HomeUrl & "index.asp><span class=""navigate_string_home"">Ê×Ò³</span></a>"
+			Response.Write "<a href=" & DEF_BBS_HomeUrl & "index.asp><span class=""navigate_string_home"">é¦–é¡µ</span></a>"
 			
 			Response.write Str%>
 		</div>
@@ -198,7 +200,7 @@ Sub cms_bodyBottom%>
 
 sub cms_fullbodyhead
 	Boards_Body_Head("")
-	Global_TableHead
+	Global_TableHead()
 %>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="user_table">
 	<tr>
@@ -210,7 +212,7 @@ Sub cms_fullbodyBottom
 %>		</td>
 	</tr>
 	</table><%Global_TableBottom
-	Boards_Body_Bottom
+	Boards_Body_Bottom()
 End Sub
 
 
@@ -221,7 +223,7 @@ Sub cms_SiteBottom
 			<div class="bottominfo">
 				<div class="area">
 				<div class="copyright">
-					<!-- #include file=sitebottom_info.asp -->
+					<!--#include file="sitebottom_info.asp"-->
 				</div>
 				<%PageExeCuteInfo%>
 				</div>

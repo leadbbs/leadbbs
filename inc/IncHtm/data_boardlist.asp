@@ -1,11 +1,11 @@
-<%@ LANGUAGE=VBScript CodePage=936%>
-<%Response.Charset = "gb2312"%>[{
+<%@ LANGUAGE=VBScript CodePage=65001%>
+<%Response.Charset = "utf-8"%>[{
 	"id":0,
-	"text":"£«ÂÛÌ³Ö÷Çø"
+	"text":"ï¼‹è®ºå›ä¸»åŒº"
 },{
 	"id":100,
-	"text":"¡¡²âÊÔ×¨Çø"
+	"text":"ã€€æµ‹è¯•ä¸“åŒº"
 },{
 	"id":444,
-	"text":"¡¡»ØÊÕÕ¾"
+	"text":"ã€€å›žæ”¶ç«™"
 }]

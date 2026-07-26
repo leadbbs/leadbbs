@@ -1,68 +1,68 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 
-Const LMT_RankNumber = 1000  '×î´óÅÅÃûÊý
+Const LMT_RankNumber = 1000  'æœ€å¤§æŽ’åæ•°
 
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
-DisplayUserNavigate("ÐÞ¸´ÂÛÌ³Í³¼ÆÇå³ýÔÚÏßÓÃ»§")
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
+DisplayUserNavigate("ä¿®å¤è®ºå›ç»Ÿè®¡æ¸…é™¤åœ¨çº¿ç”¨æˆ·")
 If GBL_CHK_Flag=1 Then
 	If Request.Form("submitflag") = "yes" then
 		If Request.Form("a") = "m" Then
 			'ReMakeRank
 		Else
-			ClearOnlineUser
+			ClearOnlineUser()
 		End If
 	Else
-		%><div class=frametitle>Ò»¡¢Çå³ýÔÚÏß»áÔ±</div>
-			<div class=frameline>×¢Òâ£º´Ë¹¦ÄÜ½«Íê³ÉÒÔÏÂ¹¦ÄÜ£º</div>
+		%><div class=frametitle>ä¸€ã€æ¸…é™¤åœ¨çº¿ä¼šå‘˜</div>
+			<div class=frameline>æ³¨æ„ï¼šæ­¤åŠŸèƒ½å°†å®Œæˆä»¥ä¸‹åŠŸèƒ½ï¼š</div>
 			<ol class=listli>
-				<li>Çå³ýµ±Ç°ÔÚÏßµÄËùÓÐÈËÔ±£¨°üÀ¨ÓÎ¿Í£©¡£</li>
-				<li>Çå³ýºóµÄÔÚÏßÈËÔ±£¬ÐèÒªÔÚ2·ÖÖÓ×óÓÒµÄ»î¶¯ºó²ÅÄÜÖØÐÂ³ÉÎªÔÚÏß»áÔ±</li>
-				<li>Çå³ýÃ¿¸ö°æÃæ(°üÀ¨Òþ²Ø°æÃæ)µÄÔÚÏßÈËÊýÎªÁã</li>
-				<li>Çå³ý×ÜÔÚÏßÈËÊýÎªÁã</li>
+				<li>æ¸…é™¤å½“å‰åœ¨çº¿çš„æ‰€æœ‰äººå‘˜ï¼ˆåŒ…æ‹¬æ¸¸å®¢ï¼‰ã€‚</li>
+				<li>æ¸…é™¤åŽçš„åœ¨çº¿äººå‘˜ï¼Œéœ€è¦åœ¨2åˆ†é’Ÿå·¦å³çš„æ´»åŠ¨åŽæ‰èƒ½é‡æ–°æˆä¸ºåœ¨çº¿ä¼šå‘˜</li>
+				<li>æ¸…é™¤æ¯ä¸ªç‰ˆé¢(åŒ…æ‹¬éšè—ç‰ˆé¢)çš„åœ¨çº¿äººæ•°ä¸ºé›¶</li>
+				<li>æ¸…é™¤æ€»åœ¨çº¿äººæ•°ä¸ºé›¶</li>
 			</ol>
-			<div class=alert>È·ÈÏÐÅÏ¢£º ÕæµÄÒª¿ªÊ¼Çå³ýÔÚÏßÈËÔ±Ã´£¿</div>
+			<div class=alert>ç¡®è®¤ä¿¡æ¯ï¼š çœŸçš„è¦å¼€å§‹æ¸…é™¤åœ¨çº¿äººå‘˜ä¹ˆï¼Ÿ</div>
 			
 			<div class=frameline>
 			<form action=ClearOnlineUser.asp method=post>
 			<input type=hidden name=submitflag value="yes">
-			<input type=submit value=µã»÷¿ªÊ¼Çå³ýÔÚÏßÈËÔ± class=fmbtn>
+			<input type=submit value=ç‚¹å‡»å¼€å§‹æ¸…é™¤åœ¨çº¿äººå‘˜ class=fmbtn>
 			</form>
 			</div>
 			
-			<div class=frameline><a href=../SiteManage/RepairSite.asp>Èç¹û½ö½öÊÇÏëÐÞ¸´Ã¿¸ö°æÃæµÄÔÚÏßÈËÊý»ò×ÜÔÚÏßÈËÊý£¬Çëµã»÷ÕâÀï</a>
+			<div class=frameline><a href=../SiteManage/RepairSite.asp>å¦‚æžœä»…ä»…æ˜¯æƒ³ä¿®å¤æ¯ä¸ªç‰ˆé¢çš„åœ¨çº¿äººæ•°æˆ–æ€»åœ¨çº¿äººæ•°ï¼Œè¯·ç‚¹å‡»è¿™é‡Œ</a>
 			</div>
 		<!--
-			<div class=frametitle>¶þ¡¢ÖØÐÂÉú³ÉÓÃ»§ÅÅÃû</div>
+			<div class=frametitle>äºŒã€é‡æ–°ç”Ÿæˆç”¨æˆ·æŽ’å</div>
 			
 			<div class=frameline>
-			ÓÃ»§ÅÅÃûÒÀ¾­Ñé(ÔÚÏßÊ±¼ä)À´ÅÅÃû¡£ÇÒÖ»ÏÞÇ°<%=LMT_RankNumber%>ÃûÓÃ»§²ÅÓÐÅÅÃû×Ê¸ñ¡£<br>
-			ÒòÖØÅÅÃûÐèÒªÏûºÄµÄÊ±¼ä·Ç³£Ö®´ó£¬½¨Òé¾¡Á¿ÉÙ½øÐÐ´ËÏî¹¤×÷¡£
+			ç”¨æˆ·æŽ’åä¾ç»éªŒ(åœ¨çº¿æ—¶é—´)æ¥æŽ’åã€‚ä¸”åªé™å‰<%=LMT_RankNumber%>åç”¨æˆ·æ‰æœ‰æŽ’åèµ„æ ¼ã€‚<br>
+			å› é‡æŽ’åéœ€è¦æ¶ˆè€—çš„æ—¶é—´éžå¸¸ä¹‹å¤§ï¼Œå»ºè®®å°½é‡å°‘è¿›è¡Œæ­¤é¡¹å·¥ä½œã€‚
 			</div>
 			<div class=frameline>
 			<form action=ClearOnlineUser.asp method=post>
 			<input type=hidden name=submitflag value="yes">
 			<input type=hidden name=a value="m">
-			<input type=submit value=µã»÷ÖØÐÂÉú³ÉÓÃ»§ÅÅÃû class=fmbtn>
+			<input type=submit value=ç‚¹å‡»é‡æ–°ç”Ÿæˆç”¨æˆ·æŽ’å class=fmbtn>
 			</form>
 			</div>
 		-->	
 		<%
 	End If
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Sub ClearOnlineUser
@@ -85,7 +85,7 @@ Sub ClearOnlineUser
 		Next
 		Application.UnLock
 	End If
-	Response.write "<div class=frameline><span class=greenfont>³É¹¦Çå³ýËùÓÐÔÚÏßÓÃ»§£¡</span>[" & DEF_Now & "]</div>"
+	Response.write "<div class=frameline><span class=greenfont>æˆåŠŸæ¸…é™¤æ‰€æœ‰åœ¨çº¿ç”¨æˆ·ï¼</span>[" & DEF_Now & "]</div>"
 
 End Sub
 
@@ -110,7 +110,7 @@ Sub ReMakeRank
 	End If
 	Rs.Close
 	Set Rs = Nothing
-	Response.write "<div class=frameline><span class=greenfont>³É¹¦ÖØÐÂÉú³ÉÓÃ»§ÅÅÃû£¡</span>[" & DEF_Now & "]</div>"
+	Response.write "<div class=frameline><span class=greenfont>æˆåŠŸé‡æ–°ç”Ÿæˆç”¨æˆ·æŽ’åï¼</span>[" & DEF_Now & "]</div>"
 
 End Sub
 %>

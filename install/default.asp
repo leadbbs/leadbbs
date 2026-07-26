@@ -1,10 +1,16 @@
 <%Option Explicit%>
-<!-- #include file=scripts/install_fun.asp -->
-<!-- #include file=../inc/md5.asp -->
 <%
-Server.ScriptTimeOut = 6000
+' AxonASP does not hoist Const declarations; a Const referenced before its
+' textual definition resolves to empty. These consts are used by functions in
+' the included scripts/install_fun.asp, so they must be declared BEFORE the
+' include (classic IIS hoists them regardless of order).
 const DEF_FSOString = "Scripting.FileSystemObject"
 const DEF_BBS_HomeUrl = "../"
+%>
+<!--#include file="scripts/install_fun.asp"-->
+<!--#include file="../inc/md5.asp"-->
+<%
+Server.ScriptTimeOut = 6000
 Dim Step,Check_com,GBL_CHK_TempStr,con,setupstr,constr,dtype
 dim adminuser,adminpassword,adminpassword2
 
@@ -14,28 +20,28 @@ Sub Main
 
 	Step = toNum(left(Request("Step"),1),1)
 	If Step > 5 then Step = 1
-	install_head
-	install_contenthead
-	install_step
-	if checkInstalled = false then
+	install_head()
+	install_contenthead()
+	install_step()
+	if checkInstalled() = false then
 		select case step
 		case 1:
-			install_step1form
+			install_step1form()
 		case 2:
-			install_step2form
+			install_step2form()
 		case 3:
-			install_step3form
+			install_step3form()
 		case 4:
-			install_step4form
+			install_step4form()
 		case 5:
-			install_step5form
+			install_step5form()
 		end select
 	end if
-	install_contentbottom
-	install_bottom
+	install_contentbottom()
+	install_bottom()
 
 End Sub
 
-Main
+Main()
 
 %>

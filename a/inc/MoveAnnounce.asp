@@ -1,32 +1,32 @@
-<%REM ×ªÒÆÌû×Ó
+<%REM è½¬ç§»å¸–å­
 Function CheckMoveSure
 
 	If GetBinarybit(GBL_CHK_UserLimit,9) = 1 Then
-		Processor_ErrMsg "´íÎó£¬È¨ÏŞ²»×ã£¡" & VbCrLf
+		Call Processor_ErrMsg("é”™è¯¯ï¼Œæƒé™ä¸è¶³ï¼" & VbCrLf)
 		CheckMoveSure = 0
 		Exit Function
 	End if
 
-	If CheckSure = 0 Then Exit Function
+	If CheckSure() = 0 Then Exit Function
 	
 	If Form_ParentID <> 0 Then
-		Processor_ErrMsg "Òª´¦ÀíµÄÌû×Ó±ØĞëÎªÖ÷ÌâÌû×Ó£¡"
+		Call Processor_ErrMsg("è¦å¤„ç†çš„å¸–å­å¿…é¡»ä¸ºä¸»é¢˜å¸–å­ï¼")
 		CheckMoveSure = 0
 		Exit Function
 	End if
 
 	If GetBinarybit(GBL_Board_BoardLimit,8) = 1 Then
-		Processor_ErrMsg "´Ë°æÃæ²»ÔÊĞí×ªÒÆ»ò¾µÏñÌû×Ó£¡"
+		Call Processor_ErrMsg("æ­¤ç‰ˆé¢ä¸å…è®¸è½¬ç§»æˆ–é•œåƒå¸–å­ï¼")
 		CheckMoveSure = 0
 		Exit Function
 	End If
 
-	CheckisBoardMaster
+	CheckisBoardMaster()
 	If GBL_UserID >= 1 and GBL_BoardMasterFlag >= 5 Then
 		CheckMoveSure = 1
 	Else
 		CheckMoveSure = 0
-		Processor_ErrMsg "´íÎó£¬È¨ÏŞ²»×ã£¡"
+		Call Processor_ErrMsg("é”™è¯¯ï¼Œæƒé™ä¸è¶³ï¼")
 	End If
 
 End Function
@@ -48,7 +48,7 @@ Sub Process_MoveAnnounce(MoveID)
 	SQL = sql_select("Select ParentID,TopicSortID,BoardID,RootID,Layer,Title,Content,FaceIcon,ndatetime,LastTime,Length,UserName,UserID,UnderWriteFlag,htmlflag,NotReplay,IPAddress,TopicType,NeedValue,TitleStyle,RootIDBak,VisitIP,GoodAssort,PollNum,ChildNum,LastUser,Hits from LeadBBS_Announce where id=" & MoveID & " and BoardID=" & GBL_Board_ID,1)
 	Set Rs = LDExeCute(SQL,0)
 	If Rs.Eof Then
-		Processor_ErrMsg "Î´Ñ¡ÔñÒª²Ù×÷µÄÌû×Ó£¡" & VbCrLf
+		Call Processor_ErrMsg("æœªé€‰æ‹©è¦æ“ä½œçš„å¸–å­ï¼" & VbCrLf)
 		Rs.Close
 		Set Rs = Nothing
 		Exit Sub
@@ -70,8 +70,8 @@ Sub Process_MoveAnnounce(MoveID)
 		Rs.Close
 		Set Rs = Nothing
 		
-	If CheckLimitNameOnly(MoveUserName) = 1 and GBL_BoardMasterFlag < 9 and (CheckSupervisorNameOnly = 0 or GBL_UserID < 1) then
-		Processor_ErrMsg "±àºÅ" & MoveID & "Ìû×ÓÎŞ×ã¹»È¨ÏŞ²Ù×÷¡£"
+	If CheckLimitNameOnly(MoveUserName) = 1 and GBL_BoardMasterFlag < 9 and (CheckSupervisorNameOnly() = 0 or GBL_UserID < 1) then
+		Call Processor_ErrMsg("ç¼–å·" & MoveID & "å¸–å­æ— è¶³å¤Ÿæƒé™æ“ä½œã€‚")
 		Exit Sub
 	end if
 		
@@ -83,19 +83,19 @@ Sub Process_MoveAnnounce(MoveID)
 			Temp = Application(DEF_MasterCookies & "BoardInfo" & BoardID)
 		End If
 		If isArray(Temp) = False Then
-			Processor_ErrMsg "ÂÛÌ³·¢Éú´íÎó£¬ÇëÁªÏµ¹ÜÀíÔ±£¡" & VbCrLf
+			Call Processor_ErrMsg("è®ºå›å‘ç”Ÿé”™è¯¯ï¼Œè¯·è”ç³»ç®¡ç†å‘˜ï¼" & VbCrLf)
 			Set Rs = Nothing
 			Exit Sub
 		End If
 		BoardName = Temp(0,0)
 		
 		If BoardID2 < 1 Then
-			Processor_ErrMsg "´íÎó£¬Ä¿±êÂÛÌ³²»´æÔÚ£¡" & VbCrLf
+			Call Processor_ErrMsg("é”™è¯¯ï¼Œç›®æ ‡è®ºå›ä¸å­˜åœ¨ï¼" & VbCrLf)
 			Exit Sub
 		End if
 		
 		If BoardID2 = BoardID Then
-			Processor_ErrMsg "Ä¿±êÂÛÌ³¾ÍÊÇÖ÷ÌâËùÔÚÂÛÌ³£¬²Ù×÷ºöÂÔ£¡" & VbCrLf
+			Call Processor_ErrMsg("ç›®æ ‡è®ºå›å°±æ˜¯ä¸»é¢˜æ‰€åœ¨è®ºå›ï¼Œæ“ä½œå¿½ç•¥ï¼" & VbCrLf)
 			Exit Sub
 		End if
 	
@@ -108,22 +108,22 @@ Sub Process_MoveAnnounce(MoveID)
 		End If
 		If isArray(Temp) = False Then
 			If BoardID2 = 444 Then
-				Processor_ErrMsg "ÂÛÌ³»ØÊÕÕ¾Î´½¨Á¢£¬ÇëÁªÏµ¹ÜÀíÔ±£¡" & VbCrLf
+				Call Processor_ErrMsg("è®ºå›å›æ”¶ç«™æœªå»ºç«‹ï¼Œè¯·è”ç³»ç®¡ç†å‘˜ï¼" & VbCrLf)
 			Else
-				Processor_ErrMsg "ÂÛÌ³·¢Éú´íÎó£¬ÇëÁªÏµ¹ÜÀíÔ±£¡" & VbCrLf
+				Call Processor_ErrMsg("è®ºå›å‘ç”Ÿé”™è¯¯ï¼Œè¯·è”ç³»ç®¡ç†å‘˜ï¼" & VbCrLf)
 			End If
 			Exit Sub
 		End If
 		BoardName2 = Temp(0,0)
 		BoardLimit2 = Temp(9,0)
 		If GetBinarybit(BoardLimit2,12) = 1 Then
-			Processor_ErrMsg "Ä¿±ê°æÃæ<u>ÊôÓÚ·ÖÀàÂÛÌ³</u>£¬²»ÔÊĞí´Ë²Ù×÷¡£" & VbCrLf
+			Call Processor_ErrMsg("ç›®æ ‡ç‰ˆé¢<u>å±äºåˆ†ç±»è®ºå›</u>ï¼Œä¸å…è®¸æ­¤æ“ä½œã€‚" & VbCrLf)
 			Exit Sub
 		End If
 		
-		'×¢Òâ,Ã»ÓĞ¶ÔÏÂÃæµÄÓï¾ä×÷×¨ÃÅµÄË÷Òı,µ±Ä³Ö÷Ìâ»Ø¸´Ìû×Ó¾Ş´óÊ±,¿ÉÄÜËÙ¶È»áÏÂ½µµÃÀ÷º¦,Èç¹ûÓĞ±ØÒª,ÔÚÊı¾İ¿âÖĞ½¨Á¢ÏàÓ¦µÄË÷Òı,µ«Ë÷Òı¶à»áµ¼ÖÂÊı¾İ¿âĞÔÄÜÏÂ½µ.
+		'æ³¨æ„,æ²¡æœ‰å¯¹ä¸‹é¢çš„è¯­å¥ä½œä¸“é—¨çš„ç´¢å¼•,å½“æŸä¸»é¢˜å›å¤å¸–å­å·¨å¤§æ—¶,å¯èƒ½é€Ÿåº¦ä¼šä¸‹é™å¾—å‰å®³,å¦‚æœæœ‰å¿…è¦,åœ¨æ•°æ®åº“ä¸­å»ºç«‹ç›¸åº”çš„ç´¢å¼•,ä½†ç´¢å¼•å¤šä¼šå¯¼è‡´æ•°æ®åº“æ€§èƒ½ä¸‹é™.
 		Dim TodayAnnounce
-		Set Rs = LDExeCute("select count(*) from LeadBBS_Announce where RootIDBak=" & RootIDBak  & " and ndatetime>" & Left(GetTimeValue(DEF_Now),8) & "000000",0)
+		Set Rs = LDExeCute("select count(*) from LeadBBS_Announce where RootIDBak=" & RootIDBak  & " and ndatetime>" & Left(LngStr(GetTimeValue(DEF_Now)),8) & "000000",0)
 		If Rs.Eof Then
 			TodayAnnounce = 0
 		Else
@@ -135,8 +135,8 @@ Sub Process_MoveAnnounce(MoveID)
 		Set Rs = Nothing
 		
 		If Action_Str = "mirror" Then
-			If cCur(GetData(17,0)) = 39 Then
-				Processor_ErrMsg "´ËÌû<u>ÒÑÊÇ¾µÏñÌû×Ó</u>£¬ÎŞ·¨ÔÙ´Î¾µÏñ¡£" & VbCrLf
+			If cCur(LngStr(GetData(17,0))) = 39 Then
+				Call Processor_ErrMsg("æ­¤å¸–<u>å·²æ˜¯é•œåƒå¸–å­</u>ï¼Œæ— æ³•å†æ¬¡é•œåƒã€‚" & VbCrLf)
 				Exit Sub
 			End If
 			GetData(2,0) = BoardID2 'boardid
@@ -153,11 +153,11 @@ Sub Process_MoveAnnounce(MoveID)
 			SQL = " insert into LeadBBS_Announce(ParentID,TopicSortID,BoardID,RootID," & _
 				    "Layer,Title,Content,FaceIcon,ndatetime,LastTime,Length," &_
 				    "UserName,UserID,UnderWriteFlag,htmlflag,NotReplay,IPAddress,TopicType,NeedValue,TitleStyle,RootIDBak,VisitIP,GoodAssort,PollNum,ChildNum,LastUser,Hits,LastInfo)" &_
-			" values(" & GetData(0,0) & "," & GetData(1,0) & "," & GetData(2,0) & "," & GetData(3,0) & "," &_
-			GetData(4,0) & ",'" & Replace(GetData(5,0),"'","''") & "','" & GetData(6,0) & "'," &_
-			GetData(7,0) & "," & GetData(8,0) & "," & GetData(9,0) & "," & GetData(10,0) & ",'" &_
-			Replace(GetData(11,0),"'","''") & "'," & GetData(12,0) & "," & GetData(13,0) & "," & GetData(14,0) & "," & GetData(15,0) & ",'" & Replace(GetData(16,0),"'","''") & "'" & _
-			"," & GetData(17,0) & "," & GetData(18,0) & "," & GetData(19,0) & "," & GetData(20,0) & ",'" & Replace(GetData(21,0),"'","''") & "'," & GetData(22,0) & "," & GetData(23,0) & "," & GetData(24,0) & ",'" & Replace(GetData(25,0),"'","''") & "'," & GetData(26,0) & "," & BoardID & ")"
+			" values(" & LngStr(GetData(0,0)) & "," & LngStr(GetData(1,0)) & "," & LngStr(GetData(2,0)) & "," & LngStr(GetData(3,0)) & "," &_
+			LngStr(GetData(4,0)) & ",'" & Replace(GetData(5,0),"'","''") & "','" & LngStr(GetData(6,0)) & "'," &_
+			LngStr(GetData(7,0)) & "," & LngStr(GetData(8,0)) & "," & LngStr(GetData(9,0)) & "," & LngStr(GetData(10,0)) & ",'" &_
+			Replace(GetData(11,0),"'","''") & "'," & LngStr(GetData(12,0)) & "," & LngStr(GetData(13,0)) & "," & LngStr(GetData(14,0)) & "," & LngStr(GetData(15,0)) & ",'" & Replace(GetData(16,0),"'","''") & "'" & _
+			"," & LngStr(GetData(17,0)) & "," & LngStr(GetData(18,0)) & "," & LngStr(GetData(19,0)) & "," & LngStr(GetData(20,0)) & ",'" & Replace(GetData(21,0),"'","''") & "'," & LngStr(GetData(22,0)) & "," & LngStr(GetData(23,0)) & "," & LngStr(GetData(24,0)) & ",'" & Replace(GetData(25,0),"'","''") & "'," & LngStr(GetData(26,0)) & "," & BoardID & ")"
 			CALL LDExeCute(SQL,1)
 			
 			Dim NewAnnounceID
@@ -174,7 +174,7 @@ Sub Process_MoveAnnounce(MoveID)
 					SQL = sql_select("Select ID,RootID from LeadBBS_Announce where UserID=" & Form_UserID & " order by id DESC",1)
 					Set Rs = LDExeCute(SQL,0)
 					If Rs.Eof Then
-						GBL_CHK_TempStr = "ÒâÍâ´íÎó: for mirror£¡<br>" & VbCrLf
+						GBL_CHK_TempStr = "æ„å¤–é”™è¯¯: for mirrorï¼<br>" & VbCrLf
 						Rs.Close
 						Set Rs = Nothing
 						Exit Sub
@@ -190,7 +190,7 @@ Sub Process_MoveAnnounce(MoveID)
 				Set Rs=LDExeCute(SQL,0)
 				GBL_DBNum = GBL_DBNum + 1
 				If Rs.Eof Then
-					GBL_CHK_TempStr = "ÒâÍâ´íÎó(mirror)£¡<br>" & VbCrLf
+					GBL_CHK_TempStr = "æ„å¤–é”™è¯¯(mirror)ï¼<br>" & VbCrLf
 					Rs.Close
 					Set Rs = Nothing
 					Exit Sub
@@ -204,22 +204,22 @@ Sub Process_MoveAnnounce(MoveID)
 				SQL = " insert into LeadBBS_Topic(ID,BoardID,RootID," & _
 					    "Title,FaceIcon,ndatetime,LastTime,Length," &_
 					    "UserName,UserID,NotReplay,TopicType,NeedValue,TitleStyle,VisitIP,GoodAssort,PollNum,ChildNum,Hits,LastInfo)" &_
-				" values(" & NewAnnounceID & "," & GetData(2,0) & "," & GetData(3,0) & "," &_
+				" values(" & NewAnnounceID & "," & LngStr(GetData(2,0)) & "," & LngStr(GetData(3,0)) & "," &_
 				"'" & Replace(GetData(5,0),"'","''") & "'," &_
-				GetData(7,0) & "," & GetData(8,0) & "," & GetData(9,0) & "," & GetData(10,0) & ",'" &_
-				Replace(GetData(11,0),"'","''") & "'," & GetData(12,0) & "," & GetData(15,0) & "" & _
-				"," & GetData(17,0) & "," & GetData(18,0) & "," & GetData(19,0) & ",'" & Replace(GetData(21,0),"'","''") & "'," & GetData(22,0) & "," & GetData(23,0) & "," & GetData(24,0) & ",'" & Replace(GetData(25,0),"'","''") & "'," & GetData(26,0) & "," & BoardID & ")"
+				LngStr(GetData(7,0)) & "," & LngStr(GetData(8,0)) & "," & LngStr(GetData(9,0)) & "," & LngStr(GetData(10,0)) & ",'" &_
+				Replace(GetData(11,0),"'","''") & "'," & LngStr(GetData(12,0)) & "," & LngStr(GetData(15,0)) & "" & _
+				"," & LngStr(GetData(17,0)) & "," & LngStr(GetData(18,0)) & "," & LngStr(GetData(19,0)) & ",'" & Replace(GetData(21,0),"'","''") & "'," & LngStr(GetData(22,0)) & "," & LngStr(GetData(23,0)) & "," & LngStr(GetData(24,0)) & ",'" & Replace(GetData(25,0),"'","''") & "'," & LngStr(GetData(26,0)) & "," & BoardID & ")"
 				CALL LDExeCute(SQL,1)
 			End select
 			CALL LDExeCute("Update LeadBBS_Announce Set RootMaxID=ID,RootMinID=ID,RootIDBak=ID where RootIDBak=0",1)
 			If DEF_UsedDataBase = 1 Then CALL LDExeCute("Update LeadBBS_Topic Set RootMaxID=ID,RootMinID=ID where ID=" & NewAnnounceID,1)
-			UpdateBoardAnnounceNum Application(DEF_MasterCookies & "BoardInfo" & BoardID2)(28,0),1,1,0,0
+			Call UpdateBoardAnnounceNum(Application(DEF_MasterCookies & "BoardInfo" & BoardID2)(28,0),1,1,0,0)
 			CALL MakeAnnounceTop(NewAnnounceID,"")
-			Processor_Done "<span class=greenfont>Ô­Ö÷Ìâ³É¹¦¾µÏñµ½" & BoardName2 & "£¡</span>" & VbCrLf
+			Call Processor_Done("<span class=greenfont>åŸä¸»é¢˜æˆåŠŸé•œåƒåˆ°" & BoardName2 & "ï¼</span>" & VbCrLf)
 			Exit Sub
 		End If
 
-		'×¢Òâ,Ã»ÓĞ¶ÔÏÂÃæµÄÓï¾ä×÷×¨ÃÅµÄË÷Òı,µ±Ä³Ö÷Ìâ»Ø¸´Ìû×Ó¾Ş´óÊ±,¿ÉÄÜËÙ¶È»áÏÂ½µµÃÀ÷º¦,Èç¹ûÓĞ±ØÒª,ÔÚÊı¾İ¿âÖĞ½¨Á¢ÏàÓ¦µÄË÷Òı,µ«Ë÷Òı¶à»áµ¼ÖÂÊı¾İ¿âĞÔÄÜÏÂ½µ.
+		'æ³¨æ„,æ²¡æœ‰å¯¹ä¸‹é¢çš„è¯­å¥ä½œä¸“é—¨çš„ç´¢å¼•,å½“æŸä¸»é¢˜å›å¤å¸–å­å·¨å¤§æ—¶,å¯èƒ½é€Ÿåº¦ä¼šä¸‹é™å¾—å‰å®³,å¦‚æœæœ‰å¿…è¦,åœ¨æ•°æ®åº“ä¸­å»ºç«‹ç›¸åº”çš„ç´¢å¼•,ä½†ç´¢å¼•å¤šä¼šå¯¼è‡´æ•°æ®åº“æ€§èƒ½ä¸‹é™.
 		Dim GoodNum
 		Set Rs = LDExeCute("select count(*) from LeadBBS_Announce where RootIDBak=" & RootIDBak & " and GoodFlag=1",0)
 		If Rs.Eof Then
@@ -239,41 +239,40 @@ Sub Process_MoveAnnounce(MoveID)
 			If DEF_UsedDataBase = 1 Then CALL LDExeCute("Update LeadBBS_Topic Set GoodAssort=0 where ID=" & MoveID,1)
 		End If
 		CALL LDExeCute("Update LeadBBS_TopAnnounce Set BoardID=" & BoardID2 & " where BoardID=" & BoardID & " and RootID=" & RootIDBak,1)
-		If CheckSupervisorUserName = 0 Then CALL LDExeCute("Update LeadBBS_Announce Set OtherInfo='´ËÌû×îºóÓÉ" & Replace(LeftTrue(GBL_CHK_User,20),"'","''") & "ÔÚ" & DEF_Now & "´Ó " & Replace(LeftTrue(KillHTMLLabel(BoardName),39),"'","''") & " ×ªÒÆ¹ıÀ´'" & " where ParentID=0 and RootIDBak=" & RootIDBak,1)
+		If CheckSupervisorUserName() = 0 Then CALL LDExeCute("Update LeadBBS_Announce Set OtherInfo='æ­¤å¸–æœ€åç”±" & Replace(LeftTrue(GBL_CHK_User,20),"'","''") & "åœ¨" & DEF_Now & "ä» " & Replace(LeftTrue(KillHTMLLabel(BoardName),39),"'","''") & " è½¬ç§»è¿‡æ¥'" & " where ParentID=0 and RootIDBak=" & RootIDBak,1)
 		'CALL LDExeCute("Update LeadBBS_Boards Set TopicNum=TopicNum-1,AnnounceNum=AnnounceNum-" & ChildNum+1 & ",TodayAnnounce=TodayAnnounce-" & TodayAnnounce & ",GoodNum=GoodNum-" & GoodNum & " where boardID=" & BoardID,1)
-		UpdateBoardAnnounceNum Application(DEF_MasterCookies & "BoardInfo" & BoardID)(28,0),-1,0-ChildNum-1,0-TodayAnnounce,0-GoodNum
+		Call UpdateBoardAnnounceNum(Application(DEF_MasterCookies & "BoardInfo" & BoardID)(28,0),-1,0-ChildNum-1,0-TodayAnnounce,0-GoodNum)
 		'CALL LDExeCute("Update LeadBBS_Boards Set TopicNum=TopicNum+1,AnnounceNum=AnnounceNum+" & ChildNum+1 & ",TodayAnnounce=TodayAnnounce+" & TodayAnnounce & ",GoodNum=GoodNum+" & GoodNum & " where boardID=" & BoardID2,1)
-		UpdateBoardAnnounceNum Application(DEF_MasterCookies & "BoardInfo" & BoardID2)(28,0),1,ChildNum+1,TodayAnnounce,GoodNum
+		Call UpdateBoardAnnounceNum(Application(DEF_MasterCookies & "BoardInfo" & BoardID2)(28,0),1,ChildNum+1,TodayAnnounce,GoodNum)
 		CALL MakeAnnounceTop(MoveID,"")
 		DeleteAllTopData(MoveID)
 		UpdateBoardValue(BoardID)
 		UpdateBoardValue(BoardID2)
 		If inStr(application(DEF_MasterCookies & "TopAncList" & GBL_Board_BoardAssort),"," & MoveID & ",") Then ReloadTopAnnounceInfo(GBL_Board_BoardAssort)
 		
-		If CheckSupervisorUserName = 0 Then
+		If CheckSupervisorUserName() = 0 Then
 			CALL LDExeCute("Update LeadBBS_User Set LastWriteTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
 			UpdateSessionValue 13,GetTimeValue(DEF_Now),0
 		End If
 
-		CALL LDExeCute("insert into LeadBBS_Log(LogType,LogTime,LogInfo,UserName,IP,BoardID) Values(103," & GetTimeValue(DEF_Now) & ",'" & Left("³É¹¦×ªÒÆ±àºÅ" & MoveID & "£¬Ô­×÷Õß±àºÅ" & UserID & "µÄÌû×Ó£®Ô­°æÃæ±àºÅ" & BoardID & "(" & Replace(Replace(htmlencode(BoardName),"\","\\"),"'","''") & ")£¬Ä¿±êÂÛÌ³±àºÅ" & BoardID2 & "(" & Replace(Replace(htmlencode(BoardName2),"\","\\"),"'","''") & "£®",255) & "','" & Replace(GBL_CHK_User,"'","''") & "','" & Replace(GBL_IPAddress,"'","''") & "'," & GBL_Board_ID & ")",1)
+		CALL LDExeCute("insert into LeadBBS_Log(LogType,LogTime,LogInfo,UserName,IP,BoardID) Values(103," & GetTimeValue(DEF_Now) & ",'" & Left("æˆåŠŸè½¬ç§»ç¼–å·" & LngStr(MoveID) & "ï¼ŒåŸä½œè€…ç¼–å·" & UserID & "çš„å¸–å­ï¼åŸç‰ˆé¢ç¼–å·" & BoardID & "(" & Replace(Replace(htmlencode(BoardName),"\","\\"),"'","''") & ")ï¼Œç›®æ ‡è®ºå›ç¼–å·" & BoardID2 & "(" & Replace(Replace(htmlencode(BoardName2),"\","\\"),"'","''") & "ï¼",255) & "','" & Replace(GBL_CHK_User,"'","''") & "','" & Replace(GBL_IPAddress,"'","''") & "'," & GBL_Board_ID & ")",1)
 		
 		If GoodAssort > 0 Then ChangeGoodAssort GoodAssort,0
-		If LMT_Prc_MsgFlag = 2 or Request.Form("SendMessage") = "1" Then SendNewMessage Prc_User,AnnounceUser,"ÂÛÌ³¶ÌĞÅ£ºÌû×Ó×ªÒÆÍ¨Öª","[color=blue]ÄúËù·¢±íµÄÌû×ÓÒÑ±»×ªÒÆ[/color]" & VbCrLf & VbCrLf &_
-			"[b]Ô­Ê¼°æÃæ£º[/b][url=../b/" & RW_b(GBL_Board_ID,0,"") & "]" & htmlencode(KillHTMLLabel(BoardName)) & "[/url]" & VbCrLf & _
-			"[b]Ä¿±ê°æÃæ£º[/b]" & htmlencode(BoardName2) & VbCrLf & _
-			"[b]²Ù×÷ÈËÔ±£º[/b]" & htmlencode(GBL_CHK_User) & VbCrLf & _
-			"[b]²Ù×÷Ô­Òò£º[/b]" & Left(Request.Form("SendWhys"),24) & VbCrLf & _
-			"[b]Ìû×Ó±êÌâ£º[/b][url=../a/" & RW_a(GBL_Board_ID,MoveID,1,1,"") & "]" & htmlencode(AnnounceTitle) & "[/url]",GBL_IPAddress
+		If LMT_Prc_MsgFlag = 2 or Request.Form("SendMessage") = "1" Then SendNewMessage Prc_User,AnnounceUser,"è®ºå›çŸ­ä¿¡ï¼šå¸–å­è½¬ç§»é€šçŸ¥","[color=blue]æ‚¨æ‰€å‘è¡¨çš„å¸–å­å·²è¢«è½¬ç§»[/color]" & VbCrLf & VbCrLf &_
+			"[b]åŸå§‹ç‰ˆé¢ï¼š[/b][url=../b/" & RW_b(GBL_Board_ID,0,"") & "]" & htmlencode(KillHTMLLabel(BoardName)) & "[/url]" & VbCrLf & _
+			"[b]ç›®æ ‡ç‰ˆé¢ï¼š[/b]" & htmlencode(BoardName2) & VbCrLf & _
+			"[b]æ“ä½œäººå‘˜ï¼š[/b]" & htmlencode(GBL_CHK_User) & VbCrLf & _
+			"[b]æ“ä½œåŸå› ï¼š[/b]" & Left(Request.Form("SendWhys"),24) & VbCrLf & _
+			"[b]å¸–å­æ ‡é¢˜ï¼š[/b][url=../a/" & RW_a(GBL_Board_ID,MoveID,1,1,"") & "]" & htmlencode(AnnounceTitle) & "[/url]",GBL_IPAddress
 		GBL_Board_ID = BoardID
 		LMT_AncID = 0
-		Processor_Done "<span class=greenfont>Ô­Ö÷Ìâ³É¹¦×ªÒÆµ½" & BoardName2 & "£¡</span>" & VbCrLf
-
+		Call Processor_Done("<span class=greenfont>åŸä¸»é¢˜æˆåŠŸè½¬ç§»åˆ°" & BoardName2 & "ï¼</span>" & VbCrLf)
 End Sub
 
 Function DisplayMoveAnnounce
 
 	If cStr(LMT_AncID) = "0" Then
-		Processor_ErrMsg "´íÎó£¬Î´Ñ¡ÔñÒª²Ù×÷µÄÌû×Ó£¡" & VbCrLf
+		Call Processor_ErrMsg("é”™è¯¯ï¼Œæœªé€‰æ‹©è¦æ“ä½œçš„å¸–å­ï¼" & VbCrLf)
 		Exit Function
 	End if
 
@@ -296,35 +295,35 @@ Function DisplayMoveAnnounce
 			Process_MoveAnnounce(Tmp(N))
 		Next
 	Else
-		Processor_Head
+		Processor_Head()
 		%>
 		<form name=DellClientForm action=<%=DEF_BBS_HomeUrl%>a/Processor.asp?Action=<%=Action_Str%>&b=<%=GBL_Board_ID%> onSubmit="submit_disable(this);" method="post"<%
 	If AjaxFlag = 1 Then
 		Response.Write " target=""hidden_frame"""
 	End If
 	%>>
-			Ñ¡ÔñÌû×Ó£º<%Response.Write "¹²<b>" & Len(LMT_AncID)-Len(Replace(LMT_AncID,",","")) + 1 & "</b>Ìõ¼ÇÂ¼"%>
+			é€‰æ‹©å¸–å­ï¼š<%Response.Write "å…±<b>" & Len(LMT_AncID)-Len(Replace(LMT_AncID,",","")) + 1 & "</b>æ¡è®°å½•"%>
 			<input type=hidden name=SureFlag value="1">
 			<input type=hidden name=JsFlag value="1">
 			<input type=hidden name=AjaxFlag value="<%=AjaxFlag%>">
-			<input type=hidden name=ID value="<%=LMT_AncID%>">
+			<input type=hidden name=ID value="<%=LngStr(LMT_AncID)%>">
 			<input type=hidden name=BoardID value="<%=GBL_Board_ID%>">
 			<%If DEF_EnableDelAnnounce = 0 and BoardID2 = 444 and Action_Str <> "mirror" Then%>
-				<div class="value2">Ìû×Ó½«±»×ªÒÆµ½»ØÊÕ°æÃæ£¬È·ÈÏÒª»ØÊÕ´ËÖ÷ÌâÌû×ÓÂğ£¿</div>
+				<div class="value2">å¸–å­å°†è¢«è½¬ç§»åˆ°å›æ”¶ç‰ˆé¢ï¼Œç¡®è®¤è¦å›æ”¶æ­¤ä¸»é¢˜å¸–å­å—ï¼Ÿ</div>
 				<input type=hidden name=BoardID2 value="<%=BoardID2%>"><div class="value2">
 			<%Else%>
-				<div class="value2"><b>È·ÈÏÒª<u><%
+				<div class="value2"><b>ç¡®è®¤è¦<u><%
 				If Action_Str = "Move" Then
-					Response.Write "×ªÒÆ"
+					Response.Write "è½¬ç§»"
 				Else
-					Response.Write "¾µÏñ"
-				End If%></u>Ñ¡ÔñµÄÌû×ÓÂğ£¿</b>
+					Response.Write "é•œåƒ"
+				End If%></u>é€‰æ‹©çš„å¸–å­å—ï¼Ÿ</b>
 				</div>
 				<div class="value2">
-				Ñ¡ÔñÄ¿±êÂÛÌ³£º<!-- #include file=../../inc/incHTM/BoardForMoveList.asp -->
+				é€‰æ‹©ç›®æ ‡è®ºå›ï¼š<!--#include file="../../inc/incHTM/BoardForMoveList.asp"-->
 			<%End If
 			If BoardID2 <> 444 Then%>
-				»òÌîĞ´±àºÅ£º<input type=input name=BoardID3 value="" size=4 maxlength=14 class="fminpt input_1">
+				æˆ–å¡«å†™ç¼–å·ï¼š<input type=input name=BoardID3 value="" size=4 maxlength=14 class="fminpt input_1">
 				</div>
 			<%
 			Else%>
@@ -333,7 +332,7 @@ Function DisplayMoveAnnounce
 			<div class="value2">
 			<%Processor_MsgForm%>
 			</div>
-			<br><input type=submit value=È·¶¨ class='fmbtn btn_2'>
+			<br><input type=submit value=ç¡®å®š class='fmbtn btn_2'>
 		</form>
 		<%Processor_Bottom
 	End If

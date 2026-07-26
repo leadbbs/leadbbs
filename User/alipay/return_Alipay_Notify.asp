@@ -1,5 +1,5 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim Key,partner,out_trade_no,total_fee,receive_name
@@ -8,19 +8,19 @@ Dim alipayNotifyURL,Retrieval,ResponseTxt,varItem,mystr
 Dim Count,i,j,md5str,mysign
 Dim minmax,minmaxSlot,temp,mark,Value
 
- key="o48habnndc8yr4jtyf9g1p02hlt7fs7h"    ' Ö§¸¶±¦°²È«½ÌÑĞÂë
- partner="2088002030498170"  'Ö§¸¶±¦ºÏ×÷id
+ key=""    ' æ”¯ä»˜å®å®‰å…¨æ•™ç ”ç 
+ partner=""  'æ”¯ä»˜å®åˆä½œid
 
 
-	out_trade_no		= DelStr(Request("out_trade_no")) '»ñÈ¡¶¨µ¥ºÅ
-    total_fee		    = DelStr(Request("total_fee")) '»ñÈ¡Ö§¸¶µÄ×Ü¼Û¸ñ
-    receive_name    =DelStr(Request("receive_name"))   '»ñÈ¡ÊÕ»õÈËĞÕÃû
-	receive_address =DelStr(Request("receive_address")) '»ñÈ¡ÊÕ»õÈËµØÖ·
-	receive_zip     =DelStr(Request("receive_zip"))   '»ñÈ¡ÊÕ»õÈËÓÊ±à
-	receive_phone   =DelStr(Request("receive_phone")) '»ñÈ¡ÊÕ»õÈËµç»°
-	receive_mobile  =DelStr(Request("receive_mobile")) '»ñÈ¡ÊÕ»õÈËÊÖ»ú
+	out_trade_no		= DelStr(Request("out_trade_no")) 'è·å–å®šå•å·
+    total_fee		    = DelStr(Request("total_fee")) 'è·å–æ”¯ä»˜çš„æ€»ä»·æ ¼
+    receive_name    =DelStr(Request("receive_name"))   'è·å–æ”¶è´§äººå§“å
+	receive_address =DelStr(Request("receive_address")) 'è·å–æ”¶è´§äººåœ°å€
+	receive_zip     =DelStr(Request("receive_zip"))   'è·å–æ”¶è´§äººé‚®ç¼–
+	receive_phone   =DelStr(Request("receive_phone")) 'è·å–æ”¶è´§äººç”µè¯
+	receive_mobile  =DelStr(Request("receive_mobile")) 'è·å–æ”¶è´§äººæ‰‹æœº
 
-'******************************************ÅĞ¶ÏÏûÏ¢ÊÇ²»ÊÇÖ§¸¶±¦·¢³ö
+'******************************************åˆ¤æ–­æ¶ˆæ¯æ˜¯ä¸æ˜¯æ”¯ä»˜å®å‘å‡º
 alipayNotifyURL = "http://notify.alipay.com/trade/notify_query.do?"
 alipayNotifyURL = alipayNotifyURL &"partner=" & partner & "&notify_id=" & request("notify_id")
 	Set Retrieval = Server.CreateObject("Msxml2.ServerXMLHTTP.3.0")
@@ -30,7 +30,7 @@ alipayNotifyURL = alipayNotifyURL &"partner=" & partner & "&notify_id=" & reques
     ResponseTxt = Retrieval.ResponseText
 	Set Retrieval = Nothing
 '*****************************************
-'»ñÈ¡Ö§¸¶±¦GET¹ıÀ´Í¨ÖªÏûÏ¢,ÅĞ¶ÏÏûÏ¢ÊÇ²»ÊÇ±»ĞŞ¸Ä¹ı
+'è·å–æ”¯ä»˜å®GETè¿‡æ¥é€šçŸ¥æ¶ˆæ¯,åˆ¤æ–­æ¶ˆæ¯æ˜¯ä¸æ˜¯è¢«ä¿®æ”¹è¿‡
 For Each varItem in Request.QueryString
 mystr=varItem&"="&Request(varItem)&"^"&mystr
 Next 
@@ -40,7 +40,7 @@ End If
 
 mystr = SPLIT(mystr, "^")
 Count=ubound(mystr)
-'¶Ô²ÎÊıÅÅĞò
+'å¯¹å‚æ•°æ’åº
 For i = Count TO 0 Step -1
 minmax = mystr( 0 )
 minmaxSlot = 0
@@ -58,7 +58,7 @@ mystr( minmaxSlot ) = mystr( i )
 mystr( i ) = temp
 End If
 Next
-'¹¹Ôìmd5ÕªÒª×Ö·û´®
+'æ„é€ md5æ‘˜è¦å­—ç¬¦ä¸²
  For j = 0 To Count Step 1
  value = SPLIT(mystr( j ), "=")
  If  value(1)<>"" And value(0)<>"sign" And value(0)<>"sign_type"  Then
@@ -75,13 +75,13 @@ md5str=md5str&key
 
 If mysign=Request("sign") and ResponseTxt="true"   Then 	
 
-	'response.write "¸¶¿î³É¹¦Ò³Ãæ"        'ÕâÀï¿ÉÒÔÖ¸¶¨ÄãĞèÒªÏÔÊ¾µÄÄÚÈİ
-	Alipay_UpdateSellList
-	Response.Redirect "payment.asp?act=done&str=" & server.urlencode("<font color=green class=greenfont>¸¶¿î³É¹¦,¿É²é¿´ÄúµÄÀúÊ·¶©µ¥ÔÙ´ÎÈ·ÈÏ³äÖµÇé¿ö!</font>")
+	'response.write "ä»˜æ¬¾æˆåŠŸé¡µé¢"        'è¿™é‡Œå¯ä»¥æŒ‡å®šä½ éœ€è¦æ˜¾ç¤ºçš„å†…å®¹
+	Alipay_UpdateSellList()
+	Response.Redirect "payment.asp?act=done&str=" & server.urlencode("<font color=green class=greenfont>ä»˜æ¬¾æˆåŠŸ,å¯æŸ¥çœ‹æ‚¨çš„å†å²è®¢å•å†æ¬¡ç¡®è®¤å……å€¼æƒ…å†µ!</font>")
 
 Else
-	'response.write "Ìø×ªÊ§°Ü"          'ÕâÀï¿ÉÒÔÖ¸¶¨ÄãĞèÒªÏÔÊ¾µÄÄÚÈİ
-	Response.Redirect "payment.asp?act=done&str=" & server.urlencode("<font color=red class=redfont>¸¶¿îÊ§°Ü,Çë·µ»ØÆğÊ¼Ò³ÃæÖØĞÂÌá½»»ò²éÑ¯ÀúÊ·¶©µ¥ºË¶ÔÇé¿ö!</font>")
+	'response.write "è·³è½¬å¤±è´¥"          'è¿™é‡Œå¯ä»¥æŒ‡å®šä½ éœ€è¦æ˜¾ç¤ºçš„å†…å®¹
+	Response.Redirect "payment.asp?act=done&str=" & server.urlencode("<font color=red class=redfont>ä»˜æ¬¾å¤±è´¥,è¯·è¿”å›èµ·å§‹é¡µé¢é‡æ–°æäº¤æˆ–æŸ¥è¯¢å†å²è®¢å•æ ¸å¯¹æƒ…å†µ!</font>")
 End If
 
 Function DelStr(Str)
@@ -93,7 +93,7 @@ Function DelStr(Str)
 	DelStr	= Replace(DelStr,"'","")
 	DelStr	= Replace(DelStr,"&","")
 	DelStr	= Replace(DelStr," ","")
-	DelStr	= Replace(DelStr,"¡¡","")
+	DelStr	= Replace(DelStr,"ã€€","")
 	DelStr	= Replace(DelStr,"%20","")
 	DelStr	= Replace(DelStr,"--","")
 	DelStr	= Replace(DelStr,"==","")
@@ -105,7 +105,7 @@ End Function
 
 Sub Alipay_UpdateSellList
 
-	InitDatabase
+	InitDatabase()
 	If isNumeric(out_trade_no) = 0 Then out_trade_no = 0
 	out_trade_no = Fix(cCur(out_trade_no))
 	If isNumeric(total_fee) = 0 Then total_fee = 0
@@ -125,12 +125,12 @@ Sub Alipay_UpdateSellList
 		Set Rs = Nothing
 	End If
 	
-	If PayFlag = 0 and PayPoints = total_fee Then '½ğ¶î¶ÔÓ¦,²¢ÇÒÎ´Ö§¸¶µÄÇé¿öÏÂ¸üĞÂ¶©µ¥¼°ÓÃ»§×´Ì¬
+	If PayFlag = 0 and PayPoints = total_fee Then 'é‡‘é¢å¯¹åº”,å¹¶ä¸”æœªæ”¯ä»˜çš„æƒ…å†µä¸‹æ›´æ–°è®¢å•åŠç”¨æˆ·çŠ¶æ€
 		CALL LdExeCute("Update LeadBBS_SellList Set PayFlag=1 Where PID=" & out_trade_no,1)
 		CALL LdExeCute("Update LeadBBS_User Set CharmPoint=CharmPoint+" & GetPoints & " Where UserName='" & Replace(UserName,"'","''") & "'",1)
 	End If
 	
-	CloseDatabase
+	CloseDatabase()
 
 End Sub
 %>

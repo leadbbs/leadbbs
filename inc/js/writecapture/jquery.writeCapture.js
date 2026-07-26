@@ -1,0 +1,1 @@
+jquery.writecapture.js

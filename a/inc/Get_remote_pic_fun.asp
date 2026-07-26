@@ -1,0 +1,1 @@
+get_remote_pic_fun.asp

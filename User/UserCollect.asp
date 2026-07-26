@@ -1,36 +1,36 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/Board_Popfun.asp -->
-<!-- #include file=inc/UserTopic.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
+<!--#include file="inc/UserTopic.asp"-->
 <%
 DEF_BBS_HomeUrl = "../"
 Dim GBL_ID,GBL_Name
 
 GBL_CHK_TempStr = ""
 
-initDatabase
+initDatabase()
 
-SiteHead(DEF_SiteNameString & " - ÓÃ»§»áÔ±Çø")
-UpdateOnlineUserAtInfo GBL_board_ID,"²é¿´ÎÒµÄÌû×ÓÊÕ²Ø¼Ğ"
+SiteHead(DEF_SiteNameString & " - ç”¨æˆ·ä¼šå‘˜åŒº")
+UpdateOnlineUserAtInfo GBL_board_ID,"æŸ¥çœ‹æˆ‘çš„å¸–å­æ”¶è—å¤¹"
 
 If GBL_ID = 0 and GBL_Name = "" Then
 	If GBL_ID = 0 Then GBL_ID = GBL_UserID
 	GBL_CHK_TempStr = ""
 	If GBL_ID = 0 Then
-		GBL_CHK_TempStr = "ÕÒ²»µ½ÓÃ»§£¬Òª²é¿´×Ô¼ºµÄ×ÊÁÏÇëÏÈµÇÂ¼¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = "æ‰¾ä¸åˆ°ç”¨æˆ·ï¼Œè¦æŸ¥çœ‹è‡ªå·±çš„èµ„æ–™è¯·å…ˆç™»å½•ã€‚<br>" & VbCrLf
 	End If
 Else
 	If GBL_ID <> 0 Then GBL_Name = ""
 	GBL_CHK_TempStr = ""
 End If
 
-Global_TableHead
+Global_TableHead()
 %>
 <table width="<%=DEF_BBS_ScreenWidth%>" border="0" cellspacing="1" cellpadding="0" align="center" bgcolor="<%=DEF_BBS_DarkColor%>" class=TBone>
 <tr>
 	<td valign="top" bgcolor=<%=DEF_BBS_LightColor%> class=TBBG1>
 		<table width="100%" border="0" cellspacing="0" cellpadding="5" align="center">
 		<tr> 
-			<td height="20"><img src=../images/NULL.GIF height=3 width=2><br><%DisplayUserNavigate("ÎÒµÄÌû×ÓÊÕ²Ø¼Ğ")%>
+			<td height="20"><img src=../images/NULL.GIF height=3 width=2><br><%DisplayUserNavigate("æˆ‘çš„å¸–å­æ”¶è—å¤¹")%>
 			</td>
 		</tr>
 		</table>
@@ -47,7 +47,7 @@ Global_TableHead
             	Response.Write "<p align=left><font color=ff0000 class=redfont><b>" & GBL_CHK_TempStr & "</b></font><hr size=1>"
             Else
             	GBL_CHK_TempStr = ""
-            	DisplayCenter
+            	DisplayCenter()
             End If%>
 			</td>
 		</tr>
@@ -56,8 +56,8 @@ Global_TableHead
 </tr>
 </table>
 <%Global_TableBottom
-closeDataBase
-SiteBottom
+closeDataBase()
+SiteBottom()
 If GBL_ShowBottomSure = 1 Then Response.Write GBL_SiteBottomString
 
 Function DisplayCenter
@@ -148,7 +148,7 @@ Function DisplayCenter
 		Rs.Close
 		Set Rs = Nothing
 	
-		SQL = sql_select("select T1.ID,T2.Title,T2.Length,T2.ndatetime,T2.Hits,T2.FaceIcon,T2.ChildNum,T2.BoardID,T2.GoodFlag,T2.Username,T2.ID,T2.TitleStyle from LeadBBS_CollectAnc as T1 Left join LeadBBS_Announce as T2 on T1.AnnounceID=T2.ID " & SQLendString,DEF_MaxListNum)
+		SQL = sql_select("select T1.ID,T2.Title,T2.Length,T2.ndatetime,T2.Hits,T2.FaceIcon,T2.ChildNum,T2.BoardID,T2.GoodFlag,T2.Username,T2.ID as id_dup2,T2.TitleStyle from LeadBBS_CollectAnc as T1 Left join LeadBBS_Announce as T2 on T1.AnnounceID=T2.ID " & SQLendString,DEF_MaxListNum)
 		Set Rs = LDExeCute(SQL,0)
 		Dim Num
 		Dim GetData
@@ -191,11 +191,11 @@ Function DisplayCenter
 	
 		PageSplictString = PageSplictString & "&nbsp;"
 		If FirstID >= MaxRecordID Then
-			PageSplictString = PageSplictString & "<font color=999999 class=grayfont>Ê×Ò³</font> " & VbCrLf
-			PageSplictString = PageSplictString & " <font color=999999 class=grayfont>ÉÏÒ³</font> " & VbCrLf
+			PageSplictString = PageSplictString & "<font color=999999 class=grayfont>é¦–é¡µ</font> " & VbCrLf
+			PageSplictString = PageSplictString & " <font color=999999 class=grayfont>ä¸Šé¡µ</font> " & VbCrLf
 		Else
-			PageSplictString = PageSplictString & "<a href=UserCollect.asp" & EndwriteQueryString & "&Start=0>Ê×Ò³</a> " & VbCrLf
-			PageSplictString = PageSplictString & " <a href=UserCollect.asp" & EndwriteQueryString & "&Start=" & FirstID & "&UpDownPageFlag=1>ÉÏÒ³</a> " & VbCrLf
+			PageSplictString = PageSplictString & "<a href=UserCollect.asp" & EndwriteQueryString & "&Start=0>é¦–é¡µ</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=UserCollect.asp" & EndwriteQueryString & "&Start=" & LngStr(FirstID) & "&UpDownPageFlag=1>ä¸Šé¡µ</a> " & VbCrLf
 		End If
 	
 		If LastID<MaxRecordID and LastID<>0 then
@@ -203,24 +203,24 @@ Function DisplayCenter
 		End If
 	
 		If LastID <= MinRecordID Then
-			PageSplictString = PageSplictString & " <font color=999999 class=grayfont>ÏÂÒ³</font> " & VbCrLf
-			PageSplictString = PageSplictString & " <font color=999999 class=grayfont>Î²Ò³</font> " & VbCrLf
+			PageSplictString = PageSplictString & " <font color=999999 class=grayfont>ä¸‹é¡µ</font> " & VbCrLf
+			PageSplictString = PageSplictString & " <font color=999999 class=grayfont>å°¾é¡µ</font> " & VbCrLf
 		Else
-			PageSplictString = PageSplictString & " <a href=UserCollect.asp" & EndwriteQueryString & "&Start=" & LastID & ">ÏÂÒ³</a> " & VbCrLf
-			PageSplictString = PageSplictString & " <a href=UserCollect.asp" & EndwriteQueryString & "&Start=1&UpDownPageFlag=1>Î²Ò³</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=UserCollect.asp" & EndwriteQueryString & "&Start=" & LngStr(LastID) & ">ä¸‹é¡µ</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=UserCollect.asp" & EndwriteQueryString & "&Start=1&UpDownPageFlag=1>å°¾é¡µ</a> " & VbCrLf
 		End If
 
-		PageSplictString = PageSplictString & "¹²<b>" & RecordCount & "</b>ÌõĞÅÏ¢"
+		PageSplictString = PageSplictString & "å…±<b>" & RecordCount & "</b>æ¡ä¿¡æ¯"
 		If (RecordCount mod DEF_MaxListNum)=0 Then
-			PageSplictString = PageSplictString & " ¼Æ<b>" & clng(RecordCount/DEF_MaxListNum) & "</b>Ò³"
+			PageSplictString = PageSplictString & " è®¡<b>" & clng(RecordCount/DEF_MaxListNum) & "</b>é¡µ"
 		Else
 			If RecordCount>=DEF_MaxListNum Then
-				PageSplictString = PageSplictString & " ¼Æ<b>" & clng(RecordCount/DEF_MaxListNum)+1 & "</b>Ò³"
+				PageSplictString = PageSplictString & " è®¡<b>" & clng(RecordCount/DEF_MaxListNum)+1 & "</b>é¡µ"
 			Else
-				PageSplictString = PageSplictString & " ¼Æ<b>1</b>Ò³"
+				PageSplictString = PageSplictString & " è®¡<b>1</b>é¡µ"
 			End If
 		End If
-		PageSplictString = PageSplictString & " Ã¿Ò³<b>" & DEF_MaxListNum & "</b>ÌõÊÕ²ØÌû"
+		PageSplictString = PageSplictString & " æ¯é¡µ<b>" & DEF_MaxListNum & "</b>æ¡æ”¶è—å¸–"
 	
 	End If
 	%>
@@ -239,14 +239,14 @@ Function DisplayCenter
 	  <tbody> 
 	  <tr height="19" bgcolor=<%=DEF_BBS_LightDarkColor%> class=TBHead2>
 	    <td width=20 align=center>&nbsp;</td>
-	    <td><img src=../images/null.GIF width=151 height=2><br>&nbsp;<b><font color=ffffff class=HeadFont>Ö÷Ìâ</font></b>&nbsp;</td>
-	    <td width=54 align=center><img src=<%=DEF_BBS_HomeUrl%>images/null.gif width=2 height=2><br><span title="»Ø¸´/µã»÷"><font color=ffffff class=HeadFont><b>ÈËÆø</b></font></span></td>
-	    <td width=210 align=left><img src=../images/null.gif width=5 height=2><br><img src=../images/null.gif width=3 height=2><font color=ffffff class=HeadFont><b>¡¡¡¡·¢±íÊ±¼ä¡¡¡¡| ×÷Õß</b></font></td>
-	    <td width=20 align=center><font color=ffffff class=HeadFont><b>É¾</b></font></td>
+	    <td><img src=../images/null.GIF width=151 height=2><br>&nbsp;<b><font color=ffffff class=HeadFont>ä¸»é¢˜</font></b>&nbsp;</td>
+	    <td width=54 align=center><img src=<%=DEF_BBS_HomeUrl%>images/null.gif width=2 height=2><br><span title="å›å¤/ç‚¹å‡»"><font color=ffffff class=HeadFont><b>äººæ°”</b></font></span></td>
+	    <td width=210 align=left><img src=../images/null.gif width=5 height=2><br><img src=../images/null.gif width=3 height=2><font color=ffffff class=HeadFont><b>ã€€ã€€å‘è¡¨æ—¶é—´ã€€ã€€| ä½œè€…</b></font></td>
+	    <td width=20 align=center><font color=ffffff class=HeadFont><b>åˆ </b></font></td>
 	  </tr>
 	<%
 	If Num = -1 Then
-		response.write "<tr bgcolor=" & DEF_BBS_LightestColor & " class=TBBG9><td colspan=5 height=30>&nbsp; Ã»ÓĞÈÎºÎÖ÷Ìâ!</td></tr>"
+		response.write "<tr bgcolor=" & DEF_BBS_LightestColor & " class=TBBG9><td colspan=5 height=30>&nbsp; æ²¡æœ‰ä»»ä½•ä¸»é¢˜!</td></tr>"
 	End If
 
 	Dim TempN,Temp,Temp1
@@ -256,7 +256,7 @@ Function DisplayCenter
 		LastID = GetData(0,ubound(getdata,2))
 		For n= MinN to MaxN Step StepValue
 			If isNull(GetData(6,N)) Then
-				GetData(1,n) = "<font color=gray class=grayfont>¸ÃÊÕ²ØÌûÒÑ¾­²»´æÔÚ(Ô­±àºÅ" & GetData(0,n) & ")£¬ÒÑ¾­±»¹ÜÀíÔ±É¾³ı¡£</font>"
+				GetData(1,n) = "<font color=gray class=grayfont>è¯¥æ”¶è—å¸–å·²ç»ä¸å­˜åœ¨(åŸç¼–å·" & GetData(0,n) & ")ï¼Œå·²ç»è¢«ç®¡ç†å‘˜åˆ é™¤ã€‚</font>"
 				GetData(0,n) = 0
 				GetData(2,n) = 0
 				GetData(3,n) = "19000101000000"
@@ -265,16 +265,16 @@ Function DisplayCenter
 				GetData(6,n) = 0
 				GetData(7,n) = 0
 				GetData(8,n) = 0
-				GetData(9,n) = "ÓÎ¿Í"
+				GetData(9,n) = "æ¸¸å®¢"
 				GetData(10,n) = ""
 				GetData(11,n) = 1
 			Else
-				GetData(0,n) = cCur(GetData(0,n))
+				GetData(0,n) = LngStr(GetData(0,n))
 			End If
 			Response.Write "<tr height=" & DEF_LineHeight & " bgcolor=" & DEF_BBS_LightestColor & " class=TBBG9><td>"
 			Response.Write "<img src=../images/bf/face" & GetData(5,N) & ".gif align=absbottom width=20> "
 			Response.Write "</td><td>&nbsp;"
-			If GetData(0,n) > 0 Then Response.Write "<a href=../a/a.asp?B=" & GetData(7,n) & "&ID=" & GetData(10,N) & ">"
+			If GetData(0,n) > 0 Then Response.Write "<a href=../a/a.asp?B=" & GetData(7,n) & "&ID=" & LngStr(GetData(10,N)) & ">"
 
 			GetData(6,N) = cCur(GetData(6,N))
 			Temp1 = Fix((GetData(6,N)+1)/DEF_TopicContentMaxListNum)
@@ -292,29 +292,29 @@ Function DisplayCenter
 			If GetData(0,n) > 0 Then Response.Write "</a>"
 
 			If GetData(6,N)>=DEF_TopicContentMaxListNum Then
-				Response.Write " [<a href=../a/a.asp?B=" & GetData(7,N) & "&ID=" & GetData(10,N) & "&AUpflag=1&ANum=1 title=" & GetData(2,n) & "×Ö½Ú>" & Temp1 & "</b></a>]"
+				Response.Write " [<a href=../a/a.asp?B=" & GetData(7,N) & "&ID=" & LngStr(GetData(10,N)) & "&AUpflag=1&ANum=1 title=" & GetData(2,n) & "å­—èŠ‚>" & Temp1 & "</b></a>]"
 			End If
 
 			If ccur(GetData(8,n)) = 1 Then
-				Response.Write "<img src=../images/" & GBL_DefineImage & "jh1.GIF border=0 title=¾«»ªÌû×Ó align=absbottom width=16 height=16>"
+				Response.Write "<img src=../images/" & GBL_DefineImage & "jh1.GIF border=0 title=ç²¾åå¸–å­ align=absbottom width=16 height=16>"
 			End If
 			Response.Write "</td><td align=center width=50>&nbsp;"
 			Response.Write GetData(6,N) & "/" & GetData(4,N)
 			Response.Write "</td><td width=210>&nbsp;"
-			If GetData(9,n) <> "ÓÎ¿Í" then
+			If GetData(9,n) <> "æ¸¸å®¢" then
 				Response.Write Left(RestoreTime(GetData(3,n)),16) & " | <a href=LookUserInfo.asp?name=" & urlencode(GetData(9,n)) & ">" & htmlencode(GetData(9,n)) & "</a></td>"
 			Else
 				Response.Write Left(RestoreTime(GetData(3,n)),16) & " | " & htmlencode(GetData(9,n)) & "</td>"
 			End If
-			Response.Write "<td align=center><a href='javascript:kill(" & GetData(0,n) & ");'><img src=../images/" & GBL_DefineImage & "Del.GIF border=0 title=É¾³ı´ËÌû×Ó align=absmiddle width=16 height=16></a></td>"
+			Response.Write "<td align=center><a href='javascript:kill(" & GetData(0,n) & ");'><img src=../images/" & GBL_DefineImage & "Del.GIF border=0 title=åˆ é™¤æ­¤å¸–å­ align=absmiddle width=16 height=16></a></td>"
 			Response.Write "</tr>" & VbCrLf
 			i=i+1
 		Next
 	End If
 	Response.Write "<tr bgcolor=" & DEF_BBS_TableHeadColor & " class=TBfour><td colspan=5>" & PageSplictString
 	%>
-	&nbsp;<a href='javascript:killall("dkeJje5");'><img src=../images/<%=GBL_DefineImage%>clear.gif width=16 border=0 align=absmiddle>Çå¿ÕÎÒµÄÊÕ²Ø¼Ğ</a>
-	<%If GBL_UserID>0 and CheckSupervisorUserName = 1 Then%><a href='javascript:killall("dkeJje6");'><img src=../images/<%=GBL_DefineImage%>clear.gif width=16 border=0 align=absmiddle>Çå¿ÕËùÓĞÈËµÄÊÕ²Ø¼Ğ</a><%End If%>
+	&nbsp;<a href='javascript:killall("dkeJje5");'><img src=../images/<%=GBL_DefineImage%>clear.gif width=16 border=0 align=absmiddle>æ¸…ç©ºæˆ‘çš„æ”¶è—å¤¹</a>
+	<%If GBL_UserID>0 and CheckSupervisorUserName() = 1 Then%><a href='javascript:killall("dkeJje6");'><img src=../images/<%=GBL_DefineImage%>clear.gif width=16 border=0 align=absmiddle>æ¸…ç©ºæ‰€æœ‰äººçš„æ”¶è—å¤¹</a><%End If%>
 	<%Response.Write "</td></tr>"%>
 	      </table><%
 

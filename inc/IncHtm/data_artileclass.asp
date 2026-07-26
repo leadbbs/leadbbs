@@ -1,5 +1,5 @@
-<%@ LANGUAGE=VBScript CodePage=936%>
-<%Response.Charset = "gb2312"%>[{
+<%@ LANGUAGE=VBScript CodePage=65001%>
+<%Response.Charset = "utf-8"%>[{
 	"id":1,
-	"text":"1.¹«¸æ"
+	"text":"1.å…¬å‘Š"
 }]

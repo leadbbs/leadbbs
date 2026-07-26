@@ -1,21 +1,21 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../../inc/Ubbcode.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../../inc/Ubbcode.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 server.scripttimeout=99999
-Rem ¸üÐÂÂÛÌ³UBB±àÂë
-Rem µ±ÂÛÌ³²ÉÓÃÐÂµÄUBB±àºÅÂë,Ô­À´µÄUBBÎÄÕÂ¿ÉÒÔÖØÐÂ×ª»»¸ñÊ½£®
+Rem æ›´æ–°è®ºå›UBBç¼–ç 
+Rem å½“è®ºå›é‡‡ç”¨æ–°çš„UBBç¼–å·ç ,åŽŸæ¥çš„UBBæ–‡ç« å¯ä»¥é‡æ–°è½¬æ¢æ ¼å¼ï¼Ž
 Rem -------------------------------------------------------
-Rem ------------µ±ÄãµÄUBB±àÂë¸ü¸Ä»ò¹ýÂ©ÎÄ×Ö¸ü¸Äºó----------
-Rem ------------ÐèÒªÁ¢¼´ÉúÐ§£¬ÇëÓÃ´ËÎÄ¼þ¸üÐÂ---------------
-Rem ------------¸üÐÂÊ±¼äÂþ³¤£¬½¨Á¢ÏÈµ½ºóÌ¨¹Ø±ÕÂÛÌ³---------
+Rem ------------å½“ä½ çš„UBBç¼–ç æ›´æ”¹æˆ–è¿‡æ¼æ–‡å­—æ›´æ”¹åŽ----------
+Rem ------------éœ€è¦ç«‹å³ç”Ÿæ•ˆï¼Œè¯·ç”¨æ­¤æ–‡ä»¶æ›´æ–°---------------
+Rem ------------æ›´æ–°æ—¶é—´æ¼«é•¿ï¼Œå»ºç«‹å…ˆåˆ°åŽå°å…³é—­è®ºå›---------
 Rem -------------------------------------------------------
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-initDatabase
-UpdatePrintContentColumn
-CloseDatabase
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+initDatabase()
+UpdatePrintContentColumn()
+CloseDatabase()
 Manage_Sitebottom("none")
 
 Function ResumeCode(Tstr)
@@ -35,21 +35,21 @@ End Function
 
 Function UpdatePrintContentColumn()
 
-	If CheckSupervisorUserName = 0 or GBL_UserID = 0 Then Exit Function
+	If CheckSupervisorUserName() = 0 or GBL_UserID = 0 Then Exit Function
 	If Request.Form("SureFlag") <> "E72ksiOkw2" Then
 		%>
 			<p><form action=UpdatePrintColumn.asp method=post>
-			<b><font color=ff0000 class=RedFont>È·¶¨´Ë²Ù×÷Âð?<br>
+			<b><font color=ff0000 class=RedFont>ç¡®å®šæ­¤æ“ä½œå—?<br>
 			<br>
 			<input type=hidden name=SureFlag value="E72ksiOkw2">
 			
-			<input type=submit value=È·¶¨½øÐÐ class=fmbtn>
+			<input type=submit value=ç¡®å®šè¿›è¡Œ class=fmbtn>
 			</form>
 		<%
 	Else
 		If Request("executepage") = "" Then
 			%>
-		<p style="font-size:9pt">ÏÂÃæ¸ù¾ÝÐÂµÄUBB±àÂëÖØÐÂÉú³ÉÌû×ÓÄÚÈÝ£¬¹²ÓÐ<%=RecordCount%>¸öÌû×Ó´ý¸üÐÂ
+		<p style="font-size:9pt">ä¸‹é¢æ ¹æ®æ–°çš„UBBç¼–ç é‡æ–°ç”Ÿæˆå¸–å­å†…å®¹ï¼Œå…±æœ‰<%=RecordCount%>ä¸ªå¸–å­å¾…æ›´æ–°
 	
 		<table width="400" border="0" cellspacing="1" cellpadding="1">
 			<tr> 
@@ -58,7 +58,7 @@ Function UpdatePrintContentColumn()
 			<tr> 
 				<td bgcolor=ffffff height=9><img src=../pic/progressbar.gif width=0 height=16 id=img1 name=img1 align=middle></td></tr></table>
 		</td></tr></table> <span id=txt1 name=txt1 style="font-size:9pt">0</span><span style="font-size:9pt">%</span>
-		<span id=tm1 name=tm1 style="font-size:9pt">ÕýÔÚ¹ÀËãÐèÒªÊ±¼ä...</span>
+		<span id=tm1 name=tm1 style="font-size:9pt">æ­£åœ¨ä¼°ç®—éœ€è¦æ—¶é—´...</span>
 		<script src="<%=DEF_BBS_HomeUrl%>inc/js/bar.js?ver=<%=DEF_Jer%>" type="text/javascript"></script>
 		<script>
 			Upl_url = "Io_Info.asp?id=<%=Urlencode(GBL_CHK_User)%>";
@@ -130,7 +130,7 @@ Function UpdatePrintContentColumn()
 						HtmlFlag = 3
 						Content = ""
 					End If
-				ElseIf HtmlFlag = 1 and CheckSupervisorUserName = 1 and GBL_UserID > 0 Then
+				ElseIf HtmlFlag = 1 and CheckSupervisorUserName() = 1 and GBL_UserID > 0 Then
 					PrintContent = Content
 					Content = ""
 				Else
@@ -155,7 +155,7 @@ Function UpdatePrintContentColumn()
 			End If
 		Loop
 		%>
-		Íê³É
+		å®Œæˆ
 		<%Application.Contents.Remove("Io_" & GBL_CHK_User)
 		application.contents.removeall
 	End If

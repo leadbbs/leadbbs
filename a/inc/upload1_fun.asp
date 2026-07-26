@@ -40,7 +40,7 @@ Class upload_Class
 		Dim iFormStart,iFormEnd,sFormName
 		Dim readBlock,readBlockSize,upBytes
 		Dim startTime
-		Version="»¯¾³HTTPÉÏ´«³ÌĞò Version 2.0"
+		Version="åŒ–å¢ƒHTTPä¸Šä¼ ç¨‹åº Version 2.0"
 		set objForm=Server.CreateObject("Scripting.Dictionary")
 		set objFile=Server.CreateObject("Scripting.Dictionary")
 		if Request.TotalBytes<1 then Exit Sub
@@ -50,11 +50,11 @@ Class upload_Class
 		GBL_FormStream.Mode =3
 		GBL_FormStream.Open
 		if Request.TotalBytes>300000000 then
-			GBL_CHK_TempStr = "Ìá½»µÄÊı¾İ¹ı´ó£®"
+			GBL_CHK_TempStr = "æäº¤çš„æ•°æ®è¿‡å¤§ï¼"
 			Exit Sub
 		End If
 		'---create applicaton--------------------
-		ClearApp
+		ClearApp()
 		On Error resume next
 		Application.Lock
 		Application("LdUpload_" & GBL_CHK_User) = "0 1 1" & " " & Timer
@@ -88,7 +88,7 @@ Class upload_Class
 		On Error Goto 0
 	'------------------------modify end by mytju.com------------------------------
 		GBL_FormStream.Position=0
-		RequestData =GBL_FormStream.Read 
+		RequestData =GBL_FormStream.Read(-1) 
 	
 		iFormStart = 1
 		iFormEnd = LenB(RequestData)
@@ -138,26 +138,26 @@ Class upload_Class
 			GBL_FormStream.CopyTo tStream,iInfoEnd-iFormStart
 			tStream.Position = 0
 			tStream.Type = 2
-			tStream.Charset ="gb2312"
+			tStream.Charset ="utf-8"
 			sInfo = tStream.ReadText
 			tStream.Close
-			'È¡µÃ±íµ¥ÏîÄ¿Ãû³Æ
+			'å–å¾—è¡¨å•é¡¹ç›®åç§°
 			'Response.Write "<p>sInfo:" & sInfo
 			iFormStart = InStrB(iInfoEnd,RequestData,sStart)
 			iFindStart = InStr(1,sInfo,"name=""",1)+6
 			iFindEnd = InStr(iFindStart,sInfo,"""",1)
 			sFormName = lcase(Mid (sinfo,iFindStart,iFindEnd-iFindStart))
 			
-			'Èç¹ûÊÇÎÄ¼ş
+			'å¦‚æœæ˜¯æ–‡ä»¶
 			if InStr (1,sInfo,"filename=""",1) > 0 then
 				set theFile=new FileInfo
-				'È¡µÃÎÄ¼şÃû
+				'å–å¾—æ–‡ä»¶å
 				iFindStart = InStr(iFindEnd,sInfo,"filename=""",1)+10
 				iFindEnd = InStr(iFindStart,sInfo,"""",1)
 				sFileName = Mid (sinfo,iFindStart,iFindEnd-iFindStart)
 				theFile.FileName=getFileName(sFileName)
 				theFile.FilePath=getFilePath(sFileName)
-				'È¡µÃÎÄ¼şÀàĞÍ
+				'å–å¾—æ–‡ä»¶ç±»å‹
 				iFindStart = InStr(iFindEnd,sInfo,"Content-Type: ",1)+14
 				iFindEnd = InStr(iFindStart,sInfo,vbCr)
 				theFile.FileType =Mid (sinfo,iFindStart,iFindEnd-iFindStart)
@@ -169,14 +169,14 @@ Class upload_Class
 				if not objFile.Exists(sFormName) then
 					objFile.add sFormName,theFile
 					if theFile.FileSize > 0 and theFile.FileName <> "" then GBL_filelist = GBL_filelist & "," & sFormName
-				'ÏÂÃæÎª¶ÔÖØ¸´Ãû³ÆµÄ´¦Àí
+				'ä¸‹é¢ä¸ºå¯¹é‡å¤åç§°çš„å¤„ç†
 				Else
 					GBL_FileNum = GBL_FileNum + 1
 					objFile.add sFormName & "_" & GBL_FileNum,theFile
 					if theFile.FileSize > 0 and theFile.FileName <> "" then GBL_filelist = GBL_filelist & "," & sFormName & "_" & GBL_FileNum
 				End If
 			Else
-			'Èç¹ûÊÇ±íµ¥ÏîÄ¿
+			'å¦‚æœæ˜¯è¡¨å•é¡¹ç›®
 				tStream.Type =1
 				tStream.Mode =3
 				tStream.Open
@@ -184,7 +184,7 @@ Class upload_Class
 				GBL_FormStream.CopyTo tStream,iFormStart-iInfoEnd-3
 				tStream.Position = 0
 				tStream.Type = 2
-				tStream.Charset ="gb2312"
+				tStream.Charset ="utf-8"
 				sFormValue = tStream.ReadText 
 				tStream.Close
 				if objForm.Exists(sFormName) then
@@ -266,7 +266,7 @@ Class FileInfo
 	Public Function SaveAs(FullPath)
 		Dim dr,ErrorChar,i
 		SaveAs=true
-		'¶ÔÎÄ¼şÃû¿Õµ«ÓĞÄÚÈİµÄÎÄ¼şÈÔÈ»×÷ÉÏ´«
+		'å¯¹æ–‡ä»¶åç©ºä½†æœ‰å†…å®¹çš„æ–‡ä»¶ä»ç„¶ä½œä¸Šä¼ 
 		if trim(fullpath)="" or FileStart=0 or (FileName="" and FileSize < 1) or right(fullpath,1)="/" then Exit Function
 		set dr=CreateObject("Adodb.Stream")
 		dr.Mode=3

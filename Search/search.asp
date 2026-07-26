@@ -1,15 +1,21 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/Limit_Fun.asp -->
-<!-- #include file=../User/inc/UserTopic.asp -->
-<!-- #include file=inc/Search_fun.asp -->
-<!-- #include file=inc/hubbleCom_fun.asp -->
+<%
+' --- AxonASP fix (Â§5): these Consts must be declared BEFORE the includes that
+' use them; AxonASP resolves a Const by source position, so a later Const reads
+' as empty. Sch_AncTitle=empty made the title-search mode silently fall back to
+' an author search, which is what the UI's default option submits. ---
+Const Sch_AllContent = 0 'æ˜¯å¦å…è®¸å…¨éƒ¨æœç´¢,å³åŒæ—¶æœç´¢æ ‡é¢˜å’Œå†…å®¹ï¼Œè®¾ä¸º99è¡¨ç¤ºé‡‡ç”¨hubbledotnetå¼•æ“ajaxè°ƒç”¨æœç´¢ï¼Œè®¾ä¸º98é‡‡ç”¨ç»„ä»¶æ–¹å¼è°ƒç”¨hubbledotnetæœç´¢
+Const Sch_AncTitle = 1 'æ˜¯å¦å…è®¸å¸–å­æ ‡é¢˜æœç´¢
+Const Sch_AncContent = 1 'æ˜¯å¦å…è®¸å¸–å­å†…å®¹æœç´¢
+Const Sch_LimitTime = 30 'é™åˆ¶æœç´¢æ—¶é—´(å•ä½ç§’)
+%>
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/Limit_Fun.asp"-->
+<!--#include file="../User/inc/UserTopic.asp"-->
+<!--#include file="inc/Search_fun.asp"-->
+<!--#include file="inc/hubbleCom_fun.asp"-->
 <%
 Server.ScriptTimeOut = 120
-Const Sch_AllContent = 0 'ÊÇ·ñÔÊĞíÈ«²¿ËÑË÷,¼´Í¬Ê±ËÑË÷±êÌâºÍÄÚÈİ£¬ÉèÎª99±íÊ¾²ÉÓÃhubbledotnetÒıÇæajaxµ÷ÓÃËÑË÷£¬ÉèÎª98²ÉÓÃ×é¼ş·½Ê½µ÷ÓÃhubbledotnetËÑË÷
-Const Sch_AncTitle = 1 'ÊÇ·ñÔÊĞíÌû×Ó±êÌâËÑË÷
-Const Sch_AncContent = 1 'ÊÇ·ñÔÊĞíÌû×ÓÄÚÈİËÑË÷
-Const Sch_LimitTime = 30 'ÏŞÖÆËÑË÷Ê±¼ä(µ¥Î»Ãë)
 DEF_BBS_HomeUrl = "../"
 Dim LMT_WidthStr,GBL_NoneLimitFlag
 
@@ -18,7 +24,7 @@ sub LoginAccuessFul
 	GBL_CHK_TempStr = ""
 	
 	if Sch_AllContent = 99 then
-		search_foraspx
+		search_foraspx()
 		exit sub
 	elseif Sch_AllContent = 98 then
 		dim hubblesearchclass
@@ -26,9 +32,9 @@ sub LoginAccuessFul
 		set hubblesearchclass = nothing
 		exit sub
 	end if
-	DisplaySearchForm
+	DisplaySearchForm()
 	If Request("key") <> "" Then
-		DisplayAnnouncesSplitPages
+		DisplayAnnouncesSplitPages()
 	Else
 		If GBL_ShowBottomSure = 0 Then GBL_SiteBottomString = ""
 	End If
@@ -80,7 +86,7 @@ private Function BytesToBstr(body)
 	.Write body 
 	.Position = 0
 	.Type = 2
-	.Charset = "GB2312"
+	.Charset = "utf-8"
 	
 	'.Charset = "UTF-8"
 	BytesToBstr = .ReadText
@@ -122,7 +128,7 @@ Function search_foraspx
 		send = "";
 		if($id('TextBoxSearch').value=="")
 		{
-			alert("ÇëÊäÈëÒªËÑË÷µÄÄÚÈİ£¡\n");
+			alert("è¯·è¾“å…¥è¦æœç´¢çš„å†…å®¹ï¼\n");
 			$id('TextBoxSearch').focus();
 			return;
 		}
@@ -173,7 +179,7 @@ Sub DisplaySearchForm
 		
 		if(theform.key.value=="")
 		{
-			alert("ÇëÊäÈëÒªËÑË÷µÄÄÚÈİ£¡\n");
+			alert("è¯·è¾“å…¥è¦æœç´¢çš„å†…å®¹ï¼\n");
 			ValidationPassed = false;
 			theform.key.focus();
 			return;
@@ -187,8 +193,8 @@ Sub DisplaySearchForm
 	</script>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class=table_in>
 	<tr class=tbinhead>
-		<td><div class=value><%If DEF_UsedDataBase = 0 and DEF_BBS_SearchMode = 2 Then%><b>ÂÛÌ³È«ÎÄËÑË÷</b>
-		<%Else%><b>ÂÛÌ³Ä£ºı²éÑ¯</b><%End if%>
+		<td><div class=value><%If DEF_UsedDataBase = 0 and DEF_BBS_SearchMode = 2 Then%><b>è®ºå›å…¨æ–‡æœç´¢</b>
+		<%Else%><b>è®ºå›æ¨¡ç³ŠæŸ¥è¯¢</b><%End if%>
 		</div>
 		</td>
 	</tr>
@@ -196,7 +202,7 @@ Sub DisplaySearchForm
 		<td class=tdbox>
 			<form name=sform id=sform action=Search.asp onSubmit="submitonce(this);return ValidationPassed;">
 				<br>
-				<div class=value2>ËÑË÷·¶Î§£º<%
+				<div class=value2>æœç´¢èŒƒå›´ï¼š<%
 				If DEF_UsedDataBase = 0 and DEF_BBS_SearchMode = 2 Then
 					If ModeStr = "" Then ModeStr = "1"%>
 					<input name=mode class=fmchkbox type=radio value=1<%
@@ -205,22 +211,22 @@ Sub DisplaySearchForm
 					Else
 						If ModeStr = "1" Then Response.Write " checked"
 					End If
-					%>>Ìû×ÓÃû³Æ
+					%>>å¸–å­åç§°
 					<input name=mode class=fmchkbox type=radio value=2<%
 					If Sch_AncContent = 0 Then
 						Response.Write " disabled"
 					Else
 						If ModeStr = "2" Then Response.Write " checked"
 					End If
-					%>>Ìû×ÓÄÚÈİ
+					%>>å¸–å­å†…å®¹
 					<input name=mode class=fmchkbox type=radio value=0<%
 					If Sch_AllContent = 0 Then
 						Response.Write " disabled"
 					Else
 						If ModeStr = "0" Then Response.Write " checked"
-					End If%>>È«²¿
+					End If%>>å…¨éƒ¨
 					<input name=mode class=fmchkbox type=radio value=3<%
-					If ModeStr = "3" Then Response.Write " checked"%>>Ìû×Ó×÷Õß
+					If ModeStr = "3" Then Response.Write " checked"%>>å¸–å­ä½œè€…
 					<br>
 				<%Else
 					If ModeStr = "" Then ModeStr = "0"
@@ -230,18 +236,18 @@ Sub DisplaySearchForm
 					Else
 						If ModeStr = "0" Then Response.Write " checked"
 					End If
-					%>>Ìû×ÓÃû³Æ
-					<input name=mode class=fmchkbox type=radio value=1<%If ModeStr = "1" Then Response.Write " checked"%>>Ìû×Ó×÷Õß
+					%>>å¸–å­åç§°
+					<input name=mode class=fmchkbox type=radio value=1<%If ModeStr = "1" Then Response.Write " checked"%>>å¸–å­ä½œè€…
 					<div class=value2>
-					ËÑË÷ÂÛÌ³£º<!-- #include file=../inc/incHTM/BoardForMoveList.asp -->						
+					æœç´¢è®ºå›ï¼š<!--#include file="../inc/incHTM/BoardForMoveList.asp"-->						
 					</div>
 				<%End If%>
 				</div>
 				<br>
-				<div class=value2>ËÑË÷ÄÚÈİ£º <input value="<%=htmlencode(Request("key"))%>" type="text" name=key size=22 maxlength=255 class='fminpt input_3'>
+				<div class=value2>æœç´¢å†…å®¹ï¼š <input value="<%=htmlencode(Request("key"))%>" type="text" name=key size=22 maxlength=255 class='fminpt input_3'>
 				</div>
 				<br>
-				<div class=value2><input name=submit2 type=submit value="ËÑË÷" class="fmbtn btn_2"></div>
+				<div class=value2><input name=submit2 type=submit value="æœç´¢" class="fmbtn btn_2"></div>
 			</form>
 		</td>
 	</tr>
@@ -253,11 +259,11 @@ End Sub
 Sub CheckSearchLimit
 
 	If GBL_UserID < 1 Then
-		GBL_CHK_TempStr = "ÇëÈ·ÈÏÄãµÄÉí·İ£¬Ö»ÓĞ×¢²áÓÃ»§²ÅÄÜËÑË÷ÂÛÌ³¡£"
+		GBL_CHK_TempStr = "è¯·ç¡®è®¤ä½ çš„èº«ä»½ï¼Œåªæœ‰æ³¨å†Œç”¨æˆ·æ‰èƒ½æœç´¢è®ºå›ã€‚"
 		Exit Sub
 	Else
 		If GBL_CHK_OnlineTime < DEF_NeedOnlineTime Then
-			GBL_CHK_TempStr = "ÄãµÄÔÚÏßÊ±¼ä(" & DEF_PointsName(4) & ")²»×ã£¬Ö»ÓĞÔÚÏßÊ±¼ä³¬¹ı" & DEF_NeedOnlineTime & "ÃëµÄÓÃ»§²ÅÄÜÊ¹ÓÃ´Ë¹¦ÄÜ¡£"
+			GBL_CHK_TempStr = "ä½ çš„åœ¨çº¿æ—¶é—´(" & DEF_PointsName(4) & ")ä¸è¶³ï¼Œåªæœ‰åœ¨çº¿æ—¶é—´è¶…è¿‡" & DEF_NeedOnlineTime & "ç§’çš„ç”¨æˆ·æ‰èƒ½ä½¿ç”¨æ­¤åŠŸèƒ½ã€‚"
 			Exit Sub
 		End If
 	End If
@@ -266,27 +272,27 @@ End Sub
 
 Sub Main
 
-	initDatabase
+	initDatabase()
 	GBL_CHK_TempStr = ""
-	BBS_SiteHead DEF_SiteNameString & " - ÂÛÌ³ËÑË÷",0,"ÂÛÌ³ËÑË÷"
-	UpdateOnlineUserAtInfo 0,"ÂÛÌ³ËÑË÷"
+	BBS_SiteHead DEF_SiteNameString & " - è®ºå›æœç´¢",0,"è®ºå›æœç´¢"
+	UpdateOnlineUserAtInfo 0,"è®ºå›æœç´¢"
 
 	if Sch_AllContent <> 98 and Sch_AllContent <> 99 then CheckSearchLimit
 
-	GBL_NoneLimitFlag = CheckSupervisorUserName
+	GBL_NoneLimitFlag = CheckSupervisorUserName()
 	
 	UserTopicTopInfo("forum")
 	If GBL_CHK_TempStr = "" Then
-		LoginAccuessFul
+		LoginAccuessFul()
 	Else
 		GBL_SiteBottomString = ""
 		Global_ErrMsg GBL_CHK_TempStr
 	End If
-	closeDataBase
-	UserTopicBottomInfo
-	SiteBottom
+	closeDataBase()
+	UserTopicBottomInfo()
+	SiteBottom()
 
 End Sub
 
-Main
+Main()
 %>

@@ -1,19 +1,19 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/User_Setup.ASP -->
-<!-- #include file=../inc/Upload_Setup.asp -->
-<!-- #include file=../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/Constellation.asp -->
-<!-- #include file=../inc/Limit_fun.asp -->
-<!-- #include file=inc/UserTopic.asp -->
-<!-- #include file=../Search/inc/Upload_fun.asp -->
-<!-- #include file=inc/Bind_Fun.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/User_Setup.ASP"-->
+<!--#include file="../inc/Upload_Setup.asp"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/Constellation.asp"-->
+<!--#include file="../inc/Limit_fun.asp"-->
+<!--#include file="inc/UserTopic.asp"-->
+<!--#include file="../Search/inc/Upload_fun.asp"-->
+<!--#include file="inc/Bind_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../"
 Dim GBL_ID,GBL_Name,GBL_NoneLimitFlag
 Dim Evol,EvolString
 Dim Tmp_TrueName
 
-Main
+Main()
 
 Sub Main
 
@@ -28,26 +28,26 @@ Sub Main
 	
 	Evol = Left(Request.QueryString("Evol"),6)
 	
-	initDatabase
+	initDatabase()
 	
 	Select Case Evol
-		Case "A":EvolString = "²é¿´ÓÃ»§×ÊÁÏ"
-		Case "n":EvolString = "²é¿´ÓÃ»§·¢±íµÄÌû×Ó"
-		Case "g":EvolString = "²é¿´ÓÃ»§·¢±íµÄÖ÷Ìâ"
-		Case "e":EvolString = "²é¿´ÓÃ»§·¢±íµÄ¾«»ªÌû×Ó"
-		Case "l":EvolString = "²é¿´ÓÃ»§ÉÏ´«¸½¼ş"
-		Case "more":EvolString = "²é¿´ÓÃ»§µÄ¸ü¶àĞÅÏ¢"
-		Case "f": EvolString = "¹Ø×¢"
-		Case "uf": EvolString = "¹Ø×¢"
-		Case "bag": EvolString = "ÊÕ²Ø¼Ğ"
-		case "bind": EvolString = "¹ØÁªÕÊºÅ"
+		Case "A":EvolString = "æŸ¥çœ‹ç”¨æˆ·èµ„æ–™"
+		Case "n":EvolString = "æŸ¥çœ‹ç”¨æˆ·å‘è¡¨çš„å¸–å­"
+		Case "g":EvolString = "æŸ¥çœ‹ç”¨æˆ·å‘è¡¨çš„ä¸»é¢˜"
+		Case "e":EvolString = "æŸ¥çœ‹ç”¨æˆ·å‘è¡¨çš„ç²¾åå¸–å­"
+		Case "l":EvolString = "æŸ¥çœ‹ç”¨æˆ·ä¸Šä¼ é™„ä»¶"
+		Case "more":EvolString = "æŸ¥çœ‹ç”¨æˆ·çš„æ›´å¤šä¿¡æ¯"
+		Case "f": EvolString = "å…³æ³¨"
+		Case "uf": EvolString = "å…³æ³¨"
+		Case "bag": EvolString = "æ”¶è—å¤¹"
+		case "bind": EvolString = "å…³è”å¸å·"
 		case "unbind": 
-			Unbind
+			Unbind()
 			exit sub
 		case "remark":
-			user_remark
+			user_remark()
 			exit sub
-		Case Else: EvolString = "²é¿´ÓÃ»§×ÊÁÏ"
+		Case Else: EvolString = "æŸ¥çœ‹ç”¨æˆ·èµ„æ–™"
 				Evol = "A"
 	End Select
 
@@ -58,7 +58,7 @@ Sub Main
 		If GBL_ID = 0 Then GBL_ID = GBL_UserID
 		GBL_CHK_TempStr = ""
 		If GBL_ID = 0 Then
-			GBL_CHK_TempStr = "ÕÒ²»µ½ÓÃ»§£¬Òª²é¿´×Ô¼ºµÄ×ÊÁÏÇëÏÈµÇÂ¼¡£" & VbCrLf
+			GBL_CHK_TempStr = "æ‰¾ä¸åˆ°ç”¨æˆ·ï¼Œè¦æŸ¥çœ‹è‡ªå·±çš„èµ„æ–™è¯·å…ˆç™»å½•ã€‚" & VbCrLf
 		End If
 	Else
 		GBL_CHK_TempStr = ""
@@ -68,38 +68,38 @@ Sub Main
 		Tmp_TrueName = GBL_CHK_TrueName
 	End If
 	
-	GBL_NoneLimitFlag = CheckSupervisorUserName  '¹ÜÀíÔ±ÎŞÏŞÖÆ
+	GBL_NoneLimitFlag = CheckSupervisorUserName()  'ç®¡ç†å‘˜æ— é™åˆ¶
 	
 	If GBL_ID <> GBL_UserID or GBL_CHK_User <> GBL_Name Then
 		UserTopicTopInfo("")
 	Else
 		UserTopicTopInfo("user")
 	End If
-	If GBL_UserID < 1 Then GBL_CHK_TempStr = "ÇëÈ·ÈÏÄúµÄÉí·İ£¬ÓÎ¿ÍÎŞÈ¨" & EvolString
+	If GBL_UserID < 1 Then GBL_CHK_TempStr = "è¯·ç¡®è®¤æ‚¨çš„èº«ä»½ï¼Œæ¸¸å®¢æ— æƒ" & EvolString
 	if GBL_CHK_TempStr <> "" Then
 		Response.Write "<div class='alert redfont'>" & GBL_CHK_TempStr & "</div>"
 	Else
 		GBL_CHK_TempStr = ""
 		Select Case Evol
-			Case "n":DisplayUserAnc
-			Case "g":DisplayUserTopic
-			Case "e":DisplayAncGood
-			Case "l":DisplayUpload
-			Case "more":If LookMoreInfo = 0 Then Response.Write "<div class='alert redfont'>" & GBL_CHK_TempStr & "</div>"
-			Case "f": DisplayFriend
-			Case "uf": DisplayFriend
-			Case "bag": DisplayFavorite
-			Case "bind": DisplayBind
-			Case Else: If LookUserInfo = 0 Then Response.Write "<div class='alert redfont'>" & GBL_CHK_TempStr & "</div>"
+			Case "n":DisplayUserAnc()
+			Case "g":DisplayUserTopic()
+			Case "e":DisplayAncGood()
+			Case "l":DisplayUpload()
+			Case "more":If LookMoreInfo() = 0 Then Response.Write "<div class='alert redfont'>" & GBL_CHK_TempStr & "</div>"
+			Case "f": DisplayFriend()
+			Case "uf": DisplayFriend()
+			Case "bag": DisplayFavorite()
+			Case "bind": DisplayBind()
+			Case Else: If LookUserInfo() = 0 Then Response.Write "<div class='alert redfont'>" & GBL_CHK_TempStr & "</div>"
 		End Select
 	End If
-	UserTopicBottomInfo
-	closeDataBase
-	SiteBottom
+	UserTopicBottomInfo()
+	closeDataBase()
+	SiteBottom()
 
 End Sub
 
-Rem ÏÔÊ¾ÓÃ»§×ÊÁÏ
+Rem æ˜¾ç¤ºç”¨æˆ·èµ„æ–™
 Function LookUserInfo
 
 	Dim Form_Pass,Form_Mail,Form_Address
@@ -117,7 +117,7 @@ Function LookUserInfo
 		Set Rs = LDExeCute(sql_select(SQL & "id=" & GBL_ID,1),0)
 	End If
 	If Rs.Eof Then
-		GBL_CHK_TempStr = "ÓÃ»§²»´æÔÚ£¬Òª²é¿´µÄÓÃ»§¿ÉÄÜÒÑ¾­É¾³ı£¬»òÕßÊÇÓÎ¿ÍµÄÃû×Ö¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = "ç”¨æˆ·ä¸å­˜åœ¨ï¼Œè¦æŸ¥çœ‹çš„ç”¨æˆ·å¯èƒ½å·²ç»åˆ é™¤ï¼Œæˆ–è€…æ˜¯æ¸¸å®¢çš„åå­—ã€‚<br>" & VbCrLf
 		LookUserInfo = 0
 		GBL_CHK_Flag = 0
 		Rs.Close
@@ -138,7 +138,7 @@ Function LookUserInfo
 	Form_birthday = Rs(10)
 	Form_NotSecret = cCurBit(Rs(11))
 
-	REM ÌØÊâÊı¾İ
+	REM ç‰¹æ®Šæ•°æ®
 	Form_ApplyTime = Rs(12)
 	Form_UserLevel = Rs(13)
 	Form_Officer = Rs(14)
@@ -165,7 +165,7 @@ Function LookUserInfo
 	Tmp_TrueName = Rs(32)
 	Rs.Close
 	Set Rs = Nothing
-	LookUserInfo_NavInfo
+	LookUserInfo_NavInfo()
 
 	dim form_rank
 	'------------special version start--------------
@@ -189,26 +189,26 @@ Function LookUserInfo
 			<table border=0 cellpadding="0" cellspacing="0" class="blanktable splitupright" style="">
 			<tr>
 				<td width=90>
-					ÂÛÌ³ÅÅÃû£º
+					è®ºå›æ’åï¼š
 				</td>
 				<td>
 					<%
 					If cCur(form_rank) > 0 Then
 						Response.Write "<b><font color=blue class=bluefont>" & form_rank & "</font></b>"
 					Else
-						Response.Write "ÎŞ"
+						Response.Write "æ— "
 					End If
-					if GBL_Name = GBL_CHK_User or CheckSupervisorNameOnly = 1 then
-						Response.Write "£¬ÓÃ»§Ãû£º"  & GBL_Name
+					if GBL_Name = GBL_CHK_User or CheckSupervisorNameOnly() = 1 then
+						Response.Write "ï¼Œç”¨æˆ·åï¼š"  & GBL_Name
 					end if
 					If Tmp_TrueName <> "" Then
-						Response.Write "£¬êÇ³Æ£º" & Tmp_TrueName & "#" & GBL_ID
+						Response.Write "ï¼Œæ˜µç§°ï¼š" & Tmp_TrueName & "#" & GBL_ID
 					End If
 					%></td>
 			</tr><%If Form_mail <> "" and (Form_NotSecret = 1 or GBL_UserID=GBL_ID) Then%>
 			<tr>
 				<td>
-					µç×ÓÓÊ¼ş£º
+					ç”µå­é‚®ä»¶ï¼š
 				</td>
 				<td>
 					<div class=word-break-all>
@@ -219,7 +219,7 @@ Function LookUserInfo
 			If Form_homepage <> "" Then%>
 			<tr>
 				<td>
-					Ö÷Ò³µØÖ·£º
+					ä¸»é¡µåœ°å€ï¼š
 				</td>
 				<td>
 					<div class=word-break-all>
@@ -233,7 +233,7 @@ Function LookUserInfo
 			If Form_icq <> "" and Form_icq <> "0" Then%>
 			<tr>
 				<td>
-					ICQ ºÅÂë£º
+					ICQ å·ç ï¼š
 				</td>
 				<td>
 					<%=HtmlEncode(Form_icq)%></td>
@@ -242,7 +242,7 @@ Function LookUserInfo
 			If Form_oicq <> "" and Form_oicq <> "0" and (Form_NotSecret = 1 or GBL_UserID=GBL_ID) Then%>
 			<tr>
 				<td>
-					OICQºÅÂë£º
+					OICQå·ç ï¼š
 				</td>
 				<td>
 					<%=HtmlEncode(Form_oicq)%></td>
@@ -251,7 +251,7 @@ Function LookUserInfo
 			If Form_address <> "" and (Form_NotSecret = 1 or GBL_UserID=GBL_ID) Then%>
 			<tr>
 				<td>
-					ÓÃ»§µØÖ·£º
+					ç”¨æˆ·åœ°å€ï¼š
 				</td>
 				<td>
 					<div class=word-break-all><%=HtmlEncode(Form_address)%>
@@ -260,14 +260,14 @@ Function LookUserInfo
 			End If%>
 			<tr>
 				<td>
-					ÓÃ»§ĞÔ±ğ£º
+					ç”¨æˆ·æ€§åˆ«ï¼š
 				</td>
 				<td>
 					<%=Form_sex%></td>
 			</tr><%if len(Form_birthday)=14 and (Form_NotSecret = 1 or GBL_UserID=GBL_ID) Then%>
 			<tr>
 				<td>
-					ÓÃ»§ÉúÈÕ£º 
+					ç”¨æˆ·ç”Ÿæ—¥ï¼š 
 				</td>
 				<td>
 					<%If len(Form_birthday)=14 Then%>
@@ -277,7 +277,7 @@ Function LookUserInfo
 			<%If len(Form_Birthday) = 14 Then%>
 			<tr>
 				<td>
-					ĞÇ×ùÉúĞ¤£º
+					æ˜Ÿåº§ç”Ÿè‚–ï¼š
 				</td>
 				<td>
 					<%
@@ -321,14 +321,14 @@ Function LookUserInfo
 			</tr>
 			<tr>
 				<td>
-					ÉêÇëÊ±¼ä£º
+					ç”³è¯·æ—¶é—´ï¼š
 				</td>
 				<td>
 					<%=RestoreTime(Form_ApplyTime)%></td>
 			</tr>
 			<tr>
 				<td>
-					×îºó»î¶¯£º
+					æœ€åæ´»åŠ¨ï¼š
 				</td>
 				<td>
 					<%
@@ -338,36 +338,36 @@ Function LookUserInfo
 			</tr>
 			<tr>
 				<td>
-					<%=DEF_PointsName(3)%>£º
+					<%=DEF_PointsName(3)%>ï¼š
 				</td>
 				<td>
 					<%=DEF_UserLevelString(Form_UserLevel)%></td>
 			</tr>
 			<tr>
 				<td>
-					<%=DEF_PointsName(0)%>£º
+					<%=DEF_PointsName(0)%>ï¼š
 				</td>
 				<td>
 					<%=HtmlEncode(Form_Points)%></td>
 			</tr>
 			<tr>
 				<td>
-					·¢±íÌû×Ó£º
+					å‘è¡¨å¸–å­ï¼š
 				</td>
 				<td>
 					<%
 					If Form_AnnounceNum = 0 Then
-						Response.Write "ÎŞÈÎºÎÌû×Ó"
+						Response.Write "æ— ä»»ä½•å¸–å­"
 					Else
-						Response.Write "ÏÖ´æ<b>" & Form_AnnounceNum & "</b>Æª"
-						Response.Write "£¬Ö÷Ìâ<b>" & Form_AnnounceTopic & "</b>Æª£¬»Ø¸´<b>" & Form_AnnounceNum - Form_AnnounceTopic & "</b>Æª"
-						Response.Write "<br>¾«»ª<b>" & Form_AnnounceGood & "</b>Æª"
+						Response.Write "ç°å­˜<b>" & Form_AnnounceNum & "</b>ç¯‡"
+						Response.Write "ï¼Œä¸»é¢˜<b>" & Form_AnnounceTopic & "</b>ç¯‡ï¼Œå›å¤<b>" & Form_AnnounceNum - Form_AnnounceTopic & "</b>ç¯‡"
+						Response.Write "<br>ç²¾å<b>" & Form_AnnounceGood & "</b>ç¯‡"
 					End If
-					%> ÀúÊ·ÀÛ¼Æ<b><%=Form_AnnounceNum2%></b>Æª</td>
+					%> å†å²ç´¯è®¡<b><%=Form_AnnounceNum2%></b>ç¯‡</td>
 			</tr>
 			<tr>
 				<td>
-					<%=DEF_PointsName(4)%>£º
+					<%=DEF_PointsName(4)%>ï¼š
 				</td>
 				<td>
 					<%=clng(cCur(Form_OnlineTime)/60)%></td>
@@ -375,12 +375,12 @@ Function LookUserInfo
 			If Form_CachetValue <> 0 Then%>
 			<tr>
 				<td>
-					<%=DEF_PointsName(2)%>£º
+					<%=DEF_PointsName(2)%>ï¼š
 				</td>
 				<td>
 			<%
 				If Form_CachetValue > 0 Then
-					Response.Write "<font color=blue class=bluefont>£«" & Form_CachetValue & "</font><br>"
+					Response.Write "<font color=blue class=bluefont>ï¼‹" & Form_CachetValue & "</font><br>"
 				Else
 					Response.Write Form_CachetValue & "<br>"
 				End If%></td>
@@ -390,17 +390,17 @@ Function LookUserInfo
 			If Form_CharmPoint <> 0 Then%>
 			<tr>
 				<td>
-					<%=DEF_PointsName(1)%>£º
+					<%=DEF_PointsName(1)%>ï¼š
 				</td>
 				<td>
-					<b><font color=red><%=Form_CharmPoint%></font></b> <a href="alipay/Payment.asp">Á¢¼´³äÖµ</a></td>
+					<b><font color=red><%=Form_CharmPoint%></font></b> <a href="alipay/Payment.asp">ç«‹å³å……å€¼</a></td>
 			</tr>
 			<%
 			End If
 			If Form_Officer <> "0" and Form_Officer <> "" Then%>
 			<tr>
 				<td>
-					<%=DEF_PointsName(9)%>£º
+					<%=DEF_PointsName(9)%>ï¼š
 				</td>
 				<td>
 					<%=DisplayOfficerString(Form_Officer)%></td>
@@ -408,20 +408,20 @@ Function LookUserInfo
 			If GetBinarybit(Form_UserLimit,8) = 1 or GetBinarybit(Form_UserLimit,10) = 1 or GetBinarybit(Form_UserLimit,14) = 1 or GetBinarybit(Form_UserLimit,2) = 1 Then%>
 			<tr>
 				<TD valign=top>
-					ÆäËüĞÅÏ¢£º
+					å…¶å®ƒä¿¡æ¯ï¼š
 				</td>
 				<td>
 					<%
 			If GetBinarybit(Form_UserLimit,10) = 1 Then
-				Response.Write "<font color=555555>Ö°Îñ£º</font>" & DEF_PointsName(6) & "<br>"
+				Response.Write "<font color=555555>èŒåŠ¡ï¼š</font>" & DEF_PointsName(6) & "<br>"
 			ElseIf GetBinarybit(Form_UserLimit,14) = 1 Then
-				Response.Write "<font color=555555 class=grayfont>µ£ÈÎ</font><b>" & DEF_PointsName(7) & "</b><font color=555555 class=grayfont>Ò»Ö°</font>"
+				Response.Write "<font color=555555 class=grayfont>æ‹…ä»»</font><b>" & DEF_PointsName(7) & "</b><font color=555555 class=grayfont>ä¸€èŒ</font>"
 			ElseIf GetBinarybit(Form_UserLimit,8) = 1 Then
-				Response.Write "<font color=555555 class=grayfont>µ£ÈÎ</font><b>" & DEF_PointsName(8) & "</b><font color=555555 class=grayfont>Ò»Ö°</font>"
+				Response.Write "<font color=555555 class=grayfont>æ‹…ä»»</font><b>" & DEF_PointsName(8) & "</b><font color=555555 class=grayfont>ä¸€èŒ</font>"
 			End If
 
 			If GetBinarybit(Form_UserLimit,2) = 1 Then
-				Response.Write " <font color=555555 class=grayfont>ÒÑ¾­ÊÇ</font>" & DEF_PointsName(5) & "<br>"
+				Response.Write " <font color=555555 class=grayfont>å·²ç»æ˜¯</font>" & DEF_PointsName(5) & "<br>"
 			End If%></td>
 			</tr><%End If%><%If GBL_UserID=GBL_ID Then%>
 			<tr>
@@ -430,9 +430,9 @@ Function LookUserInfo
 			</tr>
 			<tr>
 				<td height=25 valign=top>
-					ÎÒµÄÈ¨ÏŞ<br>ºÍÉèÖÃ£º<p>
-					<font color=888888 class=grayfont>Ä³Ğ©Éè¶¨<br>
-					½ö°æÖ÷ÒÔ<br>ÉÏ²ÅÓĞÓÃ</font></td>
+					æˆ‘çš„æƒé™<br>å’Œè®¾ç½®ï¼š<p>
+					<font color=888888 class=grayfont>æŸäº›è®¾å®š<br>
+					ä»…ç‰ˆä¸»ä»¥<br>ä¸Šæ‰æœ‰ç”¨</font></td>
 				<td>
 					<table cellpadding="0" cellspacing="0"><%
 			Dim TempN
@@ -440,19 +440,19 @@ Function LookUserInfo
 				If (GetBinarybit(Form_UserLimit,8) = 1 or GetBinarybit(Form_UserLimit,10) = 1) or GBL_NoneLimitFlag = 1 Then
 					Response.Write "<tr height=20><td>" & LimitUserStringData(tempN)
 					If GetBinarybit(Form_UserLimit,TempN+1) = 1 Then
-						Response.Write "</td><td>ÊÇ</td></tr>"
+						Response.Write "</td><td>æ˜¯</td></tr>"
 					Else
-						Response.Write "</td><td>·ñ</td></tr>"
+						Response.Write "</td><td>å¦</td></tr>"
 					End If
 				Else
 					If TempN = 4 or TempN = 8 or TempN = 5 or TempN = 10 or TempN = 11 or TempN = 14 or TempN = 15 Then
-						'´ËÀà×ÊÁÏ¶ÔÓÚ·Ç°æÖ÷ÒÔÉÏÓÃ»§ÎŞÒâÒå,ËùÒÔÆÁ±Î,Áí,ÊÇ·ñ×¨ÒµÓÃ»§Ò²²»×÷ÏÔÊ¾´¦Àí
+						'æ­¤ç±»èµ„æ–™å¯¹äºéç‰ˆä¸»ä»¥ä¸Šç”¨æˆ·æ— æ„ä¹‰,æ‰€ä»¥å±è”½,å¦,æ˜¯å¦ä¸“ä¸šç”¨æˆ·ä¹Ÿä¸ä½œæ˜¾ç¤ºå¤„ç†
 					Else
 						Response.Write "<tr height=20><td>" & LimitUserStringData(tempN)
 						If GetBinarybit(Form_UserLimit,TempN+1) = 1 Then
-							Response.Write "</td><td>ÊÇ</td></tr>"
+							Response.Write "</td><td>æ˜¯</td></tr>"
 						Else
-							Response.Write "</td><td>·ñ</td></tr>"
+							Response.Write "</td><td>å¦</td></tr>"
 						End If
 					End If
 				End If
@@ -471,14 +471,15 @@ Function LookUserInfo
 			<%End If%>
 
 			<%If GBL_CHK_User <> GBL_Name Then%>
-			<div class=value2><a href="../a/Processor.asp?action=AddFriend&FriendName=<%=UrlEncode(GetTrueName(GBL_Name,Tmp_TrueName))%>&FriendNameID=<%=GBL_ID%>" onclick="return(pub_msg(this,'anc_msgbody','&SureFlag=1'));"><img src="../images/<%=GBL_DefineImage%>friend.gif" alt="¹Ø×¢Ta" class="absmiddle" /></a></div>
-			<div class=value2><a href="SendMessage.asp?SdM_ToUser=<%=urlEncode(GetTrueNameID(GBL_Name,Tmp_TrueName,GBL_ID))%>&SdM_ToUserID=<%=GBL_ID%>" onclick="return(sendprivatemsg(this,'<%=DEF_BBS_HomeUrl%>'));"><img src="../images/<%=GBL_DefineImage%>message.gif" alt="¹Ø×¢Ta" class="absmiddle" /></a></div>
+			<div class=value2><a href="../a/Processor.asp?action=AddFriend&FriendName=<%=UrlEncode(GetTrueName(GBL_Name,Tmp_TrueName))%>&FriendNameID=<%=GBL_ID%>" onclick="return(pub_msg(this,'anc_msgbody','&SureFlag=1'));"><img src="../images/<%=GBL_DefineImage%>friend.gif" alt="å…³æ³¨Ta" class="absmiddle" /></a></div>
+			<div class=value2><a href="SendMessage.asp?SdM_ToUser=<%=urlEncode(GetTrueNameID(GBL_Name,Tmp_TrueName,GBL_ID))%>&SdM_ToUserID=<%=GBL_ID%>" onclick="return(sendprivatemsg(this,'<%=DEF_BBS_HomeUrl%>'));"><img src="../images/<%=GBL_DefineImage%>message.gif" alt="å…³æ³¨Ta" class="absmiddle" /></a></div>
 			<%End If%>
-			<div class=value2><a href="<%=RW_User(GBL_ID,"more","","")%>">²é¿´¸ü¶àĞÅÏ¢</a></div>
+			<div class=value2><a href="<%=RW_User(GBL_ID,"more","","")%>">æŸ¥çœ‹æ›´å¤šä¿¡æ¯</a></div>
 			<%
 rem ---special code start---
 			user_lastvisit(GBL_ID)
-rem ---special code end---%>
+rem ---special code end---
+%>
 		</td>
 		</tr>
 		</table>
@@ -506,7 +507,7 @@ sub user_lastvisit(uid)
 	set rs = nothing
 	
 	if num >= max_n then
-		'ÊÇ·ñÉ¾³ı¹ı¾É·ÃÎÊ£¬Èô×¢ÊÍ´ú±í²»É¾³ı£¬ÓÀ¾Ã±£»¤À´·ÃÓÃ»§ĞÅÏ¢
+		'æ˜¯å¦åˆ é™¤è¿‡æ—§è®¿é—®ï¼Œè‹¥æ³¨é‡Šä»£è¡¨ä¸åˆ é™¤ï¼Œæ°¸ä¹…ä¿æŠ¤æ¥è®¿ç”¨æˆ·ä¿¡æ¯
 		'call ldexecute("delete from leadbbs_extend where classtype=500 and extendid=" & uid & " and id<=" & getdata(0,num),1)
 	end if
 	
@@ -515,12 +516,12 @@ sub user_lastvisit(uid)
 	%>
 		<div class="clear"></div>
 		<br>
-		<div class=title>¹²À´·Ã<%=maxcount%>´Î£¬×î½ü°İ·Ã£º</div>
+		<div class=title>å…±æ¥è®¿<%=maxcount%>æ¬¡ï¼Œæœ€è¿‘æ‹œè®¿ï¼š</div>
 		<ul class="ufacelist">
 		<% for n = 0 to num%>
 		<li title="<%
-			response.write "×î½ü·ÃÎÊÊ±¼ä:" & ConvertTimeString(restoretime(getdata(4,n)))
-			response.write "£¬À´·Ã´ÎÊı:" & getdata(6,n)
+			response.write "æœ€è¿‘è®¿é—®æ—¶é—´:" & ConvertTimeString(restoretime(getdata(4,n)))
+			response.write "ï¼Œæ¥è®¿æ¬¡æ•°:" & getdata(6,n)
 			%>">
 			<a href="<%=RW_User(getdata(1,n),"",getdata(2,n),"")%>">
 			<span class="u_face">
@@ -621,7 +622,7 @@ Function DisplayOfficerString(Officer)
 
 End Function
 
-Rem ÏÔÊ¾ÓÃ»§·¢±íµÄÌû×Ó
+Rem æ˜¾ç¤ºç”¨æˆ·å‘è¡¨çš„å¸–å­
 Sub DisplayUserAnc
 
 	Dim Rs,SQL,NewNum,RecordCount
@@ -636,7 +637,7 @@ Sub DisplayUserAnc
 		RecordCount = cCur(Rs(2))
 		Tmp_TrueName = Rs(3)
 	Else
-		Response.Write "<div class=alert>´íÎó£¬´ËÓÃ»§²»´æÔÚ£¡</div>"
+		Response.Write "<div class=alert>é”™è¯¯ï¼Œæ­¤ç”¨æˆ·ä¸å­˜åœ¨ï¼</div>"
 		Rs.Close
 		Set Rs = Nothing
 		Exit Sub
@@ -754,47 +755,47 @@ Sub DisplayUserAnc
 
 		PageSplictString = PageSplictString & "<div class=j_page>"
 		If FirstID >= MaxRecordID Then
-			'PageSplictString = PageSplictString & "Ê×Ò³ " & VbCrLf
-			'PageSplictString = PageSplictString & " ÉÏÒ³ " & VbCrLf
+			'PageSplictString = PageSplictString & "é¦–é¡µ " & VbCrLf
+			'PageSplictString = PageSplictString & " ä¸Šé¡µ " & VbCrLf
 		Else
-			PageSplictString = PageSplictString & "<a href=""" & RW_User(GBL_ID,"n","",more & "&start=0") & """>Ê×Ò³</a> " & VbCrLf
-			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,"n","",more & "&Start=" & FirstID) & """>ÉÏÒ³</a> " & VbCrLf
+			PageSplictString = PageSplictString & "<a href=""" & RW_User(GBL_ID,"n","",more & "&start=0") & """>é¦–é¡µ</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,"n","",more & "&Start=" & LngStr(FirstID)) & """>ä¸Šé¡µ</a> " & VbCrLf
 		End if
 	
 		If LastID <= MinRecordID Then
-			'PageSplictString = PageSplictString & " ÏÂÒ³ " & VbCrLf
-			'PageSplictString = PageSplictString & " Î²Ò³ " & VbCrLf
+			'PageSplictString = PageSplictString & " ä¸‹é¡µ " & VbCrLf
+			'PageSplictString = PageSplictString & " å°¾é¡µ " & VbCrLf
 		else
-			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,"n","",more & "&Start=" & LastID) & """>ÏÂÒ³</a> " & VbCrLf
-			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,"n","",more & "&Start=1&UpDownPageFlag=1") & """>Î²Ò³</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,"n","",more & "&Start=" & LngStr(LastID)) & """>ä¸‹é¡µ</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,"n","",more & "&Start=1&UpDownPageFlag=1") & """>å°¾é¡µ</a> " & VbCrLf
 		end if
 		
-		PageSplictString = PageSplictString & "<b>¹²" & RecordCount & "</b>"
+		PageSplictString = PageSplictString & "<b>å…±" & RecordCount & "</b>"
 		'If (RecordCount mod DEF_MaxListNum)=0 Then
-		'	PageSplictString = PageSplictString & " ¼Æ<b>" & clng(RecordCount/DEF_MaxListNum) & "</b>Ò³"
+		'	PageSplictString = PageSplictString & " è®¡<b>" & clng(RecordCount/DEF_MaxListNum) & "</b>é¡µ"
 		'Else
 		'	If RecordCount>=DEF_MaxListNum Then
-		'		PageSplictString = PageSplictString & " ¼Æ<b>" & clng(RecordCount/DEF_MaxListNum)+1 & "</b>Ò³"
+		'		PageSplictString = PageSplictString & " è®¡<b>" & clng(RecordCount/DEF_MaxListNum)+1 & "</b>é¡µ"
 		'	Else
-		'		PageSplictString = PageSplictString & " ¼Æ<b>1</b>Ò³"
+		'		PageSplictString = PageSplictString & " è®¡<b>1</b>é¡µ"
 		'	End If
 		'End If
-		'PageSplictString = PageSplictString & " Ã¿Ò³<b>" & DEF_MaxListNum & "</b>Ìõ¼ÇÂ¼"
+		'PageSplictString = PageSplictString & " æ¯é¡µ<b>" & DEF_MaxListNum & "</b>æ¡è®°å½•"
 		PageSplictString = PageSplictString & "</div>"
 	
 	End If
 
-	LookUserInfo_NavInfo
+	LookUserInfo_NavInfo()
 	%>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class=table_in>
 	  <tr class=tbinhead>
-	    <td><div class=value>Ìû×Ó</div></td>
-	    <td width=80><div class=value title="»Ø¸´/µã»÷">ÈËÆø</div></td>
-	    <td width=125><div class=value>·¢±íÊ±¼ä</div></td>
+	    <td><div class=value>å¸–å­</div></td>
+	    <td width=80><div class=value title="å›å¤/ç‚¹å‡»">äººæ°”</div></td>
+	    <td width=125><div class=value>å‘è¡¨æ—¶é—´</div></td>
 	  </tr>
 	<%
 	If Num = -1 Then
-		Response.Write "<tr><td colspan=3 class=tdbox>Ã»ÓĞÏà¹ØµÄÌû×Ó!</td></tr>"
+		Response.Write "<tr><td colspan=3 class=tdbox>æ²¡æœ‰ç›¸å…³çš„å¸–å­!</td></tr>"
 	end if
 	
 	
@@ -826,7 +827,7 @@ Sub DisplayUserAnc
 
 			If ccur(GetData(8,n)) = 1 Then Temp = Temp - 3
 			If GBL_NoneLimitFlag = 0 and GBL_CheckLimitTitle(GetData(11,n),GetData(12,n),GetData(13,n),GetData(14,n)) = 1 Then
-				GetData(1,n) = "´ËÌû×Ó±êÌâÒÑÉèÖÃÎªÒş²Ø"
+				GetData(1,n) = "æ­¤å¸–å­æ ‡é¢˜å·²è®¾ç½®ä¸ºéšè—"
 				GetData(9,n) = 1
 			End If
 
@@ -840,11 +841,11 @@ Sub DisplayUserAnc
 			Response.Write "</a>"
 
 			If GetData(6,N)>=DEF_TopicContentMaxListNum Then
-				Response.Write " [<a href=""../a/" & RW_a(GetData(7,n),GetData(0,N),1,1,"lastpage=1") & """ title=" & GetData(2,n) & "×Ö½Ú>" & Temp1 & "</b></a>]"
+				Response.Write " [<a href=""../a/" & RW_a(GetData(7,n),GetData(0,N),1,1,"lastpage=1") & """ title=" & GetData(2,n) & "å­—èŠ‚>" & Temp1 & "</b></a>]"
 			End If
 
 			If ccur(GetData(8,n)) = 1 Then
-				Response.Write "<img src=../images/" & GBL_DefineImage & "jh1.GIF border=0 title=¾«»ªÌû×Ó align=absbottom>"
+				Response.Write "<img src=../images/" & GBL_DefineImage & "jh1.GIF border=0 title=ç²¾åå¸–å­ align=absbottom>"
 			End If
 			Response.Write "</td><td class=tdbox><em>"
 			Response.Write GetData(6,N) & "/" & GetData(4,N)
@@ -861,7 +862,7 @@ Sub DisplayUserAnc
 
 End Sub
 
-Rem ÏÔÊ¾ÓÃ»§·¢±íµÄÖ÷Ìâ
+Rem æ˜¾ç¤ºç”¨æˆ·å‘è¡¨çš„ä¸»é¢˜
 Function DisplayUserTopic
 
 	Dim Rs,SQL,NewNum,RecordCount
@@ -878,7 +879,7 @@ Function DisplayUserTopic
 		Tmp_TrueName = Rs(3)
 	Else
 		RecordCount = 0
-		Response.Write "<div class=alert>´íÎó£¬´ËÓÃ»§²»´æÔÚ£¡</div>"
+		Response.Write "<div class=alert>é”™è¯¯ï¼Œæ­¤ç”¨æˆ·ä¸å­˜åœ¨ï¼</div>"
 		Rs.Close
 		Set Rs = Nothing
 		Exit Function
@@ -1018,11 +1019,11 @@ Function DisplayUserTopic
 	
 		PageSplictString = PageSplictString & "<div class=j_page>"
 		If FirstID >= MaxRecordID Then
-			'PageSplictString = PageSplictString & "Ê×Ò³ " & VbCrLf
-			'PageSplictString = PageSplictString & " ÉÏÒ³ " & VbCrLf
+			'PageSplictString = PageSplictString & "é¦–é¡µ " & VbCrLf
+			'PageSplictString = PageSplictString & " ä¸Šé¡µ " & VbCrLf
 		else
-			PageSplictString = PageSplictString & "<a href=""" & RW_User(GBL_ID,"g","",more & "&Start=0") & """>Ê×Ò³</a> " & VbCrLf
-			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,"g","",more & "&Start=" & FirstID & "&UpDownPageFlag=1") & """>ÉÏÒ³</a> " & VbCrLf
+			PageSplictString = PageSplictString & "<a href=""" & RW_User(GBL_ID,"g","",more & "&Start=0") & """>é¦–é¡µ</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,"g","",more & "&Start=" & LngStr(FirstID) & "&UpDownPageFlag=1") & """>ä¸Šé¡µ</a> " & VbCrLf
 		end if
 	
 		if LastID<MaxRecordID and LastID<>0 then
@@ -1030,39 +1031,39 @@ Function DisplayUserTopic
 		end if
 	
 		If LastID <= MinRecordID Then
-			'PageSplictString = PageSplictString & " ÏÂÒ³ " & VbCrLf
-			'PageSplictString = PageSplictString & " Î²Ò³ " & VbCrLf
+			'PageSplictString = PageSplictString & " ä¸‹é¡µ " & VbCrLf
+			'PageSplictString = PageSplictString & " å°¾é¡µ " & VbCrLf
 		else
-			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,"g","",more & "&Start=" & LastID) & """>ÏÂÒ³</a> " & VbCrLf
-			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,"g","",more & "&Start=1&UpDownPageFlag=1") & """>Î²Ò³</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,"g","",more & "&Start=" & LngStr(LastID)) & """>ä¸‹é¡µ</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,"g","",more & "&Start=1&UpDownPageFlag=1") & """>å°¾é¡µ</a> " & VbCrLf
 		end if
 		
-		PageSplictString = PageSplictString & "<b>¹²" & RecordCount & "</b>"
+		PageSplictString = PageSplictString & "<b>å…±" & RecordCount & "</b>"
 		'If (RecordCount mod DEF_MaxListNum)=0 Then
-		'	PageSplictString = PageSplictString & " ¼Æ<b>" & clng(RecordCount/DEF_MaxListNum) & "</b>Ò³"
+		'	PageSplictString = PageSplictString & " è®¡<b>" & clng(RecordCount/DEF_MaxListNum) & "</b>é¡µ"
 		'Else
 		'	If RecordCount>=DEF_MaxListNum Then
-		'		PageSplictString = PageSplictString & " ¼Æ<b>" & clng(RecordCount/DEF_MaxListNum)+1 & "</b>Ò³"
+		'		PageSplictString = PageSplictString & " è®¡<b>" & clng(RecordCount/DEF_MaxListNum)+1 & "</b>é¡µ"
 		'	Else
-		'		PageSplictString = PageSplictString & " ¼Æ<b>1</b>Ò³"
+		'		PageSplictString = PageSplictString & " è®¡<b>1</b>é¡µ"
 		'	End If
 		'End If
-		'PageSplictString = PageSplictString & " Ã¿Ò³<b>" & DEF_MaxListNum & "</b>Ìõ¼ÇÂ¼"
+		'PageSplictString = PageSplictString & " æ¯é¡µ<b>" & DEF_MaxListNum & "</b>æ¡è®°å½•"
 		PageSplictString = PageSplictString & "</div>"
 	
 	End If
 
-	LookUserInfo_NavInfo
+	LookUserInfo_NavInfo()
 	%>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class=table_in>
 	  <tr class=tbinhead>
-	    <td><div class=value>Ö÷Ìâ</div></td>
-	    <td width=80><div class=value title="»Ø¸´/µã»÷">ÈËÆø</div></td>
-	    <td width=125><div class=value>·¢±íÊ±¼ä</div></td>
+	    <td><div class=value>ä¸»é¢˜</div></td>
+	    <td width=80><div class=value title="å›å¤/ç‚¹å‡»">äººæ°”</div></td>
+	    <td width=125><div class=value>å‘è¡¨æ—¶é—´</div></td>
 	  </tr>
 	<%
 	If Num = -1 Then
-		Response.Write "<tr><td colspan=3 class=tdbox>Ã»ÓĞÈÎºÎÖ÷Ìâ!</td></tr>"
+		Response.Write "<tr><td colspan=3 class=tdbox>æ²¡æœ‰ä»»ä½•ä¸»é¢˜!</td></tr>"
 	end if
 	
 	
@@ -1087,7 +1088,7 @@ Function DisplayUserTopic
 
 			If ccur(GetData(8,n)) = 1 Then Temp = Temp - 3
 			If GBL_NoneLimitFlag = 0 and GBL_CheckLimitTitle(GetData(10,n),GetData(11,n),GetData(12,n),GetData(13,n)) = 1 Then
-				GetData(1,n) = "´ËÌû×Ó±êÌâÒÑÉèÖÃÎªÒş²Ø"
+				GetData(1,n) = "æ­¤å¸–å­æ ‡é¢˜å·²è®¾ç½®ä¸ºéšè—"
 				GetData(9,n) = 1
 			End If
 
@@ -1100,11 +1101,11 @@ Function DisplayUserTopic
 			Response.Write "</a>"
 
 			If GetData(6,N)>=DEF_TopicContentMaxListNum Then
-				Response.Write " [<a href=""../a/" & RW_a(GetData(7,n),GetData(0,N),1,1,"lastpage=1") & """ title=" & GetData(2,n) & "×Ö½Ú>" & Temp1 & "</b></a>]"
+				Response.Write " [<a href=""../a/" & RW_a(GetData(7,n),GetData(0,N),1,1,"lastpage=1") & """ title=" & GetData(2,n) & "å­—èŠ‚>" & Temp1 & "</b></a>]"
 			End If
 	
 			If ccur(GetData(8,n)) = 1 Then
-				Response.Write "<img src=../images/" & GBL_DefineImage & "jh1.GIF border=0 title=¾«»ªÌû×Ó align=absbottom>"
+				Response.Write "<img src=../images/" & GBL_DefineImage & "jh1.GIF border=0 title=ç²¾åå¸–å­ align=absbottom>"
 			End If
 			Response.Write "</td><td class=tdbox><em>"
 			Response.Write GetData(6,N) & "/" & GetData(4,N)
@@ -1121,7 +1122,7 @@ Function DisplayUserTopic
 
 End Function
 
-Rem ²é¿´ÓÃ»§·¢±íµÄ¾«»ªÌû×Ó
+Rem æŸ¥çœ‹ç”¨æˆ·å‘è¡¨çš„ç²¾åå¸–å­
 Function DisplayAncGood
 
 	Dim Rs,SQL,NewNum,RecordCount
@@ -1138,7 +1139,7 @@ Function DisplayAncGood
 		Tmp_TrueName = Rs(3)
 	Else
 		RecordCount = 0
-		Response.Write "<br><br>&nbsp; &nbsp; &nbsp; ´íÎó£¬´ËÓÃ»§²»´æÔÚ£¡"
+		Response.Write "<br><br>&nbsp; &nbsp; &nbsp; é”™è¯¯ï¼Œæ­¤ç”¨æˆ·ä¸å­˜åœ¨ï¼"
 		Rs.Close
 		Set Rs = Nothing
 		Exit Function
@@ -1231,7 +1232,7 @@ Function DisplayAncGood
 		case 0,2:
 			SQL = sql_select("select T1.ID,T1.Title,T1.Length,T1.ndatetime,T1.Hits,T1.FaceIcon,T1.ChildNum,T1.BoardID,T1.GoodFlag,T1.ParentID,T1.TitleStyle,T2.ForumPass,T2.BoardLimit,T2.OtherLimit,T2.HiddenFlag,T1.RootIDBak from LeadBBS_Announce as T1 left join LeadBBS_Boards as T2 on T1.BoardID=T2.BoardID " & SQLendString,DEF_MaxListNum)
 		case Else
-			SQL = sql_select("select T1.ID,T1.Title,T1.Length,T1.ndatetime,T1.Hits,T1.FaceIcon,T1.ChildNum,T1.BoardID,T1.GoodFlag,0,T1.TitleStyle,T2.ForumPass,T2.BoardLimit,T2.OtherLimit,T2.HiddenFlag,T1.ID from LeadBBS_Topic as T1 left join LeadBBS_Boards as T2 on T1.BoardID=T2.BoardID " & SQLendString,DEF_MaxListNum)
+			SQL = sql_select("select T1.ID,T1.Title,T1.Length,T1.ndatetime,T1.Hits,T1.FaceIcon,T1.ChildNum,T1.BoardID,T1.GoodFlag,0,T1.TitleStyle,T2.ForumPass,T2.BoardLimit,T2.OtherLimit,T2.HiddenFlag,T1.ID as id_dup2 from LeadBBS_Topic as T1 left join LeadBBS_Boards as T2 on T1.BoardID=T2.BoardID " & SQLendString,DEF_MaxListNum)
 	End select
 	Set Rs = LDExeCute(SQL,0)
 	Dim Num
@@ -1273,47 +1274,47 @@ Function DisplayAncGood
 	
 		PageSplictString = PageSplictString & "<div class=j_page>"
 		If FirstID >= MaxRecordID Then
-			'PageSplictString = PageSplictString & "Ê×Ò³ " & VbCrLf
-			'PageSplictString = PageSplictString & "ÉÏÒ³ " & VbCrLf
+			'PageSplictString = PageSplictString & "é¦–é¡µ " & VbCrLf
+			'PageSplictString = PageSplictString & "ä¸Šé¡µ " & VbCrLf
 		Else
-			PageSplictString = PageSplictString & "<a href=""" & RW_User(GBL_ID,"e","",more & "&Start=0") & """>Ê×Ò³</a> " & VbCrLf
-			PageSplictString = PageSplictString & "<a href=""" & RW_User(GBL_ID,"e","",more & "&Start=" & FirstID & "&UpDownPageFlag=1") & """>ÉÏÒ³</a> " & VbCrLf
+			PageSplictString = PageSplictString & "<a href=""" & RW_User(GBL_ID,"e","",more & "&Start=0") & """>é¦–é¡µ</a> " & VbCrLf
+			PageSplictString = PageSplictString & "<a href=""" & RW_User(GBL_ID,"e","",more & "&Start=" & LngStr(FirstID) & "&UpDownPageFlag=1") & """>ä¸Šé¡µ</a> " & VbCrLf
 		End if
 
 		If LastID <= MinRecordID Then
-			'PageSplictString = PageSplictString & "ÏÂÒ³ " & VbCrLf
-			'PageSplictString = PageSplictString & "Î²Ò³ " & VbCrLf
+			'PageSplictString = PageSplictString & "ä¸‹é¡µ " & VbCrLf
+			'PageSplictString = PageSplictString & "å°¾é¡µ " & VbCrLf
 		Else
-			PageSplictString = PageSplictString & "<a href=""" & RW_User(GBL_ID,"e","",more & "&Start=" & LastID) & """>ÏÂÒ³</a>" & VbCrLf
-			PageSplictString = PageSplictString & "<a href=""" & RW_User(GBL_ID,"e","",more & "&Start=1&UpDownPageFlag=1") & """>Î²Ò³</a>" & VbCrLf
+			PageSplictString = PageSplictString & "<a href=""" & RW_User(GBL_ID,"e","",more & "&Start=" & LngStr(LastID)) & """>ä¸‹é¡µ</a>" & VbCrLf
+			PageSplictString = PageSplictString & "<a href=""" & RW_User(GBL_ID,"e","",more & "&Start=1&UpDownPageFlag=1") & """>å°¾é¡µ</a>" & VbCrLf
 		End If
 
-		PageSplictString = PageSplictString & "<b>¹²" & RecordCount & "</b>"
+		PageSplictString = PageSplictString & "<b>å…±" & RecordCount & "</b>"
 		'If (RecordCount mod DEF_MaxListNum)=0 Then
-		'	PageSplictString = PageSplictString & " ¼Æ<b>" & clng(RecordCount/DEF_MaxListNum) & "</b>Ò³"
+		'	PageSplictString = PageSplictString & " è®¡<b>" & clng(RecordCount/DEF_MaxListNum) & "</b>é¡µ"
 		'Else
 		'	If RecordCount>=DEF_MaxListNum Then
-		'		PageSplictString = PageSplictString & " ¼Æ<b>" & clng(RecordCount/DEF_MaxListNum)+1 & "</b>Ò³"
+		'		PageSplictString = PageSplictString & " è®¡<b>" & clng(RecordCount/DEF_MaxListNum)+1 & "</b>é¡µ"
 		'	Else
-		'		PageSplictString = PageSplictString & " ¼Æ<b>1</b>Ò³"
+		'		PageSplictString = PageSplictString & " è®¡<b>1</b>é¡µ"
 		'	End If
 		'End If
-		'PageSplictString = PageSplictString & " Ã¿Ò³<b>" & DEF_MaxListNum & "</b>Ìõ¼ÇÂ¼"
+		'PageSplictString = PageSplictString & " æ¯é¡µ<b>" & DEF_MaxListNum & "</b>æ¡è®°å½•"
 		PageSplictString = PageSplictString & "</div>"
 	End If
 
-	LookUserInfo_NavInfo
+	LookUserInfo_NavInfo()
 	%>
 	
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class=table_in>
 	  <tr class=tbinhead>
-	    <td><div class=value>Ìû×Ó</div></td>
-	    <td width=80><div class=value title="»Ø¸´/µã»÷">ÈËÆø</div></td>
-	    <td width=125><div class=value>·¢±íÊ±¼ä</div></td>
+	    <td><div class=value>å¸–å­</div></td>
+	    <td width=80><div class=value title="å›å¤/ç‚¹å‡»">äººæ°”</div></td>
+	    <td width=125><div class=value>å‘è¡¨æ—¶é—´</div></td>
 	  </tr>
 	<%
 	If Num = -1 Then
-		Response.Write "<tr><td colspan=3 class=tdbox>Ã»ÓĞÈÎºÎÌû×Ó!</td></tr>"
+		Response.Write "<tr><td colspan=3 class=tdbox>æ²¡æœ‰ä»»ä½•å¸–å­!</td></tr>"
 	End if
 
 	Dim TempN,Temp,Temp1,ext
@@ -1342,7 +1343,7 @@ Function DisplayAncGood
 		
 			'If ccur(GetData(8,n)) = True Then Temp = Temp - 3
 			If GBL_NoneLimitFlag = 0 and GBL_CheckLimitTitle(GetData(11,n),GetData(12,n),GetData(13,n),GetData(14,n)) = 1 Then
-				GetData(1,n) = "´ËÌû×Ó±êÌâÒÑÉèÖÃÎªÒş²Ø"
+				GetData(1,n) = "æ­¤å¸–å­æ ‡é¢˜å·²è®¾ç½®ä¸ºéšè—"
 				GetData(10,n) = 1
 			End If
 			
@@ -1355,11 +1356,11 @@ Function DisplayAncGood
 			Response.Write "</a>"
 
 			If GetData(6,N)>=DEF_TopicContentMaxListNum Then
-				Response.Write " [<a href=""../a/" & RW_a(GetData(7,n),GetData(0,N),1,1,"lastpage=1") & """ title=" & GetData(2,n) & "×Ö½Ú>" & Temp1 & "</b></a>]"
+				Response.Write " [<a href=""../a/" & RW_a(GetData(7,n),GetData(0,N),1,1,"lastpage=1") & """ title=" & GetData(2,n) & "å­—èŠ‚>" & Temp1 & "</b></a>]"
 			End If
 	
 			'If ccur(GetData(8,n)) = 1 Then
-			'	Response.Write "<img src=../images/" & GBL_DefineImage & "jh1.GIF border=0 title=¾«»ªÌû×Ó align=absbottom width=15 height=16>"
+			'	Response.Write "<img src=../images/" & GBL_DefineImage & "jh1.GIF border=0 title=ç²¾åå¸–å­ align=absbottom width=15 height=16>"
 			'End If
 			Response.Write "</td><td class=tdbox><em>"
 			Response.Write GetData(6,N) & "/" & GetData(4,N)
@@ -1376,7 +1377,7 @@ Function DisplayAncGood
 
 End Function
 
-Rem ÏÔÊ¾ÉÏ´«¸½¼ş
+Rem æ˜¾ç¤ºä¸Šä¼ é™„ä»¶
 Sub DisplayUpload
 
 	Dim Rs,SQL,NewNum,RecordCount
@@ -1391,8 +1392,8 @@ Sub DisplayUpload
 		RecordCount = cCur(Rs(2))
 		Tmp_TrueName = Rs(3)
 	Else
-		LookUserInfo_NavInfo
-		Response.Write "<div class=alert>´ËÓÃ»§²»´æÔÚ£¡</div>"
+		LookUserInfo_NavInfo()
+		Response.Write "<div class=alert>æ­¤ç”¨æˆ·ä¸å­˜åœ¨ï¼</div>"
 		Rs.Close
 		Set Rs = Nothing
 		Exit Sub
@@ -1401,18 +1402,18 @@ Sub DisplayUpload
 	Set Rs = Nothing
 
 	If GBL_UserID <> GBL_ID and GBL_NoneLimitFlag = 0 Then
-		LookUserInfo_NavInfo
-		Response.Write "<div class='alert redfont'>¸½¼şÒÑÉèÖÃÎªÖ»ÔÊĞí×÷Õß±¾ÈË²é¿´£¡</div>"
+		LookUserInfo_NavInfo()
+		Response.Write "<div class='alert redfont'>é™„ä»¶å·²è®¾ç½®ä¸ºåªå…è®¸ä½œè€…æœ¬äººæŸ¥çœ‹ï¼</div>"
 		Exit Sub
 	End If
 
-	LookUserInfo_NavInfo
+	LookUserInfo_NavInfo()
 	CALL Upload_List(GBL_ID,RecordCount,"../User/" & RW_User(GBL_ID,"l","",""),1)
 
 
 End Sub
 
-Rem ²é¿´¸ü¶àĞÅÏ¢
+Rem æŸ¥çœ‹æ›´å¤šä¿¡æ¯
 Function LookMoreInfo
 
 	Dim Online_OnlineFlag,Online_LastDoingTime,Online_IP,Online_StartTime,LookUserLevel
@@ -1456,7 +1457,7 @@ Function LookMoreInfo
 	Set Rs = LDExeCute(sql_select("Select UserName,ShowFlag,UserLevel,IP,ID,Login_okNum,Login_RightIP,TrueName,remark from LeadBBS_User where id=" & GBL_ID,1),0)
 	If Online_OnlineFlag = 0 Then
 		If Rs.Eof Then
-			GBL_CHK_TempStr = "ÓÃ»§²»´æÔÚ<br>" & VbCrLf
+			GBL_CHK_TempStr = "ç”¨æˆ·ä¸å­˜åœ¨<br>" & VbCrLf
 			LookUserInfo = 0
 			GBL_CHK_Flag = 0
 			Rs.Close
@@ -1468,7 +1469,7 @@ Function LookMoreInfo
 	If Not Rs.Eof Then
 		GBL_Name = Rs(0)
 		ShowFlag = Rs(1)
-		REM ÌØÊâÊı¾İ
+		REM ç‰¹æ®Šæ•°æ®
 		Form_IP = Rs(3)
 		Form_ID = Rs(4)
 		Form_Login_oknum = Rs(5)
@@ -1507,32 +1508,35 @@ Function LookMoreInfo
 	End If
 	GBL_CHK_User = Old_GBL_CHK_User
 	
-	If GBL_CHK_User = GBL_Name Then GBL_NoneLimitFlag = 1 'Èç¹ûÊÇ²é¿´×Ô¼ºµÄĞÅÏ¢ÎŞÏŞÖÆ
+	If GBL_CHK_User = GBL_Name Then GBL_NoneLimitFlag = 1 'å¦‚æœæ˜¯æŸ¥çœ‹è‡ªå·±çš„ä¿¡æ¯æ— é™åˆ¶
 	If (GBL_ID > 0 and (OlID=0 or LookUserLevel >= 15)) or OlUserName = GBL_Name Then
-		LookUserInfo_NavInfo
+		LookUserInfo_NavInfo()
 	Else
 		GBL_Name = OlUserName
 	End If
 	%>
 	<div class="clear"></div>
-	<div class=title>¸ü¶à¹ØÓÚ<%
+	<div class=title>æ›´å¤šå…³äº<%
 	If (GBL_ID = 0 or GBL_NoneLimitFlag = 0) and OlID > 0 Then
-		Response.Write "µÚ[" & OlID & "]ºÅÔÚÏßÈËÔ±"
+		' Â§46: OlID is a Currency (cCur above), and AxonASP renders one into a string in Go's %g
+		' form -- so a seven-digit online-user id prints as 2.361371e+06. Only visible on a forum
+		' whose online-user ids have grown past six digits, which no fixture had.
+		Response.Write "ç¬¬[" & LngStr(OlID) & "]å·åœ¨çº¿äººå‘˜"
 	Else
-		Response.Write "ÓÃ»§[<span class=redfont>" & htmlencode(GetTrueName(GBL_Name,Tmp_TrueName)) & "</span>]"
-	End If%>µÄĞÅÏ¢</div>
+		Response.Write "ç”¨æˆ·[<span class=redfont>" & htmlencode(GetTrueName(GBL_Name,Tmp_TrueName)) & "</span>]"
+	End If%>çš„ä¿¡æ¯</div>
 			<table border=0 cellpadding="0" cellspacing="0" class=blanktable><%
 			If GBL_ID > 0 and (OlID=0 or LookUserLevel >= 15) Then%>
 			<tr>
 				<TD class=tdbox width="20%">
-					ÓÃ»§±àºÅ£º
+					ç”¨æˆ·ç¼–å·ï¼š
 				</td>
 				<td>
 					<a href="<%=RW_User(GBL_ID,"","","")%>"><%=GBL_ID%></a></td>
 			</tr>
 			<tr>
 				<td>
-					ÓÃ»§£º
+					ç”¨æˆ·ï¼š
 				</td>
 				<td>
 					<%=Server.HtmlEncode(GetTrueNameID(GBL_Name,Tmp_TrueName,Form_ID))%></td>
@@ -1543,56 +1547,56 @@ Function LookMoreInfo
 			dim splitline : splitline = vbcrlf & "---leadbbs---" & vbcrlf
 			if remark & "" <> "" then
 				splitremark = split(remark,splitline)
-				screen = replace(replace(splitremark(0),"screen:"," ·Ö±æÂÊ:"),",",", ·ç¸ñ:")
+				screen = replace(replace(splitremark(0),"screen:"," åˆ†è¾¨ç‡:"),",",", é£æ ¼:")
 				if ubound(splitremark)>0 then agent = splitremark(1)
 				if Browser = "" then Browser = GetSBInfo(1)
 				if System = "" then System = GetSBInfo(2)
 			end if
 
-			If Browser = "" Then Browser = "Î´Öª"
-			If System = "" Then System = "Î´Öª"
+			If Browser = "" Then Browser = "æœªçŸ¥"
+			If System = "" Then System = "æœªçŸ¥"
 			%>
 			<tr>
 				<td>
-					ä¯ÀÀÆ÷¼°ÏµÍ³£º
+					æµè§ˆå™¨åŠç³»ç»Ÿï¼š
 				</td>
 				<td>
 					<%=Browser%> / <%=System%><%
 					if screen <> "" then
 					%> , <%=screen%><%
 					End if
-					if CheckSupervisorNameOnly = 1 and agent <> "" then response.write "<br>USER_AGENT: " & agent
+					if CheckSupervisorNameOnly() = 1 and agent <> "" then response.write "<br>USER_AGENT: " & agent
 					%></td>
 			</tr><%'End If
 			If GBL_ID > 0 and (Online_OnlineFlag > 1 or GBL_NoneLimitFlag = 1) Then%>
 			<tr>
 				<td>
-					µÇÂ¼´ÎÊı£º
+					ç™»å½•æ¬¡æ•°ï¼š
 				</td>
 				<td>
 					<%If LookUserLevel>=4 Then
-						Response.Write Form_Login_oknum & "´Î"
+						Response.Write Form_Login_oknum & "æ¬¡"
 					Else
-						Response.Write "ĞèÒª5¼¶ÓÃ»§²ÅÄÜ²é¿´"
+						Response.Write "éœ€è¦5çº§ç”¨æˆ·æ‰èƒ½æŸ¥çœ‹"
 					End If%></td>
 			</tr><%
 			End If
 			If LookUserLevel>=0 Then%>
 			<tr>
 				<td>
-					ÊÇ·ñÔÚÏß£º
+					æ˜¯å¦åœ¨çº¿ï¼š
 				</td>
 				<td>
 					<%
 					If Online_OnlineFlag=1 Then
-						Response.Write "ÊÇ"
+						Response.Write "æ˜¯"
 					else
-						Response.Write "·ñ»òÒşÉí"
+						Response.Write "å¦æˆ–éšèº«"
 					End If%></td>
 			</tr><%If Online_OnlineFlag=1 Then%>
 			<tr>
 				<td>
-					µ±Ç°ä¯ÀÀÍøÒ³£º
+					å½“å‰æµè§ˆç½‘é¡µï¼š
 				</td>
 				<td>
 					<a href="<%=AtUrl%>"><%=AtInfo%></a></td>
@@ -1600,7 +1604,7 @@ Function LookMoreInfo
 			End If%>
 			<tr>
 				<td>
-					ÔÚÏßµÇÂ¼Ê±¼ä£º
+					åœ¨çº¿ç™»å½•æ—¶é—´ï¼š
 				</td>
 				<td>
 					<%			
@@ -1608,26 +1612,27 @@ Function LookMoreInfo
 						If Online_OnlineFlag=1 Then
 							Response.Write RestoreTime(Online_StartTime)
 						else
-							Response.Write "</font>ÀëÏß»òÒşÉí</font>"
+							Response.Write "</font>ç¦»çº¿æˆ–éšèº«</font>"
 						end If
 					Else
-						Response.Write "ĞèÒª10¼¶ÓÃ»§²ÅÄÜ²é¿´"
+						Response.Write "éœ€è¦10çº§ç”¨æˆ·æ‰èƒ½æŸ¥çœ‹"
 					End If%></td>
 			</tr><%
 					If LookUserLevel>=15 Then%>
 			<tr>
 				<td>
-					×îºó¶¯×÷Ê±¼ä£º
+					æœ€ååŠ¨ä½œæ—¶é—´ï¼š
 				</td>
 				<td>
 					<%
 						If Online_OnlineFlag=1 Then
 							Response.Write RestoreTime(Online_LastDoingTime)
 						else
-							Response.Write "ÀëÏß»òÒşÉí"
+							Response.Write "ç¦»çº¿æˆ–éšèº«"
 						end If
 					'Else
-					'	Response.Write "ĞèÒª7¼¶ÓÃ»§²ÅÄÜ²é¿´"%></td>
+					'	Response.Write "éœ€è¦7çº§ç”¨æˆ·æ‰èƒ½æŸ¥çœ‹"
+%></td>
 			</tr><%
 			End If
 			'If GBL_NoneLimitFlag = 0 and Online_OnlineFlag=1 Then
@@ -1652,7 +1657,7 @@ Function LookMoreInfo
 			<%If GBL_NoneLimitFlag = 1 and Online_OnlineFlag=1 Then
 			'<tr>
 			'	<td>
-			'		Session±êÊ¶£º
+			'		Sessionæ ‡è¯†ï¼š
 			'	</td>
 			'	<td>
 			'		SessionID</td>
@@ -1660,20 +1665,20 @@ Function LookMoreInfo
 			%>
 			<tr>
 				<td>
-					ÔÚÏßIPµØÖ·£º
+					åœ¨çº¿IPåœ°å€ï¼š
 				</td>
 				<td>
 					<%=Online_IP%><br>
 					<%=Online_IPAddress%></td>
 			</tr><%End If
 			If GBL_ID = 0 Then
-				Form_IP = "ÓÎ¿ÍÎŞ×¢²áIPµØÖ·"
-				Form_IPAddress = "ÓÎ¿ÍÎŞ×¢²áµØÀíÎ»ÖÃ"
+				Form_IP = "æ¸¸å®¢æ— æ³¨å†ŒIPåœ°å€"
+				Form_IPAddress = "æ¸¸å®¢æ— æ³¨å†Œåœ°ç†ä½ç½®"
 			End If
 			If GBL_NoneLimitFlag = 1 Then%>
 			<tr>
 				<td>
-					×¢²áIPµØÖ·£º
+					æ³¨å†ŒIPåœ°å€ï¼š
 				</td>
 				<td>
 					<%=Form_IP%>
@@ -1681,17 +1686,17 @@ Function LookMoreInfo
 					<%=Form_IPAddress%></td>
 			</tr><%End If
 
-			If Login_RightIP = "3u7s9_d9299Xls" Then Login_RightIP = "ÎŞ"
+			If Login_RightIP = "3u7s9_d9299Xls" Then Login_RightIP = "æ— "
 			If GBL_NoneLimitFlag = 1 Then%>
 			<tr>
 				<td>
-					µÇÂ¼IPµØÖ·£º
+					ç™»å½•IPåœ°å€ï¼š
 				</td>
 				<td>
 					<%=Login_RightIP%>
 					<br>
 					<%
-				If Login_RightIP <> "" and Login_rightIP <> "ÎŞ" Then Response.Write GetIPAddressData(Login_RightIP,LookUserLevel)%>
+				If Login_RightIP <> "" and Login_rightIP <> "æ— " Then Response.Write GetIPAddressData(Login_RightIP,LookUserLevel)%>
 				</td>
 			</tr>
 			<%End If%>
@@ -1739,7 +1744,7 @@ Function GetIPAddressData(IP,LookUserLevel)
 	Loop
 	Rs.Close
 	Set Rs = Nothing
-	If GetIPAddressData = "" Then GetIPAddressData="Î´Öª"
+	If GetIPAddressData = "" Then GetIPAddressData="æœªçŸ¥"
 
 End Function
 
@@ -1779,12 +1784,12 @@ Sub DisplayFriend
 		End If
 	
 		If NotSecret = "0" and GBL_CHK_User <> GBL_Name Then
-			LookUserInfo_NavInfo
-			Response.Write "<div class=alert>´ËÓÃ»§ÒÑÉèÖÃÒşË½×ÊÁÏ±£ÃÜ¡£</div>"
+			LookUserInfo_NavInfo()
+			Response.Write "<div class=alert>æ­¤ç”¨æˆ·å·²è®¾ç½®éšç§èµ„æ–™ä¿å¯†ã€‚</div>"
 			Exit Sub
 		End If
 	End If
-	LookUserInfo_NavInfo
+	LookUserInfo_NavInfo()
 	
 	Dim SelfFlag
 	If GBL_CHK_User <> GBL_Name Then
@@ -1856,12 +1861,12 @@ Sub DisplayFriend
 		Set Rs = Nothing
 	
 		If Evol = "uf" Then
-			SQL = sql_select("select T2.UserName,T2.Mail,T2.Sex,T2.LastDoingTime,T2.Userphoto,T2.FaceUrl,T2.FaceWidth,T2.FaceHeight,T1.ID,T2.ID,T2.TrueName from LeadBBS_FriendUser as T1 left join LeadBBS_User as T2 on T1.UserID=T2.ID " & SQLendString,DEF_MaxListNum)
+			SQL = sql_select("select T2.UserName,T2.Mail,T2.Sex,T2.LastDoingTime,T2.Userphoto,T2.FaceUrl,T2.FaceWidth,T2.FaceHeight,T1.ID,T2.ID as id_dup2,T2.TrueName from LeadBBS_FriendUser as T1 left join LeadBBS_User as T2 on T1.UserID=T2.ID " & SQLendString,DEF_MaxListNum)
 		Else
-			SQL = sql_select("select T2.UserName,T2.Mail,T2.Sex,T2.LastDoingTime,T2.Userphoto,T2.FaceUrl,T2.FaceWidth,T2.FaceHeight,T1.ID,T2.ID,T2.TrueName from LeadBBS_FriendUser as T1 left join LeadBBS_User as T2 on T1.FriendUserID=T2.ID " & SQLendString,DEF_MaxListNum)
+			SQL = sql_select("select T2.UserName,T2.Mail,T2.Sex,T2.LastDoingTime,T2.Userphoto,T2.FaceUrl,T2.FaceWidth,T2.FaceHeight,T1.ID,T2.ID as id_dup2,T2.TrueName from LeadBBS_FriendUser as T1 left join LeadBBS_User as T2 on T1.FriendUserID=T2.ID " & SQLendString,DEF_MaxListNum)
 		End If
 	Else
-		SQL = "select T2.UserName,T2.Mail,T2.Sex,T2.LastDoingTime,T2.Userphoto,T2.FaceUrl,T2.FaceWidth,T2.FaceHeight,T1.ID,T2.ID,T2.TrueName from (LeadBBS_FriendUser as T1 right join LeadBBS_onlineUser as T3 on T1.FriendUserID=T3.UserID) right join LeadBBS_User as T2 on T3.UserID=T2.ID where T1.UserID=" & GBL_UserID
+		SQL = "select T2.UserName,T2.Mail,T2.Sex,T2.LastDoingTime,T2.Userphoto,T2.FaceUrl,T2.FaceWidth,T2.FaceHeight,T1.ID,T2.ID as id_dup2,T2.TrueName from (LeadBBS_FriendUser as T1 right join LeadBBS_onlineUser as T3 on T1.FriendUserID=T3.UserID) right join LeadBBS_User as T2 on T3.UserID=T2.ID where T1.UserID=" & GBL_UserID
 	End If
 	Set Rs = LDExeCute(SQL,0)
 	Dim Num
@@ -1904,11 +1909,11 @@ Sub DisplayFriend
 	
 		PageSplictString = PageSplictString & "<div class=j_page>"
 		If FirstID >= MaxRecordID Then
-			'PageSplictString = PageSplictString & "Ê×Ò³" & VbCrLf
-			'PageSplictString = PageSplictString & " ÉÏÒ³" & VbCrLf
+			'PageSplictString = PageSplictString & "é¦–é¡µ" & VbCrLf
+			'PageSplictString = PageSplictString & " ä¸Šé¡µ" & VbCrLf
 		else
-			PageSplictString = PageSplictString & "<a href=""" & RW_User(GBL_ID,Evol,"",more & "start=0") & """>Ê×Ò³</a> " & VbCrLf
-			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,Evol,"",more & "start=" & FirstID & "&UpDownPageFlag=1") & """>ÉÏÒ³</a> " & VbCrLf
+			PageSplictString = PageSplictString & "<a href=""" & RW_User(GBL_ID,Evol,"",more & "start=0") & """>é¦–é¡µ</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,Evol,"",more & "start=" & LngStr(FirstID) & "&UpDownPageFlag=1") & """>ä¸Šé¡µ</a> " & VbCrLf
 		end if
 	
 		if LastID<MaxRecordID and LastID<>0 then
@@ -1916,24 +1921,24 @@ Sub DisplayFriend
 		end if
 	
 		If LastID <= MinRecordID Then
-			'PageSplictString = PageSplictString & " ÏÂÒ³" & VbCrLf
-			'PageSplictString = PageSplictString & " Î²Ò³" & VbCrLf
+			'PageSplictString = PageSplictString & " ä¸‹é¡µ" & VbCrLf
+			'PageSplictString = PageSplictString & " å°¾é¡µ" & VbCrLf
 		else
-			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,Evol,"",more & "start=" & LastID) & """>ÏÂÒ³</a> " & VbCrLf
-			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,Evol,"",more & "&Start=1&UpDownPageFlag=1") & """>Î²Ò³</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,Evol,"",more & "start=" & LngStr(LastID)) & """>ä¸‹é¡µ</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,Evol,"",more & "&Start=1&UpDownPageFlag=1") & """>å°¾é¡µ</a> " & VbCrLf
 		end if
 		
-		'PageSplictString = PageSplictString & "¹²¹Ø×¢ÁË<b>" & recordCount & "</b>"
+		'PageSplictString = PageSplictString & "å…±å…³æ³¨äº†<b>" & recordCount & "</b>"
 		'If (recordCount mod DEF_MaxListNum)=0 Then
-		'	PageSplictString = PageSplictString & " ¼Æ<b>" & clng(recordCount/DEF_MaxListNum) & "</b>Ò³"
+		'	PageSplictString = PageSplictString & " è®¡<b>" & clng(recordCount/DEF_MaxListNum) & "</b>é¡µ"
 		'Else
 		'	If recordCount>=DEF_MaxListNum Then
-		'		PageSplictString = PageSplictString & " ¼Æ<b>" & clng(recordCount/DEF_MaxListNum)+1 & "</b>Ò³"
+		'		PageSplictString = PageSplictString & " è®¡<b>" & clng(recordCount/DEF_MaxListNum)+1 & "</b>é¡µ"
 		'	Else
-		'		PageSplictString = PageSplictString & " ¼Æ<b>1</b>Ò³"
+		'		PageSplictString = PageSplictString & " è®¡<b>1</b>é¡µ"
 		'	End If
 		'End If
-		'PageSplictString = PageSplictString & " Ã¿Ò³<b>" & DEF_MaxListNum & "</b>¸ö"
+		'PageSplictString = PageSplictString & " æ¯é¡µ<b>" & DEF_MaxListNum & "</b>ä¸ª"
 		PageSplictString = PageSplictString & "</div>"
 	
 	End If
@@ -1951,20 +1956,20 @@ Sub DisplayFriend
 		function killall(str)
 		{
 			//window.open('DelFriend.asp?kasdie=3&ClearFlag='+str,'','width=450,height=37,scrollbars=auto,status=no');
-			if (confirm('É¾³ı²Ù×÷½«²»¿ÉÄæ,È·¶¨¼ÌĞøÂğ?'))
+			if (confirm('åˆ é™¤æ“ä½œå°†ä¸å¯é€†,ç¡®å®šç»§ç»­å—?'))
 			p_once("&ClearFlag="+str,1);
 		}
 	</script>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class=table_in>
 	  <tr class=tbinhead>
-	    <td width=<%=DEF_AllFaceMaxWidth + 30%> align=center><div class=value>ÓÃ»§</div></td>
-	    <td><div class=value>ĞÅÏ¢</div></td><%If GBL_CHK_User = GBL_Name and Evol = "f" Then
+	    <td width=<%=DEF_AllFaceMaxWidth + 30%> align=center><div class=value>ç”¨æˆ·</div></td>
+	    <td><div class=value>ä¿¡æ¯</div></td><%If GBL_CHK_User = GBL_Name and Evol = "f" Then
 	    	colNum = 3%>
-	    <td width=80><div class=value>É¾³ı</div></td><%End If%>
+	    <td width=80><div class=value>åˆ é™¤</div></td><%End If%>
 	  </tr>
 	<%
 	If Num = -1 Then
-		response.write "<tr><td colspan=" & colNum & " class=tdbox>Ã»ÓĞ¹Ø×¢¡£</td></tr>"
+		response.write "<tr><td colspan=" & colNum & " class=tdbox>æ²¡æœ‰å…³æ³¨ã€‚</td></tr>"
 	end if
 
 	Dim TempN,Temp,Temp1
@@ -1989,15 +1994,15 @@ Sub DisplayFriend
 
 			Response.Write "</td><td class=tdbox>"
 			Response.Write "<ul>"
-			If SelfFlag = 1 Then Response.Write "<li>ÓÊÏä£º<a href=""mailto:." & htmlencode(GetData(1,n)) & """>" & htmlencode(GetData(1,n)) & "</a></li>"
-			Response.Write "<li>×îºó»î¶¯: " & RestoreTime(GetData(3,n)) & "</li>"
-			Response.Write "<li><a href=""SendMessage.asp?SdM_ToUser=" & urlencode(GetTrueNameID(GetData(0,n),GetData(10,n),GetData(9,n))) & "&SdM_ToUserID=" & GetData(9,n) & """><img src=../images/" & GBL_DefineImage & "message.GIF border=0 title=¸ø" & htmlencode(GetData(0,n)) & "·¢ÏûÏ¢ align=middle></a></li>"
+			If SelfFlag = 1 Then Response.Write "<li>é‚®ç®±ï¼š<a href=""mailto:." & htmlencode(GetData(1,n)) & """>" & htmlencode(GetData(1,n)) & "</a></li>"
+			Response.Write "<li>æœ€åæ´»åŠ¨: " & RestoreTime(GetData(3,n)) & "</li>"
+			Response.Write "<li><a href=""SendMessage.asp?SdM_ToUser=" & urlencode(GetTrueNameID(GetData(0,n),GetData(10,n),GetData(9,n))) & "&SdM_ToUserID=" & GetData(9,n) & """><img src=../images/" & GBL_DefineImage & "message.GIF border=0 title=ç»™" & htmlencode(GetData(0,n)) & "å‘æ¶ˆæ¯ align=middle></a></li>"
 			Response.Write "</ul>"
 			If GBL_CHK_User = GBL_Name and Evol = "f" Then
 				Response.Write "</td><td class=tdbox>"
 				%>
 				<input class="fmchkbox" type="checkbox" name="ids" id="ids<%=Index%>" value="<%=urlencode(GetData(8,n))%>" /><%
-				Response.Write "<a href='javascript:p_once(" & urlencode(GetData(8,n)) & ");'>È¡Ïû¹Ø×¢</a>"
+				Response.Write "<a href='javascript:p_once(" & urlencode(GetData(8,n)) & ");'>å–æ¶ˆå…³æ³¨</a>"
 				Index = Index + 1
 			End If
 			Response.Write "</td></tr>" & VbCrLf
@@ -2008,36 +2013,36 @@ Sub DisplayFriend
 	%></td></tr>
 	
 	<tr><td colspan=<%=colNum%> class=tdbox align=right>
-	<input class="fmchkbox" type="checkbox" name="selmsg" id="selmsg" value="1" onclick="achoose();" />Ñ¡ÔñËùÓĞ¼ÇÂ¼
-	<input type=button value="ÅúÁ¿È¡Ïû¹Ø×¢" onclick="pchoose();" class="fmbtn btn_4">
+	<input class="fmchkbox" type="checkbox" name="selmsg" id="selmsg" value="1" onclick="achoose();" />é€‰æ‹©æ‰€æœ‰è®°å½•
+	<input type=button value="æ‰¹é‡å–æ¶ˆå…³æ³¨" onclick="pchoose();" class="fmbtn btn_4">
 	</td></tr>
 	</table>
 	<br>
 	<%If GBL_CHK_User = GBL_Name Then%>
 	<div class=value2>	
-	<a href='../a/Processor.asp?action=AddFriend&b=0&ID=0&FriendName=' onclick="return(pub_msg(this,'anc_msgbody','&Dir=<%=DEF_BBS_HomeUrl%>'));" target=_blank><img src="../images/<%=GBL_DefineImage%>friend.gif" alt="¹Ø×¢Ta" class="absmiddle" /></a>
-	<a href='javascript:killall("dkeJje5");'><img src=../images/<%=GBL_DefineImage%>clear.gif width=16 border=0 align=middle>È¡ÏûËùÓĞ¹Ø×¢</a>
+	<a href='../a/Processor.asp?action=AddFriend&b=0&ID=0&FriendName=' onclick="return(pub_msg(this,'anc_msgbody','&Dir=<%=DEF_BBS_HomeUrl%>'));" target=_blank><img src="../images/<%=GBL_DefineImage%>friend.gif" alt="å…³æ³¨Ta" class="absmiddle" /></a>
+	<a href='javascript:killall("dkeJje5");'><img src=../images/<%=GBL_DefineImage%>clear.gif width=16 border=0 align=middle>å–æ¶ˆæ‰€æœ‰å…³æ³¨</a>
 	</div>
 	<div class=value2>
 		<%If Request.QueryString("need") = "23" Then%>
-		<a href="<%=RW_User(0,"f","","")%>">²é¿´ÎÒµÄ¹Ø×¢</a>
+		<a href="<%=RW_User(0,"f","","")%>">æŸ¥çœ‹æˆ‘çš„å…³æ³¨</a>
 		<%Else%>
-		<a href="<%=RW_User(0,"f","","need=23")%>">²é¿´ÎÒµÄÔÚÏß¹Ø×¢</a>
+		<a href="<%=RW_User(0,"f","","need=23")%>">æŸ¥çœ‹æˆ‘çš„åœ¨çº¿å…³æ³¨</a>
 		<%End If%>
 	</div><%
 	End If%>
 	<div class=value2>
 	<%If Evol = "uf" Then%>
-		<a href="<%=RW_User(0,"f","","")%>">²é¿´<b><%=htmlencode(GetTrueName(GBL_Name,Tmp_TrueName))%></b>µÄ¹Ø×¢</a>
+		<a href="<%=RW_User(0,"f","","")%>">æŸ¥çœ‹<b><%=htmlencode(GetTrueName(GBL_Name,Tmp_TrueName))%></b>çš„å…³æ³¨</a>
 	<%Else%>
-		<a href="<%=RW_User(GBL_ID,"uf","","")%>">²é¿´¹Ø×¢ÁË<b><%=htmlencode(GetTrueName(GBL_Name,Tmp_TrueName))%></b>µÄÓÃ»§</a>
+		<a href="<%=RW_User(GBL_ID,"uf","","")%>">æŸ¥çœ‹å…³æ³¨äº†<b><%=htmlencode(GetTrueName(GBL_Name,Tmp_TrueName))%></b>çš„ç”¨æˆ·</a>
 	<%End If%>
 	</div>
 	<%
-	If GBL_UserID>0 and CheckSupervisorUserName = 1 Then
+	If GBL_UserID>0 and CheckSupervisorUserName() = 1 Then
 		%>
 		<hr class=splitline>
-		<a href='javascript:killall("dkeJje6");'><img src=../images/<%=GBL_DefineImage%>clear.gif width=16 border=0 align=middle title=Ìí¿ÕËùÓĞÈËµÄ¹Ø×¢ÁĞ±í>Çå¿ÕÈ«²¿¹Ø×¢Ãûµ¥(ÏŞ¹ÜÀíÔ±)</a><%
+		<a href='javascript:killall("dkeJje6");'><img src=../images/<%=GBL_DefineImage%>clear.gif width=16 border=0 align=middle title=æ·»ç©ºæ‰€æœ‰äººçš„å…³æ³¨åˆ—è¡¨>æ¸…ç©ºå…¨éƒ¨å…³æ³¨åå•(é™ç®¡ç†å‘˜)</a><%
 	End If
 
 End Sub
@@ -2073,12 +2078,12 @@ Sub DisplayFavorite
 		End If
 
 		If NotSecret = "0" and GBL_CHK_User <> GBL_Name Then
-			LookUserInfo_NavInfo
-			Response.Write "<div class=alert>´ËÓÃ»§ÒÑÉèÖÃÒşË½×ÊÁÏ±£ÃÜ¡£</div>"
+			LookUserInfo_NavInfo()
+			Response.Write "<div class=alert>æ­¤ç”¨æˆ·å·²è®¾ç½®éšç§èµ„æ–™ä¿å¯†ã€‚</div>"
 			Exit Sub
 		End If
 	End If
-	LookUserInfo_NavInfo
+	LookUserInfo_NavInfo()
 
 	Dim UpDownPageFlag
 	UpDownPageFlag = Request("UpDownPageFlag")
@@ -2163,7 +2168,7 @@ Sub DisplayFavorite
 		Rs.Close
 		Set Rs = Nothing
 	
-		SQL = sql_select("select T1.ID,T2.Title,T2.Length,T2.ndatetime,T2.Hits,T2.FaceIcon,T2.ChildNum,T2.BoardID,T2.GoodFlag,T2.Username,T2.ID,T2.TitleStyle,T3.ID,T3.TrueName from (LeadBBS_CollectAnc as T1 Left join LeadBBS_Announce as T2 on T1.AnnounceID=T2.ID) left join LeadBBS_User as T3 on T3.Id=T2.Userid " & SQLendString,DEF_MaxListNum)
+		SQL = sql_select("select T1.ID,T2.Title,T2.Length,T2.ndatetime,T2.Hits,T2.FaceIcon,T2.ChildNum,T2.BoardID,T2.GoodFlag,T2.Username,T2.ID as id_dup2,T2.TitleStyle,T3.ID as id_dup3,T3.TrueName from (LeadBBS_CollectAnc as T1 Left join LeadBBS_Announce as T2 on T1.AnnounceID=T2.ID) left join LeadBBS_User as T3 on T3.Id=T2.Userid " & SQLendString,DEF_MaxListNum)
 		Set Rs = LDExeCute(SQL,0)
 		Dim Num
 		Dim GetData
@@ -2210,11 +2215,11 @@ Sub DisplayFavorite
 	
 		PageSplictString = "<div class=j_page>"
 		If FirstID >= MaxRecordID Then
-			'PageSplictString = PageSplictString & "Ê×Ò³" & VbCrLf
-			'PageSplictString = PageSplictString & " ÉÏÒ³" & VbCrLf
+			'PageSplictString = PageSplictString & "é¦–é¡µ" & VbCrLf
+			'PageSplictString = PageSplictString & " ä¸Šé¡µ" & VbCrLf
 		Else
-			PageSplictString = PageSplictString & "<a href=""" & RW_User(GBL_ID,Evol,"",more & "start=0") & """>Ê×Ò³</a> " & VbCrLf
-			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,Evol,"",more & "&Start=" & FirstID & "&UpDownPageFlag=1") & """>ÉÏÒ³</a> " & VbCrLf
+			PageSplictString = PageSplictString & "<a href=""" & RW_User(GBL_ID,Evol,"",more & "start=0") & """>é¦–é¡µ</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,Evol,"",more & "&Start=" & LngStr(FirstID) & "&UpDownPageFlag=1") & """>ä¸Šé¡µ</a> " & VbCrLf
 		End If
 	
 		If LastID<MaxRecordID and LastID<>0 then
@@ -2222,24 +2227,24 @@ Sub DisplayFavorite
 		End If
 	
 		If LastID <= MinRecordID Then
-			'PageSplictString = PageSplictString & " ÏÂÒ³" & VbCrLf
-			'PageSplictString = PageSplictString & " Î²Ò³" & VbCrLf
+			'PageSplictString = PageSplictString & " ä¸‹é¡µ" & VbCrLf
+			'PageSplictString = PageSplictString & " å°¾é¡µ" & VbCrLf
 		Else
-			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,Evol,"",more & "start=" & LastID) & """>ÏÂÒ³</a> " & VbCrLf
-			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,Evol,"",more & "&Start=1&UpDownPageFlag=1") & """>Î²Ò³</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,Evol,"",more & "start=" & LngStr(LastID)) & """>ä¸‹é¡µ</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=""" & RW_User(GBL_ID,Evol,"",more & "&Start=1&UpDownPageFlag=1") & """>å°¾é¡µ</a> " & VbCrLf
 		End If
 
-		PageSplictString = PageSplictString & "<b>¹²" & RecordCount & "</b>"
+		PageSplictString = PageSplictString & "<b>å…±" & RecordCount & "</b>"
 		'If (RecordCount mod DEF_MaxListNum)=0 Then
-		'	PageSplictString = PageSplictString & " ¼Æ<b>" & clng(RecordCount/DEF_MaxListNum) & "</b>Ò³"
+		'	PageSplictString = PageSplictString & " è®¡<b>" & clng(RecordCount/DEF_MaxListNum) & "</b>é¡µ"
 		'Else
 		'	If RecordCount>=DEF_MaxListNum Then
-		'		PageSplictString = PageSplictString & " ¼Æ<b>" & clng(RecordCount/DEF_MaxListNum)+1 & "</b>Ò³"
+		'		PageSplictString = PageSplictString & " è®¡<b>" & clng(RecordCount/DEF_MaxListNum)+1 & "</b>é¡µ"
 		'	Else
-		'		PageSplictString = PageSplictString & " ¼Æ<b>1</b>Ò³"
+		'		PageSplictString = PageSplictString & " è®¡<b>1</b>é¡µ"
 		'	End If
 		'End If
-		'PageSplictString = PageSplictString & " Ã¿Ò³<b>" & DEF_MaxListNum & "</b>ÌõÊÕ²ØÌû"
+		'PageSplictString = PageSplictString & " æ¯é¡µ<b>" & DEF_MaxListNum & "</b>æ¡æ”¶è—å¸–"
 		PageSplictString = PageSplictString & "</div>"
 	
 	End If
@@ -2253,25 +2258,25 @@ Sub DisplayFavorite
 		p_type = 1;
 		function killall(str)
 		{
-			if (confirm('É¾³ı²Ù×÷½«²»¿ÉÄæ,È·¶¨¼ÌĞøÂğ?'))
+			if (confirm('åˆ é™¤æ“ä½œå°†ä¸å¯é€†,ç¡®å®šç»§ç»­å—?'))
 			p_once("&ClearFlag="+str,1);
 		}
 	</script>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class=table_in>
 	  <tr class=tbinhead>
-	    <td><div class=value>Ö÷Ìâ</div></td>
-	    <td width=80><div class=value>ÈËÆø</div></td>
-	    <td width=210><div class=value>·¢±íÊ±¼ä/×÷Õß</div></td><%
+	    <td><div class=value>ä¸»é¢˜</div></td>
+	    <td width=80><div class=value>äººæ°”</div></td>
+	    <td width=210><div class=value>å‘è¡¨æ—¶é—´/ä½œè€…</div></td><%
 	    Dim ColNum
 	    ColNum = 3
 	    If GBL_ID = GBL_UserID Then
 	    	ColNum = 4%>
-	    <td width=80><div class=value>É¾³ı</div></td><%
+	    <td width=80><div class=value>åˆ é™¤</div></td><%
 	    End If%>
 	  </tr>
 	<%
 	If Num = -1 Then
-		response.write "<tr><td colspan=" & ColNum & " class=tdbox>ÔİÎŞÊÕ²Ø!</td></tr>"
+		response.write "<tr><td colspan=" & ColNum & " class=tdbox>æš‚æ— æ”¶è—!</td></tr>"
 	End If
 
 	Dim TempN,Temp,Temp1
@@ -2283,7 +2288,7 @@ Sub DisplayFavorite
 		LastID = GetData(0,ubound(getdata,2))
 		For n= MinN to MaxN Step StepValue
 			If isNull(GetData(6,N)) Then
-				GetData(1,n) = "<span class=grayfont>¸ÃÊÕ²ØÌûÒÑ¾­²»´æÔÚ(Ô­±àºÅ" & GetData(0,n) & ")£¬ÒÑ¾­±»¹ÜÀíÔ±É¾³ı¡£</span>"
+				GetData(1,n) = "<span class=grayfont>è¯¥æ”¶è—å¸–å·²ç»ä¸å­˜åœ¨(åŸç¼–å·" & GetData(0,n) & ")ï¼Œå·²ç»è¢«ç®¡ç†å‘˜åˆ é™¤ã€‚</span>"
 				GetData(0,n) = 0
 				GetData(2,n) = 0
 				GetData(3,n) = "19000101000000"
@@ -2292,7 +2297,7 @@ Sub DisplayFavorite
 				GetData(6,n) = 0
 				GetData(7,n) = 0
 				GetData(8,n) = 0
-				GetData(9,n) = "ÓÎ¿Í"
+				GetData(9,n) = "æ¸¸å®¢"
 				GetData(10,n) = ""
 				GetData(11,n) = 1
 			Else
@@ -2317,16 +2322,16 @@ Sub DisplayFavorite
 			If GetData(0,n) > 0 Then Response.Write "</a>"
 
 			If GetData(6,N)>=DEF_TopicContentMaxListNum Then
-				Response.Write " [<a href=""../a/" & RW_a(GetData(7,n),GetData(10,N),1,1,"lastpage=1") & """ title=" & GetData(2,n) & "×Ö½Ú>" & Temp1 & "</b></a>]"
+				Response.Write " [<a href=""../a/" & RW_a(GetData(7,n),GetData(10,N),1,1,"lastpage=1") & """ title=" & GetData(2,n) & "å­—èŠ‚>" & Temp1 & "</b></a>]"
 			End If
 
 			If ccur(GetData(8,n)) = 1 Then
-				Response.Write "<img src=""../images/" & GBL_DefineImage & "jh1.GIF"" border=0 title=¾«»ªÌû×Ó align=absbottom>"
+				Response.Write "<img src=""../images/" & GBL_DefineImage & "jh1.GIF"" border=0 title=ç²¾åå¸–å­ align=absbottom>"
 			End If
 			Response.Write "</td><td class=tdbox><em>"
 			Response.Write GetData(6,N) & "/" & GetData(4,N)
 			Response.Write "</em></td><td class=tdbox><em>"
-			If GetData(9,n) <> "ÓÎ¿Í" then
+			If GetData(9,n) <> "æ¸¸å®¢" then
 				Response.Write Left(RestoreTime(GetData(3,n)),16) & "</em> <a href=""" & RW_User(GetData(12,n),"","","") & """>" & htmlencode(GetTrueName(GetData(9,n),GetData(13,n))) & "</a></td>"
 			Else
 				Response.Write Left(RestoreTime(GetData(3,n)),16) & "</em> " & htmlencode(GetData(9,n)) & "</td>"
@@ -2335,7 +2340,7 @@ Sub DisplayFavorite
 				%>
 				<td class=tdbox>
 				<input class="fmchkbox" type="checkbox" name="ids" id="ids<%=Index%>" value="<%=GetData(0,n)%>" /><%
-				Response.Write "<a href='javascript:p_once(" & GetData(0,n) & ");'>É¾³ı</a>"
+				Response.Write "<a href='javascript:p_once(" & GetData(0,n) & ");'>åˆ é™¤</a>"
 				Index = Index + 1
 			End If
 			Response.Write "</td></tr>" & VbCrLf
@@ -2347,13 +2352,13 @@ Sub DisplayFavorite
 		</td></tr>
 	<%If GBL_ID = GBL_UserID Then%>
 	<tr><td colspan=<%=ColNum%> class=tdbox align=right>
-	<input class="fmchkbox" type="checkbox" name="selmsg" id="selmsg" value="1" onclick="achoose();" />Ñ¡ÔñËùÓĞ¼ÇÂ¼
-	<input type=button value="ÅúÁ¿É¾³ı" onclick="pchoose();" class="fmbtn btn_4">
+	<input class="fmchkbox" type="checkbox" name="selmsg" id="selmsg" value="1" onclick="achoose();" />é€‰æ‹©æ‰€æœ‰è®°å½•
+	<input type=button value="æ‰¹é‡åˆ é™¤" onclick="pchoose();" class="fmbtn btn_4">
 	</td></tr>
 	<tr><td colspan=<%=ColNum%> class=tdbox align=right>
 	<div class=value2>
-	<a href='javascript:killall("dkeJje5");'><img src=../images/<%=GBL_DefineImage%>clear.gif width=16 border=0 align=middle>Çå¿ÕÎÒµÄÊÕ²Ø¼Ğ</a>
-	<%	If GBL_UserID>0 and CheckSupervisorUserName = 1 Then%><a href='javascript:killall("dkeJje6");'><img src=../images/<%=GBL_DefineImage%>clear.gif width=16 border=0 align=middle>Çå¿ÕËùÓĞÈËµÄÊÕ²Ø¼Ğ(¹ÜÀíÔ±)</a><%End If%>
+	<a href='javascript:killall("dkeJje5");'><img src=../images/<%=GBL_DefineImage%>clear.gif width=16 border=0 align=middle>æ¸…ç©ºæˆ‘çš„æ”¶è—å¤¹</a>
+	<%	If GBL_UserID>0 and CheckSupervisorUserName() = 1 Then%><a href='javascript:killall("dkeJje6");'><img src=../images/<%=GBL_DefineImage%>clear.gif width=16 border=0 align=middle>æ¸…ç©ºæ‰€æœ‰äººçš„æ”¶è—å¤¹(ç®¡ç†å‘˜)</a><%End If%>
 	</div>
 	</td></tr>
 	<%End If%>
@@ -2366,40 +2371,40 @@ Sub LookUserInfo_NavInfo
 	Response.Write "<div class='user_item_nav fire'><ul>"
 	Response.Write "<li class=name>" & htmlencode(GetTrueName(GBL_Name,Tmp_TrueName)) & "</li>"
 	If Evol = "A" or Evol = "" Then
-		Response.Write "	<li class=navactive><span>»ù±¾×ÊÁÏ</span></li>"
+		Response.Write "	<li class=navactive><span>åŸºæœ¬èµ„æ–™</span></li>"
 	Else
-		Response.Write "	<li><a href=""" & RW_User(GBL_ID,"","","") & """>»ù±¾×ÊÁÏ</a></li>"
+		Response.Write "	<li><a href=""" & RW_User(GBL_ID,"","","") & """>åŸºæœ¬èµ„æ–™</a></li>"
 	End If
 	If Evol = "g" Then
-		Response.Write "	<li class=navactive>Ö÷ÌâÌû×Ó</li>"
+		Response.Write "	<li class=navactive>ä¸»é¢˜å¸–å­</li>"
 	Else
-		Response.Write "	<li><a href=""" & RW_User(GBL_ID,"g","","") & """>Ö÷ÌâÌû×Ó</a></li>"
+		Response.Write "	<li><a href=""" & RW_User(GBL_ID,"g","","") & """>ä¸»é¢˜å¸–å­</a></li>"
 	End If
 	If Evol = "n" Then
-		Response.Write "	<li class=navactive>ËùÓĞÌû×Ó</li>"
+		Response.Write "	<li class=navactive>æ‰€æœ‰å¸–å­</li>"
 	Else
-		Response.Write "	<li><a href=""" & RW_User(GBL_ID,"n","","") & """>ËùÓĞÌû×Ó</a></li>"
+		Response.Write "	<li><a href=""" & RW_User(GBL_ID,"n","","") & """>æ‰€æœ‰å¸–å­</a></li>"
 	End If
 	If Evol = "e" Then
-		Response.Write "	<li class=navactive>¾«»ªÌû×Ó</li>"
+		Response.Write "	<li class=navactive>ç²¾åå¸–å­</li>"
 	Else
-		Response.Write "	<li><a href=""" & RW_User(GBL_ID,"e","","") & """>¾«»ªÌû×Ó</a></li>"
+		Response.Write "	<li><a href=""" & RW_User(GBL_ID,"e","","") & """>ç²¾åå¸–å­</a></li>"
 	End If
 	If Evol = "l" Then
-		Response.Write "	<li class=navactive>ÉÏ´«¸½¼ş</li>"
+		Response.Write "	<li class=navactive>ä¸Šä¼ é™„ä»¶</li>"
 	Else
-		Response.Write "	<li><a href=""" & RW_User(GBL_ID,"l","","") & """>ÉÏ´«¸½¼ş</a></li>"
+		Response.Write "	<li><a href=""" & RW_User(GBL_ID,"l","","") & """>ä¸Šä¼ é™„ä»¶</a></li>"
 	End If
 	dim t
 	If Evol = "f" or Evol = "uf" Then
-		Response.Write "	<li class=navactive>¹Ø×¢</li>"
+		Response.Write "	<li class=navactive>å…³æ³¨</li>"
 	Else
-		Response.Write "	<li><a href=""" & RW_User(GBL_ID,"f","","") & """>¹Ø×¢</a></li>"
+		Response.Write "	<li><a href=""" & RW_User(GBL_ID,"f","","") & """>å…³æ³¨</a></li>"
 	End If
 	If Evol = "bag" Then
-		Response.Write "	<li class=navactive>ÊÕ²Ø¼Ğ</li>"
+		Response.Write "	<li class=navactive>æ”¶è—å¤¹</li>"
 	Else
-		Response.Write "	<li><a href=""" & RW_User(GBL_ID,"bag","","") & """>ÊÕ²Ø¼Ğ</a></li>"
+		Response.Write "	<li><a href=""" & RW_User(GBL_ID,"bag","","") & """>æ”¶è—å¤¹</a></li>"
 	End If
 	Response.Write "</ul></div>"
 	
@@ -2415,7 +2420,7 @@ sub user_remark
 	browser = GetSBInfo(1)
 	sys = GetSBInfo(2)
 	
-	GetStyleInfo
+	GetStyleInfo()
 	
 	dim w,h,tmp
 	if instr(remark,",") then

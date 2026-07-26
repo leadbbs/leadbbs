@@ -1,13 +1,13 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=inc/BoardMaster_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="inc/BoardMaster_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-CheckisBoardMasterFlag
+CheckisBoardMasterFlag()
 
-BBS_SiteHead DEF_SiteNameString & " - ×¢²áĞÂÓÃ»§",0,"" & DEF_PointsName(6) & "¹ÜÀí"
+BBS_SiteHead DEF_SiteNameString & " - æ³¨å†Œæ–°ç”¨æˆ·",0,"" & DEF_PointsName(6) & "ç®¡ç†"
 
 
 If BDM_isBoardMasterFlag = 1 Then
@@ -18,25 +18,25 @@ If BDM_isBoardMasterFlag = 1 Then
 			Else
 				UserTopicTopInfo(8)
 			End If
-			Assessor
+			Assessor()
 		Case "2"
 			UserTopicTopInfo(10)
-			BoardMaster_Manage
+			BoardMaster_Manage()
 		Case Else
 			UserTopicTopInfo(1)
-			DeleteAllTopAnnounce
+			DeleteAllTopAnnounce()
 	End Select
 Else
 	UserTopicTopInfo(0)
 	If Request("submitflag")="" Then
-		DisplayLoginForm("ÇëÏÈµÇÂ¼")
+		DisplayLoginForm("è¯·å…ˆç™»å½•")
 	Else
 		DisplayLoginForm("<span class=""redfont"">" & GBL_CHK_TempStr & "</span>")
 	End If
 End If
-UserTopicBottomInfo
-closeDataBase
-SiteBottom
+UserTopicBottomInfo()
+closeDataBase()
+SiteBottom()
 If GBL_ShowBottomSure = 1 Then Response.Write GBL_SiteBottomString
 
 Function DeleteAllTopAnnounce
@@ -49,18 +49,18 @@ Function DeleteAllTopAnnounce
 		application(DEF_MasterCookies & "TopAncList") = ""
 		Application.UnLock
 	
-		Response.Write "<div class=""title"">×Ü¹Ì¶¥ĞÅÏ¢Çå³ıÍê±Ï²¢Íê³É¸üĞÂ£¡</div>"
+		Response.Write "<div class=""title"">æ€»å›ºé¡¶ä¿¡æ¯æ¸…é™¤å®Œæ¯•å¹¶å®Œæˆæ›´æ–°ï¼</div>"
 	Else%>
 		<form action=ClearTopAnc.asp method=post>
-				<div class="title">×¢Òâ£º´Ë¹¦ÄÜ½«Íê³ÉÒÔÏÂ¹¦ÄÜ£º</div>
+				<div class="title">æ³¨æ„ï¼šæ­¤åŠŸèƒ½å°†å®Œæˆä»¥ä¸‹åŠŸèƒ½ï¼š</div>
 				<ol>
-				<li>½â³ıËùÓĞ×Ü¹Ì¶¥Ìû×Ó</li>
-				<li>É¾³ı¿ÉÄÜ´æÔÚµÄÈßÓà×Ü¹Ì¶¥Êı¾İ</li>
-				<li>½â¾öÒòÂÛÌ³ÒâÍâ²úÉúµÄÈßÓàÊı¾İ½ø¶ø²»ÄÜ¼ÌĞø×Ü¹Ì¶¥</li>
+				<li>è§£é™¤æ‰€æœ‰æ€»å›ºé¡¶å¸–å­</li>
+				<li>åˆ é™¤å¯èƒ½å­˜åœ¨çš„å†—ä½™æ€»å›ºé¡¶æ•°æ®</li>
+				<li>è§£å†³å› è®ºå›æ„å¤–äº§ç”Ÿçš„å†—ä½™æ•°æ®è¿›è€Œä¸èƒ½ç»§ç»­æ€»å›ºé¡¶</li>
 				</ol>
 		<input type=hidden name=submitflag value="yes">
 		<div class="value2">
-		<input type=submit value="È·¶¨²Ù×÷" class="fmbtn btn_4">
+		<input type=submit value="ç¡®å®šæ“ä½œ" class="fmbtn btn_4">
 		</div>
 		</form>
 	<%
@@ -70,7 +70,7 @@ End Function
 
 Sub Assessor
 
-	If (GetBinarybit(GBL_CHK_UserLimit,18) = 1 or CheckSupervisorUserName = 1) Then
+	If (GetBinarybit(GBL_CHK_UserLimit,18) = 1 or CheckSupervisorUserName() = 1) Then
 	Else
 		Exit Sub
 	End If
@@ -95,7 +95,7 @@ Sub Assessor
 				CALL LDExeCute("Delete from LeadBBS_Assessor where ID=" & DelID,1)
 				'Response.Redirect DEF_BBS_HomeUrl & "a/" & RW_a(toNum(Request("pb"),0),Rs(1),1,1,"")
 			Else
-				Response.Write "´íÎó£¬ÒªÉóºËµÄÌû×Ó²¢²»´æÔÚ£¡"
+				Response.Write "é”™è¯¯ï¼Œè¦å®¡æ ¸çš„å¸–å­å¹¶ä¸å­˜åœ¨ï¼"
 				Exit Sub
 			End If
 		End If
@@ -117,9 +117,9 @@ Sub Assessor
 						End If
 					End If
 					CALL LDExeCute("Delete from LeadBBS_Assessor where ID=" & DelID,1)
-					Response.Write "<br>±àºÅÎª " & DelID & " µÄÌû×Ó³É¹¦Í¨¹ıÉóºË!"
+					Response.Write "<br>ç¼–å·ä¸º " & DelID & " çš„å¸–å­æˆåŠŸé€šè¿‡å®¡æ ¸!"
 				Else
-					Response.Write "<br>±àºÅÎª " & DelID & " µÄÌû×ÓÒÑ²»´æÔÚ,¿ÉÄÜÒÑ×÷É¾³ı£¡"
+					Response.Write "<br>ç¼–å·ä¸º " & DelID & " çš„å¸–å­å·²ä¸å­˜åœ¨,å¯èƒ½å·²ä½œåˆ é™¤ï¼"
 				End If
 			End If
 		Next
@@ -241,11 +241,11 @@ Sub Assessor
 	
 		PageSplictString = PageSplictString & "&nbsp;"
 		If FirstID >= MaxRecordID Then
-			PageSplictString = PageSplictString & "<span class=grayfont>Ê×Ò³</span> " & VbCrLf
-			PageSplictString = PageSplictString & " <span class=grayfont>ÉÏÒ³</span> " & VbCrLf
+			PageSplictString = PageSplictString & "<span class=grayfont>é¦–é¡µ</span> " & VbCrLf
+			PageSplictString = PageSplictString & " <span class=grayfont>ä¸Šé¡µ</span> " & VbCrLf
 		else
-			PageSplictString = PageSplictString & "<a href=ClearTopAnc.asp" & EndwriteQueryString & "&Start=0>Ê×Ò³</a> " & VbCrLf
-			PageSplictString = PageSplictString & " <a href=ClearTopAnc.asp" & EndwriteQueryString & "&Start=" & FirstID & "&UpDownPageFlag=1>ÉÏÒ³</a> " & VbCrLf
+			PageSplictString = PageSplictString & "<a href=ClearTopAnc.asp" & EndwriteQueryString & "&Start=0>é¦–é¡µ</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=ClearTopAnc.asp" & EndwriteQueryString & "&Start=" & LngStr(FirstID) & "&UpDownPageFlag=1>ä¸Šé¡µ</a> " & VbCrLf
 		end if
 	
 		if LastID<MaxRecordID and LastID<>0 then
@@ -253,24 +253,24 @@ Sub Assessor
 		end if
 	
 		If LastID <= MinRecordID Then
-			PageSplictString = PageSplictString & " <span class=grayfont>ÏÂÒ³</span> " & VbCrLf
-			PageSplictString = PageSplictString & " <span class=grayfont>Î²Ò³</span> " & VbCrLf
+			PageSplictString = PageSplictString & " <span class=grayfont>ä¸‹é¡µ</span> " & VbCrLf
+			PageSplictString = PageSplictString & " <span class=grayfont>å°¾é¡µ</span> " & VbCrLf
 		else
-			PageSplictString = PageSplictString & " <a href=ClearTopAnc.asp" & EndwriteQueryString & "&Start=" & LastID & ">ÏÂÒ³</a> " & VbCrLf
-			PageSplictString = PageSplictString & " <a href=ClearTopAnc.asp" & EndwriteQueryString & "&Start=1&UpDownPageFlag=1>Î²Ò³</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=ClearTopAnc.asp" & EndwriteQueryString & "&Start=" & LngStr(LastID) & ">ä¸‹é¡µ</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=ClearTopAnc.asp" & EndwriteQueryString & "&Start=1&UpDownPageFlag=1>å°¾é¡µ</a> " & VbCrLf
 		end if
 		
-		'PageSplictString = PageSplictString & "¹²<b>" & recordCount & "</b>Ìû´ıÉóºË"
+		'PageSplictString = PageSplictString & "å…±<b>" & recordCount & "</b>å¸–å¾…å®¡æ ¸"
 		'If (recordCount mod DEF_MaxListNum)=0 Then
-		'	PageSplictString = PageSplictString & " ¼Æ<b>" & clng(recordCount/DEF_MaxListNum) & "</b>Ò³"
+		'	PageSplictString = PageSplictString & " è®¡<b>" & clng(recordCount/DEF_MaxListNum) & "</b>é¡µ"
 		'Else
 		'	If recordCount>=DEF_MaxListNum Then
-		'		PageSplictString = PageSplictString & " ¼Æ<b>" & clng(recordCount/DEF_MaxListNum)+1 & "</b>Ò³"
+		'		PageSplictString = PageSplictString & " è®¡<b>" & clng(recordCount/DEF_MaxListNum)+1 & "</b>é¡µ"
 		'	Else
-		'		PageSplictString = PageSplictString & " ¼Æ<b>1</b>Ò³"
+		'		PageSplictString = PageSplictString & " è®¡<b>1</b>é¡µ"
 		'	End If
 		'End If
-		PageSplictString = PageSplictString & " Ã¿Ò³<b>" & DEF_MaxListNum & "</b>¸ö"
+		PageSplictString = PageSplictString & " æ¯é¡µ<b>" & DEF_MaxListNum & "</b>ä¸ª"
 	
 	End If
 	%>
@@ -281,14 +281,14 @@ var GBL_domain="<%=DEF_AbsolutHome%>";
 var DEF_DownKey="<%=UrlEncode(DEF_DownKey)%>";
 HU="<%=DEF_BBS_HomeUrl%>";
 </script>
-	<div class="title">´ıÉóºËÌû×ÓĞÅÏ¢£º<%
+	<div class="title">å¾…å®¡æ ¸å¸–å­ä¿¡æ¯ï¼š<%
 	If typeflag = 1 Then
-		Response.Write " ÏÈ¿´ºóÉó(·¢Ìû¿ª·Åä¯ÀÀ,µ«ÌáÊ¾ÉóºË)"
+		Response.Write " å…ˆçœ‹åå®¡(å‘å¸–å¼€æ”¾æµè§ˆ,ä½†æç¤ºå®¡æ ¸)"
 	Else
-		Response.Write " ÏÈÉóºó¿´(Íê³ÉÉóºËºó¿ª·Åä¯ÀÀ)"
+		Response.Write " å…ˆå®¡åçœ‹(å®Œæˆå®¡æ ¸åå¼€æ”¾æµè§ˆ)"
 	End If%></div>
 	
-	<div class="value2 grayfont">µã»÷ÉóºË½«É¾³ıÉóºËĞÅÏ¢£¨¹Ø±ÕĞÅÏ¢½«Í¬Ê±¿ª·ÅÏÔÊ¾£©£¬²¢½øÈë²é¿´¾ßÌåÌû×Ó½çÃæ</div>
+	<div class="value2 grayfont">ç‚¹å‡»å®¡æ ¸å°†åˆ é™¤å®¡æ ¸ä¿¡æ¯ï¼ˆå…³é—­ä¿¡æ¯å°†åŒæ—¶å¼€æ”¾æ˜¾ç¤ºï¼‰ï¼Œå¹¶è¿›å…¥æŸ¥çœ‹å…·ä½“å¸–å­ç•Œé¢</div>
 	<table border=0 cellpadding="0" class="table_in" width="100%">
 	<form action="ClearTopAnc.asp" method="post">
 	<input type="hidden" name="action" value="1">
@@ -296,15 +296,15 @@ HU="<%=DEF_BBS_HomeUrl%>";
 	<input type=hidden name="typeflag" value="<%=typeflag%>">
 	  <tbody> 
 	  <tr class=tbinhead>
-	    <td width=100><div class=value>±àºÅ</div></td>
-	    <td width=100><div class=value>·¢ÌûÈË</div></b></td>
-	    <td><div class=value>°æÃæ</div></b></td>
-	    <td width=140><div class=value>Ê±¼ä</div></td>
-	    <td width=74><div class=value>ÉóºË</div></td>
+	    <td width=100><div class=value>ç¼–å·</div></td>
+	    <td width=100><div class=value>å‘å¸–äºº</div></b></td>
+	    <td><div class=value>ç‰ˆé¢</div></b></td>
+	    <td width=140><div class=value>æ—¶é—´</div></td>
+	    <td width=74><div class=value>å®¡æ ¸</div></td>
 	  </tr>
 	<%
 	If Num = -1 Then
-		Response.write "<tr><td colspan=5 class=tdbox>ÎŞ´ıÉóÌûµÄÌû×Ó£®</td></tr>"
+		Response.write "<tr><td colspan=5 class=tdbox>æ— å¾…å®¡å¸–çš„å¸–å­ï¼</td></tr>"
 	End if
 
 	Dim TempN,Temp1
@@ -324,12 +324,12 @@ HU="<%=DEF_BBS_HomeUrl%>";
 			Response.Write "</td><td class=""tdbox grayfont"">"
 			Response.Write RestoreTime(GetData(3,N))
 			Response.Write "</td><td class=tdbox>"
-			Response.Write "<a href=ClearTopAnc.asp?action=1&pb=" & GetData(4,N) & "&id=" & GetData(0,N) & "&typeflag=" & GetData(9,n) & " target=_blank><span class=bluefont>Í¨¹ıÉóºË</span></a>"
+			Response.Write "<a href=ClearTopAnc.asp?action=1&pb=" & GetData(4,N) & "&id=" & GetData(0,N) & "&typeflag=" & GetData(9,n) & " target=_blank><span class=bluefont>é€šè¿‡å®¡æ ¸</span></a>"
 			Response.Write "</td></tr>" & VbCrLf
 			Response.Write "<tr><td colspan=5 class=tdbox>"
-			Response.Write "<div class=value2><span class=grayfont>±êÌâ£º</span><a href=" & DEF_BBS_HomeUrl & "a/" & RW_a(GetData(4,N),GetData(6,N),1,1,"") & " target=_blank><span class=bluefont>" & GetData(2,N) & "</span></a></div>"
+			Response.Write "<div class=value2><span class=grayfont>æ ‡é¢˜ï¼š</span><a href=" & DEF_BBS_HomeUrl & "a/" & RW_a(GetData(4,N),GetData(6,N),1,1,"") & " target=_blank><span class=bluefont>" & GetData(2,N) & "</span></a></div>"
 			If (GetData(8,n) = 0 or GetData(8,n) = 2) Then GetData(7,n) = PrintTrueText(GetData(7,n))
-			Response.Write "<div class=""value2 grayfont"">ÄÚÈİ£º</div><hr class=splitline><div class=value2>"
+			Response.Write "<div class=""value2 grayfont"">å†…å®¹ï¼š</div><hr class=splitline><div class=value2>"
 			If GetData(8,n) <> 2 Then
 				Response.Write GetData(7,n)
 			Else
@@ -346,7 +346,7 @@ HU="<%=DEF_BBS_HomeUrl%>";
 		Response.Write "</td></tr>"
 	End If
 	Response.Write "<tr><td colspan=5 class=tdbox>"
-	Response.Write "<input name=submit2 type=submit value='ÅúÉóÑ¡ÔñÌû' class=""fmbtn btn_4"">"	
+	Response.Write "<input name=submit2 type=submit value='æ‰¹å®¡é€‰æ‹©å¸–' class=""fmbtn btn_4"">"	
 	Response.Write "</td></tr></form>"
 	Response.Write "</table>"
 

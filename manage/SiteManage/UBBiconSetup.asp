@@ -1,43 +1,43 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/UBBicon_Setup.ASP -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/UBBicon_Setup.ASP"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Const MaxLinkNum = 100
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-CheckSupervisorPass
+CheckSupervisorPass()
 
 Dim Form_DEF_UBBiconNote
 Redim Form_DEF_UBBiconNote(DEF_UBBiconNumber)
 
-GetDefaultValue
+GetDefaultValue()
 
-SiteHead(DEF_SiteNameString & " - ¹ÜÀíÔ±")
-UserTopicTopInfo
-DisplayUserNavigate("ÂÛÌ³±íÇé×¢ÊÍ²ÎÊýÉèÖÃ")
+SiteHead(DEF_SiteNameString & " - ç®¡ç†å‘˜")
+UserTopicTopInfo()
+DisplayUserNavigate("è®ºå›è¡¨æƒ…æ³¨é‡Šå‚æ•°è®¾ç½®")
 If GBL_CHK_Flag=1 Then
-	UBBiconSetup
+	UBBiconSetup()
 Else%>
 	<table width=96%>
 	<tr>
 	<td>
 	<%
 	If Request("submitflag")="" Then
-		Response.Write "<br><b>ÇëÏÈµÇÂ¼</b>"
+		Response.Write "<br><b>è¯·å…ˆç™»å½•</b>"
 	Else
 		Response.Write "<br><p align=left><font color=ff0000 class=RedFont><b>" & GBL_CHK_TempStr & "</b></font>"
 	End If
-	DisplayLoginForm
+	DisplayLoginForm()
 	Response.Write "</p>"%>
 	</td>
 	</tr>
 	</table>
 <%End If
-UserTopicBottomInfo
-closeDataBase
-SiteBottom
+UserTopicBottomInfo()
+closeDataBase()
+SiteBottom()
 If GBL_ShowBottomSure = 1 Then Response.Write GBL_SiteBottomString
 
 Function UBBiconSetup
@@ -46,34 +46,34 @@ Function UBBiconSetup
 <form name="pollform3sdx" method="post" action="UBBiconSetup.asp">
 <input type="hidden" name="SubmitFlag" value=yes>
 <p>
-		ÉèÖÃ£º<a href=SiteSetup.asp>ÂÛÌ³³£ÓÃ²ÎÊý</a> <a href=UploadSetup.asp>ÉÏ´«²ÎÊý</a>
-		<a href=../User/UserSetup.asp>ÓÃ»§×¢²á²ÎÊý</a>
-		<a href=UbbcodeSetup.asp>UBB±àÂë²ÎÊý</a>
-		<font color=gray class=GrayFont>UBB±íÇé×¢ÊÍ</font>
+		è®¾ç½®ï¼š<a href=SiteSetup.asp>è®ºå›å¸¸ç”¨å‚æ•°</a> <a href=UploadSetup.asp>ä¸Šä¼ å‚æ•°</a>
+		<a href=../User/UserSetup.asp>ç”¨æˆ·æ³¨å†Œå‚æ•°</a>
+		<a href=UbbcodeSetup.asp>UBBç¼–ç å‚æ•°</a>
+		<font color=gray class=GrayFont>UBBè¡¨æƒ…æ³¨é‡Š</font>
 		</b>
-		<br><font color=8888888 class=GrayFont>(ÏÂÃæÎªÍøÕ¾²ÎÊý£¬Çë×¢ÒâÐÞ¸Ä£¬´íÎóµÄÉèÖÃ½«»á·¢ÉúÑÏÖØ´íÎó)<br><br>
-		Èç¹ûÔÚÉèÖÃºó·¢ÏÖÍøÕ¾²»ÄÜÕý³£ÔËÐÐ£¬Çë½«LeadBBS×îÐÂ°æµÄinc/UBBicon_Setup.ASP¸²¸Ç»ØÈ¥</font>
+		<br><font color=8888888 class=GrayFont>(ä¸‹é¢ä¸ºç½‘ç«™å‚æ•°ï¼Œè¯·æ³¨æ„ä¿®æ”¹ï¼Œé”™è¯¯çš„è®¾ç½®å°†ä¼šå‘ç”Ÿä¸¥é‡é”™è¯¯)<br><br>
+		å¦‚æžœåœ¨è®¾ç½®åŽå‘çŽ°ç½‘ç«™ä¸èƒ½æ­£å¸¸è¿è¡Œï¼Œè¯·å°†LeadBBSæœ€æ–°ç‰ˆçš„inc/UBBicon_Setup.ASPè¦†ç›–å›žåŽ»</font>
 </p>
 <%If Request.Form("SubmitFlag") <> "" Then
-	GetFormValue
+	GetFormValue()
 End If%>
 <b><font color=ff0000 class=RedFont><%=GBL_CHK_TempStr%></font></b>
 <p>
 <%
 If Request.Form("SubmitFlag") <> "" Then
 	If GBL_CHK_TempStr <> "" Then
-		DisplayDatabaseLink
+		DisplayDatabaseLink()
 	Else
-		MakeDataBaseLinkFile
+		MakeDataBaseLinkFile()
 		Exit Function
 	End If
 Else
-	DisplayDatabaseLink
+	DisplayDatabaseLink()
 End If
 %>
 <br>
-<input type=submit name=Ìá½» value=Ìá½» class=fmbtn>
-<input type=reset name=È¡Ïû value=È¡Ïû class=fmbtn>
+<input type=submit name=æäº¤ value=æäº¤ class=fmbtn>
+<input type=reset name=å–æ¶ˆ value=å–æ¶ˆ class=fmbtn>
 </form>
 <%
 
@@ -85,13 +85,13 @@ Function DisplayDatabaseLink
 	%>
 	<table border=0 cellpadding=5 cellspacing=1 width="100%" bgcolor="<%=DEF_BBS_LightColor%>" class=TBBG1>
 	<tr class=TBBG9>
-		<td valign=top><b>±íÇé×¢ÊÍ</b></td>
+		<td valign=top><b>è¡¨æƒ…æ³¨é‡Š</b></td>
 		<td>
 			<table border=0 cellpadding=1 cellspacing=0>
 			<tr>
-				<td>&nbsp;±àºÅ</td>
-				<td>&nbsp;±íÇé</td>
-				<td>&nbsp;×¢ÊÍ</td>
+				<td>&nbsp;ç¼–å·</td>
+				<td>&nbsp;è¡¨æƒ…</td>
+				<td>&nbsp;æ³¨é‡Š</td>
 			</tr><%
 		m = Ubound(DEF_UBBiconNote)
 		For n = 0 to DEF_UBBiconNumber - 1
@@ -141,7 +141,7 @@ Function GetFormValue
 	
 	For n = 0 to DEF_UBBiconNumber
 		If inStr(Form_DEF_UBBiconNote(n),"""") or inStr(Form_DEF_UBBiconNote(n),"%") Then
-			GBL_CHK_TempStr = "µÚ" & N & "±àºÅ±íÇéÃèÊö²»ÄÜ°üº¬ÓÐÒýºÅ»ò°Ù·ÖºÅ<br>" & VbCrLf
+			GBL_CHK_TempStr = "ç¬¬" & N & "ç¼–å·è¡¨æƒ…æè¿°ä¸èƒ½åŒ…å«æœ‰å¼•å·æˆ–ç™¾åˆ†å·<br>" & VbCrLf
 		End If
 	Next
 
@@ -167,9 +167,9 @@ Function MakeDataBaseLinkFile
 	
 	ADODB_SaveToFile TempStr,"../../inc/UBBicon_Setup.ASP"
 	If GBL_CHK_TempStr = "" Then
-		Response.Write "<br><font color=Green class=GreenFont>2.³É¹¦Íê³ÉÉèÖÃ£¡</font>"
+		Response.Write "<br><font color=Green class=GreenFont>2.æˆåŠŸå®Œæˆè®¾ç½®ï¼</font>"
 	Else
-		%><%=GBL_CHK_TempStr%><br>·þÎñÆ÷²»Ö§³ÖÔÚÏßÐ´ÈëÎÄ¼þ¹¦ÄÜ£¬ÇëÊ¹ÓÃFTPµÈ¹¦ÄÜ£¬½«<font color=Red Class=RedFont>../../inc/UBBicon_Setup.ASP</font>ÎÄ¼þÌæ»»³É¿òÖÐÄÚÈÝ(×¢Òâ±¸·Ý)<p>
+		%><%=GBL_CHK_TempStr%><br>æœåŠ¡å™¨ä¸æ”¯æŒåœ¨çº¿å†™å…¥æ–‡ä»¶åŠŸèƒ½ï¼Œè¯·ä½¿ç”¨FTPç­‰åŠŸèƒ½ï¼Œå°†<font color=Red Class=RedFont>../../inc/UBBicon_Setup.ASP</font>æ–‡ä»¶æ›¿æ¢æˆæ¡†ä¸­å†…å®¹(æ³¨æ„å¤‡ä»½)<p>
 		<textarea name="fileContent" cols="80" rows="30" class=fmtxtra><%=Server.htmlencode(TempStr)%></textarea><%
 		GBL_CHK_TempStr = ""
 	End If

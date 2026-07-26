@@ -1,14 +1,14 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/Board_Popfun.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
 <%
 '--------------------------------------------------
 'LEADBBS RSS FOR 4.0 
 'MODIFY TIME 2007-03-13
 '--------------------------------------------------
-Const RSS_ViewNumer = 12 '×î¶àÔÊĞíÏÔÊ¾µÄRSS¼ÇÂ¼ÌõÊı
+Const RSS_ViewNumer = 12 'æœ€å¤šå…è®¸æ˜¾ç¤ºçš„RSSè®°å½•æ¡æ•°
 DEF_BBS_HomeUrl = "../"
 
-RSS_View
+RSS_View()
 
 Sub RSS_View
 
@@ -22,7 +22,7 @@ Sub RSS_View
 	If isNumeric(BoardID) = 0 Then BoardID = 0
 	BoardID = Fix(cCur(BoardID))
 
-	OpenDatabase
+	OpenDatabase()
 	
 	Dim Temp
 	If BoardID > 0 Then
@@ -50,9 +50,9 @@ Sub RSS_View
 	End If
 	select case DEF_UsedDataBase
 		case 0,2:
-			Set Rs = LDExeCute(sql_select("select TA.ID,TA.BoardID,TA.Title,TA.Content,TA.ndatetime,TA.LastTime,TA.UserName,TA.LastUser,TA.TitleStyle,TB.BoardName,TA.HTMLFlag,TB.BoardLimit,TB.ForumPass,TB.OtherLimit,TB.HiddenFlag,TU.TrueName,TU.ID from LeadBBS_Announce as TA left join LeadBBS_Boards as TB on TA.BoardID=TB.BoardID left join LeadBBS_User as TU on TU.Id=TA.Userid where TA.ParentID = 0 " & SQLEndString,RSS_ViewNumer),0)
+			Set Rs = LDExeCute(sql_select("select TA.ID,TA.BoardID,TA.Title,TA.Content,TA.ndatetime,TA.LastTime,TA.UserName,TA.LastUser,TA.TitleStyle,TB.BoardName,TA.HTMLFlag,TB.BoardLimit,TB.ForumPass,TB.OtherLimit,TB.HiddenFlag,TU.TrueName,TU.ID as id_dup2 from LeadBBS_Announce as TA left join LeadBBS_Boards as TB on TA.BoardID=TB.BoardID left join LeadBBS_User as TU on TU.Id=TA.Userid where TA.ParentID = 0 " & SQLEndString,RSS_ViewNumer),0)
 		case Else
-			Set Rs = LDExeCute(sql_select("select TA.ID,TA.BoardID,TA.Title,'',TA.ndatetime,TA.LastTime,TA.UserName,TA.LastUser,TA.TitleStyle,TB.BoardName,0,TB.BoardLimit,TB.ForumPass,TB.OtherLimit,TB.HiddenFlag,TU.TrueName,TU.ID from (LeadBBS_Topic as TA left join LeadBBS_Boards as TB on TA.BoardID=TB.BoardID) left join LeadBBS_User as TU on TU.Id=TA.Userid " & SQLEndString,RSS_ViewNumer),0)
+			Set Rs = LDExeCute(sql_select("select TA.ID,TA.BoardID,TA.Title,'',TA.ndatetime,TA.LastTime,TA.UserName,TA.LastUser,TA.TitleStyle,TB.BoardName,0,TB.BoardLimit,TB.ForumPass,TB.OtherLimit,TB.HiddenFlag,TU.TrueName,TU.ID as id_dup2 from (LeadBBS_Topic as TA left join LeadBBS_Boards as TB on TA.BoardID=TB.BoardID) left join LeadBBS_User as TU on TU.Id=TA.Userid " & SQLEndString,RSS_ViewNumer),0)
 	End select
 
 	If Not rs.Eof Then
@@ -63,11 +63,11 @@ Sub RSS_View
 	End If
 	Rs.close
 	Set Rs = Nothing
-	CloseDatabase
+	CloseDatabase()
 	
 	Dim PostTime
 	Response.ContentType="application/xml"
-	Response.Write "<?xml version=""1.0"" encoding=""gb2312""?>"
+	Response.Write "<?xml version=""1.0"" encoding=""utf-8""?>"
 	'<?xml-stylesheet type="text/css" href="rss.css"?>
 	'<?xml-stylesheet type="text/xsl" href="viewforfeed.xslt"?>
 	%>
@@ -84,10 +84,10 @@ Sub RSS_View
 <link><%=MyHomeUrl%></link>
 <description><![CDATA[ <%
 	If Temp = "" Then
-		Response.Write "ËùÓĞ°æÃæ"
+		Response.Write "æ‰€æœ‰ç‰ˆé¢"
 	Else
-		Response.Write "°æÃæ£º" & Temp
-	End IF%> ×îĞÂ<%=RSS_ViewNumer%>ÌõÖ÷Ìâ ]]></description>
+		Response.Write "ç‰ˆé¢ï¼š" & Temp
+	End IF%> æœ€æ–°<%=RSS_ViewNumer%>æ¡ä¸»é¢˜ ]]></description>
 <language>zh-cn</language>
 <copyright>Copyright(C)LeadBBS.COM</copyright>
 <webMaster>Info@LeadBBS.COM</webMaster>
@@ -106,14 +106,14 @@ Sub RSS_View
 		Dim N
 		For n = 0 to RssNum
 			If GBL_CheckLimitTitle(GetData(12,N),GetData(11,N),GetData(13,N),GetData(14,N)) = 1 Then
-				GetData(2,N) = "²é¿´´ËÌû×Ó±êÌâĞèÒªÌØÊâÈ¨ÏŞ."
-				GetData(7,N) = "Òş²Ø"
-				GetData(6,N) = "Òş²Ø"
+				GetData(2,N) = "æŸ¥çœ‹æ­¤å¸–å­æ ‡é¢˜éœ€è¦ç‰¹æ®Šæƒé™."
+				GetData(7,N) = "éšè—"
+				GetData(6,N) = "éšè—"
 				GetData(10,N) = 1
 			End If
-			If GBL_CheckLimitContent(GetData(12,N),GetData(11,N),GetData(13,N),GetData(14,N)) = 1 Then GetData(3,N) = "²é¿´´ËÌû×ÓÄÚÈİĞèÒªÌØÊâÈ¨ÏŞ"
+			If GBL_CheckLimitContent(GetData(12,N),GetData(11,N),GetData(13,N),GetData(14,N)) = 1 Then GetData(3,N) = "æŸ¥çœ‹æ­¤å¸–å­å†…å®¹éœ€è¦ç‰¹æ®Šæƒé™"
 			If GetData(8,N) = 1 Then GetData(2,N) = KillHTMLLabel(HtmlEncode(GetData(2,N)))
-			if GetData(7,N) <> "" then GetData(7,N) = "×îºó»Ø¸´£º" & HtmlEncode(GetData(7,N)) & " at " & RestoreTime(GetData(5,N)) & VbCrLf
+			if GetData(7,N) <> "" then GetData(7,N) = "æœ€åå›å¤ï¼š" & HtmlEncode(GetData(7,N)) & " at " & RestoreTime(GetData(5,N)) & VbCrLf
 			Response.Write "<item>" & VbCrLf
 			Response.Write "<title><![CDATA[ " & HtmlEncode(GetData(2,N)) & " ]]></title>" & VbCrLf
 			Response.Write "<link>" & MyHomeUrl & "a/" & replace(RW_a(GetData(1,N),GetData(0,N),1,1,""),"&","&amp;") & "</link>" & VbCrLf
@@ -121,15 +121,15 @@ Sub RSS_View
 			Response.Write "<category><![CDATA[ " & HtmlEncode(KillHTMLLabel(GetData(9,N))) & " ]]></category>" & VbCrLf
 			Response.Write "<pubDate>" & RestoreTime(GetData(4,N)) & "</pubDate>" & VbCrLf
 			Response.Write "<description><![CDATA[ " & GetData(7,N)
-			Response.Write "<br>ËùÔÚ°æÃæ£º<a href=" & MyHomeUrl
+			Response.Write "<br>æ‰€åœ¨ç‰ˆé¢ï¼š<a href=" & MyHomeUrl
 			response.write "b/" & RW_b(GetData(1,N),0,"")
 			response.write ">" & HtmlEncode(KillHTMLLabel(GetData(9,N))) & "</a>" & VbCrLf
-			If ccur(GetData(16,N)&"")>0 then
-			Response.Write "<br>Ìû×Ó×÷Õß£º<a href=" & MyHomeUrl & "User/" & RW_User(GetData(16,N),"","","") & ">" & HtmlEncode(GetTrueName(GetData(6,N),GetData(15,N))) & "</a>" & VbCrLf
+			If ccur("0" & GetData(16,N))>0 then	'AxonASP/VBScript: cCur("") is a Type mismatch; mirror rows have a NULL author join
+			Response.Write "<br>å¸–å­ä½œè€…ï¼š<a href=" & MyHomeUrl & "User/" & RW_User(GetData(16,N),"","","") & ">" & HtmlEncode(GetTrueName(GetData(6,N),GetData(15,N))) & "</a>" & VbCrLf
 			else
-				Response.Write "<br>Ìû×Ó×÷Õß£º" & HtmlEncode(GetTrueName(GetData(6,N),GetData(15,N))) & VbCrLf
+				Response.Write "<br>å¸–å­ä½œè€…ï¼š" & HtmlEncode(GetTrueName(GetData(6,N),GetData(15,N))) & VbCrLf
 			end if
-			Response.Write "<br>ÄÚÈİÌáÒª£º"
+			Response.Write "<br>å†…å®¹æè¦ï¼š"
 			If isNull(GetData(3,N)) Then GetData(3,N) = ""
 			GetData(3,N) = Left(GetData(3,N),200)
 			Select Case GetData(10,N)
@@ -146,8 +146,8 @@ Sub RSS_View
 	End IF
 	%>
 <LeadBBS>
-<ExeCuteTime>ºÄÊ±<%=FormatNumber(cCur(Timer - DEF_PageExeTime1),3,True)%>Ãë</ExeCuteTime>
-<Query>ÇëÇó<%=GBL_DBNum%>´Î</Query>
+<ExeCuteTime>è€—æ—¶<%=FormatNumber(cCur(Timer - DEF_PageExeTime1),3,True)%>ç§’</ExeCuteTime>
+<Query>è¯·æ±‚<%=GBL_DBNum%>æ¬¡</Query>
 </LeadBBS>
 </channel>
 </rss>

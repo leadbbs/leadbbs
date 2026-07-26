@@ -37,7 +37,7 @@ function ld_typeset(str,htmlflag)
 
 			Dim NewTemp,N,I,moredataArray,tm,Tmp,fullstop,tm2,splitflag
 			NewTemp = str
-			fullstop = "|?|£¿|.|¡£|¡®|;|£»|!|:|£º|£¡|`|`£à|¡±|¡°|""|¡­|"
+			fullstop = "|?|ï¼Ÿ|.|ã€‚|â€˜|;|ï¼›|!|:|ï¼š|ï¼|`|`ï½€|â€|â€œ|""|â€¦|"
 			If htmlflag = 2 Then
 				if kill_lineheight = 1 then
 					NewTemp = ld_clearfontstyle(NewTemp)
@@ -51,11 +51,11 @@ function ld_typeset(str,htmlflag)
 			If kill_headspace = 1 then
 				moredataArray(0) = trim(moredataArray(0))
 			else
-				If Left(moredataArray(0),1) <> "¡¡" and (htmlflag <> 2 or Left(moredataArray(0),3) <> "[P]") Then
-					If Left(moredataArray(0),2) <> "¡¡¡¡" Then
-						moredataArray(0) = "¡¡¡¡" & moredataArray(0)
+				If Left(moredataArray(0),1) <> "ã€€" and (htmlflag <> 2 or Left(moredataArray(0),3) <> "[P]") Then
+					If Left(moredataArray(0),2) <> "ã€€ã€€" Then
+						moredataArray(0) = "ã€€ã€€" & moredataArray(0)
 					Else
-						moredataArray(0) = "¡¡" & moredataArray(0)
+						moredataArray(0) = "ã€€" & moredataArray(0)
 					End If
 				End If
 			end if
@@ -66,10 +66,10 @@ function ld_typeset(str,htmlflag)
 			
 			For N = 0 to I-1
 				If kill_headspace = 1 then
-					moredataArray(N) = "¡¡¡¡" & LD_RTrim(LD_Ltrim(moredataArray(N)))
+					moredataArray(N) = "ã€€ã€€" & LD_RTrim(LD_Ltrim(moredataArray(N)))
 				else
 					Rstr = right(moredataArray(N),1)
-					do While Rstr = "¡¡" or Rstr = " "
+					do While Rstr = "ã€€" or Rstr = " "
 						moredataArray(N) = left(moredataArray(N),len(moredataArray(N))-1)
 						Rstr = right(moredataArray(N),1)
 					loop
@@ -80,10 +80,10 @@ function ld_typeset(str,htmlflag)
 					If inStr(fullstop,"|" & Tmp & "|") Then splitflag = 1
 					tm2 = clearUbbcode(Trim(Replace(moredataArray(N+1),chr(9),"      ")))
 					If kill_headspace = 1 then
-						moredataArray(N) = "¡¡¡¡" & LD_RTrim(LD_Ltrim(moredataArray(N)))
+						moredataArray(N) = "ã€€ã€€" & LD_RTrim(LD_Ltrim(moredataArray(N)))
 					else
 						Rstr = right(tm2,1)
-						do While Rstr = "¡¡" or Rstr = " "
+						do While Rstr = "ã€€" or Rstr = " "
 							tm2 = left(tm2,len(tm2)-1)
 							Rstr = right(tm2,1)
 						loop
@@ -92,13 +92,13 @@ function ld_typeset(str,htmlflag)
 						splitflag = 0
 						moredataArray(N+1) = Trim(moredataArray(N+1))
 						If kill_headspace = 1 then
-							moredataArray(N+1) = "¡¡¡¡" & LD_RTrim(LD_Ltrim(moredataArray(N+1)))
+							moredataArray(N+1) = "ã€€ã€€" & LD_RTrim(LD_Ltrim(moredataArray(N+1)))
 						else
-							If Left(moredataArray(N+1),1) <> "¡¡" and (htmlflag <> 2 or Left(moredataArray(N+1),3) <> "[P]") Then
-								If Left(moredataArray(N+1),2) <> "¡¡¡¡" Then
-									moredataArray(N+1) = "¡¡¡¡" & moredataArray(N+1)
+							If Left(moredataArray(N+1),1) <> "ã€€" and (htmlflag <> 2 or Left(moredataArray(N+1),3) <> "[P]") Then
+								If Left(moredataArray(N+1),2) <> "ã€€ã€€" Then
+									moredataArray(N+1) = "ã€€ã€€" & moredataArray(N+1)
 								Else
-									moredataArray(N+1) = "¡¡" & moredataArray(N+1)
+									moredataArray(N+1) = "ã€€" & moredataArray(N+1)
 								End If
 							End If
 						end if
@@ -113,18 +113,18 @@ function ld_typeset(str,htmlflag)
 					End If
 				Else
 					tm = Left(moredataArray(N+1),1)
-					If tm <> " " and tm <> "¡¡" and tm <> chr(9) and tm <> "" and len(moredataArray(N)) > 25 Then
+					If tm <> " " and tm <> "ã€€" and tm <> chr(9) and tm <> "" and len(moredataArray(N)) > 25 Then
 						NewTemp = NewTemp & moredataArray(N+1)
 					Else
-						moredataArray(N+1) = "¡¡¡¡" & LD_RTrim(LD_Ltrim(moredataArray(N+1)))
+						moredataArray(N+1) = "ã€€ã€€" & LD_RTrim(LD_Ltrim(moredataArray(N+1)))
 						If kill_headspace = 1 then
-							moredataArray(N+1) = "¡¡¡¡" & trim(moredataArray(N+1))
+							moredataArray(N+1) = "ã€€ã€€" & trim(moredataArray(N+1))
 						else
-							If Left(moredataArray(N+1),1) <> "¡¡" and (htmlflag <> 2 or Left(moredataArray(N+1),3) <> "[P]") Then
-								If Left(moredataArray(N+1),2) <> "¡¡¡¡" Then
-									moredataArray(N+1) = "¡¡¡¡" & moredataArray(N+1)
+							If Left(moredataArray(N+1),1) <> "ã€€" and (htmlflag <> 2 or Left(moredataArray(N+1),3) <> "[P]") Then
+								If Left(moredataArray(N+1),2) <> "ã€€ã€€" Then
+									moredataArray(N+1) = "ã€€ã€€" & moredataArray(N+1)
 								Else
-									moredataArray(N+1) = "¡¡" & moredataArray(N+1)
+									moredataArray(N+1) = "ã€€" & moredataArray(N+1)
 								End If
 							End If
 						end if
@@ -152,20 +152,20 @@ function ld_typeset(str,htmlflag)
 					Tmp = left(tm,2)
 					
 					addflag = 0
-					If Replace(Replace(tm,"¡¡","")," ","") <> "" Then
+					If Replace(Replace(tm,"ã€€","")," ","") <> "" Then
 						If kill_headspace = 1 then
 							If N = 0 then
-								NewTemp = NewTemp & "¡¡¡¡" & trim(moredataArray(N))
+								NewTemp = NewTemp & "ã€€ã€€" & trim(moredataArray(N))
 							else
-								NewTemp = NewTemp & "[P]¡¡¡¡" & trim(moredataArray(N))
+								NewTemp = NewTemp & "[P]ã€€ã€€" & trim(moredataArray(N))
 							end if
 							addflag = 1
 						else
-							If Tmp <> "¡¡¡¡" and Tmp <> "  " and Tmp <> "¡¡ " and Tmp <> " ¡¡" Then
+							If Tmp <> "ã€€ã€€" and Tmp <> "  " and Tmp <> "ã€€ " and Tmp <> " ã€€" Then
 								If N = 0 Then
-									NewTemp = NewTemp & "¡¡¡¡" & moredataArray(N)
+									NewTemp = NewTemp & "ã€€ã€€" & moredataArray(N)
 								Else
-									NewTemp = NewTemp & "[P]¡¡¡¡" & moredataArray(N)
+									NewTemp = NewTemp & "[P]ã€€ã€€" & moredataArray(N)
 								End If
 								addflag = 1
 							End If
@@ -190,7 +190,7 @@ function LD_Rtrim(s)
 	dim tm2,Rstr
 	tm2 = s
 	Rstr = right(tm2,1)
-	do While Rstr = "¡¡" or Rstr = " " or Rstr = chr(9)
+	do While Rstr = "ã€€" or Rstr = " " or Rstr = chr(9)
 		tm2 = left(tm2,len(tm2)-1)
 		Rstr = right(tm2,1)
 	loop
@@ -203,7 +203,7 @@ function LD_Ltrim(s)
 	dim tm2,Rstr
 	tm2 = s
 	Rstr = left(tm2,1)
-	do While Rstr = "¡¡" or Rstr = " " or Rstr = chr(9)
+	do While Rstr = "ã€€" or Rstr = " " or Rstr = chr(9)
 		tm2 = right(tm2,len(tm2)-1)
 		Rstr = left(tm2,1)
 	loop

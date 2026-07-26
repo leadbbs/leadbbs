@@ -95,11 +95,11 @@ End Sub
 
 Sub LeadBBSHomePageStar()
 
-	If GBL_PLUG_HPS_ShowType < 1 and (CheckSupervisorNameOnly = 0 or GBL_UserID <= 0) Then Exit Sub
+	If GBL_PLUG_HPS_ShowType < 1 and (CheckSupervisorNameOnly() = 0 or GBL_UserID <= 0) Then Exit Sub
 	
 	If ((GBL_PLUG_HPS_ShowType = 1 or GBL_PLUG_HPS_ShowType = 3) and (GBL_PLUG_HPS_LineSecondType > 0)) or ((GBL_PLUG_HPS_ShowType = 1 or GBL_PLUG_HPS_ShowType = 2) and (GBL_PLUG_HPS_LineFirstType > 0)) Then
 	Else
-		If (CheckSupervisorNameOnly = 0 or GBL_UserID <= 0) Then Exit Sub
+		If (CheckSupervisorNameOnly() = 0 or GBL_UserID <= 0) Then Exit Sub
 	End If
 
 	Dim CFlag
@@ -118,9 +118,9 @@ Sub LeadBBSHomePageStar()
 				Response.Write "1"
 			End If%>;</script>
 			<div class="b_assort">
-			<div class="b_assort_title"><span class="clicktext" title="¹Ø±Õ/Õ¹¿ª" onclick="bstar=(bstar==0)?1:0;LD.blist.assort_click('bstar',bstar,1);"><img src="<%=DEF_BBS_HomeUrl%>images/blank.gif" id="b_assort_img_bstar" class="b_assort_close<%
-			If CFlag = 1 Then Response.Write "_swap"%>" alt="¹Ø±Õ/Õ¹¿ª" /></span>
-				<b>ÉçÇøÃ÷ĞÇ</b>
+			<div class="b_assort_title"><span class="clicktext" title="å…³é—­/å±•å¼€" onclick="bstar=(bstar==0)?1:0;LD.blist.assort_click('bstar',bstar,1);"><img src="<%=DEF_BBS_HomeUrl%>images/blank.gif" id="b_assort_img_bstar" class="b_assort_close<%
+			If CFlag = 1 Then Response.Write "_swap"%>" alt="å…³é—­/å±•å¼€" /></span>
+				<b>ç¤¾åŒºæ˜æ˜Ÿ</b>
 			</div>
 			</div>
 		</td>
@@ -144,12 +144,12 @@ Sub LeadBBSHomePageStar()
 	<%
 	End If%>
 	<%
-	If CheckSupervisorNameOnly = 1 Then%>
+	If CheckSupervisorNameOnly() = 1 Then%>
 		<table border="0" cellspacing="0" cellpadding="0" width="100%" class="tablebox">
 		<tr>
 			<td class="tdbox" align="right">
 				<div class="b_list_box">
-				<a href="plug-ins/HomePageStar/admin_HomePageStar.asp">ÏÔÊ¾·½Ê½ÉèÖÃ</a>
+				<a href="plug-ins/HomePageStar/admin_HomePageStar.asp">æ˜¾ç¤ºæ–¹å¼è®¾ç½®</a>
 				</div>
 			</td>
 		</tr>
@@ -163,7 +163,7 @@ End Sub
 
 Sub FUN_PLUG_HPS_HomePageStar()
 
-	'Í·²¿ÎÄ¼ş
+	'å¤´éƒ¨æ–‡ä»¶
 	%>
 	<table border="0" cellspacing="0" cellpadding="0" class="blanktable" width="100%"><tr>
 	<%
@@ -171,66 +171,66 @@ Sub FUN_PLUG_HPS_HomePageStar()
 	Dim SQL,Rs,F_or_M,UserName,AnnounceNum,TempLineStr,UserID,UserID2,AnnounceNum2,UserName2
 	Dim NTime,WTime,YTime,MTime
 
-	'Ã¿ÈÕ·¢Ìû
-	NTime = cCur(Left(GetTimeValue(DEF_Now),8) & "000000")
+	'æ¯æ—¥å‘å¸–
+	NTime = cCur(Left(LngStr(GetTimeValue(DEF_Now)),8) & "000000")
 
-	'Ã¿ÖÜ¹àË®
-	WTime = cCur(Left(GetTimeValue(DateAdd("d",0-WeekDay(DEF_Now,2),DEF_Now)),8) & "000000")
+	'æ¯å‘¨çŒæ°´
+	WTime = cCur(Left(LngStr(GetTimeValue(DateAdd("d",0-WeekDay(DEF_Now,2),DEF_Now))),8) & "000000")
 
-	'±¾Äê·¢Ìû
-	YTime = cCur(Left(GetTimeValue(DEF_Now),4) & "0000000000")
+	'æœ¬å¹´å‘å¸–
+	YTime = cCur(Left(LngStr(GetTimeValue(DEF_Now)),4) & "0000000000")
 
-	'±¾ÔÂ·¢Ìû
-	MTime = cCur(Left(GetTimeValue(DEF_Now),6) & "00000000")
-	'ÏÔÊ¾µÚÒ»ÁĞµÄÍ·Ïñ
+	'æœ¬æœˆå‘å¸–
+	MTime = cCur(Left(LngStr(GetTimeValue(DEF_Now)),6) & "00000000")
+	'æ˜¾ç¤ºç¬¬ä¸€åˆ—çš„å¤´åƒ
 	Select Case GBL_PLUG_HPS_LineFirstType
 		Case 1
-			TempLineStr = "½ñÈÕ"
+			TempLineStr = "ä»Šæ—¥"
 			SQL = sql_select("Select UserID,Count(UserID) from LeadBBS_Announce Where NDateTime>=" & NTime & " Group By UserID Order by Count(UserID) DESC",GBL_PLUG_HPS_TopMax)
 		Case 2
-			TempLineStr = "±¾ÖÜ"
+			TempLineStr = "æœ¬å‘¨"
 			SQL = sql_select("Select UserID,Count(UserID) from LeadBBS_Announce Where NDateTime>=" & WTime & " Group By UserID Order by Count(UserID) DESC",GBL_PLUG_HPS_TopMax)
 		Case 3
-			TempLineStr = "±¾ÔÂ"
+			TempLineStr = "æœ¬æœˆ"
 			SQL = sql_select("Select UserID,Count(UserID) from LeadBBS_Announce Where NDateTime>=" & MTime & " Group By UserID Order by Count(UserID) DESC",GBL_PLUG_HPS_TopMax)
 		Case 4
-			TempLineStr = "½ñÄê"
+			TempLineStr = "ä»Šå¹´"
 			SQL = sql_select("Select UserID,Count(UserID) from LeadBBS_Announce Where NDateTime>=" & YTime & " Group By UserID Order by Count(UserID) DESC",GBL_PLUG_HPS_TopMax)
 		Case 5
-			TempLineStr = "ÕæÕı"
+			TempLineStr = "çœŸæ­£"
 			SQL = sql_select("Select ID,AnnounceNum from LeadBBS_User Order By AnnounceNum DESC",GBL_PLUG_HPS_TopMax)
 		'Case 6
-		'	TempLineStr = "Ë§¸ç"
-		'		sql_select(SQL = "Select ID,AnnounceNum ID from LeadBBS_User Where Sex='ÄĞ' Order By AnnounceNum DESC",GBL_PLUG_HPS_TopMax)
+		'	TempLineStr = "å¸…å“¥"
+		'		sql_select(SQL = "Select ID,AnnounceNum ID from LeadBBS_User Where Sex='ç”·' Order By AnnounceNum DESC",GBL_PLUG_HPS_TopMax)
 		'Case 7
-		'	TempLineStr = "ö¦ÃÃ"
-		'	SQL = sql_select("Select ID,AnnounceNum from LeadBBS_User Where Sex='Å®' Order By AnnounceNum DESC",GBL_PLUG_HPS_TopMax)
+		'	TempLineStr = "é“å¦¹"
+		'	SQL = sql_select("Select ID,AnnounceNum from LeadBBS_User Where Sex='å¥³' Order By AnnounceNum DESC",GBL_PLUG_HPS_TopMax)
 		Case Else
-			GBL_PLUG_HPS_LineFirstType = 1
-			TempLineStr = "½ñÈÕ"
+			'GBL_PLUG_HPS_LineFirstType = 1  ' AxonASP: cannot assign to Const (defined in Inc/StarSetup.asp); value already valid
+			TempLineStr = "ä»Šæ—¥"
 			SQL = sql_select("Select UserID,Count(UserID) from LeadBBS_Announce Where NDateTime>=" & NTime & " Group By UserID Order by Count(UserID) DESC",GBL_PLUG_HPS_TopMax)
 	End Select
 	GBL_PLUG_HPS_Str1 = SQL
-	FUN_PLUG_HPS_GetDayStarData
+	FUN_PLUG_HPS_GetDayStarData()
 
 	Dim GetData,GetDataUserData1,GetDataUserData2
 	GetData = GBL_PLUG_HPS_DataOne
 
 	If isArray(GetData) = False Then
 		%>
-			<td valign="middle" align="center" width="20%"><img src="<%=DEF_BBS_HomeUrl%>images/face/0000.gif" alt="Í·Ïñ" /></td>
+			<td valign="middle" align="center" width="20%"><img src="<%=DEF_BBS_HomeUrl%>images/face/0000.gif" alt="å¤´åƒ" /></td>
 			<td valign="top" width="30%"><strong>
-			<%=TempLineStr%>¹àË®×´Ôª
+			<%=TempLineStr%>çŒæ°´çŠ¶å…ƒ
 			</strong><br /><br />
-			ÓÃ»§ĞÕÃû£º<span class="bluefont">µÈÄãÀ´¸ÄĞ´</span><br />
+			ç”¨æˆ·å§“åï¼š<span class="bluefont">ç­‰ä½ æ¥æ”¹å†™</span><br />
 			
-			ÉçÇø<%=DEF_PointsName(3)%>£º<img src="<%=DEF_BBS_HomeUrl%>images/lvstar/level0.gif" alt="µÈ¼¶" />
-			<br /><%=TempLineStr%>·¢Ìû£º0 Æª
-			<br />¸öÈË<%=DEF_PointsName(0)%>£ºÎŞ
-			<br />¸öÈË<%=DEF_PointsName(1)%>£ºÎŞ
-	        	<br />¸öÈË<%=DEF_PointsName(2)%>£ºÎŞ
-			<br />ÉçÇø<%=DEF_PointsName(4)%>£ºÎŞ
-			<br />E&nbsp;-&nbsp;Mail£º¿Õ
+			ç¤¾åŒº<%=DEF_PointsName(3)%>ï¼š<img src="<%=DEF_BBS_HomeUrl%>images/lvstar/level0.gif" alt="ç­‰çº§" />
+			<br /><%=TempLineStr%>å‘å¸–ï¼š0 ç¯‡
+			<br />ä¸ªäºº<%=DEF_PointsName(0)%>ï¼šæ— 
+			<br />ä¸ªäºº<%=DEF_PointsName(1)%>ï¼šæ— 
+	        	<br />ä¸ªäºº<%=DEF_PointsName(2)%>ï¼šæ— 
+			<br />ç¤¾åŒº<%=DEF_PointsName(4)%>ï¼šæ— 
+			<br />E&nbsp;-&nbsp;Mailï¼šç©º
 			</td>
 		<%
 	Else
@@ -282,9 +282,9 @@ Sub FUN_PLUG_HPS_HomePageStar()
 			UID = GetDataUserData1(13,0)
 			TrueName = GetDataUserData1(14,0)
 		Else
-			UserName = "ÎŞ"
-			Mail = "ÎŞ"
-			Sex = "ÎŞ"
+			UserName = "æ— "
+			Mail = "æ— "
+			Sex = "æ— "
 			UserPhoto = ""
 			UserLevel = 0
 			Points = 0
@@ -299,9 +299,9 @@ Sub FUN_PLUG_HPS_HomePageStar()
 			TrueName = ""
 		End If
 
-		If Sex = "ÄĞ" Then
+		If Sex = "ç”·" Then
 			F_or_M = DEF_BBS_HomeUrl & "images/sxmg/Male.gif"
-		ElseIf Sex = "Å®" Then
+		ElseIf Sex = "å¥³" Then
 			F_or_M = DEF_BBS_HomeUrl & "images/sxmg/FeMale.gif"
         Else
 			F_or_M = DEF_BBS_HomeUrl & "images/sxmg/Male.gif"
@@ -321,33 +321,33 @@ Sub FUN_PLUG_HPS_HomePageStar()
 			%><%=FaceUrl%>" width="<%=FaceWidth%>" height="<%=FaceHeight%>"<%
 		Else
 			%>images/face/<%=String(4-len(CStr(UserPhoto)),"0") & UserPhoto%>.gif"
-		<%End If%> title="¿´Ê²Ã´¿´,ÎÒÊÇÃ÷ĞÇ£¡£¡" alt="Í·Ïñ" /></a>
+		<%End If%> title="çœ‹ä»€ä¹ˆçœ‹,æˆ‘æ˜¯æ˜æ˜Ÿï¼ï¼" alt="å¤´åƒ" /></a>
 			</td>
 			<td valign="middle" width="30%">
 				<strong>
-        			<%=TempLineStr%>¹àË®×´Ôª
+        			<%=TempLineStr%>çŒæ°´çŠ¶å…ƒ
         			</strong>
         			<br /><br />
-				ÓÃ»§ĞÕÃû£º<span class="bluefont"><%=GetTrueName(UserName,TrueName)%></span><br />
-				ÉçÇø<%=DEF_PointsName(3)%>£º<img src="images/<%=GBL_DefineImage%>lvstar/level<%=UserLevel%>.gif" align="middle" alt="µÈ¼¶" /><br />
-				<%=TempLineStr%>·¢Ìû£º<%=AnnounceNum%> Æª
-				<br />¸öÈË<%=DEF_PointsName(0)%>£º<%=cCur(Points)%>
-				<br />¸öÈË<%=DEF_PointsName(1)%>£º<%=CharmPoint%>
+				ç”¨æˆ·å§“åï¼š<span class="bluefont"><%=GetTrueName(UserName,TrueName)%></span><br />
+				ç¤¾åŒº<%=DEF_PointsName(3)%>ï¼š<img src="images/<%=GBL_DefineImage%>lvstar/level<%=UserLevel%>.gif" align="middle" alt="ç­‰çº§" /><br />
+				<%=TempLineStr%>å‘å¸–ï¼š<%=AnnounceNum%> ç¯‡
+				<br />ä¸ªäºº<%=DEF_PointsName(0)%>ï¼š<%=cCur(Points)%>
+				<br />ä¸ªäºº<%=DEF_PointsName(1)%>ï¼š<%=CharmPoint%>
 		<%
         	If CachetValue <> 0 Then
 			If CachetValue > 0 Then
-				CachetValue = "<span class=""bluefont"">£«" & CachetValue & "</span>"
+				CachetValue = "<span class=""bluefont"">ï¼‹" & CachetValue & "</span>"
 			End If
 		Else
-			CachetValue = "»¹Ğè¶à¼ÓÅ¬Á¦£¡" 
+			CachetValue = "è¿˜éœ€å¤šåŠ åŠªåŠ›ï¼" 
 		End If
 		%>
-			<br />¸öÈË<%=DEF_PointsName(2)%>£º<%=CachetValue%>
-			<br />ÉçÇø<%=DEF_PointsName(4)%>£º<%=Fix(cCur(OnlineTime)/60)%>	
+			<br />ä¸ªäºº<%=DEF_PointsName(2)%>ï¼š<%=CachetValue%>
+			<br />ç¤¾åŒº<%=DEF_PointsName(4)%>ï¼š<%=Fix(cCur(OnlineTime)/60)%>	
 			
 		<%
 		If Trim(Mail) <> "" Then
-			'Response.Write("<a href=""Mailto:" & htmlencode(Mail) & """>·É¸ë´«Êé</a>")
+			'Response.Write("<a href=""Mailto:" & htmlencode(Mail) & """>é£é¸½ä¼ ä¹¦</a>")
 		End If
 		%>
 			</td><%
@@ -356,20 +356,20 @@ Sub FUN_PLUG_HPS_HomePageStar()
 	If isArray(GetDataUserData2) = False Then
 		%>
 			<td valign="middle" align="center" width="20%">
-				<img src="<%=DEF_BBS_HomeUrl%>images/face/0000.gif" alt="Í·Ïñ" />
+				<img src="<%=DEF_BBS_HomeUrl%>images/face/0000.gif" alt="å¤´åƒ" />
 			</td>
 			<td valign="top" width="30%">
 				<strong>
-				<%=TempLineStr%>¹àË®°ñÑÛ
+				<%=TempLineStr%>çŒæ°´æ¦œçœ¼
 				</strong>
 				<br /><br />
-				ÓÃ»§ĞÕÃû£º<span class="bluefont">µÈÄãÀ´¸ÄĞ´</span> <br />
-			ÉçÇø<%=DEF_PointsName(3)%>£º<img src="<%=DEF_BBS_HomeUrl%>images/lvstar/level0.gif" alt="µÈ¼¶" />
-			<br /><%=TempLineStr%>·¢Ìû£º0 Æª
-			<br />¸öÈË<%=DEF_PointsName(0)%>£ºÎŞ
-			<br />¸öÈË<%=DEF_PointsName(1)%>£ºÎŞ
-			<br />¸öÈË<%=DEF_PointsName(2)%>£ºÎŞ
-			<br />ÉçÇø<%=DEF_PointsName(4)%>£ºÎŞ
+				ç”¨æˆ·å§“åï¼š<span class="bluefont">ç­‰ä½ æ¥æ”¹å†™</span> <br />
+			ç¤¾åŒº<%=DEF_PointsName(3)%>ï¼š<img src="<%=DEF_BBS_HomeUrl%>images/lvstar/level0.gif" alt="ç­‰çº§" />
+			<br /><%=TempLineStr%>å‘å¸–ï¼š0 ç¯‡
+			<br />ä¸ªäºº<%=DEF_PointsName(0)%>ï¼šæ— 
+			<br />ä¸ªäºº<%=DEF_PointsName(1)%>ï¼šæ— 
+			<br />ä¸ªäºº<%=DEF_PointsName(2)%>ï¼šæ— 
+			<br />ç¤¾åŒº<%=DEF_PointsName(4)%>ï¼šæ— 
 			</td>
 		<%
   	Else
@@ -391,9 +391,9 @@ Sub FUN_PLUG_HPS_HomePageStar()
 			UID = GetDataUserData2(13,0)
 			TrueName = GetDataUserData2(14,0)
 		Else
-			UserName = "ÎŞ"
-			Mail = "ÎŞ"
-			Sex = "ÎŞ"
+			UserName = "æ— "
+			Mail = "æ— "
+			Sex = "æ— "
 			UserPhoto = ""
 			UserLevel = 0
 			Points = 0
@@ -408,9 +408,9 @@ Sub FUN_PLUG_HPS_HomePageStar()
 			TrueName = ""
 		End If
 
-		If Sex = "ÄĞ" Then
+		If Sex = "ç”·" Then
 			F_or_M = DEF_BBS_HomeUrl & "images/sxmg/Male.gif"
-		ElseIf Sex = "Å®" Then
+		ElseIf Sex = "å¥³" Then
 			F_or_M = DEF_BBS_HomeUrl & "images/sxmg/FeMale.gif"
 		Else
 			F_or_M = DEF_BBS_HomeUrl & "images/sxmg/Male.gif"
@@ -430,40 +430,40 @@ Sub FUN_PLUG_HPS_HomePageStar()
 			Response.Write FaceUrl & Chr(34) & " width=""" & FaceWidth & """ height=""" & FaceHeight & """"
 		Else
 			Response.Write "images/face/" & String(4-len(CStr(UserPhoto)),"0") & UserPhoto & ".gif"""
-		End If%> title="¿´Ê²Ã´¿´,ÎÒÊÇÃ÷ĞÇ£¡£¡" alt="Í·Ïñ" /></a>
+		End If%> title="çœ‹ä»€ä¹ˆçœ‹,æˆ‘æ˜¯æ˜æ˜Ÿï¼ï¼" alt="å¤´åƒ" /></a>
 			</td>
 			<td valign="top" width="30%">
 				<strong>
-				<%=TempLineStr%>¹àË®°ñÑÛ
+				<%=TempLineStr%>çŒæ°´æ¦œçœ¼
 				</strong>
 				<br /><br />
-				ÓÃ»§ĞÕÃû£º<span class="bluefont"><%=GetTrueName(UserName,TrueName)%></span>
+				ç”¨æˆ·å§“åï¼š<span class="bluefont"><%=GetTrueName(UserName,TrueName)%></span>
 				<br />
-				ÉçÇø<%=DEF_PointsName(3)%>£º<img src="images/<%=GBL_DefineImage%>lvstar/level<%=UserLevel%>.gif" align="middle" alt="µÈ¼¶" />
+				ç¤¾åŒº<%=DEF_PointsName(3)%>ï¼š<img src="images/<%=GBL_DefineImage%>lvstar/level<%=UserLevel%>.gif" align="middle" alt="ç­‰çº§" />
 				<br />
-				<%=TempLineStr%>·¢Ìû£º<%=AnnounceNum%> Æª
-				<br />¸öÈË<%=DEF_PointsName(0)%>£º<%=Points%>
-				<br />¸öÈË<%=DEF_PointsName(1)%>£º<%=CharmPoint%>
+				<%=TempLineStr%>å‘å¸–ï¼š<%=AnnounceNum%> ç¯‡
+				<br />ä¸ªäºº<%=DEF_PointsName(0)%>ï¼š<%=Points%>
+				<br />ä¸ªäºº<%=DEF_PointsName(1)%>ï¼š<%=CharmPoint%>
 		<%
 		If CachetValue <> 0 Then
 			If CachetValue > 0 Then
-				CachetValue = "<span class=""bluefont"">£«" & CachetValue & "</span>"
+				CachetValue = "<span class=""bluefont"">ï¼‹" & CachetValue & "</span>"
 			End If
 		Else
-			CachetValue = "»¹Ğè¶à¼ÓÅ¬Á¦£¡"
+			CachetValue = "è¿˜éœ€å¤šåŠ åŠªåŠ›ï¼"
 		End If%>
-			<br />¸öÈË<%=DEF_PointsName(2)%>£º<%=CachetValue%>
-			<br />ÉçÇø<%=DEF_PointsName(4)%>£º<%=Fix(cCur(OnlineTime)/60)%>	
+			<br />ä¸ªäºº<%=DEF_PointsName(2)%>ï¼š<%=CachetValue%>
+			<br />ç¤¾åŒº<%=DEF_PointsName(4)%>ï¼š<%=Fix(cCur(OnlineTime)/60)%>	
 			
 		<%
 		If Trim(Mail) <> "" Then
-	  		'Response.Write("<a href=""Mailto:" & htmlencode(Mail) & """>·É¸ë´«Êé</a>")
+	  		'Response.Write("<a href=""Mailto:" & htmlencode(Mail) & """>é£é¸½ä¼ ä¹¦</a>")
 		End If
 		%>
 			</td><%
 	End If
 
-	'Î²²¿ÎÄ¼ş
+	'å°¾éƒ¨æ–‡ä»¶
 	Response.Write("</tr></table>")
 
 End Sub 
@@ -472,42 +472,42 @@ Sub FUN_PLUG_HPS_HomePageStarTop
 
 	Dim NTime,WTime,YTime,MTime,SQL
 
-	'Ã¿ÈÕ·¢Ìû
-	NTime = cCur(Left(GetTimeValue(DEF_Now),8) & "000000")
+	'æ¯æ—¥å‘å¸–
+	NTime = cCur(Left(LngStr(GetTimeValue(DEF_Now)),8) & "000000")
 
-	'Ã¿ÖÜ¹àË®
-	WTime = cCur(Left(GetTimeValue(DateAdd("d",0-WeekDay(DEF_Now,2),DEF_Now)),8) & "000000")
+	'æ¯å‘¨çŒæ°´
+	WTime = cCur(Left(LngStr(GetTimeValue(DateAdd("d",0-WeekDay(DEF_Now,2),DEF_Now))),8) & "000000")
 
-	'±¾Äê·¢Ìû
-	YTime = cCur(Left(GetTimeValue(DEF_Now),4) & "0000000000")
+	'æœ¬å¹´å‘å¸–
+	YTime = cCur(Left(LngStr(GetTimeValue(DEF_Now)),4) & "0000000000")
 
-	'±¾ÔÂ·¢Ìû
-	MTime = cCur(Left(GetTimeValue(DEF_Now),6) & "00000000")
-	'ÏÔÊ¾µÚÒ»ÁĞµÄÍ·Ïñ
+	'æœ¬æœˆå‘å¸–
+	MTime = cCur(Left(LngStr(GetTimeValue(DEF_Now)),6) & "00000000")
+	'æ˜¾ç¤ºç¬¬ä¸€åˆ—çš„å¤´åƒ
 	Dim TempLineStr
 	Select Case GBL_PLUG_HPS_LineSecondType
 		Case 1
-			TempLineStr = "½ñÈÕ"
+			TempLineStr = "ä»Šæ—¥"
 			SQL = sql_select("Select UserID,Count(UserID),'',0,'','' from LeadBBS_Announce Where NDateTime>=" & NTime & " Group By UserID Order by Count(UserID) DESC",GBL_PLUG_HPS_TopMax)
 		Case 2
-			TempLineStr = "±¾ÖÜ"
+			TempLineStr = "æœ¬å‘¨"
 			SQL = sql_select("Select UserID,Count(UserID),'',0,'','' from LeadBBS_Announce Where NDateTime>=" & WTime & " Group By UserID Order by Count(UserID) DESC",GBL_PLUG_HPS_TopMax)
 		Case 3
-			TempLineStr = "±¾ÔÂ"
+			TempLineStr = "æœ¬æœˆ"
 			SQL = sql_select("Select UserID,Count(UserID),'',0,'','' from LeadBBS_Announce Where NDateTime>=" & MTime & " Group By UserID Order by Count(UserID) DESC",GBL_PLUG_HPS_TopMax)
 		Case 4
-			TempLineStr = "½ñÄê"
+			TempLineStr = "ä»Šå¹´"
 			SQL = sql_select("Select UserID,Count(UserID),'',0,'','' from LeadBBS_Announce Where NDateTime>=" & YTime & " Group By UserID Order by Count(UserID) DESC",GBL_PLUG_HPS_TopMax)
 		Case 5
-			TempLineStr = "ÕæÕı"
-			SQL = sql_select("Select ID,AnnounceNum,'',0,'','' from LeadBBS_User Order By AnnounceNum DESC",GBL_PLUG_HPS_TopMax)
+			TempLineStr = "çœŸæ­£"
+			SQL = sql_select("Select ID,AnnounceNum,'',0,'' as ___dup2,'' as ___dup3 from LeadBBS_User Order By AnnounceNum DESC",GBL_PLUG_HPS_TopMax)
 		Case Else
-			GBL_PLUG_HPS_LineSecondType = 1
-			TempLineStr = "½ñÈÕ"
+			'GBL_PLUG_HPS_LineSecondType = 1  ' AxonASP: cannot assign to Const (defined in Inc/StarSetup.asp); value already valid
+			TempLineStr = "ä»Šæ—¥"
 			SQL = sql_select("Select UserID,Count(UserID),'',0,'','' from LeadBBS_Announce Where NDateTime>=" & NTime & " Group By UserID Order by Count(UserID) DESC",GBL_PLUG_HPS_TopMax)
 	End Select
 	GBL_PLUG_HPS_Str2 = SQL
-	FUN_PLUG_HPS_GetDayStarData
+	FUN_PLUG_HPS_GetDayStarData()
 
 	If isArray(GBL_PLUG_HPS_DataTwo) = False Then Exit Sub
 	Dim N
@@ -524,12 +524,12 @@ Sub FUN_PLUG_HPS_HomePageStarTop
 	dim Form_userphoto,Form_FaceUrl,name
 	For N = 0 to Ubound(GBL_PLUG_HPS_DataTwo,2)
 		'Response.Write "hps(""" & GBL_PLUG_HPS_DataTwo(0,N) & """," & GBL_PLUG_HPS_DataTwo(1,N) & ");" & VbCrLf
-		If GBL_PLUG_HPS_DataTwo(0,N) = "" then GBL_PLUG_HPS_DataTwo(0,N) = "ÓÎ¿Í"
+		If GBL_PLUG_HPS_DataTwo(0,N) = "" then GBL_PLUG_HPS_DataTwo(0,N) = "æ¸¸å®¢"
 		
 		name = GetTrueName(GBL_PLUG_HPS_DataTwo(0,N),GBL_PLUG_HPS_DataTwo(2,N))
 		%>
 		<li style="padding:0;margin:0 12px 16px 0;*margin:0 0 16px 0;*width:72px;width:60px;overflow:hidden;text-align:center;display:block;float:left;">
-		<a href="User/<%=RW_User(GBL_PLUG_HPS_DataTwo(3,N),"","","")%>" target="_blank" title="<%=htmlencode(name)%> <%=TempLineStr%>¹àË®: <%=GBL_PLUG_HPS_DataTwo(1,N)%>">
+		<a href="User/<%=RW_User(GBL_PLUG_HPS_DataTwo(3,N),"","","")%>" target="_blank" title="<%=htmlencode(name)%> <%=TempLineStr%>çŒæ°´: <%=GBL_PLUG_HPS_DataTwo(1,N)%>">
 		<span style="margin-bottom:6px;width:60px;height:60px;line-height:60px;display:block;vertical-align:bottom;text-align:center;">
 		<img style="margin-bottom:6px;border-radius:5%;max-width:60px;max-height:60px;_width:60px;_height:60px;" <%
 			Form_userphoto = GBL_PLUG_HPS_DataTwo(4,N)

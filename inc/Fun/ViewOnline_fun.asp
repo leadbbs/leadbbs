@@ -27,13 +27,13 @@ Function DisplayUserOnline(BoardID,url)
 		If usr <> "1" Then
 			usr = "0"
 			if m > 0 Then rs = " where T1.id>=" & m
-			SQL = sql_select("Select T1.ID,T1.UserName,T1.HiddenFlag,T2.ID,T2.TrueName from LeadBBS_onlineUser as T1 left join LeadBBS_User as T2 on T2.Id=T1.Userid " & rs & " Order by T1.ID ASC",LMT_Max_OnlineUserList + 1)
+			SQL = sql_select("Select T1.ID,T1.UserName,T1.HiddenFlag,T2.ID as id_dup2,T2.TrueName from LeadBBS_onlineUser as T1 left join LeadBBS_User as T2 on T2.Id=T1.Userid " & rs & " Order by T1.ID ASC",LMT_Max_OnlineUserList + 1)
 		Else
-			SQL = sql_select("Select T1.ID,T1.UserName,T1.HiddenFlag,T2.ID,T2.TrueName from LeadBBS_onlineUser as T1 left join LeadBBS_User as T2 on T2.Id=T1.Userid where T1.UserID > 0",LMT_Max_OnlineUserList + 1)
+			SQL = sql_select("Select T1.ID,T1.UserName,T1.HiddenFlag,T2.ID as id_dup2,T2.TrueName from LeadBBS_onlineUser as T1 left join LeadBBS_User as T2 on T2.Id=T1.Userid where T1.UserID > 0",LMT_Max_OnlineUserList + 1)
 		End If
 	Else
 		if m > 0 Then rs = " and id>=" & m
-		SQL = sql_select("Select T1.ID,T1.UserName,T1.HiddenFlag,T2.ID,T2.TrueName from LeadBBS_onlineUser as T1 left join LeadBBS_User as T2 on T2.Id=T1.Userid where T1.AtBoardID=" & boardID &" and T1.UserID>0" & rs & " Order by T1.ID ASC",LMT_Max_OnlineUserList + 1)
+		SQL = sql_select("Select T1.ID,T1.UserName,T1.HiddenFlag,T2.ID as id_dup2,T2.TrueName from LeadBBS_onlineUser as T1 left join LeadBBS_User as T2 on T2.Id=T1.Userid where T1.AtBoardID=" & boardID &" and T1.UserID>0" & rs & " Order by T1.ID ASC",LMT_Max_OnlineUserList + 1)
 	End If
 
 	Set Rs = LDExeCute(SQL,0)
@@ -65,12 +65,12 @@ Function DisplayUserOnline(BoardID,url)
 			If n = 1 Then Response.Write "<td width=""" & fix(100/Lines) & "%"" valign=""top""><ul class=""list_break"">"
 			Response.Write "<li>"
 			if isNull(GetData(1,i)) or GetData(1,i) = "" Then
-				Response.Write "<span class=""ol_7""><a href=""" & Url & "User/" & RW_User(0,"more","","OlID=" & GetData(0,i)) & """ target=""_blank"">ÓÎ¿Í</a></span>"
+				Response.Write "<span class=""ol_7""><a href=""" & Url & "User/" & RW_User(0,"more","","OlID=" & GetData(0,i)) & """ target=""_blank"">æ¸¸å®¢</a></span>"
 				vuser = vuser + 1
 			Else
 				rguser = rguser + 1
-				If GetData(1,i) = "ÒşÉíÓÃ»§" Then
-					Response.Write "<span class=""ol_6""><a href=""" & Url & "User/" & RW_User(0,"more","","OlID=" & GetData(0,i)) & """ target=""_blank"">ÒşÉíÓÃ»§</a></span>"
+				If GetData(1,i) = "éšèº«ç”¨æˆ·" Then
+					Response.Write "<span class=""ol_6""><a href=""" & Url & "User/" & RW_User(0,"more","","OlID=" & GetData(0,i)) & """ target=""_blank"">éšèº«ç”¨æˆ·</a></span>"
 				Else
 					GetData(2,i) = cCur(GetData(2,i))
 					Response.Write "<span class=""ol_"
@@ -124,41 +124,41 @@ Function DisplayUserOnline(BoardID,url)
 	<br />
 	<div class="j_page">
 	<%If nxtflag  > 0 Then
-		%><a href="#bol" onclick="getAJAX('B<%If BoardID = 0 Then Response.Write "oards"%>.asp','ol=1&amp;n=<%=nxtflag%>&amp;b=<%=BoardID%>','follow0');">ÏÂÒ»Ò³</a><%
+		%><a href="#bol" onclick="getAJAX('B<%If BoardID = 0 Then Response.Write "oards"%>.asp','ol=1&amp;n=<%=nxtflag%>&amp;b=<%=BoardID%>','follow0');">ä¸‹ä¸€é¡µ</a><%
 	End If
 	If m > 0 Then
-		%><a href="#bol" onclick="getAJAX('B<%If BoardID = 0 Then Response.Write "oards"%>.asp','ol=1&amp;b=<%=BoardID%>','follow0');">·µ»Ø</a>
+		%><a href="#bol" onclick="getAJAX('B<%If BoardID = 0 Then Response.Write "oards"%>.asp','ol=1&amp;b=<%=BoardID%>','follow0');">è¿”å›</a>
 	<%
 	End If%>
 	<%
 	If vuser = 0 Then vuser = ActiveUsers - rguser
 	If BoardID = 0 Then
 		If usr <> "1" Then
-			%><a href="#bol" onclick="getAJAX('Boards.asp','ol=1&amp;usr=1','follow0');">Ö»¿´ÔÚÏßÓÃ»§</a><%
-		Else%><a href="#bol" onclick="getAJAX('Boards.asp','ol=1','follow0');">²é¿´È«²¿ÔÚÏß</a>
+			%><a href="#bol" onclick="getAJAX('Boards.asp','ol=1&amp;usr=1','follow0');">åªçœ‹åœ¨çº¿ç”¨æˆ·</a><%
+		Else%><a href="#bol" onclick="getAJAX('Boards.asp','ol=1','follow0');">æŸ¥çœ‹å…¨éƒ¨åœ¨çº¿</a>
 		<%
 		End If
 	End If%>
-	<a href="#bol" onclick="ShowOnline('follow0','swap_ol');">¹Ø±Õ</a>
+	<a href="#bol" onclick="ShowOnline('follow0','swap_ol');">å…³é—­</a>
 	</div>
 	<%
 	If BoardID > 0 Then
-		Response.Write "µ±Ç°°æÃæ¹² " & ActiveUsers & " ÈËÔÚÏß£¬"
-		Response.Write "µ±Ç°ÁĞ±íÖĞ×¢²áÓÃ»§¹² " & rguser & " ÈË£¬ÓÎ¿Í " & vuser & " ÈË "
+		Response.Write "å½“å‰ç‰ˆé¢å…± " & ActiveUsers & " äººåœ¨çº¿ï¼Œ"
+		Response.Write "å½“å‰åˆ—è¡¨ä¸­æ³¨å†Œç”¨æˆ·å…± " & rguser & " äººï¼Œæ¸¸å®¢ " & vuser & " äºº "
 	Else
-		Response.Write "µ±Ç°ÁĞ±íÖĞ×¢²áÓÃ»§¹² " & rguser & " ÈË "
+		Response.Write "å½“å‰åˆ—è¡¨ä¸­æ³¨å†Œç”¨æˆ·å…± " & rguser & " äºº "
 	End If
 	%>
 	</td></tr>
 	<tr><td colspan="<%=Lines%>">
 	<%If BoardID = 0 Then%>
-	<br />Í¼Àı <span class="ol_1"><%=DEF_PointsName(6)%></span>
+	<br />å›¾ä¾‹ <span class="ol_1"><%=DEF_PointsName(6)%></span>
 	<span class="ol_2"><%=DEF_PointsName(7)%></span>
 	<span class="ol_3"><%=DEF_PointsName(8)%></span>
 	<span class="ol_4"><%=DEF_PointsName(5)%></span>
-	<span class="ol_5">×¢²áÓÃ»§</span>
-	<span class="ol_6">ÒşÉíÓÃ»§</span>
-	<span class="ol_7">ÓÎ¿Í</span><%
+	<span class="ol_5">æ³¨å†Œç”¨æˆ·</span>
+	<span class="ol_6">éšèº«ç”¨æˆ·</span>
+	<span class="ol_7">æ¸¸å®¢</span><%
 	End If%>
 	</td></tr></table></div>
 	<%

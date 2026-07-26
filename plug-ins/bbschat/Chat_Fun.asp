@@ -1,24 +1,27 @@
 <%
-Chat_init_Application
-Chat_init_session
+Chat_init_Application()
+Chat_init_session()
 
 Sub Chat_init_Application
 
 	'If Application(DEF_MasterCookies & "_Chat_Load") <> "1" Then
-	'	Response.Write "´íÎó£¬ÁÄÌìÏµÍ³ĞèÒªĞéÄâÄ¿Â¼»ò¶ÀÁ¢Õ¾µãÖ§³Ö²ÅÄÜÕı³£ÔËĞĞ£®"
+	'	Response.Write "é”™è¯¯ï¼ŒèŠå¤©ç³»ç»Ÿéœ€è¦è™šæ‹Ÿç›®å½•æˆ–ç‹¬ç«‹ç«™ç‚¹æ”¯æŒæ‰èƒ½æ­£å¸¸è¿è¡Œï¼"
 	'	Response.End
 	'End If
 	
-	If Application(DEF_MasterCookies & "_Chat_Load") <> "1" Then
+	' Self-healing + atomic: (re)initialize whenever the world-chat cache is not
+	' actually an array (cold start after a restart, or ever cleared). Keying off a
+	' separate _Chat_Load flag left a race where a reader could hit a non-array and
+	' 500 on the very first request. Check-and-init under the lock closes that.
+	Application.Lock
+	If Not isArray(Application(DEF_MasterCookies & "_Chat_World")) Then
 		Dim Temp
 		Redim Temp(Chat_MaxCache)
-
-		Application.Lock
 		Application(DEF_MasterCookies & "_Chat_World") = Temp
 		Application(DEF_MasterCookies & "_Chat_World_Index") = 0
 		Application(DEF_MasterCookies & "_Chat_Load") = "1"
-		Application.UnLock
 	End If
+	Application.UnLock
 
 End Sub
 
@@ -42,7 +45,7 @@ Sub Chat_Appand(User,Str,Channel,ToUser)
 	Dim f,f_Str
 	f = Channel
 	
-	If User = "SpiderMan" and left(Str,4) = "/¹«¸æ " and Str <> "/¹«¸æ " Then
+	If User = "SpiderMan" and left(Str,4) = "/å…¬å‘Š " and Str <> "/å…¬å‘Š " Then
 		f = 4
 		f_Str = "<font style='font-size:9pt;' color=red class=redfont><b>" & Mid(Str,5) & "</b></font>"
 	End If
@@ -56,7 +59,7 @@ Sub Chat_Appand(User,Str,Channel,ToUser)
 	
 	Dim FaceFlag
 	FaceFlag = 0
-	If Trim(Str) = "$N" Then Str = "$NÎŞÓï¡­"
+	If Trim(Str) = "$N" Then Str = "$Næ— è¯­â€¦"
 	If f <> 4 and f <> 9 Then
 		If inStr(Str,"$N") Then
 			f_Str = Replace("<u>" & PrintTrueText(Str) & "</u>","$N","<span onclick=c_sc(this.innerHTML) style=cursor:hand class=c_name>" & User & "</span>",1,3,0)
@@ -82,7 +85,7 @@ Sub Chat_Appand(User,Str,Channel,ToUser)
 				Index = Index + 1
 				If Index > Chat_MaxSessionCache - 1 Then Index = 0
 				If FaceFlag = 0 Then
-					Temp(Index) = "6 ÄãÇÄÇÄµÄ¶Ô<span onclick=c_sc(this.innerHTML) style=cursor:hand class=c_name>" & ToUser & "</span>Ëµ: " & f_Str
+					Temp(Index) = "6 ä½ æ‚„æ‚„çš„å¯¹<span onclick=c_sc(this.innerHTML) style=cursor:hand class=c_name>" & ToUser & "</span>è¯´: " & f_Str
 				Else
 					Temp(Index) = f_Str
 				End If
@@ -99,7 +102,7 @@ Sub Chat_Appand(User,Str,Channel,ToUser)
 			Index = Index + 1
 			If Index > Chat_MaxSessionCache - 1 Then Index = 0
 			If FaceFlag = 0 Then
-				Temp(Index) = "5 <span onclick=c_sc(this.innerHTML) style=cursor:hand class=c_name>" & User & "</span>ÇÄÇÄµÄ¶ÔÄãËµ: " & f_Str
+				Temp(Index) = "5 <span onclick=c_sc(this.innerHTML) style=cursor:hand class=c_name>" & User & "</span>æ‚„æ‚„çš„å¯¹ä½ è¯´: " & f_Str
 			Else
 				Temp(Index) = f_Str
 			End If

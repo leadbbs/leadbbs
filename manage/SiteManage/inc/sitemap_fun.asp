@@ -6,7 +6,7 @@ Class sitemap_main
 	Private Sub Class_Initialize
 	
 		s_count = 0
-		sitemap_page
+		sitemap_page()
 	
 	End Sub
 	
@@ -44,7 +44,7 @@ Class sitemap_main
 	
 	private sub sitemap_form
 	
-		%>约有<%=s_count%>帖子记录待成生，<a href="../BlockUpdate/UpdateUnderWritePrintColumn.asp?flag=UpdateRootMaxMinAnnounceID&BlockType=4">点此进入SiteMap生成页面</a><%
+		%>绾︽湁<%=s_count%>甯栧瓙璁板綍寰呮垚鐢燂紝<a href="../BlockUpdate/UpdateUnderWritePrintColumn.asp?flag=UpdateRootMaxMinAnnounceID&BlockType=4">鐐规杩涘叆SiteMap鐢熸垚椤甸潰</a><%
 	
 	end sub
 

@@ -1,6 +1,6 @@
 <%
 dim splitpage_getdata,splitpage_num,splitpage_page,splitpage_maxpage,splitpage_listNum,splitpage_orderstr
-dim startid : startid = 0 'Ìø×ªÏŞÖÆÒ³ºó²ÎÊı£¬ÔİÊ±ÎŞĞèÇóÎ´¿ª·¢
+dim startid : startid = 0 'è·³è½¬é™åˆ¶é¡µåå‚æ•°ï¼Œæš‚æ—¶æ— éœ€æ±‚æœªå¼€å‘
 dim splitpage_MaxJumpPageNum : splitpage_MaxJumpPageNum = DEF_MaxJumpPageNum
 
 sub splitpage_returnData(class_sql,class_idname,class_page,class_selcolumn,class_recordcount)
@@ -50,7 +50,7 @@ sub splitpage_returnData(class_sql,class_idname,class_page,class_selcolumn,class
 		
 		dim maxJumpPage : maxJumpPage = 5
 		'if DEF_UsedDataBase <> 2 then
-		if 1 = 0 and DEF_UsedDataBase <> 2 then 'move£¬ÆäÖĞmysql odbc²»Ö§³ÖÊ¹ÓÃmove
+		if 1 = 0 and DEF_UsedDataBase <> 2 then 'moveï¼Œå…¶ä¸­mysql odbcä¸æ”¯æŒä½¿ç”¨move
 			if p > maxJumpPage then
 				dim orderstr
 				if splitpage_orderstr <> "" then
@@ -65,9 +65,9 @@ sub splitpage_returnData(class_sql,class_idname,class_page,class_selcolumn,class
 				end if
 				Set rs = LDExeCute(sql,0)
 				If Not Rs.Eof Then
-					sqlstring = sqlstring & "<li><span class=bluefont>" & FormatNumber(cCur(Timer - DEF_PageExeTime1),4,True) & "</span> move" & p*listNum & "Ìõ¼ÇÂ¼Ç°</li>" & VbCrLf
+					sqlstring = sqlstring & "<li><span class=bluefont>" & FormatNumber(cCur(Timer - DEF_PageExeTime1),4,True) & "</span> move" & p*listNum & "æ¡è®°å½•å‰</li>" & VbCrLf
 					Rs.Move p*listNum
-					sqlstring = sqlstring & "<li><span class=bluefont>" & FormatNumber(cCur(Timer - DEF_PageExeTime1),4,True) & "</span> move" & p*listNum & "Ìõ¼ÇÂ¼ºó</li>" & VbCrLf
+					sqlstring = sqlstring & "<li><span class=bluefont>" & FormatNumber(cCur(Timer - DEF_PageExeTime1),4,True) & "</span> move" & p*listNum & "æ¡è®°å½•å</li>" & VbCrLf
 					If Not Rs.Eof Then
 						startid = ccur(Rs(0))
 						selpage = 0
@@ -112,7 +112,7 @@ sub splitpage_returnData(class_sql,class_idname,class_page,class_selcolumn,class
 					end if
 					Set rs = LDExeCute(sql,0)
 					If Not Rs.Eof Then
-						sqlstring = sqlstring & "<li><span class=bluefont>" & FormatNumber(cCur(Timer - DEF_PageExeTime1),4,True) & "</span> funnameºó</li>" & VbCrLf
+						sqlstring = sqlstring & "<li><span class=bluefont>" & FormatNumber(cCur(Timer - DEF_PageExeTime1),4,True) & "</span> funnameå</li>" & VbCrLf
 						startid = ccur(Rs(0))
 						selpage = 0
 					end if
@@ -179,10 +179,10 @@ sub splitpage_returnData(class_sql,class_idname,class_page,class_selcolumn,class
 
 end Sub
 
-rem ajaxobj ×é³É: ajax´«µİ·µ»ØµÄobj.id|´«µİµÄ²ÎÊı|ajaxÖ´ĞĞÍê³ÉºóÖ´ĞĞµÄjs´úÂë
-dim splitpage_cazhi : splitpage_cazhi = 0 'Ò³Êı²î¾à
-Dim splitpage_notbreak : splitpage_notbreak = 0 'ÊÇ·ñclear bothÇ¿ÖÆ·ÖĞĞ
-dim splitpage_mobileflag : splitpage_mobileflag = 0 'ÊÇ·ñÎªÒÆ¶¯Éè±¸
+rem ajaxobj ç»„æˆ: ajaxä¼ é€’è¿”å›çš„obj.id|ä¼ é€’çš„å‚æ•°|ajaxæ‰§è¡Œå®Œæˆåæ‰§è¡Œçš„jsä»£ç 
+dim splitpage_cazhi : splitpage_cazhi = 0 'é¡µæ•°å·®è·
+Dim splitpage_notbreak : splitpage_notbreak = 0 'æ˜¯å¦clear bothå¼ºåˆ¶åˆ†è¡Œ
+dim splitpage_mobileflag : splitpage_mobileflag = 0 'æ˜¯å¦ä¸ºç§»åŠ¨è®¾å¤‡
 sub splitpage_viewpagelist(url,num,curp,ajaxobj)
 
 	dim n
@@ -213,7 +213,7 @@ sub splitpage_viewpagelist(url,num,curp,ajaxobj)
 	if curp < 1 then
 		if splitpage_mobileflag = 1 then
 		%>
-		<a class="prev disabled font-icon" onclick="return false;">¡¡</a>
+		<a class="prev disabled font-icon" onclick="return false;">ã€€</a>
 		<%
 		end if
 	else
@@ -230,9 +230,9 @@ sub splitpage_viewpagelist(url,num,curp,ajaxobj)
 			end if
 		%> data-ajax=false><%
 		if splitpage_mobileflag = 0 then
-			response.write "ÉÏÒ³"
+			response.write "ä¸Šé¡µ"
 		else
-			response.write "¡¡"
+			response.write "ã€€"
 		end if
 		%></a>
 		<%
@@ -330,7 +330,7 @@ sub splitpage_viewpagelist(url,num,curp,ajaxobj)
 	
 	if num > jumpNum * 2 then
 	%>
-	<input type="text" data-role="none" title="ÊäÈëÒ³Êı,°´Enter¼üÌø×ª¡£" size="2" onkeydown="javascript:if(event.keyCode==13){<%
+	<input type="text" data-role="none" title="è¾“å…¥é¡µæ•°,æŒ‰Enteré”®è·³è½¬ã€‚" size="2" onkeydown="javascript:if(event.keyCode==13){<%
 	if ajaxobj <> "" Then
 	%>getAJAX('<%
 	
@@ -353,7 +353,7 @@ sub splitpage_viewpagelist(url,num,curp,ajaxobj)
 	if curp+splitpage_cazhi+1 >= num then
 		if splitpage_mobileflag = 1 then
 		%>
-		<a class="nxt disabled font-icon" onclick="return false;">¡¡</a>
+		<a class="nxt disabled font-icon" onclick="return false;">ã€€</a>
 		<%
 		end if
 	else
@@ -370,9 +370,9 @@ sub splitpage_viewpagelist(url,num,curp,ajaxobj)
 			end if
 		%> data-ajax=false><%
 		if splitpage_mobileflag = 0 then
-			response.write "ÏÂÒ³"
+			response.write "ä¸‹é¡µ"
 		else
-			response.write "¡¡"
+			response.write "ã€€"
 		end if
 		%></a>
 		<%

@@ -1,32 +1,32 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../../inc/Limit_Fun.asp -->
-<!-- #include file=../inc/UserTopic.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../../inc/Limit_Fun.asp"-->
+<!--#include file="../inc/UserTopic.asp"-->
 <!--#include file="alipayto/alipay_payto.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
-Main
+Main()
 
 Sub Main
 
-	initDatabase
+	initDatabase()
 	GBL_CHK_TempStr = ""
 	
-	BBS_SiteHead DEF_SiteNameString & " - " & DEF_PointsName(1) & "³äÖµ",0,"" & DEF_PointsName(1) & "³äÖµ"
+	BBS_SiteHead DEF_SiteNameString & " - " & DEF_PointsName(1) & "å……å€¼",0,"" & DEF_PointsName(1) & "å……å€¼"
 	
 	UserTopicTopInfo("user")
 	If GBL_CHK_Flag = 1 Then
-		LoginAccuessFul
+		LoginAccuessFul()
 	Else
 		If Request("submitflag")="" Then
-			DisplayLoginForm("ÇëÏÈµÇÂ¼")
+			DisplayLoginForm("è¯·å…ˆç™»å½•")
 		Else
 			DisplayLoginForm(GBL_CHK_TempStr)
 		End If
 	End If
-	closeDataBase
-	UserTopicBottomInfo
-	SiteBottom
+	closeDataBase()
+	UserTopicBottomInfo()
+	SiteBottom()
 
 End Sub
 
@@ -40,9 +40,9 @@ Function LoginAccuessFul
               	Case "done":
               		Response.Write "<b>" & Request.QueryString("str") & "</b>"
               	Case "list":
-              		Alipay_SellList
+              		Alipay_SellList()
               	Case Else
-              		DisplayPaymentForm
+              		DisplayPaymentForm()
               End Select
     
 End Function
@@ -50,13 +50,13 @@ End Function
 Sub Payment_nav(Evol)
 
 	Response.Write "<div class='user_item_nav fire'><ul>"
-	Response.Write "<li><div class=name>" & DEF_PointsName(1) & "³äÖµ</div></li>"
+	Response.Write "<li><div class=name>" & DEF_PointsName(1) & "å……å€¼</div></li>"
 	If Evol = "list" Then
-		%><li><div class=navactive>ÀúÊ·¶©µ¥</div></li>
-		<li><a href="payment.asp">Á¢¼´³äÖµ</a></li><%
+		%><li><div class=navactive>å†å²è®¢å•</div></li>
+		<li><a href="payment.asp">ç«‹å³å……å€¼</a></li><%
 	Else%>
-		<li><a href="payment.asp?act=list">ÀúÊ·¶©µ¥</a></li>
-		<li><div class=navactive>Á¢¼´³äÖµ</div></li><%
+		<li><a href="payment.asp?act=list">å†å²è®¢å•</a></li>
+		<li><div class=navactive>ç«‹å³å……å€¼</div></li><%
 	End If
 	Response.Write "</ul></div>"
 	
@@ -68,12 +68,12 @@ Dim shijian,dingdan,subject,body,out_trade_no,price,quantity,discount,AlipayObj,
 Sub PaymentSubmit
 
 	If DEF_seller_email = "" Then
-		Response.Write "<div class=alert>ÍøÕ¾Î´¿ªÍ¨´ËÏî·şÎñ.</div>"
+		Response.Write "<div class=alert>ç½‘ç«™æœªå¼€é€šæ­¤é¡¹æœåŠ¡.</div>"
 		Exit Sub
 	End If
 
 	GBL_CHK_TempStr = ""
-	If CheckUserAnnounceLimit = 0 Then
+	If CheckUserAnnounceLimit() = 0 Then
 		Response.Write "<div class=alert>" & GBL_CHK_TempStr & "</div>"
 		Exit Sub
 	End If
@@ -89,12 +89,12 @@ Sub PaymentSubmit
 	
 	If PreSellTime > 0 Then
 		If DateDiff("s",RestoreTime(GBL_UDT(13)),DEF_Now) < 5 Then
-			GBL_CHK_TempStr = "¶©µ¥Ìá½»Ì«Æµ,ÇëÉÔºòÔÙÌá½»."
+			GBL_CHK_TempStr = "è®¢å•æäº¤å¤ªé¢‘,è¯·ç¨å€™å†æäº¤."
 			Exit Sub
 		End If
 	End If
 	
-	'É¾³ı¾ÉÎ´¸¶¿î¶©µ¥(7ÌìÇ°)
+	'åˆ é™¤æ—§æœªä»˜æ¬¾è®¢å•(7å¤©å‰)
 	CALL LdExeCute("Delete from LeadBBS_SellList where UserName='" & Replace(GBL_CHK_User,"'","''") & "' and PayFlag = 0 and SellTime<" & GetTimeValue(DateAdd("d",-7,DEF_Now)) & "",1)
 
 	Dim PayPoints
@@ -102,13 +102,13 @@ Sub PaymentSubmit
 	If isNumeric(PayPoints) = False Then PayPoints = 0
 	PayPoints = Fix(cCur(PayPoints))
 	If PayPoints < DEF_seller_minpoints Then
-		GBL_CHK_TempStr = "±¾´Î³äÖµÊı¶î²»ÄÜÉÙÓÚ " & DEF_seller_minpoints & " µã"
+		GBL_CHK_TempStr = "æœ¬æ¬¡å……å€¼æ•°é¢ä¸èƒ½å°‘äº " & DEF_seller_minpoints & " ç‚¹"
 		Exit Sub
 	End If
 	
 	shijian=now()
 	dingdan= GetTimeValue(DEF_Now)
-	'¿Í»§ÍøÕ¾¶©µ¥ºÅ£¬£¨ÏÖÈ¡ÏµÍ³Ê±¼ä£¬¿É¸Ä³ÉÍøÕ¾×Ô¼ºµÄ±äÁ¿£©
+	'å®¢æˆ·ç½‘ç«™è®¢å•å·ï¼Œï¼ˆç°å–ç³»ç»Ÿæ—¶é—´ï¼Œå¯æ”¹æˆç½‘ç«™è‡ªå·±çš„å˜é‡ï¼‰
 	
 	Dim LoopN
 	LoopN = 0
@@ -126,18 +126,18 @@ Sub PaymentSubmit
 	Next
 		
 	
-	'subject			=	DEF_PointsName(1) & "³äÖµ"		'ÉÌÆ·Ãû³Æ
-	'body			=	"ÂÛÌ³" & DEF_PointsName(1) & "³äÖµ£¬¹²" & PayPoints*DEF_seller_exchangescale & "µã"		'body			ÉÌÆ·ÃèÊö
-	subject			=	dingdan		'ÉÌÆ·Ãû³Æ
-	body			=	"value" & PayPoints*DEF_seller_exchangescale & ""		'body			ÉÌÆ·ÃèÊö
+	'subject			=	DEF_PointsName(1) & "å……å€¼"		'å•†å“åç§°
+	'body			=	"è®ºå›" & DEF_PointsName(1) & "å……å€¼ï¼Œå…±" & PayPoints*DEF_seller_exchangescale & "ç‚¹"		'body			å•†å“æè¿°
+	subject			=	dingdan		'å•†å“åç§°
+	body			=	"value" & PayPoints*DEF_seller_exchangescale & ""		'body			å•†å“æè¿°
 	out_trade_no    =   dingdan
-	price		    =	PayPoints				'priceÉÌÆ·µ¥¼Û			0.01¡«50000.00
-	quantity        =   "1"               'ÉÌÆ·ÊıÁ¿,Èç¹û×ß¹ºÎï³µÄ¬ÈÏÎª1
-	discount        =   "0"               'ÉÌÆ·ÕÛ¿Û
+	price		    =	PayPoints				'priceå•†å“å•ä»·			0.01ï½50000.00
+	quantity        =   "1"               'å•†å“æ•°é‡,å¦‚æœèµ°è´­ç‰©è½¦é»˜è®¤ä¸º1
+	discount        =   "0"               'å•†å“æŠ˜æ‰£
 	Set AlipayObj	= New creatAlipayItemURL
 	itemUrl=AlipayObj.creatAlipayItemURL(subject,body,out_trade_no,price,quantity,seller_email)
 	
-	'Ìí¼Ó±£´æ¶©µ¥
+	'æ·»åŠ ä¿å­˜è®¢å•
 	CALL LdExeCute("insert into LeadBBS_SellList(PID,UserName,PayPoints,GetPoints,SellTime,PayFlag) Values(" &_
 		dingdan &_
 		",'" & Replace(GBL_CHK_User,"'","''") & "'" &_
@@ -149,25 +149,25 @@ Sub PaymentSubmit
 	<form id="PaymentForm" method="post" action="<%=itemUrl%>" method=get target="_blank">
 	<table cellspacing="0" cellpadding="0" class=blanktable>
 	<tr>
-	<td><b>³äÈëÕË»§</b></td>
+	<td><b>å……å…¥è´¦æˆ·</b></td>
 	<td><%=htmlencode(GBL_CHK_User)%></td>
 	</tr>
 	<tr>
-	<td><b>³äÖµ½ğ¶î</b></td>
-	<td><%=PayPoints%>Ôª</td>
+	<td><b>å……å€¼é‡‘é¢</b></td>
+	<td><%=PayPoints%>å…ƒ</td>
 	</tr>
 	<tr>
-	<td><b>¹ºÂò<%=DEF_PointsName(1)%>µãÊı</b></td>
-	<td><%=PayPoints*DEF_seller_exchangescale%>µã</td>
+	<td><b>è´­ä¹°<%=DEF_PointsName(1)%>ç‚¹æ•°</b></td>
+	<td><%=PayPoints*DEF_seller_exchangescale%>ç‚¹</td>
 	</tr>
 	<tr>
-	<td><b>¶©µ¥ºÅ</b></td>
+	<td><b>è®¢å•å·</b></td>
 	<td><%=dingdan%></td>
 	</tr>
 	<tr>
-	<td colspan=2><br/>ÇëÈ·ÈÏÒÔÉÏĞÅÏ¢£¬µã»÷ÒÔÏÂ°´Å¥Ìá½»¶©µ¥Ö§¸¶
+	<td colspan=2><br/>è¯·ç¡®è®¤ä»¥ä¸Šä¿¡æ¯ï¼Œç‚¹å‡»ä»¥ä¸‹æŒ‰é’®æäº¤è®¢å•æ”¯ä»˜
 	<br><br>
-	<input type="submit" value=Á¢¼´Ö§¸¶ class="fmbtn btn_3" />
+	<input type="submit" value=ç«‹å³æ”¯ä»˜ class="fmbtn btn_3" />
 	</td></tr></table>
 	</form>
 	<%
@@ -178,9 +178,9 @@ Sub DisplayPaymentForm
 
 	GBL_CHK_TempStr = ""
 	If Request.Form("action") = "submitpayment" Then
-		PaymentSubmit
+		PaymentSubmit()
 		If GBL_CHK_TempStr <> "" Then
-			Response.Write "<div class=alert>´íÎóÌáÊ¾£º" & GBL_CHK_TempStr & "</div>"
+			Response.Write "<div class=alert>é”™è¯¯æç¤ºï¼š" & GBL_CHK_TempStr & "</div>"
 		Else
 			Exit Sub
 		End If
@@ -190,13 +190,13 @@ Sub DisplayPaymentForm
 	<input type="hidden" name="action" value="submitpayment">
 	<table cellspacing="0" cellpadding="0" class=blanktable>
 	<tr>
-	<td><b>³äÖµ<%=DEF_PointsName(1)%>¹æÔò</b></td>
+	<td><b>å……å€¼<%=DEF_PointsName(1)%>è§„åˆ™</b></td>
 	<td>
-	ÈËÃñ±ÒÏÖ½ğ <b>1</b> Ôª = <%=DEF_PointsName(1)%> <b><%=1*DEF_seller_exchangescale%></b> µã	<br>±¾´Î×îµÍ³äÖµ <%=DEF_PointsName(1)%> <b><%=DEF_seller_minpoints%></b> µã
+	äººæ°‘å¸ç°é‡‘ <b>1</b> å…ƒ = <%=DEF_PointsName(1)%> <b><%=1*DEF_seller_exchangescale%></b> ç‚¹	<br>æœ¬æ¬¡æœ€ä½å……å€¼ <%=DEF_PointsName(1)%> <b><%=DEF_seller_minpoints%></b> ç‚¹
 	</td>
 	</tr>
 	<tr>
-	<td><b>³äÖµÈËÃñ±Ò½ğ¶î</b></td>
+	<td><b>å……å€¼äººæ°‘å¸é‡‘é¢</b></td>
 	<td>
 	<script>
 	function $id(id)
@@ -209,7 +209,7 @@ Sub DisplayPaymentForm
 		if(isNaN(PayPoints))
 		{
 			PayPoints = 0;
-			alert("³äÖµ½ğ¶îÇëÊ¹ÓÃÊı×Ö.");
+			alert("å……å€¼é‡‘é¢è¯·ä½¿ç”¨æ•°å­—.");
 			$id('PayPoints').value="";
 		}
 		else
@@ -220,31 +220,31 @@ Sub DisplayPaymentForm
 		$id('payment_points').innerHTML = PayPoints*<%=DEF_seller_exchangescale%>;
 	}
 	</script>
-	<input name=PayPoints id=PayPoints onchange="refreshMoney()" class="fminpt input_2" /> Ôª</td>
+	<input name=PayPoints id=PayPoints onchange="refreshMoney()" class="fminpt input_2" /> å…ƒ</td>
 	</tr>
 
 	<tr>
-	<td><b>Äú¹²ĞèÒªÔÚÏßÖ§¸¶</b></td>
-	<td>ÈËÃñ±Ò <span id="payment_money">0</span> Ôª ¿É¹ºµÃ<%=DEF_PointsName(1)%>µãÊı <span id="payment_points">0</span> µã</td>
+	<td><b>æ‚¨å…±éœ€è¦åœ¨çº¿æ”¯ä»˜</b></td>
+	<td>äººæ°‘å¸ <span id="payment_money">0</span> å…ƒ å¯è´­å¾—<%=DEF_PointsName(1)%>ç‚¹æ•° <span id="payment_points">0</span> ç‚¹</td>
 	</tr>
 
 	<tr>
 	<td></td>
 	<td>
 	<div class=value2>
-	´ËÏî³äÖµ·şÎñÒÔÈËÃñ±ÒÏÖ½ğÔÚÏßÖ§¸¶£¬¹ºÂòÂÛÌ³¸÷·½ÃæÊ¹ÓÃµÄĞéÄâ±Ò£º<%=DEF_PointsName(1)%><br>
-	»ı·Ö³äÖµ²»ÄÜ³·Ïú»òÍË¿î£¬ÇëÄúÔÚ³äÖµÇ°È·¶¨²¢×ĞÏ¸ºË¶Ô³äÖµµÄ½ğ¶î¡£
+	æ­¤é¡¹å……å€¼æœåŠ¡ä»¥äººæ°‘å¸ç°é‡‘åœ¨çº¿æ”¯ä»˜ï¼Œè´­ä¹°è®ºå›å„æ–¹é¢ä½¿ç”¨çš„è™šæ‹Ÿå¸ï¼š<%=DEF_PointsName(1)%><br>
+	ç§¯åˆ†å……å€¼ä¸èƒ½æ’¤é”€æˆ–é€€æ¬¾ï¼Œè¯·æ‚¨åœ¨å……å€¼å‰ç¡®å®šå¹¶ä»”ç»†æ ¸å¯¹å……å€¼çš„é‡‘é¢ã€‚
 	</div>
 	<br />
 	<div class=value2>
-	Äú³É¹¦Ö§¸¶ºóÏµÍ³¿ÉÄÜĞèÒª¼¸·ÖÖÓµÄÊ±¼äµÈ´ıÖ§¸¶½á¹û£¬Òò´Ë¿ÉÄÜÎŞ·¨Ë²¼äÈëÕË¡£<br>
-	Èç¹û³¬¹ı48Ğ¡Ê±ÈÔÎ´ÊÕµ½Í¨Öª¶ÌÏûÏ¢£¬ÇëÓëÂÛÌ³¹ÜÀíÔ±ÁªÏµ¡£
+	æ‚¨æˆåŠŸæ”¯ä»˜åç³»ç»Ÿå¯èƒ½éœ€è¦å‡ åˆ†é’Ÿçš„æ—¶é—´ç­‰å¾…æ”¯ä»˜ç»“æœï¼Œå› æ­¤å¯èƒ½æ— æ³•ç¬é—´å…¥è´¦ã€‚<br>
+	å¦‚æœè¶…è¿‡48å°æ—¶ä»æœªæ”¶åˆ°é€šçŸ¥çŸ­æ¶ˆæ¯ï¼Œè¯·ä¸è®ºå›ç®¡ç†å‘˜è”ç³»ã€‚
 	</div></td>
 	</tr>
 	<tr class="btns">
 		<td>&nbsp;</td>
 		<td>
-			<input type="submit" value=Ìá½» class="fmbtn btn_2" /></td>
+			<input type="submit" value=æäº¤ class="fmbtn btn_2" /></td>
 	</tr>
 	</table>
 
@@ -257,7 +257,7 @@ Sub Alipay_SellList
 
 	Dim Rs,payflag,SQL
 	payflag = Request.QueryString("payflag")
-	If CheckSupervisorUserName = 0 Then
+	If CheckSupervisorUserName() = 0 Then
 		If payflag = "0" Then
 			payflag = 0
 			SQL = " where UserName='" & Replace(GBL_CHK_User,"'","''") & "' and PayFlag=0"
@@ -294,12 +294,12 @@ Sub Alipay_SellList
 	%>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class=table_in>
 	<tr class=tbinhead>
-		<td><div class=value>¶©µ¥ºÅ</div></td>
-		<td><div class=value>ÓÃ»§</div></td>
-		<td><div class=value>¶î(Ôª)</div></td>
-		<td><div class=value>¶Ò»»Öµ</div></td>
-		<td><div class=value>Ê±¼ä</div></td>
-		<td><div class=value>×´Ì¬</div></td>
+		<td><div class=value>è®¢å•å·</div></td>
+		<td><div class=value>ç”¨æˆ·</div></td>
+		<td><div class=value>é¢(å…ƒ)</div></td>
+		<td><div class=value>å…‘æ¢å€¼</div></td>
+		<td><div class=value>æ—¶é—´</div></td>
+		<td><div class=value>çŠ¶æ€</div></td>
 	</tr>
 	<%
 	Dim N
@@ -313,9 +313,9 @@ Sub Alipay_SellList
 		<td class=tdbox><%=GetData(4,N)%></td>
 		<td class=tdbox><%=RestoreTime(GetData(5,N))%></td>
 		<td class=tdbox><%If GetData(6,N) = 0 Then
-			Response.Write "Î´¸¶¿î"
+			Response.Write "æœªä»˜æ¬¾"
 		Else
-			Response.Write "<span class=greenfont>ÒÑ¸¶¿î</span>"
+			Response.Write "<span class=greenfont>å·²ä»˜æ¬¾</span>"
 		End If%></td>
 	</tr>
 		<%
@@ -324,21 +324,21 @@ Sub Alipay_SellList
 
 	Response.Write "<tr><td class=tdbox colspan=6><div class=j_page>"
 	If payflag = -1 Then
-		Response.Write "<b>È«²¿¶©µ¥</b>"
+		Response.Write "<b>å…¨éƒ¨è®¢å•</b>"
 	Else
-		Response.Write "<a href=""payment.asp?act=list"">È«²¿¶©µ¥</a>"
+		Response.Write "<a href=""payment.asp?act=list"">å…¨éƒ¨è®¢å•</a>"
 	End If
 	If payflag = 1 Then
-		Response.Write "<b>ÒÑ¸¶¿î</b>"
+		Response.Write "<b>å·²ä»˜æ¬¾</b>"
 	Else
-		Response.Write "<a href=""payment.asp?act=list&payflag=1"">ÒÑ¸¶¿î</a>"
+		Response.Write "<a href=""payment.asp?act=list&payflag=1"">å·²ä»˜æ¬¾</a>"
 	End If
 	If payflag = 0 Then
-		Response.Write "<b>Î´¸¶¿î</b>"
+		Response.Write "<b>æœªä»˜æ¬¾</b>"
 	Else
-		Response.Write "<a href=""payment.asp?act=list&payflag=0"">Î´¸¶¿î</a>"
+		Response.Write "<a href=""payment.asp?act=list&payflag=0"">æœªä»˜æ¬¾</a>"
 	End If
-	If CheckSupervisorUserName = 1 Then Response.Write " <b><span class=gray>ÄúÊÇ¹ÜÀíÔ±,ÒÔÏÂÏÔÊ¾ÎªÈ«²¿ÓÃ»§¶©µ¥ĞÅÏ¢</span></b>"
+	If CheckSupervisorUserName() = 1 Then Response.Write " <b><span class=gray>æ‚¨æ˜¯ç®¡ç†å‘˜,ä»¥ä¸‹æ˜¾ç¤ºä¸ºå…¨éƒ¨ç”¨æˆ·è®¢å•ä¿¡æ¯</span></b>"
 	%>
 	</div>
 	</td>

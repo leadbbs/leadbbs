@@ -3,4 +3,4 @@ INSERT INTO `leadbbs_boards` VALUES ('100', '100', 'Default Forum', '', '', '201
 INSERT INTO `leadbbs_boards` VALUES ('444', '100', 'Recycle', '', '', '20130319024028', '0', '0', '', '0', '0', '', '', '92', '0', '0', '0', '0', '0', '0', '0', '0', '', '', '', '0', '0', '0', '', '444', '1', '0', '0', '0', '0', '0') ON DUPLICATE KEY update boardid=boardid;
 INSERT INTO `leadbbs_skin` VALUES ('1000', 'style1000', '66', '0', '', '', '', '', '1', '', 'abc', '0') ON DUPLICATE KEY update StyleID=StyleID;
 INSERT INTO `leadbbs_skin` VALUES ('1001', 'LeadBBS 7.0', '80', '0', '', '', '', '', '1', '', 'abc', '0') ON DUPLICATE KEY update StyleID=StyleID;
-INSERT INTO `leadbbs_setup` VALUES ('72', '1002', '20130314002', '0', 'ƒ⁄≤ø∞Ê±æ∫≈') ON DUPLICATE KEY update valuestr='20130314001';
+INSERT INTO `leadbbs_setup` VALUES ('72', '1002', '20130314002', '0', 'ÂÜÖÈÉ®ÁâàÊú¨Âè∑') ON DUPLICATE KEY update valuestr='20130314001';

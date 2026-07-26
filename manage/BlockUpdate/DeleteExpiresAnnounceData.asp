@@ -1,17 +1,17 @@
-<!-- #include file=../../inc/BBSSetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../../b/inc/cache_fun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSSetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../../b/inc/cache_fun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 Server.ScriptTimeOut = 6000
 DEF_BBS_HomeUrl = "../../"
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-checkSupervisorPass
+checkSupervisorPass()
 'Response.End
 
 If GBL_CHK_Flag = 0 or GBL_CHK_TempStr <> "" Then
-	CloseDatabase
+	CloseDatabase()
 	Response.End
 End If
 
@@ -24,45 +24,45 @@ If Request.Form("submitflag") <> "" Then
 	GBL_Form_BoardID = Fix(cCur(GBL_Form_BoardID))
 	
 	If GBL_Form_Day < 7 or GBL_Form_Day > 9999 Then
-		GBL_CHK_TempStr = "<p>´íÎóµÄÌìÊıÖ¸¶¨£¬ÒªÇóÖµÖÁÉÙÒªÇóÎª7ÌìÇ°£®"
+		GBL_CHK_TempStr = "<p>é”™è¯¯çš„å¤©æ•°æŒ‡å®šï¼Œè¦æ±‚å€¼è‡³å°‘è¦æ±‚ä¸º7å¤©å‰ï¼"
 	Else
 		If GBL_Form_BoardID < 1 Then
-			GBL_CHK_TempStr = "<p>´íÎóµÄÂÛÌ³°æÃæ£®"
+			GBL_CHK_TempStr = "<p>é”™è¯¯çš„è®ºå›ç‰ˆé¢ï¼"
 		End If
 	End If	
 End If
 	
 If Request.Form("submitflag") = "" or GBL_CHK_TempStr <> "" Then
 	Dim GBL_Form_Day,GBL_Form_BoardID
-	Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-	frame_TopInfo
-	DisplayUserNavigate("ÅúÁ¿É¾³ıÂÛÌ³Ö¸¶¨Ìõ¼şµÄÀúÊ·Êı¾İ")
+	Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+	frame_TopInfo()
+	DisplayUserNavigate("æ‰¹é‡åˆ é™¤è®ºå›æŒ‡å®šæ¡ä»¶çš„å†å²æ•°æ®")
 	if GBL_CHK_TempStr <> "" Then
 		Response.Write "<br><p align=left><font color=ff0000 class=redfont><b>" & GBL_CHK_TempStr & "</b></font>"
-		DisplayForm
+		DisplayForm()
 	Else%>
 		<table width=100%>
 		<tr>
 			<td>
-				<%DisplayForm%>
+				<%DisplayForm()%>
 			</td>
 		</tr>
 		</table>
 		<%
 	End If
-	frame_BottomInfo
-	SiteBottom
+	frame_BottomInfo()
+	SiteBottom()
 	If GBL_ShowBottomSure = 1 Then Response.Write GBL_SiteBottomString
 Else
-	If GBL_CHK_Flag = 1 and GBL_UserID > 0 and CheckSupervisorUserName = 1 Then
+	If GBL_CHK_Flag = 1 and GBL_UserID > 0 and CheckSupervisorUserName() = 1 Then
 		if GBL_CHK_TempStr <> "" Then
 			Response.Write "<br><p align=center><font color=ff0000 class=redfont><b>" & GBL_CHK_TempStr & "</b></font>"
 		Else
-			DeleteExpiresAnnounceData
+			DeleteExpiresAnnounceData()
 		End If
 	End If
-	closeDataBase
-	SiteBottom_Spend
+	closeDataBase()
+	SiteBottom_Spend()
 End If
 
 Function DisplayForm
@@ -83,15 +83,15 @@ Function DisplayForm
 				</script>
 				<form name=LeadBBSFm action=DeleteExpiresAnnounceData.asp method=post onSubmit="submitonce(this);">
 					<input type=hidden name=submitflag value="dk9@dl9s92lw_SWxl">
-					<div class=alert>¾¯¸æ£º</div>
-					<div class=frameline>Ä¿Ç°Ê±¼ä£º<%=DEF_Now%> (×îĞ¡ÒªÇó£·ÌìÇ°)</div>
-					<div class=frameline>ÅúÁ¿É¾³ı<input type=text value="<%=GBL_Form_Day%>" size=4 maxlength=4 name=GBL_Form_Day>ÌìÇ°µÄÊı¾İ</div>
+					<div class=alert>è­¦å‘Šï¼š</div>
+					<div class=frameline>ç›®å‰æ—¶é—´ï¼š<%=DEF_Now%> (æœ€å°è¦æ±‚ï¼—å¤©å‰)</div>
+					<div class=frameline>æ‰¹é‡åˆ é™¤<input type=text value="<%=GBL_Form_Day%>" size=4 maxlength=4 name=GBL_Form_Day>å¤©å‰çš„æ•°æ®</div>
 					<div class=frameline>
-					<!-- #include file=../../inc/incHTM/BoardForMoveList.asp -->
-					(Ò»¶¨ÒªÖ¸¶¨ËùÒªÅúÁ¿É¾³ıµÄ°æÃæ)</div>
-					<div class=alert>ÂÛÌ³Êı¾İÉ¾³ıºó½«ÎŞ·¨»Ö¸´£¬Ò»ÇĞ²Ù×÷²»¿ÉÄæ£¡£¡</div>
-					<div class=frameline>½¨ÒéÔÚÉ¾³ıÇ°×÷ºÃÊı¾İ¿â±¸·İ£¬ÒÔ·À²»²â£®È·¶¨Òª¼ÌĞøÂğ£¿</div>
-					<input type=submit value=È·¶¨ÅúÁ¿É¾³ıÖ¸¶¨Ìõ¼şµÄÂÛÌ³Êı¾İ class=fmbtn>
+					<!--#include file="../../inc/incHTM/BoardForMoveList.asp"-->
+					(ä¸€å®šè¦æŒ‡å®šæ‰€è¦æ‰¹é‡åˆ é™¤çš„ç‰ˆé¢)</div>
+					<div class=alert>è®ºå›æ•°æ®åˆ é™¤åå°†æ— æ³•æ¢å¤ï¼Œä¸€åˆ‡æ“ä½œä¸å¯é€†ï¼ï¼</div>
+					<div class=frameline>å»ºè®®åœ¨åˆ é™¤å‰ä½œå¥½æ•°æ®åº“å¤‡ä»½ï¼Œä»¥é˜²ä¸æµ‹ï¼ç¡®å®šè¦ç»§ç»­å—ï¼Ÿ</div>
+					<input type=submit value=ç¡®å®šæ‰¹é‡åˆ é™¤æŒ‡å®šæ¡ä»¶çš„è®ºå›æ•°æ® class=fmbtn>
 				</form>
 	<%
 End Function
@@ -104,8 +104,8 @@ Function DeleteExpiresAnnounceData
 	Dim NowID,EndFlag
 	NowID = 0
 	EndFlag = 0
-	Response.Write "<p style=font-size:9pt>ÏÂĞè¿ªÊ¼É¾³ı¸üĞÂÊ±¼ä" & GBL_Form_Day & "Ç°µÄ¾ÉÂÛÌ³Ìû×Ó£¬³ÌĞò½«¿ªÊ¼É¨Ãè²¢É¾³ı°æÃæ±àºÅºÅÎª<font color=blue class=bluefont>" & GBL_Form_BoardID & "</font>µÄ·ûºÏÌõ¼şµÄÖ÷Ìâ£®£®£®"
-	'Response.Write "<br>½ø¶È(ĞèÒªÊ±¼ä¿ÉÄÜ»áºÜ³¤£¬ÇëµÈ´ı³öÏÖÍê³É£¬¡ö±íÊ¾É¾³ı£¬¡õ±íÊ¾ÂÔ¹ı)£º"
+	Response.Write "<p style=font-size:9pt>ä¸‹éœ€å¼€å§‹åˆ é™¤æ›´æ–°æ—¶é—´" & GBL_Form_Day & "å‰çš„æ—§è®ºå›å¸–å­ï¼Œç¨‹åºå°†å¼€å§‹æ‰«æå¹¶åˆ é™¤ç‰ˆé¢ç¼–å·å·ä¸º<font color=blue class=bluefont>" & GBL_Form_BoardID & "</font>çš„ç¬¦åˆæ¡ä»¶çš„ä¸»é¢˜ï¼ï¼ï¼"
+	'Response.Write "<br>è¿›åº¦(éœ€è¦æ—¶é—´å¯èƒ½ä¼šå¾ˆé•¿ï¼Œè¯·ç­‰å¾…å‡ºç°å®Œæˆï¼Œâ– è¡¨ç¤ºåˆ é™¤ï¼Œâ–¡è¡¨ç¤ºç•¥è¿‡)ï¼š"
 	GBL_Form_Day = GetTimeValue(GBL_Form_Day)
 	NowID = 0
 	EndFlag = 0
@@ -132,7 +132,7 @@ Function DeleteExpiresAnnounceData
 	If RecordCount < 1 Then RecordCount = 1
 	CountIndex = 0
 	%>
-	<p style="font-size:9pt">ÏÂÃæÉ¨Ãè¿ÉÉ¾³ıµÄÖ÷Ìâ£¬¹²ÓĞ<%=RecordCount%>¸öÖ÷Ìâ´ıÉ¨Ãè
+	<p style="font-size:9pt">ä¸‹é¢æ‰«æå¯åˆ é™¤çš„ä¸»é¢˜ï¼Œå…±æœ‰<%=RecordCount%>ä¸ªä¸»é¢˜å¾…æ‰«æ
 
 	<table width="400" border="0" cellspacing="1" cellpadding="1">
 		<tr> 
@@ -189,7 +189,7 @@ Function DeleteExpiresAnnounceData
 	%>
 	<script>img1.width=400;
 	txt1.innerHTML="100";</script>
-	¹²¼Æ<%=DeleteNum%>¸öÖ÷ÌâÌû×Ó±»É¾³ı
+	å…±è®¡<%=DeleteNum%>ä¸ªä¸»é¢˜å¸–å­è¢«åˆ é™¤
 	<%
 
 End Function
@@ -299,7 +299,7 @@ Function DelAnnounce(DelID)
 		End If
 		CALL LDExeCute("Update LeadBBS_User set AnnounceNum=AnnounceNum-1,AnnounceGood=AnnounceGood-" & GoodNum & " Where ID =" & UserID,1)
 		'UpdateBoardValue(BoardID)
-		Rem ¸üĞÂMaxRootID
+		Rem æ›´æ–°MaxRootID
 
 		select case DEF_UsedDataBase
 		case 0,2:
@@ -328,7 +328,7 @@ Function DelAnnounce(DelID)
 		TmpTopicNum = 0
 		todayAnnounce = 0
 		Do While LoopFlag = 1
-			Rem Ö÷ÌâÌûÁô×Å×îºóÉ¾³ı£¬ÒÔÃâÉ¾³ıÖĞÑëÒâÍâÖĞÖ¹£¬µ¼ÖÂÖ÷ÌâËğ»µ
+			Rem ä¸»é¢˜å¸–ç•™ç€æœ€ååˆ é™¤ï¼Œä»¥å…åˆ é™¤ä¸­å¤®æ„å¤–ä¸­æ­¢ï¼Œå¯¼è‡´ä¸»é¢˜æŸå
 			SQL = sql_select("Select ID,BoardID,ParentID,UserID,ndatetime,GoodFlag from LeadBBS_Announce where RootIDBak=" & RootIDBak & " and id>" & NowID & " order by ID",100)
 			Set Rs = LDExeCute(SQL,0)
 			If Not Rs.Eof Then
@@ -441,7 +441,7 @@ End Function
 Sub ReloadTopicAssort(BoardID)
 
 	Dim Rs
-	Set Rs = LDExeCute("select ID,AssortName,0,0,0 from LeadBBS_GoodAssort where BoardID=" & BoardID & " Order by BoardID,OrderID",0)
+	Set Rs = LDExeCute("select ID,AssortName,0,0 as c0_dup2,0 as c0_dup3 from LeadBBS_GoodAssort where BoardID=" & BoardID & " Order by BoardID,OrderID",0)
 	If Not Rs.Eof Then
 		Application.Lock
 		Application(DEF_MasterCookies & "BoardInfo" & BoardID & "_TI") = Rs.GetRows(-1)

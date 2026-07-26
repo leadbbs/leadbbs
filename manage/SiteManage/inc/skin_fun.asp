@@ -5,11 +5,16 @@
 'Extent skin can define DisplayTopicLength and css file content.
 Class ExtentSkin_Manager
 
-	Public StyleID,StyleName,DisplayTopicLength,CssContent,DT(5,4)
+	' README Â§35: AxonASP mis-sizes a dimensioned array declared as a Class member â€”
+	' `Public DT(5,4)` comes out with UBound(,1)=0 and UBound(,2)=5, so every row past
+	' the first raised "Subscript out of range" and this whole page 500'd. Declaring it
+	' bare and ReDim'ing in the initializer allocates the real bounds.
+	Public StyleID,StyleName,DisplayTopicLength,CssContent,DT()
 	Public Action,submitflag
-	
+
 	Private Sub Class_Initialize
-	
+
+		ReDim DT(5,4)
 		StyleID = 0
 		StyleName = ""
 		DisplayTopicLength = 0
@@ -58,57 +63,57 @@ Class ExtentSkin_Manager
 			if submitflag = "" Then
 				DT(4,4) = "Extentskin_add"
 				DT(5,4) = "1"
-				CALL ExtentSkin_ViewForm("´´½¨ĞÂ·ç¸ñ","Extentskin_add")
+				CALL ExtentSkin_ViewForm("åˆ›å»ºæ–°é£æ ¼","Extentskin_add")
 			Else
-				GetSendPara
-				StyleID = DT(0,4)
+				GetSendPara()
+				StyleID = toNum(DT(0,4),0)
 				StyleName = DT(1,4)
-				DisplayTopicLength = DT(2,4)
+				DisplayTopicLength = toNum(DT(2,4),0)
 				CssContent = DT(3,4)
 				If ExtentSkin_Check = 1 Then
-					ExtentSkin_Save
-					ExtentSkin_Done("³É¹¦´´½¨·ç¸ñ.")
+					ExtentSkin_Save()
+					ExtentSkin_Done("æˆåŠŸåˆ›å»ºé£æ ¼.")
 				else
-					CALL ExtentSkin_ViewForm("´´½¨ĞÂ·ç¸ñ","Extentskin_add")
+					CALL ExtentSkin_ViewForm("åˆ›å»ºæ–°é£æ ¼","Extentskin_add")
 				End If
 			End If
 		case "extentskin_delete":
-			deletestyle(GetFormData("StyleID",0))
-			ExtentSkin_Done("É¾³ı²Ù×÷Íê³É.")
+			deletestyle(toNum(GetFormData("StyleID",0),0))
+			ExtentSkin_Done("åˆ é™¤æ“ä½œå®Œæˆ.")
 		case "extentskin_modify":
-			StyleID = GetFormData("StyleID",0)
+			StyleID = toNum(GetFormData("StyleID",0),0)
 			If StyleID > 0 Then
 				if submitflag = "" Then
 					ExtentSkin_GetSkin(StyleID)
-					StyleID = DT(0,4)
+					StyleID = toNum(DT(0,4),0)
 					StyleName = DT(1,4)
-					DisplayTopicLength = DT(2,4)
+					DisplayTopicLength = toNum(DT(2,4),0)
 					CssContent = DT(3,4)
 					DT(4,4) = "Extentskin_modify"
 					DT(5,4) = "1"
 					If StyleID = 0 Then
-						ExtentSkin_Err "²ÎÊı²»×ã£®"
+						ExtentSkin_Err "å‚æ•°ä¸è¶³ï¼"
 					Else
-						CALL ExtentSkin_ViewForm("±à¼­À©Õ¹·ç¸ñ","Extentskin_modify")
+						CALL ExtentSkin_ViewForm("ç¼–è¾‘æ‰©å±•é£æ ¼","Extentskin_modify")
 					End If
 				Else
-					GetSendPara
-					StyleID = DT(0,4)
+					GetSendPara()
+					StyleID = toNum(DT(0,4),0)
 					StyleName = DT(1,4)
-					DisplayTopicLength = DT(2,4)
+					DisplayTopicLength = toNum(DT(2,4),0)
 					CssContent = DT(3,4)
 					If ExtentSkin_Check = 1 Then
-						ExtentSkin_Save
-						ExtentSkin_Done("±à¼­À©Õ¹·ç¸ñÍê³É.")
+						ExtentSkin_Save()
+						ExtentSkin_Done("ç¼–è¾‘æ‰©å±•é£æ ¼å®Œæˆ.")
 					else
-						CALL ExtentSkin_ViewForm("±à¼­À©Õ¹·ç¸ñ","Extentskin_modify")
+						CALL ExtentSkin_ViewForm("ç¼–è¾‘æ‰©å±•é£æ ¼","Extentskin_modify")
 					End If
 				end if
 			Else
-				ExtentSkin_Err "²ÎÊı²»×ã£®"
+				ExtentSkin_Err "å‚æ•°ä¸è¶³ï¼"
 			End If
 		case else:
-			DisplayskinList
+			DisplayskinList()
 		End select
 
 	End Sub
@@ -125,26 +130,26 @@ Class ExtentSkin_Manager
 			Num = Ubound(GetData,2)
 		Else
 			Num = -1
-			Response.Write "ÎŞÀ©Õ¹·ç¸ñ£®"
+			Response.Write "æ— æ‰©å±•é£æ ¼ï¼"
 		End If
 		Rs.close
 		Set Rs = Nothing
 		
 		%>
 		
-		<a href=DefineStyleParameter.asp?action=extentskin_add>Ìí¼ÓĞÂµÄÀ©Õ¹·ç¸ñ</a>
+		<a href=DefineStyleParameter.asp?action=extentskin_add>æ·»åŠ æ–°çš„æ‰©å±•é£æ ¼</a>
 		<ul>
 		<%
 		for n = 0 to num
 			%>
 			<li style="line-height:40px;height:40px;">
 			<%=GetData(0,n)%> <a href=><%=htmlencode(GetData(1,n))%></a>
-			 - <a href=DefineStyleParameter.asp?action=extentskin_modify&StyleID=<%=GetData(0,n)%>>ĞŞ¸Ä</a>
-			 - <a href="script:;" onclick="if (confirm('É¾³ı²Ù×÷½«²»¿ÉÄæ,È·¶¨¼ÌĞøÂğ?'))document.location='DefineStyleParameter.asp?action=extentskin_delete&StyleID=<%=GetData(0,n)%>';return false;">É¾³ı</a>
+			 - <a href=DefineStyleParameter.asp?action=extentskin_modify&StyleID=<%=GetData(0,n)%>>ä¿®æ”¹</a>
+			 - <a href="script:;" onclick="if (confirm('åˆ é™¤æ“ä½œå°†ä¸å¯é€†,ç¡®å®šç»§ç»­å—?'))document.location='DefineStyleParameter.asp?action=extentskin_delete&StyleID=<%=GetData(0,n)%>';return false;">åˆ é™¤</a>
 			 - <a href="../SiteManage/siteInfo.asp?action=upload&p_filepath=images/style/preview/&p_filename=<%
 			if ccur(GetData(0,n)) < 10000 then response.write "0"
-			response.write GetData(0,n)%>.jpg&p_fileinfo=<%=urlencode("ÉÏ´«·ç¸ñ ID:" & GetData(0,n) & " µÄÔ¤ÀÀÍ¼Æ¬,±ØĞëÊÇjpgÎÄ¼ş£¬´óĞ¡140x105")%>" target=_blank>
-	ÉÏ´«·ç¸ñÔ¤ÀÀÍ¼Æ¬</a>
+			response.write GetData(0,n)%>.jpg&p_fileinfo=<%=urlencode("ä¸Šä¼ é£æ ¼ ID:" & GetData(0,n) & " çš„é¢„è§ˆå›¾ç‰‡,å¿…é¡»æ˜¯jpgæ–‡ä»¶ï¼Œå¤§å°140x105")%>" target=_blank>
+	ä¸Šä¼ é£æ ¼é¢„è§ˆå›¾ç‰‡</a>
 			</li>
 			<%
 		next
@@ -157,20 +162,20 @@ Class ExtentSkin_Manager
 	private function ExtentSkin_check
 	
 		if strlength(StyleName) > 255 or StyleName = "" Then
-			ExtentSkin_Err "·ç¸ñÃû³Æ³¤¶È±ØĞëÎª1-25×Ö·û£®"
+			ExtentSkin_Err "é£æ ¼åç§°é•¿åº¦å¿…é¡»ä¸º1-25å­—ç¬¦ï¼"
 			ExtentSkin_check = 0
 			Exit function
 		end if
 		
 		DisplayTopicLength = ccur(DisplayTopicLength)
 		if DisplayTopicLength < 10 or DisplayTopicLength > 255 Then
-			ExtentSkin_Err "Ö÷Ìâ³¤¶ÈÇëÌîĞ´10-255Ö®¼äµÄÊı×Ö£®"
+			ExtentSkin_Err "ä¸»é¢˜é•¿åº¦è¯·å¡«å†™10-255ä¹‹é—´çš„æ•°å­—ï¼"
 			ExtentSkin_check = 0
 			Exit function
 		end if
 		
 		if len(CssContent)>1024000 then
-			ExtentSkin_Err "ÑùÊ½ÎÄ¼ş¹ı´ó£¬×î¶àÔÊĞí" & DEF_MaxTextLength & "×Ö£®"
+			ExtentSkin_Err "æ ·å¼æ–‡ä»¶è¿‡å¤§ï¼Œæœ€å¤šå…è®¸" & DEF_MaxTextLength & "å­—ï¼"
 			ExtentSkin_check = 0
 			Exit function
 		end if
@@ -183,7 +188,7 @@ Class ExtentSkin_Manager
 		Dim Rs,exist
 		exist = 1
 		If StyleID >= 1000 Then
-			If CheckSupervisorUserName = 1 Then
+			If CheckSupervisorUserName() = 1 Then
 				Set Rs = LDExeCute(sql_select("Select * from LeadBBS_Skin Where StyleID=" & StyleID,1),0)
 			Else
 				Set Rs = LDExeCute(sql_select("Select * from LeadBBS_Skin Where StyleID=" & StyleID & " and SmallTableBottom like '" & Replace(GBL_CHK_User,"'","''") & "'",1),0)
@@ -224,7 +229,7 @@ Class ExtentSkin_Manager
 				")",1)
 				ExtentSkin_SaveCss(StyleID)
 			Else
-				ExtentSkin_Err "ÒòÒâÍâ²Ù×÷ÖĞÖ¹£®"
+				ExtentSkin_Err "å› æ„å¤–æ“ä½œä¸­æ­¢ï¼"
 			End If
 		End If
 
@@ -233,10 +238,10 @@ Class ExtentSkin_Manager
 	private sub deletestyle(id)
 
 		If id < 1000 then			
-			ExtentSkin_Err "ÒòÒâÍâ²Ù×÷ÖĞÖ¹£®"
+			ExtentSkin_Err "å› æ„å¤–æ“ä½œä¸­æ­¢ï¼"
 			Exit sub
 		end If
-		If CheckSupervisorUserName = 1 Then
+		If CheckSupervisorUserName() = 1 Then
 			CALL LDExeCute("delete from LeadBBS_Skin Where StyleID=" & id,1)
 		Else
 			CALL LDExeCute("delete from LeadBBS_Skin Where StyleID=" & id & " and SmallTableBottom like '" & Replace(GBL_CHK_User,"'","''") & "'",1)
@@ -277,7 +282,7 @@ Class ExtentSkin_Manager
 		Else
 			Rs = id
 		End If
-		ADODB_SaveToFile CssContent,DEF_BBS_HomeUrl & "inc/css/" & Rs & ".css"
+		Call ADODB_SaveToFile(CssContent,DEF_BBS_HomeUrl & "inc/css/" & Rs & ".css")
 
 	End Sub
 	
@@ -294,7 +299,7 @@ Class ExtentSkin_Manager
 		End If
 		Rs.Close
 		Set Rs = Nothing
-		If DT(0,4) > 0 Then
+		If toNum(DT(0,4),0) > 0 Then   ' Â§37: a String operand never compares numerically
 			If id < 10000 Then
 				Rs = Right("00000" & cCur(id),5)
 			Else
@@ -319,24 +324,24 @@ Class ExtentSkin_Manager
 		<table border=0 cellpadding=0 cellspacing=0 width=100% class=frame_table>
 		<%If StyleID > 0 Then%>
 		<tr>
-			<td class=tdbox width=120>·ç¸ñ±àºÅ <b><%=StyleID%></b><input name=StyleID value=<%=StyleID%> type=hidden></td>
+			<td class=tdbox width=120>é£æ ¼ç¼–å· <b><%=StyleID%></b><input name=StyleID value=<%=StyleID%> type=hidden></td>
 		</tr>
 		<%End If%>
 		<tr>
-			<td class=tdbox>·ç¸ñÃû³Æ <input class=fminpt type="text" name="StyleName" maxlength="255" size="25" value="<%=htmlencode(StyleName)%>"></td>
+			<td class=tdbox>é£æ ¼åç§° <input class=fminpt type="text" name="StyleName" maxlength="255" size="25" value="<%=htmlencode(StyleName)%>"></td>
 		</tr>
 		<tr>
-			<td class=tdbox>Ö÷Ìâ³¤¶È <input class=fminpt type="text" name="DisplayTopicLength" maxlength="3" size="10" value="<%=htmlencode(DisplayTopicLength)%>"><span color=gray>(µ¥Î»£º×Ö½Ú£¬Ìû×ÓÖ÷ÌâÏÔÊ¾×î´ó³¤¶È£¬750¿í=54£¬770¿í=56,×î³¤Îª255×Ö½Ú)</span></td>
+			<td class=tdbox>ä¸»é¢˜é•¿åº¦ <input class=fminpt type="text" name="DisplayTopicLength" maxlength="3" size="10" value="<%=htmlencode(DisplayTopicLength)%>"><span color=gray>(å•ä½ï¼šå­—èŠ‚ï¼Œå¸–å­ä¸»é¢˜æ˜¾ç¤ºæœ€å¤§é•¿åº¦ï¼Œ750å®½=54ï¼Œ770å®½=56,æœ€é•¿ä¸º255å­—èŠ‚)</span></td>
 		</tr>
 		<tr>
-			<td class=tdbox>ÑùÊ½ÎÄ¼ş
+			<td class=tdbox>æ ·å¼æ–‡ä»¶
 			<textarea name="CssContent" cols="80" rows="15" class=fmtxtra><%If CssContent <> "" Then Response.Write VbCrLf & server.htmlEncode(CssContent)%></textarea><p>
 			</td>
 		</tr>
 		</table>
 		<br>
-		<input type=submit name=Ìá½» value=Ìá½» class=fmbtn>
-		<input type=reset name=È¡Ïû value=È¡Ïû class=fmbtn>
+		<input type=submit name=æäº¤ value=æäº¤ class=fmbtn>
+		<input type=reset name=å–æ¶ˆ value=å–æ¶ˆ class=fmbtn>
 		</form>
 		<%
 	
@@ -427,7 +432,7 @@ Class ExtentSkin_Manager
 	Set fs = Server.CreateObject(DEF_FSOString)
 	If err <> 0 Then
 		Err.Clear
-		Response.Write "<br>·şÎñÆ÷²»Ö§³ÖFSO£¬Ó²ÅÌÎÄ¼şÎ´É¾³ı£®"
+		Response.Write "<br>æœåŠ¡å™¨ä¸æ”¯æŒFSOï¼Œç¡¬ç›˜æ–‡ä»¶æœªåˆ é™¤ï¼"
 		Exit Function
 	End If
 	If fs.FileExists(path) Then

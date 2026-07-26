@@ -1,12 +1,12 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Upload_Setup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
-<!-- #include file=../../b/inc/cache_fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Upload_Setup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
+<!--#include file="../../b/inc/cache_fun.asp"-->
 <%
 server.scriptTimeOut = 9999
 DEF_BBS_HomeUrl = "../../"
-InitDatabase
+InitDatabase()
 Dim GBL_ID,Form_ID
 
 Dim DelUserID
@@ -17,29 +17,29 @@ DelUserID = Fix(cCur(DelUserID))
 If DelUserID < 0 Then DelUserID = 0
 
 GBL_CHK_TempStr=""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 Form_ID = GBL_ID
 Form_ID = cCur(Form_ID)
 If Form_ID < 0 Then Form_ID = 0
 If Form_ID = 0 or GBL_CHK_Flag = 0 Then
-	GBL_CHK_TempStr = GBL_CHK_TempStr & "ÄãÃ»ÓĞµÇÂ¼<br>" & VbCrLf
+	GBL_CHK_TempStr = GBL_CHK_TempStr & "ä½ æ²¡æœ‰ç™»å½•<br>" & VbCrLf
 End If
 
 Dim UserName
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
 
 	Dim Rs,SQL,SQLendString,ClearFlag
 	If GBL_CHK_TempStr = "" Then
-		If GBL_UserID<1 or CheckSupervisorUserName = 0 Then
+		If GBL_UserID<1 or CheckSupervisorUserName() = 0 Then
 			SQL = sql_select("Select ID,UserName from LeadBBS_User where ID=-111",1)
 		Else
 			SQL = sql_select("Select ID,UserName from LeadBBS_User where id=" & DelUserID,1)
 		End If
 		Set Rs = LDExeCute(SQL,0)
 		If Rs.Eof Then
-			Response.Write "ÕÒ²»µ½¼ÇÂ¼£¡<br>" & VbCrLf
+			Response.Write "æ‰¾ä¸åˆ°è®°å½•ï¼<br>" & VbCrLf
 			Rs.Close
 			Set Rs = Nothing
 		Else
@@ -60,16 +60,16 @@ frame_TopInfo
 				<input type=hidden name=DelUserID value="<%=htmlencode(DelUserID)%>">
 				<input type=hidden name=dflag value="<%=htmlencode(dflag)%>">
 				<%If dflag <> "onlyupload" Then%>
-				<b>´Ë²Ù×÷²»¿ÉÄæ£¬È·ÈÏÒªÉ¾³ıÓÃ»§<span class=redfont><%=htmlencode(UserName)%></span>µÄËùÓĞÏà¹Ø×ÊÁÏÂğ£¿
+				<b>æ­¤æ“ä½œä¸å¯é€†ï¼Œç¡®è®¤è¦åˆ é™¤ç”¨æˆ·<span class=redfont><%=htmlencode(UserName)%></span>çš„æ‰€æœ‰ç›¸å…³èµ„æ–™å—ï¼Ÿ
 				<br>
-				×¢Òâ£¬²Ù×÷ºóÇë<span class=redfont>ÖØ×öÂÛÌ³ÁĞ±í¼°ĞŞ¸´</span>µÄ¹¤×÷£¬ÒÔ±£Ö¤Ìû×ÓÊıÁ¿Í³¼Æ×¼È·£®</b>
+				æ³¨æ„ï¼Œæ“ä½œåè¯·<span class=redfont>é‡åšè®ºå›åˆ—è¡¨åŠä¿®å¤</span>çš„å·¥ä½œï¼Œä»¥ä¿è¯å¸–å­æ•°é‡ç»Ÿè®¡å‡†ç¡®ï¼</b>
 				<%Else%>
-				<b>´Ë²Ù×÷²»¿ÉÄæ£¬È·ÈÏÒªÉ¾³ıÓÃ»§<span class=redfont><%=htmlencode(UserName)%></span>µÄËùÓĞÉÏ´«¸½¼şÃ´£¿</b>
+				<b>æ­¤æ“ä½œä¸å¯é€†ï¼Œç¡®è®¤è¦åˆ é™¤ç”¨æˆ·<span class=redfont><%=htmlencode(UserName)%></span>çš„æ‰€æœ‰ä¸Šä¼ é™„ä»¶ä¹ˆï¼Ÿ</b>
 				<%End If%>
 				<br><label>
-				<input class=fmchkbox type="checkbox" name="delusersure" value="yes" checked=checked>Í¬Ê±É¾³ıÓÃ»§</label>
-				<p><input type=submit value=È·¶¨ class=fmbtn>
-				<input type=button value=²»É¾ onclick="javascript:window.close();" class=fmbtn>
+				<input class=fmchkbox type="checkbox" name="delusersure" value="yes" checked=checked>åŒæ—¶åˆ é™¤ç”¨æˆ·</label>
+				<p><input type=submit value=ç¡®å®š class=fmbtn>
+				<input type=button value=ä¸åˆ  onclick="javascript:window.close();" class=fmbtn>
 				</form>
 				<%
 			End If
@@ -78,8 +78,8 @@ frame_TopInfo
 		Response.Write "<div class=alert>" & GBL_CHK_TempStr & "</div>"
 	End If
 
-closeDataBase
-frame_BottomInfo
+closeDataBase()
+frame_BottomInfo()
 Manage_Sitebottom("none")
 
 Function DeleteUserInfo(DelUserID,UserName)
@@ -89,13 +89,13 @@ Function DeleteUserInfo(DelUserID,UserName)
 	NowID = 0
 	EndFlag = 0
 
-	Response.Write "½ø¶È(ĞèÒªÊ±¼ä¿ÉÄÜ»áºÜ³¤£¬ÇëµÈ´ı³öÏÖÍê³É)£º¡õ"
+	Response.Write "è¿›åº¦(éœ€è¦æ—¶é—´å¯èƒ½ä¼šå¾ˆé•¿ï¼Œè¯·ç­‰å¾…å‡ºç°å®Œæˆ)ï¼šâ–¡"
 	Response.Flush
 	Dim TempNum
 	Dim Tmp,Tmp2
 	
 	If DEF_FSOString = "" Then
-		Response.Write " <font color=Red class=redfont>²»Ö§³ÖFSO£¬ÂÔ¹ı¸½¼şÉ¾³ı£®</font>"
+		Response.Write " <font color=Red class=redfont>ä¸æ”¯æŒFSOï¼Œç•¥è¿‡é™„ä»¶åˆ é™¤ï¼</font>"
 	Else
 		Do while EndFlag = 0
 			SQL = sql_select("Select ID,PhotoDir,SPhotoDir from LeadBBS_Upload where UserID=" & DelUserID & " and ID>" & NowID & " order by ID ASC",100)
@@ -113,7 +113,7 @@ Function DeleteUserInfo(DelUserID,UserName)
 					NowID = Rs(0)
 					Rs.MoveNext
 				Loop
-				Response.Write "¡ö"
+				Response.Write "â– "
 				Rs.Close
 				Set Rs = Nothing
 				Response.Flush
@@ -140,7 +140,7 @@ Function DeleteUserInfo(DelUserID,UserName)
 				Tmp = mid(Tmp,instrrev(Tmp,"\face\")+6)
 			End If
 			If Tmp <> "" Then DeleteFiles(Server.Mappath(Replace(Replace(DEF_BBS_HomeUrl & DEF_BBS_UploadPhotoUrl & "face\" & Tmp,"/","\"),"\\","\")))
-			Response.Write "¡ö"
+			Response.Write "â– "
 			Rs.Close
 			Set Rs = Nothing
 			Response.Flush
@@ -149,7 +149,7 @@ Function DeleteUserInfo(DelUserID,UserName)
 	End If
 
 	If Left(Request("dflag"),10) = "onlyupload" Then
-		Response.Write " <b><font color=green class=greenfont>Íê³ÉÓÃ»§¸½¼şÉ¾³ı!</font></b>"
+		Response.Write " <b><font color=green class=greenfont>å®Œæˆç”¨æˆ·é™„ä»¶åˆ é™¤!</font></b>"
 		Exit Function
 	End If
 
@@ -167,7 +167,7 @@ Function DeleteUserInfo(DelUserID,UserName)
 				NowID = Rs(0)
 				Rs.MoveNext
 			Loop
-			Response.Write "¡ö"
+			Response.Write "â– "
 			Rs.Close
 			Set Rs = Nothing
 			Response.Flush
@@ -178,7 +178,7 @@ Function DeleteUserInfo(DelUserID,UserName)
 	NowID = 0
 	EndFlag = 0
 
-	Response.Write "¡õ"
+	Response.Write "â–¡"
 	Do while EndFlag = 0
 		SQL = sql_select("Select ID from LeadBBS_FriendUser where FriendUserID=" & DelUserID & " and ID>" & NowID & " order by ID ASC",100)
 		Set Rs = LDExeCute(SQL,0)
@@ -191,7 +191,7 @@ Function DeleteUserInfo(DelUserID,UserName)
 				NowID = Rs(0)
 				Rs.MoveNext
 			Loop
-			Response.Write "¡ö"
+			Response.Write "â– "
 			Rs.Close
 			Set Rs = Nothing
 			Response.Flush
@@ -202,7 +202,7 @@ Function DeleteUserInfo(DelUserID,UserName)
 	NowID = 0
 	EndFlag = 0
 
-	Response.Write "¡õ"
+	Response.Write "â–¡"
 	Do while EndFlag = 0
 		SQL = sql_select("Select ID from LeadBBS_InfoBox where FromUser='" & Replace(UserName,"'","''") & "' and ID>" & NowID & " order by ID ASC",100)
 		Set Rs = LDExeCute(SQL,0)
@@ -215,7 +215,7 @@ Function DeleteUserInfo(DelUserID,UserName)
 				NowID = Rs(0)
 				Rs.MoveNext
 			Loop
-			Response.Write "¡ö"
+			Response.Write "â– "
 			Rs.Close
 			Set Rs = Nothing
 			Response.Flush
@@ -226,7 +226,7 @@ Function DeleteUserInfo(DelUserID,UserName)
 	NowID = 0
 	EndFlag = 0
 
-	Response.Write "¡õ"
+	Response.Write "â–¡"
 	Do while EndFlag = 0
 		SQL = sql_select("Select ID from LeadBBS_InfoBox where ToUser='" & Replace(UserName,"'","''") & "' and ID>" & NowID & " order by ID ASC",100)
 		Set Rs = LDExeCute(SQL,0)
@@ -239,7 +239,7 @@ Function DeleteUserInfo(DelUserID,UserName)
 				NowID = Rs(0)
 				Rs.MoveNext
 			Loop
-			Response.Write "¡ö"
+			Response.Write "â– "
 			Rs.Close
 			Set Rs = Nothing
 			Response.Flush
@@ -251,7 +251,7 @@ Function DeleteUserInfo(DelUserID,UserName)
 	EndFlag = 0
 	Dim GetData,N
 
-	Response.Write "¡õ"
+	Response.Write "â–¡"
 	Do while EndFlag = 0
 		SQL = sql_select("Select ID from LeadBBS_Announce where UserID=" & DelUserID & " and ID>" & NowID & " order by ID ASC",100)
 		Set Rs = LDExeCute(SQL,0)
@@ -269,7 +269,7 @@ Function DeleteUserInfo(DelUserID,UserName)
 				DelAnnounce(NowID)
 				CALL LDExeCute("delete from LeadBBS_Announce Where ID=" & NowID,1)
 			Next
-			Response.Write "¡ö"
+			Response.Write "â– "
 			Response.Flush
 		End If
 	Loop
@@ -278,14 +278,14 @@ Function DeleteUserInfo(DelUserID,UserName)
 	CALL LDExeCute("Delete from LeadBBS_AppLogin where UserID=" & DelUserID,1)
 	CALL LDExeCute("Delete from LeadBBS_Extend where classtype=500 and extent_level=" & DelUserID,1)
 	CALL LDExeCute("Delete from LeadBBS_Extend where classtype=500 and extendid=" & DelUserID,1)
-	Response.Write "¡ñ"
+	Response.Write "â—"
 
 	ReloadTopAnnounceInfo(0)
-	ReloadOtherTopAnnounce
-	ReloadStatisticData
+	ReloadOtherTopAnnounce()
+	ReloadStatisticData()
 	
 	If Request("delusersure") = "yes" Then DeleteUser(DelUserID)
-	Response.Write " <b><font color=green class=greenfont>Íê³É!</font></b>"
+	Response.Write " <b><font color=green class=greenfont>å®Œæˆ!</font></b>"
 
 End Function
 
@@ -394,7 +394,7 @@ Function DelAnnounce(DelID)
 		End If
 		CALL LDExeCute("Update LeadBBS_User set AnnounceNum=AnnounceNum-1,AnnounceGood=AnnounceGood-" & GoodNum & " Where ID =" & UserID,1)
 		'UpdateBoardValue(BoardID)
-		Rem ¸üĞÂMaxRootID
+		Rem æ›´æ–°MaxRootID
 
 		select case DEF_UsedDataBase
 			case 0,2:
@@ -423,7 +423,7 @@ Function DelAnnounce(DelID)
 		TmpTopicNum = 0
 		todayAnnounce = 0
 		Do While LoopFlag = 1
-			Rem Ö÷ÌâÌûÁô×Å×îºóÉ¾³ı£¬ÒÔÃâÉ¾³ıÖĞÑëÒâÍâÖĞÖ¹£¬µ¼ÖÂÖ÷ÌâËğ»µ
+			Rem ä¸»é¢˜å¸–ç•™ç€æœ€ååˆ é™¤ï¼Œä»¥å…åˆ é™¤ä¸­å¤®æ„å¤–ä¸­æ­¢ï¼Œå¯¼è‡´ä¸»é¢˜æŸå
 			SQL = sql_select("Select ID,BoardID,ParentID,UserID,ndatetime,GoodFlag,Opinion from LeadBBS_Announce where RootIDBak=" & RootIDBak & " and id>" & NowID & " order by ID",100)
 			Set Rs = LDExeCute(SQL,0)
 			If Not Rs.Eof Then
@@ -485,7 +485,7 @@ Function DeleteFiles(path)
 	Set fs = Server.CreateObject(DEF_FSOString)
 	If err <> 0 Then
 		Err.Clear
-		'Response.Write "<br>·şÎñÆ÷²»Ö§³ÖFSO£¬Ó²ÅÌÎÄ¼şÎ´É¾³ı£®"
+		'Response.Write "<br>æœåŠ¡å™¨ä¸æ”¯æŒFSOï¼Œç¡¬ç›˜æ–‡ä»¶æœªåˆ é™¤ï¼"
 		Exit Function
 	End If
 	If fs.FileExists(path) Then
@@ -517,7 +517,7 @@ Sub ReloadOtherTopAnnounce
 
 End Sub
 
-rem É¾³ıÄ³ÓÃ»§
+rem åˆ é™¤æŸç”¨æˆ·
 Function DeleteUser(ID)
 
 	Dim Rs
@@ -526,11 +526,11 @@ Function DeleteUser(ID)
 		DeleteUser = 0
 		Rs.Close
 		Set Rs = Nothing
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "ÕÒ²»µ½´ËÓÃ»§£¡<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "æ‰¾ä¸åˆ°æ­¤ç”¨æˆ·ï¼<br>" & VbCrLf
 	Else
 		GBL_CHK_User = Rs("UserName")
-		If CheckSupervisorUserName = 1 Then
-			GBL_CHK_TempStr = GBL_CHK_TempStr & "³¬¼¶¹ÜÀíÔ±²»ÄÜÉ¾³ı£¡<br>" & VbCrLf
+		If CheckSupervisorUserName() = 1 Then
+			GBL_CHK_TempStr = GBL_CHK_TempStr & "è¶…çº§ç®¡ç†å‘˜ä¸èƒ½åˆ é™¤ï¼<br>" & VbCrLf
 			Rs.Close
 			Set Rs = Nothing
 			DeleteUser = 0
@@ -542,7 +542,7 @@ Function DeleteUser(ID)
 		CALL LDExeCute("delete from LeadBBS_User where ID=" & ID,1)
 		
 		
-		Response.Write "<br><p><font color=008800 class=greenfont><b>ÒÑ¾­³É¹¦É¾³ıIDÎª" & ID & "µÄÓÃ»§£¡</b></font></p>"
+		Response.Write "<br><p><font color=008800 class=greenfont><b>å·²ç»æˆåŠŸåˆ é™¤IDä¸º" & ID & "çš„ç”¨æˆ·ï¼</b></font></p>"
 		CALL LDExeCute("Update LeadBBS_SiteInfo Set UserCount=UserCount-1",1)
 		UpdateStatisticDataInfo -1,1,1
 		DeleteUser = 1

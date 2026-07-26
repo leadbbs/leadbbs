@@ -25,7 +25,7 @@ CREATE TABLE `hbtrigger_englishnews` (
   `Fields` text CHARACTER SET utf8,
   PRIMARY KEY (`Serial`),
   KEY `ITriggerOprSerial` (`Opr`,`Serial`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of hbtrigger_englishnews
@@ -86,7 +86,7 @@ CREATE TABLE `leadbbs_announce` (
   KEY `IX_LeadBBS_Announce_RootIDBak2` (`ParentID`,`RootIDBak`) USING BTREE,
   KEY `IX_LeadBBS_Announce_TopicType` (`TopicType`,`NeedValue`) USING BTREE,
   KEY `IX_LeadBBS_Announce_UserID2` (`UserID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2260954 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=2260954 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_announce
@@ -107,7 +107,7 @@ CREATE TABLE `leadbbs_applogin` (
   PRIMARY KEY (`ID`),
   KEY `IX_LeadBBS_AppLogin_appid` (`appType`,`appid`) USING BTREE,
   KEY `IX_LeadBBS_AppLogin_UserID` (`appid`,`UserID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=226 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=226 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_applogin
@@ -131,7 +131,7 @@ CREATE TABLE `leadbbs_assessor` (
   KEY `IX_LeadBBS_Assessor_AnnounceID` (`AnnounceID`) USING BTREE,
   KEY `IX_LeadBBS_Assessor_BoardID` (`BoardID`) USING BTREE,
   KEY `IX_LeadBBS_Assessor_TypeFlag` (`TypeFlag`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=71030 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=71030 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_assessor
@@ -148,7 +148,7 @@ CREATE TABLE `leadbbs_assort` (
   `AssortLimit` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`AssortID`),
   KEY `IX_AsphouseBBS_Assort_AssortName` (`AssortName`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_assort
@@ -202,7 +202,7 @@ CREATE TABLE `leadbbs_boards` (
   KEY `IX_AsphouseBBS_Boards2` (`HiddenFlag`,`BoardAssort`,`OrderID`) USING BTREE,
   KEY `IX_LeadBBS_Boards_HiddenFlag` (`HiddenFlag`) USING BTREE,
   KEY `IX_LeadBBS_Boards_ParentBoard` (`ParentBoard`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_boards
@@ -219,7 +219,7 @@ CREATE TABLE `leadbbs_collectanc` (
   PRIMARY KEY (`ID`),
   KEY `IX_LeadBBS_CollectAnc` (`AnnounceID`,`UserID`) USING BTREE,
   KEY `IX_LeadBBS_CollectAnc_UserID` (`UserID`,`ID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=40390 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=40390 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_collectanc
@@ -237,7 +237,7 @@ CREATE TABLE `leadbbs_download` (
   `LastIP` varchar(15) CHARACTER SET ascii NOT NULL DEFAULT '',
   PRIMARY KEY (`ID`),
   UNIQUE KEY `IX_LeadBBS_Download_DownName` (`DownName`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_download
@@ -259,7 +259,7 @@ CREATE TABLE `leadbbs_forbidip` (
   KEY `IX_LeadBBS_ForbidIP_1` (`IPStart`) USING BTREE,
   KEY `IX_LeadBBS_ForbidIP_2` (`IPEnd`) USING BTREE,
   KEY `IX_LeadBBS_ForbidIP_ExpiresTime` (`ExpiresTime`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_forbidip
@@ -276,7 +276,7 @@ CREATE TABLE `leadbbs_frienduser` (
   PRIMARY KEY (`ID`),
   KEY `IX_LeadBBS_FriendUser_FriendUserID` (`FriendUserID`,`UserID`) USING BTREE,
   KEY `PK_LeadBBS_FriendUser_UserID` (`UserID`,`ID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=11706 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=11706 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_frienduser
@@ -294,7 +294,7 @@ CREATE TABLE `leadbbs_goodassort` (
   `GoodNum` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `IX_LeadBBS_GoodAssort_BoardID` (`BoardID`,`OrderID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_goodassort
@@ -320,7 +320,7 @@ CREATE TABLE `leadbbs_infobox` (
   KEY `IX_LeadBBS_InfoBox_ExpiresDate` (`ExpiresDate`) USING BTREE,
   KEY `IX_LeadBBS_InfoBox_ReadFlag` (`ReadFlag`,`FromUser`,`ID`) USING BTREE,
   KEY `IX_LeadBBS_InfoBox_ReadFlag1` (`ReadFlag`,`ToUser`,`ID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=253749 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=253749 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_infobox
@@ -337,7 +337,7 @@ CREATE TABLE `leadbbs_ipaddress` (
   `city` varchar(47) CHARACTER SET utf8 DEFAULT '',
   KEY `IX_LeadBBS_IPAddress` (`ip1`,`ip2`) USING BTREE,
   KEY `IX_LeadBBS_IPAddress_1` (`ip2`,`ip1`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_ipaddress
@@ -359,7 +359,7 @@ CREATE TABLE `leadbbs_link` (
   `LinkType` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `IX_LeadBBS_Link` (`LinkType`,`OrderID`,`ID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=743 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=743 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_link
@@ -382,7 +382,7 @@ CREATE TABLE `leadbbs_log` (
   KEY `IX_LeadBBS_Log_LogTime` (`LogTime`) USING BTREE,
   KEY `IX_LeadBBS_Log_LogType` (`LogType`) USING BTREE,
   KEY `IX_LeadBBS_Log_UserName` (`UserName`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=184542 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=184542 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_log
@@ -413,7 +413,7 @@ CREATE TABLE `leadbbs_onlineuser` (
   KEY `IX_asphouse_onlineUser_SessionID` (`SessionID`) USING BTREE,
   KEY `IX_asphouse_onlineUser_UserID` (`UserID`,`SessionID`) USING BTREE,
   KEY `IX_LeadBBS_onlineUser_IP` (`IP`,`UserID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2360893 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=2360893 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_onlineuser
@@ -435,7 +435,7 @@ CREATE TABLE `leadbbs_opinion` (
   PRIMARY KEY (`ID`),
   KEY `IX_LeadBBS_Opinion_AnnounceID` (`AnnounceID`,`ID`) USING BTREE,
   KEY `IX_LeadBBS_Opinion_AnnounceID2` (`AnnounceID`,`UserName`,`ID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=782 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=782 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_opinion
@@ -454,7 +454,7 @@ CREATE TABLE `leadbbs_plug_card` (
   KEY `CardType` (`CardType`,`CardPoints`) USING BTREE,
   KEY `CardType_2` (`CardType`) USING BTREE,
   KEY `ExpiresDate` (`ExpiresDate`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_plug_card
@@ -479,7 +479,7 @@ CREATE TABLE `leadbbs_selllist` (
   KEY `IX_LeadBBS_SellList_UserName` (`UserName`) USING BTREE,
   KEY `IX_LeadBBS_SellList_UserNamePayFlag` (`UserName`,`PayFlag`,`ID`) USING BTREE,
   KEY `IX_LeadBBS_SellList_UserSellTime` (`UserName`,`PayFlag`,`SellTime`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=679 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=679 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_selllist
@@ -498,7 +498,7 @@ CREATE TABLE `leadbbs_setup` (
   PRIMARY KEY (`ID`),
   KEY `IX_LeadBBS_Setup_ClassNum` (`ClassNum`) USING BTREE,
   KEY `IX_LeadBBS_Setup_RID` (`RID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_setup
@@ -523,7 +523,7 @@ CREATE TABLE `leadbbs_siteinfo` (
   `DBWrite` bigint(20) NOT NULL DEFAULT '0',
   `DBNum` bigint(20) NOT NULL DEFAULT '0',
   `Version` varchar(20) CHARACTER SET ascii NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_siteinfo
@@ -547,7 +547,7 @@ CREATE TABLE `leadbbs_skin` (
   `SmallTableBottom` text CHARACTER SET utf8 NOT NULL,
   `TempletID` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`StyleID`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_skin
@@ -572,7 +572,7 @@ CREATE TABLE `leadbbs_specialuser` (
   KEY `IX_LeadBBS_SpecialUser` (`Assort`,`ID`) USING BTREE,
   KEY `IX_LeadBBS_SpecialUser_ExpiresTime` (`ExpiresTime`) USING BTREE,
   KEY `IX_LeadBBS_SpecialUser_UserName` (`UserName`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=20994 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=20994 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_specialuser
@@ -591,7 +591,7 @@ CREATE TABLE `leadbbs_templet` (
   `TempletString2` text CHARACTER SET utf8 NOT NULL,
   `TempletString3` text CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_templet
@@ -605,7 +605,7 @@ CREATE TABLE `leadbbs_tmp` (
   `ID` bigint(20) NOT NULL AUTO_INCREMENT,
   `tmpstr` text CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_tmp
@@ -623,7 +623,7 @@ CREATE TABLE `leadbbs_topannounce` (
   PRIMARY KEY (`ID`),
   KEY `IX_AsphouseBBS_TopAnnounce` (`BoardID`) USING BTREE,
   KEY `IX_LeadBBS_TopAnnounce_TopType` (`TopType`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=572 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=572 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_topannounce
@@ -655,7 +655,7 @@ CREATE TABLE `leadbbs_upload` (
   KEY `IX_LeadBBS_Upload_NdateTime` (`NdateTime`) USING BTREE,
   KEY `IX_LeadBBS_Upload_UserID` (`UserID`,`ID`) USING BTREE,
   KEY `IX_LeadBBS_Upload_UserIDFileType` (`UserID`,`FileType`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=14526 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=14526 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_upload
@@ -727,7 +727,7 @@ CREATE TABLE `leadbbs_user` (
   KEY `IX_LeadBBS_User_LastDoingTime` (`LastDoingTime`,`ID`) USING BTREE,
   KEY `IX_LeadBBS_User_Mail` (`Mail`) USING BTREE,
   KEY `IX_LeadBBS_User_OnlineTime` (`OnlineTime`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=199080 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=199080 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_user
@@ -746,7 +746,7 @@ CREATE TABLE `leadbbs_userface` (
   `FileType` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `IX_LeadBBS_UserFace_UserID` (`UserID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2962 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=2962 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_userface
@@ -765,7 +765,7 @@ CREATE TABLE `leadbbs_voteitem` (
   `VoteNum` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `IX_AsphouseBBS_VoteItem_AnnounceID` (`AnnounceID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6674 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=6674 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_voteitem
@@ -783,7 +783,7 @@ CREATE TABLE `leadbbs_voteuser` (
   PRIMARY KEY (`ID`),
   KEY `IX_LeadBBS_VoteUser_AnnounceID` (`AnnounceID`) USING BTREE,
   KEY `IX_LeadBBS_VoteUser_UserName` (`AnnounceID`,`UserName`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=68882 DEFAULT CHARSET=gbk ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=68882 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of leadbbs_voteuser
@@ -795,7 +795,7 @@ INSERT INTO `leadbbs_skin` VALUES ('1000', 'style1000', '66', '0', '', '', '', '
 INSERT INTO `leadbbs_skin` VALUES ('1001', '2013', '80', '0', '', '', '', '', '1', '', 'abc', '0') ON DUPLICATE KEY update StyleID=StyleID;
 INSERT INTO `leadbbs_skin` VALUES ('1002', '2014', '80', '0', '', '', '', '', '1', '', 'abc', '0') ON DUPLICATE KEY update StyleID=StyleID;
 INSERT INTO `leadbbs_skin` VALUES ('1003', 'bubu', '80', '0', '', '', '', '', '1', '', 'abc', '0') ON DUPLICATE KEY update StyleID=StyleID;
-INSERT INTO `leadbbs_setup` VALUES ('72', '1002', '20140422004', '0', 'ƒ⁄≤ø∞Ê±æ∫≈') ON DUPLICATE KEY update valuestr='20130314001';
+INSERT INTO `leadbbs_setup` VALUES ('72', '1002', '20140422004', '0', 'ÂÜÖÈÉ®ÁâàÊú¨Âè∑') ON DUPLICATE KEY update valuestr='20130314001';
 
 ALTER TABLE `leadbbs_applogin`
 ADD COLUMN `Token`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '64' AFTER `IPAddress`,
@@ -929,7 +929,7 @@ CREATE TABLE IF NOT EXISTS `leadbbs_announce_hide` (
   KEY `UserID_2` (`UserID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
-INSERT INTO `article_newsclass` VALUES ('1', 'π´∏Ê', '1', '0', '17', '3', '0') ON DUPLICATE KEY update classname=classname;
+INSERT INTO `article_newsclass` VALUES ('1', 'ÂÖ¨Âëä', '1', '0', '17', '3', '0') ON DUPLICATE KEY update classname=classname;
 
 ALTER TABLE `article_newsclass` ADD COLUMN `classname_side`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `ParentID`;
 ALTER TABLE `article_newsarticle` ADD COLUMN `htmlflag`  tinyint NOT NULL DEFAULT 2 AFTER `ChildNum`;
@@ -951,5 +951,6 @@ ALTER TABLE `LeadBBS_User` ADD INDEX `IX_LeadBBS_User_MobileTel` (`MobileTel`, `
 ALTER TABLE `LeadBBS_SpecialUser` MODIFY COLUMN `UserName`  varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '';
 
 ALTER TABLE `leadbbs_plug_card` MODIFY COLUMN `ID`  bigint(20) NULL AUTO_INCREMENT FIRST , MODIFY COLUMN `CardID`  bigint(20) NULL DEFAULT 0 AFTER `ID`, MODIFY COLUMN `CardType`  int(11) NULL DEFAULT 0 AFTER `CardID`, MODIFY COLUMN `ExpiresDate`  int(11) NULL DEFAULT 0 AFTER `CardType`, MODIFY COLUMN `CardPoints`  int(11) NULL DEFAULT 0 AFTER `ExpiresDate`, ADD PRIMARY KEY (`ID`);
-CREATE TABLE `leadbbs_plugs` ( `ID` bigint(20) NOT NULL AUTO_INCREMENT, `Name` varchar(255) NOT NULL DEFAULT '''''', `ClassID` int(11) NOT NULL DEFAULT '0', `url` varchar(255) NOT NULL DEFAULT '''''', `width` int(11) NOT NULL DEFAULT '0', `height` int(11) NOT NULL DEFAULT '0', `intro` longtext NOT NULL, `sortid` bigint(20) NOT NULL DEFAULT '0', `plugkey` varchar(128) NOT NULL DEFAULT '''''', `createtime` bigint(20) NOT NULL DEFAULT '0', `remark` longtext NOT NULL, PRIMARY KEY (`ID`), KEY `ClassID` (`ClassID`,`sortid`,`ID`), KEY `plugkey` (`plugkey`,`ID`)) ENGINE=InnoDB DEFAULT CHARSET=gbk;
-CREATE TABLE `leadbbs_plug_class` ( `ID` int(11) NOT NULL AUTO_INCREMENT, `Name` varchar(100) NOT NULL DEFAULT '''''', `ParentID` bigint(20) NOT NULL DEFAULT '0', `Num` int(11) NOT NULL DEFAULT '0', `remark` longtext NOT NULL, `sortid` int(11) NOT NULL DEFAULT '0', PRIMARY KEY (`ID`), KEY `ParentID` (`ParentID`,`ID`), KEY `sortid` (`sortid`,`ID`)) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+CREATE TABLE `leadbbs_plugs` ( `ID` bigint(20) NOT NULL AUTO_INCREMENT, `Name` varchar(255) NOT NULL DEFAULT '''''', `ClassID` int(11) NOT NULL DEFAULT '0', `url` varchar(255) NOT NULL DEFAULT '''''', `width` int(11) NOT NULL DEFAULT '0', `height` int(11) NOT NULL DEFAULT '0', `intro` longtext NOT NULL, `sortid` bigint(20) NOT NULL DEFAULT '0', `plugkey` varchar(128) NOT NULL DEFAULT '''''', `createtime` bigint(20) NOT NULL DEFAULT '0', `remark` longtext NOT NULL, PRIMARY KEY (`ID`), KEY `ClassID` (`ClassID`,`sortid`,`ID`), KEY `plugkey` (`plugkey`,`ID`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `leadbbs_plug_class` ( `ID` int(11) NOT NULL AUTO_INCREMENT, `Name` varchar(100) NOT NULL DEFAULT '''''', `ParentID` bigint(20) NOT NULL DEFAULT '0', `Num` int(11) NOT NULL DEFAULT '0', `remark` longtext NOT NULL, `sortid` int(11) NOT NULL DEFAULT '0', PRIMARY KEY (`ID`), KEY `ParentID` (`ParentID`,`ID`), KEY `sortid` (`sortid`,`ID`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `plug_flash_gold` ( `ID` bigint(20) NOT NULL AUTO_INCREMENT, `username` varchar(20) NOT NULL DEFAULT '', `createtime` bigint(20) NOT NULL DEFAULT '0', `recordtime` bigint(20) NOT NULL DEFAULT '0', `points` int(11) NOT NULL DEFAULT '0', PRIMARY KEY (`ID`), UNIQUE KEY `username` (`username`), KEY `points` (`points`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;

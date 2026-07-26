@@ -13,14 +13,14 @@ End Sub
 Sub Unbind
 
 	If GBL_CHK_OnlineTime < Unbind_limit then
-		Response.Write "ÎŞ·¨Á¢¼´½â³ı°ó¶¨£¬" & DEF_PointsName & "¸ßÓÚ120²ÅÄÜ½øĞĞ´Ë²Ù×÷."
+		Response.Write "æ— æ³•ç«‹å³è§£é™¤ç»‘å®šï¼Œ" & DEF_PointsName & "é«˜äº120æ‰èƒ½è¿›è¡Œæ­¤æ“ä½œ."
 		Exit Sub
 	End If
 	dim apptype
 	apptype = toNum(request.querystring("apptype"),0)
 	if apptype > 0 then
 		call ldexecute("delete from leadbbs_applogin where userid=" & GBL_UserID & " and apptype=" & apptype,1)
-		Response.Write "³É¹¦½â³ı°ó¶¨."
+		Response.Write "æˆåŠŸè§£é™¤ç»‘å®š."
 	end if
 
 End Sub
@@ -35,13 +35,13 @@ Class Connet_Bind
 	Private Sub Class_Initialize
 	
 		BindType = connect_apptype
-		BindTongBuName = array("ÌÚÑ¶QQ¿Õ¼ä","ÌÚÑ¶Î¢²©","Î¢²©","°Ù¶È","Ö§¸¶±¦","ÈËÈËÍø","¿ªĞÄÍø","ÌìÒí","ÓÅ¿á")
+		BindTongBuName = array("è…¾è®¯QQç©ºé—´","è…¾è®¯å¾®åš","å¾®åš","ç™¾åº¦","æ”¯ä»˜å®","äººäººç½‘","å¼€å¿ƒç½‘","å¤©ç¿¼","ä¼˜é…·")
 		dim n
 		redim BindLoginUrl(ubound(BindType))
 		for n = 0 to ubound(BindType)
 			BindLoginUrl(n) = ("app/qqlogin/login.asp?apptype=" & BindType(n))
 		next
-		BindMethod = array("·¢±íÌû×Ó","»Ø¸´Ìû×Ó","ÆÀÂÛ","ÊÕ²Ø")
+		BindMethod = array("å‘è¡¨å¸–å­","å›å¤å¸–å­","è¯„è®º","æ”¶è—")
 	
 	End Sub
 	
@@ -63,7 +63,7 @@ Class Connet_Bind
 		<script>
 		function unbind(n,url)
 		{
-			getAJAX('LookUserInfo.asp?Evol=unbind&apptype='+n+'&t='+Math.random(),'','$id("unbind'+n+'").innerHTML="<a href=<%=DEF_BBS_HomeUrl%>'+url+' class=\'fmbtn btn_3 inline\' target=_blank>Á¢¼´°ó¶¨</a>";',1);return false;
+			getAJAX('LookUserInfo.asp?Evol=unbind&apptype='+n+'&t='+Math.random(),'','$id("unbind'+n+'").innerHTML="<a href=<%=DEF_BBS_HomeUrl%>'+url+' class=\'fmbtn btn_3 inline\' target=_blank>ç«‹å³ç»‘å®š</a>";',1);return false;
 		}
 		</script>
 		<%
@@ -100,19 +100,19 @@ Class Connet_Bind
 								next
 								If GBL_CHK_OnlineTime >= Unbind_limit then
 								%>
-								<a href="javascript:;" onclick="unbind(<%=BindType(n)%>,'<%=BindLoginUrl(N)%>');" class="fmbtn btn_3 inline">½â³ı°ó¶¨</a>
+								<a href="javascript:;" onclick="unbind(<%=BindType(n)%>,'<%=BindLoginUrl(N)%>');" class="fmbtn btn_3 inline">è§£é™¤ç»‘å®š</a>
 								</span>
 								<%
 								Else
 									%>
-									ÔÚÏßÒ»¶¨Ê±¼ä²ÅÄÜ½â³ı°ó¶¨
+									åœ¨çº¿ä¸€å®šæ—¶é—´æ‰èƒ½è§£é™¤ç»‘å®š
 									<%
 								End If
 						end select
 					end if
 				next
 	 			If exist = 0 then%>
-					<a href="<%=DEF_BBS_HomeUrl%><%=BindLoginUrl(N)%>" class="fmbtn btn_3 inline" target=_blank>Á¢¼´°ó¶¨</a>
+					<a href="<%=DEF_BBS_HomeUrl%><%=BindLoginUrl(N)%>" class="fmbtn btn_3 inline" target=_blank>ç«‹å³ç»‘å®š</a>
 					<%
 				end if
 				%>					</div>
@@ -153,7 +153,7 @@ Class Connet_Bind
 			}
 		}
 		</script>
-		<div class="value bindpost"><span id="api_syncstring">Í¬²½µ½£º</span>
+		<div class="value bindpost"><span id="api_syncstring">åŒæ­¥åˆ°ï¼š</span>
 		<%
 			dim weiboflag,qqflag
 			weiboflag = 0
@@ -188,7 +188,7 @@ Class Connet_Bind
 							<!--
 							<span class="item">
 							<input type="hidden" name="bindpost_<%=BindType(n)%>" value="<%=pVal%>">
-							<a href="javascript:;" id="LD_Bind1" title="Í¬²½µ½<%=BindTongBuName(n)%>" onclick="toggleBind(this);return false;" class="bindpost_icon_s" style="background-position:0 0px"></a><em onclick="toggleBind($id('LD_Bind1'));return false;" class="<%=pclass%>"></em>
+							<a href="javascript:;" id="LD_Bind1" title="åŒæ­¥åˆ°<%=BindTongBuName(n)%>" onclick="toggleBind(this);return false;" class="bindpost_icon_s" style="background-position:0 0px"></a><em onclick="toggleBind($id('LD_Bind1'));return false;" class="<%=pclass%>"></em>
 							</span>
 							// -->
 							<%
@@ -197,7 +197,7 @@ Class Connet_Bind
 							weiboflag = 1%>						
 							<span class="item">
 							<input type="hidden" name="bindpost_<%=BindType(n)%>" value="<%=pVal%>">
-							<a href="javascript:;" id="LD_Bind<%=BindType(n)%>_1" title="Í¬²½µ½<%=BindTongBuName(n)%>" onclick="toggleBind(this);return false;" class="bindpost_icon_s" style="background-position:0 -<%=(BindType(n)-1)*32%>px"></a><em onclick="toggleBind($id('LD_Bind<%=BindType(n)%>_1'));return false;" class="<%=pclass%>"></em>
+							<a href="javascript:;" id="LD_Bind<%=BindType(n)%>_1" title="åŒæ­¥åˆ°<%=BindTongBuName(n)%>" onclick="toggleBind(this);return false;" class="bindpost_icon_s" style="background-position:0 -<%=(BindType(n)-1)*32%>px"></a><em onclick="toggleBind($id('LD_Bind<%=BindType(n)%>_1'));return false;" class="<%=pclass%>"></em>
 							</span>
 						<%
 						
@@ -206,7 +206,7 @@ Class Connet_Bind
 							%>						
 							<span class="item">
 							<input type="hidden" name="bindpost_<%=BindType(n)%>" value="<%=pVal%>">
-							<a href="javascript:;" id="LD_Bind<%=BindType(n)%>_1" title="Í¬²½µ½<%=BindTongBuName(n)%>" onclick="toggleBind(this);return false;" class="bindpost_icon_s" style="background-position:0 -<%=(BindType(n)-1)*32%>px"></a><em onclick="toggleBind($id('LD_Bind<%=BindType(n)%>_1'));return false;" class="<%=pclass%>"></em>
+							<a href="javascript:;" id="LD_Bind<%=BindType(n)%>_1" title="åŒæ­¥åˆ°<%=BindTongBuName(n)%>" onclick="toggleBind(this);return false;" class="bindpost_icon_s" style="background-position:0 -<%=(BindType(n)-1)*32%>px"></a><em onclick="toggleBind($id('LD_Bind<%=BindType(n)%>_1'));return false;" class="<%=pclass%>"></em>
 							</span>
 						<%
 						case else
@@ -220,7 +220,7 @@ Class Connet_Bind
 					%>
 							<span class="item">
 							<input type="hidden" name="bindpost_1_1" value="<%=pVal%>">
-							<a href="javascript:;" id="LD_Bind1_1" title="×ª·¢µ½ÌÚÑ¶Î¢²©" onclick="toggleBind(this);return false;" class="bindpost_icon_s" style="background-position:0 -32px"></a><em onclick="toggleBind($id('LD_Bind1_1'));return false;" class="<%=pclass%>"></em>
+							<a href="javascript:;" id="LD_Bind1_1" title="è½¬å‘åˆ°è…¾è®¯å¾®åš" onclick="toggleBind(this);return false;" class="bindpost_icon_s" style="background-position:0 -32px"></a><em onclick="toggleBind($id('LD_Bind1_1'));return false;" class="<%=pclass%>"></em>
 							</span><%
 				end if
 				

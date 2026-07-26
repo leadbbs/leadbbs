@@ -1,118 +1,118 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../../User/inc/UserTopic.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../../User/inc/UserTopic.asp"-->
 <%
 DEF_BBS_homeUrl="../../"
-Const PLUG_LeadCard_Length = 14 '¿¨ºÅ³¤¶È
-Const PLUG_LeadCard_ChangeValueLimit = 10000 '×ªÕËÊ±ÒªÇóµÄÕËºÅµ×Ïß²Æ¸»
+Const PLUG_LeadCard_Length = 14 'å¡å·é•¿åº¦
+Const PLUG_LeadCard_ChangeValueLimit = 10000 'è½¬è´¦æ—¶è¦æ±‚çš„è´¦å·åº•çº¿è´¢å¯Œ
 
-Main
+Main()
 
 Sub Main
 
-	InitDatabase
+	InitDatabase()
 	BBS_SiteHead DEF_SiteNameString & " - LeadCard",0,"<span class=navigate_string_step>LeadCard</span>"
 	
 	UserTopicTopInfo("forum")
 	
 	If GBL_CHK_User = "" then
-		Response.write "<div class=alert>ÄúÃ»ÓĞÊ¹ÓÃLeadCardµÄÈ¨ÏŞ£¬ÇëÏÈµÇÂ½»òÕß×¢²áÎªÂÛÌ³»áÔ±¡£</div>"
+		Response.write "<div class=alert>æ‚¨æ²¡æœ‰ä½¿ç”¨LeadCardçš„æƒé™ï¼Œè¯·å…ˆç™»é™†æˆ–è€…æ³¨å†Œä¸ºè®ºå›ä¼šå‘˜ã€‚</div>"
 	Else
-		Main_LeadCard
+		Main_LeadCard()
 	End If
 	
-	CloseDatabase
-	UserTopicBottomInfo
-	SiteBottom
+	CloseDatabase()
+	UserTopicBottomInfo()
+	SiteBottom()
 
 End Sub
 
 Sub Main_LeadCard
 
 	Dim SupervisorFlag
-	SupervisorFlag = CheckSupervisorNameOnly
+	SupervisorFlag = CheckSupervisorNameOnly()
 %>
-	<div class=title>LeadCard ÄúµÄ×´Ì¬</div>
+	<div class=title>LeadCard æ‚¨çš„çŠ¶æ€</div>
 	<div class=value2>
-	<%=DEF_PointsName(1) & "£º" & GBL_CHK_CharmPoint%>
-	 / <%=DEF_PointsName(0) & "£º" & GBL_CHK_Points%>
-	 / <%=DEF_PointsName(2) & "£º" & GBL_CHK_CachetValue%></div>
+	<%=DEF_PointsName(1) & "ï¼š" & GBL_CHK_CharmPoint%>
+	 / <%=DEF_PointsName(0) & "ï¼š" & GBL_CHK_Points%>
+	 / <%=DEF_PointsName(2) & "ï¼š" & GBL_CHK_CachetValue%></div>
 
 	<%If Request.Form("submitflag") = "1" Then
 		Select Case Request("act")
-			Case "0": LeadCard_InputValue
-			Case "1": If SupervisorFlag = 1 Then LeadCard_Made
-			Case "11": LeadCard_ChangeValue
+			Case "0": Call LeadCard_InputValue()
+			Case "1": If SupervisorFlag = 1 Then Call LeadCard_Made()
+			Case "11": Call LeadCard_ChangeValue()
 		End Select
 	Else%>
 		<br>
-		<div class=title>¿¨Æ¬³äÖµ</div>
+		<div class=title>å¡ç‰‡å……å€¼</div>
 		<div class=value2>
-		1.<a href=#none onclick="$('#CardUser2')[0].value=$('#CardUser')[0].value='<%=htmlencode(GBL_CHK_User)%>';">Ìæ×Ô¼º³äÖµ</a>
-		2.<a href=#none onclick="$('#CardUser2')[0].value=$('#CardUser')[0].value='';">ÌæÅóÓÑ³äÖµ</a>
+		1.<a href=#none onclick="$('#CardUser2')[0].value=$('#CardUser')[0].value='<%=htmlencode(GBL_CHK_User)%>';">æ›¿è‡ªå·±å……å€¼</a>
+		2.<a href=#none onclick="$('#CardUser2')[0].value=$('#CardUser')[0].value='';">æ›¿æœ‹å‹å……å€¼</a>
 		</div>
 		<form method=post action=Default.asp name=cardform id=cardform onSubmit="submit_disable(this);">
 		<input type=hidden value=1 name=submitflag>
 		<input type=hidden value=0 name=act>
-		<div class=value2>³äÖµ¿¨ºÅ£º<input maxlength=20 id=CardID name=CardID value="<%=Left(Request("CardID"),16)%>" size="20" class='fminpt input_3'>
-		<%=PLUG_LeadCard_Length%>Î»¿¨ºÅ
+		<div class=value2>å……å€¼å¡å·ï¼š<input maxlength=20 id=CardID name=CardID value="<%=Left(Request("CardID"),16)%>" size="20" class='fminpt input_3'>
+		<%=PLUG_LeadCard_Length%>ä½å¡å·
 		</div>
-		<div class=value2>³äÈëÕËºÅ£º<input maxlength=20 id=CardUser name=CardUser value="<%=Left(Request("CardUser"),20)%>" size="20" class='fminpt input_2'>
-		ÌîĞ´Òª³äÈëµÄÕËºÅ
+		<div class=value2>å……å…¥è´¦å·ï¼š<input maxlength=20 id=CardUser name=CardUser value="<%=Left(Request("CardUser"),20)%>" size="20" class='fminpt input_2'>
+		å¡«å†™è¦å……å…¥çš„è´¦å·
 		</div>
-		<div class=value2>ÖØ¸´ÕËºÅ£º<input maxlength=20 id=CardUser2 name=CardUser2 value="<%=Left(Request("CardUser2"),20)%>" size="20" class='fminpt input_2'>
-		È·ÈÏ³äÖµÕËºÅ
+		<div class=value2>é‡å¤è´¦å·ï¼š<input maxlength=20 id=CardUser2 name=CardUser2 value="<%=Left(Request("CardUser2"),20)%>" size="20" class='fminpt input_2'>
+		ç¡®è®¤å……å€¼è´¦å·
 		</div>
 		<div class=value2>
-		<input name=submit2 type=submit value="Á¢¼´³äÖµ" class='fmbtn btn_3'>
+		<input name=submit2 type=submit value="ç«‹å³å……å€¼" class='fmbtn btn_3'>
 		</div>
 		</form>
 
 		<br>
-		<div class=title>·şÎñ£º<%=DEF_PointsName(1)%>×ªÕË</div>
+		<div class=title>æœåŠ¡ï¼š<%=DEF_PointsName(1)%>è½¬è´¦</div>
 		
 		<%If PLUG_LeadCard_ChangeValueLimit > 0 Then
-			Response.Write "<div class=value2>ÕË»§±£µ×Êı¶î£º" & PLUG_LeadCard_ChangeValueLimit & " µã</div>"
+			Response.Write "<div class=value2>è´¦æˆ·ä¿åº•æ•°é¢ï¼š" & PLUG_LeadCard_ChangeValueLimit & " ç‚¹</div>"
 		End If%>
-		<div class=value2>ÄúÄÜ×ªÕËµÄÊı¶î£º<%
+		<div class=value2>æ‚¨èƒ½è½¬è´¦çš„æ•°é¢ï¼š<%
 		If GBL_CHK_CharmPoint - PLUG_LeadCard_ChangeValueLimit > 0 Then
 			Response.Write GBL_CHK_CharmPoint-PLUG_LeadCard_ChangeValueLimit
 		Else
 			Response.Write "0"
-		End If%> µã
+		End If%> ç‚¹
 		</div>
 		<form method=post action=Default.asp name=cardform id=cardform onSubmit="submit_disable(this);">
 		<input type=hidden value=1 name=submitflag>
 		<input type=hidden value=11 name=act>
-		<div class=value2>×ªÕËÊı¶î£º<input maxlength=20 name=ChangeValue value="<%=Left(Request("ChangeValue"),16)%>" size="20" class='fminpt input_2'>
+		<div class=value2>è½¬è´¦æ•°é¢ï¼š<input maxlength=20 name=ChangeValue value="<%=Left(Request("ChangeValue"),16)%>" size="20" class='fminpt input_2'>
 		</div>
-		<div class=value2>ĞèÒª×ªÈëµÄ<%=DEF_PointsName(1)%>ÊıÖµ£¬ÏŞÒ»ÍòÒÔÄÚ
+		<div class=value2>éœ€è¦è½¬å…¥çš„<%=DEF_PointsName(1)%>æ•°å€¼ï¼Œé™ä¸€ä¸‡ä»¥å†…
 		</div>
-		<div class=value2>×ªÈëÕËºÅ£º<input maxlength=20 name=CardUser value="<%=Left(Request("CardUser"),20)%>" size="20" class='fminpt input_2'>
-		ÌîĞ´Òª×ªÈëµÄÕËºÅ
+		<div class=value2>è½¬å…¥è´¦å·ï¼š<input maxlength=20 name=CardUser value="<%=Left(Request("CardUser"),20)%>" size="20" class='fminpt input_2'>
+		å¡«å†™è¦è½¬å…¥çš„è´¦å·
 		<div class=value2>
-		ÖØ¸´ÕËºÅ£º<input maxlength=20 name=CardUser2 value="<%=Left(Request("CardUser2"),20)%>" size="20" class='fminpt input_2'>
-		È·ÈÏ×ªÈëÕËºÅ
+		é‡å¤è´¦å·ï¼š<input maxlength=20 name=CardUser2 value="<%=Left(Request("CardUser2"),20)%>" size="20" class='fminpt input_2'>
+		ç¡®è®¤è½¬å…¥è´¦å·
 		</div>
 		<div class=value2>
-		<input name=submit2 type=submit value="Á¢¼´×ªÕË" class='fmbtn btn_3'>
+		<input name=submit2 type=submit value="ç«‹å³è½¬è´¦" class='fmbtn btn_3'>
 		</div>
 		</form>
 		<%
 		If SupervisorFlag = 1 Then%>
-		<br><div class=title>¹ÜÀíÔ±£ºÖÆ×÷ĞÂ³äÖµ¿¨</div>
-		<%LeadCard_MakeForm%>
+		<br><div class=title>ç®¡ç†å‘˜ï¼šåˆ¶ä½œæ–°å……å€¼å¡</div>
+		<%LeadCard_MakeForm()%>
 		<br>
-		<div class=title>¹ÜÀíÔ±£º³äÖµ¿¨ÁĞ±í</a></div><br>
+		<div class=title>ç®¡ç†å‘˜ï¼šå……å€¼å¡åˆ—è¡¨</a></div><br>
 		<ol>
-		<li><a href=Default.asp>×î½ü100ÕÅ³äÖµ¿¨</a>
-		<li><a href=Default.asp?T=1>×î½ü100ÕÅ<%=DEF_PointsName(0)%>¿¨</a>
-		<li><a href=Default.asp?T=2>×î½ü100ÕÅ<%=DEF_PointsName(1)%>¿¨</a>
-		<li><a href=Default.asp?T=3>×î½ü100ÕÅ<%=DEF_PointsName(2)%>¿¨</a>
-		<li><a href=Default.asp?T=4>×î½ü100ÕÅ<%=DEF_PointsName(4)%>¿¨</a>
-		<li><a href=Default.asp?T=5>×î½ü100ÕÅÑûÇëÂë</a>
+		<li><a href=Default.asp>æœ€è¿‘100å¼ å……å€¼å¡</a>
+		<li><a href=Default.asp?T=1>æœ€è¿‘100å¼ <%=DEF_PointsName(0)%>å¡</a>
+		<li><a href=Default.asp?T=2>æœ€è¿‘100å¼ <%=DEF_PointsName(1)%>å¡</a>
+		<li><a href=Default.asp?T=3>æœ€è¿‘100å¼ <%=DEF_PointsName(2)%>å¡</a>
+		<li><a href=Default.asp?T=4>æœ€è¿‘100å¼ <%=DEF_PointsName(4)%>å¡</a>
+		<li><a href=Default.asp?T=5>æœ€è¿‘100å¼ é‚€è¯·ç </a>
 		</ol><%
-			LeadCard_List
+			LeadCard_List()
 		End If
 	End If%>
 <%
@@ -125,21 +125,21 @@ Sub LeadCard_MakeForm
 		<form method=post action=Default.asp name=madeform id=madeform onSubmit="submit_disable(this);">
 		<input type=hidden value=1 name=submitflag>
 		<input type=hidden value=1 name=act>
-		<div class=value2>Éú³ÉÊıÁ¿£º<input maxlength=20 name=CardNum value="<%=Left(Request("CardNum"),16)%>" size="20" class='fminpt input_2'>
-		ÖÆ×÷ĞÂ³äÖµ¿¨ÊıÁ¿ Ò»´Î×î¶à1000ÕÅ
+		<div class=value2>ç”Ÿæˆæ•°é‡ï¼š<input maxlength=20 name=CardNum value="<%=Left(Request("CardNum"),16)%>" size="20" class='fminpt input_2'>
+		åˆ¶ä½œæ–°å……å€¼å¡æ•°é‡ ä¸€æ¬¡æœ€å¤š1000å¼ 
 		</div>
-		<div class=value2>³äÖµÀàĞÍ£º<select name=CardType class=TBBG9>
-			<option value=-1>ÇëÑ¡Ôñ
-			<option value=1><%=DEF_PointsName(0)%>¿¨(Ôö¼Ó<%=DEF_PointsName(0)%>)
-			<option value=2><%=DEF_PointsName(1)%>¿¨(Ôö¼Ó<%=DEF_PointsName(1)%>)
-			<option value=3><%=DEF_PointsName(2)%>¿¨(Ôö¼Ó<%=DEF_PointsName(2)%>)
-			<option value=4><%=DEF_PointsName(4)%>¿¨(Ôö¼Ó<%=DEF_PointsName(4)%>)
-			<option value=5>ÑûÇëÂë¿¨(½ûÖ¹×¢²áÊ±¿ÉÓÃ)
-			<select> ²»Í¬ÀàĞÍµÄ³äÖµ¿¨£¬¶ÔÓ¦²»Í¬³äÖµÄÚÈİ
+		<div class=value2>å……å€¼ç±»å‹ï¼š<select name=CardType class=TBBG9>
+			<option value=-1>è¯·é€‰æ‹©
+			<option value=1><%=DEF_PointsName(0)%>å¡(å¢åŠ <%=DEF_PointsName(0)%>)
+			<option value=2><%=DEF_PointsName(1)%>å¡(å¢åŠ <%=DEF_PointsName(1)%>)
+			<option value=3><%=DEF_PointsName(2)%>å¡(å¢åŠ <%=DEF_PointsName(2)%>)
+			<option value=4><%=DEF_PointsName(4)%>å¡(å¢åŠ <%=DEF_PointsName(4)%>)
+			<option value=5>é‚€è¯·ç å¡(ç¦æ­¢æ³¨å†Œæ—¶å¯ç”¨)
+			<select> ä¸åŒç±»å‹çš„å……å€¼å¡ï¼Œå¯¹åº”ä¸åŒå……å€¼å†…å®¹
 		</div>
 		<div class=value2>
-		³äÖµµãÊı£º<select name=CardPoints class=TBBG9>
-			<option value=-1>ÇëÑ¡Ôñ
+		å……å€¼ç‚¹æ•°ï¼š<select name=CardPoints class=TBBG9>
+			<option value=-1>è¯·é€‰æ‹©
 			<option value=1>1
 			<option value=2>2
 			<option value=5>5
@@ -150,21 +150,21 @@ Sub LeadCard_MakeForm
 			<option value=500>500
 			<option value=1000>1000
 			<option value=10000>10000
-			</select> ³äÖµ¿¨³äÖµºó¿É»ñÈ¡µãÊı
+			</select> å……å€¼å¡å……å€¼åå¯è·å–ç‚¹æ•°
 		</div>
 		<div class=value2>
-		µ½ÆÚÊ±¼ä£º<select name=ExpiresDate class=TBBG9>
-			<option value=-1>ÇëÑ¡Ôñ
-			<option value=1>1Ìì
-			<option value=7>1ÖÜ
-			<option value=30>1ÔÂ
-			<option value=120>3¸öÔÂ
-			<option value=365>1Äê
-			<option value=3650>10Äê
-			</select> ÔÚ³¬¹ıÊ±¼äºóÎ´³äµÄ¿¨Æ¬½«»áÊ§Ğ§
+		åˆ°æœŸæ—¶é—´ï¼š<select name=ExpiresDate class=TBBG9>
+			<option value=-1>è¯·é€‰æ‹©
+			<option value=1>1å¤©
+			<option value=7>1å‘¨
+			<option value=30>1æœˆ
+			<option value=120>3ä¸ªæœˆ
+			<option value=365>1å¹´
+			<option value=3650>10å¹´
+			</select> åœ¨è¶…è¿‡æ—¶é—´åæœªå……çš„å¡ç‰‡å°†ä¼šå¤±æ•ˆ
 		</div>
 		<div class=value2>
-		<input name=submit2 type=submit value="Á¢¼´ÖÆ×÷" class='fmbtn btn_3'>
+		<input name=submit2 type=submit value="ç«‹å³åˆ¶ä½œ" class='fmbtn btn_3'>
 		</div>
 		</form>
 <%
@@ -191,31 +191,31 @@ Sub LeadCard_ChangeValue
 
 	ChangeValue = GBLFUN_Clng(ChangeValue)
 	If ChangeValue < 0 or ChangeValue > 10000 Then
-		LeadCard_Err "×ªÕË´íÎó£ºÇëÊäÈëÕıÈ·µÄÊıÖµ£®"
+		LeadCard_Err "è½¬è´¦é”™è¯¯ï¼šè¯·è¾“å…¥æ­£ç¡®çš„æ•°å€¼ï¼"
 		Exit Sub
 	End If
 	
 	If LCase(CardUser) <> LCase(CardUser2) Then
-		LeadCard_Err "×ªÕË´íÎó£ºÁ½´ÎÊäÈëµÄ×ªÈëÓÃ»§±ØĞëÏàÍ¬£®"
+		LeadCard_Err "è½¬è´¦é”™è¯¯ï¼šä¸¤æ¬¡è¾“å…¥çš„è½¬å…¥ç”¨æˆ·å¿…é¡»ç›¸åŒï¼"
 		Exit Sub
 	End If
 	
 	If Trim(LCase(GBL_CHK_User)) = Trim(LCase(CardUser)) Then
-		LeadCard_Err "×ªÕË´íÎó£º²»ÄÜ×ªÕË¸ø×Ô¼º£®"
+		LeadCard_Err "è½¬è´¦é”™è¯¯ï¼šä¸èƒ½è½¬è´¦ç»™è‡ªå·±ï¼"
 		Exit Sub
 	End If
 	
 	Dim CardUserID
 	CardUserID = CheckUserNameExist(CardUser)
 	If CardUserID = 0 Then
-		LeadCard_Err "×ªÕË´íÎó£º²»´æÔÚÓÃ»§ " & htmlencode(CardUser) & "£®"
+		LeadCard_Err "è½¬è´¦é”™è¯¯ï¼šä¸å­˜åœ¨ç”¨æˆ· " & htmlencode(CardUser) & "ï¼"
 		Exit Sub
 	End If
 
 	Dim Rs
-	Set Rs = Con.ExeCute(sql_select("Select CharmPoint from LeadBBS_User Where ID=" & GBL_UserID,1),0)
+	Set Rs = LDExeCute(sql_select("Select CharmPoint from LeadBBS_User Where ID=" & GBL_UserID,1),0)
 	If Rs.Eof Then
-		LeadCard_Err "×ªÕË´íÎó£ºÇëÏÈµÇÂ¼£®"
+		LeadCard_Err "è½¬è´¦é”™è¯¯ï¼šè¯·å…ˆç™»å½•ï¼"
 		Rs.Close
 		Set Rs = Nothing
 		Exit Sub
@@ -225,12 +225,12 @@ Sub LeadCard_ChangeValue
 	Set Rs = Nothing
 
 	If ChangeValue > GBL_CHK_CharmPoint Then
-		LeadCard_Err "×ªÕË´íÎó£ºÄúµÄ" & DEF_PointsName(1) & "²»×ã£®"
+		LeadCard_Err "è½¬è´¦é”™è¯¯ï¼šæ‚¨çš„" & DEF_PointsName(1) & "ä¸è¶³ï¼"
 		Exit Sub
 	End If
 
 	If GBL_CHK_CharmPoint <= PLUG_LeadCard_ChangeValueLimit or ChangeValue > (GBL_CHK_CharmPoint - PLUG_LeadCard_ChangeValueLimit) Then
-		LeadCard_Err "×ªÕË´íÎó£ºÄúµÄ" & DEF_PointsName(1) & "Î´µ½ÔÊĞí×ªÕËµÄÊıÖµ»ò³¬³öÁËÔÊĞí×ªÕËµÄÊıÖµ£®"
+		LeadCard_Err "è½¬è´¦é”™è¯¯ï¼šæ‚¨çš„" & DEF_PointsName(1) & "æœªåˆ°å…è®¸è½¬è´¦çš„æ•°å€¼æˆ–è¶…å‡ºäº†å…è®¸è½¬è´¦çš„æ•°å€¼ï¼"
 		Exit Sub
 	End If
 
@@ -239,7 +239,7 @@ Sub LeadCard_ChangeValue
 	
 	UpdateSessionValue 15,0-ChangeValue,1
 	
-	LeadCard_Done "×ªÕË³É¹¦ÌáÊ¾£º³É¹¦×ªÈëÕËºÅ<u>" & htmlencode(CardUser) & "</u>£¬¹²¼Æ" & DEF_PointsName(1) & "<u>" & ChangeValue & "</u>£®"
+	LeadCard_Done "è½¬è´¦æˆåŠŸæç¤ºï¼šæˆåŠŸè½¬å…¥è´¦å·<u>" & htmlencode(CardUser) & "</u>ï¼Œå…±è®¡" & DEF_PointsName(1) & "<u>" & ChangeValue & "</u>ï¼"
 
 End Sub
 
@@ -252,27 +252,27 @@ Sub LeadCard_InputValue
 
 	CardID = GBLFUN_Clng(CardID)
 	If Len(Cstr(CardID)) <> PLUG_LeadCard_Length Then
-		LeadCard_Err "³äÖµ´íÎó£º¿¨ºÅ´íÎó£¬ÎŞ·¨Íê³É³äÖµ£®"
+		LeadCard_Err "å……å€¼é”™è¯¯ï¼šå¡å·é”™è¯¯ï¼Œæ— æ³•å®Œæˆå……å€¼ï¼"
 		Exit Sub
 	End If
 	
 	If LCase(CardUser) <> LCase(CardUser2) Then
-		LeadCard_Err "³äÖµ´íÎó£ºÁ½´ÎÊäÈëµÄ³äÖµÓÃ»§²»Í¬£¬ÎŞ·¨Íê³É³äÖµ£®"
+		LeadCard_Err "å……å€¼é”™è¯¯ï¼šä¸¤æ¬¡è¾“å…¥çš„å……å€¼ç”¨æˆ·ä¸åŒï¼Œæ— æ³•å®Œæˆå……å€¼ï¼"
 		Exit Sub
 	End If
 	
 	Dim CardUserID
 	CardUserID = CheckUserNameExist(CardUser)
 	If CardUserID = 0 Then
-		LeadCard_Err "³äÖµ´íÎó£º²»´æÔÚÓÃ»§ " & htmlencode(CardUser) & "£®"
+		LeadCard_Err "å……å€¼é”™è¯¯ï¼šä¸å­˜åœ¨ç”¨æˆ· " & htmlencode(CardUser) & "ï¼"
 		Exit Sub
 	End If
 
 	Dim Rs
 	Dim CardType,ExpiresDate,CardPoints
-	Set Rs = Con.ExeCute(sql_select("Select CardType,ExpiresDate,CardPoints from LeadBBS_Plug_Card Where CardID=" & CardID,1),0)
+	Set Rs = LDExeCute(sql_select("Select CardType,ExpiresDate,CardPoints from LeadBBS_Plug_Card Where CardID=" & CardID,1),0)
 	If Rs.Eof Then
-		LeadCard_Err "³äÖµ´íÎó£º¿¨ºÅ " & CardID & " ²»´æÔÚ»òÒÑ±»³äÖµ£®"
+		LeadCard_Err "å……å€¼é”™è¯¯ï¼šå¡å· " & CardID & " ä¸å­˜åœ¨æˆ–å·²è¢«å……å€¼ï¼"
 		Rs.Close
 		Set Rs = Nothing
 		Exit Sub
@@ -283,8 +283,8 @@ Sub LeadCard_InputValue
 	Rs.Close
 	Set Rs = Nothing
 
-	If cCur(Left(GetTimeValue(DEF_Now),8)) > ExpiresDate Then
-		LeadCard_Err "³äÖµ´íÎó£º¿¨ºÅ " & CardID & " ÒÑµ½ÆÚ×÷·Ï£®"
+	If cCur(Left(LngStr(GetTimeValue(DEF_Now)),8)) > ExpiresDate Then
+		LeadCard_Err "å……å€¼é”™è¯¯ï¼šå¡å· " & CardID & " å·²åˆ°æœŸä½œåºŸï¼"
 		Exit Sub
 	End If
 
@@ -299,18 +299,18 @@ Sub LeadCard_InputValue
 	Case 4: TypeStr = DEF_PointsName(4)
 		TypeCol = "OnlineTime"
 		CardPoints = CardPoints * 60
-	case 5: TypeStr = "ÑûÇëÂë"
-		LeadCard_Err "ÑûÇëÂëÎŞ·¨³äÖµ£®"
+	case 5: TypeStr = "é‚€è¯·ç "
+		LeadCard_Err "é‚€è¯·ç æ— æ³•å……å€¼ï¼"
 		Exit Sub
 	Case Else: 
-		LeadCard_Err "³äÖµ´íÎó£º¿¨ºÅ " & CardID & " Óöµ½²»¿ÉÔ¤ÖªµÄ´íÎó£¬ÇëÁªÏµ¹ÜÀíÔ±½â¾ö£®"
+		LeadCard_Err "å……å€¼é”™è¯¯ï¼šå¡å· " & CardID & " é‡åˆ°ä¸å¯é¢„çŸ¥çš„é”™è¯¯ï¼Œè¯·è”ç³»ç®¡ç†å‘˜è§£å†³ï¼"
 		Exit Sub
 	End Select
 	
 	Con.ExeCute("Update LeadBBS_User Set " & TypeCol & "=" & TypeCol & "+" & CardPoints & " Where ID=" & CardUserID)
 	Con.ExeCute("Delete from LeadBBS_Plug_Card Where CardID=" & CardID)
 	If CardType = 4 Then CardPoints = CardPoints / 60
-	LeadCard_Done "³äÖµ³É¹¦ÌáÊ¾£º³É¹¦ÎªÕËºÅ<u>" & htmlencode(CardUser) & "</u>³äÈë" & TypeStr & "¿¨£¬¹²¼ÆµãÊı<u>" & CardPoints & "</u>£®"
+	LeadCard_Done "å……å€¼æˆåŠŸæç¤ºï¼šæˆåŠŸä¸ºè´¦å·<u>" & htmlencode(CardUser) & "</u>å……å…¥" & TypeStr & "å¡ï¼Œå…±è®¡ç‚¹æ•°<u>" & CardPoints & "</u>ï¼"
 	
 
 End Sub
@@ -325,25 +325,25 @@ Sub LeadCard_Made
 	
 	CardNum = GBLFUN_Clng(CardNum)
 	If CardNum < 0 or CardNum > 1000 Then
-		LeadCard_Err "Éú³ÉĞÂ³äÖµ¿¨´íÎó£ºÊıÁ¿±ØĞëÏŞÖÆÔÚ1-1000£®"
+		LeadCard_Err "ç”Ÿæˆæ–°å……å€¼å¡é”™è¯¯ï¼šæ•°é‡å¿…é¡»é™åˆ¶åœ¨1-1000ï¼"
 		Exit Sub
 	End If
 
 	CardType = GBLFUN_Clng(CardType)
 	If CardType < 1 or CardType > 5 Then
-		LeadCard_Err "Éú³ÉĞÂ³äÖµ¿¨´íÎó£ºÇëÑ¡Ôñ³äÖµ¿¨ÀàĞÍ£®"
+		LeadCard_Err "ç”Ÿæˆæ–°å……å€¼å¡é”™è¯¯ï¼šè¯·é€‰æ‹©å……å€¼å¡ç±»å‹ï¼"
 		Exit Sub
 	End If
 
 	CardPoints = GBLFUN_Clng(CardPoints)
 	If CardPoints < 1 or CardPoints > 10000 Then
-		LeadCard_Err "Éú³ÉĞÂ³äÖµ¿¨´íÎó£ºÇëÑ¡ÔñÕıÈ·µÄ³äÖµ¿¨µãÊı£®"
+		LeadCard_Err "ç”Ÿæˆæ–°å……å€¼å¡é”™è¯¯ï¼šè¯·é€‰æ‹©æ­£ç¡®çš„å……å€¼å¡ç‚¹æ•°ï¼"
 		Exit Sub
 	End If
 
 	ExpiresDate = GBLFUN_Clng(ExpiresDate)
 	If ExpiresDate < 1 or ExpiresDate > 3650 Then
-		LeadCard_Err "Éú³ÉĞÂ³äÖµ¿¨´íÎó£ºÇëÕıÈ·Ñ¡Ôñ³äÖµ¿¨×÷·ÏÈÕÆÚ£®"
+		LeadCard_Err "ç”Ÿæˆæ–°å……å€¼å¡é”™è¯¯ï¼šè¯·æ­£ç¡®é€‰æ‹©å……å€¼å¡ä½œåºŸæ—¥æœŸï¼"
 		Exit Sub
 	End If
 
@@ -351,10 +351,10 @@ Sub LeadCard_Made
 	<br>
 	<table cellpadding=0 cellspacing=0 class=table_in>
 	<tr class=tbinhead>
-	<td><div class=value>¿¨ºÅ</div></td>
-	<td><div class=value>ÀàĞÍ</div></td>
-	<td><div class=value>µãÊı</div></td>
-	<td><div class=value>µ½ÆÚÈÕÆÚ</div></td>
+	<td><div class=value>å¡å·</div></td>
+	<td><div class=value>ç±»å‹</div></td>
+	<td><div class=value>ç‚¹æ•°</div></td>
+	<td><div class=value>åˆ°æœŸæ—¥æœŸ</div></td>
 	</tr>
 	<%
 	Dim TypeStr
@@ -364,11 +364,11 @@ Sub LeadCard_Made
 	Case 2: TypeStr = DEF_PointsName(1)
 	Case 3: TypeStr = DEF_PointsName(2)
 	Case 4: TypeStr = DEF_PointsName(4)
-	Case 5: TypeStr = "ÑûÇëÂë"
+	Case 5: TypeStr = "é‚€è¯·ç "
 	End Select
 
 	Dim ExpiresDateTmp
-	ExpiresDateTmp = Left(GetTimeValue(DateAdd("d",ExpiresDate,DEF_Now)),8)
+	ExpiresDateTmp = Left(LngStr(GetTimeValue(DateAdd("d",ExpiresDate,DEF_Now))),8)
 
 	Dim CardID,N,Rs,Num
 	Num = 0
@@ -377,16 +377,16 @@ Sub LeadCard_Made
 		CardID = Fix(Rnd*99999999999999)
 		
 		If Len(CardID) >= PLUG_LeadCard_Length Then
-			Set Rs = Con.ExeCute(sql_select("Select CardID From LeadBBS_Plug_Card Where CardID=" & CardID,1),0)
+			Set Rs = LDExeCute(sql_select("Select CardID From LeadBBS_Plug_Card Where CardID=" & CardID,1),0)
 			If Rs.Eof Then
 				Rs.Close
 				Set Rs = Nothing
 				Num = Num + 1
 				Con.ExeCute("Insert Into LeadBBS_Plug_Card(CardID,CardType,ExpiresDate,CardPoints) Values(" & CardID & "," & CardType & "," & ExpiresDateTmp & "," & CardPoints & ")")
 				Response.Write "<tr><td class=tdbox>" & CardID & "</td>"
-				Response.Write "<td class=tdbox>" & TypeStr & "¿¨</td>"
+				Response.Write "<td class=tdbox>" & TypeStr & "å¡</td>"
 				Response.Write "<td class=tdbox>" & CardPoints & "</td>"
-				Response.Write "<td class=tdbox>" & ExpiresDate & "Ìì</td></tr>" & VbCrLf
+				Response.Write "<td class=tdbox>" & ExpiresDate & "å¤©</td></tr>" & VbCrLf
 			Else
 				Rs.Close
 				Set Rs = Nothing
@@ -396,25 +396,25 @@ Sub LeadCard_Made
 	%>
 	</table>
 	<%
-	LeadCard_Done "³äÖµ¿¨³É¹¦Éú³É£º	¹²¼Æ" & Num & "ÕÅ£®"
+	LeadCard_Done "å……å€¼å¡æˆåŠŸç”Ÿæˆï¼š	å…±è®¡" & Num & "å¼ ï¼"
 
 End Sub
 
 Sub LeadCard_Err(str)
 
 	Response.Write "<div class=alert>" & Str & "</div>"
-	Response.Write "<a href=Default.asp>[·µ»ØÖ÷½çÃæ]</a>"
+	Response.Write "<a href=Default.asp>[è¿”å›ä¸»ç•Œé¢]</a>"
 
 End Sub
 
 Sub LeadCard_Done(str)
 
 	Response.Write "<div class='alert greenfont'>" & Str & "</div>"
-	Response.Write "<a href=Default.asp>[·µ»ØÖ÷½çÃæ]</a>"
+	Response.Write "<a href=Default.asp>[è¿”å›ä¸»ç•Œé¢]</a>"
 
 End Sub
 
-Rem ¼ì²âÄ³ÓÃ»§ÃûÊÇ·ñ´æÔÚ
+Rem æ£€æµ‹æŸç”¨æˆ·åæ˜¯å¦å­˜åœ¨
 Function CheckUserNameExist(UserName)
 
 	Dim Rs
@@ -437,14 +437,14 @@ Sub LeadCard_List
 	T = GBLFUN_Clng(T)
 	If T < 1 or T > 5 Then T = 0
 	If T = 0 Then
-		Set Rs = Con.ExeCute(sql_select("Select ID,CardID,CardType,ExpiresDate,CardPoints From LeadBBS_Plug_Card",100),0)
+		Set Rs = LDExeCute(sql_select("Select ID,CardID,CardType,ExpiresDate,CardPoints From LeadBBS_Plug_Card",100),0)
 	Else
-		Set Rs = Con.ExeCute(sql_select("Select ID,CardID,CardType,ExpiresDate,CardPoints From LeadBBS_Plug_Card where CardType=" & T,100),0)
+		Set Rs = LDExeCute(sql_select("Select ID,CardID,CardType,ExpiresDate,CardPoints From LeadBBS_Plug_Card where CardType=" & T,100),0)
 	End If
 	If Rs.Eof Then
 		Rs.Close
 		Set Rs = Nothing
-		LeadCard_Done "Ã»ÓĞ·ûºÏ²éÑ¯Ìõ¼şµÄ³åÖµ¿¨£®"
+		LeadCard_Done "æ²¡æœ‰ç¬¦åˆæŸ¥è¯¢æ¡ä»¶çš„å†²å€¼å¡ï¼"
 		Exit Sub
 	End If
 	
@@ -455,11 +455,11 @@ Sub LeadCard_List
 	%>
 	<table cellpadding=0 cellspacing=0 class=table_in>
 	<tr class=tbinhead>
-	<td><div class=value>±àºÅ</div></td>
-	<td><div class=value>¿¨ºÅ</div></td>
-	<td><div class=value>ÀàĞÍ</div></td>
-	<td><div class=value>µãÊı</div></td>
-	<td><div class=value>µ½ÆÚ</div></td>
+	<td><div class=value>ç¼–å·</div></td>
+	<td><div class=value>å¡å·</div></td>
+	<td><div class=value>ç±»å‹</div></td>
+	<td><div class=value>ç‚¹æ•°</div></td>
+	<td><div class=value>åˆ°æœŸ</div></td>
 	</tr>
 	<%
 	Dim TypeStr
@@ -473,12 +473,12 @@ Sub LeadCard_List
 		Case 2: TypeStr = DEF_PointsName(1)
 		Case 3: TypeStr = DEF_PointsName(2)
 		Case 4: TypeStr = DEF_PointsName(4)
-		Case 5: TypeStr = "ÑûÇëÂë"
+		Case 5: TypeStr = "é‚€è¯·ç "
 		End Select
 
-		Response.Write "<tr><td class=tdbox>" & GetData(0,N) & "</td>"
-		Response.Write "<td class=tdbox>" & GetData(1,N) & "</td>"
-		Response.Write "<td class=tdbox>" & TypeStr & "¿¨</td>"
+		Response.Write "<tr><td class=tdbox>" & LngStr(GetData(0,N)) & "</td>"
+		Response.Write "<td class=tdbox>" & LngStr(GetData(1,N)) & "</td>"
+		Response.Write "<td class=tdbox>" & TypeStr & "å¡</td>"
 		Response.Write "<td class=tdbox>" & GetData(4,N) & "</td>"
 		Response.Write "<td class=tdbox>" & restoretime(GetData(3,N)) & "</td></tr>" & VbCrLf
 	Next

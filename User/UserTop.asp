@@ -1,43 +1,43 @@
-<!-- #include file=../inc/BBSSetup.asp -->
-<!-- #include file=../inc/User_Setup.ASP -->
-<!-- #include file=../inc/Board_Popfun.asp -->
-<!-- #include file=inc/UserTopic.asp -->
-<!-- #include file=../inc/IncHtm/Top_BoardTop.asp -->
+<!--#include file="../inc/BBSSetup.asp"-->
+<!--#include file="../inc/User_Setup.ASP"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
+<!--#include file="inc/UserTopic.asp"-->
+<!--#include file="../inc/IncHtm/Top_BoardTop.asp"-->
 <%
 DEF_BBS_HomeUrl = "../"
 GBL_CHK_PWdFlag = 0
-initDatabase
+initDatabase()
 
 Dim Tmp_NavStr,Tmp_Para
-Tmp_Para = Left(Request.QueryString,1)
+Tmp_Para = Left(Request.ServerVariables("QUERY_STRING"),1)
 Select Case Tmp_Para
-	Case "S": Tmp_NavStr = DEF_PointsName(0) & "ÅÅĞĞ°ñ"
-	Case "u": Tmp_NavStr = DEF_PointsName(4) & "ÅÅĞĞ°ñ"
-	Case "p": Tmp_NavStr = "¹àË®ÅÅĞĞ°ñ"
-	Case "e": Tmp_NavStr = "ĞÂÈëÓÃ»§"
-	Case "r": Tmp_NavStr = "²éÕÒÓÃ»§"
-	Case "b": Tmp_NavStr = "°æÃæ·¢ÌûÅÅĞĞ"
-	Case Else: Tmp_NavStr = DEF_PointsName(0) & "ÅÅĞĞ°ñ"
+	Case "S": Tmp_NavStr = DEF_PointsName(0) & "æ’è¡Œæ¦œ"
+	Case "u": Tmp_NavStr = DEF_PointsName(4) & "æ’è¡Œæ¦œ"
+	Case "p": Tmp_NavStr = "çŒæ°´æ’è¡Œæ¦œ"
+	Case "e": Tmp_NavStr = "æ–°å…¥ç”¨æˆ·"
+	Case "r": Tmp_NavStr = "æŸ¥æ‰¾ç”¨æˆ·"
+	Case "b": Tmp_NavStr = "ç‰ˆé¢å‘å¸–æ’è¡Œ"
+	Case Else: Tmp_NavStr = DEF_PointsName(0) & "æ’è¡Œæ¦œ"
 End Select
 
 BBS_SiteHead DEF_SiteNameString & " - " & Tmp_NavStr,0,"" & Tmp_NavStr & ""
 UpdateOnlineUserAtInfo 0,Tmp_NavStr
 
 UserTopicTopInfo("forum")
-UserTop_NavInfo
+UserTop_NavInfo()
 
 Select Case Tmp_Para
 	Case "S": DisplayUserPointsTop(DEF_MaxListNum)
 	Case "u": DisplayUserOnlineTimeTop(DEF_MaxListNum)
 	Case "p": DisplayUserAncTop(DEF_MaxListNum)
 	Case "e": DisplayUserNewest(DEF_MaxListNum)
-	Case "r": DisplayUserFind
-	Case "b": DisplayBoardTop
+	Case "r": DisplayUserFind()
+	Case "b": DisplayBoardTop()
 	Case Else: DisplayUserPointsTop(DEF_MaxListNum)
 End Select
-UserTopicBottomInfo
-closeDataBase
-SiteBottom
+UserTopicBottomInfo()
+closeDataBase()
+SiteBottom()
 
 Sub UserTop_NavInfo
 
@@ -48,29 +48,29 @@ Sub UserTop_NavInfo
 
 	Response.Write "<div class='user_item_nav fire'><ul>"
 	If Evol = "S" or Evol = "" Then
-		Response.Write "	<li><div class=navactive>" & DEF_PointsName(0) & "ÅÅĞĞ°ñ</div></li>"
+		Response.Write "	<li><div class=navactive>" & DEF_PointsName(0) & "æ’è¡Œæ¦œ</div></li>"
 	Else
-		Response.Write "	<li><a href=UserTop.asp?S>" & DEF_PointsName(0) & "ÅÅĞĞ°ñ</a></li>"
+		Response.Write "	<li><a href=UserTop.asp?S>" & DEF_PointsName(0) & "æ’è¡Œæ¦œ</a></li>"
 	End If
 	If Evol = "u" Then
-		Response.Write "	<li><div class=navactive>" & DEF_PointsName(4) & "ÅÅĞĞ°ñ</div></li>"
+		Response.Write "	<li><div class=navactive>" & DEF_PointsName(4) & "æ’è¡Œæ¦œ</div></li>"
 	Else
-		Response.Write "	<li><a href=UserTop.asp?u>" & DEF_PointsName(4) & "ÅÅĞĞ°ñ</a></li>"
+		Response.Write "	<li><a href=UserTop.asp?u>" & DEF_PointsName(4) & "æ’è¡Œæ¦œ</a></li>"
 	End If
 	If Evol = "p" Then
-		Response.Write "	<li><div class=navactive>¹àË®ÅÅĞĞ°ñ</div></li>"
+		Response.Write "	<li><div class=navactive>çŒæ°´æ’è¡Œæ¦œ</div></li>"
 	Else
-		Response.Write "	<li><a href=UserTop.asp?p>¹àË®ÅÅĞĞ°ñ</a></li>"
+		Response.Write "	<li><a href=UserTop.asp?p>çŒæ°´æ’è¡Œæ¦œ</a></li>"
 	End If
 	If Evol = "e" Then
-		Response.Write "	<li><div class=navactive>ĞÂÈëÓÃ»§</div></li>"
+		Response.Write "	<li><div class=navactive>æ–°å…¥ç”¨æˆ·</div></li>"
 	Else
-		Response.Write "	<li><a href=UserTop.asp?e>ĞÂÈëÓÃ»§</a></li>"
+		Response.Write "	<li><a href=UserTop.asp?e>æ–°å…¥ç”¨æˆ·</a></li>"
 	End If
 	If Evol = "r" Then
-		Response.Write "	<li><div class=navactive>²éÕÒÓÃ»§</div></li>"
+		Response.Write "	<li><div class=navactive>æŸ¥æ‰¾ç”¨æˆ·</div></li>"
 	Else
-		Response.Write "	<li><a href=UserTop.asp?r>²éÕÒÓÃ»§</a></li>"
+		Response.Write "	<li><a href=UserTop.asp?r>æŸ¥æ‰¾ç”¨æˆ·</a></li>"
 	End If
 	Response.Write "</ul></div>"
 	
@@ -81,19 +81,19 @@ Sub DisplayUserPointsTop(Number)
 
 	Dim Rs,SQL
 	
-	Rem Order by Points¸úOrder by LeadBBS_User.PointsÊÇ²»Ò»ÑùµÄ(ÌØÖ¸AccessÖĞ),¿É¶ñµÄAccess¾­³£»á½«pointsÎª0µÄÅÅµ½×îÇ°Ãæ
-	Rem »¹ÓĞ,¼ÓÉÏÒ»¸öWhereÅĞ¶Ï,¿ÉÄÜÓĞÈÃAccessÖØ±æË÷ÒıµÄĞ§¹û
+	Rem Order by Pointsè·ŸOrder by LeadBBS_User.Pointsæ˜¯ä¸ä¸€æ ·çš„(ç‰¹æŒ‡Accessä¸­),å¯æ¶çš„Accessç»å¸¸ä¼šå°†pointsä¸º0çš„æ’åˆ°æœ€å‰é¢
+	Rem è¿˜æœ‰,åŠ ä¸Šä¸€ä¸ªWhereåˆ¤æ–­,å¯èƒ½æœ‰è®©Accessé‡è¾¨ç´¢å¼•çš„æ•ˆæœ
 	SQL = sql_select("select LeadBBS_User.ID,LeadBBS_User.UserName,LeadBBS_User.Points,LeadBBS_User.ApplyTime,LeadBBS_User.Lastdoingtime,LeadBBS_User.UserLevel,LeadBBS_User.TrueName from LeadBBS_User Order by LeadBBS_User.Points DESC",Number)
 
 	Set Rs = LDExeCute(SQL,0)
 	If Not Rs.Eof Then%>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class=table_in>
                     <tr class=tbinhead>
-                    	<td width=8%><div class=value>ÅÅÃû</div></td>
-                    	<td width=30%><div class=value>Ãû³Æ</div></td>
+                    	<td width=8%><div class=value>æ’å</div></td>
+                    	<td width=30%><div class=value>åç§°</div></td>
                     	<td width=15%><div class=value><%=DEF_PointsName(0)%></div></td>
-                    	<td width=15%><div class=value>×¢²áÊ±¼ä</div></td>
-                    	<td width=15%><div class=value>×î½ü¹âÁÙ</div></td>
+                    	<td width=15%><div class=value>æ³¨å†Œæ—¶é—´</div></td>
+                    	<td width=15%><div class=value>æœ€è¿‘å…‰ä¸´</div></td>
                     	<td width=17%><div class=value><%=DEF_PointsName(3)%></div></td>
                     </tr>
 <%	
@@ -120,7 +120,7 @@ Sub DisplayUserPointsTop(Number)
 	Else
 		Rs.close
 		Set Rs = Nothing
-		Response.Write "<div class=alert>ÔİÎŞÏà¹ØÄÚÈİ.</div>" & VbCrLf
+		Response.Write "<div class=alert>æš‚æ— ç›¸å…³å†…å®¹.</div>" & VbCrLf
 	End If
 
 End Sub
@@ -135,11 +135,11 @@ Sub DisplayUserOnlineTimeTop(Number)
 	If Not Rs.Eof Then%>
                   <table width="100%" border="0" cellspacing="0" cellpadding="0" class=table_in>
                     <tr class=tbinhead>
-                    	<td width=8%><div class=value>ÅÅÃû</div></td>
-                    	<td width=30%><div class=value>Ãû³Æ</div></td>
+                    	<td width=8%><div class=value>æ’å</div></td>
+                    	<td width=30%><div class=value>åç§°</div></td>
                     	<td width=15%><div class=value><%=DEF_PointsName(4)%></div></td>
-                    	<td width=15%><div class=value>×¢²áÊ±¼ä</div></td>
-                    	<td width=15%><div class=value>×î½ü¹âÁÙ</div></td>
+                    	<td width=15%><div class=value>æ³¨å†Œæ—¶é—´</div></td>
+                    	<td width=15%><div class=value>æœ€è¿‘å…‰ä¸´</div></td>
                     	<td width=17%><div class=value><%=DEF_PointsName(3)%></div></td>
                     </tr>
 <%	
@@ -163,7 +163,7 @@ Sub DisplayUserOnlineTimeTop(Number)
 	Else
 		Rs.close
 		Set Rs = Nothing
-		Response.Write "<div class=alert>ÔİÎŞÏà¹ØÄÚÈİ.</div>" & VbCrLf
+		Response.Write "<div class=alert>æš‚æ— ç›¸å…³å†…å®¹.</div>" & VbCrLf
 	End If
 
 End Sub
@@ -179,11 +179,11 @@ Sub DisplayUserAncTop(Number)
 
                   <table width="100%" border="0" cellspacing="0" cellpadding="0" class=table_in>
                     <tr class=tbinhead>
-                    	<td width=8%><div class=value>ÅÅÃû</div></td>
-                    	<td width=30%><div class=value>Ãû³Æ</div></td>
-                    	<td width=15%><div class=value>·¢Ìû</div></td>
-                    	<td width=15%><div class=value>×¢²áÊ±¼ä</div></td>
-                    	<td width=15%><div class=value>×î½ü¹âÁÙ</div></td>
+                    	<td width=8%><div class=value>æ’å</div></td>
+                    	<td width=30%><div class=value>åç§°</div></td>
+                    	<td width=15%><div class=value>å‘å¸–</div></td>
+                    	<td width=15%><div class=value>æ³¨å†Œæ—¶é—´</div></td>
+                    	<td width=15%><div class=value>æœ€è¿‘å…‰ä¸´</div></td>
                     	<td width=17%><div class=value><%=DEF_PointsName(3)%></div></td>
                     </tr>
                     <%	
@@ -207,7 +207,7 @@ Sub DisplayUserAncTop(Number)
 	Else
 		Rs.close
 		Set Rs = Nothing
-		Response.Write "<div class=alert>ÔİÎŞÏà¹ØÄÚÈİ.</div>" & VbCrLf
+		Response.Write "<div class=alert>æš‚æ— ç›¸å…³å†…å®¹.</div>" & VbCrLf
 	End If
 
 End Sub
@@ -222,12 +222,12 @@ Sub DisplayUserNewest(Number)
 	%>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class=table_in>
 		<tr class=tbinhead>
-			<td width=12%><div class=value>±àºÅ</div></td>
-			<td width=24%><div class=value>Ãû³Æ</div></td>
+			<td width=12%><div class=value>ç¼–å·</div></td>
+			<td width=24%><div class=value>åç§°</div></td>
 			<td width=8%><div class=value><%=DEF_PointsName(0)%></div></td>
 			<td width=8%><div class=value><%=DEF_PointsName(4)%></div></td>
-			<td width=24%><div class=value>×¢²áÊ±¼ä</div></td>
-			<td width=24%><div class=value>×îºóµÇÂ¼</div></td>
+			<td width=24%><div class=value>æ³¨å†Œæ—¶é—´</div></td>
+			<td width=24%><div class=value>æœ€åç™»å½•</div></td>
 		</tr>
 <%	
 		dim n,getdata
@@ -250,7 +250,7 @@ Sub DisplayUserNewest(Number)
 	Else
 		Rs.Close
 		Set Rs = Nothing
-		Response.Write "<div class=alert>ÔİÎŞÏà¹ØÄÚÈİ.</div>" & VbCrLf
+		Response.Write "<div class=alert>æš‚æ— ç›¸å…³å†…å®¹.</div>" & VbCrLf
 	End If
 
 End Sub
@@ -267,7 +267,7 @@ If Len(Form_SearchKey) < 1 Then OkFlag = 0
 If OkFlag = 1 Then Form_SearchKey = Left(Form_SearchKey,20)
 
 If OkFlag = 0 Then
-	DisplaySearchForm
+	DisplaySearchForm()
 Else
 	Dim Rs,SQL
 	SQL = sql_select("select ID,UserName,Points,ApplyTime,Prevtime,UserLevel from LeadBBS_User where UserName ='" & Replace(Form_SearchKey,"'","''") & "'",1)
@@ -289,10 +289,10 @@ Else
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class=table_in>
 	<tr class=tbinhead>
 		<td wdith=8%><div class=value>ID</div></td>
-		<td wdith=30%><div class=value>Ãû³Æ</div></td>
+		<td wdith=30%><div class=value>åç§°</div></td>
 		<td wdith=15%><div class=value><%=DEF_PointsName(0)%></div></td>
-		<td wdith=15%><div class=value>×¢²áÊ±¼ä</div></td>
-		<td wdith=15%><div class=value>×îºóµÇÂ¼</div></td>
+		<td wdith=15%><div class=value>æ³¨å†Œæ—¶é—´</div></td>
+		<td wdith=15%><div class=value>æœ€åç™»å½•</div></td>
 		<td wdith=17%><div class=value><%=DEF_PointsName(3)%></div></td>
 	</tr>
 <%
@@ -311,11 +311,11 @@ Else
 %>
 	</table>
 	<%
-		DisplaySearchForm
+		DisplaySearchForm()
 	Else%>
-		<div class=title>²éÕÒÓÃ»§£º <span class=redfont><%=htmlencode(Form_SearchKey)%></span></div><%
-		Response.Write "<div class=alert>ÔİÎŞÏà¹ØÄÚÈİ.</div>"
-		DisplaySearchForm
+		<div class=title>æŸ¥æ‰¾ç”¨æˆ·ï¼š <span class=redfont><%=htmlencode(Form_SearchKey)%></span></div><%
+		Response.Write "<div class=alert>æš‚æ— ç›¸å…³å†…å®¹.</div>"
+		DisplaySearchForm()
 	End If
 End If
 
@@ -326,7 +326,7 @@ Sub DisplayBoardTop
 	Dim t
 	t = DateDiff("s",Top_BoardTop_UpdateTime,DEF_Now)
 	If t >= 0 and t <= DEF_UpdateInterval Then
-		Top_BoardTop_View
+		Top_BoardTop_View()
 		Exit Sub
 	End If
 	
@@ -349,8 +349,8 @@ Sub DisplayBoardTop
 Str = "	<table width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"" class=""table_in"">" & VbCrLf &_
 "	<tr class=tbinhead>" & VbCrLf &_
 "		<td wdith=8% ><div class=value>&nbsp;</div></td>" & VbCrLf &_
-"		<td width=77% ><div class=value>°æÃæ</div></td>" & VbCrLf &_
-"		<td wdith=15% ><div class=value>·¢Ìû</div></td>" & VbCrLf &_
+"		<td width=77% ><div class=value>ç‰ˆé¢</div></td>" & VbCrLf &_
+"		<td wdith=15% ><div class=value>å‘å¸–</div></td>" & VbCrLf &_
 "	</tr>" & VbCrLF
 		for n= 0 to Num
 Str = Str & "	<tr>" & VbCrLf &_
@@ -362,7 +362,7 @@ Str = Str & "	<tr>" & VbCrLf &_
 		next
 Str = Str & "	</table>" & VbCrLf
 	Else
-		Str = "<div class=alert>ÔİÎŞ°æÃæ.</div>"
+		Str = "<div class=alert>æš‚æ— ç‰ˆé¢.</div>"
 	End If
 	Response.Write Str	
 	
@@ -388,13 +388,13 @@ Sub DisplaySearchForm
 	Form_SearchKey = Request.Form("Form_SearchKey")
 %>
 	<form action="UserTop.asp?r" onSubmit="submit_disable(this);" method="post">
-	<div class="title">ÇëÊäÈëÍêÕûÓÃ»§Ãû: </div>
+	<div class="title">è¯·è¾“å…¥å®Œæ•´ç”¨æˆ·å: </div>
 	<div class="value2">
 	<input name="Form_SearchKey" type="text" value="<%=Htmlencode(Form_SearchKey)%>" class="fminpt input_2">
 	<input name="SubmitFlag" value="kdWosoO9w2AXkHouseASP" type="hidden">
 	</div>
 	<div class="value2">
-	<input type="submit" value="²éÕÒ" class="fmbtn btn_2">
+	<input type="submit" value="æŸ¥æ‰¾" class="fmbtn btn_2">
 	</div>
 	</Form>
 <%

@@ -4,50 +4,50 @@ Dim GBL_AssortID_Old
 GBL_AssortID_Old = 1
 
 Dim LimitAssortStringData,LimitAssortStringDataNum
-LimitAssortStringData = Array("¼òÔ¼ÏÔÊ¾·ÖÀà")
+LimitAssortStringData = Array("ç®€çº¦æ˜¾ç¤ºåˆ†ç±»")
 LimitAssortStringDataNum = Ubound(LimitAssortStringData,1)
 
-Rem ÄÚÈİÑéÖ¤
+Rem å†…å®¹éªŒè¯
 Function CheckFormForumCateGoryData
 
 	If isNumeric(GBL_AssortID) = 0 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ±ØĞëÎªÂÛÌ³·ÖÀàIDÖ¸¶¨Ò»¸ö´óÓÚ0µÄÊı×Ö£¬¶ø²»ÄÜÊÇÆäËü×Ö·û¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: å¿…é¡»ä¸ºè®ºå›åˆ†ç±»IDæŒ‡å®šä¸€ä¸ªå¤§äº0çš„æ•°å­—ï¼Œè€Œä¸èƒ½æ˜¯å…¶å®ƒå­—ç¬¦ã€‚<br>" & VbCrLf
 		CheckFormForumCateGoryData = 0
 		Exit Function
 	End If
 
 	GBL_AssortID = cCur(GBL_AssortID)
 	If GBL_AssortID > 2147479999 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ÂÛÌ³·ÖÀàID±àĞ´Ì«´ó¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: è®ºå›åˆ†ç±»IDç¼–å†™å¤ªå¤§ã€‚<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
 	If GBL_AssortID < 1 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ±ØĞëÎªÂÛÌ³·ÖÀàIDÖ¸¶¨Ò»¸ö´óÓÚ0µÄÊı×Ö¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: å¿…é¡»ä¸ºè®ºå›åˆ†ç±»IDæŒ‡å®šä¸€ä¸ªå¤§äº0çš„æ•°å­—ã€‚<br>" & VbCrLf
 		CheckFormForumCateGoryData = 0
 		Exit Function
 	End If
 
 	If len(GBL_AssortName)<1 or GBL_AssortName = "" Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ÂÛÌ³·ÖÀàÃû³ÆÊÇ±ØÌîÏî<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: è®ºå›åˆ†ç±»åç§°æ˜¯å¿…å¡«é¡¹<br>" & VbCrLf
 		CheckFormForumCateGoryData = 0
 		Exit Function
 	End If
 	
 	If inStr(LCase(GBL_AssortName),"""") > 0 or inStr(GBL_AssortName,"<script") > 0 or inStr(GBL_AssortName,"<\script") > 0 or inStr(GBL_AssortName,"</script") > 0 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ÂÛÌ³·ÖÀàÃû³Æ²»ÔÊĞí²åÈëjsµÈÆäËü±àÂë£¬²»ÔÊĞíÊ¹ÓÃË«ÒıºÅ<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: è®ºå›åˆ†ç±»åç§°ä¸å…è®¸æ’å…¥jsç­‰å…¶å®ƒç¼–ç ï¼Œä¸å…è®¸ä½¿ç”¨åŒå¼•å·<br>" & VbCrLf
 		CheckFormForumCateGoryData = 0
 		Exit Function
 	End If
 
 	If strLength(GBL_AssortName) > 250 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ·ÖÀàÃû³Æ³¤¶È²»ÄÜ³¬¹ı250¸ö×Ö·û<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: åˆ†ç±»åç§°é•¿åº¦ä¸èƒ½è¶…è¿‡250ä¸ªå­—ç¬¦<br>" & VbCrLf
 		CheckFormForumCateGoryData = 0
 		Exit Function
 	End If
 
 	If strLength(GBL_AssortMaster) > 250 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ·ÖÀà°æÖ÷Ãûµ¥³¤¶È²»ÄÜ³¬¹ı250¸ö×Ö·û<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: åˆ†ç±»ç‰ˆä¸»åå•é•¿åº¦ä¸èƒ½è¶…è¿‡250ä¸ªå­—ç¬¦<br>" & VbCrLf
 		CheckFormForumCateGoryData = 0
 		Exit Function
 	End If
@@ -61,7 +61,7 @@ Function CheckFormForumCateGoryData
 	Else
 		GBL_AssortMaster = ""
 		If Ubound(GBL_AssortMasterArray,1) > DEF_MaxBoardMastNum - 1 Then
-			GBL_CHK_TempStr = "´íÎó£¬" & DEF_PointsName(7) & "×î¶àÖ»ÄÜÉèÖÃ" & DEF_MaxBoardMastNum & "¸ö"
+			GBL_CHK_TempStr = "é”™è¯¯ï¼Œ" & DEF_PointsName(7) & "æœ€å¤šåªèƒ½è®¾ç½®" & DEF_MaxBoardMastNum & "ä¸ª"
 			CheckFormForumCateGoryData = 0
 			GBL_AssortMaster = GBL_AssortMaster_OldD
 			Exit Function
@@ -71,7 +71,7 @@ Function CheckFormForumCateGoryData
 			If Trim(GBL_AssortMasterArray(TempN)) <> "" Then
 				TempName = CheckUserNameExist(GBL_AssortMasterArray(TempN))
 				If TempName = "" Then
-					GBL_CHK_TempStr = "Error: " & DEF_PointsName(8) & "ÁĞ±í´íÎó£¬ÓÃ»§" & htmlencode(GBL_AssortMasterArray(TempN)) & "²»´æÔÚ£¡¡£<br>" & VbCrLf
+					GBL_CHK_TempStr = "Error: " & DEF_PointsName(8) & "åˆ—è¡¨é”™è¯¯ï¼Œç”¨æˆ·" & htmlencode(GBL_AssortMasterArray(TempN)) & "ä¸å­˜åœ¨ï¼ã€‚<br>" & VbCrLf
 					CheckFormForumCateGoryData = 0
 					GBL_AssortMaster = GBL_AssortMaster_OldD
 					Exit Function
@@ -87,7 +87,7 @@ Function CheckFormForumCateGoryData
 
 End Function
 
-Rem ¼ì²âÄ³·ÖÀàIDÊÇ·ñ´æÔÚ
+Rem æ£€æµ‹æŸåˆ†ç±»IDæ˜¯å¦å­˜åœ¨
 Function CheckForumAssortIDExist(AssortID)
 
 	Dim Rs
@@ -102,7 +102,7 @@ Function CheckForumAssortIDExist(AssortID)
 
 End Function
 
-Rem ¼ì²âÄ³·ÖÀàÃû³ÆÊÇ·ñ´æÔÚ
+Rem æ£€æµ‹æŸåˆ†ç±»åç§°æ˜¯å¦å­˜åœ¨
 Function CheckForumAssortNameExist(AssortName)
 
 	Dim Rs
@@ -117,7 +117,7 @@ Function CheckForumAssortNameExist(AssortName)
 
 End Function
 
-Rem É¾³ıÄ³·ÖÀà
+Rem åˆ é™¤æŸåˆ†ç±»
 Function DeleteForumAssort(AssortID)
 
 	Dim Rs,AssortMaster
@@ -125,7 +125,7 @@ Function DeleteForumAssort(AssortID)
 	If Rs.Eof Then
 		Rs.Close
 		Set Rs = Nothing
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ÂÛÌ³·ÖÀàIDºÅ" & AssortID & "²»´æÔÚ!<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: è®ºå›åˆ†ç±»IDå·" & AssortID & "ä¸å­˜åœ¨!<br>" & VbCrLf
 		DeleteForumAssort = 0
 		Exit Function
 	Else
@@ -134,7 +134,7 @@ Function DeleteForumAssort(AssortID)
 		Set Rs = Nothing
 		Set Rs = LDExeCute(sql_select("Select BoardAssort from LeadBBS_Boards where BoardAssort=" & AssortID,1),0)
 		If Not Rs.Eof Then
-			GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ´Ë·ÖÀàÏÂ»¹ÓĞ°æÃæ´æÔÚ£¬²»ÄÜÍê³ÉÉ¾³ı²Ù×÷!<br>" & VbCrLf
+			GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: æ­¤åˆ†ç±»ä¸‹è¿˜æœ‰ç‰ˆé¢å­˜åœ¨ï¼Œä¸èƒ½å®Œæˆåˆ é™¤æ“ä½œ!<br>" & VbCrLf
 			DeleteForumAssort = 0
 			Rs.Close
 			Set Rs = Nothing
@@ -144,25 +144,25 @@ Function DeleteForumAssort(AssortID)
 		Set Rs = Nothing
 
 		GBL_AssortID = AssortID
-		UpdateAssortMasterList AssortMaster,0
+		Call UpdateAssortMasterList(AssortMaster,0)
 		CALL LDExeCute("delete from LeadBBS_Assort where AssortID=" & AssortID,1)
 		DeleteForumAssort = 1
 	End if
 
 End Function
 
-Rem ²åÈëÄ³·ÖÀà
+Rem æ’å…¥æŸåˆ†ç±»
 Function InsertForumAssort
 
 	If CheckForumAssortIDExist(GBL_AssortID) = 1 Then
 		InsertForumAssort = 0
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "·ÖÀàIDºÅ" & GBL_AssortID & "ÒÑ¾­´æÔÚ!<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "åˆ†ç±»IDå·" & GBL_AssortID & "å·²ç»å­˜åœ¨!<br>" & VbCrLf
 		Exit Function
 	End If
 	
 	If CheckForumAssortNameExist(GBL_AssortName) = 1 Then
 		InsertForumAssort = 0
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "·ÖÀàÃû³ÆºÅ" & htmlencode(GBL_AssortName) & "ÒÑ¾­´æÔÚ!<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "åˆ†ç±»åç§°å·" & htmlencode(GBL_AssortName) & "å·²ç»å­˜åœ¨!<br>" & VbCrLf
 		Exit Function
 	End If
 
@@ -170,12 +170,12 @@ Function InsertForumAssort
 			GBL_AssortID & ",'" & Replace(GBL_AssortName,"'","''") & "','" & Replace(GBL_AssortMaster,"'","''") & "')",1)
 
 	GBL_AssortID_Old = GBL_AssortID
-	UpdateAssortMasterList GBL_AssortMaster,1
+	Call UpdateAssortMasterList(GBL_AssortMaster,1)
 	InsertForumAssort = 1
 
 End Function
 
-Rem µÃµ½Ä³·ÖÀàĞÅÏ¢
+Rem å¾—åˆ°æŸåˆ†ç±»ä¿¡æ¯
 Function GetForumAssortData(AssortID)
 
 	Dim Rs
@@ -195,13 +195,13 @@ Function GetForumAssortData(AssortID)
 
 End Function
 
-Rem ¸üĞÂÄ³·ÖÀà
+Rem æ›´æ–°æŸåˆ†ç±»
 Function UpdateForumAssort
 	
 	If isNumeric(GBL_MODIFYID) = 0 or GBL_MODIFYID = "" Then GBL_MODIFYID = 0
 	GBL_MODIFYID = cCur(GBL_MODIFYID)
 	If GBL_MODIFYID = 0 or GBL_MODIFYID<1 then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ÒªĞŞ¸ÄµÄ·ÖÀà²»´æÔÚ£¡<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: è¦ä¿®æ”¹çš„åˆ†ç±»ä¸å­˜åœ¨ï¼<br>" & VbCrLf
 		GBL_CHK_Flag = 0
 		UpdateForumAssort = 0
 		Exit Function
@@ -214,7 +214,7 @@ Function UpdateForumAssort
 	End If
 
 	If cCur(GBL_GetData(0,0))<>GBL_AssortID and CheckForumAssortIDExist(GBL_AssortID) = 1 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ·ÖÀàIDºÅ" & GBL_AssortID & "ÒÑ¾­´æÔÚ£¬ÇëÊ¹ÓÃÆäËüIDºÅ¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: åˆ†ç±»IDå·" & GBL_AssortID & "å·²ç»å­˜åœ¨ï¼Œè¯·ä½¿ç”¨å…¶å®ƒIDå·ã€‚<br>" & VbCrLf
 		GBL_CHK_Flag = 0
 		UpdateForumAssort = 0
 		Exit Function
@@ -222,7 +222,7 @@ Function UpdateForumAssort
 	Dim Temp
 	Temp = CheckForumAssortNameExist(GBL_AssortName)
 	If Temp<>0 and Temp<>cCur(GBL_GetData(0,0)) Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: Í¬¼¶·ÖÀàÖĞÒÑ¾­´æÔÚÃû³ÆÎª<b>" & htmlencode(GBL_AssortName) & "</b>µÄ·ÖÀà<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: åŒçº§åˆ†ç±»ä¸­å·²ç»å­˜åœ¨åç§°ä¸º<b>" & htmlencode(GBL_AssortName) & "</b>çš„åˆ†ç±»<br>" & VbCrLf
 		GBL_CHK_Flag = 0
 		UpdateForumAssort = 0
 		Exit Function
@@ -233,12 +233,12 @@ Function UpdateForumAssort
 	End If
 
 	GBL_AssortID_Old = cCur(GBL_GetData(0,0))
-	UpdateAssortMasterList GBL_GetData(2,0),0
+	Call UpdateAssortMasterList(GBL_GetData(2,0),0)
 	CALL LDExeCute("Update LeadBBS_Assort Set AssortID=" & GBL_AssortID & ",AssortName='" & Replace(GBL_AssortName,"'","''") & "',AssortMaster='" & Replace(GBL_AssortMaster,"'","''") & "',AssortLimit=" & GBL_AssortLimit & " where AssortID=" & GBL_GetData(0,0),1)
 	GBL_AssortID_Old = GBL_AssortID
-	UpdateAssortMasterList GBL_AssortMaster,1
+	Call UpdateAssortMasterList(GBL_AssortMaster,1)
 	UpdateForumAssort = 1
-	ReloadBoardApplicationInfo
+	ReloadBoardApplicationInfo()
 
 End Function
 
@@ -265,7 +265,7 @@ End Function
 
 Function UpdateAssortMasterList(AssortMaster,Flag)
 
-	Rem ÖØĞÂ¸üĞÂÂÛÌ³ÓÃ»§°æÖ÷×´Ì¬
+	Rem é‡æ–°æ›´æ–°è®ºå›ç”¨æˆ·ç‰ˆä¸»çŠ¶æ€
 	Dim TA,N
 
 	TA = Split(AssortMaster,",")
@@ -276,7 +276,7 @@ Function UpdateAssortMasterList(AssortMaster,Flag)
 End Function
 
 
-Rem ÉèÖÃÄ³ÓÃ»§ÊÇ·ñ°æÖ÷
+Rem è®¾ç½®æŸç”¨æˆ·æ˜¯å¦ç‰ˆä¸»
 Function SetUserAssortMastFlag(UserName,Fla)
 
 	Dim Flag
@@ -328,7 +328,7 @@ Function SetUserAssortMastFlag(UserName,Fla)
 
 End Function
 
-Rem ¼ì²âÄ³ÓÃ»§ÃûÊÇ·ñ´æÔÚ
+Rem æ£€æµ‹æŸç”¨æˆ·åæ˜¯å¦å­˜åœ¨
 Function CheckUserNameExist(UserName)
 
 	Dim Rs

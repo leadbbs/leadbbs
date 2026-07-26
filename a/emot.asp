@@ -1,8 +1,8 @@
-<!-- #include file=../inc/BBSsetup.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
 <html>
 <head>
-<title>插入表情图标</title>
-<meta http-equiv=Content-Type content="text/html; charset=gb2312">
+<title>鎻掑叆琛ㄦ儏鍥炬爣</title>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
 <style type=text/css>
 BODY {padding:5px}
 IMG {CURSOR:hand;width:20px;height:20px;}

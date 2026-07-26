@@ -2,29 +2,29 @@
 
    var
 
-   //²ÎÊı
+   //å‚æ•°
 
    setting={
 
-      column_width:322,//ÁĞ¿í
+      column_width:322,//åˆ—å®½
 
-       column_className:'waterfall_column',//ÁĞµÄÀàÃû
+       column_className:'waterfall_column',//åˆ—çš„ç±»å
 
-       column_space:10,//ÁĞ¼ä¾à
+       column_space:10,//åˆ—é—´è·
 
-       cell_selector:'.cell',//ÒªÅÅÁĞµÄ×©¿éµÄÑ¡ÔñÆ÷£¬ÏŞ¶¨ÔÚÆÙ²¼Á÷µÄÈİÆ÷ÄÚ
+       cell_selector:'.cell',//è¦æ’åˆ—çš„ç –å—çš„é€‰æ‹©å™¨ï¼Œé™å®šåœ¨ç€‘å¸ƒæµçš„å®¹å™¨å†…
 
-       img_selector:'img',//Òª¼ÓÔØµÄÍ¼Æ¬µÄÑ¡ÔñÆ÷
+       img_selector:'img',//è¦åŠ è½½çš„å›¾ç‰‡çš„é€‰æ‹©å™¨
 
-       auto_imgHeight:false,//ÊÇ·ñĞèÒª×Ô¶¯¼ÆËãÍ¼Æ¬µÄ¸ß¶È
+       auto_imgHeight:false,//æ˜¯å¦éœ€è¦è‡ªåŠ¨è®¡ç®—å›¾ç‰‡çš„é«˜åº¦
 
-       fadein:true,//ÊÇ·ñ½¥ÏÔÔØÈë
+       fadein:true,//æ˜¯å¦æ¸æ˜¾è½½å…¥
 
-       fadein_speed:600,//½¥ÏÔËÙÂÊ£¬µ¥Î»ºÁÃë
+       fadein_speed:600,//æ¸æ˜¾é€Ÿç‡ï¼Œå•ä½æ¯«ç§’
 
-       insert_type:1, //×©¿é²åÈë·½Ê½£¬1Îª²åÈë×î¶ÌÄÇÁĞ£¬2Îª°´ĞòÂÖÁ÷²åÈë
+       insert_type:1, //ç –å—æ’å…¥æ–¹å¼ï¼Œ1ä¸ºæ’å…¥æœ€çŸ­é‚£åˆ—ï¼Œ2ä¸ºæŒ‰åºè½®æµæ’å…¥
 
-       getResource:function(index){ },  //»ñÈ¡¶¯Ì¬×ÊÔ´º¯Êı,±ØĞë·µ»ØÒ»¸ö×©¿éÔªËØ¼¯ºÏ,´«Èë²ÎÊıÎª¼ÓÔØµÄ´ÎÊı
+       getResource:function(index){ },  //è·å–åŠ¨æ€èµ„æºå‡½æ•°,å¿…é¡»è¿”å›ä¸€ä¸ªç –å—å…ƒç´ é›†åˆ,ä¼ å…¥å‚æ•°ä¸ºåŠ è½½çš„æ¬¡æ•°
        
 			pre_lowid : -1
 
@@ -34,9 +34,9 @@
 
    waterfall=$.waterfall={},
 
-   $container=null;//ÈİÆ÷
+   $container=null;//å®¹å™¨
 
-   waterfall.load_index=0, //¼ÓÔØ´ÎÊı
+   waterfall.load_index=0, //åŠ è½½æ¬¡æ•°
 
    $.fn.extend({
 
@@ -50,7 +50,7 @@
 
           waterfall.$columns=creatColumn();
 
-          render($(this).find(setting.cell_selector).detach(),false); //ÖØÅÅÒÑ´æÔÚÔªËØÊ±Ç¿ÖÆ²»½¥ÏÔ
+          render($(this).find(setting.cell_selector).detach(),false); //é‡æ’å·²å­˜åœ¨å…ƒç´ æ—¶å¼ºåˆ¶ä¸æ¸æ˜¾
 
           waterfall._scrollTimer2=null;
 
@@ -76,11 +76,11 @@
 
    });
 
-   function creatColumn(){//´´½¨ÁĞ
+   function creatColumn(){//åˆ›å»ºåˆ—
 
-           waterfall.column_num=calculateColumns();//ÁĞÊı
+           waterfall.column_num=calculateColumns();//åˆ—æ•°
 
-      //Ñ­»·´´½¨ÁĞ
+      //å¾ªç¯åˆ›å»ºåˆ—
 
       var html='';
 
@@ -90,39 +90,39 @@
 
       }
 
-      $container.prepend(html);//²åÈëÁĞ
+      $container.prepend(html);//æ’å…¥åˆ—
 
-      return $('.'+setting.column_className,$container);//ÁĞ¼¯ºÏ
+      return $('.'+setting.column_className,$container);//åˆ—é›†åˆ
 
    }
 
-   function calculateColumns(){//¼ÆËãĞèÒªµÄÁĞÊı
+   function calculateColumns(){//è®¡ç®—éœ€è¦çš„åˆ—æ•°
 
            var num=Math.floor(($container.innerWidth())/(setting.column_width+setting.column_space));
 
-      if(num<1){ num=1; } //±£Ö¤ÖÁÉÙÓĞÒ»ÁĞ
+      if(num<1){ num=1; } //ä¿è¯è‡³å°‘æœ‰ä¸€åˆ—
 
       return num;
 
    }
 
-   function render(elements,fadein){//äÖÈ¾ÔªËØ
+   function render(elements,fadein){//æ¸²æŸ“å…ƒç´ 
 
-      if(!$(elements).length) return;//Ã»ÓĞÔªËØ
+      if(!$(elements).length) return;//æ²¡æœ‰å…ƒç´ 
 
       var $columns = waterfall.$columns;
 
       $(elements).each(function(i){                                     
 
-          if(!setting.auto_imgHeight||setting.insert_type==2){//Èç¹û¸ø³öÁËÍ¼Æ¬¸ß¶È£¬»òÕßÊÇ°´Ë³Ğò²åÈë£¬Ôò²»±ØµÈÍ¼Æ¬¼ÓÔØÍê¾ÍÄÜ¼ÆËãÁĞµÄ¸ß¶ÈÁË
+          if(!setting.auto_imgHeight||setting.insert_type==2){//å¦‚æœç»™å‡ºäº†å›¾ç‰‡é«˜åº¦ï¼Œæˆ–è€…æ˜¯æŒ‰é¡ºåºæ’å…¥ï¼Œåˆ™ä¸å¿…ç­‰å›¾ç‰‡åŠ è½½å®Œå°±èƒ½è®¡ç®—åˆ—çš„é«˜åº¦äº†
 
              if(setting.insert_type==1){ 
 
-                insert($(elements).eq(i),setting.fadein&&fadein);//²åÈëÔªËØ
+                insert($(elements).eq(i),setting.fadein&&fadein);//æ’å…¥å…ƒç´ 
 
              }else if(setting.insert_type==2){
 
-                insert2($(elements).eq(i),i,setting.fadein&&fadein);//²åÈëÔªËØ   
+                insert2($(elements).eq(i),i,setting.fadein&&fadein);//æ’å…¥å…ƒç´    
 
              }
 
@@ -130,23 +130,23 @@
 
           }                     
 
-          if($(this)[0].nodeName.toLowerCase()=='img'||$(this).find(setting.img_selector).length>0){//±¾ÉíÊÇÍ¼Æ¬»òº¬ÓĞÍ¼Æ¬
+          if($(this)[0].nodeName.toLowerCase()=='img'||$(this).find(setting.img_selector).length>0){//æœ¬èº«æ˜¯å›¾ç‰‡æˆ–å«æœ‰å›¾ç‰‡
 
               var image=new Image;
 
               var src=$(this)[0].nodeName.toLowerCase()=='img'?$(this).attr('src'):$(this).find(setting.img_selector).attr('src');
 
-              image.onload=function(){//Í¼Æ¬¼ÓÔØºó²ÅÄÜ×Ô¶¯¼ÆËã³ö³ß´ç
+              image.onload=function(){//å›¾ç‰‡åŠ è½½åæ‰èƒ½è‡ªåŠ¨è®¡ç®—å‡ºå°ºå¯¸
 
                   image.onreadystatechange=null;
 
                   if(setting.insert_type==1){ 
 
-                     insert($(elements).eq(i),setting.fadein&&fadein);//²åÈëÔªËØ
+                     insert($(elements).eq(i),setting.fadein&&fadein);//æ’å…¥å…ƒç´ 
 
                   }else if(setting.insert_type==2){
 
-                     insert2($(elements).eq(i),i,setting.fadein&&fadein);//²åÈëÔªËØ  
+                     insert2($(elements).eq(i),i,setting.fadein&&fadein);//æ’å…¥å…ƒç´   
 
                   }
 
@@ -154,7 +154,7 @@
 
               }
 
-              image.onreadystatechange=function(){//´¦ÀíIEµÈä¯ÀÀÆ÷µÄ»º´æÎÊÌâ£ºÍ¼Æ¬»º´æºó²»»áÔÙ´¥·¢onloadÊÂ¼ş
+              image.onreadystatechange=function(){//å¤„ç†IEç­‰æµè§ˆå™¨çš„ç¼“å­˜é—®é¢˜ï¼šå›¾ç‰‡ç¼“å­˜åä¸ä¼šå†è§¦å‘onloadäº‹ä»¶
 
                   if(image.readyState == "complete"){
 
@@ -162,11 +162,11 @@
 
                      if(setting.insert_type==1){ 
 
-                        insert($(elements).eq(i),setting.fadein&&fadein);//²åÈëÔªËØ
+                        insert($(elements).eq(i),setting.fadein&&fadein);//æ’å…¥å…ƒç´ 
 
                      }else if(setting.insert_type==2){
 
-                        insert2($(elements).eq(i),i,setting.fadein&&fadein);//²åÈëÔªËØ   
+                        insert2($(elements).eq(i),i,setting.fadein&&fadein);//æ’å…¥å…ƒç´    
 
                      }
 
@@ -178,15 +178,15 @@
 
               image.src=src;
 
-          }else{//²»ÓÃ¿¼ÂÇÍ¼Æ¬¼ÓÔØ
+          }else{//ä¸ç”¨è€ƒè™‘å›¾ç‰‡åŠ è½½
 
               if(setting.insert_type==1){ 
 
-                 insert($(elements).eq(i),setting.fadein&&fadein);//²åÈëÔªËØ
+                 insert($(elements).eq(i),setting.fadein&&fadein);//æ’å…¥å…ƒç´ 
 
               }else if(setting.insert_type==2){
 
-                 insert2($(elements).eq(i),i,setting.fadein&&fadein);//²åÈëÔªËØ  
+                 insert2($(elements).eq(i),i,setting.fadein&&fadein);//æ’å…¥å…ƒç´   
 
               }
 
@@ -196,19 +196,19 @@
 
    }
 
-   function public_render(elem){//Òì²½Êı¾İäÖÈ¾½Ó¿Úº¯Êı    ¡¡¡¡
+   function public_render(elem){//å¼‚æ­¥æ•°æ®æ¸²æŸ“æ¥å£å‡½æ•°    ã€€ã€€
 
        render(elem,true);
 
    }
 
-   function insert($element,fadein){//°ÑÔªËØ²åÈë×î¶ÌÁĞ
+   function insert($element,fadein){//æŠŠå…ƒç´ æ’å…¥æœ€çŸ­åˆ—
 
-      if(fadein){//½¥ÏÔ
+      if(fadein){//æ¸æ˜¾
 
          $element.css('opacity',0).appendTo(waterfall.$columns.eq(calculateLowest())).fadeTo(setting.fadein_speed,1);
 
-      }else{//²»½¥ÏÔ
+      }else{//ä¸æ¸æ˜¾
 
          $element.appendTo(waterfall.$columns.eq(calculateLowest()));
 
@@ -216,22 +216,22 @@
 
    }
 
-   function insert2($element,i,fadein){//°´ĞòÂÖÁ÷²åÈëÔªËØ
+   function insert2($element,i,fadein){//æŒ‰åºè½®æµæ’å…¥å…ƒç´ 
    	
    	if(setting.pre_lowid==-1)
    	$lowest_column=waterfall.$columns.eq(calculateLowest());
    	else
    		$lowest_column=waterfall.$columns.eq(calculateLowest());
-   	//var $lowest_column=lowid;//×î¶ÌÁĞ
+   	//var $lowest_column=lowid;//æœ€çŸ­åˆ—
 		setting.pre_lowid=parseInt($element.find("img").attr("width"))>setting.column_width+100?0:-1;
 
-		//var $lowest_column=waterfall.$columns.eq(calculateLowest());//×î¶ÌÁĞ
-      if(fadein){//½¥ÏÔ
+		//var $lowest_column=waterfall.$columns.eq(calculateLowest());//æœ€çŸ­åˆ—
+      if(fadein){//æ¸æ˜¾
 
          //$element.css('opacity',0).appendTo(waterfall.$columns.eq(i%waterfall.column_num)).fadeTo(setting.fadein_speed,1);
          $element.css('opacity',0).appendTo($lowest_column).fadeTo(setting.fadein_speed,1);
 
-      }else{//²»½¥ÏÔ
+      }else{//ä¸æ¸æ˜¾
 
          //$element.appendTo(waterfall.$columns.eq(i%waterfall.column_num));
          $element.appendTo($lowest_column);
@@ -240,7 +240,7 @@
 
    }
 
-   function calculateLowest(){//¼ÆËã×î¶ÌµÄÄÇÁĞµÄË÷Òı
+   function calculateLowest(){//è®¡ç®—æœ€çŸ­çš„é‚£åˆ—çš„ç´¢å¼•
 
       var min=waterfall.$columns.eq(0).outerHeight(),min_key=0;
 
@@ -280,7 +280,7 @@
 
    }
 
-   function getElements(){//»ñÈ¡×ÊÔ´
+   function getElements(){//è·å–èµ„æº
 
       $.waterfall.load_index++;
 
@@ -288,20 +288,20 @@
 
    }
 
-   waterfall._scrollTimer=null;//ÑÓ³Ù¹ö¶¯¼ÓÔØ¼ÆÊ±Æ÷
+   waterfall._scrollTimer=null;//å»¶è¿Ÿæ»šåŠ¨åŠ è½½è®¡æ—¶å™¨
 
-   function onScroll(){//¹ö¶¯¼ÓÔØ
+   function onScroll(){//æ»šåŠ¨åŠ è½½
 		return;
       clearTimeout(waterfall._scrollTimer);
 
       waterfall._scrollTimer=setTimeout(function(){
 
-          var $lowest_column=waterfall.$columns.eq(calculateLowest());//×î¶ÌÁĞ
-          var bottom=$lowest_column.offset().top+$lowest_column.outerHeight();//×î¶ÌÁĞµ×²¿¾àÀëä¯ÀÀÆ÷´°¿Ú¶¥²¿µÄ¾àÀë
+          var $lowest_column=waterfall.$columns.eq(calculateLowest());//æœ€çŸ­åˆ—
+          var bottom=$lowest_column.offset().top+$lowest_column.outerHeight();//æœ€çŸ­åˆ—åº•éƒ¨è·ç¦»æµè§ˆå™¨çª—å£é¡¶éƒ¨çš„è·ç¦»
 
-          var scrollTop=document.documentElement.scrollTop||document.body.scrollTop||0;//¹ö¶¯Ìõ¾àÀë
+          var scrollTop=document.documentElement.scrollTop||document.body.scrollTop||0;//æ»šåŠ¨æ¡è·ç¦»
 
-          var windowHeight=document.documentElement.clientHeight||document.body.clientHeight||0;//´°¿Ú¸ß¶È
+          var windowHeight=document.documentElement.clientHeight||document.body.clientHeight||0;//çª—å£é«˜åº¦
 
           if(scrollTop>=bottom-windowHeight){
 
@@ -313,9 +313,9 @@
 
    }
 
-   function onResize(){//´°¿ÚËõ·ÅÊ±ÖØĞÂÅÅÁĞ
+   function onResize(){//çª—å£ç¼©æ”¾æ—¶é‡æ–°æ’åˆ—
 
-      if(calculateColumns()==waterfall.column_num) return; //ÁĞÊıÎ´¸Ä±ä£¬²»ĞèÒªÖØÅÅ
+      if(calculateColumns()==waterfall.column_num) return; //åˆ—æ•°æœªæ”¹å˜ï¼Œä¸éœ€è¦é‡æ’
 
       var $cells=waterfall.$container.find(setting.cell_selector);
 
@@ -323,7 +323,7 @@
 
       waterfall.$columns=creatColumn();
 
-      render($cells,false); //ÖØÅÅÒÑÓĞÔªËØÊ±Ç¿ÖÆ²»½¥ÏÔ
+      render($cells,false); //é‡æ’å·²æœ‰å…ƒç´ æ—¶å¼ºåˆ¶ä¸æ¸æ˜¾
 
    }
 

@@ -1,25 +1,25 @@
-<!-- #include file=../../inc/BBSSetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSSetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
 Dim GBL_SiteDisbleWhyString,GBL_REQ_Flag
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
-DisplayUserNavigate("ÍøÕ¾ÔİÍ£/¿ªÆô")
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
+DisplayUserNavigate("ç½‘ç«™æš‚åœ/å¼€å¯")
 If GBL_CHK_Flag=1 Then
-	LoginAccuessFul
+	LoginAccuessFul()
 Else
-	DisplayLoginForm
+	DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Function LoginAccuessFul
@@ -28,16 +28,16 @@ Function LoginAccuessFul
 	If GBL_REQ_Flag <> "close" and GBL_REQ_Flag<>"open" Then GBL_REQ_Flag = "open"
 	If GBL_REQ_Flag = "open" Then
 		If application(DEF_MasterCookies & "SiteEnableFlagzoieiu") = 1 or application(DEF_MasterCookies & "SiteDisbleWhyszoieiu") = "" Then
-			Response.Write "<div class=alert>ÍøÕ¾ÒÑ¾­¿ªÆô¹ıÁË£¬²»ĞèÒªÔÙ¿ªÆô!</div>" & VbCrLf
+			Response.Write "<div class=alert>ç½‘ç«™å·²ç»å¼€å¯è¿‡äº†ï¼Œä¸éœ€è¦å†å¼€å¯!</div>" & VbCrLf
 		Else
 			Application.Lock
 			application(DEF_MasterCookies & "SiteEnableFlagzoieiu") = 1
 			Application.UnLock
-			Response.Write "<div class=alert><span class=greenfont><b>ÍøÕ¾³É¹¦¿ªÆô!</b></span></div>" & VbCrLf
+			Response.Write "<div class=alert><span class=greenfont><b>ç½‘ç«™æˆåŠŸå¼€å¯!</b></span></div>" & VbCrLf
 		End If
 	Else
 		If application(DEF_MasterCookies & "SiteEnableFlagzoieiu") = 0 and application(DEF_MasterCookies & "SiteDisbleWhyszoieiu") <> "" Then
-			Response.Write "<div class=alert>ÍøÕ¾ÒÑ¾­¹Ø±Õ¹ıÁË£¬²»ĞèÒªÔÙ¹Ø±Õ!</div>" & VbCrLf
+			Response.Write "<div class=alert>ç½‘ç«™å·²ç»å…³é—­è¿‡äº†ï¼Œä¸éœ€è¦å†å…³é—­!</div>" & VbCrLf
 		Else
 			If Request.Form("submitflag")="Dieos9xsl29LO_8" Then
 				GBL_SiteDisbleWhyString = Request("GBL_SiteDisbleWhyString")
@@ -46,14 +46,14 @@ Function LoginAccuessFul
 					application(DEF_MasterCookies & "SiteEnableFlagzoieiu") = 0
 					application(DEF_MasterCookies & "SiteDisbleWhyszoieiu") = GBL_SiteDisbleWhyString
 					Application.UnLock
-					Response.Write "<div class=alert><span class=greenfont><b>ÍøÕ¾¹Ø±Õ³É¹¦£¬ÏÂÃæ¼´ÍøÕ¾ÔİÍ£·ÃÎÊµÄÔ­Òò£º</b></span></div><hr size=1>" & PrintTrueText(GBL_SiteDisbleWhyString) & "<hr size=1>" & VbCrLf
+					Response.Write "<div class=alert><span class=greenfont><b>ç½‘ç«™å…³é—­æˆåŠŸï¼Œä¸‹é¢å³ç½‘ç«™æš‚åœè®¿é—®çš„åŸå› ï¼š</b></span></div><hr size=1>" & PrintTrueText(GBL_SiteDisbleWhyString) & "<hr size=1>" & VbCrLf
 				Else
-					Response.Write "<div class=alert>ÔİÍ£ÓÃ»§·ÃÎÊÔ­Òò²»ÄÜÎª¿Õ!</div>"
+					Response.Write "<div class=alert>æš‚åœç”¨æˆ·è®¿é—®åŸå› ä¸èƒ½ä¸ºç©º!</div>"
 				End If
-				DisplayStringForm
+				DisplayStringForm()
 			Else
-				GBL_SiteDisbleWhyString = DEF_Now & " ÆğÍøÕ¾ÔİÍ£·ÃÎÊ"
-				DisplayStringForm
+				GBL_SiteDisbleWhyString = DEF_Now & " èµ·ç½‘ç«™æš‚åœè®¿é—®"
+				DisplayStringForm()
 			End If
 			If DEF_UsedDataBase = 1 and DEF_EnableDatabaseCache = 1 Then
 				If isObject(Application(DEF_MasterCookies & "con")) = True Then
@@ -74,7 +74,7 @@ Function DisplayStringForm
 
 %>
 <form action=SiteOpenClose.asp method="post">
-	<div class=frameline>ÒªÔİÍ£·ÃÎÊÇëĞ´³ö<span class=redfont>ÔİÍ£ÓÃ»§·ÃÎÊµÄÔ­Òò</span>:
+	<div class=frameline>è¦æš‚åœè®¿é—®è¯·å†™å‡º<span class=redfont>æš‚åœç”¨æˆ·è®¿é—®çš„åŸå› </span>:
 	</div>
 	<div class=frameline>
 	<textarea class=fmtxtra name=GBL_SiteDisbleWhyString rows=8 cols=61 ><%If GBL_SiteDisbleWhyString <> "" Then Response.Write VbCrLf & htmlEncode(GBL_SiteDisbleWhyString)%></textarea>
@@ -83,12 +83,12 @@ Function DisplayStringForm
 	<input name=Flag type=hidden value="<%=htmlencode(GBL_REQ_Flag)%>">
 	
 	<div class=frameline>
-	<input type=submit value="ÔİÍ£" class=fmbtn> <input type=reset value="È¡Ïû" class=fmbtn>
+	<input type=submit value="æš‚åœ" class=fmbtn> <input type=reset value="å–æ¶ˆ" class=fmbtn>
 	</div>
 </form>
 
 	<div class=frameline>
-		Çë×¢Òâ£¬ÔİÍ£ÍøÕ¾ºó£¬Çë²»Òª¹Ø±Õ´Ëä¯ÀÀ´°¿Ú£¬»òÖØĞÂµÇÂ¼ÉèÖÃÎªCookie±£´æ£¨²»ÒªÑ¡ÔñÎŞĞ§£©£¬<span class=redfont>·ñÔò¹ÜÀíÔ±½«ÎŞ·¨ÖØĞÂ¿ªÆôÍøÕ¾</span>(ÎªÁË±£Ö¤ÔİÍ£ºóµÄ¹Ø¼üÊı¾İ¸üĞÂ°²È«)¡£
+		è¯·æ³¨æ„ï¼Œæš‚åœç½‘ç«™åï¼Œè¯·ä¸è¦å…³é—­æ­¤æµè§ˆçª—å£ï¼Œæˆ–é‡æ–°ç™»å½•è®¾ç½®ä¸ºCookieä¿å­˜ï¼ˆä¸è¦é€‰æ‹©æ— æ•ˆï¼‰ï¼Œ<span class=redfont>å¦åˆ™ç®¡ç†å‘˜å°†æ— æ³•é‡æ–°å¼€å¯ç½‘ç«™</span>(ä¸ºäº†ä¿è¯æš‚åœåçš„å…³é”®æ•°æ®æ›´æ–°å®‰å…¨)ã€‚
 	</div>
 <%
 

@@ -1,0 +1,41 @@
+# LeadBBS rewrites a good part of its own source at runtime: the generated includes under
+# inc/IncHtm/, the setup files it regenerates from the admin panel (inc/Ubbcode_Setup.asp,
+# inc/Upload_Setup.asp, inc/UBBicon_Setup.ASP, inc/js/ad.js, User/inc/User_Reg.asp), the CMS
+# caches under article/inc/cache/ and the templet .JS files. It always writes CRLF, while this
+# repository stores LF (commit "Normalize line endings to LF"). Without normalisation on
+# commit, every admin action that regenerates one of those files turns into a whole-file diff
+# and the working tree can never be clean after a test run.
+#
+# The stored content is already LF everywhere, so this is a no-op for existing files; it only
+# stops CRLF the application wrote from showing up as a change.
+* text=auto eol=lf
+
+# ...except the things that are not text. `data/global.asa` is the original binary Access
+# database and `images/vlink/LOGO.TXT` is a mislabelled GIF (see README §1).
+data/global.asa -text
+images/vlink/LOGO.TXT -text
+*.gif -text
+*.jpg -text
+*.jpeg -text
+*.png -text
+*.ico -text
+*.swf -text
+*.zip -text
+*.rar -text
+*.mdb -text
+*.wav -text
+*.mp3 -text
+*.ttf -text
+*.eot -text
+*.woff -text
+*.woff2 -text
+
+# --- release packaging -------------------------------------------------------------------
+# `git archive` honours export-ignore, so the release zip is built from the same source of
+# truth as the repository, minus everything a deployment must not carry. Symlinks survive
+# git archive; they do NOT survive a naive `zip -r`, which dereferences them into copies.
+test/           export-ignore
+docs/           export-ignore
+.github/        export-ignore
+.gitattributes  export-ignore
+.gitignore      export-ignore

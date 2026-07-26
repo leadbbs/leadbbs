@@ -1,37 +1,37 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
-<!-- #include file=inc/ForumCategory_fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
+<!--#include file="inc/ForumCategory_fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID,GBL_ModifyID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
 
-frame_TopInfo
+frame_TopInfo()
 If GBL_CHK_Flag=1 Then
 	Select Case Left(Request("action"),5)
 		Case "del"
-			DisplayUserNavigate("É¾³ıÂÛÌ³·ÖÀà")
-			ForumCategoryDelete
+			DisplayUserNavigate("åˆ é™¤è®ºå›åˆ†ç±»")
+			ForumCategoryDelete()
 		Case "edit"
-			DisplayUserNavigate("ĞŞ¸ÄÂÛÌ³·ÖÀà")
-			ForumCategoryModify
+			DisplayUserNavigate("ä¿®æ”¹è®ºå›åˆ†ç±»")
+			ForumCategoryModify()
 		Case "join"
-			DisplayUserNavigate("Ìí¼ÓÂÛÌ³·ÖÀà")
-			ForumCategoryJoin
+			DisplayUserNavigate("æ·»åŠ è®ºå›åˆ†ç±»")
+			ForumCategoryJoin()
 		Case Else
-			DisplayUserNavigate("ÂÛÌ³·ÖÀà¹ÜÀí")
-			ForumCategoryManage
+			DisplayUserNavigate("è®ºå›åˆ†ç±»ç®¡ç†")
+			ForumCategoryManage()
 	End Select
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Sub ForumCategoryManage
@@ -40,7 +40,7 @@ Sub ForumCategoryManage
 	Dim Rs
 	Set Rs = LDExeCute("Select AssortID,AssortName,AssortMaster from LeadBBS_Assort order by AssortID",0)
 	If Rs.Eof Then
-		Response.Write "»¹Ã»ÓĞÈÎºÎ·ÖÀà£¬Çë³ÆÌí¼Ó°É!"
+		Response.Write "è¿˜æ²¡æœ‰ä»»ä½•åˆ†ç±»ï¼Œè¯·ç§°æ·»åŠ å§!"
 		Rs.Close
 		Set Rs = Nothing
 		Exit Sub
@@ -53,13 +53,13 @@ Sub ForumCategoryManage
 		Response.Write GBL_CHK_TempStr
 	Else
 %>
-<div class=frameline><a href=ForumCategoryManage.asp?action=join>µã´ËÔö¼Ó·ÖÀà</a>
+<div class=frameline><a href=ForumCategoryManage.asp?action=join>ç‚¹æ­¤å¢åŠ åˆ†ç±»</a>
 </div>
 <div class=frameline>
       <table width="100%" border="0" cellspacing="0" cellpadding="0" class=frame_table>
         <tr bgcolor="#eeeeee" class=frame_tbhead>
           <td width="10%"><div class=value>ID</div></td>
-          <td width="45%"><div class=value>·ÖÀàÃû³Æ</div></td>
+          <td width="45%"><div class=value>åˆ†ç±»åç§°</div></td>
           <td width="45%"><div class=value><%=DEF_PointsName(7)%></div></td>
         </tr>
 	<%
@@ -69,9 +69,9 @@ Sub ForumCategoryManage
 		Response.Write "        <tr>" & VbCrLf
 		Response.Write "          <td class=tdbox>"
 		Response.Write GBL_GetData(0,TempN) & "</td>" & VbCrLf
-		Response.Write "          <td class=tdbox>" & GBL_GetData(1,TempN) & " <a href=ForumCategoryManage.asp?action=edit&GBL_MODIFYID=" & GBL_GetData(0,TempN) & ">ĞŞ¸Ä</a> <a href=ForumCategoryManage.asp?action=del&GBL_DELETEID=" & GBL_GetData(0,TempN) & ">É¾³ı</a></td>" & VbCrLf
+		Response.Write "          <td class=tdbox>" & GBL_GetData(1,TempN) & " <a href=ForumCategoryManage.asp?action=edit&GBL_MODIFYID=" & GBL_GetData(0,TempN) & ">ä¿®æ”¹</a> <a href=ForumCategoryManage.asp?action=del&GBL_DELETEID=" & GBL_GetData(0,TempN) & ">åˆ é™¤</a></td>" & VbCrLf
 		Response.Write "          <td class=tdbox>"
-		DisplayBoardMastList GBL_GetData(2,TempN),30
+		Call DisplayBoardMastList(GBL_GetData(2,TempN),30)
 		Response.Write "</td>" & VbCrLf
 		Response.Write "        </tr>" & VbCrLf
 	next
@@ -87,10 +87,10 @@ End Sub
 Sub DisplayBoardMastList(MasterList,Num)
 
 	If MasterList = "" Then
-		Response.Write "ÎŞ"
+		Response.Write "æ— "
 		Exit Sub
 	ElseIf MasterList = "?LeadBBS?" Then
-		Response.Write "È«Ìå°æÖ÷"
+		Response.Write "å…¨ä½“ç‰ˆä¸»"
 		Exit Sub		
 	End If
 	Dim temp,n,I
@@ -105,7 +105,7 @@ Sub DisplayBoardMastList(MasterList,Num)
 	Next
 
 	If N >= Num and N <= I Then
-		Response.Write "<span style=""cursor:hand"" title=""¸ü¶à°æÖ÷: " & temp(N)
+		Response.Write "<span style=""cursor:hand"" title=""æ›´å¤šç‰ˆä¸»: " & temp(N)
 		N = N + 1
 		For N = N to I
 			Response.Write " " & temp(N)
@@ -124,20 +124,20 @@ Sub ForumCategoryDelete
 
 	If Request.Form("sure") = "E72ksiOkw2" Then
 		If DeleteForumAssort(GBL_DELETEID)>0 Then
-			Response.Write "<p><font color=008800 class=greenfont><b>ÒÑ¾­³É¹¦É¾³ıIDÎª" & GBL_DELETEID & "µÄÂÛÌ³·ÖÀà£¡</b></font></p>"
+			Response.Write "<p><font color=008800 class=greenfont><b>å·²ç»æˆåŠŸåˆ é™¤IDä¸º" & GBL_DELETEID & "çš„è®ºå›åˆ†ç±»ï¼</b></font></p>"
 		Else
 			Response.Write "<p><font color=ff0000 class=redfont><b>" & GBL_CHK_TempStr & "</b></font></p>"
 		End If
 	Else
 		%><p><form action=ForumCategoryManage.asp method=post>
-		<b><font color=ff0000 class=redfont>È·ÈÏĞÅÏ¢£º ÕæµÄÒªÉ¾³ı´ËÂÛÌ³·ÖÀàÂğ£¿<br><br>
+		<b><font color=ff0000 class=redfont>ç¡®è®¤ä¿¡æ¯ï¼š çœŸçš„è¦åˆ é™¤æ­¤è®ºå›åˆ†ç±»å—ï¼Ÿ<br><br>
 		
 		<input type=hidden name=GBL_DELETEID value="<%=urlencode(GBL_DELETEID)%>">
 		<input type=hidden name=sure value="E72ksiOkw2">
 		<input type=hidden name=action value="del">
 			
-		<input type=button value=²»ÄÜÉ¾°¡ onclick="javascript:history.go(-1);" class=fmbtn>
-		<input type=submit value=µ±È»É¾³ı class=fmbtn>
+		<input type=button value=ä¸èƒ½åˆ å•Š onclick="javascript:history.go(-1);" class=fmbtn>
+		<input type=submit value=å½“ç„¶åˆ é™¤ class=fmbtn>
 		</form>
 	<%End If
 
@@ -146,26 +146,26 @@ End Sub
 Function ForumCategoryJoin
 
 	%>
-	<div class=frameline><b>Ìí¼Ó·ÖÀà</b></div>
+	<div class=frameline><b>æ·»åŠ åˆ†ç±»</b></div>
 	<div class=frameline><%
 	GBL_CHK_TempStr = ""
 	If Request.Form("submitflag")="LKOkxk2" Then
 		GBL_AssortID = Left(Trim(Request.Form("Form_AssortID")),14)
 		GBL_AssortName = Trim(Request.Form("Form_AssortName"))
 		GBL_AssortMaster = Trim(Request.Form("GBL_AssortMaster"))
-		If CheckFormForumCateGoryData=0 Then
-			Response.Write "<div class=alert>Êı¾İ²»ÄÜÍ¨¹ı£º" & GBL_CHK_TempStr & "</div>" & VbCrLf
-			DisplayJoinForm
+		If CheckFormForumCateGoryData()=0 Then
+			Response.Write "<div class=alert>æ•°æ®ä¸èƒ½é€šè¿‡ï¼š" & GBL_CHK_TempStr & "</div>" & VbCrLf
+			DisplayJoinForm()
 			          		Else
-			If InsertForumAssort = 0 Then
-				Response.Write "<div class=alert>²åÈë³ö´í£º" & GBL_CHK_TempStr & "</div>" & VbCrLf
-				DisplayJoinForm
+			If InsertForumAssort() = 0 Then
+				Response.Write "<div class=alert>æ’å…¥å‡ºé”™ï¼š" & GBL_CHK_TempStr & "</div>" & VbCrLf
+				DisplayJoinForm()
 			Else
-				Response.Write "<div class=alert><span class=greenfont><b>Ìí¼Ó³É¹¦!</b></span></div>" & VbCrLf
+				Response.Write "<div class=alert><span class=greenfont><b>æ·»åŠ æˆåŠŸ!</b></span></div>" & VbCrLf
 			End If
 		End If
 	Else
-		DisplayJoinForm
+		DisplayJoinForm()
 	End If%>
 	</div><%
 
@@ -174,12 +174,12 @@ End Function
 Function DisplayJoinForm%>
 
 	<table class=frame_table><form action=ForumCategoryManage.asp method=post name=form1 id=form1>
-	<tr><td class=tdbox width=120>Ô¤¶¨·ÖÀàIDºÅ:</td><td class=tdbox><input name=Form_AssortID value="<%=htmlencode(GBL_AssortID)%>" class=fminpt></td></tr>
+	<tr><td class=tdbox width=120>é¢„å®šåˆ†ç±»IDå·:</td><td class=tdbox><input name=Form_AssortID value="<%=htmlencode(GBL_AssortID)%>" class=fminpt></td></tr>
 	<tr><td class=tdbox><input name=submitflag type=hidden value="LKOkxk2">
 	<input name=action type=hidden value="join">
-	Ô¤¶¨·ÖÀàÃû³Æ:</td><td class=tdbox><input name=Form_AssortName value="<%=htmlencode(GBL_AssortName)%>" class=fminpt></td></tr>
-	<tr><td class=tdbox>·ÖÀà°æÖ÷Ãûµ¥:</td><td class=tdbox><input name=GBL_AssortMaster value="<%=htmlencode(GBL_AssortMaster)%>" class=fminpt>(¶ººÅ·Ö¸ô,È«Ìå°æÖ÷ÌîĞ´<span style="cursor:hand" onclick="document.form1.GBL_AssortMaster.value='?LeadBBS?';">?LeadBBS?</span>)</td></tr>
-	<tr><td class=tdbox>&nbsp;</td><td class=tdbox><input type=submit value="Ìá½»" class=fmbtn> <input type=reset value="È¡Ïû" class=fmbtn></form></td></tr>
+	é¢„å®šåˆ†ç±»åç§°:</td><td class=tdbox><input name=Form_AssortName value="<%=htmlencode(GBL_AssortName)%>" class=fminpt></td></tr>
+	<tr><td class=tdbox>åˆ†ç±»ç‰ˆä¸»åå•:</td><td class=tdbox><input name=GBL_AssortMaster value="<%=htmlencode(GBL_AssortMaster)%>" class=fminpt>(é€—å·åˆ†éš”,å…¨ä½“ç‰ˆä¸»å¡«å†™<span style="cursor:hand" onclick="document.form1.GBL_AssortMaster.value='?LeadBBS?';">?LeadBBS?</span>)</td></tr>
+	<tr><td class=tdbox>&nbsp;</td><td class=tdbox><input type=submit value="æäº¤" class=fmbtn> <input type=reset value="å–æ¶ˆ" class=fmbtn></form></td></tr>
 	</table>
 
 <%End Function
@@ -187,7 +187,7 @@ Function DisplayJoinForm%>
 Function ForumCategoryModify
 
 	%>
-	<div class=frameline><b>ĞŞ¸Ä·ÖÀà</b></div>
+	<div class=frameline><b>ä¿®æ”¹åˆ†ç±»</b></div>
 	<div class=frameline>
 			<%
 	GBL_ModifyID = Left(Request("GBL_ModifyID"),14)
@@ -214,23 +214,23 @@ Function ForumCategoryModify
 				If Temp1 = "1" Then GBL_AssortLimit = GBL_AssortLimit+cCur(Temp2)
 				Temp2 = Temp2*2
 			Next
-			If CheckFormForumCateGoryData=0 Then
-				Response.Write "<div class=alert>Êı¾İ²»ÄÜÍ¨¹ı£º" & GBL_CHK_TempStr & "</div>" & VbCrLf
-				DisplayModifyForm
+			If CheckFormForumCateGoryData()=0 Then
+				Response.Write "<div class=alert>æ•°æ®ä¸èƒ½é€šè¿‡ï¼š" & GBL_CHK_TempStr & "</div>" & VbCrLf
+				DisplayModifyForm()
 			Else
-				If UpdateForumAssort = 0 Then
-					Response.Write "<div class=alert>ĞŞ¸Ä³ö´í£º" & GBL_CHK_TempStr & "</div>" & VbCrLf
-					DisplayModifyForm
+				If UpdateForumAssort() = 0 Then
+					Response.Write "<div class=alert>ä¿®æ”¹å‡ºé”™ï¼š" & GBL_CHK_TempStr & "</div>" & VbCrLf
+					DisplayModifyForm()
 				Else
-					Response.Write "<div class=alert><span class=greenfont><b>ĞŞ¸Ä³É¹¦!</b></span></div>" & VbCrLf
-					ReloadBoardListData
+					Response.Write "<div class=alert><span class=greenfont><b>ä¿®æ”¹æˆåŠŸ!</b></span></div>" & VbCrLf
+					ReloadBoardListData()
 				End If
 			End If
 		Else
-			DisplayModifyForm
+			DisplayModifyForm()
 		End If
 	Else
-		Response.Write "<div class=alert>´íÎó£¬Î´Ñ¡ÔñÒªĞŞ¸ÄµÄ·ÖÀà¡£</div>" & VbCrLf
+		Response.Write "<div class=alert>é”™è¯¯ï¼Œæœªé€‰æ‹©è¦ä¿®æ”¹çš„åˆ†ç±»ã€‚</div>" & VbCrLf
 	End If%>
 	</div>
 	<%
@@ -241,16 +241,16 @@ Function DisplayModifyForm
 
 	%>
 	<table class=frame_table><form action=ForumCategoryManage.asp method=post>
-	<tr><td class=tdbox width=120>Ô¤¶¨·ÖÀàIDºÅ:</td><td class=tdbox><input name=Form_AssortID value="<%=htmlencode(GBL_AssortID)%>" class=fminpt></td></tr>
+	<tr><td class=tdbox width=120>é¢„å®šåˆ†ç±»IDå·:</td><td class=tdbox><input name=Form_AssortID value="<%=htmlencode(GBL_AssortID)%>" class=fminpt></td></tr>
 	<tr><td class=tdbox><input name=submitflag type=hidden value="LKOkxk2">
 		<input name=action type=hidden value="edit">
 		<input name=GBL_ModifyID type=hidden value="<%=htmlencode(GBL_ModifyID)%>" class=fminpt>
-		Ô¤¶¨·ÖÀàÃû³Æ:</td><td class=tdbox><input name=Form_AssortName value="<%=htmlencode(GBL_AssortName)%>" class=fminpt></td></tr>
-	<tr><td class=tdbox>·ÖÀà°æÖ÷Ãûµ¥:</td><td class=tdbox><input name=GBL_AssortMaster value="<%=htmlencode(GBL_AssortMaster)%>" class=fminpt>(¶ººÅ·Ö¸ô,È«Ìå°æÖ÷ÌîĞ´<span style="cursor:hand" onclick="document.form1.GBL_AssortMaster.value='?LeadBBS?';">?LeadBBS?</span>)
+		é¢„å®šåˆ†ç±»åç§°:</td><td class=tdbox><input name=Form_AssortName value="<%=htmlencode(GBL_AssortName)%>" class=fminpt></td></tr>
+	<tr><td class=tdbox>åˆ†ç±»ç‰ˆä¸»åå•:</td><td class=tdbox><input name=GBL_AssortMaster value="<%=htmlencode(GBL_AssortMaster)%>" class=fminpt>(é€—å·åˆ†éš”,å…¨ä½“ç‰ˆä¸»å¡«å†™<span style="cursor:hand" onclick="document.form1.GBL_AssortMaster.value='?LeadBBS?';">?LeadBBS?</span>)
 	</td></tr>
 	<tr>
 		<td class=tdbox>
-			·ÖÀà¶¨ÖÆ£º</td>
+			åˆ†ç±»å®šåˆ¶ï¼š</td>
 		<td class=tdbox><%
 		Dim TempN
 		GBL_AssortLimit = cCur(GBL_AssortLimit)
@@ -263,7 +263,7 @@ Function DisplayModifyForm
 		<%Next%></td>
 	</tr>
 	<tr><td class=tdbox>&nbsp;</td><td class=tdbox>
-		<input type=submit value="Ìá½»" class=fmbtn> <input type=reset value="È¡Ïû" class=fmbtn></td></tr></form>
+		<input type=submit value="æäº¤" class=fmbtn> <input type=reset value="å–æ¶ˆ" class=fmbtn></td></tr></form>
 	</table>
 
 <%End Function%>

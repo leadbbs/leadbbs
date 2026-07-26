@@ -70,8 +70,8 @@ height: expression((this.scrollHeight>320)?320:this.scrollHeight-22+'px');
 		</div>
 
 <%
-if CheckSupervisorNameOnly = 1 then%>
-<br><a href=default.asp?file=edit target=_blank>ÄúÊÇ¹ÜÀíÔ±£¬µã´Ë±à¼­²¥·ÅÁĞ±í</a>
+if CheckSupervisorNameOnly() = 1 then%>
+<br><a href=default.asp?file=edit target=_blank>æ‚¨æ˜¯ç®¡ç†å‘˜ï¼Œç‚¹æ­¤ç¼–è¾‘æ’­æ”¾åˆ—è¡¨</a>
 <%end if%>
 <script>
 var playlist = [];
@@ -114,37 +114,37 @@ public Sub Plug_MusicBar_Edit
 	Dim Master
 	Dim EditMod,MyStr
 	EditMod = Request("EditMod")
-	MyStr = "<table width=600><tr><td><b>ÔÚÏß±à¼­¸èÇúÁĞ±íÎÄ¼şbglist.js</b>--<font color=red>×¢ÒâÊÂÏî</font></td></tr>"
+	MyStr = "<table width=600><tr><td><b>åœ¨çº¿ç¼–è¾‘æ­Œæ›²åˆ—è¡¨æ–‡ä»¶bglist.js</b>--<font color=red>æ³¨æ„äº‹é¡¹</font></td></tr>"
 	If EditMod = "0" Then
-		MyStr = MyStr&"<tr><td><li>¸ñÊ½ mkList('ÒôÀÖÎÄ¼şÂ·¾¶','ÒôÀÖ½ÚÄ¿Ãû³Æ','×ÖÄ»µØÖ·','ÊÇ·ñ²¥·Å(fÎª²»²¥·Å,²¥·ÅÁô¿Õ)');<li>±ÈÈç mkList('hi/LeadBBS_H1.mp3','Welcome to LeadBBS.','','');</td></tr>"
+		MyStr = MyStr&"<tr><td><li>æ ¼å¼ mkList('éŸ³ä¹æ–‡ä»¶è·¯å¾„','éŸ³ä¹èŠ‚ç›®åç§°','å­—å¹•åœ°å€','æ˜¯å¦æ’­æ”¾(fä¸ºä¸æ’­æ”¾,æ’­æ”¾ç•™ç©º)');<li>æ¯”å¦‚ mkList('hi/LeadBBS_H1.mp3','Welcome to LeadBBS.','','');</td></tr>"
 	Else
 		EditMod = "1"
-		MyStr = MyStr&"<tr><td><ul><li>¸èÇú±êÌâ»ò¸èÇúµØÖ·Áô¿Õ£¬½«´ÓÁĞ±íÖĞÉ¾³ı;<li>ÅÅĞòÊı×Ö±ØĞë½éÓÚ±àºÅµÄ×îĞ¡×î´óÖµÖ®¼ä,ÖØ¸´»òÕß³¬³ö½«´ÓÁĞ±íÖĞÉ¾³ı;</li><li>Ö»Ö§³ÖMp3¸ñÊ½ÎÄ¼ş£¬ÆäËü¸ñÊ½ÇëÏÈ×ª»»¡£</li></ul></td></tr>"
+		MyStr = MyStr&"<tr><td><ul><li>æ­Œæ›²æ ‡é¢˜æˆ–æ­Œæ›²åœ°å€ç•™ç©ºï¼Œå°†ä»åˆ—è¡¨ä¸­åˆ é™¤;<li>æ’åºæ•°å­—å¿…é¡»ä»‹äºç¼–å·çš„æœ€å°æœ€å¤§å€¼ä¹‹é—´,é‡å¤æˆ–è€…è¶…å‡ºå°†ä»åˆ—è¡¨ä¸­åˆ é™¤;</li><li>åªæ”¯æŒMp3æ ¼å¼æ–‡ä»¶ï¼Œå…¶å®ƒæ ¼å¼è¯·å…ˆè½¬æ¢ã€‚</li></ul></td></tr>"
 	End If
-	MyStr = MyStr&"<tr><td><input type=button onclick=""location='default.asp?file=edit&editmod=0'"" value=""ÎÄ±¾Ä£Ê½"" class=fmbtn>&nbsp;&nbsp;<input type=button onclick=""location='default.asp?file=edit&editmod=1'"" value=""ÁĞ±íÄ£Ê½"" class=fmbtn></td></tr></table>"
+	MyStr = MyStr&"<tr><td><input type=button onclick=""location='default.asp?file=edit&editmod=0'"" value=""æ–‡æœ¬æ¨¡å¼"" class=fmbtn>&nbsp;&nbsp;<input type=button onclick=""location='default.asp?file=edit&editmod=1'"" value=""åˆ—è¡¨æ¨¡å¼"" class=fmbtn></td></tr></table>"
 	
-	InitDatabase
-	BBS_SiteHead DEF_SiteNameString &" - ÒôÀÖ²¥·Å",GBL_board_ID," ÂÛÌ³ÒôÀÖºĞ"
+	Call InitDatabase()
+	Call BBS_SiteHead(DEF_SiteNameString &" - éŸ³ä¹æ’­æ”¾",GBL_board_ID," è®ºå›éŸ³ä¹ç›’")
 	
 	%>	
 	<div class="area">
 	<%
-	If CheckSupervisorNameOnly = 1 and GBL_UserID > 0 Then
+	If CheckSupervisorNameOnly() = 1 and GBL_UserID > 0 Then
 		Master = True
 	Else
 		Master = False
 	End If
-	CloseDatabase
+	Call CloseDatabase()
 	
-	Global_TableHead
+	Call Global_TableHead()
 	%>
 	<table cellpadding=3 cellspacing=1 style="margin-top:35px;" align=center width=100% class=TBone>
 	<tr class=TBHead height=24>
-		<td align=center><b><font class=HeadFont><a href=default.asp>¹Ù·½°æLeadBBSÒôÀÖ²¥·Å²å¼ş</a> ¹ÜÀíÖĞĞÄ</font><b></td>
+		<td align=center><b><font class=HeadFont><a href=default.asp>å®˜æ–¹ç‰ˆLeadBBSéŸ³ä¹æ’­æ”¾æ’ä»¶</a> ç®¡ç†ä¸­å¿ƒ</font><b></td>
 	</tr>
 	<%
 	If GBL_CHK_User = "" or Master = False Then
-		Response.Write "<tr class=TBBG1><td><table cellpadding=3 cellspacing=4><tr><td>²úÉú´íÎóµÄÔ­Òò¿ÉÄÜÊÇ£º<br><br><li>Äã²»ÊÇ¹ÜÀíÔ±£¬ÎŞÈ¨½øÈë£¡</li><li>Èç¹ûÄãÊÇ¹ÜÀíÔ±£¬ÇëÒÔ¹ÜÀíÔ±Éí·İ<a href='" & DEF_BBS_HomeUrl & "User/Login.asp?Relogin=Yes&u=" & urlencode(Request.Servervariables("SCRIPT_NAME") & "?" & Request.QueryString) & "'><font class=NavColor>ÖØµÇÂ¼</font></a>£¡</li></td></tr></table></td></tr></table>"
+		Response.Write "<tr class=TBBG1><td><table cellpadding=3 cellspacing=4><tr><td>äº§ç”Ÿé”™è¯¯çš„åŸå› å¯èƒ½æ˜¯ï¼š<br><br><li>ä½ ä¸æ˜¯ç®¡ç†å‘˜ï¼Œæ— æƒè¿›å…¥ï¼</li><li>å¦‚æœä½ æ˜¯ç®¡ç†å‘˜ï¼Œè¯·ä»¥ç®¡ç†å‘˜èº«ä»½<a href='" & DEF_BBS_HomeUrl & "User/Login.asp?Relogin=Yes&u=" & urlencode(Request.Servervariables("SCRIPT_NAME") & "?" & Request.QueryString) & "'><font class=NavColor>é‡ç™»å½•</font></a>ï¼</li></td></tr></table></td></tr></table>"
 	Else
 		%>
 		<tr class=TBBG1><td align=center>
@@ -158,24 +158,24 @@ public Sub Plug_MusicBar_Edit
 	%>
 	</table>
 	<%
-	Global_TableBottom
+	Call Global_TableBottom()
 	%>
 	
 	</div>
 	<%
-	SiteBottom
+	Call SiteBottom()
 	If GBL_ShowBottomSure = 0 Then GBL_SiteBottomString = ""
 	Response.Write GBL_SiteBottomString
 
 End Sub
 
-'FileName Ïà¶ÔÂ·¾¶
-'TemStr ±à¼­×¢ÊÍ
-'FilePar Òş²Ø´«µİ²ÎÊı
+'FileName ç›¸å¯¹è·¯å¾„
+'TemStr ç¼–è¾‘æ³¨é‡Š
+'FilePar éšè—ä¼ é€’å‚æ•°
 private Sub DisplayEditFileContent(FileName,TmpStr,FilePar,eMod)
 
 	'If DEF_FSOString = "" Then
-	'	Response.Write "<p><br><font color=red class=redfont>ÂÛÌ³ÒÑÉèÖÃ³É²»Ö§³ÖÔÚÏß±à¼­ÎÄ¼ş¹¦ÄÜ!</font></p>" & VbCrLf
+	'	Response.Write "<p><br><font color=red class=redfont>è®ºå›å·²è®¾ç½®æˆä¸æ”¯æŒåœ¨çº¿ç¼–è¾‘æ–‡ä»¶åŠŸèƒ½!</font></p>" & VbCrLf
 	'	Exit Sub
 	'End If
 	Dim fileContent
@@ -207,7 +207,7 @@ private Sub DisplayEditFileContent(FileName,TmpStr,FilePar,eMod)
 		Dim TempContent
 		TempContent = Lcase(fileContent)
 		If inStr(TempContent,"<%") or inStr(TempContent,"include") or inStr(TempContent,"server") Then
-			Response.Write "<p><br><font color=red class=redfont>ÄÚÈİÖĞ²»ÄÜº¬ÓĞ<%£¬include£¬ServerµÈ×Ö·û!</font></p>" & VbCrLf
+			Response.Write "<p><br><font color=red class=redfont>å†…å®¹ä¸­ä¸èƒ½å«æœ‰<%ï¼Œincludeï¼ŒServerç­‰å­—ç¬¦!</font></p>" & VbCrLf
 			Exit Sub
 		End If
 
@@ -217,7 +217,7 @@ private Sub DisplayEditFileContent(FileName,TmpStr,FilePar,eMod)
 			GBL_CHK_TempStr = ""
 			Exit Sub
 		Else
-			Response.Write "<p><font color=green class=greenfont><b>³É¹¦¸üĞÂÎÄ¼şÄÚÈİ£¡</b></font></p>" & VbCrLf
+			Response.Write "<p><font color=green class=greenfont><b>æˆåŠŸæ›´æ–°æ–‡ä»¶å†…å®¹ï¼</b></font></p>" & VbCrLf
 		End If
 	End If
 	%>
@@ -233,7 +233,7 @@ private Sub DisplayEditFileContent(FileName,TmpStr,FilePar,eMod)
 		#list td{ text-align:center;border:1px dashed #000000; height:24px}
 		.txt{ border:1px solid #000000; text-align:center; width:220px}
 		</style>
-		<table width=600 id="list"><tr><td width=30>±àºÅ</td><td width=240>¸èÇú±êÌâ</td><td width=240>¸èÇúµØÖ·</td><td width=60>ÊÇ·ñ²¥·Å</td><td width=30>ÅÅĞò</td></tr><%
+		<table width=600 id="list"><tr><td width=30>ç¼–å·</td><td width=240>æ­Œæ›²æ ‡é¢˜</td><td width=240>æ­Œæ›²åœ°å€</td><td width=60>æ˜¯å¦æ’­æ”¾</td><td width=30>æ’åº</td></tr><%
 		Dim objRegExp,Matches,j
 		Set objRegExp=New RegExp
 		objRegExp.IgnoreCase =True
@@ -243,7 +243,7 @@ private Sub DisplayEditFileContent(FileName,TmpStr,FilePar,eMod)
 		For j = 0 to Matches.Count - 1
 			Response.Write "<tr><td>"&j+1&"</td><td><input name=mName type=text class=txt value="""&Matches(j).SubMatches(1)&"""></td><td><input name=mLink type=text class=txt value="""&Matches(j).SubMatches(0)&"""></td><td><input name=mF"&j+1&" type=checkbox value=""t"" "&Chf(Matches(j).SubMatches(2))&"></td><td><input name=mO type=text class=txt style=""width:20px"" value="""&j+1&"""></td></tr>"&vbcrlf
 		Next				
-		%></table><div align="left" style="margin-left:70px"><input type="button" onclick="AddRow()" value="Ôö¼ÓÒ»ĞĞ" class=fmbtn></div>
+		%></table><div align="left" style="margin-left:70px"><input type="button" onclick="AddRow()" value="å¢åŠ ä¸€è¡Œ" class=fmbtn></div>
 		<Script Language="Javascript">
 		function AddRow()
 		{
@@ -262,8 +262,8 @@ private Sub DisplayEditFileContent(FileName,TmpStr,FilePar,eMod)
 		}
 		</script>
 		<%End If%>
-		<input type="submit" name="save" value="Ìá½»±à¼­" class=fmbtn>
-		<input type="reset" name="Reset" value="È¡Ïû" class=fmbtn>
+		<input type="submit" name="save" value="æäº¤ç¼–è¾‘" class=fmbtn>
+		<input type="reset" name="Reset" value="å–æ¶ˆ" class=fmbtn>
 		</form>
 	<%
 
@@ -308,7 +308,7 @@ private Function ADODB_LoadFile(ByVal File)
 	If FSFlag = 1 Then
 		Set WriteFile = fs.OpenTextFile(Server.MapPath(File),1,True)
 		If Err Then
-			GBL_CHK_TempStr = "<br>¶ÁÈ¡ÎÄ¼şÊ§°Ü£º" & err.description & "<br>ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞ¶ÁÈ¡È¨ÏŞ."
+			GBL_CHK_TempStr = "<br>è¯»å–æ–‡ä»¶å¤±è´¥ï¼š" & err.description & "<br>å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰è¯»å–æƒé™."
 			err.Clear
 			Set Fs = Nothing
 			Exit Function
@@ -316,7 +316,7 @@ private Function ADODB_LoadFile(ByVal File)
 		If Not WriteFile.AtEndOfStream Then
 			ADODB_LoadFile = WriteFile.ReadAll
 			If Err Then
-				GBL_CHK_TempStr = "<br>¶ÁÈ¡ÎÄ¼şÊ§°Ü£º" & err.description & "<br>ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞ¶ÁÈ¡È¨ÏŞ."
+				GBL_CHK_TempStr = "<br>è¯»å–æ–‡ä»¶å¤±è´¥ï¼š" & err.description & "<br>å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰è¯»å–æƒé™."
 				err.Clear
 				Set Fs = Nothing
 				Exit Function
@@ -327,7 +327,7 @@ private Function ADODB_LoadFile(ByVal File)
 	Else
 		Set objStream = Server.CreateObject("ADODB.Stream")
 		If Err.Number=-2147221005 Then 
-			GBL_CHK_TempStr = "<div align='center'>ÄúµÄÖ÷»ú²»Ö§³ÖADODB.Stream£¬ÎŞ·¨Íê³É²Ù×÷£¬ÇëÊÖ¹¤½øĞĞ</div>"
+			GBL_CHK_TempStr = "<div align='center'>æ‚¨çš„ä¸»æœºä¸æ”¯æŒADODB.Streamï¼Œæ— æ³•å®Œæˆæ“ä½œï¼Œè¯·æ‰‹å·¥è¿›è¡Œ</div>"
 			Err.Clear
 			Set objStream = Nothing
 			Exit Function
@@ -337,7 +337,7 @@ private Function ADODB_LoadFile(ByVal File)
 			.Mode = 3
 			.Open
 			.LoadFromFile Server.MapPath(File)
-			.Charset = "gb2312"
+			.Charset = "utf-8"
 			.Position = 2
 			ADODB_LoadFile = .ReadText
 			.Close
@@ -345,7 +345,7 @@ private Function ADODB_LoadFile(ByVal File)
 		Set objStream = Nothing
 	End If
 	If Err Then
-		GBL_CHK_TempStr = "<br>´íÎóĞÅÏ¢£º" & err.description & "<br>ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞ¶ÁÈ¡È¨ÏŞ."
+		GBL_CHK_TempStr = "<br>é”™è¯¯ä¿¡æ¯ï¼š" & err.description & "<br>å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰è¯»å–æƒé™."
 		err.Clear
 		Set Fs = Nothing
 		Exit Function
@@ -353,7 +353,7 @@ private Function ADODB_LoadFile(ByVal File)
 
 End Function
 
-'´æ´¢ÄÚÈİµ½ÎÄ¼ş
+'å­˜å‚¨å†…å®¹åˆ°æ–‡ä»¶
 private Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 
 	On Error Resume Next
@@ -378,7 +378,7 @@ private Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 	Else
 		Set objStream = Server.CreateObject("ADODB.Stream")
 		If Err.Number=-2147221005 Then 
-			GBL_CHK_TempStr = "<div align='center'>ÄúµÄÖ÷»ú²»Ö§³ÖADODB.Stream£¬ÎŞ·¨Íê³É²Ù×÷£¬ÇëÊÖ¹¤½øĞĞ</div>"
+			GBL_CHK_TempStr = "<div align='center'>æ‚¨çš„ä¸»æœºä¸æ”¯æŒADODB.Streamï¼Œæ— æ³•å®Œæˆæ“ä½œï¼Œè¯·æ‰‹å·¥è¿›è¡Œ</div>"
 			Err.Clear
 			Set objStream = Nothing
 			Exit Sub
@@ -386,7 +386,7 @@ private Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 		With objStream
 			.Type = 2
 			.Open
-			.Charset = "gb2312"
+			.Charset = "utf-8"
 			.Position = objStream.Size
 			.WriteText = strBody
 			.SaveToFile Server.MapPath(File),2
@@ -395,7 +395,7 @@ private Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 		Set objStream = Nothing
 	End If
 	If Err Then
-		GBL_CHK_TempStr = "<br>´íÎóĞÅÏ¢£º" & err.description & "<br>ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞĞ´ÈëÈ¨ÏŞ."
+		GBL_CHK_TempStr = "<br>é”™è¯¯ä¿¡æ¯ï¼š" & err.description & "<br>å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰å†™å…¥æƒé™."
 		err.Clear
 		Set Fs = Nothing
 		Exit Sub

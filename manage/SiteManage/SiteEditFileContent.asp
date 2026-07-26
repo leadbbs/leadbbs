@@ -1,23 +1,23 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
-DisplayUserNavigate("±à¼­ÎÄ¼şÄÚÈİ")
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
+DisplayUserNavigate("ç¼–è¾‘æ–‡ä»¶å†…å®¹")
 If GBL_CHK_Flag=1 and GBL_CHK_TempStr = "" Then
-	SiteEditFileContent
+	SiteEditFileContent()
 Else
-	DisplayLoginForm
+	DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Sub SiteEditFileContent
@@ -27,29 +27,29 @@ Sub SiteEditFileContent
 	If isNumeric(File) = 0 Then File = 0
 	File = Fix(cCur(File))
 	If File < -4 or File > DEF_BoardStyleStringNum or File = -2 Then
-		Response.Write "<div class=alert>´íÎó,Òª±à¼­µÄÎÄ¼ş²»´æÔÚ!</div>" & VbCrLf
+		Response.Write "<div class=alert>é”™è¯¯,è¦ç¼–è¾‘çš„æ–‡ä»¶ä¸å­˜åœ¨!</div>" & VbCrLf
 		Exit Sub
 	End If
 	Select Case File
 		Case -3: FileName = "../../User/inc/Contact_info.asp"
-				 TmpStr = "<b>ÔÚÏß±à¼­Contact_info.aspÎÄ¼ş£¨ÁªÏµÎÒÃÇĞÅÏ¢£©</b>£¬HTMLÓï·¨"
+				 TmpStr = "<b>åœ¨çº¿ç¼–è¾‘Contact_info.aspæ–‡ä»¶ï¼ˆè”ç³»æˆ‘ä»¬ä¿¡æ¯ï¼‰</b>ï¼ŒHTMLè¯­æ³•"
 		Case -4: FileName = "../../../other/80bbs/test.txt"
-				 TmpStr = "<b>ÔÚÏß±à¼­../../../other/80bbs/test.txtÎÄ¼ş</b>£¬HTMLÓï·¨"
+				 TmpStr = "<b>åœ¨çº¿ç¼–è¾‘../../../other/80bbs/test.txtæ–‡ä»¶</b>ï¼ŒHTMLè¯­æ³•"
 		'Case -2: FileName = "../../inc/BBSSetup.asp"
-		'		 TmpStr = "<b>ÔÚÏß±à¼­BBSSetup.aspÂÛÌ³ÅäÖÃÎÄ¼ş</b>£¬Çë×¢Òâ£¬ĞŞ¸ÄÇ°×îºÃ±¸·İBBSSetup.aspÎÄ¼ş"
+		'		 TmpStr = "<b>åœ¨çº¿ç¼–è¾‘BBSSetup.aspè®ºå›é…ç½®æ–‡ä»¶</b>ï¼Œè¯·æ³¨æ„ï¼Œä¿®æ”¹å‰æœ€å¥½å¤‡ä»½BBSSetup.aspæ–‡ä»¶"
 		Case -1: FileName = "../../User/inc/User_Reg.asp"
-				 TmpStr = "<b>±à¼­ĞÂÓÃ»§×¢²áÂÛÌ³Ğ­ÒéÄÚÈİ</b>(html¸ñÊ½)"
+				 TmpStr = "<b>ç¼–è¾‘æ–°ç”¨æˆ·æ³¨å†Œè®ºå›åè®®å†…å®¹</b>(htmlæ ¼å¼)"
 		Case Else: FileName = "../../inc/style" & File & ".css"
-				 TmpStr = "<b>±à¼­·ç¸ñÑùÊ½¶¨Òå-" & DEF_BoardStyleString(File) & "</b> CSSÎÄ¼ş¸ñÊ½"
+				 TmpStr = "<b>ç¼–è¾‘é£æ ¼æ ·å¼å®šä¹‰-" & DEF_BoardStyleString(File) & "</b> CSSæ–‡ä»¶æ ¼å¼"
 	End Select
-	DisplayEditFileContent FileName,TmpStr,File
+	Call DisplayEditFileContent(FileName,TmpStr,File)
 
 End Sub
 
 Sub DisplayEditFileContent(FileName,TmpStr,FileParNum)
 
 	'If DEF_FSOString = "" Then
-	'	Response.Write "<p><br><font color=red class=redfont>ÂÛÌ³ÒÑÉèÖÃ³É²»Ö§³ÖÔÚÏß±à¼­ÎÄ¼ş¹¦ÄÜ!</font></p>" & VbCrLf
+	'	Response.Write "<p><br><font color=red class=redfont>è®ºå›å·²è®¾ç½®æˆä¸æ”¯æŒåœ¨çº¿ç¼–è¾‘æ–‡ä»¶åŠŸèƒ½!</font></p>" & VbCrLf
 	'	Exit Sub
 	'End If
 	Dim fileContent
@@ -66,7 +66,7 @@ Sub DisplayEditFileContent(FileName,TmpStr,FileParNum)
 		Dim TempContent
 		TempContent = Lcase(fileContent)
 		If inStr(TempContent,"<%") or inStr(TempContent,"include") or inStr(TempContent,"server") Then
-			Response.Write "<p><br><font color=red class=redfont>ÄÚÈİÖĞ²»ÄÜº¬ÓĞ<%£¬include£¬ServerµÈ×Ö·û!</font></p>" & VbCrLf
+			Response.Write "<p><br><font color=red class=redfont>å†…å®¹ä¸­ä¸èƒ½å«æœ‰<%ï¼Œincludeï¼ŒServerç­‰å­—ç¬¦!</font></p>" & VbCrLf
 			Exit Sub
 		End If
 		
@@ -85,7 +85,7 @@ Sub DisplayEditFileContent(FileName,TmpStr,FileParNum)
 			GBL_CHK_TempStr = ""
 			Exit Sub
 		Else
-			Response.Write "<p><font color=green class=greenfont><b>³É¹¦¸üĞÂÎÄ¼şÄÚÈİ£¡</b></font></p>" & VbCrLf
+			Response.Write "<p><font color=green class=greenfont><b>æˆåŠŸæ›´æ–°æ–‡ä»¶å†…å®¹ï¼</b></font></p>" & VbCrLf
 		End If
 	End If
 	%>
@@ -98,8 +98,8 @@ Sub DisplayEditFileContent(FileName,TmpStr,FileParNum)
 		</div>
 
 		<div class=frameline>
-		<input type="submit" name="save" value="ĞŞ¸Ä" class=fmbtn>
-		<input type="reset" name="Reset" value="È¡Ïû" class=fmbtn>
+		<input type="submit" name="save" value="ä¿®æ”¹" class=fmbtn>
+		<input type="reset" name="Reset" value="å–æ¶ˆ" class=fmbtn>
 		</div>
 	</form>
 	<%

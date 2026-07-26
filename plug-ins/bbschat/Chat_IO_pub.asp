@@ -1,6 +1,6 @@
-<!-- #include file=../../inc/BBSSetup.asp -->
-<!-- #include file=Chat_Fun.asp -->
-<!-- #include file=Inc/Chat_Setup.asp -->
+<!--#include file="../../inc/BBSSetup.asp"-->
+<!--#include file="Chat_Fun.asp"-->
+<!--#include file="Inc/Chat_Setup.asp"-->
 <%
 Sub Chat_GetWorldChat(User)
 
@@ -9,7 +9,7 @@ Sub Chat_GetWorldChat(User)
 	Index = Session(DEF_MasterCookies & "_Chat_5_Index")
 	World_Index = Application(DEF_MasterCookies & "_Chat_S_Index_" & User)
 	If Index <> World_Index and Index <> -1 Then
-		Response.Write "1 ÄúÓĞĞÂµÄË½ÁÄ" & VbCrLf
+		Response.Write "1 æ‚¨æœ‰æ–°çš„ç§èŠ" & VbCrLf
 	Else
 		If isArray(Session(DEF_MasterCookies & "UDT")) = False Then
 			Response.Write "9 stop"
@@ -31,11 +31,11 @@ Sub Chat_GetInfo
 	User = Left(Request.Form("User"),20)
 	If isArray(Application(DEF_MasterCookies & "_Chat_S_Data_" & User)) = False Then
 		Response.Write "9 guest"
-		Exit Sub 'ÓÎ¿ÍÎŞ·¨ÇëÇó
+		Exit Sub 'æ¸¸å®¢æ— æ³•è¯·æ±‚
 	Else
 		If Application(DEF_MasterCookies & "_Chat_S_ID_" & User) <> cCur(Session.SessionID) Then
 			Response.Write "9 stop"
-			Exit Sub '·Çµ±Ç°´°¿ÚÎŞ·¨ÇëÇó
+			Exit Sub 'éå½“å‰çª—å£æ— æ³•è¯·æ±‚
 		End If
 	End If
 	Dim tmp
@@ -45,7 +45,7 @@ Sub Chat_GetInfo
 		tmp = Timer
 	End If
 	If Timer - tmp < 6 Then
-		'·ÀÖ¹ÇëÇóÁÄÌìÊÒĞÅÏ¢
+		'é˜²æ­¢è¯·æ±‚èŠå¤©å®¤ä¿¡æ¯
 		Response.Write "9 none"
 		Exit Sub
 	End If
@@ -54,5 +54,5 @@ Sub Chat_GetInfo
 
 End Sub
 
-Chat_GetInfo
+Chat_GetInfo()
 %>

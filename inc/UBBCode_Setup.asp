@@ -1,13 +1,13 @@
 <%
-const FiltrateBadWordString="fuck|ÉµB|·¨ÂÖ"
+const FiltrateBadWordString="fuck|å‚»B|æ³•è½®"
 const DEF_MaxUBBNumber = 10
 const DEF_UbbUnderwriteImages = 1
 const DEF_UbbDefaultEdit = 1
 Dim DEF_UbbIconG,DEF_UbbIconMax,DEF_UbbIconMin,DEF_UbbIconGNum
 DEF_UbbIconGNum = 3
-DEF_UbbIconG = Array("¾­µä±íÇé","¾­µä±íÇé(´ó)","Ä¢¹½µãµã")
+DEF_UbbIconG = Array("ç»å…¸è¡¨æƒ…","ç»å…¸è¡¨æƒ…(å¤§)","è˜‘è‡ç‚¹ç‚¹")
 DEF_UbbIconMin = Array(1,47,62)
-DEF_UbbIconMax = Array(46,61,280)
+DEF_UbbIconMax = Array(46,61,99)
 Dim DEF_UbbLinkData,DEF_UbbLinkUrl,DEF_UbbLinkNum
 DEF_UbbLinkNum = 0
 

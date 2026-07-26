@@ -1,14 +1,14 @@
-<!-- #include file=../../../inc/BBSsetup.asp -->
+<!--#include file="../../../inc/BBSsetup.asp"-->
 <%
-Dim DEF_EXTEND_ClassType : DEF_EXTEND_ClassType = 3001 'ÓÅ¿áÊÓÆµÉÏ´«ĞÅÏ¢À©Õ¹ÀàĞÍ±àºÅÎª3001
-Dim DEF_EXTEND_Level : DEF_EXTEND_Level = 100 'ÓÅ¿áÊÓÆµÉÏ´«ĞÅÏ¢À©Õ¹ÀàĞÍ±àºÅÎª3001
+Dim DEF_EXTEND_ClassType : DEF_EXTEND_ClassType = 3001 'ä¼˜é…·è§†é¢‘ä¸Šä¼ ä¿¡æ¯æ‰©å±•ç±»å‹ç¼–å·ä¸º3001
+Dim DEF_EXTEND_Level : DEF_EXTEND_Level = 100 'ä¼˜é…·è§†é¢‘ä¸Šä¼ ä¿¡æ¯æ‰©å±•ç±»å‹ç¼–å·ä¸º3001
 'Response.Charset = "utf-8"
 'Session.CodePage = 65001
 %>
-<!-- #include file=../../../inc/UBBCode_Setup.asp -->
-<!-- #include file=../../../inc/Board_popfun.asp -->
-<!-- #include file=../../../app/qqlogin/oauth.asp -->
-<!-- #include file=../../../article/inc/splitpage_fun.asp -->
+<!--#include file="../../../inc/UBBCode_Setup.asp"-->
+<!--#include file="../../../inc/Board_popfun.asp"-->
+<!--#include file="../../../app/qqlogin/oauth.asp"-->
+<!--#include file="../../../article/inc/splitpage_fun.asp"-->
 <%
 DEF_BBS_homeUrl="../../../"
 dim Uploadyouku
@@ -25,12 +25,12 @@ class Upload_youku
 	
 		client_id = youku_apikey
 		if client_id = "" then
-			errstr = "ÍøÕ¾Î´¿ªÍ¨YOUKU»¥Áª¹¦ÄÜ£¬ÎŞ·¨Ê¹ÓÃ´Ë¹¦ÄÜ£®"
+			errstr = "ç½‘ç«™æœªå¼€é€šYOUKUäº’è”åŠŸèƒ½ï¼Œæ— æ³•ä½¿ç”¨æ­¤åŠŸèƒ½ï¼"
 			exit sub
 		end if
 		if gbl_userid < 0 then
-			errstr = "ÇëÏÈµÇÂ¼ÂÛÌ³£®"
-			closedatabase
+			errstr = "è¯·å…ˆç™»å½•è®ºå›ï¼"
+			Call closedatabase()
 			exit sub
 		end if
 		
@@ -47,7 +47,7 @@ class Upload_youku
 		Set Rs = LDExeCute(sql_select("Select UserID,appid,Token,ExpiresTime from LeadBBS_AppLogin where userid=" & userid & " and apptype=9",1),0)
 		If Rs.Eof Then
 			App_CheckAppid = 0
-			errstr = "ÒªÊ¹ÓÃ´Ë¹¦ÄÜ£¬ĞèÒªÏÈ°ó¶¨YOUKUÕÊºÅ£®<a href=""" & DEF_Installdir & "user/" & RW_User(0,"bind","","") & """ target=_blank>µã´Ë¹ØÁª</a>."
+			errstr = "è¦ä½¿ç”¨æ­¤åŠŸèƒ½ï¼Œéœ€è¦å…ˆç»‘å®šYOUKUå¸å·ï¼<a href=""" & DEF_Installdir & "user/" & RW_User(0,"bind","","") & """ target=_blank>ç‚¹æ­¤å…³è”</a>."
 		Else
 			App_CheckAppid = 1
 			openid = rs(1)
@@ -56,7 +56,7 @@ class Upload_youku
 			if exp > 0 then
 				if gettimevalue(DEF_Now) > exp then
 					App_CheckAppid = 0
-					errstr = "ÄúÓëÓÅ¿áµÄÕÊºÅ°ó¶¨ÒÑ¹ıÆÚ£¬ĞèÒªÈ¡Ïû°ó¶¨ºóÖØĞÂ°ó¶¨£®<a href=""" & DEF_Installdir & "user/" & RW_User(0,"bind","","") & """ target=_blank>µã´Ë¹ØÁª</a>."
+					errstr = "æ‚¨ä¸ä¼˜é…·çš„å¸å·ç»‘å®šå·²è¿‡æœŸï¼Œéœ€è¦å–æ¶ˆç»‘å®šåé‡æ–°ç»‘å®šï¼<a href=""" & DEF_Installdir & "user/" & RW_User(0,"bind","","") & """ target=_blank>ç‚¹æ­¤å…³è”</a>."
 				end if
 			end if
 		End if
@@ -74,7 +74,7 @@ class Upload_youku
 			exit sub
 		end if
 		
-		'extent_num ×÷Îª±£´æÊ±¼äÓÃ
+		'extent_num ä½œä¸ºä¿å­˜æ—¶é—´ç”¨
 		dim rs,sql,extent_num,extent_title
 		sql = sql_select("select extent_num,extent_title from leadbbs_extend where classtype=" & DEF_EXTEND_ClassType & " and extendid=" & GBL_userid & " order by id desc",1)
 		set rs = ldexecute(sql,0)
@@ -88,7 +88,7 @@ class Upload_youku
 			end if
 			if extent_num > 0 then
 				extent_num = restoretime(extent_num)
-				'±£´æÌ«ÆµµÄ²»»áÌá½»
+				'ä¿å­˜å¤ªé¢‘çš„ä¸ä¼šæäº¤
 				if datediff("s",extent_num,DEF_Now) < 10 then
 					rs.close
 					set rs = Nothing
@@ -132,9 +132,9 @@ table .span5{width:100%!important;}
 <body>
 <table class="pagelimit"><tr><td>
 <div class="youku_nav">
-<a href="default.asp?action=list">ËùÓĞÉÏ´«</a>
-<a href="default.asp?action=list&userid=<%=gbl_userid%>">ÎÒµÄÉÏ´«</a>
-<a href="default.asp">ÉÏ´«ÊÓÆµ</a>
+<a href="default.asp?action=list">æ‰€æœ‰ä¸Šä¼ </a>
+<a href="default.asp?action=list&userid=<%=gbl_userid%>">æˆ‘çš„ä¸Šä¼ </a>
+<a href="default.asp">ä¸Šä¼ è§†é¢‘</a>
 </div>
 <div style="clear:both;"></div>
 	<%
@@ -142,11 +142,11 @@ table .span5{width:100%!important;}
 
 	public sub uploadForm
 	
-		initdatabase
-		initUpload
+		Call initdatabase()
+		initUpload()
 		if errstr = "" then
 			if request.querystring("action") = "save" then
-				upload_save
+				upload_save()
 				exit sub
 			end if
 		end if
@@ -217,14 +217,14 @@ text-indent:-9999px;
 <body>
 <div class="pagelimit">
 <div class="youku_nav">
-<a href="default.asp?action=list">ËùÓĞÉÏ´«</a>
-<a href="default.asp?action=list&userid=<%=gbl_userid%>">ÎÒµÄÉÏ´«</a>
-<a href="default.asp">ÉÏ´«ÊÓÆµ</a>
+<a href="default.asp?action=list">æ‰€æœ‰ä¸Šä¼ </a>
+<a href="default.asp?action=list&userid=<%=gbl_userid%>">æˆ‘çš„ä¸Šä¼ </a>
+<a href="default.asp">ä¸Šä¼ è§†é¢‘</a>
 </div>
 <div style="clear:both;"></div>
 <%
-	youku_list
-	closedatabase
+	youku_list()
+	Call closedatabase()
 	%>
 </div>
 	</body>
@@ -233,12 +233,12 @@ text-indent:-9999px;
 %>
 <%
 elseif errstr <> "" then
-	other_head
+	other_head()
 	Response.write errstr
-	closedatabase
+	Call closedatabase()
 else
-	other_head
-	closedatabase
+	other_head()
+	Call closedatabase()
 	%>
  <script src="<%=DEF_InstallDir%>inc/js/jquery.js"></script>
     <!--<script src="http://open.youku.com/assets/lib/uploadjs.php"></script>-->
@@ -251,62 +251,62 @@ else
             <form class="well form-horizontal" name="video-upload">
                 <fieldset>
 						<div class="control-group">
-							<label class="control-label" for="spanSWFUploadButton">Ñ¡ÔñÎÄ¼ş£º</label>
+							<label class="control-label" for="spanSWFUploadButton">é€‰æ‹©æ–‡ä»¶ï¼š</label>
 							<div id="uploadControl" class="controls" style="></div>
 						</div>
 						<div class="control-group">
-							<label>±êÌâ£º</label>
+							<label>æ ‡é¢˜ï¼š</label>
 							<div class="controls">
 							<input type="text">
 							</div>
 						</div>
 						<div class="control-group">
-							<label class="control-label" for="input01">±êÌâ£º</label>
+							<label class="control-label" for="input01">æ ‡é¢˜ï¼š</label>
 							<div class="controls">
 							<input type="text" class="input-xlarge" id="input01" name="title">
 							</div>
 						</div>
                 <div class="control-group">
-                    <label class="control-label" for="textarea">¼ò½é£º</label>
+                    <label class="control-label" for="textarea">ç®€ä»‹ï¼š</label>
                     <div class="controls">
                         <textarea class="input-xlarge" id="textarea" rows="3" name="description"></textarea>
                     </div>
                 </div>
                    <div class="control-group">
-                       <label class="control-label" for="input02">±êÇ©£º</label>
+                       <label class="control-label" for="input02">æ ‡ç­¾ï¼š</label>
                        <div class="controls">
                           <input type="text" class="input-xlarge" id="input02" name="tags">
                           <span class="help-inline"></span>
                       </div>
                    </div>
                <div class="control-group">
-                    <label class="control-label" for="category-node">Àà±ğ£º</label>
+                    <label class="control-label" for="category-node">ç±»åˆ«ï¼š</label>
                     <div class="controls">
                         <select id="category-node" name="category" ></select>
                      </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label">°æÈ¨ËùÓĞ</label>
+                        <label class="control-label">ç‰ˆæƒæ‰€æœ‰</label>
                    <div class="controls">
                    <label class="radio inline">
-                        <input type="radio" name="copyright_type" id="copyright_type2" value="original" checked="">Ô­´´
+                        <input type="radio" name="copyright_type" id="copyright_type2" value="original" checked="">åŸåˆ›
                     </label>
                     <label class="radio inline">
-                   <input type="radio" name="copyright_type" id="copyright_type1" value="reproduced">×ªÔØ
+                   <input type="radio" name="copyright_type" id="copyright_type1" value="reproduced">è½¬è½½
                </label>
      </div>
     </div>
     <div class="control-group">
-       <label class="control-label">ÊÓÆµÈ¨ÏŞ</label>
+       <label class="control-label">è§†é¢‘æƒé™</label>
           <div class="controls">
                  <label class="radio inline">
-                   <input type="radio" name="public_type" id="public_type1" value="all" checked="">¹«¿ª
+                   <input type="radio" name="public_type" id="public_type1" value="all" checked="">å…¬å¼€
                  </label>
                  <label class="radio inline">
-                   <input type="radio" name="public_type" id="public_type2" value="friend">½öºÃÓÑ
+                   <input type="radio" name="public_type" id="public_type2" value="friend">ä»…å¥½å‹
                  </label>
                  <label class="radio inline">
-                    <input type="radio" name="public_type" id="public_type3" value="password">ÊäÈëÃÜÂë¹Û¿´
+                    <input type="radio" name="public_type" id="public_type3" value="password">è¾“å…¥å¯†ç è§‚çœ‹
                  </label>
                  <label class="radio inline" style="display:none" id="passwrod">
                     <input type="text" class="input "name="watch_password">
@@ -316,7 +316,7 @@ else
     <div class="form-actions">
             <button type="submit" class="btn btn-primary start" id="btn-upload-start">
              <i class="icon-upload icon-white"></i>
-        <span>¿ªÊ¼ÉÏ´«</span>
+        <span>å¼€å§‹ä¸Šä¼ </span>
         </button>
     </div>
     </fieldset>
@@ -324,25 +324,25 @@ else
     <div class="row" >
         <div class="span5" id="upload-status-wraper" ></div>
     </div>
-    <div class="well"><h3>ËµÃ÷</h3><ul><li>×î´óÖ§³ÖÉÏ´«<strong>1 GB</strong> ÊÓÆµÎÄ¼ş</li><li>ÔÊĞíÉÏ´«µÄÊÓÆµ¸ñÊ½Îª£ºwmv,avi,dat,asf,rm,rmvb,ram,mpg,mpeg,3gp,mov,mp4,m4v,dvix,dv,dat,</br>mkv,flv,vob,ram,qt,divx,cpk,fli,flc,mod¡£²»·ûºÏ¸ñÊ½µÄÊÓÆµ½«»á±»¶ªÆú£¬ÇëÈ·±£ÊÓÆµ¸ñÊ½µÄÕıÈ·ĞÔ£¬±ÜÃâÉÏ´«Ê§°Ü</li></ul>
+    <div class="well"><h3>è¯´æ˜</h3><ul><li>æœ€å¤§æ”¯æŒä¸Šä¼ <strong>1 GB</strong> è§†é¢‘æ–‡ä»¶</li><li>å…è®¸ä¸Šä¼ çš„è§†é¢‘æ ¼å¼ä¸ºï¼šwmv,avi,dat,asf,rm,rmvb,ram,mpg,mpeg,3gp,mov,mp4,m4v,dvix,dv,dat,</br>mkv,flv,vob,ram,qt,divx,cpk,fli,flc,modã€‚ä¸ç¬¦åˆæ ¼å¼çš„è§†é¢‘å°†ä¼šè¢«ä¸¢å¼ƒï¼Œè¯·ç¡®ä¿è§†é¢‘æ ¼å¼çš„æ­£ç¡®æ€§ï¼Œé¿å…ä¸Šä¼ å¤±è´¥</li></ul>
     </div>
     </div>
-    <!--Íê³ÉÉÏ´«µÄDOMºÍµÇÂ¼DOM ¿ªÊ¼-->
+    <!--å®Œæˆä¸Šä¼ çš„DOMå’Œç™»å½•DOM å¼€å§‹-->
     <div id="complete"></div>
     <div id="login" style="width:100%;height:100%;position:fixed;z-index:999;left:0px;top:0px;overflow:hidden;display:none;">
     </div>
-    <!--Íê³ÉÉÏ´«µÄDOMºÍµÇÂ¼DOM ½áÊø-->
+    <!--å®Œæˆä¸Šä¼ çš„DOMå’Œç™»å½•DOM ç»“æŸ-->
 </div>
   <script>
         //document.domain = "youku.com";
         var USE_STREAM_UPLOAD = true;
         jQuery(document).ready(function(){
-            //OauthÊÚÈ¨µÄÈıÖÖÒ³ÃæÌø×ª·½Ê½iframe,newWindow,currentWindow
-            //iframeÌø×ª·½Ê½
+            //Oauthæˆæƒçš„ä¸‰ç§é¡µé¢è·³è½¬æ–¹å¼iframe,newWindow,currentWindow
+            //iframeè·³è½¬æ–¹å¼
             //var param = {client_id:"",access_token:"",oauth_opentype:"iframe",oauth_redirect_uri:"http://test.youku.com/youkuupload/oauth_result.html",oauth_state:"",completeCallback:"uploadComplete",categoryCallback:"categoryLoaded"};
-            //newWindowĞÂµ¯³ö´°¿Ú·½Ê½
+            //newWindowæ–°å¼¹å‡ºçª—å£æ–¹å¼
             //var param = {client_id:"",access_token:"",oauth_opentype:"newWindow",oauth_redirect_uri:"http://test.youku.com/youkuupload/oauth_result_newwindow.html",oauth_state:"",completeCallback:"uploadComplete",categoryCallback:"categoryLoaded"};
-            //currentWindowµ±Ç°´°¿Ú·½Ê½
+            //currentWindowå½“å‰çª—å£æ–¹å¼
             //14003805
             /*
             var param = {client_id:"<%=client_id%>",access_token:"<%=access_token%>",oauth_opentype:"currentWindow",oauth_redirect_uri:"http://www.leadbbs.com/app/tools/youku/default.asp",oauth_state:"",completeCallback:"uploadComplete",categoryCallback:"categoryLoaded"};
@@ -357,7 +357,7 @@ else
             youkuUploadInit(param);
 
        });
-            //ÉÏ´«Íê³ÉÊ±»Øµ÷·½·¨
+            //ä¸Šä¼ å®Œæˆæ—¶å›è°ƒæ–¹æ³•
             var videoid,videotitle;
 				//data:{videoid:escape(videoid).replace(/\%u/gi,"\\u").replace(/\%/gi,"\\u00"),title:escape(videotitle).replace(/\%/gi,"\\u00")},
             function uploadComplete(data){
@@ -379,7 +379,7 @@ else
             	return "http://player.youku.com/player.php/sid/"+id+"/v.swf"
             }
 
-            //·ÖÀà¼ÓÔØºó»Øµ÷·½·¨
+            //åˆ†ç±»åŠ è½½åå›è°ƒæ–¹æ³•
             function categoryLoaded(data){
             if(data.categories) {
                     var tpl = '';

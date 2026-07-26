@@ -26,7 +26,7 @@ class center_editfileClass_Class
 				FileName = "inc/home_bannerlist.asp"
 				EditFlag = 1
 				Form_EditAnnounceID = -100
-				GetAncUploaInfo
+				Call GetAncUploaInfo()
 			case 1:
 				FileName = "inc/sitebottom_info.asp"
 				LMT_EnableUpload = 0
@@ -41,24 +41,24 @@ class center_editfileClass_Class
 				FileName = "inc/inpage_info.asp"
 				LMT_EnableUpload = 0
 			case 99:
-				editlogo
+				editlogo()
 				exit sub
 		end select
 
 		dim submitflag
 		submitflag = GetFormData("submitflag")
 		if submitflag = "" then
-			private_getClassinfo
-			center_Class_Form
+			private_getClassinfo()
+			center_Class_Form()
 		else
-			private_getformdata
+			private_getformdata()
 		end if
 	
 	End Sub
 	
 	private sub editlogo
 	%>
-	ĞŞ¸ÄCMS LOGO
+	ä¿®æ”¹CMS LOGO
 	<div class=frameline id="moreskinimg">
 	<table class="table_in">
 	<tr><td colspan="2"><hr class=splitline></td></tr>
@@ -69,15 +69,15 @@ class center_editfileClass_Class
 		</td>
 		<td>
 			<a href="../<%=DEF_ManageDir%>/SiteManage/siteInfo.asp?action=upload&p_filepath=article/images/&p_filename=logo.png&p_fileinfo=%C4%AC%C8%CF%B7%E7%B8%F1Banner%CD%BC%C6%AC%28%C0%A9%D5%B9%B7%E7%B8%F11002%29%2C%B1%D8%D0%EB%CA%C7png%B8%F1%CA%BD" target="_blank">
-			µã»÷ĞŞ¸Ä logoÍ¼Æ¬(pngÍ¼Æ¬)</a>
+			ç‚¹å‡»ä¿®æ”¹ logoå›¾ç‰‡(pngå›¾ç‰‡)</a>
 			
 			<br>
 			<a href="../<%=DEF_ManageDir%>/SiteManage/siteInfo.asp?action=upload&p_filepath=article/images/&p_filename=logo.gif&p_fileinfo=%C4%AC%C8%CF%B7%E7%B8%F1Banner%CD%BC%C6%AC%28%C0%A9%D5%B9%B7%E7%B8%F11002%29%2C%B1%D8%D0%EB%CA%C7gif%B8%F1%CA%BD" target="_blank">
-				µã»÷ĞŞ¸Ä logo Í¼Æ¬ (GIFÍ¼Æ¬,Îª¼æÈİIE6)
+				ç‚¹å‡»ä¿®æ”¹ logo å›¾ç‰‡ (GIFå›¾ç‰‡,ä¸ºå…¼å®¹IE6)
 			</a>
 			
 			<br>
-			<span class="grayfont">×¢ÊÍ: ÈôÄãÊ¹ÓÃÁËĞÂµÄCSSÑùÊ½¶¨ÒåÍ¼Æ¬,´ËĞŞ¸Ä¿ÉÄÜ»áÊ§Ğ§,Çë²Î¿¼ĞÂµÄcss</span>
+			<span class="grayfont">æ³¨é‡Š: è‹¥ä½ ä½¿ç”¨äº†æ–°çš„CSSæ ·å¼å®šä¹‰å›¾ç‰‡,æ­¤ä¿®æ”¹å¯èƒ½ä¼šå¤±æ•ˆ,è¯·å‚è€ƒæ–°çš„css</span>
 			</span>
 		</td>
 	</tr>
@@ -91,11 +91,11 @@ class center_editfileClass_Class
 	
 		form_content = GetFormData("form_content")
 		
-		CALL FormClass_CheckFormValue(form_content,"ÄÚÈİ","string","none","=~~~",DEF_MaxTextLength)
+		CALL FormClass_CheckFormValue(form_content,"å†…å®¹","string","none","=~~~",DEF_MaxTextLength)
 		
 		If CheckErrorStr <> "" Then
 			Response.Write "<span class=cms_error>" & CheckErrorStr & "</span>"
-			center_Class_Form
+			center_Class_Form()
 		Else
 			select case form_fileid
 			case 0:
@@ -118,15 +118,15 @@ class center_editfileClass_Class
 			case 1:
 				CALL Update_InsertSetupRID(1051,"article/" & FileName,9,form_content," and ClassNum=" & 9)
 			end select
-			private_Saveformdata
+			private_Saveformdata()
 		End If 
 	
 	End Sub
 	
 	private sub private_Saveformdata
 	
-		ADODB_SaveToFile form_content,FileName
-		Response.Write "<span class=cms_ok>³É¹¦±à¼­ĞÅÏ¢.</span>"
+		Call ADODB_SaveToFile(form_content,FileName)
+		Response.Write "<span class=cms_ok>æˆåŠŸç¼–è¾‘ä¿¡æ¯.</span>"
 
 	End Sub
 	
@@ -141,24 +141,24 @@ class center_editfileClass_Class
 	
 	%>
 		<ul>
-		<li><a href=center.asp?action=editfile&form_fileid=0>±à¼­Ê×Ò³Í¼Æ¬ĞÂÎÅ</a></li>
-		<li><a href=center.asp?action=editfile&form_fileid=1>×Ô¶¨ÒåÍøÕ¾µ×²¿ĞÅÏ¢</a></li>
-		<li><a href=center.asp?action=editfile&form_fileid=2>CSSÑùÊ½±í</a></li>
-		<li><a href=center.asp?action=editfile&form_fileid=3>×Ô¶¨ÒåÄÚÒ³ÄÚÈİ¸½¼ÓĞÅÏ¢</a></li>
+		<li><a href=center.asp?action=editfile&form_fileid=0>ç¼–è¾‘é¦–é¡µå›¾ç‰‡æ–°é—»</a></li>
+		<li><a href=center.asp?action=editfile&form_fileid=1>è‡ªå®šä¹‰ç½‘ç«™åº•éƒ¨ä¿¡æ¯</a></li>
+		<li><a href=center.asp?action=editfile&form_fileid=2>CSSæ ·å¼è¡¨</a></li>
+		<li><a href=center.asp?action=editfile&form_fileid=3>è‡ªå®šä¹‰å†…é¡µå†…å®¹é™„åŠ ä¿¡æ¯</a></li>
 		</ul>
 	<%
 		select case form_fileid
 				case 0:
-					Form_ActionStr = "Ê×Ò³Í¼Æ¬ĞÂÎÅ"
+					Form_ActionStr = "é¦–é¡µå›¾ç‰‡æ–°é—»"
 					CALL FormClass_Head(Form_ActionStr,1,"center.asp?action=editfile")
 				case 1:
-					Form_ActionStr = "ÍøÕ¾µ×²¿ĞÅÏ¢"
+					Form_ActionStr = "ç½‘ç«™åº•éƒ¨ä¿¡æ¯"
 					CALL FormClass_Head(Form_ActionStr,0,"center.asp?action=editfile")
 				case 2:
-					Form_ActionStr = "CSSÑùÊ½±í"
+					Form_ActionStr = "CSSæ ·å¼è¡¨"
 					CALL FormClass_Head(Form_ActionStr,0,"center.asp?action=editfile")
 				case 3:
-					Form_ActionStr = "ÄÚÒ³ÄÚÈİ¸½¼ÓĞÅÏ¢"
+					Form_ActionStr = "å†…é¡µå†…å®¹é™„åŠ ä¿¡æ¯"
 					CALL FormClass_Head(Form_ActionStr,0,"center.asp?action=editfile")
 		end select
 		CALL FormClass_ItemPring("","hidden","form_fileid",form_fileid,"","","","","")
@@ -170,8 +170,8 @@ class center_editfileClass_Class
 		<div class="itemline">
 				<div class="iteminfo homeimagesfornews">
 		<%
-		CALL FormClass_ItemPring("Í¼Æ¬¿í¶È£º","input","form_width",form_width,3,4,"±ØÌî","","")
-		CALL FormClass_ItemPring("Í¼Æ¬¸ß¶È£º","input","form_height",form_height,3,4,"±ØÌî","","")
+		CALL FormClass_ItemPring("å›¾ç‰‡å®½åº¦ï¼š","input","form_width",form_width,3,4,"å¿…å¡«","","")
+		CALL FormClass_ItemPring("å›¾ç‰‡é«˜åº¦ï¼š","input","form_height",form_height,3,4,"å¿…å¡«","","")
 		call DisplayLeadBBSEditor1(2,Form_Content,1,0)
 		%>
 			</div>
@@ -180,13 +180,13 @@ class center_editfileClass_Class
 			case else
 				CALL FormClass_ItemPring("","textarea","form_content",form_content,"500px;",15,"","","")
 		end select
-		FormClass_End
+		Call FormClass_End()
 		%>
 		<br /><br />
 		<hr class=splitline>
-		<b>±à¼­Ê×Ò³Í¼Æ¬ĞÂÎÅËµÃ÷: </b>
+		<b>ç¼–è¾‘é¦–é¡µå›¾ç‰‡æ–°é—»è¯´æ˜: </b>
 		<ol>
-		<li>×¢ÊÍÖĞ¿ÉÒÔÌîĞ´ËµÃ÷¼°Í¼Æ¬ÍøÖ·,¸ñÊ½Îª: Á´½ÓµØÖ·|×¢ÊÍ(ÒÔ|ºÅ·Ö¸ô)</li>
+		<li>æ³¨é‡Šä¸­å¯ä»¥å¡«å†™è¯´æ˜åŠå›¾ç‰‡ç½‘å€,æ ¼å¼ä¸º: é“¾æ¥åœ°å€|æ³¨é‡Š(ä»¥|å·åˆ†éš”)</li>
 		</ol>
 		
 		<%
@@ -216,7 +216,7 @@ class center_editfileClass_Class
 	
 		Dim Rs,SQL,GetData
 		
-		SQL = sql_select("Select U.ID,U.PhotoDir,U.SPhotoDir,U.NdateTime,U.Info,0,0 from Article_Upload as U where U.AnnounceID=-100 Order by U.ID DESC",Num)
+		SQL = sql_select("Select U.ID,U.PhotoDir,U.SPhotoDir,U.NdateTime,U.Info,0,0 as c0_dup2 from Article_Upload as U where U.AnnounceID=-100 Order by U.ID DESC",Num)
 	
 		Set Rs = Con.ExeCute(SQL)
 		If Not Rs.Eof Then
@@ -237,9 +237,9 @@ class center_editfileClass_Class
 			"<div class=""playimages_bg""></div>" &_
 			"<div class=""playimages_info""></div>" &_
 			"<ul>" &_
-			"<li class=""on"">¡ñ<span class=number style=""display:none;"">1</span></li>"
+			"<li class=""on"">â—<span class=number style=""display:none;"">1</span></li>"
 		For Rs = 1 To SQL
-			str = str & "<li>¡ñ<span class=number style=""display:none;"">" & Rs+1 & "</span></li>"
+			str = str & "<li>â—<span class=number style=""display:none;"">" & Rs+1 & "</span></li>"
 		Next
 		str = str & "</ul>"
 		str = str & "<div class=""playimages_list"">"

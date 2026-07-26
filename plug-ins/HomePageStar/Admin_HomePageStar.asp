@@ -1,17 +1,17 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
 <!--#include file="inc/StarSetup.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 
-Main
+Main()
 
 Sub Main
 
-	BBS_SiteHead DEF_SiteNameString & " - ��������",0,"<span class=""navigate_string_step"">��������</span>"
+	BBS_SiteHead DEF_SiteNameString & " - 社区明星",0,"<span class=""navigate_string_step"">社区明星</span>"
 	Dim Master
-	InitDatabase
-	If CheckSupervisorNameOnly = 1 Then
+	InitDatabase()
+	If CheckSupervisorNameOnly() = 1 Then
 		Master = True
 	Else
 		Master = False
@@ -22,16 +22,16 @@ Sub Main
 	<div class="alertbox fire">
 	<table cellpadding="0" cellspacing="0" class="table_in">
 	<tr class="tbinhead">
-		<td><div class="value"><b>���ٷ���LeadBBS��ҳ���ǲ�� �������ǹ������ģ�</b></div></td>
+		<td><div class="value"><b>＝官方版LeadBBS首页明星插件 社区明星管理中心＝</b></div></td>
 	</tr>
 	<tr>
 	<td class="tdbox">
 	<%
 	If GBL_CHK_User="" or Not(Master) Then
 		%>
-		<div class="alert">���������ԭ������ǣ�</div><br /><br />
-		�㲻�ǹ���Ա����Ȩ���룡<
-		br />������ǹ���Ա�����Թ���Ա����<a href="<%=DEF_BBS_HomeUrl%>User/Login.asp?Relogin=Yes&u=<%=urlencode(Request.Servervariables("SCRIPT_NAME") & "?" & Request.QueryString)%>"><b>�ص�¼</b></a>��
+		<div class="alert">产生错误的原因可能是：</div><br /><br />
+		你不是管理员，无权进入！<
+		br />如果你是管理员，请以管理员身份<a href="<%=DEF_BBS_HomeUrl%>User/Login.asp?Relogin=Yes&u=<%=urlencode(Request.Servervariables("SCRIPT_NAME") & "?" & Request.QueryString)%>"><b>重登录</b></a>！
 		</div>
 		<%
 	Else
@@ -41,10 +41,10 @@ Sub Main
 	</td><tr>
 	</table>
 	<%
-	Boards_Body_Bottom
+	Boards_Body_Bottom()
 	
 	If GBL_ShowBottomSure = 0 Then GBL_SiteBottomString = ""
-	SiteBottom
+	SiteBottom()
 
 End Sub
 
@@ -54,19 +54,19 @@ Sub Main_Star()
 		<br />
 		<ol>
 			<li>
-			ע����� �����棬���������Ե�ǰ����������ʾ��ʽ���趨�������Ҫ�޸ģ�������Ӧ�ĵ�ѡ��ť��ÿһ�е���ʾ��ʽ�����Զ��壬�Զ���������ǿ��
+			注意事项： 在下面，您将看到对当前社区明星显示方式的设定，如果想要修改，请点击相应的单选按钮对每一行的显示方式进行自定义，自定能力更加强大！
 			</li>
-			<li>�����㣬�Ӷ���ҳ��ʾ���ٶ�Ӱ�쿴����Χ�ڣ�0.00�롪��2.0��䡣ÿһ����ʾ��ʽ���ٶȵ�Ӱ�춼��һ��������Ա��ʹ��ʱ���Լ�ʵ��һ�£�����
+			<li>经测算，从对首页显示的速度影响看，范围在：0.00秒——2.0秒间。每一种显示方式对速度的影响都不一样，管理员在使用时可自己实验一下！！！
 			</li>
 			<li>
 			<a href="http://www.leadbbs.com/a/a.asp?B=10&ID=858130" target="_blank">
-				<span class="redfont">�ٷ���LeadBBS��ҳ���ǲ�����°����¸�����������</span></a>
+				<span class="redfont">官方版LeadBBS首页明星插件最新版最新更新请点击这里</span></a>
 			</li>
 		</ol>
 				<form action="admin_HomePageStar.asp" method="post">
 					<%
 	Dim Temp_1,Temp_2,Temp_3,Temp_4,Temp_5,Temp_6
-	If Request.Form("submit") <> " �ύ " Then
+	If Request.Form("submit") <> " 提交 " Then
 		Temp_1 = GBL_PLUG_HPS_LineFirstType
 		Temp_2 = GBL_PLUG_HPS_LineSecondType
 		Temp_3 = GBL_PLUG_HPS_ShowType
@@ -75,47 +75,47 @@ Sub Main_Star()
 		Temp_6 = GBL_PLUG_HPS_Collapse
 		%>
 		<ol>
-		<li><b>��һ��������ʾ��ʽ��</b>
+		<li><b>第一行明星显示方式：</b>
 			<br />
-			<input type="radio" name="GBL_PLUG_HPS_LineFirstType" value="1" <%if Temp_1="1" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">ÿ�շ�����
-			<input type="radio" name="GBL_PLUG_HPS_LineFirstType" value="2" <%if Temp_1="2" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">ÿ�ܷ�����
-			<input type="radio" name="GBL_PLUG_HPS_LineFirstType" value="3" <%if Temp_1="3" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">ÿ�·�����
-			<input type="radio" name="GBL_PLUG_HPS_LineFirstType" value="4" <%if Temp_1="4" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">ÿ�귢���� 
-			<input type="radio" name="GBL_PLUG_HPS_LineFirstType" value="5" <%if Temp_1="5" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">��������
+			<input type="radio" name="GBL_PLUG_HPS_LineFirstType" value="1" <%if Temp_1="1" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">每日发贴量
+			<input type="radio" name="GBL_PLUG_HPS_LineFirstType" value="2" <%if Temp_1="2" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">每周发贴量
+			<input type="radio" name="GBL_PLUG_HPS_LineFirstType" value="3" <%if Temp_1="3" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">每月发贴量
+			<input type="radio" name="GBL_PLUG_HPS_LineFirstType" value="4" <%if Temp_1="4" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">每年发贴量 
+			<input type="radio" name="GBL_PLUG_HPS_LineFirstType" value="5" <%if Temp_1="5" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">发贴总数
 		</li>
-		<li><b>�ڶ���������ʾ��ʽ��</b>
+		<li><b>第二行明星显示方式：</b>
 			<br />
-			<input type="radio" name="GBL_PLUG_HPS_LineSecondType" value="1" <%if Temp_2="1" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">ÿ�շ�����
-			<input type="radio" name="GBL_PLUG_HPS_LineSecondType" value="2" <%if Temp_2="2" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">ÿ�ܷ�����
-			<input type="radio" name="GBL_PLUG_HPS_LineSecondType" value="3" <%if Temp_2="3" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">ÿ�·�����
-			<input type="radio" name="GBL_PLUG_HPS_LineSecondType" value="4" <%if Temp_2="4" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">ÿ�귢����
-			<input type="radio" name="GBL_PLUG_HPS_LineSecondType" value="5" <%if Temp_2="5" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">��������
+			<input type="radio" name="GBL_PLUG_HPS_LineSecondType" value="1" <%if Temp_2="1" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">每日发贴量
+			<input type="radio" name="GBL_PLUG_HPS_LineSecondType" value="2" <%if Temp_2="2" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">每周发贴量
+			<input type="radio" name="GBL_PLUG_HPS_LineSecondType" value="3" <%if Temp_2="3" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">每月发贴量
+			<input type="radio" name="GBL_PLUG_HPS_LineSecondType" value="4" <%if Temp_2="4" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">每年发贴量
+			<input type="radio" name="GBL_PLUG_HPS_LineSecondType" value="5" <%if Temp_2="5" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">发贴总数
 		</li>
-		<li><b>���ǲ����ʾ��ʽ��</b>
+		<li><b>明星插件显示方式：</b>
 			<br />
-			<input type="radio" name="GBL_PLUG_HPS_ShowType" value="0" <%if Temp_3="0" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">��ֹ��ʾ
-			<input type="radio" name="GBL_PLUG_HPS_ShowType" value="1" <%if Temp_3="1" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">������ʾ����
-			<input type="radio" name="GBL_PLUG_HPS_ShowType" value="2" <%if Temp_3="2" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">ֻ��ʾ��һ��
-			<input type="radio" name="GBL_PLUG_HPS_ShowType" value="3" <%if Temp_3="3" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">ֻ��ʾ�ڶ���
+			<input type="radio" name="GBL_PLUG_HPS_ShowType" value="0" <%if Temp_3="0" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">禁止显示
+			<input type="radio" name="GBL_PLUG_HPS_ShowType" value="1" <%if Temp_3="1" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">正常显示两行
+			<input type="radio" name="GBL_PLUG_HPS_ShowType" value="2" <%if Temp_3="2" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">只显示第一行
+			<input type="radio" name="GBL_PLUG_HPS_ShowType" value="3" <%if Temp_3="3" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">只显示第二行
 		</li>
-		<li>4. <b>���ǲ��ˢ�¼����</b>
+		<li>4. <b>明星插件刷新间隔：</b>
 			<br />
-			<input type="text" size="3" maxlength="3" name="GBL_PLUG_HPS_RefreshSpace" value="<%=Temp_4%>" class="fminpt input_1">���ӣ�Ϊ�������վ�����ټ����������������棬Ҫ������Ϊ5���ӣ����50����
+			<input type="text" size="3" maxlength="3" name="GBL_PLUG_HPS_RefreshSpace" value="<%=Temp_4%>" class="fminpt input_1">分钟，为了你的网站更快速及各虚拟主机商利益，要求最少为5分钟，最多50分钟
 		</li>
-		<li><b>��ʾ���Ǽ�¼������</b>
+		<li><b>显示明星记录条数：</b>
 			<br />
-			<input type="text" size="2" maxlength="2" name="GBL_PLUG_HPS_TopMax" value="<%=Temp_5%>" class="fminpt input_1"> ����Ϊ3�������ֻ������Ϊ50��
+			<input type="text" size="2" maxlength="2" name="GBL_PLUG_HPS_TopMax" value="<%=Temp_5%>" class="fminpt input_1"> 最少为3条，最多只能设置为50条
 		</li>
-		<li><b>Ĭ���Ƿ����</b>
+		<li><b>默认是否卷起：</b>
 			<br />
-			<input type="radio" name="GBL_PLUG_HPS_Collapse" value="0" <%if Temp_6="0" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">Ĭ����ʾ
-			<input type="radio" name="GBL_PLUG_HPS_Collapse" value="1" <%if Temp_6="1" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">Ĭ�Ͼ���
+			<input type="radio" name="GBL_PLUG_HPS_Collapse" value="0" <%if Temp_6="0" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">默认显示
+			<input type="radio" name="GBL_PLUG_HPS_Collapse" value="1" <%if Temp_6="1" Then Response.Write("checked=""checked""") End If%> class="fmchkbox">默认卷起
 		</li>
 		</ol>
 		<ol>
 		<div class=value2>
-			<input type="submit" name="Submit" value=" �ύ " class="fmbtn btn_2">
-			<input type="reset" name="Submit2" value=" ���� " class="fmbtn btn_2">
+			<input type="submit" name="Submit" value=" 提交 " class="fmbtn btn_2">
+			<input type="reset" name="Submit2" value=" 重置 " class="fmbtn btn_2">
 		</div>
 		</ol>
 		<%
@@ -151,14 +151,14 @@ Sub Main_Star()
 		WriteString = WriteString & "const GBL_PLUG_HPS_Collapse = " & Temp_6 & VbCrLf & VbCrLf
 		WriteString = WriteString & "'####################################################################" & VbCrLf
 		WriteString = WriteString & "'##" & VbCrLf
-		WriteString = WriteString & "'##��������������ʾ��ʽ����!����ķ�������֧��FSO�����ֶ��޸���ʾ��ʽ!" & VbCrLf
-		WriteString = WriteString & "'##����1Ϊÿ�շ�������2Ϊÿ�ܷ�������3Ϊÿ�·�������4Ϊÿ�귢������5Ϊ����������6Ϊ��������ǣ�7Ϊ���Ů����" & VbCrLf
-				WriteString = WriteString & "'##�����˳�������ɹ�����Ա�������£�ʱ��2004-03-20 16:50 LeadBBS�������� for 3.14" & VbCrLf
-		WriteString = WriteString & "'##�������������ֹ����������λ��!" & VbCrLf
-		WriteString = WriteString & "'##����ʹ��ǰ���ȿ���װ˵��!" & VbCrLf
-		WriteString = WriteString & "'##������ҳ��http://gafc.9126.com/" & VbCrLf
-		WriteString = WriteString & "'##�����ٷ���ҳ��http://www.LeadBBS.com/" & VbCrLf
-		WriteString = WriteString & "'##������л��ʹ�ñ����!" & VbCrLf
+		WriteString = WriteString & "'##　　社区明星显示方式设置!如你的服务器不支持FSO，请手动修改显示方式!" & VbCrLf
+		WriteString = WriteString & "'##　　1为每日发贴量，2为每周发贴量，3为每月发贴量，4为每年发贴量，5为发贴总数，6为最佳男明星，7为最佳女明星" & VbCrLf
+				WriteString = WriteString & "'##　　此程序最后由管理人员整理更新，时间2004-03-20 16:50 LeadBBS社区明星 for 3.14" & VbCrLf
+		WriteString = WriteString & "'##　　切勿随意手工更改上面的位置!" & VbCrLf
+		WriteString = WriteString & "'##　　使用前请先看安装说明!" & VbCrLf
+		WriteString = WriteString & "'##　　主页：http://gafc.9126.com/" & VbCrLf
+		WriteString = WriteString & "'##　　官方主页：http://www.LeadBBS.com/" & VbCrLf
+		WriteString = WriteString & "'##　　感谢您使用本插件!" & VbCrLf
 		WriteString = WriteString & "'##" & VbCrLf
 		WriteString = WriteString & "'####################################################################" & VbCrLf
 
@@ -166,11 +166,11 @@ Sub Main_Star()
 		ADODB_SaveToFile WriteString,"Inc/StarSetup.asp"
 		
 		If GBL_CHK_TempStr = "" Then
-			Response.Write "<br /><span class=greenfont>2.�ɹ�������ã�</span>"
-			Response.Write("��ϲ��������������ʾ��ʽ�Ѿ��趨��ϣ�����"&"<br /><br /><br />")
-        	Response.Write("<input type=""button"" value=""��������"" onclick=""window.location.href='admin_HomePageStar.asp'"" class=""fmbtn btn_3"">")
+			Response.Write "<br /><span class=greenfont>2.成功完成设置！</span>"
+			Response.Write("恭喜您，明星社区显示方式已经设定完毕！！！"&"<br /><br /><br />")
+        	Response.Write("<input type=""button"" value=""重新设置"" onclick=""window.location.href='admin_HomePageStar.asp'"" class=""fmbtn btn_3"">")
 		Else
-			%><%=GBL_CHK_TempStr%><br />��������֧������д���ļ����ܣ���ʹ��FTP�ȹ��ܣ���<span class="redfont">Inc/StarSetup.asp</span>�ļ��滻�ɿ�������(ע�ⱸ��)
+			%><%=GBL_CHK_TempStr%><br />服务器不支持在线写入文件功能，请使用FTP等功能，将<span class="redfont">Inc/StarSetup.asp</span>文件替换成框中内容(注意备份)
 			<p>
 			<textarea name="fileContent" cols="80" rows="30" class="fmtxtra"><%=Server.htmlencode(WriteString)%></textarea>
 			</p><%

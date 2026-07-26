@@ -5,10 +5,10 @@ Function DisplayAnnouncesSplitPages
 	Dim ALL_FirstRootID,ALL_LastRootID
 
 	Dim SQLEndString,WhereFlag,OrderColumn,BoardUrlString
-	RootFlag = Left(Request.QueryString,1)
+	RootFlag = Left(Request.ServerVariables("QUERY_STRING"),1)
 	If RootFlag <> "0" and RootFlag <> "1" and RootFlag <> "2" Then RootFlag = "0"
 	If DEF_UsedDataBase = 1 Then
-		If RootFlag = "0" Then RootFlag = "1" 'ACCESSÊı¾İ¿â½ûÓÃ²é¿´È«²¿Ìû×Ó
+		If RootFlag = "0" Then RootFlag = "1" 'ACCESSæ•°æ®åº“ç¦ç”¨æŸ¥çœ‹å…¨éƒ¨å¸–å­
 	End If
 	Select Case RootFlag
 		Case "1":
@@ -25,8 +25,8 @@ Function DisplayAnnouncesSplitPages
 				case Else
 					SQLEndString = " from LeadBBS_Topic "
 			End select
-			RootFlagStr = "Ö÷Ìâ"
-			RootFlagStr1 = "<b>²é¿´ÂÛÌ³È«²¿Ö÷Ìâ</b>"
+			RootFlagStr = "ä¸»é¢˜"
+			RootFlagStr1 = "<b>æŸ¥çœ‹è®ºå›å…¨éƒ¨ä¸»é¢˜</b>"
 		Case "2":
 			OrderColumn = "ID"
 			WhereFlag = 1
@@ -36,8 +36,8 @@ Function DisplayAnnouncesSplitPages
 				case Else
 					SQLEndString = " from LeadBBS_Topic where GoodFlag=1 "
 			End select
-			RootFlagStr = "¾«»ªÌû×Ó"
-			RootFlagStr1 = "²é¿´ÂÛÌ³È«²¿¾«»ªÌû×Ó"
+			RootFlagStr = "ç²¾åå¸–å­"
+			RootFlagStr1 = "æŸ¥çœ‹è®ºå›å…¨éƒ¨ç²¾åå¸–å­"
 		Case Else:
 			WhereFlag = 0
 			OrderColumn = "ID"
@@ -46,8 +46,8 @@ Function DisplayAnnouncesSplitPages
 				case Else
 					SQLEndString = " from LeadBBS_Announce "
 			End select
-			RootFlagStr = "Ìû×Ó"
-			RootFlagStr1 = "<b>²é¿´ÂÛÌ³È«²¿Ìû×Ó</b>"
+			RootFlagStr = "å¸–å­"
+			RootFlagStr1 = "<b>æŸ¥çœ‹è®ºå›å…¨éƒ¨å¸–å­</b>"
 	End Select
 	BoardUrlString = "List.asp"
 	select case DEF_UsedDataBase
@@ -86,7 +86,7 @@ Function DisplayAnnouncesSplitPages
 	Dim ALL_Count
 	
 	Rem SQL = "Select count(*) from LeadBBS_Announce " & SQLEndString
-	Rem ÏÂÃæµÄÓï¾ä±ÈÉÏÃæµÄËÙ¶È¿ì,ÒòÎª°æÃæÉÙ,¶øµ±Ö÷ÌâºÍÌû×ÓÔ½¶àÊ±,²ÉÏÂÏÂÃæµÄËÙ¶È¾Í»áÔ½¿ì
+	Rem ä¸‹é¢çš„è¯­å¥æ¯”ä¸Šé¢çš„é€Ÿåº¦å¿«,å› ä¸ºç‰ˆé¢å°‘,è€Œå½“ä¸»é¢˜å’Œå¸–å­è¶Šå¤šæ—¶,é‡‡ä¸‹ä¸‹é¢çš„é€Ÿåº¦å°±ä¼šè¶Šå¿«
 	
 	If RootFlag <> "2" Then
 		If RootFlag = "1" Then
@@ -188,7 +188,7 @@ Function DisplayAnnouncesSplitPages
 				SQL = sql_select("select T1.id,T1.ParentID,T1.ChildNum,T1.Layer,T1.Title,T1.FaceIcon,T1.LastTime,T1.Hits,T1.Length,T1.UserName,T1.UserID,T1.RootIDBak,T1.TopicSortID,T1.LastUser,T1.NotReplay,T1.GoodFlag,T1.BoardID,T1.TopicType,T1.PollNum,T1.TitleStyle,T2.ForumPass,T2.BoardLimit,T2.OtherLimit,T2.HiddenFlag from LeadBBS_Announce as T1 left join LeadBBS_Boards as T2 on T1.BoardID=T2.BoardID " & SQLEndString,Temp)
 			case Else
 				If RootFlag = "1" or RootFlag = "2" Then
-					SQL = sql_select("select T1.id,0,T1.ChildNum,0,T1.Title,T1.FaceIcon,T1.LastTime,T1.Hits,T1.Length,T1.UserName,T1.UserID,T1.ID,0,T1.LastUser,T1.NotReplay,T1.GoodFlag,T1.BoardID,T1.TopicType,T1.PollNum,T1.TitleStyle,T2.ForumPass,T2.BoardLimit,T2.OtherLimit,T2.HiddenFlag from LeadBBS_Topic as T1 left join LeadBBS_Boards as T2 on T1.BoardID=T2.BoardID " & Replace(SQLEndString," from LeadBBS_Topic",""),Temp)
+					SQL = sql_select("select T1.id,0,T1.ChildNum,0 as c0_dup2,T1.Title,T1.FaceIcon,T1.LastTime,T1.Hits,T1.Length,T1.UserName,T1.UserID,T1.ID as id_dup2,0 as c0_dup3,T1.LastUser,T1.NotReplay,T1.GoodFlag,T1.BoardID,T1.TopicType,T1.PollNum,T1.TitleStyle,T2.ForumPass,T2.BoardLimit,T2.OtherLimit,T2.HiddenFlag from LeadBBS_Topic as T1 left join LeadBBS_Boards as T2 on T1.BoardID=T2.BoardID " & Replace(SQLEndString," from LeadBBS_Topic",""),Temp)
 				Else
 					SQL = sql_select("select T1.id,T1.ParentID,T1.ChildNum,T1.Layer,T1.Title,T1.FaceIcon,T1.LastTime,T1.Hits,T1.Length,T1.UserName,T1.UserID,T1.RootIDBak,T1.TopicSortID,T1.LastUser,T1.NotReplay,T1.GoodFlag,T1.BoardID,T1.TopicType,T1.PollNum,T1.TitleStyle,T2.ForumPass,T2.BoardLimit,T2.OtherLimit,T2.HiddenFlag from LeadBBS_Announce as T1 left join LeadBBS_Boards as T2 on T1.BoardID=T2.BoardID " & Replace(SQLEndString," from LeadBBS_Announce",""),Temp)
 				End If
@@ -232,26 +232,26 @@ Function DisplayAnnouncesSplitPages
 	Dim PageSplitString,PageSplitString2
 	PageSplitString = "<div class=j_page>"
 	If FirstRootID >= All_FirstRootID Then
-		'PageSplitString = PageSplitString & "Ê×Ò³"
-		'PageSplitString = PageSplitString & " ÉÏÒ³"
+		'PageSplitString = PageSplitString & "é¦–é¡µ"
+		'PageSplitString = PageSplitString & " ä¸Šé¡µ"
 	Else
-		PageSplitString = PageSplitString & "<a href=" & BoardUrlString & SQL & ">Ê×Ò³</a>"
-		PageSplitString = PageSplitString & " <a href=" & BoardUrlString & SQL & "&RootID=" & FirstRootID & "&Upflag=1>ÉÏÒ³</a>"
+		PageSplitString = PageSplitString & "<a href=" & BoardUrlString & SQL & ">é¦–é¡µ</a>"
+		PageSplitString = PageSplitString & " <a href=" & BoardUrlString & SQL & "&RootID=" & FirstRootID & "&Upflag=1>ä¸Šé¡µ</a>"
 	End If
 
 	If LastRootID <= All_LastRootID Then
-		'PageSplitString = PageSplitString & " ÏÂÒ³"
-		'PageSplitString = PageSplitString & " Î²Ò³"
+		'PageSplitString = PageSplitString & " ä¸‹é¡µ"
+		'PageSplitString = PageSplitString & " å°¾é¡µ"
 	Else
-		PageSplitString = PageSplitString & " <a href=" & BoardUrlString & SQL & "&RootID=" & LastRootID & ">ÏÂÒ³</a>"
-		PageSplitString = PageSplitString & " <a href=" & BoardUrlString & SQL & "&Upflag=1&Num=1>Î²Ò³</a>"
+		PageSplitString = PageSplitString & " <a href=" & BoardUrlString & SQL & "&RootID=" & LastRootID & ">ä¸‹é¡µ</a>"
+		PageSplitString = PageSplitString & " <a href=" & BoardUrlString & SQL & "&Upflag=1&Num=1>å°¾é¡µ</a>"
 	End If
 	Rs = Temp1
 	Rs = Temp2+Rs
 	If HaveRootIDFlag = 1 Then Rs = Rs+1
 
-	PageSplitString = PageSplitString & "<b>¹²" & ALL_Count &"</b>"
-	' & RootFlagStr & " ´ËÒ³<b>" & Rs & "</b>Ìõ Ã¿Ò³<b>" & DEF_MaxListNum & "</b>Ìõ<td align=right><img src=" & DEF_BBS_HomeUrl & "images/null.gif width=2 height=2><br>"
+	PageSplitString = PageSplitString & "<b>å…±" & ALL_Count &"</b>"
+	' & RootFlagStr & " æ­¤é¡µ<b>" & Rs & "</b>æ¡ æ¯é¡µ<b>" & DEF_MaxListNum & "</b>æ¡<td align=right><img src=" & DEF_BBS_HomeUrl & "images/null.gif width=2 height=2><br>"
 	PageSplitString = PageSplitString & "</div>"
 	If Rs < DEF_MaxListNum and GBL_ShowBottomSure = 0 Then GBL_SiteBottomString = ""
 
@@ -262,10 +262,10 @@ Function DisplayAnnouncesSplitPages
 	</td></tr>
 	<tr class=tbinhead>
 		<!-- <td width=40><div class=value>&nbsp;</div></td> -->
-		<td><div class=value>Ö÷Ìâ</div></td>
-		<td width=110><div class=value>×÷Õß</div></b></td>
-		<td width=70><div class=value>»Ø¸´/µã»÷</div></td>
-		<td width=110><div class=value>×îºó¸üĞÂ/»Ø¸´ÈË</div></td>
+		<td><div class=value>ä¸»é¢˜</div></td>
+		<td width=110><div class=value>ä½œè€…</div></b></td>
+		<td width=70><div class=value>å›å¤/ç‚¹å‡»</div></td>
+		<td width=110><div class=value>æœ€åæ›´æ–°/å›å¤äºº</div></td>
 	</tr><%
 	If Upflag="0" Then
 		If HaveRootIDFlag = 1 Then
@@ -278,7 +278,7 @@ Function DisplayAnnouncesSplitPages
 				For2 = 0
 				StepValue = -1
 			End If
-			DisplayAnnounceData For1,For2,StepValue,GetData_2,0
+			Call DisplayAnnounceData(For1,For2,StepValue,GetData_2,0)
 		End If
 	Else
 
@@ -292,7 +292,7 @@ Function DisplayAnnouncesSplitPages
 				For2 = 0
 				StepValue = -1
 			End If
-			DisplayAnnounceData For1,For2,StepValue,GetData_2,0
+			Call DisplayAnnounceData(For1,For2,StepValue,GetData_2,0)
 		End If
 	End If
 	Response.Write "<tr><td colspan=4 class=tdbox>"
@@ -305,24 +305,24 @@ End Function
 Sub List_NavInfo(RootFlag)
 
 	Response.Write "<div class='user_item_nav fire'><ul>"
-	Response.Write "<li><div class=name>ÂÛÌ³Ìû×Ó</div></li>"
+	Response.Write "<li><div class=name>è®ºå›å¸–å­</div></li>"
 	select case DEF_UsedDataBase
 		case 0,2:
 			If RootFlag <> "2" and RootFlag <> "1" Then
-				Response.Write "	<li><div class=navactive><span>È«²¿Ìû×Ó</span></div></li>"
+				Response.Write "	<li><div class=navactive><span>å…¨éƒ¨å¸–å­</span></div></li>"
 			Else
-				Response.Write "	<li><a href=List.asp?0>È«²¿Ìû×Ó</a></li>"
+				Response.Write "	<li><a href=List.asp?0>å…¨éƒ¨å¸–å­</a></li>"
 			End If
 	End select
 	If RootFlag = "1" Then
-		Response.Write "	<li><div class=navactive>È«²¿Ö÷Ìâ</div></li>"
+		Response.Write "	<li><div class=navactive>å…¨éƒ¨ä¸»é¢˜</div></li>"
 	Else
-		Response.Write "	<li><a href=List.asp?1>È«²¿Ö÷Ìâ</a></li>"
+		Response.Write "	<li><a href=List.asp?1>å…¨éƒ¨ä¸»é¢˜</a></li>"
 	End If
 	If RootFlag = "2" Then
-		Response.Write "	<li><div class=navactive>È«²¿¾«»ª</div></li>"
+		Response.Write "	<li><div class=navactive>å…¨éƒ¨ç²¾å</div></li>"
 	Else
-		Response.Write "	<li><a href=List.asp?2>È«²¿¾«»ª</a></li>"
+		Response.Write "	<li><a href=List.asp?2>å…¨éƒ¨ç²¾å</a></li>"
 	End If
 	Response.Write "</ul></div>"	
 
@@ -332,7 +332,7 @@ Function DisplayAnnounceData(For1,For2,StepValue,GetData,AllFlag)
 	
 	Dim ReAncStr
 	Dim SuperFlag
-	SuperFlag = CheckSupervisorUserName
+	SuperFlag = CheckSupervisorUserName()
 	If SuperFlag = 1 Then
 	%>	<script language=javascript>
 	function opw(f,r,id)
@@ -344,7 +344,7 @@ Function DisplayAnnounceData(For1,For2,StepValue,GetData,AllFlag)
 	End If
 
 	Dim N,Temp,Temp1,B_Now
-	B_Now = Left(GetTimeValue(DEF_Now),8)
+	B_Now = Left(LngStr(GetTimeValue(DEF_Now)),8)
 	For N = For1 to For2 Step StepValue
 		Response.Write "<tr>"
 		'Response.Write "<td class=tdbox align=center>"
@@ -367,11 +367,11 @@ Function DisplayAnnounceData(For1,For2,StepValue,GetData,AllFlag)
 		'	End If
 		'	If GetData(14,n) = 1 Then Temp = Temp & "lock"
 		'End If
-		'Response.Write "<img src=../images/" & GBL_DefineImage & Temp & ".gif align=absbottom title=""±àºÅ" & GetData(0,N) & """>"
+		'Response.Write "<img src=../images/" & GBL_DefineImage & Temp & ".gif align=absbottom title=""ç¼–å·" & GetData(0,N) & """>"
 		'Response.Write "</td>"
 		Response.Write "<td class=tdbox>"
 
-		Rem ²»ÏÔÊ¾LayerÖµ
+		Rem ä¸æ˜¾ç¤ºLayerå€¼
 		'If GetData(3,N)>DEF_BBS_MaxLayer Then GetData(3,N)=10
 		'Response.Write Replace(string((GetData(3,N)-1),"-"),"-","<ul>")
 		'Response.Write "<img src=../images/" & GBL_DefineImage & "bf/face" & GetData(5,N) & ".gif align=absbottom>"
@@ -380,7 +380,7 @@ Function DisplayAnnounceData(For1,For2,StepValue,GetData,AllFlag)
 		If GetData(8,N) > 1024 Then
 			GetData(8,N) = cLng(GetData(8,N)/1024) & " KB"
 		Else
-			GetData(8,N) = GetData(8,N) & " ×Ö½Ú"
+			GetData(8,N) = GetData(8,N) & " å­—èŠ‚"
 		End If
 
 		If cCur(GetData(1,n)) = 0 Then
@@ -407,7 +407,7 @@ Function DisplayAnnounceData(For1,For2,StepValue,GetData,AllFlag)
 		If ccur(GetData(15,n)) = 1 Then Temp = Temp - 3
 
 		If GBL_NoneLimitFlag = 0 and GBL_CheckLimitTitle(GetData(20,n),GetData(21,n),GetData(22,n),GetData(23,n)) = 1 Then
-			GetData(4,n) = "<span calss=grayfont>´ËÌû×Ó±êÌâÒÑÉèÖÃÎªÒş²Ø</span>"
+			GetData(4,n) = "<span calss=grayfont>æ­¤å¸–å­æ ‡é¢˜å·²è®¾ç½®ä¸ºéšè—</span>"
 			GetData(19,n) = 1
 		End If
 		If left(GetData(4,N),3) = "re:" and GetData(4,N) <> "re:" Then GetData(4,N) = Mid(GetData(4,N),4)
@@ -424,7 +424,7 @@ Function DisplayAnnounceData(For1,For2,StepValue,GetData,AllFlag)
 		End If
 
 		'If ccur(GetData(15,n)) = 1 Then
-		'	Response.Write "<img src=../images/" & GBL_DefineImage & "jh1.GIF border=0 title=¾«»ªÌû×Ó align=absbottom width=15 height=16>"
+		'	Response.Write "<img src=../images/" & GBL_DefineImage & "jh1.GIF border=0 title=ç²¾åå¸–å­ align=absbottom width=15 height=16>"
 		'End If
 
 		GetData(10,N) = cCur(GetData(10,N))
@@ -435,14 +435,14 @@ Function DisplayAnnounceData(For1,For2,StepValue,GetData,AllFlag)
 		End If
 		
 		If SuperFlag = 1 Then
-			Response.Write " <a href='javascript:opw(""../" & DEF_ManageDir & "/User/DelUserAllAnnounce.asp?B=" & GBL_board_ID & """,""DelUserID""," & GetData(10,n) & ");' title=É¾³ı´ËÓÃ»§µÄºÃÓÑ×ÊÁÏ£¬Ìû×ÓÊÕ²Ø£¬·¢±íÌû×Ó£¬ÉÏ´«¸½¼şµÈ×ÊÁÏ£¬²»¼õ" & DEF_PointsName(0) & ">É¾×ÊÁÏ</a>"
+			Response.Write " <a href='javascript:opw(""../" & DEF_ManageDir & "/User/DelUserAllAnnounce.asp?B=" & GBL_board_ID & """,""DelUserID""," & GetData(10,n) & ");' title=åˆ é™¤æ­¤ç”¨æˆ·çš„å¥½å‹èµ„æ–™ï¼Œå¸–å­æ”¶è—ï¼Œå‘è¡¨å¸–å­ï¼Œä¸Šä¼ é™„ä»¶ç­‰èµ„æ–™ï¼Œä¸å‡" & DEF_PointsName(0) & ">åˆ èµ„æ–™</a>"
 		End If
 		Response.Write "</td><td class=tdbox>"
 		
 
 		If isNull(GetData(18,N)) Then GetData(18,N) = 0
 		If GetData(17,n) = 80 Then
-			Response.Write "¹²" & cCur(GetData(18,N)) & "Æ±"
+			Response.Write "å…±" & cCur(GetData(18,N)) & "ç¥¨"
 		Else
 			Response.Write "<span class=num>" & GetData(2,N) & "/" & GetData(7,N) & "</span>"
 		End If
@@ -455,7 +455,7 @@ Function DisplayAnnounceData(For1,For2,StepValue,GetData,AllFlag)
 		If GetData(13,n) = "" or isNull(GetData(13,n)) Then
 			Response.Write "<a href=../User/LookUserInfo.asp?ID=" & GetData(10,N) & ">" & htmlencode(GetData(9,N)) & "</a> "
 		Else
-			If GetData(10,N) <> "ÓÎ¿Í" Then
+			If GetData(10,N) <> "æ¸¸å®¢" Then
 				Response.Write "<a href=" & DEF_BBS_HomeUrl & "User/LookUserInfo.asp?name=" & urlencode(GetData(13,N)) & ">" & htmlencode(GetData(13,n)) & "</a>"
 			Else
 				Response.Write "" & htmlencode(GetData(13,n))

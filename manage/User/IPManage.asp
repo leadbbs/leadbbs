@@ -1,23 +1,23 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
-DisplayUserNavigate("ÆÁ±Î£É£ĞµØÖ·¹ÜÀí")
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
+DisplayUserNavigate("å±è”½ï¼©ï¼°åœ°å€ç®¡ç†")
 If GBL_CHK_Flag=1 Then
-	LoginAccuessFul
+	LoginAccuessFul()
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Function LoginAccuessFul
@@ -42,7 +42,7 @@ Function LoginAccuessFul
 
 	Dim SQLCountString,whereFlag
 
-	Rem ÏÂÃæµÄ´úÂëÊ¹Ä¿Ç°Ôİ²»Ìá¹©³ÇÊĞ·ÖÀàË«ÖØ²éÑ¯
+	Rem ä¸‹é¢çš„ä»£ç ä½¿ç›®å‰æš‚ä¸æä¾›åŸå¸‚åˆ†ç±»åŒé‡æŸ¥è¯¢
 	
 	SQLCountString = SQLendString
 	If UpDownPageFlag = "1" and Start>0 then
@@ -146,11 +146,11 @@ Function LoginAccuessFul
 	
 		PageSplictString = PageSplictString & "<div class=frameline>"
 		If FirstID >= MaxRecordID Then
-			PageSplictString = PageSplictString & "<span class=grayfont>Ê×Ò³</span> " & VbCrLf
-			PageSplictString = PageSplictString & " <span class=grayfont>ÉÏÒ³</span> " & VbCrLf
+			PageSplictString = PageSplictString & "<span class=grayfont>é¦–é¡µ</span> " & VbCrLf
+			PageSplictString = PageSplictString & " <span class=grayfont>ä¸Šé¡µ</span> " & VbCrLf
 		else
-			PageSplictString = PageSplictString & "<a href=IPManage.asp" & EndwriteQueryString & "&Start=0>Ê×Ò³</a> " & VbCrLf
-			PageSplictString = PageSplictString & " <a href=IPManage.asp" & EndwriteQueryString & "&Start=" & FirstID & "&UpDownPageFlag=1>ÉÏÒ³</a> " & VbCrLf
+			PageSplictString = PageSplictString & "<a href=IPManage.asp" & EndwriteQueryString & "&Start=0>é¦–é¡µ</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=IPManage.asp" & EndwriteQueryString & "&Start=" & LngStr(FirstID) & "&UpDownPageFlag=1>ä¸Šé¡µ</a> " & VbCrLf
 		end if
 	
 		if LastID<MaxRecordID and LastID<>0 then
@@ -158,33 +158,33 @@ Function LoginAccuessFul
 		end if
 	
 		If LastID <= MinRecordID Then
-			PageSplictString = PageSplictString & " <span class=grayfont>ÏÂÒ³</span> " & VbCrLf
-			PageSplictString = PageSplictString & " <span class=grayfont>Î²Ò³</span> " & VbCrLf
+			PageSplictString = PageSplictString & " <span class=grayfont>ä¸‹é¡µ</span> " & VbCrLf
+			PageSplictString = PageSplictString & " <span class=grayfont>å°¾é¡µ</span> " & VbCrLf
 		else
-			PageSplictString = PageSplictString & " <a href=IPManage.asp" & EndwriteQueryString & "&Start=" & LastID & ">ÏÂÒ³</a> " & VbCrLf
-			PageSplictString = PageSplictString & " <a href=IPManage.asp" & EndwriteQueryString & "&Start=1&UpDownPageFlag=1>Î²Ò³</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=IPManage.asp" & EndwriteQueryString & "&Start=" & LngStr(LastID) & ">ä¸‹é¡µ</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=IPManage.asp" & EndwriteQueryString & "&Start=1&UpDownPageFlag=1>å°¾é¡µ</a> " & VbCrLf
 		end if
 		
-		PageSplictString = PageSplictString & "&nbsp;¹²<b>" & recordCount & "</b>Ìõ¼ÇÂ¼"
+		PageSplictString = PageSplictString & "&nbsp;å…±<b>" & recordCount & "</b>æ¡è®°å½•"
 		If (recordCount mod DEF_MaxListNum)=0 Then
-			PageSplictString = PageSplictString & " ¼Æ<b>" & clng(recordCount/DEF_MaxListNum) & "</b>Ò³"
+			PageSplictString = PageSplictString & " è®¡<b>" & clng(recordCount/DEF_MaxListNum) & "</b>é¡µ"
 		Else
 			If recordCount>=DEF_MaxListNum Then
 				SQL = fix(recordCount/DEF_MaxListNum)
 				If (recordCount mod DEF_MaxListNum) <> 0 Then SQL = SQL + 1
-				PageSplictString = PageSplictString & " ¼Æ<b>" & SQL & "</b>Ò³"
+				PageSplictString = PageSplictString & " è®¡<b>" & SQL & "</b>é¡µ"
 			Else
-				PageSplictString = PageSplictString & " ¼Æ<b>1</b>Ò³"
+				PageSplictString = PageSplictString & " è®¡<b>1</b>é¡µ"
 			End If
 		End If
-		PageSplictString = PageSplictString & " Ã¿Ò³<b>" & DEF_MaxListNum & "</b>Ìõ"
+		PageSplictString = PageSplictString & " æ¯é¡µ<b>" & DEF_MaxListNum & "</b>æ¡"
 		PageSplictString = PageSplictString & "</div>"
 	
 	End If
 
 	If DEF_EnableForbidIP = 0 Then
 	%>
-	<div class=alert>Ä¿Ç°IPÆÁ±Î¹¦ÄÜ´¦ÓÚ¹Ø±Õ×´Ì¬, Äã¿ÉÒÔÖÁÈ«¾Ö²ÎÊıÖĞ¿ªÆôIPÆÁ±Î¹¦ÄÜ.</div>
+	<div class=alert>ç›®å‰IPå±è”½åŠŸèƒ½å¤„äºå…³é—­çŠ¶æ€, ä½ å¯ä»¥è‡³å…¨å±€å‚æ•°ä¸­å¼€å¯IPå±è”½åŠŸèƒ½.</div>
 	<%End If%>
 	
 	<script language=javascript>
@@ -194,19 +194,19 @@ Function LoginAccuessFul
 		}
 	</script>
 	
-	<%Response.Write "<b>¹²<font color=ff0000 class=redfont>" & recordCount & "</font>¸öÆÁ±ÎÏîÄ¿</b>"%> <a href=NewForbidIP.asp>µã»÷ÕâÀïÌí¼ÓÆÁ±Î£É£ĞµØÖ·</a>
+	<%Response.Write "<b>å…±<font color=ff0000 class=redfont>" & recordCount & "</font>ä¸ªå±è”½é¡¹ç›®</b>"%> <a href=NewForbidIP.asp>ç‚¹å‡»è¿™é‡Œæ·»åŠ å±è”½ï¼©ï¼°åœ°å€</a>
 	<table border=0 cellpadding=0 cellspacing=0 width="100%" class=frame_table>
 	<tbody> 
 	<tr class=frame_tbhead>
-		<td width=90><div class=value>±àÄ¿</div></td>
-		<td width=240><div class=value>£É£Ğ·¶Î§</div></td>
-		<td width=90><div class=value>ÊıÁ¿</div></td>
-		<td width=42><div class=value>½â³ı</div></td>
-		<td><div class=value>ËµÃ÷</div></td>
+		<td width=90><div class=value>ç¼–ç›®</div></td>
+		<td width=240><div class=value>ï¼©ï¼°èŒƒå›´</div></td>
+		<td width=90><div class=value>æ•°é‡</div></td>
+		<td width=42><div class=value>è§£é™¤</div></td>
+		<td><div class=value>è¯´æ˜</div></td>
 	</tr>
 	<%
 	If Num = -1 Then
-		response.write "<tr class=TBfour><td colspan=6 height=30>&nbsp; Ã»ÓĞÈÎºÎÆÁ±Î£É£ĞµØÖ·£¬<a href=NewForbidIP.asp>µã»÷ÕâÀïÌí¼ÓĞÂÆÁ±Î£É£ĞµØÖ·</a>¡£</td></tr>"
+		response.write "<tr class=TBfour><td colspan=6 height=30>&nbsp; æ²¡æœ‰ä»»ä½•å±è”½ï¼©ï¼°åœ°å€ï¼Œ<a href=NewForbidIP.asp>ç‚¹å‡»è¿™é‡Œæ·»åŠ æ–°å±è”½ï¼©ï¼°åœ°å€</a>ã€‚</td></tr>"
 	end if
 
 	Dim TempN
@@ -215,17 +215,17 @@ Function LoginAccuessFul
 		i=1
 		LastID = GetData(0,ubound(getdata,2))
 		for n= MinN to MaxN Step StepValue
-			Response.Write "<tr><td class=tdbox width=30>" & GetData(0,n) & "</td>"
+			Response.Write "<tr><td class=tdbox width=30>" & LngStr(GetData(0,n)) & "</td>"
 			Response.Write "<td class=tdbox width=200>" & RestoreIPAddress(GetData(1,n)) & " - "
 			Response.Write RestoreIPAddress(GetData(2,n)) & "</td>"
 			Response.Write "<td class=tdbox width=30>" & GetData(3,n) & "</td>"
-			Response.Write "<td class=tdbox width=25><a href='javascript:kill(" & GetData(0,n) & ");'>½â³ı</a></td>"
+			Response.Write "<td class=tdbox width=25><a href='javascript:kill(" & LngStr(GetData(0,n)) & ");'>è§£é™¤</a></td>"
 			Response.Write "<td class=tdbox>"
 			If GetData(5,n) <> "" Then Response.Write htmlencode(GetData(5,n)) & "<br>"
 			If cCur(GetData(4,n)) > 0 Then
-				Response.Write "<span class=grayfont>×Ô½â³ıÊ±¼ä£º" & RestoreTime(GetData(4,n))
+				Response.Write "<span class=grayfont>è‡ªè§£é™¤æ—¶é—´ï¼š" & RestoreTime(GetData(4,n))
 			Else
-				Response.Write "<span class=grayfont>´ËIPÓÀ¾ÃÆÁ±Î£¬²»ÄÜ×Ô¶¯½â³ı"
+				Response.Write "<span class=grayfont>æ­¤IPæ°¸ä¹…å±è”½ï¼Œä¸èƒ½è‡ªåŠ¨è§£é™¤"
 			End If
 			Response.Write "</span></td>"
 			Response.Write "</tr>" & VbCrLf

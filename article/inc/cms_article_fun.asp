@@ -36,7 +36,7 @@ class center_newsArticle_Class
 
 		If form_modifyid > 0 Then
 			if private_getarticleclassinfo(form_modifyid) = 0 Then
-				response.write "<span class=cms_error>´Ë¼ÇÂ¼²»´æÔÚ,»òÕßÊÇÄúÎŞÈ¨½øĞĞ´Ë²Ù×÷.</span>"
+				response.write "<span class=cms_error>æ­¤è®°å½•ä¸å­˜åœ¨,æˆ–è€…æ˜¯æ‚¨æ— æƒè¿›è¡Œæ­¤æ“ä½œ.</span>"
 				exit sub
 			End if
 		End If
@@ -46,15 +46,15 @@ class center_newsArticle_Class
 			EditFlag = 0
 		End If
 		Form_EditAnnounceID = form_modifyid
-		GetAncUploaInfo
+		Call GetAncUploaInfo()
 
 		if submitflag = "" then
 			If form_modifyid > 0 Then
 			Else
 			End If
-			center_articleclass_Form
+			center_articleclass_Form()
 		else
-			private_getformdata
+			private_getformdata()
 		end if
 	
 	End Sub
@@ -69,9 +69,9 @@ class center_newsArticle_Class
 		form_author = left(getformdata("form_author"),50)		
 		form_htmlflag = toNum(GetFormData("form_htmlflag"),2)
 		
-		form_title = FormClass_CheckFormValue(form_title,"ÎÄÕÂ±êÌâ","string","none","=~~~",255)
-		If CheckErrorStr = "" Then form_content = FormClass_CheckFormValue(form_content,"ÎÄÕÂÄÚÈİ","string","none","=~~~",DEF_MaxTextLength)
-		If CheckErrorStr = "" Then form_classid = FormClass_CheckFormValue(form_classid,"ÎÄÕÂ·ÖÀà","int","none","<~~~1|>~~~10000000",12)
+		form_title = FormClass_CheckFormValue(form_title,"æ–‡ç« æ ‡é¢˜","string","none","=~~~",255)
+		If CheckErrorStr = "" Then form_content = FormClass_CheckFormValue(form_content,"æ–‡ç« å†…å®¹","string","none","=~~~",DEF_MaxTextLength)
+		If CheckErrorStr = "" Then form_classid = FormClass_CheckFormValue(form_classid,"æ–‡ç« åˆ†ç±»","int","none","<~~~1|>~~~10000000",12)
 		
 		if form_ndatetime = "" then
 			form_ndatetime = 0
@@ -81,7 +81,7 @@ class center_newsArticle_Class
 		
 		If CheckErrorStr <> "" Then
 			Response.Write "<span class=cms_error>" & CheckErrorStr & "</span>"
-			center_articleclass_Form
+			center_articleclass_Form()
 		Else
 			If Form_UpFlag = 1 Then
 				if form_modifyid > 0 then
@@ -96,7 +96,7 @@ class center_newsArticle_Class
 				Upd_ErrInfo = UploadSave.Upd_ErrInfo
 			End If
 			
-			private_Saveformdata
+			private_Saveformdata()
 
 			If Form_UpFlag = 1 Then
 				if EditFlag = 0 then
@@ -139,7 +139,7 @@ class center_newsArticle_Class
 				",ndatetime='" & cms_sql(getTimeValue(form_ndatetime)) & "'" &_
 				" where id=" & form_modifyid
 			call ldexecute(sql,1)
-			Response.Write "<span class=""cms_ok"">³É¹¦±à¼­ĞÅÏ¢ - <a href=""center.asp?action=newsarticle&form_modifyid=" & form_modifyid & """>µã´ËÖØĞÂ±à¼­</a> - <a href=""center.asp?center.asp?action=newsmanage&classid=" & form_classid & """>·µ»Ø·ÖÀà</a></span>"
+			Response.Write "<span class=""cms_ok"">æˆåŠŸç¼–è¾‘ä¿¡æ¯ - <a href=""center.asp?action=newsarticle&form_modifyid=" & form_modifyid & """>ç‚¹æ­¤é‡æ–°ç¼–è¾‘</a> - <a href=""center.asp?center.asp?action=newsmanage&classid=" & form_classid & """>è¿”å›åˆ†ç±»</a></span>"
 		else
 			sql = "insert into article_newsarticle(title,content,classid,ndatetime,modifytime,author,fromauthor,htmlflag)" &_
 				" values('" & cms_sql(form_title) & "'" &_
@@ -152,7 +152,7 @@ class center_newsArticle_Class
 				"," & form_htmlflag & "" &_
 				")"
 			call ldexecute(sql,1)
-			Response.Write "<span class=cms_ok>³É¹¦Ìí¼ÓĞÂĞÅÏ¢.</span>"
+			Response.Write "<span class=cms_ok>æˆåŠŸæ·»åŠ æ–°ä¿¡æ¯.</span>"
 		end if	
 
 	End Sub
@@ -184,11 +184,11 @@ class center_newsArticle_Class
 		CALL FormClass_Head(Form_ActionStr,1,"center.asp?action=newsarticle")
 		CALL FormClass_ItemPring("","hidden","form_modifyid",form_modifyid,"","","","","")
 		CALL FormClass_ItemPring("","hidden","submitflag","yes","","","","","")
-		CALL FormClass_ItemPring("ÎÄÕÂ±êÌâ£º","input","form_title",form_title,4,255,"±ØÌî","","")
-		CALL FormClass_ItemPring("×÷Õß£º","input","form_author",form_author,3,50,"","","")
-		CALL FormClass_ItemPring("À´×Ô£º","input","form_fromauthor",form_fromauthor,3,50,"","","")
-		CALL FormClass_ItemPring("Ê±¼ä£º","input","form_ndatetime",form_ndatetime,3,30,"","","")
-		call cms_selectnewsclass
+		CALL FormClass_ItemPring("æ–‡ç« æ ‡é¢˜ï¼š","input","form_title",form_title,4,255,"å¿…å¡«","","")
+		CALL FormClass_ItemPring("ä½œè€…ï¼š","input","form_author",form_author,3,50,"","","")
+		CALL FormClass_ItemPring("æ¥è‡ªï¼š","input","form_fromauthor",form_fromauthor,3,50,"","","")
+		CALL FormClass_ItemPring("æ—¶é—´ï¼š","input","form_ndatetime",form_ndatetime,3,30,"","","")
+		call cms_selectnewsclass()
 		%>
 				<div class="itemline">
 				<div class="iteminfo cms_article">
@@ -204,8 +204,8 @@ class center_newsArticle_Class
 			</div>
 		</div>
 		<%
-		'CALL FormClass_ItemPring("ÎÄÕÂÄÚÈİ£º","textarea","form_content",form_content,"500px;",15,"","","")
-		FormClass_End
+		'CALL FormClass_ItemPring("æ–‡ç« å†…å®¹ï¼š","textarea","form_content",form_content,"500px;",15,"","","")
+		Call FormClass_End()
 	
 	End Sub
 	
@@ -229,11 +229,11 @@ class center_newsArticle_Class
 			count = ubound(getdata,2)
 			
 			dim str
-			str = "0~~~Ñ¡Ôñ·ÖÀà"
+			str = "0~~~é€‰æ‹©åˆ†ç±»"
 			for n = 0 to count
-				str = str & "|" & getdata(0,n) & "~~~" & replace(htmlencode(getdata(1,n)),"|","£ü")
+				str = str & "|" & getdata(0,n) & "~~~" & replace(htmlencode(getdata(1,n)),"|","ï½œ")
 			next		
-			CALL FormClass_ItemPring("ÎÄÕÂ·ÖÀà","select","form_classid",form_classid,"","","",str,"")
+			CALL FormClass_ItemPring("æ–‡ç« åˆ†ç±»","select","form_classid",form_classid,"","","",str,"")
 	
 	end sub
 	
@@ -285,9 +285,9 @@ class center_managenewsArticle_Class
 		set rs = nothing
 		dim n,count
 		count = ubound(getdata,2)
-		Response.Write "<div class=""article_manage_classlist""><a href=""javascript:;"" class=grayfont>¿ÉÑ¡Ôñ·ÖÀà: </a>"
+		Response.Write "<div class=""article_manage_classlist""><a href=""javascript:;"" class=grayfont>å¯é€‰æ‹©åˆ†ç±»: </a>"
 		%>
-		<a href="center.asp?action=newsmanage"<%if classid=0 then response.write " style='font-weight:bold'"%>>È«²¿</a>
+		<a href="center.asp?action=newsmanage"<%if classid=0 then response.write " style='font-weight:bold'"%>>å…¨éƒ¨</a>
 		<%
 		for n = 0 to count
 			%>
@@ -299,7 +299,7 @@ class center_managenewsArticle_Class
 		<div class=clear></div>
 		<%
 		
-		private_managelist
+		private_managelist()
 		
 		CALL splitpage_viewpagelist("center.asp?action=newsmanage" & paraextend,splitpage_maxpage,splitpage_page,"")
 			
@@ -307,23 +307,23 @@ class center_managenewsArticle_Class
 	
 	private sub private_managelist
 	
-		cms_selectFormScript("center.asp?action=newsarticle")
+		Call cms_selectFormScript("center.asp?action=newsarticle")
 		%>
-		<div class="title"><div class="titlebg">¹ÜÀíÎÄÕÂ - <a href="center.asp?action=newsarticle">µã´ËÌí¼ÓÎÄÕÂ</a>
+		<div class="title"><div class="titlebg">ç®¡ç†æ–‡ç«  - <a href="center.asp?action=newsarticle">ç‚¹æ­¤æ·»åŠ æ–‡ç« </a>
 		 - <span>
-		<a href="javascript:;">ÊäÈëÎÄÕÂ±àºÅÖ±½Ó±à¼­: </a><input type="text" title="ÊäÈë±àºÅ,°´Enter¼üÌø×ª¡£" size="2" onkeydown="javascript:if(event.keyCode==13){location='center.asp?action=newsarticle&form_modifyid='+parseInt(this.value);return false;}">
+		<a href="javascript:;">è¾“å…¥æ–‡ç« ç¼–å·ç›´æ¥ç¼–è¾‘: </a><input type="text" title="è¾“å…¥ç¼–å·,æŒ‰Enteré”®è·³è½¬ã€‚" size="2" onkeydown="javascript:if(event.keyCode==13){location='center.asp?action=newsarticle&form_modifyid='+parseInt(this.value);return false;}">
 		</span>
 		<%if classid>0 then%>
 		 - <span>
-		<a href="javascript:;">°´±êÌâËÑË÷: </a><input type="text" value="<%=htmlencode(key)%>" title="ÊäÈëËÑË÷ÄÚÈİ¡£" size="5" onkeydown="javascript:if(event.keyCode==13){location='center.asp?action=newsmanage&classid=<%=classid%>&key='+escape(this.value);return false;}">
+		<a href="javascript:;">æŒ‰æ ‡é¢˜æœç´¢: </a><input type="text" value="<%=htmlencode(key)%>" title="è¾“å…¥æœç´¢å†…å®¹ã€‚" size="5" onkeydown="javascript:if(event.keyCode==13){location='center.asp?action=newsmanage&classid=<%=classid%>&key='+escape(this.value);return false;}">
 		</span>
 		<%end if%>
 		</div></div>
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" class=table_in>
 				<tr class="tbinhead cms_tbinhead">
-					<td width=60><div class=cms_value>±àºÅ</div></td>
-					<td><div class=cms_value>·ÖÀàÃû³Æ</div></td>
-					<td width=60><div class=cms_value>±à¼­</div></td>
+					<td width=60><div class=cms_value>ç¼–å·</div></td>
+					<td><div class=cms_value>åˆ†ç±»åç§°</div></td>
+					<td width=60><div class=cms_value>ç¼–è¾‘</div></td>
 					
 				</tr>
 				<%dim n
@@ -331,7 +331,7 @@ class center_managenewsArticle_Class
 				<tr>
 					<td class=tdbox><%=splitpage_getdata(0,n)%></td>
 					<td class=tdbox><span class="layerico"><input class="fmchkbox" type="checkbox" name="ids" id="ids<%=n%>" value="<%=splitpage_getdata(0,n)%>" onclick="delbody_view(this);" /></span><a href="center.asp?action=newsarticle&form_modifyid=<%=splitpage_getdata(0,n)%>"><%=splitpage_getdata(1,n)%></a></td>
-					<td class=tdbox><a href="center.asp?action=newsarticle&form_modifyid=<%=splitpage_getdata(0,n)%>">±à¼­</a></td>
+					<td class=tdbox><a href="center.asp?action=newsarticle&form_modifyid=<%=splitpage_getdata(0,n)%>">ç¼–è¾‘</a></td>
 				</tr>
 				<%next%>
 		</table>

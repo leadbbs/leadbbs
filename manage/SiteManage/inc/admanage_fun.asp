@@ -2,12 +2,12 @@
 sub admanage_Main
 
 	If Request.Form("subside") = "1" Then
-		admanage_UpdateFormData
+		admanage_UpdateFormData()
 		Exit Sub
 	End If
 
 	Dim Side_Select
-	Side_Select = Array("Ê×Ò³-¶¥²¿","Ê×Ò³-Î²²¿","°æ¿é-¶¥²¿","°æ¿é-Î²²¿","Ìû×ÓÄÚÈÝ-¶¥²¿","Ìû×ÓÄÚÈÝ-Î²²¿")
+	Side_Select = Array("é¦–é¡µ-é¡¶éƒ¨","é¦–é¡µ-å°¾éƒ¨","ç‰ˆå—-é¡¶éƒ¨","ç‰ˆå—-å°¾éƒ¨","å¸–å­å†…å®¹-é¡¶éƒ¨","å¸–å­å†…å®¹-å°¾éƒ¨")
 	
 	Dim Side_Data,Dn
 	Dim Rs
@@ -35,7 +35,7 @@ sub admanage_Main
 				$("#test_html").html($('textarea').eq(n).val());
 				$('textarea').eq(n).val($("#test_html").html());
 				if($('textarea').eq(n).val().length>10240)
-				{alert("´íÎó£º´úÂë³¤¶È³¬¹ýÁË10240.");$('textarea').eq(n).focus();return false;}
+				{alert("é”™è¯¯ï¼šä»£ç é•¿åº¦è¶…è¿‡äº†10240.");$('textarea').eq(n).focus();return false;}
 			}
 		}
 		alert('a');
@@ -44,17 +44,17 @@ sub admanage_Main
 	</script>
 	<div id=test_html style="display:none;"></div>
 	<p>
-	<b>ÂÛÌ³¹ã¸æÎ»ÖÃÍ¶·Å´úÂëÉèÖÃ</b>
+	<b>è®ºå›å¹¿å‘Šä½ç½®æŠ•æ”¾ä»£ç è®¾ç½®</b>
 	</p>
 	<br />
-	<div class=grayfont>¹ØÓÚÒì²½ÔØÈëËµÃ÷£ºÈô²åÈëµÄ´úÂëº¬ÓÐscript±êÇ©µÄjsÔØÈëÎÄ¼þ£¬²¢ÇÒjsÄÚ²¿º¬ÓÐ±ØÐëÍ¬²½Êä³öµÄdocument.writeÖ®ÀàµÄ´úÂë£¬Çë¹´Ñ¡´ËÏî
+	<div class=grayfont>å…³äºŽå¼‚æ­¥è½½å…¥è¯´æ˜Žï¼šè‹¥æ’å…¥çš„ä»£ç å«æœ‰scriptæ ‡ç­¾çš„jsè½½å…¥æ–‡ä»¶ï¼Œå¹¶ä¸”jså†…éƒ¨å«æœ‰å¿…é¡»åŒæ­¥è¾“å‡ºçš„document.writeä¹‹ç±»çš„ä»£ç ï¼Œè¯·å‹¾é€‰æ­¤é¡¹
 	<ul>
-	<li>Àý1£º°¢ÀïÂèÂèµÄ¹ã¸æ´úÂë£¬ÖÐ¹úÕ¾³¤Õ¾µÄÍ³¼ÆÆ÷£¬´ËÀà´úÂëÄÚ²¿º¬ÓÐ document.writeµÄÍ¬²½Êä³ö£¬±ØÐë¹´Ñ¡´ËÏî£¬·ñÔò»áÎÞ·¨ÏÔÊ¾¹ã¸æÄÚÈÝ</li>
-	<li>Àý2£º°Ù¶È·ÖÏí´úÂëÄÚ²¿ÎÞÍ¬²½Êä³ö£¬²»Òª¹´Ñ¡´ËÏî</li>
-	<li>Àý3£ºÈô´úÂëÎÞ js ÔØÈë£¬Ò²¾ÍÊÇÃ»ÓÐ&lt;script src="...">Ö®ÀàµÄ±êÇ©£¬²»ÓÃ¹´Ñ¡´ËÏî</ul>
+	<li>ä¾‹1ï¼šé˜¿é‡Œå¦ˆå¦ˆçš„å¹¿å‘Šä»£ç ï¼Œä¸­å›½ç«™é•¿ç«™çš„ç»Ÿè®¡å™¨ï¼Œæ­¤ç±»ä»£ç å†…éƒ¨å«æœ‰ document.writeçš„åŒæ­¥è¾“å‡ºï¼Œå¿…é¡»å‹¾é€‰æ­¤é¡¹ï¼Œå¦åˆ™ä¼šæ— æ³•æ˜¾ç¤ºå¹¿å‘Šå†…å®¹</li>
+	<li>ä¾‹2ï¼šç™¾åº¦åˆ†äº«ä»£ç å†…éƒ¨æ— åŒæ­¥è¾“å‡ºï¼Œä¸è¦å‹¾é€‰æ­¤é¡¹</li>
+	<li>ä¾‹3ï¼šè‹¥ä»£ç æ—  js è½½å…¥ï¼Œä¹Ÿå°±æ˜¯æ²¡æœ‰&lt;script src="...">ä¹‹ç±»çš„æ ‡ç­¾ï¼Œä¸ç”¨å‹¾é€‰æ­¤é¡¹</ul>
 	</ul>
 	</div>
-	<div class="frameline greenfont">ÔÚ¿òÖÐÊäÈë×Ô¶¨Òå´úÂë£¬´úÂëÔÊÐíÊ¹ÓÃÈÎÒâHTMLºÍJavaScript</div>
+	<div class="frameline greenfont">åœ¨æ¡†ä¸­è¾“å…¥è‡ªå®šä¹‰ä»£ç ï¼Œä»£ç å…è®¸ä½¿ç”¨ä»»æ„HTMLå’ŒJavaScript</div>
 	<form action="SiteInfo.asp?action=admanage" method="post" name="LeadBBSFm">
 	<input type="hidden" value="1" name="subside">
 	<div id="home_side_form">
@@ -90,7 +90,7 @@ sub admanage_Main
 					Response.Write " checked>"
 				Else
 					Response.Write ">"
-				End If%>Òì²½ÔØÈë
+				End If%>å¼‚æ­¥è½½å…¥
 			</span>
 			</td><td>
 			<textarea cols="120" name="SaveData<%=m%>" rows="12" tabindex="51" class="fmtxtra"><%If SaveData <> "" Then Response.Write VbCrLf & htmlEncode(SaveData)%></textarea>
@@ -101,7 +101,7 @@ sub admanage_Main
 	%>
 	</div>
 	<p>
-	<input name=submit type=submit value="Ìá½»ÉèÖÃ" class="fmbtn">
+	<input name=submit type=submit value="æäº¤è®¾ç½®" class="fmbtn">
 	</p>
 	</form>
 	<%
@@ -133,7 +133,7 @@ sub admanage_UpdateFormData
 		Rs.Close
 		Set Rs = Nothing
 	Next
-	admanage_UpdateFileData
+	admanage_UpdateFileData()
 	
 	
 end sub
@@ -195,7 +195,7 @@ Sub admanage_UpdateFileData
 	Str = Str & "	ad_start();" & VbCrLf
 	
 	CALL ADODB_SaveToFile(Str,DEF_BBS_HomeUrl & "inc/js/ad.js")
-	Response.Write "<p>¹ã¸æÄÚÈÝÒÑÍê³ÉÉèÖÃ. </p><p><a href=""SiteInfo.asp?action=admanage"">µã´Ë·µ»ØÉèÖÃ</a></p>"
+	Response.Write "<p>å¹¿å‘Šå†…å®¹å·²å®Œæˆè®¾ç½®. </p><p><a href=""SiteInfo.asp?action=admanage"">ç‚¹æ­¤è¿”å›žè®¾ç½®</a></p>"
 
 End Sub
 %>

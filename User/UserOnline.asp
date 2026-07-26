@@ -1,35 +1,35 @@
-<!-- #include file=../inc/BBSSetup.asp -->
-<!-- #include file=../inc/User_Setup.ASP -->
-<!-- #include file=../inc/Board_Popfun.asp -->
-<!-- #include file=inc/UserTopic.asp -->
+<!--#include file="../inc/BBSSetup.asp"-->
+<!--#include file="../inc/User_Setup.ASP"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
+<!--#include file="inc/UserTopic.asp"-->
 <%
 DEF_BBS_HomeUrl = "../"
 'DEF_MaxListNum = 100
-If CheckSupervisorUserName = 0 Then
+If CheckSupervisorUserName() = 0 Then
 	GBL_CHK_PWdFlag = 0
-	OpenDatabase
+	OpenDatabase()
 Else
-	initDatabase
+	initDatabase()
 End If
 
 
 Dim AtBoardID,AtBoardName,AtBoardIDCount
-GetAtBoardIDInfo
+GetAtBoardIDInfo()
 
 If AtBoardID = 0 Then
-	BBS_SiteHead DEF_SiteNameString & " - ‘⁄œﬂ”√ªß",0,"‘⁄œﬂ”√ªß"
+	BBS_SiteHead DEF_SiteNameString & " - Âú®Á∫øÁî®Êà∑",0,"Âú®Á∫øÁî®Êà∑"
 Else
-	BBS_SiteHead DEF_SiteNameString & " - ‘⁄œﬂ”√ªß",0,"<span class=navigate_string_step><a href=userOnline.asp><span>‘⁄œﬂ”√ªß</span></a></span><span class=navigate_string_step><a href=javascript:;><span>" & AtBoardName & " ‘⁄œﬂ</span></a></span>"
+	BBS_SiteHead DEF_SiteNameString & " - Âú®Á∫øÁî®Êà∑",0,"<span class=navigate_string_step><a href=userOnline.asp><span>Âú®Á∫øÁî®Êà∑</span></a></span><span class=navigate_string_step><a href=javascript:;><span>" & AtBoardName & " Âú®Á∫ø</span></a></span>"
 End If
-UpdateOnlineUserAtInfo GBL_board_ID,"≤Èø¥‘⁄œﬂ”√ªß"
+UpdateOnlineUserAtInfo GBL_board_ID,"Êü•ÁúãÂú®Á∫øÁî®Êà∑"
 
 
 UserTopicTopInfo("forum")
 		
-DisplayUserOnline
-closeDataBase
-UserTopicBottomInfo
-SiteBottom
+DisplayUserOnline()
+closeDataBase()
+UserTopicBottomInfo()
+SiteBottom()
 
 
 Function GetAtBoardIDInfo
@@ -103,7 +103,7 @@ Function DisplayUserOnline
 		whereFlag = 1
 	End If
 
-	Rem œ¬√Êµƒ¥˙¬Î πƒø«∞‘›≤ªÃ·π©≥« –∑÷¿‡À´÷ÿ≤È—Ø
+	Rem ‰∏ãÈù¢ÁöÑ‰ª£Á†Å‰ΩøÁõÆÂâçÊöÇ‰∏çÊèê‰æõÂüéÂ∏ÇÂàÜÁ±ªÂèåÈáçÊü•ËØ¢
 	
 	SQLCountString = SQLendString
 	If UpDownPageFlag = "1" and Start>0 then
@@ -182,7 +182,7 @@ Function DisplayUserOnline
 
 	Dim FirstID,LastID
 
-	SQL = sql_select("select T1.ID,T2.UserName,T2.Points,T1.IP,T2.OnlineTime,T2.UserLevel,T2.ID,T1.AtUrl,T1.AtInfo,T2.Userphoto,T2.FaceUrl,T2.FaceWidth,T2.FaceHeight,T2.ShowFlag,T1.Browser,T1.System,T2.TrueName from LeadBBS_onlineUser as T1 left join LeadBBS_User As T2 on T1.UserID=T2.ID" & SQLendString,DEF_MaxListNum)
+	SQL = sql_select("select T1.ID,T2.UserName,T2.Points,T1.IP,T2.OnlineTime,T2.UserLevel,T2.ID as id_dup2,T1.AtUrl,T1.AtInfo,T2.Userphoto,T2.FaceUrl,T2.FaceWidth,T2.FaceHeight,T2.ShowFlag,T1.Browser,T1.System,T2.TrueName from LeadBBS_onlineUser as T1 left join LeadBBS_User As T2 on T1.UserID=T2.ID" & SQLendString,DEF_MaxListNum)
 	Set Rs = LDExeCute(SQL,0)
 	Dim Num
 	Dim GetData
@@ -213,8 +213,8 @@ Function DisplayUserOnline
 		StepValue = 1
 	End If
 	
-	LastID = cCur(GetData(0,MaxN))
-	FirstID = cCur(GetData(0,MinN))
+	LastID = cCur("0" & GetData(0,MaxN))   ' AxonASP fix: guest LEFT-JOIN row can yield Null here
+	FirstID = cCur("0" & GetData(0,MinN))
 
 	Dim QueryStr,PageSplictString
 	QueryStr = "?rc=" & RecordCount
@@ -224,69 +224,69 @@ Function DisplayUserOnline
 
 	PageSplictString = PageSplictString & "<div class=j_page>"
 	if FirstID>MinRecordID and FirstID<>0 then
-		PageSplictString = PageSplictString & "<a href=UserOnline.asp" & QueryStr & "&Start=0> ◊“≥</a> " & VbCrLf
+		PageSplictString = PageSplictString & "<a href=UserOnline.asp" & QueryStr & "&Start=0>È¶ñÈ°µ</a> " & VbCrLf
 	else
-		'PageSplictString = PageSplictString & " ◊“≥" & VbCrLf
+		'PageSplictString = PageSplictString & "È¶ñÈ°µ" & VbCrLf
 	end if
 
 	if FirstID > MinRecordID and FirstID<>0 then
-		PageSplictString = PageSplictString & " <a href=UserOnline.asp" & QueryStr & "&Start=" & FirstID & "&uf=1>…œ“≥</a> " & VbCrLf
+		PageSplictString = PageSplictString & " <a href=UserOnline.asp" & QueryStr & "&Start=" & LngStr(FirstID) & "&uf=1>‰∏äÈ°µ</a> " & VbCrLf
 	else
-		'PageSplictString = PageSplictString & " …œ“≥" & VbCrLf
+		'PageSplictString = PageSplictString & " ‰∏äÈ°µ" & VbCrLf
 	end if
 
 	if LastID<MaxRecordID and LastID<>0 then
-		PageSplictString = PageSplictString & " <a href=UserOnline.asp" & QueryStr & "&Start=" & LastID & ">œ¬“≥</a> " & VbCrLf
+		PageSplictString = PageSplictString & " <a href=UserOnline.asp" & QueryStr & "&Start=" & LngStr(LastID) & ">‰∏ãÈ°µ</a> " & VbCrLf
 	else
-		'PageSplictString = PageSplictString & " œ¬“≥" & VbCrLf
+		'PageSplictString = PageSplictString & " ‰∏ãÈ°µ" & VbCrLf
 	end if
 
 	if LastID < MaxRecordID and LastID<>0 then
-		PageSplictString = PageSplictString & " <a href=UserOnline.asp" & QueryStr & "&Start=" & MaxRecordID+1 & "&uf=1>Œ≤“≥</a> " & VbCrLf
+		PageSplictString = PageSplictString & " <a href=UserOnline.asp" & QueryStr & "&Start=" & LngStr(MaxRecordID+1) & "&uf=1>Â∞æÈ°µ</a> " & VbCrLf
 	else
-		'PageSplictString = PageSplictString & " Œ≤“≥" & VbCrLf
+		'PageSplictString = PageSplictString & " Â∞æÈ°µ" & VbCrLf
 	end if
-	PageSplictString = PageSplictString & "<b>π≤" & RecordCount & "‘⁄œﬂ</b>"
+	PageSplictString = PageSplictString & "<b>ÂÖ±" & RecordCount & "Âú®Á∫ø</b>"
 	'If (RecordCount mod DEF_MaxListNum)=0 Then
-	'	PageSplictString = PageSplictString & " º∆<b>" & clng(RecordCount/DEF_MaxListNum) & "</b>“≥"
+	'	PageSplictString = PageSplictString & " ËÆ°<b>" & clng(RecordCount/DEF_MaxListNum) & "</b>È°µ"
 	'Else
 	'	If RecordCount>=DEF_MaxListNum Then
 	'		If (RecordCount mod DEF_MaxListNum) = 0 Then
-	'			PageSplictString = PageSplictString & " º∆<b>" & clng(RecordCount/DEF_MaxListNum) & "</b>“≥"
+	'			PageSplictString = PageSplictString & " ËÆ°<b>" & clng(RecordCount/DEF_MaxListNum) & "</b>È°µ"
 	'		Else
-	'			PageSplictString = PageSplictString & " º∆<b>" & clng(RecordCount/DEF_MaxListNum)+1 & "</b>“≥"
+	'			PageSplictString = PageSplictString & " ËÆ°<b>" & clng(RecordCount/DEF_MaxListNum)+1 & "</b>È°µ"
 	'		End If
 	'	Else
-	'		PageSplictString = PageSplictString & " º∆<b>1</b>“≥"
+	'		PageSplictString = PageSplictString & " ËÆ°<b>1</b>È°µ"
 	'	End If
 	'End If
-	'PageSplictString = PageSplictString & " √ø“≥<b>" & DEF_MaxListNum & "</b>»À"
+	'PageSplictString = PageSplictString & " ÊØèÈ°µ<b>" & DEF_MaxListNum & "</b>‰∫∫"
 	PageSplictString = PageSplictString & "</div>"
 
 	%>
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" class=table_in>
 				<tr class=tbinhead>
-					<td width=<%=DEF_AllFaceMaxWidth+30%>><div class=value>”√ªß</div></td>
-					<td><div class=value>–≈œ¢</div></td>
+					<td width=<%=DEF_AllFaceMaxWidth+30%>><div class=value>Áî®Êà∑</div></td>
+					<td><div class=value>‰ø°ÊÅØ</div></td>
 				</tr>
 <%
 		for n= MinN to MaxN Step StepValue
-			If CheckSupervisorUserName = 1 and GBL_UserID > 0 then GetData(13,N) = 0
+			If CheckSupervisorUserName() = 1 and GBL_UserID > 0 then GetData(13,N) = 0
 			%>
                     <tr><%
                     If GetData(1,n) & "" = "" Then%>
 			<td class=tdbox>
-				<a href=<%=RW_User(0,"more","","OlID=" & GetData(0,n))%>>”ŒøÕ</a></td>
+				<a href=<%=RW_User(0,"more","","OlID=" & GetData(0,n))%>>Ê∏∏ÂÆ¢</a></td>
 			<td class=tdbox>
 				<ul>
-				<%If CheckSupervisorUserName = 1 Then%>
+				<%If CheckSupervisorUserName() = 1 Then%>
                      		<li>IP: <%=GetData(3,n)%></li><%
                      		End If%>
                      		<li>
-                     		‰Ø¿¿∆˜£∫<%=htmlencode(GetData(14,n))%> ≤Ÿ◊˜œµÕ≥£∫<%=htmlencode(GetData(15,n))%>
+                     		ÊµèËßàÂô®Ôºö<%=htmlencode(GetData(14,n))%> Êìç‰ΩúÁ≥ªÁªüÔºö<%=htmlencode(GetData(15,n))%>
                      		</li>
                      		<li>
-                     		À˘¥¶Œª÷√: <a href="<%=GetData(7,N)%>"><%
+                     		ÊâÄÂ§Ñ‰ΩçÁΩÆ: <a href="<%=GetData(7,N)%>"><%
 				If StrLength(GetData(8,N)) > 130 Then
 					Response.Write htmlencode(LeftTrue(GetData(8,N),127)) & "..."
 				Else
@@ -309,7 +309,7 @@ Function DisplayUserOnline
 					<%End If
 				End If
                      		If (ccur(GetData(13,N)) = 1) and DEF_EnableUserHidden = 1 Then
-                     			%><a href=<%=RW_User(0,"more","","OlID=" & GetData(0,n))%></a>><div class=user>“˛…Ì”√ªß</div></a><%
+                     			%><a href=<%=RW_User(0,"more","","OlID=" & GetData(0,n))%></a>><div class=user>ÈöêË∫´Áî®Êà∑</div></a><%
                      		Else
                      			%><a href=<%=RW_User(GetData(6,n),"","","")%>><div class=user><%=htmlencode(getTrueName(GetData(1,n),GetData(16,n)))%></div></a><%
                      		End If%>
@@ -326,15 +326,15 @@ Function DisplayUserOnline
 					</li>
 					<%
 				End If
-				If CheckSupervisorUserName = 1 Then%>
+				If CheckSupervisorUserName() = 1 Then%>
 					<li>
 					IP: <%=GetData(3,n)%>
 					</li>
 					<%
 				End If%>
-				<li>‰Ø¿¿∆˜/≤Ÿ◊˜œµÕ≥£∫<%=htmlencode(GetData(14,n))%>/<%=htmlencode(GetData(15,n))%>
+				<li>ÊµèËßàÂô®/Êìç‰ΩúÁ≥ªÁªüÔºö<%=htmlencode(GetData(14,n))%>/<%=htmlencode(GetData(15,n))%>
 				</li>
-				<li>µ±«∞Œª÷√: <a href="<%=htmlencode(GetData(7,N))%>"><%
+				<li>ÂΩìÂâç‰ΩçÁΩÆ: <a href="<%=htmlencode(GetData(7,N))%>"><%
 				If StrLength(GetData(8,N)) > 130 Then
 					Response.Write htmlencode(LeftTrue(GetData(8,N),127)) & "..."
 				Else
@@ -352,7 +352,7 @@ Function DisplayUserOnline
 		</table>
 	<%Else%>
 		<div class=alert><%
-		Response.Write GBL_CHK_TempStr & "		<p>Œﬁ‘⁄œﬂ”√ªß°£" & VbCrLf
+		Response.Write GBL_CHK_TempStr & "		<p>Êó†Âú®Á∫øÁî®Êà∑„ÄÇ" & VbCrLf
 		%>
 		</div>
 		<%

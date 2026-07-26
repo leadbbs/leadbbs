@@ -1,29 +1,29 @@
 <%
 Dim AncIDStr
-AncIDStr = "2798569" 'ºì°üÖ÷ÌâIDÁĞ±í£¬¶ººÅ·Ö¸ô£¬»Ø¸´´ËÀàÌû×Ó½«½±ÀøËæ»úÉùÍû(1-3)£¬²¢ÇÒ´ËÀàÌû×Ó½«½ûÖ¹É¾³ı»Ø¸´(µ«¿É±à¼­)
+AncIDStr = "2798569" 'çº¢åŒ…ä¸»é¢˜IDåˆ—è¡¨ï¼Œé€—å·åˆ†éš”ï¼Œå›å¤æ­¤ç±»å¸–å­å°†å¥–åŠ±éšæœºå£°æœ›(1-3)ï¼Œå¹¶ä¸”æ­¤ç±»å¸–å­å°†ç¦æ­¢åˆ é™¤å›å¤(ä½†å¯ç¼–è¾‘)
 
 Function CheckDelSure
 
 	If GetBinarybit(GBL_CHK_UserLimit,5) = 1 Then
-		Processor_ErrMsg "ÄãÒÑ¾­±»" & LimitUserStringData(4) & "£¡" & VbCrLf
+		Call Processor_ErrMsg("ä½ å·²ç»è¢«" & LimitUserStringData(4) & "ï¼" & VbCrLf)
 		CheckDelSure = 0
 		Exit Function
 	End If
 
-	If CheckSure = 0 Then Exit Function
+	If CheckSure() = 0 Then Exit Function
 
 	If GetBinarybit(GBL_Board_BoardLimit,5) = 1 Then
-		Processor_ErrMsg "´Ë°æÃæ²»ÔÊĞíÉ¾³ıÌû×Ó£¡"
+		Call Processor_ErrMsg("æ­¤ç‰ˆé¢ä¸å…è®¸åˆ é™¤å¸–å­ï¼")
 		CheckDelSure = 0
 		Exit Function
 	End If
 
-	CheckisBoardMaster
+	CheckisBoardMaster()
 	If GBL_UserID >= 1 and GBL_BoardMasterFlag >= 5 Then
 		CheckDelSure = 1
 	Else
 		CheckDelSure = 0
-		Processor_ErrMsg "´íÎó£¬È¨ÏŞ²»×ã£¡"
+		Call Processor_ErrMsg("é”™è¯¯ï¼Œæƒé™ä¸è¶³ï¼")
 	End If
 
 End Function
@@ -35,7 +35,7 @@ Sub Process_DelAnnounce(AncID)
 	SQL = sql_select("Select t1.BoardID,t1.ParentID,t1.UserID,t2.UserName,t1.RootID,t1.Layer,t1.TopicType,t1.ndatetime,t1.GoodFlag,t1.RootIDBak,t1.Title,t1.GoodAssort,t1.TitleStyle from LeadBBS_Announce as t1 left join leadbbs_user as t2 on t1.userid=t2.id where t1.id=" & AncID & " and t1.BoardID=" & GBL_Board_ID,1)
 	Set Rs = LDExeCute(SQL,0)
 	If Rs.Eof Then
-		Processor_ErrMsg "´íÎó£¬Î´Ñ¡ÔñÒªÉ¾³ıµÄÌû×Ó£¡" & VbCrLf
+		Call Processor_ErrMsg("é”™è¯¯ï¼Œæœªé€‰æ‹©è¦åˆ é™¤çš„å¸–å­ï¼" & VbCrLf)
 		Rs.Close
 		Set Rs = Nothing
 		Exit Sub
@@ -58,21 +58,21 @@ Sub Process_DelAnnounce(AncID)
 	
 
 	If ParentID = 0 Then
-		GBL_CHK_TempStr = "<b><font color=ff0000 class=redfont>É¾³ıµÄÌû×ÓÊÇÖ÷ÌâÌû,½«É¾³ıÖ÷ÌâÌûºÍËùÓĞ»Ø¸´Ìû£¡</font></b><br>"
+		GBL_CHK_TempStr = "<b><font color=ff0000 class=redfont>åˆ é™¤çš„å¸–å­æ˜¯ä¸»é¢˜å¸–,å°†åˆ é™¤ä¸»é¢˜å¸–å’Œæ‰€æœ‰å›å¤å¸–ï¼</font></b><br>"
 	Else
-		GBL_CHK_TempStr = "½«É¾³ıµÄÌû×ÓÊÇ¸ö»Ø¸´Ìû×Ó£®<br>"		
+		GBL_CHK_TempStr = "å°†åˆ é™¤çš„å¸–å­æ˜¯ä¸ªå›å¤å¸–å­ï¼<br>"		
 	End If
 	
 	Rs.Close
 	Set Rs = Nothing
 	
-	If CheckLimitNameOnly(DelAncUser) = 1 and GBL_BoardMasterFlag < 9 and (CheckSupervisorNameOnly = 0 or GBL_UserID < 1) then
-		Processor_ErrMsg "±àºÅ" & AncID & "Ìû×ÓÎŞ×ã¹»É¾³ıÈ¨ÏŞ¡£"
+	If CheckLimitNameOnly(DelAncUser) = 1 and GBL_BoardMasterFlag < 9 and (CheckSupervisorNameOnly() = 0 or GBL_UserID < 1) then
+		Call Processor_ErrMsg("ç¼–å·" & AncID & "å¸–å­æ— è¶³å¤Ÿåˆ é™¤æƒé™ã€‚")
 		Exit Sub
 	end if
 	
-	If ParentID > 0 and inStr("," & AncIDStr & ",","," & RootIDBak & ",") and CheckSupervisorUserName = 0 Then
-		Processor_ErrMsg "´ËÖ÷Ìâ»Ø¸´ÌûÒÑ½ûÖ¹É¾³ı£¡"
+	If ParentID > 0 and inStr("," & AncIDStr & ",","," & RootIDBak & ",") and CheckSupervisorUserName() = 0 Then
+		Call Processor_ErrMsg("æ­¤ä¸»é¢˜å›å¤å¸–å·²ç¦æ­¢åˆ é™¤ï¼")
 		Exit Sub
 	End If
 
@@ -112,7 +112,7 @@ Sub Process_DelAnnounce(AncID)
 	GoodNum2 = 0
 	
 	If GBL_Board_ID <> 444 and DEF_EnableDelAnnounce = 0 and ParentID = 0 Then
-		Processor_ErrMsg "ÏµÍ³ÒÑ¾­½ûÖ¹Ö±½ÓÉ¾³ıÖ÷ÌâÌû×Ó£¬ÇëÊ¹ÓÃ»ØÊÕÕ¾¹¦ÄÜ¡£"
+		Call Processor_ErrMsg("ç³»ç»Ÿå·²ç»ç¦æ­¢ç›´æ¥åˆ é™¤ä¸»é¢˜å¸–å­ï¼Œè¯·ä½¿ç”¨å›æ”¶ç«™åŠŸèƒ½ã€‚")
 		Exit Sub
 	End If
 	Dim DelPoints
@@ -145,7 +145,7 @@ Sub Process_DelAnnounce(AncID)
 			Rs.Close
 			Set Rs = Nothing
 			If ParentID = 0 Then
-				UpdateBoardAnnounceNum Application(DEF_MasterCookies & "BoardInfo" & BoardID)(28,0),-1,-1,0-todayAnnounce,0-GoodNum
+				Call UpdateBoardAnnounceNum(Application(DEF_MasterCookies & "BoardInfo" & BoardID)(28,0),-1,-1,0-todayAnnounce,0-GoodNum)
 				UpdateStatisticDataInfo -1,9,1
 				UpdateStatisticDataInfo -1,10,1
 				If todayAnnounce > 0 Then UpdateStatisticDataInfo 0-todayAnnounce,11,1
@@ -165,7 +165,7 @@ Sub Process_DelAnnounce(AncID)
 				End If
 				Rs.Close
 				Set Rs = Nothing
-				UpdateBoardAnnounceNum Application(DEF_MasterCookies & "BoardInfo" & BoardID)(28,0),0,-1,0-todayAnnounce,0-GoodNum
+				Call UpdateBoardAnnounceNum(Application(DEF_MasterCookies & "BoardInfo" & BoardID)(28,0),0,-1,0-todayAnnounce,0-GoodNum)
 				UpdateStatisticDataInfo 0-TmpAnnounceNum,9,1
 				If todayAnnounce > 0 Then UpdateStatisticDataInfo 0-todayAnnounce,11,1
 				CALL LDExeCute("Update LeadBBS_Announce Set ChildNum=ChildNum-1,LastTime=" & LastTime & ",LastUser='" & Replace(LastUser,"'","''") & "',LastInfo='' where id=" & RootIDBak,1)
@@ -173,9 +173,9 @@ Sub Process_DelAnnounce(AncID)
 			End If
 			CALL LDExeCute("Update LeadBBS_User set Points=Points-" & DelPoints & ",AnnounceNum=AnnounceNum-1,AnnounceGood=AnnounceGood-" & GoodNum & " Where ID =" & UserID,1)
 			LMT_AncID = RootIDBak
-			Processor_Done "³É¹¦É¾³ıÂÛÌ³Ìû×Ó"
+			Call Processor_Done("æˆåŠŸåˆ é™¤è®ºå›å¸–å­")
 			UpdateBoardValue(BoardID)
-			Rem ¸üĞÂMaxRootID
+			Rem æ›´æ–°MaxRootID
 
 			select case DEF_UsedDataBase
 				case 0,2:
@@ -206,7 +206,7 @@ Sub Process_DelAnnounce(AncID)
 			todayAnnounce = 0
 			DelPoints = 0
 			Do While LoopFlag = 1
-				Rem Ö÷ÌâÌûÁô×Å×îºóÉ¾³ı£¬ÒÔÃâÉ¾³ıÖĞÑëÒâÍâÖĞÖ¹£¬µ¼ÖÂÖ÷ÌâËğ»µ
+				Rem ä¸»é¢˜å¸–ç•™ç€æœ€ååˆ é™¤ï¼Œä»¥å…åˆ é™¤ä¸­å¤®æ„å¤–ä¸­æ­¢ï¼Œå¯¼è‡´ä¸»é¢˜æŸå
 				SQL = sql_select("Select ID,BoardID,ParentID,UserID,ndatetime,GoodFlag,Opinion from LeadBBS_Announce where RootIDBak=" & RootIDBak & " and id>" & NowID & " order by ID",100)
 				Set Rs = LDExeCute(SQL,0)
 				If Not Rs.Eof Then
@@ -260,27 +260,27 @@ Sub Process_DelAnnounce(AncID)
 					CALL LDExeCute("Delete from LeadBBS_VoteItem Where AnnounceID=" & LMT_AncID,1)
 				End if
 			End If
-			UpdateBoardAnnounceNum Application(DEF_MasterCookies & "BoardInfo" & BoardID)(28,0),0-TmpTopicNum,0-TmpAnnounceNum,0-todayAnnounce,0-GoodNum2
+			Call UpdateBoardAnnounceNum(Application(DEF_MasterCookies & "BoardInfo" & BoardID)(28,0),0-TmpTopicNum,0-TmpAnnounceNum,0-todayAnnounce,0-GoodNum2)
 			UpdateStatisticDataInfo 0-TmpAnnounceNum,9,1
 			UpdateStatisticDataInfo 0-TmpTopicNum,10,1
 			If todayAnnounce > 0 Then UpdateStatisticDataInfo 0-todayAnnounce,11,1
 
 			UpdateBoardValue(BoardID)
 			If GoodAssort > 0 Then ChangeGoodAssort GoodAssort,0
-			If TopicUserID > 0 and (LMT_Prc_MsgFlag = 2 or Request.Form("SendMessage") = "1") Then SendNewMessage Prc_User,DelAncUser,"ÂÛÌ³¶ÌĞÅ£ºÌû×ÓÉ¾³ıÍ¨Öª","[color=blue]ÄúËù·¢±íµÄÌû×ÓÒÑ±»É¾³ı[/color][hr]" &_
-			"[b]ËùÔÚ°æÃæ£º[/b][url=../b/" & RW_b(GBL_Board_ID,0,"") & "]" & htmlencode(KillHTMLLabel(GBL_Board_BoardName)) & "[/url]" & VbCrLf & _
-			"[b]Ìû×Ó×÷Õß£º[/b]" & DelAncUser & VbCrLf & _
-			"[b]²Ù×÷ÈËÔ±£º[/b]" & GBL_CHK_User & VbCrLf & _
-			"[b]²Ù×÷Ô­Òò£º[/b]" & htmlencode(Left(Request.Form("SendWhys"),24)) & VbCrLf & _
-			"[b]Ìû×Ó±êÌâ£º[/b][url=../a/" & RW_a(GBL_Board_ID,LMT_AncID,1,1,"") & "]" & htmlencode(AnnounceTitle) & "[/url]",GBL_IPAddress
+			If TopicUserID > 0 and (LMT_Prc_MsgFlag = 2 or Request.Form("SendMessage") = "1") Then SendNewMessage Prc_User,DelAncUser,"è®ºå›çŸ­ä¿¡ï¼šå¸–å­åˆ é™¤é€šçŸ¥","[color=blue]æ‚¨æ‰€å‘è¡¨çš„å¸–å­å·²è¢«åˆ é™¤[/color][hr]" &_
+			"[b]æ‰€åœ¨ç‰ˆé¢ï¼š[/b][url=../b/" & RW_b(GBL_Board_ID,0,"") & "]" & htmlencode(KillHTMLLabel(GBL_Board_BoardName)) & "[/url]" & VbCrLf & _
+			"[b]å¸–å­ä½œè€…ï¼š[/b]" & DelAncUser & VbCrLf & _
+			"[b]æ“ä½œäººå‘˜ï¼š[/b]" & GBL_CHK_User & VbCrLf & _
+			"[b]æ“ä½œåŸå› ï¼š[/b]" & htmlencode(Left(Request.Form("SendWhys"),24)) & VbCrLf & _
+			"[b]å¸–å­æ ‡é¢˜ï¼š[/b][url=../a/" & RW_a(GBL_Board_ID,LMT_AncID,1,1,"") & "]" & htmlencode(AnnounceTitle) & "[/url]",GBL_IPAddress
 			LMT_AncID = 0
-			Processor_Done "<br>³É¹¦É¾³ı´ËÖ÷ÌâÏà¹ØµÄ»Ø¸´Ìû×Ó¼°Ö÷ÌâÌû×Ó"
+			Call Processor_Done("<br>æˆåŠŸåˆ é™¤æ­¤ä¸»é¢˜ç›¸å…³çš„å›å¤å¸–å­åŠä¸»é¢˜å¸–å­")
 		End If
-		If CheckSupervisorUserName = 0 Then
+		If CheckSupervisorUserName() = 0 Then
 			CALL LDExeCute("Update LeadBBS_User Set LastWriteTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
 			UpdateSessionValue 13,GetTimeValue(DEF_Now),0
 		End If
-		CALL LDExeCute("insert into LeadBBS_Log(LogType,LogTime,LogInfo,UserName,IP,BoardID) Values(101," & GetTimeValue(DEF_Now) & ",'" & Left("³É¹¦É¾³ı°æÃæ±àºÅ" & BoardID & "£¬Ìû×Ó±àºÅ" & LMT_AncID & "£¬×÷Õß±àºÅ" & UserID & "µÄÌû×Ó£®±êÌâÄÚÈİ£º" & Replace(AnnounceTitle,"'","''"),255) & "','" & Replace(GBL_CHK_User,"'","''") & "','" & Replace(GBL_IPAddress,"'","''") & "'," & GBL_Board_ID & ")",1)
+		CALL LDExeCute("insert into LeadBBS_Log(LogType,LogTime,LogInfo,UserName,IP,BoardID) Values(101," & GetTimeValue(DEF_Now) & ",'" & Left("æˆåŠŸåˆ é™¤ç‰ˆé¢ç¼–å·" & LngStr(BoardID) & "ï¼Œå¸–å­ç¼–å·" & LngStr(LMT_AncID) & "ï¼Œä½œè€…ç¼–å·" & UserID & "çš„å¸–å­ï¼æ ‡é¢˜å†…å®¹ï¼š" & Replace(AnnounceTitle,"'","''"),255) & "','" & Replace(GBL_CHK_User,"'","''") & "','" & Replace(GBL_IPAddress,"'","''") & "'," & GBL_Board_ID & ")",1)
 		If inStr(application(DEF_MasterCookies & "TopAncList" & GBL_Board_BoardAssort),"," & RootIDBak & ",") Then ReloadTopAnnounceInfo(GBL_Board_BoardAssort)
 
 	Set Rs = Nothing
@@ -316,7 +316,7 @@ Sub DisplayDelAnnounce
 	End If
 	
 	If cStr(LMT_AncID) = "0" or LMT_AncID = "" Then
-		Processor_ErrMsg "ÇëÏÈÑ¡ÔñÒª²Ù×÷µÄ¼ÇÂ¼¡£" & VbCrLf
+		Call Processor_ErrMsg("è¯·å…ˆé€‰æ‹©è¦æ“ä½œçš„è®°å½•ã€‚" & VbCrLf)
 		Exit Sub
 	End if
 	
@@ -327,7 +327,7 @@ Sub DisplayDelAnnounce
 			Process_DelAnnounce(Tmp(N))
 		Next
 	Else
-		Processor_form "Del","É¾³ı"
+		Call Processor_form("Del","åˆ é™¤")
 	End If
 
 End Sub%>

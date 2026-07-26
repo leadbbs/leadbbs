@@ -29,7 +29,7 @@ function ld_share_click(item)
 	{
 		case "weixin":
 			$.getScript(HU+"app/share/jquery.qrcode.min.js",function(){
-				layer_view("·ÖÏíµ½Î¢ĞÅÅóÓÑÈ¦",this,320,'','anc_delbody',"HTML:<table style='margin:16px 0;width:100%;text-align:left;'><tr><td align=center valign=middle><span id=ldshare_wenxin></span><br><br>´ò¿ªÎ¢ĞÅ£¬µã»÷µ×²¿µÄ·¢ÏÖ£¬Ê¹ÓÃ<br>É¨Ò»É¨¼´¿É½«ÍøÒ³·ÖÏíÖÁÅóÓÑÈ¦¡£</td></tr></table>","",1,"",1,0,"setCenterDiv($('#anc_delbody'))");
+				layer_view("åˆ†äº«åˆ°å¾®ä¿¡æœ‹å‹åœˆ",this,320,'','anc_delbody',"HTML:<table style='margin:16px 0;width:100%;text-align:left;'><tr><td align=center valign=middle><span id=ldshare_wenxin></span><br><br>æ‰“å¼€å¾®ä¿¡ï¼Œç‚¹å‡»åº•éƒ¨çš„å‘ç°ï¼Œä½¿ç”¨<br>æ‰«ä¸€æ‰«å³å¯å°†ç½‘é¡µåˆ†äº«è‡³æœ‹å‹åœˆã€‚</td></tr></table>","",1,"",1,0,"setCenterDiv($('#anc_delbody'))");
 				if(Browser.is_ie_lower||Browser.ie9)
 				$("#ldshare_wenxin").qrcode({
 					render: "table", 
@@ -63,12 +63,12 @@ function ld_share_click(item)
 		if($(this).attr("href").indexOf(".swf")!=-1)s_flash=$(this).attr("href");
 	});
 	var ld_share_para = {
-	url:location.href, /*»ñÈ¡URL£¬¿É¼ÓÉÏÀ´×Ô·ÖÏíµ½QQ±êÊ¶£¬·½±ãÍ³¼Æ*/
-	desc:'ºÃÌû×Ó£¬·ÖÏí·ÖÏí', /*·ÖÏíÀíÓÉ(·ç¸ñÓ¦Ä£ÄâÓÃ»§¶Ô»°),Ö§³Ö¶à·ÖÏíÓïËæ»úÕ¹ÏÖ£¨Ê¹ÓÃ|·Ö¸ô£©*/
-	title:s_title, /*·ÖÏí±êÌâ(¿ÉÑ¡)*/
-	summary:s_summary, /*·ÖÏíÕªÒª(¿ÉÑ¡)*/
-	pics:s_pic, /*·ÖÏíÍ¼Æ¬(¿ÉÑ¡)*/
-	flash:s_flash /*ÊÓÆµµØÖ·(¿ÉÑ¡)*/
+	url:location.href, /*è·å–URLï¼Œå¯åŠ ä¸Šæ¥è‡ªåˆ†äº«åˆ°QQæ ‡è¯†ï¼Œæ–¹ä¾¿ç»Ÿè®¡*/
+	desc:'å¥½å¸–å­ï¼Œåˆ†äº«åˆ†äº«', /*åˆ†äº«ç†ç”±(é£æ ¼åº”æ¨¡æ‹Ÿç”¨æˆ·å¯¹è¯),æ”¯æŒå¤šåˆ†äº«è¯­éšæœºå±•ç°ï¼ˆä½¿ç”¨|åˆ†éš”ï¼‰*/
+	title:s_title, /*åˆ†äº«æ ‡é¢˜(å¯é€‰)*/
+	summary:s_summary, /*åˆ†äº«æ‘˜è¦(å¯é€‰)*/
+	pics:s_pic, /*åˆ†äº«å›¾ç‰‡(å¯é€‰)*/
+	flash:s_flash /*è§†é¢‘åœ°å€(å¯é€‰)*/
 	};
 	var s = [],tmp;
 	for(var i in ld_share_para){
@@ -102,7 +102,7 @@ function ld_share_init(t)
 		if(index == "more"&&t!=0)
 		{}
 		else
-		s+="<a title=\"·ÖÏíµ½"+val.name+"\" class=\"lds_"+index+"\" href=\"#\" data-cmd=\""+index+"\"></a>\n";
+		s+="<a title=\"åˆ†äº«åˆ°"+val.name+"\" class=\"lds_"+index+"\" href=\"#\" data-cmd=\""+index+"\"></a>\n";
 		};
 	$(".ld_share").html(s);
 	$(".ld_share a").each(function(){

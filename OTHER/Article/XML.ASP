@@ -1,14 +1,14 @@
-<!-- #include file=../../inc/BBSSetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
+<!--#include file="../../inc/BBSSetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
 <%
 Dim HomeUrl
 HomeUrl = LD_GetUrl(1)
 
 DEF_BBS_HomeUrl = "../../"
 Const LMT_MaxDisplayAnnounce = 100
-OpenDatabase
-GetTopicInfo
-closeDataBase
+OpenDatabase()
+GetTopicInfo()
+closeDataBase()
 
 Function GetTopicInfo
 
@@ -84,7 +84,7 @@ Function GetTopicInfo
 	End If
 
 	If TParentID <> 0 Then
-		GBL_CHK_TempStr = "错误,该主题不存在!<br>" & VbCrLf
+		GBL_CHK_TempStr = "閿欒,璇ヤ富棰樹笉瀛樺湪!<br>" & VbCrLf
 		Exit Function
 	End If
 
@@ -106,7 +106,7 @@ Function GetTopicInfo
 		Temp = Application(DEF_MasterCookies & "BoardInfo" & BoardID)
 	End If
 	If isArray(Temp) = False Then
-		'Response.Write "错误论坛发生错误,请联系管理员!<br>" & VbCrLf
+		'Response.Write "閿欒璁哄潧鍙戠敓閿欒,璇疯仈绯荤鐞嗗憳!<br>" & VbCrLf
 		ForumPass = "a"
 		BoardLimit = 0
 		OtherLimit = 0
@@ -121,9 +121,9 @@ Function GetTopicInfo
 	End If
 
 	Response.Clear
-	Response.CharSet="gb2312"
+	Response.CharSet="utf-8"
 	Response.ContentType = "text/xml" 
-	Response.Write "<?xml version=""1.0"" encoding=""gb2312""?>" & VbCrLf
+	Response.Write "<?xml version=""1.0"" encoding=""utf-8""?>" & VbCrLf
 	If ForumPass <> "" or GetBinarybit(BoardLimit,7) = 1 or GetBinarybit(BoardLimit,2) = 1 or GetBinarybit(BoardLimit,15) = 1 or OtherLimit > 0 Then
 	%><BBSData>
 <LastTid><%=LMT_RootIDBak+1%></LastTid>
@@ -186,7 +186,7 @@ Function GetTopicInfo
 		<Attachment>
 			<URL><%=HomeUrl%>a/a.asp?b=<%=BoardID%>&amp;id=<%=LMT_RootIDBak%></URL>
 			<MIMEType>text/html</MIMEType>
-			<Description>LeadBBS asp论坛</Description>
+			<Description>LeadBBS asp璁哄潧</Description>
 		</Attachment>
 	</ContentElement>
 <%
@@ -223,7 +223,7 @@ Do While EndFlag = 0
 		<Attachment>
 			<URL><%=Url%></URL>
 			<MIMEType>text/html</MIMEType>
-			<Description>LeadBBS asp论坛</Description>
+			<Description>LeadBBS asp璁哄潧</Description>
 		</Attachment>
 	</ReplyInfo>
 <%
@@ -233,7 +233,7 @@ Do While EndFlag = 0
 	'If (PageN mod 3)=0 then Response.Flush
 	If PageN > 20 Then EndFlag = 1
 Loop
-%></PageInfo>[执行时间<%=FormatNumber(cCur(Timer - DEF_PageExeTime1),4,True)*1000%>ms]
+%></PageInfo>[鎵ц鏃堕棿<%=FormatNumber(cCur(Timer - DEF_PageExeTime1),4,True)*1000%>ms]
 </BBSData>
 	<%
 

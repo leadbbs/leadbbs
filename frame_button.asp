@@ -1,5 +1,5 @@
-<!-- #include file=inc/BBSsetup.asp -->
-<!-- #include file=inc/Board_Popfun.asp -->
+<!--#include file="inc/BBSsetup.asp"-->
+<!--#include file="inc/Board_Popfun.asp"-->
 <%siteHead("     ")%>
 <body class="tbframebutton">
 
@@ -34,7 +34,7 @@ function changel(id){
 <div id="frame_button" style="cursor:pointer;" onclick="changel('hideFrame-l')">
 <table border="0" cellpadding="0" cellspacing="0" style="height:100%;">
 <tr><td valign="middle">
-      	<img id="hideFrame-l" height="22" src="images/<%=GBL_DefineImage%>frame/arrow-l.gif" width="9" alt="¹Ø±Õ/Õ¹¿ª¿ò¼Ü" />
+      	<img id="hideFrame-l" height="22" src="images/<%=GBL_DefineImage%>frame/arrow-l.gif" width="9" alt="å…³é—­/å±•å¼€æ¡†æž¶" />
       </td></tr></table>
 </div>
 <script type="text/javascript">

@@ -730,7 +730,7 @@ function getAJAX(url,str,lb,ty,execut)
 		HR.open("POST", url, true);
 	else
 		HR.open("GET", url, true);
-	HR.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=gb2312");
+	HR.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=utf-8");
 	HR.send(str);
 }
 
@@ -850,7 +850,7 @@ function copyClipboard(data,value,alertmsg,dir,obj,event)
 	{
 		pub_clipdata = value;
 		layer_create("win_clipboard");
-		$id('win_clipboard').innerHTML='<div style=margin-top:10px;text-align:center;font-weight:bold;><a href=#copy>ÔÙ´Îµã»÷¸´ÖÆµ½¼ôÌû°å¡£</a></div><embed name="obj_clipboard" devicefont="false" src="'+HU+'images/pub/_clipboard.swf" menu="false" allowscriptaccess="sameDomain" swliveconnect="true" wmode="transparent" style="margin-top:-20px;z-index:11;" type="application/x-shockwave-flash" width="150" height="30">';
+		$id('win_clipboard').innerHTML='<div style=margin-top:10px;text-align:center;font-weight:bold;><a href=#copy>å†æ¬¡ç‚¹å‡»å¤åˆ¶åˆ°å‰ªå¸–æ¿ã€‚</a></div><embed name="obj_clipboard" devicefont="false" src="'+HU+'images/pub/_clipboard.swf" menu="false" allowscriptaccess="sameDomain" swliveconnect="true" wmode="transparent" style="margin-top:-20px;z-index:11;" type="application/x-shockwave-flash" width="150" height="30">';
 		layer_view("",obj,'','','win_clipboard','','',0,'',0,0);
 
 	}   
@@ -1343,7 +1343,7 @@ function verify_load(r,u)
 
 function sendprivatemsg(obj,u)
 {
-	layer_view('·¢ËÍÏûÏ¢',obj,'625','','anc_delbody',obj.href,'',1,'AjaxFlag=1&dir='+u,1000,0,'');
+	layer_view('å‘é€æ¶ˆæ¯',obj,'625','','anc_delbody',obj.href,'',1,'AjaxFlag=1&dir='+u,1000,0,'');
 	return(false);
 }
 

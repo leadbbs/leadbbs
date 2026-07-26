@@ -1,20 +1,20 @@
-<!-- #include file=inc/BBSsetup.asp -->
-<!-- #include file=inc/User_Setup.ASP -->
-<!-- #include file=inc/Board_Popfun.asp -->
-<!-- #include file=article/inc/popfun.asp -->
-<!-- #include file=inc/Fun/VierAnc_Fun.asp -->
+<!--#include file="inc/BBSsetup.asp"-->
+<!--#include file="inc/User_Setup.ASP"-->
+<!--#include file="inc/Board_Popfun.asp"-->
+<!--#include file="article/inc/popfun.asp"-->
+<!--#include file="inc/Fun/VierAnc_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = ""
 
 Sub Main
 
-	initdatabase
+	initdatabase()
 	article_SiteHead("")
-	main_body
+	main_body()
 	%>
 	
 	<%
-	Closedatabase
+	Closedatabase()
 
 End Sub
 
@@ -22,14 +22,14 @@ Sub main_body
 %>
 <div class="body_area_out">
 <%cms_DisplayBBSNavigate("")
-cms_imgmsg
+cms_imgmsg()
 cms_bodyhead_index("homepage")
 cms_bodyBottom%>
 
 
 </div>
 <%
-cms_SiteBottom
+cms_SiteBottom()
 
 End Sub
 
@@ -77,7 +77,7 @@ Sub cms_imgmsg
 	<div class="area">
 		<div class="cms_nav1_div">
 		<div class="content_side_box1" style="float:left;">
-				<!-- #include file="article/inc/home_bannerlist.asp" -->
+				<!--#include file="article/inc/home_bannerlist.asp"-->
 			<%
 	'Response.Write Topic_HomePicInfo(612,171,-10)
 	%>
@@ -89,7 +89,7 @@ Sub cms_imgmsg
 			set cmscacheClass = new cms_cache_Class
 			cmscacheClass.Announcement
 			set cmscacheClass = nothing
-			'response.write cms_listClass(1,3,"ÍøÕ¾¹«¸æ",19)
+			'response.write cms_listClass(1,3,"ç½‘ç«™å…¬å‘Š",19)
 			%>
 				</div>
 			</div>
@@ -100,5 +100,5 @@ Sub cms_imgmsg
 
 End Sub
 
-Main
+Main()
 %>

@@ -1,20 +1,20 @@
-<%REM ĞŞ¸´»ò¹éÈëÖ÷Ìâ
+<%REM ä¿®å¤æˆ–å½’å…¥ä¸»é¢˜
 Function CheckRepairSure
 
-	If CheckSure = 0 Then Exit Function
+	If CheckSure() = 0 Then Exit Function
 	
 	If Form_ParentID <> 0 Then
-		Processor_ErrMsg "Òª´¦ÀíµÄÌû×Ó±ØĞëÎªÖ÷ÌâÌû×Ó£¡"
+		Call Processor_ErrMsg("è¦å¤„ç†çš„å¸–å­å¿…é¡»ä¸ºä¸»é¢˜å¸–å­ï¼")
 		CheckRepairSure = 0
 		Exit Function
 	End if
 	
-	CheckisBoardMaster
+	CheckisBoardMaster()
 	If GBL_UserID >= 1 and (GBL_BoardMasterFlag >= 5 and GetBinarybit(GBL_CHK_UserLimit,4) = 0) Then
 		CheckRepairSure = 1
 	Else
 		CheckRepairSure = 0
-		Processor_ErrMsg "´íÎó£¬È¨ÏŞ²»×ã£®"
+		Call Processor_ErrMsg("é”™è¯¯ï¼Œæƒé™ä¸è¶³ï¼")
 	End If
 
 End Function
@@ -22,20 +22,20 @@ End Function
 Function DisplayRepairAnnounce
 
 	If LMT_AncID = 0 Then
-		Response.Write "´íÎó£¬Î´Ñ¡ÔñÒªĞŞ¸´µÄÌû×Ó£¡" & VbCrLf
+		Response.Write "é”™è¯¯ï¼Œæœªé€‰æ‹©è¦ä¿®å¤çš„å¸–å­ï¼" & VbCrLf
 		Exit Function
 	End if
 	If Request.Form("SureFlag")="1" Then
 		Select Case RepairAnnounce(LMT_AncID)
 			Case 0
-				Processor_ErrMsg GBL_CHK_TempStr
+				Call Processor_ErrMsg(GBL_CHK_TempStr)
 			Case 1
-				Processor_Done "³É¹¦ĞŞ¸´ÂÛÌ³Ìû×Ó¡£"
+				Call Processor_Done("æˆåŠŸä¿®å¤è®ºå›å¸–å­ã€‚")
 			Case 2
-				Processor_Done "³É¹¦ĞŞ¸´ÂÛÌ³Ìû×Ó²¢¹éÈëÏàÓ¦×¨Ìâ¡£"
+				Call Processor_Done("æˆåŠŸä¿®å¤è®ºå›å¸–å­å¹¶å½’å…¥ç›¸åº”ä¸“é¢˜ã€‚")
 		End Select
 	Else
-		Processor_Head
+		Processor_Head()
 		%>
 		<form name=DellClientForm action=Processor.asp?Action=Repair&b=<%=GBL_Board_ID%> onSubmit="submit_disable(this);" method="post"<%
 		If AjaxFlag = 1 Then
@@ -45,11 +45,11 @@ Function DisplayRepairAnnounce
 			<input type=hidden name=SureFlag value="1">
 			<input type=hidden name=JsFlag value="1">
 			<input type=hidden name=AjaxFlag value="<%=AjaxFlag%>">
-			<input type=hidden name=ID value="<%=LMT_AncID%>">
+			<input type=hidden name=ID value="<%=LngStr(LMT_AncID)%>">
 			<input type=hidden name=BoardID value="<%=GBL_Board_ID%>">
-			<div class="value2"><b>È·ÈÏÒªĞŞ¸´±àºÅÎª<font color=ff0000 class=redfont><%=LMT_AncID%></font>µÄÌû×ÓÂğ£¿</b></div>
-			<div class="value2"><%DisplayEType%></div>
-			<p><input type=submit value=È·¶¨ class="fmbtn btn_2">
+			<div class="value2"><b>ç¡®è®¤è¦ä¿®å¤ç¼–å·ä¸º<font color=ff0000 class=redfont><%=LngStr(LMT_AncID)%></font>çš„å¸–å­å—ï¼Ÿ</b></div>
+			<div class="value2"><%DisplayEType()%></div>
+			<p><input type=submit value=ç¡®å®š class="fmbtn btn_2">
 		</form>
 		<%Processor_Bottom
 	End If
@@ -63,10 +63,10 @@ Function DisplayEType
 	TArray2 = Application(DEF_MasterCookies & "BoardInfo" & 0 & "_TI")
 	If isArray(TArray) = False and isArray(TArray2) = False Then Exit Function
 	%>
-	ĞŞ¸´²¢¹éÈë×¨Ìâ£º<select name="GoodAssort"><%
+	ä¿®å¤å¹¶å½’å…¥ä¸“é¢˜ï¼š<select name="GoodAssort"><%
 	If isArray(TArray) Then
 		Num = Ubound(TArray,2)
-		Response.Write "		<option class=TBBG1 value=0>===Ñ¡Ôñ°æÃæ×¨ÌâÇø===</option>" & VbCrLf
+		Response.Write "		<option class=TBBG1 value=0>===é€‰æ‹©ç‰ˆé¢ä¸“é¢˜åŒº===</option>" & VbCrLf
 		For N = 0 To Num
 			If GoodAssort = cCur(TArray(0,N)) Then
 				Response.Write "		<option class=TBBG9 value=" & TArray(0,N) & " selected>" & TArray(1,N) & "</a>" & VbCrLf
@@ -79,7 +79,7 @@ Function DisplayEType
 	TArray = Application(DEF_MasterCookies & "BoardInfo" & 0 & "_TI")
 	If isArray(TArray) Then
 		Num = Ubound(TArray,2)
-		Response.Write "		<option class=TBBG1 value=0>===Ñ¡Ôñ×Ü×¨Ìâ===</a>" & VbCrLf
+		Response.Write "		<option class=TBBG1 value=0>===é€‰æ‹©æ€»ä¸“é¢˜===</a>" & VbCrLf
 		
 		For N = 0 To Num
 			If GoodAssort = cCur(TArray(0,N)) Then
@@ -90,7 +90,7 @@ Function DisplayEType
 		Next
 	End If
 	%>
-	</Select><%If isArray(TArray) Then%><font color=Gray class=grayfont> ×¢:±£ÃÜÇøÌûÉ÷Èë×Ü×¨Ìâ</font><%End If%>
+	</Select><%If isArray(TArray) Then%><font color=Gray class=grayfont> æ³¨:ä¿å¯†åŒºå¸–æ…å…¥æ€»ä¸“é¢˜</font><%End If%>
 	<%
 
 End Function
@@ -104,7 +104,7 @@ Function RepairAnnounce(ID)
 	If Rs.Eof Then
 		Rs.Close
 		Set Rs = Nothing
-		GBL_CHK_TempStr = "´ËÌû×Ó¿ÉÄÜÒÑ¾­É¾³ı¡£"
+		GBL_CHK_TempStr = "æ­¤å¸–å­å¯èƒ½å·²ç»åˆ é™¤ã€‚"
 		RepairAnnounce = 0
 		Exit function
 	Else
@@ -118,12 +118,12 @@ Function RepairAnnounce(ID)
 	End If
 
 	If TopicType = 39 Then
-		GBL_CHK_TempStr = "¾µÏñÌû×ÓÎŞĞèĞŞ¸´¡£"
+		GBL_CHK_TempStr = "é•œåƒå¸–å­æ— éœ€ä¿®å¤ã€‚"
 		RepairAnnounce = 0
 		Exit Function
 	End If
 	If ParentID <> 0 Then
-		GBL_CHK_TempStr = "Ö»ÓĞÖ÷ÌâÌû×Ó²ÅÄÜ½øĞĞ´Ë¹¦ÄÜ¡£"
+		GBL_CHK_TempStr = "åªæœ‰ä¸»é¢˜å¸–å­æ‰èƒ½è¿›è¡Œæ­¤åŠŸèƒ½ã€‚"
 		RepairAnnounce = 0
 		Exit Function
 	End If
@@ -211,7 +211,7 @@ Function RepairAnnounce(ID)
 			",RootMinID=" & RootMinID &_
 			",ChildNum=" & Count & ",GoodAssort=" & GoodAssort & " where ID=" & ID,1)
 	End select
-	If CheckSupervisorUserName = 0 Then
+	If CheckSupervisorUserName() = 0 Then
 		CALL LDExeCute("Update LeadBBS_User Set LastWriteTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
 		UpdateSessionValue 13,GetTimeValue(DEF_Now),0
 	End If

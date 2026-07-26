@@ -1,5 +1,5 @@
 <%
-Const Remote_Enable = 401 '0,È«²¿½ûÖ¹ 1.È«²¿ÔÊĞí 2.½öÔÊĞí°æÖ÷¼°ÒÔÉÏ 3.½öÔÊĞí×Ü°æÖ÷ÒÔÉÏ 4. ½öÔÊĞí¹ÜÀíÔ± 401-6000.½öÔÊĞíÉùÍû´ïµ½(µ±Ç°Öµ-400)ÒÔÉÏµÄÓÃ»§
+Const Remote_Enable = 401 '0,å…¨éƒ¨ç¦æ­¢ 1.å…¨éƒ¨å…è®¸ 2.ä»…å…è®¸ç‰ˆä¸»åŠä»¥ä¸Š 3.ä»…å…è®¸æ€»ç‰ˆä¸»ä»¥ä¸Š 4. ä»…å…è®¸ç®¡ç†å‘˜ 401-6000.ä»…å…è®¸å£°æœ›è¾¾åˆ°(å½“å‰å€¼-400)ä»¥ä¸Šçš„ç”¨æˆ·
 Const Remote_MaxGet = 10
 Const Remote_MaxSize = 1048576
 
@@ -28,7 +28,7 @@ class remote_pic_save
 
 public function get_remoteImg(content,AncID,ParentID)
 
-	if remote_checkEnable = 0 then exit function
+	if remote_checkEnable() = 0 then exit function
 	dim patrn,strng
 	Dim regEx, Match, Matches
 	strng = form_content
@@ -57,7 +57,7 @@ public function get_remoteImg(content,AncID,ParentID)
 
 			url = a4 & a5
 
-			'²»³¬¹ı×î´ó»ñÈ¡Êı ²¢ÇÒÔ¶³Ì·Ç±¾µØÓòÃû£¬²¢ÇÒÈÔÈ»ÓĞÏàÓ¦Ô¶³ÌÍ¼Æ¬ÔÚ±àÂëÖĞ
+			'ä¸è¶…è¿‡æœ€å¤§è·å–æ•° å¹¶ä¸”è¿œç¨‹éæœ¬åœ°åŸŸåï¼Œå¹¶ä¸”ä»ç„¶æœ‰ç›¸åº”è¿œç¨‹å›¾ç‰‡åœ¨ç¼–ç ä¸­
 			if Index < Remote_MaxGet and (lcase(left(a4,3)) = "htt" or lcase(left(a4,3)) = "ftp") and inStr(a5,DEF_AbsolutHome) < 1 and instr(strng,s)>0 then
 				ext = ".jpg"
 				e = inStrRev(a5,".jpg")
@@ -92,9 +92,9 @@ public function get_remoteImg(content,AncID,ParentID)
 				end if
 				if ext <> "" then
 					Index = Index + 1
-					YM = "network/" & left(gettimevalue(DEF_Now),6) & "/"
-					fileName = Mid(gettimevalue(DEF_Now),7) & "_" & Index & ext
-					fileName_s = Mid(gettimevalue(DEF_Now),7) & "_" & Index & "s" & ".jpg"
+					YM = "network/" & left(LngStr(gettimevalue(DEF_Now)),6) & "/"
+					fileName = Mid(LngStr(gettimevalue(DEF_Now)),7) & "_" & Index & ext
+					fileName_s = Mid(LngStr(gettimevalue(DEF_Now)),7) & "_" & Index & "s" & ".jpg"
 					bin_createFolder("../" & DEF_BBS_UploadPhotoUrl & YM)
 					returnSave = bin_ADODB_SaveToFile(bin,"../" & DEF_BBS_UploadPhotoUrl & YM & fileName)
 					if returnSave(0) = 1 then
@@ -223,7 +223,7 @@ private function bin_ADODB_SaveToFile(ByVal strBody,ByVal File)
 
 		Set objStream = Server.CreateObject("ADODB.Stream")
 		If Err.Number=-2147221005 Then 
-			GBL_CHK_TempStr = "ÄúµÄÖ÷»ú²»Ö§³ÖADODB.Stream£¬ÎŞ·¨Íê³ÉÍ¼Æ¬ÎÄ¼ş±£´æ."
+			GBL_CHK_TempStr = "æ‚¨çš„ä¸»æœºä¸æ”¯æŒADODB.Streamï¼Œæ— æ³•å®Œæˆå›¾ç‰‡æ–‡ä»¶ä¿å­˜."
 			Err.Clear
 			Set objStream = Nothing
 			bin_ADODB_SaveToFile = array(0,0)
@@ -247,7 +247,7 @@ private function bin_ADODB_SaveToFile(ByVal strBody,ByVal File)
 		objStream.Close
 		Set objStream = Nothing
 	If Err Then
-		GBL_CHK_TempStr = "´íÎóĞÅÏ¢£º<p>" & err.description & "</p>ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞĞ´ÈëÈ¨ÏŞ."
+		GBL_CHK_TempStr = "é”™è¯¯ä¿¡æ¯ï¼š<p>" & err.description & "</p>å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰å†™å…¥æƒé™."
 		err.Clear
 		bin_ADODB_SaveToFile = array(0,0)
 		Exit function

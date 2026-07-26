@@ -1,12 +1,12 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=inc/musicbox_fun.asp -->
-<!-- #include file=../../inc/User_Setup.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="inc/musicbox_fun.asp"-->
+<!--#include file="../../inc/User_Setup.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 
 
-Main
+Main()
 
 Sub Main
 
@@ -21,7 +21,7 @@ Sub Main
 			tmp.Plug_MusicBar_Music
 			set tmp = nothing
 		Case "medal":
-			plug_medal_get
+			plug_medal_get()
 		Case "edit":
 			set tmp = new Plug_MusicBar_Music_class
 			tmp.Plug_MusicBar_Edit
@@ -45,13 +45,13 @@ class Plug_Medal_class
 	Private Sub Class_Initialize
 	
 		redim medal_info(6)
-		medal_info(0) = "5|ĞèÒªÎªLeadBBSÂ¼ÖÆÒ»ÆÚ¹ã²¥²¢ÉóºËÍ¨¹ı||"
-		medal_info(1) = "6|ĞèÒªÂÛÌ³Áä10Ëê|6,8|datediff(""d"",applytime,DEF_Now)>=3650"
+		medal_info(0) = "5|éœ€è¦ä¸ºLeadBBSå½•åˆ¶ä¸€æœŸå¹¿æ’­å¹¶å®¡æ ¸é€šè¿‡||"
+		medal_info(1) = "6|éœ€è¦è®ºå›é¾„10å²|6,8|datediff(""d"",applytime,DEF_Now)>=3650"
 		medal_info(2) = "7|||"
-		medal_info(3) = "8|ĞèÒªÂÛÌ³Áä5Ëê|6,8|datediff(""d"",applytime,DEF_Now)>=1825"
-		medal_info(4) = "9|ĞèÒª¾­ÑéÍ»ÆÆ525600£¨365Ìì£©|9,10|onlinetime>=525600*60"
-		medal_info(5) = "10|ĞèÒª¾­ÑéÍ»ÆÆ21900£¨365Ğ¡Ê±£©|9,10|onlinetime>=21900*60"
-		initdatabase
+		medal_info(3) = "8|éœ€è¦è®ºå›é¾„5å²|6,8|datediff(""d"",applytime,DEF_Now)>=1825"
+		medal_info(4) = "9|éœ€è¦ç»éªŒçªç ´525600ï¼ˆ365å¤©ï¼‰|9,10|onlinetime>=525600*60"
+		medal_info(5) = "10|éœ€è¦ç»éªŒçªç ´21900ï¼ˆ365å°æ—¶ï¼‰|9,10|onlinetime>=21900*60"
+		Call initdatabase()
 		
 		submit = left(request.form("submit"),1)
 		medalid = toNum(request("medalid"),-1)
@@ -62,7 +62,7 @@ class Plug_Medal_class
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=GBK">
-<title>ÓÃ»§<%=DEF_PointsName(9)%></title> 
+<title>ç”¨æˆ·<%=DEF_PointsName(9)%></title> 
 <link rel="stylesheet" type="text/css" href="images/css.css">
 <script type="text/javascript" src="<%=DEF_BBS_HomeUrl%>inc/js/jquery.js"></script>
 <script type="text/javascript" src="<%=DEF_BBS_HomeUrl%>inc/js/common.js"></script>
@@ -92,15 +92,30 @@ color:gray;
 <body>
 		<%
 end if
-		medal_list
+		medal_list()
 		
 If submit <> "1" then%>
 </body>
 </html>
 	<%
 end if
-		closedatabase
+		Call closedatabase()
 	end sub
+
+	' README Â§39: AxonASP's Eval() cannot resolve DEF_Now here â€” a module-level global read
+	' from inside a routine that has its own locals â€” and fails the eval unit's COMPILATION
+	' with "Variable not defined: 'DEF_Now'", so the whole å¾½ç«  page 500'd for a logged-in
+	' user (a guest never reaches this branch, which is why a curl sweep missed it). Bake the
+	' values into the expression so the string handed to Eval is self-contained.
+	private function medal_cond(expr, at, ot)
+
+		dim s : s = expr
+		s = Replace(s, "DEF_Now", """" & CStr(DEF_Now) & """")
+		s = Replace(s, "applytime", """" & CStr(at) & """")
+		s = Replace(s, "onlinetime", CStr(cCur("0" & ot)))
+		medal_cond = s
+
+	end function
 
 	private sub medal_list
 	
@@ -147,18 +162,18 @@ end if
 			arr = split(medal_info(medalid),"|")			
 			
 			if GBL_UserID < 1 then
-				Response.Write "Î´µÇÂ¼."
+				Response.Write "æœªç™»å½•."
 				exit sub
 			end if
 
 			if arr(3) <> "" then
-				if eval(arr(3)) <> true then
-					Response.Write "²»·ûºÏÁìÈ¡ÒªÇó."
+				if eval(medal_cond(arr(3),ApplyTime,OnlineTime)) <> true then
+					Response.Write "ä¸ç¬¦åˆé¢†å–è¦æ±‚."
 					exit sub
 				end if
 			end if
 			if inStr(Officer,"," & arr(0) & ",") then
-				Response.Write "ÒÑÁìÈ¡¹ı."
+				Response.Write "å·²é¢†å–è¿‡."
 				exit sub
 			end if
 			
@@ -177,7 +192,7 @@ end if
 					if MoreImp(i) <> "" then
 						if inStr(Officer,"," & MoreImp(i) & ",") then
 							if (inStr(arr(2),"," & MoreImp(i) & ",") > 0 and inStr(arr(2),"," & arr(0) & ",") > 0) and inStr(arr(2),"," & MoreImp(i) & ",") < inStr(arr(2),"," & arr(0) & ",") then
-								Response.Write "ÄãÒÑÓµÓĞ¸ü¸ß¼¶µÄ" & DEF_PointsName(9) & "."
+								Response.Write "ä½ å·²æ‹¥æœ‰æ›´é«˜çº§çš„" & DEF_PointsName(9) & "."
 								exit sub
 							else
 								officer = replace(officer,"," & MoreImp(i) & ",","")
@@ -204,7 +219,7 @@ end if
 			if(Officer<>old_Officer) then
 				sql = "update leadbbs_user set Officer='" & replace(Officer,"'","''") & "' where id=" & GBL_UserID
 				call ldexecute(sql,1)
-				Response.Write "³É¹¦ÁìÈ¡!"
+				Response.Write "æˆåŠŸé¢†å–!"
 			end if
 			
 			exit sub
@@ -213,7 +228,7 @@ end if
 		<script>
 		function get_done(i,tmp)
 		{
-			$("#"+i).html("ÒÑÁìÈ¡");
+			$("#"+i).html("å·²é¢†å–");
 			$("#"+i).attr("class","plug_medal_none");
 			$("#"+i).click(function(){return false;});
 			$("#"+i).attr("onclick","return false;")
@@ -228,7 +243,7 @@ end if
 			allow = 0
 			arr(3) = trim(arr(3))
 			if arr(3) <> "" and GBL_UserID > 0 then
-				if eval(arr(3)) = true then allow = 1
+				if eval(medal_cond(arr(3),ApplyTime,OnlineTime)) = true then allow = 1
 			end if
 			
 			if allow = 1 then
@@ -236,16 +251,16 @@ end if
 				clickstr = "getAJAX(this.href,'submit=1','get_done(\''+this.id+'\',tmp);',1);return false;"
 			else
 				medalclass = "plug_medal_none"
-				clickstr = "alert('²»·ûºÏÁìÈ¡ÒªÇó.');return false;"
+				clickstr = "alert('ä¸ç¬¦åˆé¢†å–è¦æ±‚.');return false;"
 			end if
 			
-			HrefName = "ÁìÈ¡"
+			HrefName = "é¢†å–"
 			if arr(3) = "" then
-				HrefName = "Î´¿ª·Å"
-				clickstr = "alert('ÔİÎ´¿ª·ÅÁìÈ¡.');return false;"
+				HrefName = "æœªå¼€æ”¾"
+				clickstr = "alert('æš‚æœªå¼€æ”¾é¢†å–.');return false;"
 			end if
 			if inStr(Officer,"," & arr(0) & ",") then
-				HrefName = "ÒÑÁìÈ¡"
+				HrefName = "å·²é¢†å–"
 				medalclass = "plug_medal_none"
 				clickstr = "return false;"
 				allow = 0
@@ -257,10 +272,10 @@ end if
 					if MoreImp(i) <> "" then
 						if inStr(Officer,"," & MoreImp(i) & ",") then
 							if (inStr(arr(2),"," & MoreImp(i) & ",") > 0 and inStr(arr(2),"," & arr(0) & ",") > 0) and inStr(arr(2),"," & MoreImp(i) & ",") < inStr(arr(2),"," & arr(0) & ",") then
-								HrefName = "¹ıÆÚ"
+								HrefName = "è¿‡æœŸ"
 								medalclass = "plug_medal_none"
 								allow = 0
-								clickstr = "alert('ÄãÒÑÓµÓĞ¸ü¸ß¼¶µÄ" & DEF_PointsName(9) & ".');return false;"
+								clickstr = "alert('ä½ å·²æ‹¥æœ‰æ›´é«˜çº§çš„" & DEF_PointsName(9) & ".');return false;"
 								exit for
 							end if
 						end if

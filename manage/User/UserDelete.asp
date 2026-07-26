@@ -1,14 +1,14 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
-Manage_sitehead DEF_SiteNameString & " - ����Ա",""
+Manage_sitehead DEF_SiteNameString & " - 管理员",""
 
 Dim GBL_CTG_DELETEID
 GBL_CTG_DELETEID = Left(Request("GBL_CTG_DELETEID"),14)
@@ -17,16 +17,16 @@ GBL_CTG_DELETEID = cCur(GBL_CTG_DELETEID)
 If GBL_CTG_DELETEID < 0 Then GBL_CTG_DELETEID = 0
 GBL_CHK_TempStr=""
 If GBL_CTG_DELETEID=0 Then
-	GBL_CHK_TempStr = GBL_CHK_TempStr & "û��ѡ��Ҫɾ�����û�<br>" & VbCrLf
+	GBL_CHK_TempStr = GBL_CHK_TempStr & "没有选择要删除的用户<br>" & VbCrLf
 End If
 
-frame_TopInfo
-DisplayUserNavigate("ɾ���û�")
+frame_TopInfo()
+DisplayUserNavigate("删除用户")
 If GBL_CHK_Flag=1 Then
 	If GBL_CHK_TempStr="" Then
 		If Request.Form("DeleteSuer")="E72ksiOkw2" Then
 			If DeleteUser(GBL_CTG_DELETEID)>0 Then
-				Response.Write "<br><p><font color=008800 class=greenfont><b>�Ѿ��ɹ�ɾ��IDΪ" & GBL_CTG_DELETEID & "���û���</b></font></p>"
+				Response.Write "<br><p><font color=008800 class=greenfont><b>已经成功删除ID为" & GBL_CTG_DELETEID & "的用户！</b></font></p>"
 				CALL LDExeCute("Update LeadBBS_SiteInfo Set UserCount=UserCount-1",1)
 				UpdateStatisticDataInfo -1,1,1
 			else
@@ -35,14 +35,14 @@ If GBL_CHK_Flag=1 Then
 		Else
 			%>
 			<p><form action=UserDelete.asp method=post>
-			<b><font color=ff0000 class=redfont>ȷ����Ϣ�� ���Ҫɾ�����û���������û���<%=DEF_PointsName(8)%>,<br>
-			�뵽��Ӧ����ɾ�����û�����Ȩ��.<br>
-			ɾ���û��󣬲���ɾ�����û����������ӣ������ӽ���Ϊ�οͷ���״̬��<br><br>
+			<b><font color=ff0000 class=redfont>确认信息： 真的要删除此用户吗？如果此用户是<%=DEF_PointsName(8)%>,<br>
+			请到相应版面删除此用户版主权限.<br>
+			删除用户后，并不删除此用户发表的帖子，但帖子将成为游客发表状态．<br><br>
 			<input type=hidden name=GBL_CTG_DELETEID value="<%=urlencode(GBL_CTG_DELETEID)%>">
 			<input type=hidden name=DeleteSuer value="E72ksiOkw2">
 			
-			<input type=button value=��ɾ�� onclick="javascript:history.go(-1);" class=fmbtn>
-			<input type=submit value=��Ȼɾ�� class=fmbtn>
+			<input type=button value=不删除 onclick="javascript:history.go(-1);" class=fmbtn>
+			<input type=submit value=当然删除 class=fmbtn>
 			
 			</form>
 		<%End If
@@ -56,13 +56,13 @@ If GBL_CHK_Flag=1 Then
 		</table>
 	<%End If
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
-rem ɾ��ĳ�û�
+rem 删除某用户
 Function DeleteUser(ID)
 
 	Dim Rs
@@ -71,11 +71,11 @@ Function DeleteUser(ID)
 		DeleteUser = 0
 		Rs.Close
 		Set Rs = Nothing
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "�Ҳ������û���<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "找不到此用户！<br>" & VbCrLf
 	Else
 		GBL_CHK_User = Rs("UserName")
-		If CheckSupervisorUserName = 1 Then
-			GBL_CHK_TempStr = GBL_CHK_TempStr & "��������Ա����ɾ����<br>" & VbCrLf
+		If CheckSupervisorUserName() = 1 Then
+			GBL_CHK_TempStr = GBL_CHK_TempStr & "超级管理员不能删除！<br>" & VbCrLf
 			Rs.Close
 			Set Rs = Nothing
 			DeleteUser = 0

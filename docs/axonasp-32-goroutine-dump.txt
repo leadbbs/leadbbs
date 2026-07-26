@@ -1,0 +1,809 @@
+goroutine 2765 [running]:
+runtime/pprof.writeGoroutineStacks({0x17d8e60, 0x39baee340f0})
+	runtime/pprof/pprof.go:819 +0x6b
+runtime/pprof.writeGoroutine({0x17d8e60?, 0x39baee340f0?}, 0x39baffe38e8?)
+	runtime/pprof/pprof.go:782 +0x25
+runtime/pprof.(*Profile).WriteTo(0x325dec0?, {0x17d8e60?, 0x39baee340f0?}, 0xc?)
+	runtime/pprof/pprof.go:408 +0x149
+net/http/pprof.handler.ServeHTTP({0x16ea68e, 0x9}, {0x17e03d0, 0x39baee340f0}, 0x39bb175e500)
+	net/http/pprof/pprof.go:273 +0x52a
+net/http.(*ServeMux).ServeHTTP(0x39bb4761740?, {0x17e03d0, 0x39baee340f0}, 0x39bb175e500)
+	net/http/server.go:2828 +0x1c7
+main.main.withServerHeader.func3({0x17e03d0, 0x39baee340f0}, 0x39bb175e500)
+	g3pix.com.br/axonasp/server/main.go:469 +0xa8
+net/http.HandlerFunc.ServeHTTP(0x489a39?, {0x17e03d0?, 0x39baee340f0?}, 0x39baffe3b68?)
+	net/http/server.go:2286 +0x29
+net/http.serverHandler.ServeHTTP({0x39bb841a000?}, {0x17e03d0?, 0x39baee340f0?}, 0x1?)
+	net/http/server.go:3311 +0x8e
+net/http.(*conn).serve(0x39bba62a000, {0x17e4010, 0x39baece9c80})
+	net/http/server.go:2073 +0x650
+created by net/http.(*Server).Serve in goroutine 20
+	net/http/server.go:3464 +0x485
+
+goroutine 1 [chan receive, 2 minutes]:
+main.main()
+	g3pix.com.br/axonasp/server/main.go:443 +0x6b7
+
+goroutine 10 [chan receive, 2 minutes]:
+g3pix.com.br/axonasp/axonvm/asp.sessionWriterWorker()
+	g3pix.com.br/axonasp/axonvm/asp/session.go:77 +0x34
+created by g3pix.com.br/axonasp/axonvm/asp.init.0 in goroutine 1
+	g3pix.com.br/axonasp/axonvm/asp/session.go:71 +0x25
+
+goroutine 11 [chan receive, 2 minutes]:
+g3pix.com.br/axonasp/axonvm/asp.sessionWriterWorker()
+	g3pix.com.br/axonasp/axonvm/asp/session.go:77 +0x34
+created by g3pix.com.br/axonasp/axonvm/asp.init.0 in goroutine 1
+	g3pix.com.br/axonasp/axonvm/asp/session.go:71 +0x25
+
+goroutine 12 [chan receive, 2 minutes]:
+g3pix.com.br/axonasp/axonvm/asp.sessionWriterWorker()
+	g3pix.com.br/axonasp/axonvm/asp/session.go:77 +0x34
+created by g3pix.com.br/axonasp/axonvm/asp.init.0 in goroutine 1
+	g3pix.com.br/axonasp/axonvm/asp/session.go:71 +0x25
+
+goroutine 13 [chan receive, 2 minutes]:
+g3pix.com.br/axonasp/axonvm/asp.sessionWriterWorker()
+	g3pix.com.br/axonasp/axonvm/asp/session.go:77 +0x34
+created by g3pix.com.br/axonasp/axonvm/asp.init.0 in goroutine 1
+	g3pix.com.br/axonasp/axonvm/asp/session.go:71 +0x25
+
+goroutine 17 [IO wait, 2 minutes]:
+internal/poll.runtime_pollWait(0x7e8e88262400, 0x72)
+	runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x39bae9f2d20?, 0x39baec4fe53?, 0x1)
+	internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x39bae9f2d20, {0x39baec4fe53, 0x10000, 0x10000})
+	internal/poll/fd_unix.go:165 +0x2ae
+os.(*File).read(...)
+	os/file_posix.go:29
+os.(*File).Read(0x39bae6d2c18, {0x39baec4fe53?, 0x39baec4fe53?, 0x1?})
+	os/file.go:144 +0x4f
+github.com/fsnotify/fsnotify.(*inotify).readEvents(0x39baeba2140)
+	github.com/fsnotify/fsnotify@v1.10.1/backend_inotify.go:368 +0xcf
+created by github.com/fsnotify/fsnotify.newBackend in goroutine 1
+	github.com/fsnotify/fsnotify@v1.10.1/backend_inotify.go:165 +0x285
+
+goroutine 14 [select, 2 minutes]:
+g3pix.com.br/axonasp/axonvm.(*ScriptCache).StartInvalidator.func1()
+	g3pix.com.br/axonasp/axonvm/script_cache.go:721 +0x16b
+created by g3pix.com.br/axonasp/axonvm.(*ScriptCache).StartInvalidator in goroutine 1
+	g3pix.com.br/axonasp/axonvm/script_cache.go:711 +0x72b
+
+goroutine 15 [select, 2 minutes]:
+g3pix.com.br/axonasp/axonvm/asp.StartSessionAutoFlush.func1(0x39baee56150, 0x0?)
+	g3pix.com.br/axonasp/axonvm/asp/session.go:723 +0xd6
+created by g3pix.com.br/axonasp/axonvm/asp.StartSessionAutoFlush in goroutine 1
+	g3pix.com.br/axonasp/axonvm/asp/session.go:717 +0x19d
+
+goroutine 18 [select, 2 minutes]:
+g3pix.com.br/axonasp/axonvm.G3ALStartCleanup.func1()
+	g3pix.com.br/axonasp/axonvm/lib_g3axonlive.go:204 +0xb1
+created by g3pix.com.br/axonasp/axonvm.G3ALStartCleanup in goroutine 1
+	g3pix.com.br/axonasp/axonvm/lib_g3axonlive.go:201 +0x145
+
+goroutine 16 [syscall, 2 minutes]:
+os/signal.signal_recv()
+	runtime/sigqueue.go:152 +0x98
+os/signal.loop()
+	os/signal/signal_unix.go:23 +0x13
+created by os/signal.Notify.func1.1 in goroutine 1
+	os/signal/signal.go:152 +0x1f
+
+goroutine 20 [IO wait]:
+internal/poll.runtime_pollWait(0x7e8e88262200, 0x72)
+	runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x39baebc0080?, 0x9004246b7?, 0x0)
+	internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Accept(0x39baebc0080)
+	internal/poll/fd_unix.go:613 +0x28c
+net.(*netFD).accept(0x39baebc0080)
+	net/fd_unix.go:150 +0x29
+net.(*TCPListener).accept(0x39baeb24340)
+	net/tcpsock_posix.go:159 +0x1b
+net.(*TCPListener).Accept(0x39baeb24340)
+	net/tcpsock.go:387 +0x30
+net/http.(*Server).Serve(0x39baed96300, {0x17e1610, 0x39baeb24340})
+	net/http/server.go:3434 +0x30c
+net/http.(*Server).ListenAndServe(0x39baed96300)
+	net/http/server.go:3360 +0x72
+main.main.func1()
+	g3pix.com.br/axonasp/server/main.go:437 +0x17e
+created by main.main in goroutine 1
+	g3pix.com.br/axonasp/server/main.go:432 +0x6ab
+
+goroutine 24 [chan send, 2 minutes]:
+g3pix.com.br/axonasp/axonvm.acquireVMPoolSlot()
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:65 +0x7e
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCachedProgram({{0x39bb34ce000, 0x1cfcc, 0x1cfcc}, {0x39bb7cc8000, 0x1115, 0x1115}, 0x2bd, 0x0, 0x1, {0x39bb1702d60, ...}, ...})
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:81 +0x25
+main.executeASPWithStatus({0x17e03d0, 0x39baea4fd10}, 0x39bb0cbb180, {0x39baf16f880, 0x1c}, 0x0)
+	g3pix.com.br/axonasp/server/main.go:799 +0x2cb
+main.executeASP(...)
+	g3pix.com.br/axonasp/server/main.go:747
+main.handleRequest({0x17e03d0, 0x39baea4fd10}, 0x39bb0cbb180)
+	g3pix.com.br/axonasp/server/main.go:588 +0x87e
+net/http.HandlerFunc.ServeHTTP(0x39bae954000?, {0x17e03d0?, 0x39baea4fd10?}, 0x16efae3?)
+	net/http/server.go:2286 +0x29
+net/http.(*ServeMux).ServeHTTP(0x39bb40fd440?, {0x17e03d0, 0x39baea4fd10}, 0x39bb0cbb180)
+	net/http/server.go:2828 +0x1c7
+main.main.withServerHeader.func3({0x17e03d0, 0x39baea4fd10}, 0x39bb0cbb180)
+	g3pix.com.br/axonasp/server/main.go:469 +0xa8
+net/http.HandlerFunc.ServeHTTP(0x489a39?, {0x17e03d0?, 0x39baea4fd10?}, 0x39baf53db68?)
+	net/http/server.go:2286 +0x29
+net/http.serverHandler.ServeHTTP({0x39baf270140?}, {0x17e03d0?, 0x39baea4fd10?}, 0x6?)
+	net/http/server.go:3311 +0x8e
+net/http.(*conn).serve(0x39baf56c5a0, {0x17e4010, 0x39baece9c80})
+	net/http/server.go:2073 +0x650
+created by net/http.(*Server).Serve in goroutine 20
+	net/http/server.go:3464 +0x485
+
+goroutine 2772 [chan send, 2 minutes]:
+g3pix.com.br/axonasp/axonvm.acquireVMPoolSlot()
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:65 +0x7e
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCachedProgram({{0x39bb0d35500, 0x2d0, 0x2d0}, {0x39bb01f9408, 0x1c, 0x1c}, 0x14d, 0x0, 0x0, {0x39bae708ae0, ...}, ...})
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:81 +0x25
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCompiler(0x0?)
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:98 +0x168
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).executeHandler(0x0?, {0x17f3090, 0x39bb40fc270}, 0x0, {0x16f58fb, 0xf})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:161 +0x68
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).ExecuteSessionOnStart(0x39baeb2f400, {0x17f3090, 0x39bb40fc270})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:231 +0x96
+main.NewWebHost({0x17e0250, 0x39baeb32ee0}, 0x39bb0cbac80)
+	g3pix.com.br/axonasp/server/web_host.go:172 +0xfcb
+main.executeASPWithStatus({0x17e03d0, 0x39baea4f0e0}, 0x39bb0cbac80, {0x39baf16ec00, 0x1c}, 0x0)
+	g3pix.com.br/axonasp/server/main.go:776 +0x116
+main.executeASP(...)
+	g3pix.com.br/axonasp/server/main.go:747
+main.handleRequest({0x17e03d0, 0x39baea4f0e0}, 0x39bb0cbac80)
+	g3pix.com.br/axonasp/server/main.go:588 +0x87e
+net/http.HandlerFunc.ServeHTTP(0x39bae954000?, {0x17e03d0?, 0x39baea4f0e0?}, 0x16efae3?)
+	net/http/server.go:2286 +0x29
+net/http.(*ServeMux).ServeHTTP(0x39bb40fc060?, {0x17e03d0, 0x39baea4f0e0}, 0x39bb0cbac80)
+	net/http/server.go:2828 +0x1c7
+main.main.withServerHeader.func3({0x17e03d0, 0x39baea4f0e0}, 0x39bb0cbac80)
+	g3pix.com.br/axonasp/server/main.go:469 +0xa8
+net/http.HandlerFunc.ServeHTTP(0x489a39?, {0x17e03d0?, 0x39baea4f0e0?}, 0x39bb5e95b68?)
+	net/http/server.go:2286 +0x29
+net/http.serverHandler.ServeHTTP({0x39bb7e2e200?}, {0x17e03d0?, 0x39baea4f0e0?}, 0x1?)
+	net/http/server.go:3311 +0x8e
+net/http.(*conn).serve(0x39bb9cd3c20, {0x17e4010, 0x39baece9c80})
+	net/http/server.go:2073 +0x650
+created by net/http.(*Server).Serve in goroutine 20
+	net/http/server.go:3464 +0x485
+
+goroutine 2748 [chan send, 2 minutes]:
+g3pix.com.br/axonasp/axonvm.acquireVMPoolSlot()
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:65 +0x7e
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCachedProgram({{0x39bb8771b00, 0x2d0, 0x2d0}, {0x39bb8270008, 0x1c, 0x1c}, 0x14d, 0x0, 0x0, {0x39bae708ae0, ...}, ...})
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:81 +0x25
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCompiler(0x0?)
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:98 +0x168
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).executeHandler(0x0?, {0x17f3090, 0x39bb0223e30}, 0x0, {0x16f58fb, 0xf})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:161 +0x68
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).ExecuteSessionOnStart(0x39baeb2f400, {0x17f3090, 0x39bb0223e30})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:231 +0x96
+main.NewWebHost({0x17e0250, 0x39bb256f160}, 0x39bb1631a40)
+	g3pix.com.br/axonasp/server/web_host.go:172 +0xfcb
+main.executeASPWithStatus({0x17e03d0, 0x39baee34ff0}, 0x39bb1631a40, {0x39baefce880, 0x1c}, 0x0)
+	g3pix.com.br/axonasp/server/main.go:776 +0x116
+main.executeASP(...)
+	g3pix.com.br/axonasp/server/main.go:747
+main.handleRequest({0x17e03d0, 0x39baee34ff0}, 0x39bb1631a40)
+	g3pix.com.br/axonasp/server/main.go:588 +0x87e
+net/http.HandlerFunc.ServeHTTP(0x39bae954000?, {0x17e03d0?, 0x39baee34ff0?}, 0x16efae3?)
+	net/http/server.go:2286 +0x29
+net/http.(*ServeMux).ServeHTTP(0x39bb0223c20?, {0x17e03d0, 0x39baee34ff0}, 0x39bb1631a40)
+	net/http/server.go:2828 +0x1c7
+main.main.withServerHeader.func3({0x17e03d0, 0x39baee34ff0}, 0x39bb1631a40)
+	g3pix.com.br/axonasp/server/main.go:469 +0xa8
+net/http.HandlerFunc.ServeHTTP(0x489a39?, {0x17e03d0?, 0x39baee34ff0?}, 0x39bb26c7b68?)
+	net/http/server.go:2286 +0x29
+net/http.serverHandler.ServeHTTP({0x39bb6d2bb00?}, {0x17e03d0?, 0x39baee34ff0?}, 0x1?)
+	net/http/server.go:3311 +0x8e
+net/http.(*conn).serve(0x39bb9cd37a0, {0x17e4010, 0x39baece9c80})
+	net/http/server.go:2073 +0x650
+created by net/http.(*Server).Serve in goroutine 20
+	net/http/server.go:3464 +0x485
+
+goroutine 2744 [sync.Cond.Wait, 2 minutes]:
+sync.runtime_notifyListWait(0x39baecd8990, 0xb)
+	runtime/sema.go:617 +0x1b3
+sync.(*Cond).Wait(0x39bae96db08?)
+	sync/cond.go:71 +0x73
+g3pix.com.br/axonasp/axonvm/asp.(*Application).WaitForServer(0x39baea76960, 0x39baea6d650)
+	g3pix.com.br/axonasp/axonvm/asp/application.go:178 +0x87
+g3pix.com.br/axonasp/axonvm.(*VM).dispatchNativeCall(0x39bb2c3b508, 0x4, {0x0, 0x0}, {0x39bae96db08, 0x1, 0x20})
+	g3pix.com.br/axonasp/axonvm/vm.go:7182 +0x10886
+g3pix.com.br/axonasp/axonvm.(*VM).Run(0x39bb2c3b508)
+	g3pix.com.br/axonasp/axonvm/vm.go:4249 +0x303e5
+main.executeASPWithStatus.func1.1(0x15f0440?)
+	g3pix.com.br/axonasp/server/main.go:814 +0x4e
+main.executeASPWithStatus.func1()
+	g3pix.com.br/axonasp/server/main.go:815 +0x4c
+created by main.executeASPWithStatus in goroutine 2742
+	g3pix.com.br/axonasp/server/main.go:806 +0x535
+
+goroutine 2754 [sync.Cond.Wait, 2 minutes]:
+sync.runtime_notifyListWait(0x39baecd8990, 0xd)
+	runtime/sema.go:617 +0x1b3
+sync.(*Cond).Wait(0x39bb05d6e08?)
+	sync/cond.go:71 +0x73
+g3pix.com.br/axonasp/axonvm/asp.(*Application).WaitForServer(0x39baea76960, 0x39baea95180)
+	g3pix.com.br/axonasp/axonvm/asp/application.go:178 +0x87
+g3pix.com.br/axonasp/axonvm.(*VM).dispatchNativeCall(0x39bb25c0008, 0x4, {0x0, 0x0}, {0x39bb05d6e08, 0x1, 0x10})
+	g3pix.com.br/axonasp/axonvm/vm.go:7182 +0x10886
+g3pix.com.br/axonasp/axonvm.(*VM).Run(0x39bb25c0008)
+	g3pix.com.br/axonasp/axonvm/vm.go:4249 +0x303e5
+main.executeASPWithStatus.func1.1(0x1571da0?)
+	g3pix.com.br/axonasp/server/main.go:814 +0x4e
+main.executeASPWithStatus.func1()
+	g3pix.com.br/axonasp/server/main.go:815 +0x4c
+created by main.executeASPWithStatus in goroutine 2736
+	g3pix.com.br/axonasp/server/main.go:806 +0x535
+
+goroutine 2766 [runnable]:
+net/http.(*connReader).startBackgroundRead.gowrap2()
+	net/http/server.go:698
+runtime.goexit({})
+	runtime/asm_amd64.s:1771 +0x1
+created by net/http.(*connReader).startBackgroundRead in goroutine 2765
+	net/http/server.go:698 +0xb6
+
+goroutine 2718 [sync.Cond.Wait, 2 minutes]:
+sync.runtime_notifyListWait(0x39baecd8990, 0x6)
+	runtime/sema.go:617 +0x1b3
+sync.(*Cond).Wait(0x39bb03c4388?)
+	sync/cond.go:71 +0x73
+g3pix.com.br/axonasp/axonvm/asp.(*Application).WaitForServer(0x39baea76960, 0x39baea6ce00)
+	g3pix.com.br/axonasp/axonvm/asp/application.go:178 +0x87
+g3pix.com.br/axonasp/axonvm.(*VM).dispatchNativeCall(0x39bb0532488, 0x4, {0x0, 0x0}, {0x39bb03c4388, 0x1, 0x20})
+	g3pix.com.br/axonasp/axonvm/vm.go:7182 +0x10886
+g3pix.com.br/axonasp/axonvm.(*VM).Run(0x39bb0532488)
+	g3pix.com.br/axonasp/axonvm/vm.go:4249 +0x303e5
+main.executeASPWithStatus.func1.1(0x39bb6575f90?)
+	g3pix.com.br/axonasp/server/main.go:814 +0x4e
+main.executeASPWithStatus.func1()
+	g3pix.com.br/axonasp/server/main.go:815 +0x4c
+created by main.executeASPWithStatus in goroutine 2716
+	g3pix.com.br/axonasp/server/main.go:806 +0x535
+
+goroutine 2696 [select, 2 minutes]:
+github.com/go-sql-driver/mysql.(*mysqlConn).startWatcher.func1()
+	github.com/go-sql-driver/mysql@v1.10.0/connection.go:753 +0x9a
+created by github.com/go-sql-driver/mysql.(*mysqlConn).startWatcher in goroutine 2671
+	github.com/go-sql-driver/mysql@v1.10.0/connection.go:750 +0xfa
+
+goroutine 2739 [sync.Cond.Wait, 2 minutes]:
+sync.runtime_notifyListWait(0x39baecd8990, 0x7)
+	runtime/sema.go:617 +0x1b3
+sync.(*Cond).Wait(0x39bb65ec888?)
+	sync/cond.go:71 +0x73
+g3pix.com.br/axonasp/axonvm/asp.(*Application).WaitForServer(0x39baea76960, 0x39baea6d340)
+	g3pix.com.br/axonasp/axonvm/asp/application.go:178 +0x87
+g3pix.com.br/axonasp/axonvm.(*VM).dispatchNativeCall(0x39bb2c3ea08, 0x4, {0x0, 0x0}, {0x39bb65ec888, 0x1, 0x20})
+	g3pix.com.br/axonasp/axonvm/vm.go:7182 +0x10886
+g3pix.com.br/axonasp/axonvm.(*VM).Run(0x39bb2c3ea08)
+	g3pix.com.br/axonasp/axonvm/vm.go:4249 +0x303e5
+main.executeASPWithStatus.func1.1(0x39bba61bf10?)
+	g3pix.com.br/axonasp/server/main.go:814 +0x4e
+main.executeASPWithStatus.func1()
+	g3pix.com.br/axonasp/server/main.go:815 +0x4c
+created by main.executeASPWithStatus in goroutine 2715
+	g3pix.com.br/axonasp/server/main.go:806 +0x535
+
+goroutine 2707 [sync.Cond.Wait, 2 minutes]:
+sync.runtime_notifyListWait(0x39baecd8990, 0x5)
+	runtime/sema.go:617 +0x1b3
+sync.(*Cond).Wait(0x39baf2db608?)
+	sync/cond.go:71 +0x73
+g3pix.com.br/axonasp/axonvm/asp.(*Application).WaitForServer(0x39baea76960, 0x39bba9ce8c0)
+	g3pix.com.br/axonasp/axonvm/asp/application.go:178 +0x87
+g3pix.com.br/axonasp/axonvm.(*VM).dispatchNativeCall(0x39bb2c40488, 0x4, {0x0, 0x0}, {0x39baf2db608, 0x1, 0x20})
+	g3pix.com.br/axonasp/axonvm/vm.go:7182 +0x10886
+g3pix.com.br/axonasp/axonvm.(*VM).Run(0x39bb2c40488)
+	g3pix.com.br/axonasp/axonvm/vm.go:4249 +0x303e5
+main.executeASPWithStatus.func1.1(0x15f0440?)
+	g3pix.com.br/axonasp/server/main.go:814 +0x4e
+main.executeASPWithStatus.func1()
+	g3pix.com.br/axonasp/server/main.go:815 +0x4c
+created by main.executeASPWithStatus in goroutine 2705
+	g3pix.com.br/axonasp/server/main.go:806 +0x535
+
+goroutine 2770 [chan send, 2 minutes]:
+g3pix.com.br/axonasp/axonvm.acquireVMPoolSlot()
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:65 +0x7e
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCachedProgram({{0x39bb0d35200, 0x2d0, 0x2d0}, {0x39bb01f8808, 0x1c, 0x1c}, 0x14d, 0x0, 0x0, {0x39bae708ae0, ...}, ...})
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:81 +0x25
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCompiler(0x0?)
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:98 +0x168
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).executeHandler(0x0?, {0x17f3090, 0x39bb4833ce0}, 0x0, {0x16f58fb, 0xf})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:161 +0x68
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).ExecuteSessionOnStart(0x39baeb2f400, {0x17f3090, 0x39bb4833ce0})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:231 +0x96
+main.NewWebHost({0x17e0250, 0x39baeb32d40}, 0x39bb0cbab40)
+	g3pix.com.br/axonasp/server/web_host.go:172 +0xfcb
+main.executeASPWithStatus({0x17e03d0, 0x39baea4eff0}, 0x39bb0cbab40, {0x39baf16e1e0, 0x1c}, 0x0)
+	g3pix.com.br/axonasp/server/main.go:776 +0x116
+main.executeASP(...)
+	g3pix.com.br/axonasp/server/main.go:747
+main.handleRequest({0x17e03d0, 0x39baea4eff0}, 0x39bb0cbab40)
+	g3pix.com.br/axonasp/server/main.go:588 +0x87e
+net/http.HandlerFunc.ServeHTTP(0x39bae954000?, {0x17e03d0?, 0x39baea4eff0?}, 0x16efae3?)
+	net/http/server.go:2286 +0x29
+net/http.(*ServeMux).ServeHTTP(0x39bb4833ad0?, {0x17e03d0, 0x39baea4eff0}, 0x39bb0cbab40)
+	net/http/server.go:2828 +0x1c7
+main.main.withServerHeader.func3({0x17e03d0, 0x39baea4eff0}, 0x39bb0cbab40)
+	g3pix.com.br/axonasp/server/main.go:469 +0xa8
+net/http.HandlerFunc.ServeHTTP(0x489a39?, {0x17e03d0?, 0x39baea4eff0?}, 0x39baf539b68?)
+	net/http/server.go:2286 +0x29
+net/http.serverHandler.ServeHTTP({0x39bb7e2e0c0?}, {0x17e03d0?, 0x39baea4eff0?}, 0x1?)
+	net/http/server.go:3311 +0x8e
+net/http.(*conn).serve(0x39bb9cd3b00, {0x17e4010, 0x39baece9c80})
+	net/http/server.go:2073 +0x650
+created by net/http.(*Server).Serve in goroutine 20
+	net/http/server.go:3464 +0x485
+
+goroutine 2708 [select, 2 minutes]:
+database/sql.(*DB).connectionOpener(0x39bb6e87a00, {0x17e4048, 0x39bba9da460})
+	database/sql/sql.go:1261 +0x89
+created by database/sql.OpenDB in goroutine 2707
+	database/sql/sql.go:841 +0x130
+
+goroutine 2714 [select, 2 minutes]:
+github.com/go-sql-driver/mysql.(*mysqlConn).startWatcher.func1()
+	github.com/go-sql-driver/mysql@v1.10.0/connection.go:753 +0x9a
+created by github.com/go-sql-driver/mysql.(*mysqlConn).startWatcher in goroutine 2707
+	github.com/go-sql-driver/mysql@v1.10.0/connection.go:750 +0xfa
+
+goroutine 2774 [chan send, 2 minutes]:
+g3pix.com.br/axonasp/axonvm.acquireVMPoolSlot()
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:65 +0x7e
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCachedProgram({{0x39bb0d35b00, 0x2d0, 0x2d0}, {0x39bb0103008, 0x1c, 0x1c}, 0x14d, 0x0, 0x0, {0x39bae708ae0, ...}, ...})
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:81 +0x25
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCompiler(0x0?)
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:98 +0x168
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).executeHandler(0x0?, {0x17f3090, 0x39bb40fc6f0}, 0x0, {0x16f58fb, 0xf})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:161 +0x68
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).ExecuteSessionOnStart(0x39baeb2f400, {0x17f3090, 0x39bb40fc6f0})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:231 +0x96
+main.NewWebHost({0x17e0250, 0x39baeb33080}, 0x39bb0cbadc0)
+	g3pix.com.br/axonasp/server/web_host.go:172 +0xfcb
+main.executeASPWithStatus({0x17e03d0, 0x39baea4f1d0}, 0x39bb0cbadc0, {0x39baf16eea0, 0x1c}, 0x0)
+	g3pix.com.br/axonasp/server/main.go:776 +0x116
+main.executeASP(...)
+	g3pix.com.br/axonasp/server/main.go:747
+main.handleRequest({0x17e03d0, 0x39baea4f1d0}, 0x39bb0cbadc0)
+	g3pix.com.br/axonasp/server/main.go:588 +0x87e
+net/http.HandlerFunc.ServeHTTP(0x39bae954000?, {0x17e03d0?, 0x39baea4f1d0?}, 0x16efae3?)
+	net/http/server.go:2286 +0x29
+net/http.(*ServeMux).ServeHTTP(0x39bb40fc4e0?, {0x17e03d0, 0x39baea4f1d0}, 0x39bb0cbadc0)
+	net/http/server.go:2828 +0x1c7
+main.main.withServerHeader.func3({0x17e03d0, 0x39baea4f1d0}, 0x39bb0cbadc0)
+	g3pix.com.br/axonasp/server/main.go:469 +0xa8
+net/http.HandlerFunc.ServeHTTP(0x489a39?, {0x17e03d0?, 0x39baea4f1d0?}, 0x39bb26c3b68?)
+	net/http/server.go:2286 +0x29
+net/http.serverHandler.ServeHTTP({0x39bb7e2e340?}, {0x17e03d0?, 0x39baea4f1d0?}, 0x1?)
+	net/http/server.go:3311 +0x8e
+net/http.(*conn).serve(0x39bb9cd3d40, {0x17e4010, 0x39baece9c80})
+	net/http/server.go:2073 +0x650
+created by net/http.(*Server).Serve in goroutine 20
+	net/http/server.go:3464 +0x485
+
+goroutine 2757 [chan send, 2 minutes]:
+g3pix.com.br/axonasp/axonvm.acquireVMPoolSlot()
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:65 +0x7e
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCachedProgram({{0x39baea7f800, 0x2d0, 0x2d0}, {0x39bb01f6408, 0x1c, 0x1c}, 0x14d, 0x0, 0x0, {0x39bae708ae0, ...}, ...})
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:81 +0x25
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCompiler(0x0?)
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:98 +0x168
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).executeHandler(0x0?, {0x17f3090, 0x39bb4833470}, 0x0, {0x16f58fb, 0xf})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:161 +0x68
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).ExecuteSessionOnStart(0x39baeb2f400, {0x17f3090, 0x39bb4833470})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:231 +0x96
+main.NewWebHost({0x17e0250, 0x39baeb32ac0}, 0x39bb1631cc0)
+	g3pix.com.br/axonasp/server/web_host.go:172 +0xfcb
+main.executeASPWithStatus({0x17e03d0, 0x39baea4ee10}, 0x39bb1631cc0, {0x39baee2fcc0, 0x1c}, 0x0)
+	g3pix.com.br/axonasp/server/main.go:776 +0x116
+main.executeASP(...)
+	g3pix.com.br/axonasp/server/main.go:747
+main.handleRequest({0x17e03d0, 0x39baea4ee10}, 0x39bb1631cc0)
+	g3pix.com.br/axonasp/server/main.go:588 +0x87e
+net/http.HandlerFunc.ServeHTTP(0x39bae954000?, {0x17e03d0?, 0x39baea4ee10?}, 0x16efae3?)
+	net/http/server.go:2286 +0x29
+net/http.(*ServeMux).ServeHTTP(0x39bb4833260?, {0x17e03d0, 0x39baea4ee10}, 0x39bb1631cc0)
+	net/http/server.go:2828 +0x1c7
+main.main.withServerHeader.func3({0x17e03d0, 0x39baea4ee10}, 0x39bb1631cc0)
+	g3pix.com.br/axonasp/server/main.go:469 +0xa8
+net/http.HandlerFunc.ServeHTTP(0x489a39?, {0x17e03d0?, 0x39baea4ee10?}, 0x39bb2691b68?)
+	net/http/server.go:2286 +0x29
+net/http.serverHandler.ServeHTTP({0x39bb6d2bd40?}, {0x17e03d0?, 0x39baea4ee10?}, 0x1?)
+	net/http/server.go:3311 +0x8e
+net/http.(*conn).serve(0x39bba62af30, {0x17e4010, 0x39baece9c80})
+	net/http/server.go:2073 +0x650
+created by net/http.(*Server).Serve in goroutine 20
+	net/http/server.go:3464 +0x485
+
+goroutine 2749 [chan send, 2 minutes]:
+g3pix.com.br/axonasp/axonvm.acquireVMPoolSlot()
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:65 +0x7e
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCachedProgram({{0x39bb9df3800, 0x2d0, 0x2d0}, {0x39bb01f4c08, 0x1c, 0x1c}, 0x14d, 0x0, 0x0, {0x39bae708ae0, ...}, ...})
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:81 +0x25
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCompiler(0x0?)
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:98 +0x168
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).executeHandler(0x0?, {0x17f3090, 0x39bb4357b30}, 0x0, {0x16f58fb, 0xf})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:161 +0x68
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).ExecuteSessionOnStart(0x39baeb2f400, {0x17f3090, 0x39bb4357b30})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:231 +0x96
+main.NewWebHost({0x17e0250, 0x39baeb32860}, 0x39bb0cbaa00)
+	g3pix.com.br/axonasp/server/web_host.go:172 +0xfcb
+main.executeASPWithStatus({0x17e03d0, 0x39baea4ec30}, 0x39bb0cbaa00, {0x39baee2f840, 0x1c}, 0x0)
+	g3pix.com.br/axonasp/server/main.go:776 +0x116
+main.executeASP(...)
+	g3pix.com.br/axonasp/server/main.go:747
+main.handleRequest({0x17e03d0, 0x39baea4ec30}, 0x39bb0cbaa00)
+	g3pix.com.br/axonasp/server/main.go:588 +0x87e
+net/http.HandlerFunc.ServeHTTP(0x39bae954000?, {0x17e03d0?, 0x39baea4ec30?}, 0x16efae3?)
+	net/http/server.go:2286 +0x29
+net/http.(*ServeMux).ServeHTTP(0x39bb4357920?, {0x17e03d0, 0x39baea4ec30}, 0x39bb0cbaa00)
+	net/http/server.go:2828 +0x1c7
+main.main.withServerHeader.func3({0x17e03d0, 0x39baea4ec30}, 0x39bb0cbaa00)
+	g3pix.com.br/axonasp/server/main.go:469 +0xa8
+net/http.HandlerFunc.ServeHTTP(0x489a39?, {0x17e03d0?, 0x39baea4ec30?}, 0x39bb2721b68?)
+	net/http/server.go:2286 +0x29
+net/http.serverHandler.ServeHTTP({0x39bb71ddd00?}, {0x17e03d0?, 0x39baea4ec30?}, 0x1?)
+	net/http/server.go:3311 +0x8e
+net/http.(*conn).serve(0x39bb9cd3830, {0x17e4010, 0x39baece9c80})
+	net/http/server.go:2073 +0x650
+created by net/http.(*Server).Serve in goroutine 20
+	net/http/server.go:3464 +0x485
+
+goroutine 2759 [chan send, 2 minutes]:
+g3pix.com.br/axonasp/axonvm.acquireVMPoolSlot()
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:65 +0x7e
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCachedProgram({{0x39baea14300, 0x2d0, 0x2d0}, {0x39bb8270c08, 0x1c, 0x1c}, 0x14d, 0x0, 0x0, {0x39bae708ae0, ...}, ...})
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:81 +0x25
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCompiler(0x0?)
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:98 +0x168
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).executeHandler(0x0?, {0x17f3090, 0x39bb4760fc0}, 0x0, {0x16f58fb, 0xf})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:161 +0x68
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).ExecuteSessionOnStart(0x39baeb2f400, {0x17f3090, 0x39bb4760fc0})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:231 +0x96
+main.NewWebHost({0x17e0250, 0x39bb256f300}, 0x39bb175e140)
+	g3pix.com.br/axonasp/server/web_host.go:172 +0xfcb
+main.executeASPWithStatus({0x17e03d0, 0x39baee350e0}, 0x39bb175e140, {0x39baefcea80, 0x1c}, 0x0)
+	g3pix.com.br/axonasp/server/main.go:776 +0x116
+main.executeASP(...)
+	g3pix.com.br/axonasp/server/main.go:747
+main.handleRequest({0x17e03d0, 0x39baee350e0}, 0x39bb175e140)
+	g3pix.com.br/axonasp/server/main.go:588 +0x87e
+net/http.HandlerFunc.ServeHTTP(0x39bae954000?, {0x17e03d0?, 0x39baee350e0?}, 0x16efae3?)
+	net/http/server.go:2286 +0x29
+net/http.(*ServeMux).ServeHTTP(0x39bb4760db0?, {0x17e03d0, 0x39baee350e0}, 0x39bb175e140)
+	net/http/server.go:2828 +0x1c7
+main.main.withServerHeader.func3({0x17e03d0, 0x39baee350e0}, 0x39bb175e140)
+	g3pix.com.br/axonasp/server/main.go:469 +0xa8
+net/http.HandlerFunc.ServeHTTP(0x489a39?, {0x17e03d0?, 0x39baee350e0?}, 0x39bb6573b68?)
+	net/http/server.go:2286 +0x29
+net/http.serverHandler.ServeHTTP({0x39bb6d2bec0?}, {0x17e03d0?, 0x39baee350e0?}, 0x1?)
+	net/http/server.go:3311 +0x8e
+net/http.(*conn).serve(0x39bba62b050, {0x17e4010, 0x39baece9c80})
+	net/http/server.go:2073 +0x650
+created by net/http.(*Server).Serve in goroutine 20
+	net/http/server.go:3464 +0x485
+
+goroutine 2730 [sync.Cond.Wait, 2 minutes]:
+sync.runtime_notifyListWait(0x39baecd8990, 0x8)
+	runtime/sema.go:617 +0x1b3
+sync.(*Cond).Wait(0x39bb26adb08?)
+	sync/cond.go:71 +0x73
+g3pix.com.br/axonasp/axonvm/asp.(*Application).WaitForServer(0x39baea76960, 0x39baea949a0)
+	g3pix.com.br/axonasp/axonvm/asp/application.go:178 +0x87
+g3pix.com.br/axonasp/axonvm.(*VM).dispatchNativeCall(0x39bb27ba008, 0x4, {0x0, 0x0}, {0x39bb26adb08, 0x1, 0x20})
+	g3pix.com.br/axonasp/axonvm/vm.go:7182 +0x10886
+g3pix.com.br/axonasp/axonvm.(*VM).Run(0x39bb27ba008)
+	g3pix.com.br/axonasp/axonvm/vm.go:4249 +0x303e5
+main.executeASPWithStatus.func1.1(0x39bb271df90?)
+	g3pix.com.br/axonasp/server/main.go:814 +0x4e
+main.executeASPWithStatus.func1()
+	g3pix.com.br/axonasp/server/main.go:815 +0x4c
+created by main.executeASPWithStatus in goroutine 2740
+	g3pix.com.br/axonasp/server/main.go:806 +0x535
+
+goroutine 2672 [select, 2 minutes]:
+database/sql.(*DB).connectionOpener(0x39bba875ba0, {0x17e4048, 0x39bba741cc0})
+	database/sql/sql.go:1261 +0x89
+created by database/sql.OpenDB in goroutine 2671
+	database/sql/sql.go:841 +0x130
+
+goroutine 2777 [chan send, 2 minutes]:
+g3pix.com.br/axonasp/axonvm.acquireVMPoolSlot()
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:65 +0x7e
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCachedProgram({{0x39bb2560300, 0x2d0, 0x2d0}, {0x39bb0104808, 0x1c, 0x1c}, 0x14d, 0x0, 0x0, {0x39bae708ae0, ...}, ...})
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:81 +0x25
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCompiler(0x0?)
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:98 +0x168
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).executeHandler(0x0?, {0x17f3090, 0x39bb40fd020}, 0x0, {0x16f58fb, 0xf})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:161 +0x68
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).ExecuteSessionOnStart(0x39baeb2f400, {0x17f3090, 0x39bb40fd020})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:231 +0x96
+main.NewWebHost({0x17e0250, 0x39baeb33380}, 0x39bb0cbb040)
+	g3pix.com.br/axonasp/server/web_host.go:172 +0xfcb
+main.executeASPWithStatus({0x17e03d0, 0x39baea4fc20}, 0x39bb0cbb040, {0x39baf16f3a0, 0x1c}, 0x0)
+	g3pix.com.br/axonasp/server/main.go:776 +0x116
+main.executeASP(...)
+	g3pix.com.br/axonasp/server/main.go:747
+main.handleRequest({0x17e03d0, 0x39baea4fc20}, 0x39bb0cbb040)
+	g3pix.com.br/axonasp/server/main.go:588 +0x87e
+net/http.HandlerFunc.ServeHTTP(0x39bae954000?, {0x17e03d0?, 0x39baea4fc20?}, 0x16efae3?)
+	net/http/server.go:2286 +0x29
+net/http.(*ServeMux).ServeHTTP(0x39bb40fce10?, {0x17e03d0, 0x39baea4fc20}, 0x39bb0cbb040)
+	net/http/server.go:2828 +0x1c7
+main.main.withServerHeader.func3({0x17e03d0, 0x39baea4fc20}, 0x39bb0cbb040)
+	g3pix.com.br/axonasp/server/main.go:469 +0xa8
+net/http.HandlerFunc.ServeHTTP(0x489a39?, {0x17e03d0?, 0x39baea4fc20?}, 0x39bb268fb68?)
+	net/http/server.go:2286 +0x29
+net/http.serverHandler.ServeHTTP({0x39bb7e2e5c0?}, {0x17e03d0?, 0x39baea4fc20?}, 0x1?)
+	net/http/server.go:3311 +0x8e
+net/http.(*conn).serve(0x39bb6ee6000, {0x17e4010, 0x39baece9c80})
+	net/http/server.go:2073 +0x650
+created by net/http.(*Server).Serve in goroutine 20
+	net/http/server.go:3464 +0x485
+
+goroutine 2719 [select, 2 minutes]:
+database/sql.(*DB).connectionOpener(0x39bb487a5b0, {0x17e4048, 0x39bb963d270})
+	database/sql/sql.go:1261 +0x89
+created by database/sql.OpenDB in goroutine 2718
+	database/sql/sql.go:841 +0x130
+
+goroutine 2756 [chan send, 2 minutes]:
+g3pix.com.br/axonasp/axonvm.acquireVMPoolSlot()
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:65 +0x7e
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCachedProgram({{0x39bb9df3b00, 0x2d0, 0x2d0}, {0x39bb01f5808, 0x1c, 0x1c}, 0x14d, 0x0, 0x0, {0x39bae708ae0, ...}, ...})
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:81 +0x25
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCompiler(0x0?)
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:98 +0x168
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).executeHandler(0x0?, {0x17f3090, 0x39bb4832f30}, 0x0, {0x16f58fb, 0xf})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:161 +0x68
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).ExecuteSessionOnStart(0x39baeb2f400, {0x17f3090, 0x39bb4832f30})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:231 +0x96
+main.NewWebHost({0x17e0250, 0x39baeb329a0}, 0x39bb1631b80)
+	g3pix.com.br/axonasp/server/web_host.go:172 +0xfcb
+main.executeASPWithStatus({0x17e03d0, 0x39baea4ed20}, 0x39bb1631b80, {0x39baee2fac0, 0x1c}, 0x0)
+	g3pix.com.br/axonasp/server/main.go:776 +0x116
+main.executeASP(...)
+	g3pix.com.br/axonasp/server/main.go:747
+main.handleRequest({0x17e03d0, 0x39baea4ed20}, 0x39bb1631b80)
+	g3pix.com.br/axonasp/server/main.go:588 +0x87e
+net/http.HandlerFunc.ServeHTTP(0x39bae954000?, {0x17e03d0?, 0x39baea4ed20?}, 0x16efae3?)
+	net/http/server.go:2286 +0x29
+net/http.(*ServeMux).ServeHTTP(0x39bb4357dd0?, {0x17e03d0, 0x39baea4ed20}, 0x39bb1631b80)
+	net/http/server.go:2828 +0x1c7
+main.main.withServerHeader.func3({0x17e03d0, 0x39baea4ed20}, 0x39bb1631b80)
+	g3pix.com.br/axonasp/server/main.go:469 +0xa8
+net/http.HandlerFunc.ServeHTTP(0x489a39?, {0x17e03d0?, 0x39baea4ed20?}, 0x39bb271db68?)
+	net/http/server.go:2286 +0x29
+net/http.serverHandler.ServeHTTP({0x39bb6d2bc80?}, {0x17e03d0?, 0x39baea4ed20?}, 0x1?)
+	net/http/server.go:3311 +0x8e
+net/http.(*conn).serve(0x39bba62aea0, {0x17e4010, 0x39baece9c80})
+	net/http/server.go:2073 +0x650
+created by net/http.(*Server).Serve in goroutine 20
+	net/http/server.go:3464 +0x485
+
+goroutine 2735 [sync.Cond.Wait, 2 minutes]:
+sync.runtime_notifyListWait(0x39baecd8990, 0xa)
+	runtime/sema.go:617 +0x1b3
+sync.(*Cond).Wait(0x39bb0c32888?)
+	sync/cond.go:71 +0x73
+g3pix.com.br/axonasp/axonvm/asp.(*Application).WaitForServer(0x39baea76960, 0x39baea94ee0)
+	g3pix.com.br/axonasp/axonvm/asp/application.go:178 +0x87
+g3pix.com.br/axonasp/axonvm.(*VM).dispatchNativeCall(0x39bb226a488, 0x4, {0x0, 0x0}, {0x39bb0c32888, 0x1, 0x20})
+	g3pix.com.br/axonasp/axonvm/vm.go:7182 +0x10886
+g3pix.com.br/axonasp/axonvm.(*VM).Run(0x39bb226a488)
+	g3pix.com.br/axonasp/axonvm/vm.go:4249 +0x303e5
+main.executeASPWithStatus.func1.1(0x39bb271bf90?)
+	g3pix.com.br/axonasp/server/main.go:814 +0x4e
+main.executeASPWithStatus.func1()
+	g3pix.com.br/axonasp/server/main.go:815 +0x4c
+created by main.executeASPWithStatus in goroutine 2733
+	g3pix.com.br/axonasp/server/main.go:806 +0x535
+
+goroutine 2732 [sync.Cond.Wait, 2 minutes]:
+sync.runtime_notifyListWait(0x39baecd8990, 0x9)
+	runtime/sema.go:617 +0x1b3
+sync.(*Cond).Wait(0x39bb6ba2008?)
+	sync/cond.go:71 +0x73
+g3pix.com.br/axonasp/axonvm/asp.(*Application).WaitForServer(0x39baea76960, 0x39baea94cb0)
+	g3pix.com.br/axonasp/axonvm/asp/application.go:178 +0x87
+g3pix.com.br/axonasp/axonvm.(*VM).dispatchNativeCall(0x39bb2c3cf88, 0x4, {0x0, 0x0}, {0x39bb6ba2008, 0x1, 0x20})
+	g3pix.com.br/axonasp/axonvm/vm.go:7182 +0x10886
+g3pix.com.br/axonasp/axonvm.(*VM).Run(0x39bb2c3cf88)
+	g3pix.com.br/axonasp/axonvm/vm.go:4249 +0x303e5
+main.executeASPWithStatus.func1.1(0x39bba61b490?)
+	g3pix.com.br/axonasp/server/main.go:814 +0x4e
+main.executeASPWithStatus.func1()
+	g3pix.com.br/axonasp/server/main.go:815 +0x4c
+created by main.executeASPWithStatus in goroutine 2741
+	g3pix.com.br/axonasp/server/main.go:806 +0x535
+
+goroutine 2758 [chan send, 2 minutes]:
+g3pix.com.br/axonasp/axonvm.acquireVMPoolSlot()
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:65 +0x7e
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCachedProgram({{0x39bb0d34f00, 0x2d0, 0x2d0}, {0x39bb01f7c08, 0x1c, 0x1c}, 0x14d, 0x0, 0x0, {0x39bae708ae0, ...}, ...})
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:81 +0x25
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCompiler(0x0?)
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:98 +0x168
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).executeHandler(0x0?, {0x17f3090, 0x39bb4833860}, 0x0, {0x16f58fb, 0xf})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:161 +0x68
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).ExecuteSessionOnStart(0x39baeb2f400, {0x17f3090, 0x39bb4833860})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:231 +0x96
+main.NewWebHost({0x17e0250, 0x39baeb32be0}, 0x39bb175e000)
+	g3pix.com.br/axonasp/server/web_host.go:172 +0xfcb
+main.executeASPWithStatus({0x17e03d0, 0x39baea4ef00}, 0x39bb175e000, {0x39baee2ff00, 0x1c}, 0x0)
+	g3pix.com.br/axonasp/server/main.go:776 +0x116
+main.executeASP(...)
+	g3pix.com.br/axonasp/server/main.go:747
+main.handleRequest({0x17e03d0, 0x39baea4ef00}, 0x39bb175e000)
+	g3pix.com.br/axonasp/server/main.go:588 +0x87e
+net/http.HandlerFunc.ServeHTTP(0x39bae954000?, {0x17e03d0?, 0x39baea4ef00?}, 0x16efae3?)
+	net/http/server.go:2286 +0x29
+net/http.(*ServeMux).ServeHTTP(0x39bb4833650?, {0x17e03d0, 0x39baea4ef00}, 0x39bb175e000)
+	net/http/server.go:2828 +0x1c7
+main.main.withServerHeader.func3({0x17e03d0, 0x39baea4ef00}, 0x39bb175e000)
+	g3pix.com.br/axonasp/server/main.go:469 +0xa8
+net/http.HandlerFunc.ServeHTTP(0x489a39?, {0x17e03d0?, 0x39baea4ef00?}, 0x39baf539b68?)
+	net/http/server.go:2286 +0x29
+net/http.serverHandler.ServeHTTP({0x39bb6d2be00?}, {0x17e03d0?, 0x39baea4ef00?}, 0x1?)
+	net/http/server.go:3311 +0x8e
+net/http.(*conn).serve(0x39bba62afc0, {0x17e4010, 0x39baece9c80})
+	net/http/server.go:2073 +0x650
+created by net/http.(*Server).Serve in goroutine 20
+	net/http/server.go:3464 +0x485
+
+goroutine 2761 [chan send, 2 minutes]:
+g3pix.com.br/axonasp/axonvm.acquireVMPoolSlot()
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:65 +0x7e
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCachedProgram({{0x39bb2560000, 0x2d0, 0x2d0}, {0x39bb0103c08, 0x1c, 0x1c}, 0x14d, 0x0, 0x0, {0x39bae708ae0, ...}, ...})
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:81 +0x25
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCompiler(0x0?)
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:98 +0x168
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).executeHandler(0x0?, {0x17f3090, 0x39bb40fcba0}, 0x0, {0x16f58fb, 0xf})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:161 +0x68
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).ExecuteSessionOnStart(0x39baeb2f400, {0x17f3090, 0x39bb40fcba0})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:231 +0x96
+main.NewWebHost({0x17e0250, 0x39baeb331e0}, 0x39bb0cbaf00)
+	g3pix.com.br/axonasp/server/web_host.go:172 +0xfcb
+main.executeASPWithStatus({0x17e03d0, 0x39baea4fb30}, 0x39bb0cbaf00, {0x39baf16f160, 0x1c}, 0x0)
+	g3pix.com.br/axonasp/server/main.go:776 +0x116
+main.executeASP(...)
+	g3pix.com.br/axonasp/server/main.go:747
+main.handleRequest({0x17e03d0, 0x39baea4fb30}, 0x39bb0cbaf00)
+	g3pix.com.br/axonasp/server/main.go:588 +0x87e
+net/http.HandlerFunc.ServeHTTP(0x39bae954000?, {0x17e03d0?, 0x39baea4fb30?}, 0x16efae3?)
+	net/http/server.go:2286 +0x29
+net/http.(*ServeMux).ServeHTTP(0x39bb40fc900?, {0x17e03d0, 0x39baea4fb30}, 0x39bb0cbaf00)
+	net/http/server.go:2828 +0x1c7
+main.main.withServerHeader.func3({0x17e03d0, 0x39baea4fb30}, 0x39bb0cbaf00)
+	g3pix.com.br/axonasp/server/main.go:469 +0xa8
+net/http.HandlerFunc.ServeHTTP(0x489a39?, {0x17e03d0?, 0x39baea4fb30?}, 0x39bb6573b68?)
+	net/http/server.go:2286 +0x29
+net/http.serverHandler.ServeHTTP({0x39bb7e2e480?}, {0x17e03d0?, 0x39baea4fb30?}, 0x1?)
+	net/http/server.go:3311 +0x8e
+net/http.(*conn).serve(0x39bba62b170, {0x17e4010, 0x39baece9c80})
+	net/http/server.go:2073 +0x650
+created by net/http.(*Server).Serve in goroutine 20
+	net/http/server.go:3464 +0x485
+
+goroutine 2747 [sync.Cond.Wait, 2 minutes]:
+sync.runtime_notifyListWait(0x39baecd8990, 0xc)
+	runtime/sema.go:617 +0x1b3
+sync.(*Cond).Wait(0x39bafc2d108?)
+	sync/cond.go:71 +0x73
+g3pix.com.br/axonasp/axonvm/asp.(*Application).WaitForServer(0x39baea76960, 0x39baea6d880)
+	g3pix.com.br/axonasp/axonvm/asp/application.go:178 +0x87
+g3pix.com.br/axonasp/axonvm.(*VM).dispatchNativeCall(0x39bb27bba88, 0x4, {0x0, 0x0}, {0x39bafc2d108, 0x1, 0x10})
+	g3pix.com.br/axonasp/axonvm/vm.go:7182 +0x10886
+g3pix.com.br/axonasp/axonvm.(*VM).Run(0x39bb27bba88)
+	g3pix.com.br/axonasp/axonvm/vm.go:4249 +0x303e5
+main.executeASPWithStatus.func1.1(0x15f0440?)
+	g3pix.com.br/axonasp/server/main.go:814 +0x4e
+main.executeASPWithStatus.func1()
+	g3pix.com.br/axonasp/server/main.go:815 +0x4c
+created by main.executeASPWithStatus in goroutine 2745
+	g3pix.com.br/axonasp/server/main.go:806 +0x535
+
+goroutine 2728 [select, 2 minutes]:
+github.com/go-sql-driver/mysql.(*mysqlConn).startWatcher.func1()
+	github.com/go-sql-driver/mysql@v1.10.0/connection.go:753 +0x9a
+created by github.com/go-sql-driver/mysql.(*mysqlConn).startWatcher in goroutine 2718
+	github.com/go-sql-driver/mysql@v1.10.0/connection.go:750 +0xfa
+
+goroutine 2671 [sync.Cond.Wait, 2 minutes]:
+sync.runtime_notifyListWait(0x39baecd8990, 0x4)
+	runtime/sema.go:617 +0x1b3
+sync.(*Cond).Wait(0x39bb6ba6388?)
+	sync/cond.go:71 +0x73
+g3pix.com.br/axonasp/axonvm/asp.(*Application).WaitForServer(0x39baea76960, 0x39bba754d90)
+	g3pix.com.br/axonasp/axonvm/asp/application.go:178 +0x87
+g3pix.com.br/axonasp/axonvm.(*VM).dispatchNativeCall(0x39bb2c39a88, 0x4, {0x0, 0x0}, {0x39bb6ba6388, 0x1, 0x20})
+	g3pix.com.br/axonasp/axonvm/vm.go:7182 +0x10886
+g3pix.com.br/axonasp/axonvm.(*VM).Run(0x39bb2c39a88)
+	g3pix.com.br/axonasp/axonvm/vm.go:4249 +0x303e5
+main.executeASPWithStatus.func1.1(0x39bb9a73a40?)
+	g3pix.com.br/axonasp/server/main.go:814 +0x4e
+main.executeASPWithStatus.func1()
+	g3pix.com.br/axonasp/server/main.go:815 +0x4c
+created by main.executeASPWithStatus in goroutine 2669
+	g3pix.com.br/axonasp/server/main.go:806 +0x535
+
+goroutine 2763 [chan send, 2 minutes]:
+g3pix.com.br/axonasp/axonvm.acquireVMPoolSlot()
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:65 +0x7e
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCachedProgram({{0x39bb259a300, 0x2d0, 0x2d0}, {0x39bb8273008, 0x1c, 0x1c}, 0x14d, 0x0, 0x0, {0x39bae708ae0, ...}, ...})
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:81 +0x25
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCompiler(0x0?)
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:98 +0x168
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).executeHandler(0x0?, {0x17f3090, 0x39bb4761980}, 0x0, {0x16f58fb, 0xf})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:161 +0x68
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).ExecuteSessionOnStart(0x39baeb2f400, {0x17f3090, 0x39bb4761980})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:231 +0x96
+main.NewWebHost({0x17e0250, 0x39bb256f720}, 0x39bb175e3c0)
+	g3pix.com.br/axonasp/server/web_host.go:172 +0xfcb
+main.executeASPWithStatus({0x17e03d0, 0x39baee352c0}, 0x39bb175e3c0, {0x39baf268280, 0x1c}, 0x0)
+	g3pix.com.br/axonasp/server/main.go:776 +0x116
+main.executeASP(...)
+	g3pix.com.br/axonasp/server/main.go:747
+main.handleRequest({0x17e03d0, 0x39baee352c0}, 0x39bb175e3c0)
+	g3pix.com.br/axonasp/server/main.go:588 +0x87e
+net/http.HandlerFunc.ServeHTTP(0x39bae954000?, {0x17e03d0?, 0x39baee352c0?}, 0x16efae3?)
+	net/http/server.go:2286 +0x29
+net/http.(*ServeMux).ServeHTTP(0x39bb4761770?, {0x17e03d0, 0x39baee352c0}, 0x39bb175e3c0)
+	net/http/server.go:2828 +0x1c7
+main.main.withServerHeader.func3({0x17e03d0, 0x39baee352c0}, 0x39bb175e3c0)
+	g3pix.com.br/axonasp/server/main.go:469 +0xa8
+net/http.HandlerFunc.ServeHTTP(0x489a39?, {0x17e03d0?, 0x39baee352c0?}, 0x39bb26c7b68?)
+	net/http/server.go:2286 +0x29
+net/http.serverHandler.ServeHTTP({0x39bb841b1c0?}, {0x17e03d0?, 0x39baee352c0?}, 0x1?)
+	net/http/server.go:3311 +0x8e
+net/http.(*conn).serve(0x39bba62b290, {0x17e4010, 0x39baece9c80})
+	net/http/server.go:2073 +0x650
+created by net/http.(*Server).Serve in goroutine 20
+	net/http/server.go:3464 +0x485
+
+goroutine 2779 [chan send, 2 minutes]:
+g3pix.com.br/axonasp/axonvm.acquireVMPoolSlot()
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:65 +0x7e
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCachedProgram({{0x39bb259a000, 0x2d0, 0x2d0}, {0x39bb8271808, 0x1c, 0x1c}, 0x14d, 0x0, 0x0, {0x39bae708ae0, ...}, ...})
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:81 +0x25
+g3pix.com.br/axonasp/axonvm.AcquireVMFromCompiler(0x0?)
+	g3pix.com.br/axonasp/axonvm/vm_pool.go:98 +0x168
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).executeHandler(0x0?, {0x17f3090, 0x39bb4761440}, 0x0, {0x16f58fb, 0xf})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:161 +0x68
+g3pix.com.br/axonasp/axonvm.(*GlobalASA).ExecuteSessionOnStart(0x39baeb2f400, {0x17f3090, 0x39bb4761440})
+	g3pix.com.br/axonasp/axonvm/global_asa.go:231 +0x96
+main.NewWebHost({0x17e0250, 0x39bb256f440}, 0x39bb175e280)
+	g3pix.com.br/axonasp/server/web_host.go:172 +0xfcb
+main.executeASPWithStatus({0x17e03d0, 0x39baee351d0}, 0x39bb175e280, {0x39baefceca0, 0x1c}, 0x0)
+	g3pix.com.br/axonasp/server/main.go:776 +0x116
+main.executeASP(...)
+	g3pix.com.br/axonasp/server/main.go:747
+main.handleRequest({0x17e03d0, 0x39baee351d0}, 0x39bb175e280)
+	g3pix.com.br/axonasp/server/main.go:588 +0x87e
+net/http.HandlerFunc.ServeHTTP(0x39bae954000?, {0x17e03d0?, 0x39baee351d0?}, 0x16efae3?)
+	net/http/server.go:2286 +0x29
+net/http.(*ServeMux).ServeHTTP(0x39bb4761230?, {0x17e03d0, 0x39baee351d0}, 0x39bb175e280)
+	net/http/server.go:2828 +0x1c7
+main.main.withServerHeader.func3({0x17e03d0, 0x39baee351d0}, 0x39bb175e280)
+	g3pix.com.br/axonasp/server/main.go:469 +0xa8
+net/http.HandlerFunc.ServeHTTP(0x489a39?, {0x17e03d0?, 0x39baee351d0?}, 0x39baf7adb68?)
+	net/http/server.go:2286 +0x29
+net/http.serverHandler.ServeHTTP({0x39bb75e0100?}, {0x17e03d0?, 0x39baee351d0?}, 0x1?)
+	net/http/server.go:3311 +0x8e
+net/http.(*conn).serve(0x39bb6ee6120, {0x17e4010, 0x39baece9c80})
+	net/http/server.go:2073 +0x650
+created by net/http.(*Server).Serve in goroutine 20
+	net/http/server.go:3464 +0x485

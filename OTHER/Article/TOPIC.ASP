@@ -1,35 +1,35 @@
-<!-- #include file=../../inc/BBSSetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../../inc/Fun/VierAnc_Fun.asp -->
+<!--#include file="../../inc/BBSSetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../../inc/Fun/VierAnc_Fun.asp"-->
 <%
 '----------------------------------------------------------------------------------------
-'----- LeadBBSÖ÷ÌâÌû×Óµ÷ÓÃ(2003-7-2)
-'----- µ÷ÓÃ¾ÙÀı: <script language=javascript src=http://°²×°Ä¿Â¼/other/Article/topic.asp?B=1&Number=20&StrLen=12&NewWindow=yes></script>
-'----- ±íÊ¾ÏÔÊ¾°æÃæ£É£ÄºÅÎª1µÄ°æÃæµÄ×îĞÂ20ÌõÖ÷Ìâ£¬Ö÷Ìâ×ÖÊı³¬¹ı12¸ö×Ö½ÚµÄÒÔ12×Ö½ÚÏÔÊ¾(Ò»¸öºº×ÖÎªÁ½¸ö×Ö½Ú)
-'----- ²ÎÊı£ºBoardID °æÃæ£É£ÄºÅ£¬Èç¹û²»Ö¸¶¨£¬Ôò±íÊ¾µ÷ÓÃÂÛÌ³×îĞÂ10ÌõÖ÷Ìâ
-'----- Number£ºÏÔÊ¾¼ÇÂ¼ÌõÊı£¬×î¶àÔÊĞíµ÷ÓÃ100Ìõ£¬²»Ö¸¶¨Ä¬ÈÏµ÷ÓÃ10ÌõÖ÷Ìâ
-'----- StrLen£ºÓĞµÄÌû×ÓÖ÷Ìâ¿ÉÄÜÌ«³¤£¬ÎªÁËÃÀ»¯ÏÔÊ¾Ğ§¹û£¬ÏŞÖÆÏÔÊ¾Ö÷ÌâµÄ×Ö½Ú³¤¶È
-'----- NewWindow£ºÔÚĞÂ´°¿ÚÖĞ´ò¿ªÇëÉèÖÃÎªyes£¬ÆäËü±íÊ¾·ñ
-'----- PithFlag£ºÊÇ·ñµ÷ÓÃ¾«»ª£¬1-±íÊ¾½öµ÷ÓÃ¾«»ªÌû(¿ÉÒÔ¼ÓÉÏBoardIDÏŞÖÆµ÷ÓÃ°æÃæ)
-'----- newanc=1£ºÊÇ·ñÖ»µ÷ÓÃ×îĞÂ»Ø¸´(Ê¹ÓÃ´Ë²ÎÊıÔòÆäËü²ÎÊıÈ«²¿Ê§Ğ§)
+'----- LeadBBSä¸»é¢˜å¸–å­è°ƒç”¨(2003-7-2)
+'----- è°ƒç”¨ä¸¾ä¾‹: <script language=javascript src=http://å®‰è£…ç›®å½•/other/Article/topic.asp?B=1&Number=20&StrLen=12&NewWindow=yes></script>
+'----- è¡¨ç¤ºæ˜¾ç¤ºç‰ˆé¢ï¼©ï¼¤å·ä¸º1çš„ç‰ˆé¢çš„æœ€æ–°20æ¡ä¸»é¢˜ï¼Œä¸»é¢˜å­—æ•°è¶…è¿‡12ä¸ªå­—èŠ‚çš„ä»¥12å­—èŠ‚æ˜¾ç¤º(ä¸€ä¸ªæ±‰å­—ä¸ºä¸¤ä¸ªå­—èŠ‚)
+'----- å‚æ•°ï¼šBoardID ç‰ˆé¢ï¼©ï¼¤å·ï¼Œå¦‚æœä¸æŒ‡å®šï¼Œåˆ™è¡¨ç¤ºè°ƒç”¨è®ºå›æœ€æ–°10æ¡ä¸»é¢˜
+'----- Numberï¼šæ˜¾ç¤ºè®°å½•æ¡æ•°ï¼Œæœ€å¤šå…è®¸è°ƒç”¨100æ¡ï¼Œä¸æŒ‡å®šé»˜è®¤è°ƒç”¨10æ¡ä¸»é¢˜
+'----- StrLenï¼šæœ‰çš„å¸–å­ä¸»é¢˜å¯èƒ½å¤ªé•¿ï¼Œä¸ºäº†ç¾åŒ–æ˜¾ç¤ºæ•ˆæœï¼Œé™åˆ¶æ˜¾ç¤ºä¸»é¢˜çš„å­—èŠ‚é•¿åº¦
+'----- NewWindowï¼šåœ¨æ–°çª—å£ä¸­æ‰“å¼€è¯·è®¾ç½®ä¸ºyesï¼Œå…¶å®ƒè¡¨ç¤ºå¦
+'----- PithFlagï¼šæ˜¯å¦è°ƒç”¨ç²¾åï¼Œ1-è¡¨ç¤ºä»…è°ƒç”¨ç²¾åå¸–(å¯ä»¥åŠ ä¸ŠBoardIDé™åˆ¶è°ƒç”¨ç‰ˆé¢)
+'----- newanc=1ï¼šæ˜¯å¦åªè°ƒç”¨æœ€æ–°å›å¤(ä½¿ç”¨æ­¤å‚æ•°åˆ™å…¶å®ƒå‚æ•°å…¨éƒ¨å¤±æ•ˆ)
 '----------------------------------------------------------------------------------------
-'----- µ÷ÓÃÄ³×¨ÌâÇø×îĞÂÖ÷Ìâ
-'----- <script language=javascript src=http://°²×°Ä¿Â¼/other/Article/topic.asp?GoodAssort=10&Number=20&StrLen=12&NewWindow=yes></script>
-'----- ²ÎÊı£ºGoodAssort£¬Ö¸×¨ÌâÇø±àºÅ
+'----- è°ƒç”¨æŸä¸“é¢˜åŒºæœ€æ–°ä¸»é¢˜
+'----- <script language=javascript src=http://å®‰è£…ç›®å½•/other/Article/topic.asp?GoodAssort=10&Number=20&StrLen=12&NewWindow=yes></script>
+'----- å‚æ•°ï¼šGoodAssortï¼ŒæŒ‡ä¸“é¢˜åŒºç¼–å·
 '----------------------------------------------------------------------------------------
 
 
 '----------------------------------------------------------------------------------------
-'----- LeadBBSÂÛÌ³ĞÅÏ¢µ÷ÓÃ³ÌĞò(2003-09-30 by LeadBBS) for LeadBBS v2.88 v2.77 v3.14
-'----- µ÷ÓÃ¾ÙÀı: <script language=javascript src=http://°²×°Ä¿Â¼/other/Article/Topic.asp?img=/images/del.gif&info=1></script>
-'----- ²ÎÊıimg£ºÖ¸¶¨ÏÔÊ¾ÔÚÇ°ÃæµÄĞŞÊÎÍ¼Æ¬µØÖ·£¬²»Ö¸¶¨Ôò²»ÏÔÊ¾Í¼Æ¬£¬ÒªÇó´óĞ¡16x16
-'----- ²ÎÊıexectime£ºÊÇ·ñÏÔÊ¾Ö´ĞĞÊ±¼ä£¬no:²»ÏÔÊ¾£¬ÆäËü±íÊ¾ÏÔÊ¾
+'----- LeadBBSè®ºå›ä¿¡æ¯è°ƒç”¨ç¨‹åº(2003-09-30 by LeadBBS) for LeadBBS v2.88 v2.77 v3.14
+'----- è°ƒç”¨ä¸¾ä¾‹: <script language=javascript src=http://å®‰è£…ç›®å½•/other/Article/Topic.asp?img=/images/del.gif&info=1></script>
+'----- å‚æ•°imgï¼šæŒ‡å®šæ˜¾ç¤ºåœ¨å‰é¢çš„ä¿®é¥°å›¾ç‰‡åœ°å€ï¼Œä¸æŒ‡å®šåˆ™ä¸æ˜¾ç¤ºå›¾ç‰‡ï¼Œè¦æ±‚å¤§å°16x16
+'----- å‚æ•°exectimeï¼šæ˜¯å¦æ˜¾ç¤ºæ‰§è¡Œæ—¶é—´ï¼Œno:ä¸æ˜¾ç¤ºï¼Œå…¶å®ƒè¡¨ç¤ºæ˜¾ç¤º
 '----------------------------------------------------------------------------------------
 
 '--------------
-'LeadBBS ×îĞÂÍ¼Æ¬µ÷ÓÃ
-'Ê¹ÓÃ·¶Àı: <script language=javascript src=http://°²×°Ä¿Â¼/other/Article/Topic.asp?info=pic&num=5></script>
-'²ÎÊınum: ÏÔÊ¾×îĞÂµÄÍ¼Æ¬ÊıÁ¿£¬ÊıÁ¿Îª1-50£¬Ä¬ÈÏÎª6
+'LeadBBS æœ€æ–°å›¾ç‰‡è°ƒç”¨
+'ä½¿ç”¨èŒƒä¾‹: <script language=javascript src=http://å®‰è£…ç›®å½•/other/Article/Topic.asp?info=pic&num=5></script>
+'å‚æ•°num: æ˜¾ç¤ºæœ€æ–°çš„å›¾ç‰‡æ•°é‡ï¼Œæ•°é‡ä¸º1-50ï¼Œé»˜è®¤ä¸º6
 '--------------
 
 
@@ -39,15 +39,15 @@ HomeUrl = LD_GetUrl(1)
 
 DEF_BBS_HomeUrl = "../../"
 Const LMT_MaxDisplayAnnounce = 100
-OpenDatabase
+OpenDatabase()
 If Request.QueryString("info") = "pic" Then
-	callTopic_PicInfo
+	callTopic_PicInfo()
 ElseIf Request.QueryString("info") <> "" Then
-	Topic_BBSInfo
+	Topic_BBSInfo()
 Else
-	Topic_AnnounceList
+	Topic_AnnounceList()
 End If
-closeDataBase
+closeDataBase()
 
 Sub Topic_AnnounceList
 
@@ -135,7 +135,7 @@ Sub Topic_AnnounceList
 	Rs.close
 	Set Rs = Nothing
 	Response.Write "document.write("""
-	If Request.QueryString("exectime") = "1" Then Response.Write "Ö´ĞĞÊ±¼ä" & FormatNumber(cCur(Timer - DEF_PageExeTime1),4,True)*1000 & "ms Êı¾İ¿â" & GBL_DBNum & "´Î<br>"
+	If Request.QueryString("exectime") = "1" Then Response.Write "æ‰§è¡Œæ—¶é—´" & FormatNumber(cCur(Timer - DEF_PageExeTime1),4,True)*1000 & "ms æ•°æ®åº“" & GBL_DBNum & "æ¬¡<br>"
 
 
 	Dim img
@@ -153,7 +153,7 @@ Sub Topic_AnnounceList
 		GetData(1,SQL) = Replace(htmlencode(GetData(1,SQL)),"\","\\")
 		'GetData(1,SQL) = DisplayAnnounceTitle(GetData(1,SQL),GetData(2,SQL))
 		If GBL_CheckLimitTitle(GetData(4,SQL),GetData(5,SQL),GetData(6,SQL),GetData(7,SQL)) = 1 Then
-				GetData(1,SQL) = "´ËÌû×Ó±êÌâÒÑÉèÖÃÎªÒş²Ø"
+				GetData(1,SQL) = "æ­¤å¸–å­æ ‡é¢˜å·²è®¾ç½®ä¸ºéšè—"
 				GetData(2,SQL) = 1
 		End If
 		Response.Write img & "<a href=" & HomeUrl & "a/" & RW_a(GetData(3,SQL),GetData(0,SQL),1,1,"") & NewWindow & ">" & GetData(1,SQL) & "</a><br>"
@@ -190,10 +190,10 @@ Sub Topic_BBSInfo
 	If img <> "" Then img = "<img src=" & Replace(img,"\","\\") & " align=middle> "
 
 	Response.Write "document.write("""
-	Response.Write img & "Ìû×Ó×ÜÊı£º" & GBL_AnnounceNum & "Ìû"
-	Response.Write "<br>" & img & "Ö÷ÌâÌû×Ó£º" & GBL_TopicNum & "Ìû"
-	Response.Write "<br>" & img & "×¢²áÓÃ»§£º" & GBL_UserCount & "ÈË"
-	Response.Write "<br>" & img & "ÓÃ»§ÔÚÏß£º"
+	Response.Write img & "å¸–å­æ€»æ•°ï¼š" & GBL_AnnounceNum & "å¸–"
+	Response.Write "<br>" & img & "ä¸»é¢˜å¸–å­ï¼š" & GBL_TopicNum & "å¸–"
+	Response.Write "<br>" & img & "æ³¨å†Œç”¨æˆ·ï¼š" & GBL_UserCount & "äºº"
+	Response.Write "<br>" & img & "ç”¨æˆ·åœ¨çº¿ï¼š"
 
 	If isNumeric(application(DEF_MasterCookies & "SiteOlTime")) = False Then
 		Application.Lock
@@ -202,22 +202,22 @@ Sub Topic_BBSInfo
 	End If
 	GBL_OnlineTime = GBL_OnlineTime + application(DEF_MasterCookies & "SiteOlTime")
 	Temp = (GBL_OnlineTime)/(24*60*60)
-	Response.Write Fix(Temp) & "Ìì"
+	Response.Write Fix(Temp) & "å¤©"
 	'GBL_OnlineTime=GBL_OnlineTime-Fix(Temp)*24*60*60
 	'Temp = GBL_OnlineTime/(60*60)
-	'Response.Write Fix(Temp) & "Ê±"
+	'Response.Write Fix(Temp) & "æ—¶"
 	'GBL_OnlineTime=GBL_OnlineTime-Fix(Temp)*60*60
 	'Temp = GBL_OnlineTime/60
-	'Response.Write Fix(Temp) & "·Ö"
+	'Response.Write Fix(Temp) & "åˆ†"
 	
-	Response.Write "<br>" & img & "Ò³Ãæ·ÃÎÊ£º" & (GBL_PageCount+application(DEF_MasterCookies & "SitePageCount")) & "´Î"
-	Response.Write "<br>" & img & "µ±Ç°ÔÚÏß£º" & application(DEF_MasterCookies & "ActiveUsers") & "ÈË"
-	Response.Write "<br>" & img & "×î¸ßÔÚÏß£º" & GBL_MaxOnline & "ÈË"
-	'Response.Write "<br>" & img & "×î¸ßÈÕ·¢Ìû£º" & GBL_MaxAnnounce & "Ìû"
-	Response.Write "<br>" & img & "½ñÈÕ·¢Ìû£º<b><font color=Red class=redfont>" & GBL_TodayAnnounce & "</font></b>Ìû"
-	Response.Write "<br>" & img & "ÉÏ´«¸½¼ş£º" & GBL_UploadNum & "¸ö"
+	Response.Write "<br>" & img & "é¡µé¢è®¿é—®ï¼š" & (GBL_PageCount+application(DEF_MasterCookies & "SitePageCount")) & "æ¬¡"
+	Response.Write "<br>" & img & "å½“å‰åœ¨çº¿ï¼š" & application(DEF_MasterCookies & "ActiveUsers") & "äºº"
+	Response.Write "<br>" & img & "æœ€é«˜åœ¨çº¿ï¼š" & GBL_MaxOnline & "äºº"
+	'Response.Write "<br>" & img & "æœ€é«˜æ—¥å‘å¸–ï¼š" & GBL_MaxAnnounce & "å¸–"
+	Response.Write "<br>" & img & "ä»Šæ—¥å‘å¸–ï¼š<b><font color=Red class=redfont>" & GBL_TodayAnnounce & "</font></b>å¸–"
+	Response.Write "<br>" & img & "ä¸Šä¼ é™„ä»¶ï¼š" & GBL_UploadNum & "ä¸ª"
 
-	If Request.QueryString("exectime") = "1" Then Response.Write "<br>" & img & "Ö´ĞĞÊ±¼ä£º" & FormatNumber(cCur(Timer - DEF_PageExeTime1),4,True)*1000 & "ºÁÃë"
+	If Request.QueryString("exectime") = "1" Then Response.Write "<br>" & img & "æ‰§è¡Œæ—¶é—´ï¼š" & FormatNumber(cCur(Timer - DEF_PageExeTime1),4,True)*1000 & "æ¯«ç§’"
 	Response.Write """);"
 
 End Sub
@@ -281,18 +281,18 @@ End If%> id=topic_imgUrl name=topic_imgUrl target=_blank><img src=\"<%Response.W
 		Response.Write Replace(GetData(1,0),"\","/")
 	End If%>\"<%If DEF_EnableGFL = 1 Then
 		Else%> width=<%=Width%> height=<%=Height%><%End If%> id=topic_img name=topic_img style=\"border:1 gold ridge\"></a>");
-var topic_time = 5000;//Éè¶¨µÄÊ±¼ä¼ä¸ô
-var topic_index;//Ä¿Ç°ÏÔÊ¾µÄÍ¼Æ¬±àºÅ
-var topic_n;//×Ü¹²µÄÍ¼Æ¬Á¿
-var duration = 3;//blendTransÂË¾µÊ¹ÓÃµÄÒ»¸ö²ÎÊıÖµ£¬ºóÃæ»áÓĞËµÃ÷
+var topic_time = 5000;//è®¾å®šçš„æ—¶é—´é—´éš”
+var topic_index;//ç›®å‰æ˜¾ç¤ºçš„å›¾ç‰‡ç¼–å·
+var topic_n;//æ€»å…±çš„å›¾ç‰‡é‡
+var duration = 3;//blendTransæ»¤é•œä½¿ç”¨çš„ä¸€ä¸ªå‚æ•°å€¼ï¼Œåé¢ä¼šæœ‰è¯´æ˜
 
-//Í¼Æ¬¼¯Êı×é¶ÔÏó
+//å›¾ç‰‡é›†æ•°ç»„å¯¹è±¡
   function ImgArray(len)
   {
    this.length=len;
   }
 
-//Éè¶¨²ÎÓë¸üÌæµÄÍ¼Æ¬¼¯
+//è®¾å®šå‚ä¸æ›´æ›¿çš„å›¾ç‰‡é›†
 var ImgName=new ImgArray(<%=SQL+1%>);
 var ImgName_Open=new ImgArray(<%=SQL+1%>);
 <%For Rs = 0 To SQL%>

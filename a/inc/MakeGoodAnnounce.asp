@@ -1,8 +1,13 @@
 <%
-Const DEF_AllowPunish = 1 'ÊÇ·ñÔÊĞíÆÕÍ¨ÓÃ»§³Í·£·¢ÌûÓÃ»§£º1.ÔÊĞíÆÕ±éÓÃ»§³Í·£·¢ÌûÓÃ»§¡¡£°¡£½ûÖ¹
-Const DEF_AllowOpinionNum = 3 'ÔÊĞíÆÕÍ¨ÓÃ»§ÆÀ¼Û´ÎÊı 0,½ûÖ¹,-1 ÔÊĞíÎŞÏŞ >0 Ö¸¶¨´ÎÊı
-Const DEF_MasterNolimit = 0 '°æÖ÷¼°¹ÜÀíÔ±ÆÀ¼Û´ÎÊıÊÇ·ñÎŞÏŞ£º¡¡£±£¬ÎŞÏŞ£¬£°£¬ÏŞÖÆÍ¬ÆÕÍ¨ÓÃ»§´Î
-Const DEF_AllowBoardMasterCachetValue = 1 'ÊÇ·ñÔÊĞí°æÖ÷ÆÀ¼ÛÉùÍû£º1.ÊÇ 0.·ñ
+' README Â§41: `Abs(x)` reads a storage slot instead of the value when x is a bare variable
+' under AxonASP, so every Abs() below is written `Abs(x + 0)` â€” an expression argument is
+' evaluated correctly. It matters here: these are the points deducted from and awarded to a
+' user for rating a post, and the range clamps that keep è¯„å¸– inside DEF_BBS_PrizeAnnouncePoints.
+
+Const DEF_AllowPunish = 1 'æ˜¯å¦å…è®¸æ™®é€šç”¨æˆ·æƒ©ç½šå‘å¸–ç”¨æˆ·ï¼š1.å…è®¸æ™®éç”¨æˆ·æƒ©ç½šå‘å¸–ç”¨æˆ·ã€€ï¼ã€‚ç¦æ­¢
+Const DEF_AllowOpinionNum = 3 'å…è®¸æ™®é€šç”¨æˆ·è¯„ä»·æ¬¡æ•° 0,ç¦æ­¢,-1 å…è®¸æ— é™ >0 æŒ‡å®šæ¬¡æ•°
+Const DEF_MasterNolimit = 0 'ç‰ˆä¸»åŠç®¡ç†å‘˜è¯„ä»·æ¬¡æ•°æ˜¯å¦æ— é™ï¼šã€€ï¼‘ï¼Œæ— é™ï¼Œï¼ï¼Œé™åˆ¶åŒæ™®é€šç”¨æˆ·æ¬¡
+Const DEF_AllowBoardMasterCachetValue = 1 'æ˜¯å¦å…è®¸ç‰ˆä¸»è¯„ä»·å£°æœ›ï¼š1.æ˜¯ 0.å¦
 Dim GBL_GoodFlag,ALL_FirstRootID,ALL_LastRootID,LMT_UserID
 Dim Form_OpinionUser,Form_OpinionWhys,Form_OpinionNum,Old_Form_OpinionNum,Form_OpinionStr,Form_OpitionType,Form_CachetNum,Form_CharmNum,Form_PointsNum,Form_OpinionCount
 Dim MakeGood_Title,MakeGood_User,NotReplay
@@ -13,7 +18,7 @@ NotReplay = 0
 Function CheckMakeGoodSure
 
 	If GetBinarybit(GBL_CHK_UserLimit,6) = 1 Then
-		Processor_ErrMsg "´íÎó£¬È¨ÏŞ²»×ã£¡" & VbCrLf
+		Call Processor_ErrMsg("é”™è¯¯ï¼Œæƒé™ä¸è¶³ï¼" & VbCrLf)
 		CheckMakeGoodSure = 0
 		MakeGood_Level = 0
 		Exit Function
@@ -23,7 +28,7 @@ Function CheckMakeGoodSure
 	SQL = sql_select("Select BoardID,UserID,GoodFlag,Opinion,Title,UserName,TitleStyle,NotReplay from LeadBBS_Announce where id=" & LMT_AncID,1)
 	Set Rs = LDExeCute(SQL,0)
 	If Rs.Eof Then
-		Processor_ErrMsg "´íÎó£¬Òª¾«»ªµÄÌû×ÓID²»´æÔÚ£¡" & VbCrLf
+		Call Processor_ErrMsg("é”™è¯¯ï¼Œè¦ç²¾åçš„å¸–å­IDä¸å­˜åœ¨ï¼" & VbCrLf)
 		Rs.Close
 		Set Rs = Nothing
 		CheckMakeGoodSure = 0
@@ -76,7 +81,7 @@ Function CheckMakeGoodSure
 		Temp = Application(DEF_MasterCookies & "BoardInfo" & GBL_Board_ID)
 	End If
 	If isArray(Temp) = False Then
-		Processor_ErrMsg "´íÎóÂÛÌ³·¢Éú´íÎó£¬ÇëÁªÏµ¹ÜÀíÔ±£¡" & VbCrLf
+		Call Processor_ErrMsg("é”™è¯¯è®ºå›å‘ç”Ÿé”™è¯¯ï¼Œè¯·è”ç³»ç®¡ç†å‘˜ï¼" & VbCrLf)
 		CheckMakeGoodSure = 0
 		MakeGood_Level = 0
 		Set Rs = Nothing
@@ -87,21 +92,21 @@ Function CheckMakeGoodSure
 	ALL_FirstRootID = Temp(33,0)
 	ALL_LastRootID = Temp(34,0)
 	
-	CheckisBoardMaster
-	If CheckSupervisorUserName = 1 Then
+	CheckisBoardMaster()
+	If CheckSupervisorUserName() = 1 Then
 		CheckMakeGoodSure = 1
 		MakeGood_Level = 3
 	ElseIf GBL_UserID >= 1 and (GBL_BoardMasterFlag >= 5 and GetBinarybit(GBL_CHK_UserLimit,6) = 0) Then
 		CheckMakeGoodSure = 1
 		MakeGood_Level = 2
-	ElseIf GBL_UserID >= 1 and CheckUserAnnounceLimit = 1 Then
+	ElseIf GBL_UserID >= 1 and CheckUserAnnounceLimit() = 1 Then
 		GBL_CHK_TempStr = ""
 		CheckMakeGoodSure = 1
 		MakeGood_Level = 1
 	Else
 		CheckMakeGoodSure = 0
 		MakeGood_Level = 0
-		Processor_ErrMsg "´íÎó£¬È¨ÏŞ²»×ã(UsrLMT)£¡"
+		Call Processor_ErrMsg("é”™è¯¯ï¼Œæƒé™ä¸è¶³(UsrLMT)ï¼")
 	End If
 
 End Function
@@ -141,22 +146,22 @@ End Function
 Sub DisplayMakeGoodAnnounce
 
 	If MakeGood_Level = 1 or (Request.Form("Form_GoodType") = "2" and DEF_MasterNolimit = 0) Then
-		If Opinion_CheckAllowOpinion = 0 Then
-			Processor_ErrMsg "<span class=redfont>Äú¶Ô´ËÌûÆÀ¼Û´ÎÊıÒÑ³¬³ö´ÎÊıÏŞÖÆ,»òÊÇÆÀ¼ÛÖµ²»×ã.</span>"
+		If Opinion_CheckAllowOpinion() = 0 Then
+			Call Processor_ErrMsg("<span class=redfont>æ‚¨å¯¹æ­¤å¸–è¯„ä»·æ¬¡æ•°å·²è¶…å‡ºæ¬¡æ•°é™åˆ¶,æˆ–æ˜¯è¯„ä»·å€¼ä¸è¶³.</span>")
 			Exit Sub
 		End If
 	End If
 	If Request.Form("Form_GoodType") = "2" Then
 		If NotReplay = 1 Then
-			Processor_ErrMsg "<span class=redfont>´ËÌûÒÑËø¶¨£¬ÎŞ·¨ÆÀ¼Û.</span>"
+			Call Processor_ErrMsg("<span class=redfont>æ­¤å¸–å·²é”å®šï¼Œæ— æ³•è¯„ä»·.</span>")
 			Exit Sub
 		End If
-		OpinionAnnounce
+		OpinionAnnounce()
 		Exit Sub
 	End If
 	If Request.Form("SureFlag")="1" and MakeGood_Level >= 2 Then
-		If CheckWriteEventSpace = 0 Then
-			Processor_ErrMsg "<span class=redfont>ÄúµÄ²Ù×÷¹ıÆµ£¬ÇëÉÔºòË¢ĞÂÔÙÊÔ£¡</span>"
+		If CheckWriteEventSpace() = 0 Then
+			Call Processor_ErrMsg("<span class=redfont>æ‚¨çš„æ“ä½œè¿‡é¢‘ï¼Œè¯·ç¨å€™åˆ·æ–°å†è¯•ï¼</span>")
 			Exit Sub
 		End If
 
@@ -165,12 +170,12 @@ Sub DisplayMakeGoodAnnounce
 		SQL = sql_select("Select UserID,GoodFlag,BoardID,ParentID from LeadBBS_Announce where id=" & LMT_AncID,1)
 		Set Rs = LDExeCute(SQL,0)
 		If Rs.Eof Then
-			Processor_ErrMsg "´íÎó£¬Î´Ñ¡ÔñÒª¾«»ªµÄÌû×Ó£¡" & VbCrLf
+			Call Processor_ErrMsg("é”™è¯¯ï¼Œæœªé€‰æ‹©è¦ç²¾åçš„å¸–å­ï¼" & VbCrLf)
 			Rs.Close
 			Set Rs = Nothing
 			Exit Sub
 		'ElseIf cCur(Rs("ParentID")) <> 0 Then
-		'	Processor_ErrMsg "´íÎó,¾«»ªµÄÌû×Ó±ØĞëÊÇÖ÷ÌâÌû£¡" & VbCrLf
+		'	Processor_ErrMsg "é”™è¯¯,ç²¾åçš„å¸–å­å¿…é¡»æ˜¯ä¸»é¢˜å¸–ï¼" & VbCrLf
 		'	Rs.Close
 		'	Set Rs = Nothing
 		'	Exit Sub
@@ -191,15 +196,15 @@ Sub DisplayMakeGoodAnnounce
 				If inStr(application(DEF_MasterCookies & "TopAncList" & GBL_Board_BoardAssort),"," & LMT_AncID & ",") Then UpdateAnnounceApplicationInfo LMT_AncID,12,0,0,GBL_Board_BoardAssort
 			End if
 			
-			Processor_Done "´ËÌû×ÓÒÑ¾­ÊÇ¾«»ªÌû£¬ÏÖÈ¡Ïû¾«»ª£¡" & VbCrLf
+			Call Processor_Done("æ­¤å¸–å­å·²ç»æ˜¯ç²¾åå¸–ï¼Œç°å–æ¶ˆç²¾åï¼" & VbCrLf)
 			CALL LDExeCute("Update LeadBBS_User set Points=Points-" & DEF_BBS_MakeGoodAnnouncePoints & ",AnnounceGood=AnnounceGood-1 Where ID =" & UserID,1)
-			UpdateBoardAnnounceNum Application(DEF_MasterCookies & "BoardInfo" & BoardID)(28,0),0,0,0,-1
+			Call UpdateBoardAnnounceNum(Application(DEF_MasterCookies & "BoardInfo" & BoardID)(28,0),0,0,0,-1)
 			
-			If LMT_UserID > 0 and (LMT_Prc_MsgFlag = 2 or Request.Form("SendMessage") = "1") Then SendNewMessage Prc_User,MakeGood_User,"ÂÛÌ³¶ÌĞÅ£ºÌû×ÓÈ¡Ïû¾«»ªÍ¨Öª","[color=blue]ÄúËù·¢±íµÄÌû×Ó±»È¡Ïû¾«»ª[/color]" & VbCrLf & VbCrLf &_
-				"[b]ËùÔÚ°æÃæ£º[/b][url=../b/" & RW_b(GBL_Board_ID,0,"") & "]" & htmlencode(KillHTMLLabel(GBL_Board_BoardName)) & "[/url]" & VbCrLf & _
-				"[b]²Ù×÷ÈËÔ±£º[/b]" & htmlencode(GBL_CHK_User) & VbCrLf & _
-				"[b]²Ù×÷Ô­Òò£º[/b]" & htmlencode(Left(Request.Form("SendWhys"),24)) & VbCrLf & _
-				"[b]Ïà¹ØÌû×Ó£º[/b][url=../a/" & RW_a(GBL_Board_ID,LMT_AncID,1,1,"") & "]" & htmlencode(MakeGood_Title) & "[/url]",GBL_IPAddress
+			If LMT_UserID > 0 and (LMT_Prc_MsgFlag = 2 or Request.Form("SendMessage") = "1") Then SendNewMessage Prc_User,MakeGood_User,"è®ºå›çŸ­ä¿¡ï¼šå¸–å­å–æ¶ˆç²¾åé€šçŸ¥","[color=blue]æ‚¨æ‰€å‘è¡¨çš„å¸–å­è¢«å–æ¶ˆç²¾å[/color]" & VbCrLf & VbCrLf &_
+				"[b]æ‰€åœ¨ç‰ˆé¢ï¼š[/b][url=../b/" & RW_b(GBL_Board_ID,0,"") & "]" & htmlencode(KillHTMLLabel(GBL_Board_BoardName)) & "[/url]" & VbCrLf & _
+				"[b]æ“ä½œäººå‘˜ï¼š[/b]" & htmlencode(GBL_CHK_User) & VbCrLf & _
+				"[b]æ“ä½œåŸå› ï¼š[/b]" & htmlencode(Left(Request.Form("SendWhys"),24)) & VbCrLf & _
+				"[b]ç›¸å…³å¸–å­ï¼š[/b][url=../a/" & RW_a(GBL_Board_ID,LMT_AncID,1,1,"") & "]" & htmlencode(MakeGood_Title) & "[/url]",GBL_IPAddress
 		Else
 			Rs.Close
 			Set Rs = Nothing
@@ -210,29 +215,29 @@ Sub DisplayMakeGoodAnnounce
 			Else
 				If inStr(application(DEF_MasterCookies & "TopAncList" & GBL_Board_BoardAssort),"," & LMT_AncID & ",") Then UpdateAnnounceApplicationInfo LMT_AncID,12,1,0,GBL_Board_BoardAssort
 			End If
-			Processor_Done "³É¹¦¾«»ªÂÛÌ³Ìû×Ó£¡"
+			Call Processor_Done("æˆåŠŸç²¾åè®ºå›å¸–å­ï¼")
 			CALL LDExeCute("Update LeadBBS_User set Points=Points+" & DEF_BBS_MakeGoodAnnouncePoints & ",AnnounceGood=AnnounceGood+1 Where ID =" & UserID,1)
 			CALL LDExeCute("Update LeadBBS_Boards set GoodNum=GoodNum+1 Where BoardID =" & BoardID,1)
-			UpdateBoardAnnounceNum Application(DEF_MasterCookies & "BoardInfo" & BoardID)(28,0),0,0,0,1
-			CALL LDExeCute("insert into LeadBBS_Log(LogType,LogTime,LogInfo,UserName,IP,BoardID) Values(102," & GetTimeValue(DEF_Now) & ",'³É¹¦¾«»ª Õë¶ÔÌû×Ó£º°æÃæ±àºÅ" & GBL_Board_ID & "Ìû×Ó±àºÅ" & LMT_AncID & " ×÷Õß±àºÅ:" & LMT_UserID & "£®','" & Replace(Replace(htmlencode(Left(GBL_CHK_User,14)),"\","\\"),"'","''") & "','" & Replace(GBL_IPAddress,"'","''") & "'," & GBL_Board_ID & ")",1)
+			Call UpdateBoardAnnounceNum(Application(DEF_MasterCookies & "BoardInfo" & BoardID)(28,0),0,0,0,1)
+			CALL LDExeCute("insert into LeadBBS_Log(LogType,LogTime,LogInfo,UserName,IP,BoardID) Values(102," & GetTimeValue(DEF_Now) & ",'æˆåŠŸç²¾å é’ˆå¯¹å¸–å­ï¼šç‰ˆé¢ç¼–å·" & GBL_Board_ID & "å¸–å­ç¼–å·" & LMT_AncID & " ä½œè€…ç¼–å·:" & LMT_UserID & "ï¼','" & Replace(Replace(htmlencode(Left(GBL_CHK_User,14)),"\","\\"),"'","''") & "','" & Replace(GBL_IPAddress,"'","''") & "'," & GBL_Board_ID & ")",1)
 			
-			If LMT_UserID > 0 and (LMT_Prc_MsgFlag = 2 or Request.Form("SendMessage") = "1") Then SendNewMessage Prc_User,MakeGood_User,"ÂÛÌ³¶ÌĞÅ£ºÌû×Ó¾«»ªÍ¨Öª","[color=blue]ÄúËù·¢±íµÄÌû×Ó±»¼ÓÎª¾«»ª[/color]" & VbCrLf & VbCrLf &_
-				"[b]ËùÔÚ°æÃæ£º[/b][url=../b/" & RW_b(GBL_Board_ID,0,"") & "]" & htmlencode(KillHTMLLabel(GBL_Board_BoardName)) & "[/url]" & VbCrLf & _
-				"[b]²Ù×÷ÈËÔ±£º[/b]" & htmlencode(GBL_CHK_User) & VbCrLf & _
-				"[b]²Ù×÷Ô­Òò£º[/b]" & htmlencode(Left(Request.Form("SendWhys"),24)) & VbCrLf & _
-				"[b]Ïà¹ØÌû×Ó£º[/b][url=../a/" & RW_a(GBL_Board_ID,LMT_AncID,1,1,"") & "]" & htmlencode(MakeGood_Title) & "[/url]",GBL_IPAddress
+			If LMT_UserID > 0 and (LMT_Prc_MsgFlag = 2 or Request.Form("SendMessage") = "1") Then SendNewMessage Prc_User,MakeGood_User,"è®ºå›çŸ­ä¿¡ï¼šå¸–å­ç²¾åé€šçŸ¥","[color=blue]æ‚¨æ‰€å‘è¡¨çš„å¸–å­è¢«åŠ ä¸ºç²¾å[/color]" & VbCrLf & VbCrLf &_
+				"[b]æ‰€åœ¨ç‰ˆé¢ï¼š[/b][url=../b/" & RW_b(GBL_Board_ID,0,"") & "]" & htmlencode(KillHTMLLabel(GBL_Board_BoardName)) & "[/url]" & VbCrLf & _
+				"[b]æ“ä½œäººå‘˜ï¼š[/b]" & htmlencode(GBL_CHK_User) & VbCrLf & _
+				"[b]æ“ä½œåŸå› ï¼š[/b]" & htmlencode(Left(Request.Form("SendWhys"),24)) & VbCrLf & _
+				"[b]ç›¸å…³å¸–å­ï¼š[/b][url=../a/" & RW_a(GBL_Board_ID,LMT_AncID,1,1,"") & "]" & htmlencode(MakeGood_Title) & "[/url]",GBL_IPAddress
 		End if
 		If LMT_AncID >= ALL_FirstRootID  Then UpdateBoardApplicationInfo GBL_board_ID,0,33
 		If LMT_AncID <= ALL_LastRootID  Then UpdateBoardApplicationInfo GBL_board_ID,0,34
-		If CheckSupervisorUserName = 0 Then
+		If CheckSupervisorUserName() = 0 Then
 			CALL LDExeCute("Update LeadBBS_User Set LastWriteTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
 			UpdateSessionValue 13,GetTimeValue(DEF_Now),0
 		End If
 	Else
 		Dim N
-		Processor_Head
+		Processor_Head()
 		%>
-		<form name=DellClientForm id=DellClientForm action=Processor.asp?action=MakeGood&b=<%=GBL_Board_ID%>&ID=<%=LMT_AncID%> onSubmit="submit_disable(this);" method="post"<%
+		<form name=DellClientForm id=DellClientForm action=Processor.asp?action=MakeGood&b=<%=GBL_Board_ID%>&ID=<%=LngStr(LMT_AncID)%> onSubmit="submit_disable(this);" method="post"<%
 		If AjaxFlag = 1 Then
 			Response.Write " target=""hidden_frame"""
 		End If
@@ -240,48 +245,49 @@ Sub DisplayMakeGoodAnnounce
 			<input type=hidden name=SureFlag value="1">
 			<input type=hidden name=JsFlag value="1">
 			<input type=hidden name=AjaxFlag value="<%=AjaxFlag%>">
-			<input type=hidden name=ID value="<%=LMT_AncID%>">
+			<input type=hidden name=ID value="<%=LngStr(LMT_AncID)%>">
 			<input type=hidden name=BoardID value="<%=GBL_Board_ID%>">
 			<%
 		If DEF_BBS_PrizeAnnouncePoints <> 0 Then%>
 			<table><tr><td>
-			<div class=title>ÇëÑ¡ÔñÒª½øĞĞµÄ²Ù×÷</div>
+			<div class=title>è¯·é€‰æ‹©è¦è¿›è¡Œçš„æ“ä½œ</div>
 			<%If MakeGood_Level >= 2 Then%>
 			<hr class=splitline>
 					<input class=fmchkbox type=radio name=Form_GoodType value=0 checked><span onclick="$id('DellClientForm').Form_GoodType[0].checked=1;" style="cursor:pointer"><%
-					If GBL_GoodFlag = 1 Then%>È¡Ïû<%
-					End If%>¾«»ª±àºÅÎª<font color=ff0000 class=redfont><%=LMT_AncID%></font>µÄÌû×Ó</span>
+					If GBL_GoodFlag = 1 Then%>å–æ¶ˆ<%
+					End If%>ç²¾åç¼–å·ä¸º<font color=ff0000 class=redfont><%=LngStr(LMT_AncID)%></font>çš„å¸–å­</span>
 					<div class=value2>
-					<font color=Gray class=grayfont>´ËÏî²Ù×÷¿É½«Ìû×Ó¹éÈë¸öÈË¾«»ª×¨¼¯¼°°æÃæºÍ×ÜÂÛÌ³¾«»ª×¨¼¯£¬<br>²¢Ó°Ïì´ËÌûÓÃ»§ÏàÓ¦½±Àø</font>
+					<font color=Gray class=grayfont>æ­¤é¡¹æ“ä½œå¯å°†å¸–å­å½’å…¥ä¸ªäººç²¾åä¸“é›†åŠç‰ˆé¢å’Œæ€»è®ºå›ç²¾åä¸“é›†ï¼Œ<br>å¹¶å½±å“æ­¤å¸–ç”¨æˆ·ç›¸åº”å¥–åŠ±</font>
 					</div>
 			<%End If
-			If LMT_UserID > 0 Then  'ÓÎ¿ÍÌû×ÓÎŞ·¨ÆÀ¼Û%>
+			If LMT_UserID > 0 Then  'æ¸¸å®¢å¸–å­æ— æ³•è¯„ä»·
+%>
 			<hr class=splitline>
-				<input class=fmchkbox type=radio name=Form_GoodType id=Opinion2 value=2<%If MakeGood_Level = 1 Then Response.Write " checked=checked"%>><span onclick="$id('Opinion2').checked=1;" style="cursor:pointer">¶ÔÌû×Ó½øĞĞÆÀ·Ö</span>
+				<input class=fmchkbox type=radio name=Form_GoodType id=Opinion2 value=2<%If MakeGood_Level = 1 Then Response.Write " checked=checked"%>><span onclick="$id('Opinion2').checked=1;" style="cursor:pointer">å¯¹å¸–å­è¿›è¡Œè¯„åˆ†</span>
 				<div class=value2>
-				ÆÀ¼ÛÓï£º<input maxlength=24 onfocus="$id('Opinion2').checked=1;" name=Form_OpinionWhys value="" size="24" class='fminpt input_3'>
-				<span class=grayfont>×î¶à24×Ö½Ú</span>
+				è¯„ä»·è¯­ï¼š<input maxlength=24 onfocus="$id('Opinion2').checked=1;" name=Form_OpinionWhys value="" size="24" class='fminpt input_3'>
+				<span class=grayfont>æœ€å¤š24å­—èŠ‚</span>
 				</div>
 				
 				
 			<%If MakeGood_Level >= 1 Then%>
 				<div class=value2>
-				ÆÀ<%=DEF_PointsName(0)%>£º<select name=Form_AddPoints onchange="$id('Opinion2').checked=1;">
+				è¯„<%=DEF_PointsName(0)%>ï¼š<select name=Form_AddPoints onchange="$id('Opinion2').checked=1;">
 				<%
 					If MakeGood_Level >=2 Then Response.Write "<option value=0 selected>-----</option>" & VbCrLf
 					For N = 1 to abs(DEF_BBS_PrizeAnnouncePoints)
-						Response.Write "<option value=" & N & ">½±Àø " & DEF_PointsName(0) & " + " & N & "</option>" & VbCrLf
+						Response.Write "<option value=" & N & ">å¥–åŠ± " & DEF_PointsName(0) & " + " & N & "</option>" & VbCrLf
 					Next
 					If MakeGood_Level >=2 or DEF_AllowPunish = 1 Then
 						For N = abs(DEF_BBS_PrizeAnnouncePoints) to 1 Step -1
-							Response.Write "<option value=-" & N & ">´¦·£ " & DEF_PointsName(0) & " - " & N & "</option>" & VbCrLf
+							Response.Write "<option value=-" & N & ">å¤„ç½š " & DEF_PointsName(0) & " - " & N & "</option>" & VbCrLf
 						Next
 					End If
 				%>
 				</select>
 				</div><%If MakeGood_Level = 1 Then%>
-						<div class=value2><span class=grayfont>×¢Òâ£ºÆÀ¼Û·ÖÊı½«´ÓÄú¸öÈË<%=DEF_PointsName(0)%>ÖĞ¿Û³ı(°üÀ¨´¦·£Öµ)<%
-						If DEF_AllowOpinionNum > 0 Then Response.Write ", <br>×î¶àÔÊĞíÆÀ¼Û" & DEF_AllowOpinionNum & "´Î"%></span>
+						<div class=value2><span class=grayfont>æ³¨æ„ï¼šè¯„ä»·åˆ†æ•°å°†ä»æ‚¨ä¸ªäºº<%=DEF_PointsName(0)%>ä¸­æ‰£é™¤(åŒ…æ‹¬å¤„ç½šå€¼)<%
+						If DEF_AllowOpinionNum > 0 Then Response.Write ", <br>æœ€å¤šå…è®¸è¯„ä»·" & DEF_AllowOpinionNum & "æ¬¡"%></span>
 						</div><%
 					End If%>
 			<%
@@ -289,51 +295,53 @@ Sub DisplayMakeGoodAnnounce
 
 			If MakeGood_Level >= 2 and DEF_AllowBoardMasterCachetValue = 1 Then%>
 				<div class=value2>
-				ÆÀ<%=DEF_PointsName(2)%>£º<select name=Form_OpinionNum onchange="$id('Opinion2').checked=1;">
+				è¯„<%=DEF_PointsName(2)%>ï¼š<select name=Form_OpinionNum onchange="$id('Opinion2').checked=1;">
 				<%
 					For N = abs(DEF_BBS_PrizeAnnouncePoints) to 1 Step -1
 						Response.Write "<option value=-" & N
-						Response.Write ">´¦·£ " & DEF_PointsName(2) & " - " & N & "</option>" & VbCrLf
+						Response.Write ">å¤„ç½š " & DEF_PointsName(2) & " - " & N & "</option>" & VbCrLf
 					Next
 					Response.Write "<option value=0 selected=selected>-----</option>" & VbCrLf
 					For N = 1 to abs(DEF_BBS_PrizeAnnouncePoints)
 						Response.Write "<option value=" & N
-						Response.Write ">½±Àø " & DEF_PointsName(2) & " + " & N & "</option>" & VbCrLf
+						Response.Write ">å¥–åŠ± " & DEF_PointsName(2) & " + " & N & "</option>" & VbCrLf
 					Next
 				%>
 				</select>
 				</div>
 			<%End If
 				
-			If MakeGood_Level >= 3 Then '¹ÜÀíÔ±¿É½øĞĞ²Æ¸»ÆÀ·Ö%>
+			If MakeGood_Level >= 3 Then 'ç®¡ç†å‘˜å¯è¿›è¡Œè´¢å¯Œè¯„åˆ†
+%>
 				
 				<div class=value2>
-				<%=DEF_PointsName(1)%>ÆÀ·Ö£º<select name=Form_AddCharm onchange="$id('Opinion2').checked=1;">
+				<%=DEF_PointsName(1)%>è¯„åˆ†ï¼š<select name=Form_AddCharm onchange="$id('Opinion2').checked=1;">
 				<%
 					For N = abs(DEF_BBS_PrizeAnnouncePoints) to 1 Step -1
-						Response.Write "<option value=-" & N & ">´¦·£ " & DEF_PointsName(1) & " - " & N & "</option>" & VbCrLf
+						Response.Write "<option value=-" & N & ">å¤„ç½š " & DEF_PointsName(1) & " - " & N & "</option>" & VbCrLf
 					Next
-					Response.Write "<option value=0 selected>ÎŞ½±·£</option>" & VbCrLf
+					Response.Write "<option value=0 selected>æ— å¥–ç½š</option>" & VbCrLf
 					For N = 1 to abs(DEF_BBS_PrizeAnnouncePoints)
-						Response.Write "<option value=" & N & ">½±Àø " & DEF_PointsName(1) & " + " & N & "</option>" & VbCrLf
+						Response.Write "<option value=" & N & ">å¥–åŠ± " & DEF_PointsName(1) & " + " & N & "</option>" & VbCrLf
 					Next
 				%>
 				</select>
 				</div>
 			<%End If
-			End If 'end for guest%>
+			End If 'end for guest
+%>
 			</td></tr></table>
 			<%
-		Else%><b>È·ÈÏÒª<%
-			If GBL_GoodFlag = 1 Then%>È¡Ïû<%
-			End If%>¾«»ª±àºÅÎª<font color=ff0000 class=redfont><%=LMT_AncID%></font>µÄÌû×ÓÂğ£¿</b>
+		Else%><b>ç¡®è®¤è¦<%
+			If GBL_GoodFlag = 1 Then%>å–æ¶ˆ<%
+			End If%>ç²¾åç¼–å·ä¸º<font color=ff0000 class=redfont><%=LngStr(LMT_AncID)%></font>çš„å¸–å­å—ï¼Ÿ</b>
 			<br><%
 		End If
 		
 		If MakeGood_Level >= 2 and LMT_UserID > 0 Then Processor_MsgForm%>
 		<br>
 		<div class=value2>
-		<input type=submit value=È·¶¨ class="fmbtn btn_2">
+		<input type=submit value=ç¡®å®š class="fmbtn btn_2">
 		</div>
 		</form>
 		<%Processor_Bottom
@@ -394,10 +402,10 @@ Sub Opinion_Update(PointsNum,CachetNum,CharmNum,OpinionStr,UserName)
 			UserSQLStr = UserSQLStr & ",Points=Points+" & PointsNum
 		End If
 		Tmp = DEF_PointsName(0) & " " & PointsNum
-		If MakeGood_Level = 1 Then CALL LDExeCute("Update LeadBBS_User Set Points=Points-" & Abs(PointsNum) & " where ID=" & GBL_UserID,1)
-		UpdateSessionValue 4,-Abs(PointsNum),1
+		If MakeGood_Level = 1 Then CALL LDExeCute("Update LeadBBS_User Set Points=Points-" & Abs(PointsNum + 0) & " where ID=" & GBL_UserID,1)
+		UpdateSessionValue 4,-Abs(PointsNum + 0),1
 		'Free_UDT
-		CALL LDExeCute("Update LeadBBS_SiteInfo Set SavePoints=SavePoints-" & Abs(PointsNum),1)
+		CALL LDExeCute("Update LeadBBS_SiteInfo Set SavePoints=SavePoints-" & Abs(PointsNum + 0),1)
 		CALL LdExeCute("insert into LeadBBS_Opinion(AnnounceID,UserName,Opinion,NumType,Num,IP,Ndatetime) Values(" & LMT_AncID & ",'" & Replace(UserName,"'","''") & "','" & Replace(OpinionStr,"'","''") & "',0," & PointsNum & ",'" & Replace(GBL_IPAddress,"'","''") & "'," & OpinionTime & ")",1)
 	End If
 	If CachetNum <> 0 Then
@@ -423,39 +431,39 @@ Sub Opinion_Update(PointsNum,CachetNum,CharmNum,OpinionStr,UserName)
 	Form_Opinion = Form_PointsNum & "|" & Form_CachetNum & "|" & Form_CharmNum & "|" & Form_OpinionCount
 	CALL LDExeCute("Update LeadBBS_Announce Set Opinion='" & Replace(Form_Opinion,"'","''") & "' where ID=" & LMT_AncID,1)
 
-	CALL LDExeCute("insert into LeadBBS_Log(LogType,LogTime,LogInfo,UserName,IP,BoardID) Values(105," & OpinionTime & ",'Õë¶ÔÌû×Ó£º°æÃæ±àºÅ" & GBL_Board_ID & "Ìû×Ó±àºÅ" & LMT_AncID & " ×÷Õß±àºÅ:" & LMT_UserID & " ÆÀ¼Û:" & Replace(Form_Opinion,"'","''") & "£®','" & Replace(Replace(htmlencode(Left(GBL_CHK_User,14)),"\","\\"),"'","''") & "','" & Replace(GBL_IPAddress,"'","''") & "'," & GBL_Board_ID & ")",1)
+	CALL LDExeCute("insert into LeadBBS_Log(LogType,LogTime,LogInfo,UserName,IP,BoardID) Values(105," & OpinionTime & ",'é’ˆå¯¹å¸–å­ï¼šç‰ˆé¢ç¼–å·" & GBL_Board_ID & "å¸–å­ç¼–å·" & LMT_AncID & " ä½œè€…ç¼–å·:" & LMT_UserID & " è¯„ä»·:" & Replace(Form_Opinion,"'","''") & "ï¼','" & Replace(Replace(htmlencode(Left(GBL_CHK_User,14)),"\","\\"),"'","''") & "','" & Replace(GBL_IPAddress,"'","''") & "'," & GBL_Board_ID & ")",1)
 
-	If LMT_UserID > 0 and (LMT_Prc_MsgFlag = 2 or Request.Form("SendMessage") = "1") Then SendNewMessage Prc_User,MakeGood_User,"ÂÛÌ³¶ÌĞÅ£ºÌû×ÓÆÀ¼ÛÍ¨Öª","[color=blue]ÄúËù·¢±íµÄÌû×ÓÊÜµ½ÆÀ¼ÛÓ°Ïì[/color]" & VbCrLf & VbCrLf &_
-		"[b]°æÃæ£º[/b][url=../b/" & RW_b(GBL_Board_ID,0,"") & "]" & htmlencode(KillHTMLLabel(GBL_Board_BoardName)) & "[/url]" & VbCrLf & _
-		"[b]²Ù×÷ÈËÔ±£º[/b]" & htmlencode(GBL_CHK_User) & VbCrLf & _
-		"[b]Ô­Òò£º[/b]" & htmlencode(Left(Request.Form("SendWhys"),24)) & VbCrLf & _
-		"[b]ÆÀÓï£º[/b]" & htmlencode(OpinionStr) & VbCrLf & _
-		"[b]ÆÀ·Ö£º[/b]" & Tmp & VbCrLf & _
-		"[b]Ìû×Ó£º[/b][url=../a/" & RW_a(GBL_Board_ID,LMT_AncID,1,1,"") & "]" & htmlencode(MakeGood_Title) & "[/url]",GBL_IPAddress
+	If LMT_UserID > 0 and (LMT_Prc_MsgFlag = 2 or Request.Form("SendMessage") = "1") Then SendNewMessage Prc_User,MakeGood_User,"è®ºå›çŸ­ä¿¡ï¼šå¸–å­è¯„ä»·é€šçŸ¥","[color=blue]æ‚¨æ‰€å‘è¡¨çš„å¸–å­å—åˆ°è¯„ä»·å½±å“[/color]" & VbCrLf & VbCrLf &_
+		"[b]ç‰ˆé¢ï¼š[/b][url=../b/" & RW_b(GBL_Board_ID,0,"") & "]" & htmlencode(KillHTMLLabel(GBL_Board_BoardName)) & "[/url]" & VbCrLf & _
+		"[b]æ“ä½œäººå‘˜ï¼š[/b]" & htmlencode(GBL_CHK_User) & VbCrLf & _
+		"[b]åŸå› ï¼š[/b]" & htmlencode(Left(Request.Form("SendWhys"),24)) & VbCrLf & _
+		"[b]è¯„è¯­ï¼š[/b]" & htmlencode(OpinionStr) & VbCrLf & _
+		"[b]è¯„åˆ†ï¼š[/b]" & Tmp & VbCrLf & _
+		"[b]å¸–å­ï¼š[/b][url=../a/" & RW_a(GBL_Board_ID,LMT_AncID,1,1,"") & "]" & htmlencode(MakeGood_Title) & "[/url]",GBL_IPAddress
 
 End Sub
 
 Sub OpinionAnnounce
 
 	If LMT_UserID = 0 Then
-		Processor_ErrMsg "<span class=redfont>ÓÎ¿ÍÌû×ÓÎŞ·¨ÆÀ¼Û.</span>"
+		Call Processor_ErrMsg("<span class=redfont>æ¸¸å®¢å¸–å­æ— æ³•è¯„ä»·.</span>")
 		Exit Sub
 	End If
 	Dim Form_Opinion
 	Form_OpinionWhys = Request.Form("Form_OpinionWhys")
 
 	If StrLength(Form_OpinionWhys) > 24 Then
-		Processor_ErrMsg "²Ù×÷Ê§°Ü£¬¼òÆÀ´Ê²»ÄÜ³¬¹ı24¸ö×Ö½Ú£¡"
+		Call Processor_ErrMsg("æ“ä½œå¤±è´¥ï¼Œç®€è¯„è¯ä¸èƒ½è¶…è¿‡24ä¸ªå­—èŠ‚ï¼")
 		Exit Sub
 	End If
 
 	If inStr(Form_OpinionWhys,"|") or inStr(Form_OpinionWhys,"<") or inStr(Form_OpinionWhys,"""") or inStr(Form_OpinionWhys,"script") Then
-		Processor_ErrMsg "²Ù×÷Ê§°Ü£¬¼òÆÀ´Ê²»ÄÜº¬ÓĞ|&lt;""scriptµÈ×Ö·û»òµ¥´Ê£¡"
+		Call Processor_ErrMsg("æ“ä½œå¤±è´¥ï¼Œç®€è¯„è¯ä¸èƒ½å«æœ‰|&lt;""scriptç­‰å­—ç¬¦æˆ–å•è¯ï¼")
 		Exit Sub
 	End If
 	
 	If LMT_UserID = GBL_UserID Then
-		Processor_ErrMsg "²»ÄÜÆÀ¼Û×Ô¼º·¢±íµÄÌû×Ó£®"
+		Call Processor_ErrMsg("ä¸èƒ½è¯„ä»·è‡ªå·±å‘è¡¨çš„å¸–å­ï¼")
 		Exit Sub
 	End If
 	
@@ -465,7 +473,7 @@ Sub OpinionAnnounce
 		Form_OpinionNum = Request.Form("Form_OpinionNum")
 		If isNumeric(Form_OpinionNum) = 0 then Form_OpinionNum = 0
 		Form_OpinionNum = Fix(cCur(Form_OpinionNum))
-		If Form_OpinionNum < 0-Abs(DEF_BBS_PrizeAnnouncePoints) or Form_OpinionNum > Abs(DEF_BBS_PrizeAnnouncePoints) Then Form_OpinionNum = 0
+		If Form_OpinionNum < 0-Abs(DEF_BBS_PrizeAnnouncePoints + 0) or Form_OpinionNum > Abs(DEF_BBS_PrizeAnnouncePoints + 0) Then Form_OpinionNum = 0
 	Else
 		Form_OpinionNum = 0
 	End If
@@ -475,24 +483,24 @@ Sub OpinionAnnounce
 		Form_AddPoints = Request.Form("Form_AddPoints")
 		If isNumeric(Form_AddPoints) = 0 then Form_AddPoints = 0
 		Form_AddPoints = Fix(cCur(Form_AddPoints))
-		If Form_AddPoints < 0-Abs(DEF_BBS_PrizeAnnouncePoints) or Form_AddPoints > Abs(DEF_BBS_PrizeAnnouncePoints) Then Form_AddPoints = 0
+		If Form_AddPoints < 0-Abs(DEF_BBS_PrizeAnnouncePoints + 0) or Form_AddPoints > Abs(DEF_BBS_PrizeAnnouncePoints + 0) Then Form_AddPoints = 0
 		If DEF_AllowPunish = 1 Then
 			If MakeGood_Level = 1 and Form_AddPoints = 0 Then
-				Processor_Done "³É¹¦²Ù×÷£¬µ«ÓÃ»§" & DEF_PointsName(0) & "ÎŞÈÎºÎ¸Ä¶¯£®"
+				Call Processor_Done("æˆåŠŸæ“ä½œï¼Œä½†ç”¨æˆ·" & DEF_PointsName(0) & "æ— ä»»ä½•æ”¹åŠ¨ï¼")
 				Exit Sub
 			End If
 		Else
 			If MakeGood_Level = 1 and Form_AddPoints < 0 Then Form_AddPoints = 0
 			If MakeGood_Level = 1 and Form_AddPoints < 1 Then
-				Processor_Done "³É¹¦²Ù×÷£¬µ«ÓÃ»§" & DEF_PointsName(0) & "ÎŞÈÎºÎ¸Ä¶¯£®"
+				Call Processor_Done("æˆåŠŸæ“ä½œï¼Œä½†ç”¨æˆ·" & DEF_PointsName(0) & "æ— ä»»ä½•æ”¹åŠ¨ï¼")
 				Exit Sub
 			End If
 		End If
-		Free_UDT
+		Free_UDT()
 		GBL_CheckPassDoneFlag = 0
-		CheckPass
-		If MakeGood_Level = 1 and GBL_CHK_Points < Abs(Form_AddPoints) Then
-			Processor_Done "ÄúµÄ" & DEF_PointsName(0) & "²»×ã, ÎŞ·¨Íê³É´Ë´ÎÆÀ¼Û£®"
+		CheckPass()
+		If MakeGood_Level = 1 and GBL_CHK_Points < Abs(Form_AddPoints + 0) Then
+			Call Processor_Done("æ‚¨çš„" & DEF_PointsName(0) & "ä¸è¶³, æ— æ³•å®Œæˆæ­¤æ¬¡è¯„ä»·ï¼")
 			Exit Sub
 		End If
 	Else
@@ -504,17 +512,17 @@ Sub OpinionAnnounce
 		Form_AddCharm = Request.Form("Form_AddCharm")
 		If isNumeric(Form_AddCharm) = 0 then Form_AddCharm = 0
 		Form_AddCharm = Fix(cCur(Form_AddCharm))
-		If Form_AddCharm < 0-Abs(DEF_BBS_PrizeAnnouncePoints) or Form_AddCharm > Abs(DEF_BBS_PrizeAnnouncePoints) Then Form_AddCharm = 0
+		If Form_AddCharm < 0-Abs(DEF_BBS_PrizeAnnouncePoints + 0) or Form_AddCharm > Abs(DEF_BBS_PrizeAnnouncePoints + 0) Then Form_AddCharm = 0
 	Else
 		Form_AddCharm = 0
 	End If
 
 	If Form_AddPoints = 0 and Form_OpinionNum = 0 and Form_AddCharm = 0 Then
-		Processor_ErrMsg "ÎŞĞ§µÄÆÀ¼Û, ÆÀ¼Û±ØĞëÑ¡ÔñÆÀ·Ö£®"
+		Call Processor_ErrMsg("æ— æ•ˆçš„è¯„ä»·, è¯„ä»·å¿…é¡»é€‰æ‹©è¯„åˆ†ï¼")
 		Exit Sub
 	End If
 	CALL Opinion_Update(Form_AddPoints,Form_OpinionNum,Form_AddCharm,Form_OpinionWhys,Form_OpinionUser)
-	Processor_Done "³É¹¦Íê³É¶ÔÌû×ÓµÄÆÀ¼Û£¬²¢ÒÑÂ¼ÈëÈÕÖ¾£¡" & VbCrLf
+	Call Processor_Done("æˆåŠŸå®Œæˆå¯¹å¸–å­çš„è¯„ä»·ï¼Œå¹¶å·²å½•å…¥æ—¥å¿—ï¼" & VbCrLf)
 	Response.WRite "GBL_CHK_TrueName:" & GBL_CHK_TrueName
 
 End Sub

@@ -1,1 +1,1 @@
-document.write("½ØÖ¹2007-3-13 2:28:26£¬ÖÁÉÙÓĞ<b><font color=Red class=RedFont>62118</font></b>¸öÍøÕ¾°²×°ÁËLeadBBS¡£");
+document.write("æˆªæ­¢2007-3-13 2:28:26ï¼Œè‡³å°‘æœ‰<b><font color=Red class=RedFont>62118</font></b>ä¸ªç½‘ç«™å®‰è£…äº†LeadBBSã€‚");

@@ -1,11 +1,11 @@
-<!-- #include file=../../inc/BBSSetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../../User/inc/UserTopic.asp -->
-<!-- #include file=Chat_Fun.asp -->
+<!--#include file="../../inc/BBSSetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../../User/inc/UserTopic.asp"-->
+<!--#include file="Chat_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
 GBL_ID = GBL_UserID
 
@@ -13,7 +13,7 @@ GBL_ID = GBL_UserID
 If GBL_CHK_Flag = 1 Then
 	Chat_SendCommand()
 End If
-closeDataBase
+closeDataBase()
 
 Sub Chat_SendCommand
 
@@ -29,7 +29,7 @@ Sub Chat_SendCommand
 	
 
 	If Timer - Msg < Delay and Timer > Msg Then
-		CALL Chat_ViewError("2","<span color=red>ÇëÉÔºòÔÙ·¢ËÍÏûÏ¢£¡</span><br>")
+		CALL Chat_ViewError("2","<span color=red>è¯·ç¨å€™å†å‘é€æ¶ˆæ¯ï¼</span><br>")
 	Else
 		Msg = Left(Request.Form("inputCommand"),Chat_MaxInput)
 		If Trim(Msg) = "" Then Exit Sub
@@ -41,7 +41,7 @@ Sub Chat_SendCommand
 				If GBL_CHK_Points >= Chat_DEF_ColorSpend Then
 					SpendNum = Chat_DEF_ColorSpend
 				Else
-					CALL Chat_ViewError("2","<span color=red>ÄúµÄ" & DEF_PointsName(0) & "²»×ã£¬ÎŞ·¨·¢ËÍÔöÉ«ÎÄ×Ö!</span><br>")
+					CALL Chat_ViewError("2","<span color=red>æ‚¨çš„" & DEF_PointsName(0) & "ä¸è¶³ï¼Œæ— æ³•å‘é€å¢è‰²æ–‡å­—!</span><br>")
 					Exit Sub
 				End If
 			End If
@@ -50,9 +50,9 @@ Sub Chat_SendCommand
 
 		Select Case Channel:
 		Case "2":
-			CALL Chat_ViewError("2","<span color=red>ÄãÎ´¼ÓÈëÈÎºÎ" & DEF_PointsName(9) & "!</span><br>")
+			CALL Chat_ViewError("2","<span color=red>ä½ æœªåŠ å…¥ä»»ä½•" & DEF_PointsName(9) & "!</span><br>")
 		Case "3":
-			CALL Chat_ViewError("2","<span color=red>ÄãÎ´¼ÓÈëÈÎºÎÍÅ¶Ó!</span><br>")
+			CALL Chat_ViewError("2","<span color=red>ä½ æœªåŠ å…¥ä»»ä½•å›¢é˜Ÿ!</span><br>")
 		Case "98":
 			Channel = 98
 			If isArray(Application(DEF_MasterCookies & "_Chat_S_Data_" & ToUser)) = False Then
@@ -60,7 +60,7 @@ Sub Chat_SendCommand
 				Exit Sub
 			End If
 			ToUser = Application(DEF_MasterCookies & "_Chat_S_Name_" & ToUser)
-			Session(DEF_MasterCookies & "_Chat_SendTime") = Timer 'ÉèÖÃ×îºó·¢ËÍÊ±¼ä
+			Session(DEF_MasterCookies & "_Chat_SendTime") = Timer 'è®¾ç½®æœ€åå‘é€æ—¶é—´
 			CALL Chat_Appand(GBL_CHK_User,Msg,5,ToUser)
 			Chat_ViewWorldMsg(GBL_CHK_User)
 			If SpendNum > 0 Then Chat_SetPoint(SpendNum)
@@ -75,7 +75,7 @@ Sub Chat_SendCommand
 			Else
 				ToUser = Application(DEF_MasterCookies & "_Chat_S_Name_" & ToUser)
 			End If
-			Session(DEF_MasterCookies & "_Chat_SendTime") = Timer 'ÉèÖÃ×îºó·¢ËÍÊ±¼ä
+			Session(DEF_MasterCookies & "_Chat_SendTime") = Timer 'è®¾ç½®æœ€åå‘é€æ—¶é—´
 			CALL Chat_Appand(GBL_CHK_User,Msg,1,ToUser)
 			Chat_ViewWorldMsg(GBL_CHK_User)
 			If SpendNum > 0 Then Chat_SetPoint(SpendNum)
@@ -92,7 +92,7 @@ End Sub
 
 Sub Chat_ViewNotOnline(usr)
 
-	Response.write "parent.addMessage('5',""·¢ËÍÊ§°Ü£¬ÓÃ»§" & HtmlEncode(usr) & "²»ÔÚÏß!<br>"");" & VbCrLf
+	Response.write "parent.addMessage('5',""å‘é€å¤±è´¥ï¼Œç”¨æˆ·" & HtmlEncode(usr) & "ä¸åœ¨çº¿!<br>"");" & VbCrLf
 
 End Sub
 

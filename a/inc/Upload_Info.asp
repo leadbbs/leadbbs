@@ -1,4 +1,4 @@
-<% @codepage=936 EnableSessionState=False%>
+<% @codepage=65001 EnableSessionState=False%>
 <%
 Option Explicit
 Dim id

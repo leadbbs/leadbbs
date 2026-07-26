@@ -1,25 +1,25 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/Board_Popfun.asp -->
-<!-- #include file=inc/UserTopic.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
+<!--#include file="inc/UserTopic.asp"-->
 <%
 DEF_BBS_HomeUrl = "../"
 
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
 
 Dim Sdm_FromUser,Sdm_ToUser,Sdm_Title,Sdm_Content
 Sdm_FromUser = GBL_CHK_User
 
-UpdateOnlineUserAtInfo GBL_board_ID,"´ò°üÏÂÔØ¼°É¾³ıÎÒµÄÊÕ¼şÏä"
+UpdateOnlineUserAtInfo GBL_board_ID,"æ‰“åŒ…ä¸‹è½½åŠåˆ é™¤æˆ‘çš„æ”¶ä»¶ç®±"
 GBL_CHK_TempStr=""
 If GBL_UserID=0 or Sdm_FromUser = "" Then
-	GBL_CHK_TempStr = GBL_CHK_TempStr & "ÄãÃ»ÓĞµÇÂ¼<br>" & VbCrLf
+	GBL_CHK_TempStr = GBL_CHK_TempStr & "ä½ æ²¡æœ‰ç™»å½•<br>" & VbCrLf
 End If
 
 Server.ScriptTimeOut = 600
 
 If Request.Form("submitflag") = "" Then
-	BBS_SiteHead DEF_SiteNameString & " - ¶ÌÏûÏ¢",0,"´ò°üÏÂÔØ¼°É¾³ıÎÒµÄÊÕ¼şÏä"
+	BBS_SiteHead DEF_SiteNameString & " - çŸ­æ¶ˆæ¯",0,"æ‰“åŒ…ä¸‹è½½åŠåˆ é™¤æˆ‘çš„æ”¶ä»¶ç®±"
 	UserTopicTopInfo("user")
 	If GBL_CHK_TempStr <> "" Then
 		Response.Write "<div class=alert>" & GBL_CHK_TempStr & "</div>"
@@ -27,24 +27,24 @@ If Request.Form("submitflag") = "" Then
 		<table width=100%>
 		<tr>
 		<td>
-			<br><%DisplayForm%>
+			<br><%DisplayForm()%>
 		</td>
 		</tr>
 		</table>
 		<%
 	End If
-	UserTopicBottomInfo
-	SiteBottom
+	UserTopicBottomInfo()
+	SiteBottom()
 Else
-	SiteHead("   ´òÓ¡¶ÌÏûÏ¢")
+	SiteHead("   æ‰“å°çŸ­æ¶ˆæ¯")
 	if GBL_CHK_TempStr <> "" Then
 		Response.Write "<div class=alert>" & GBL_CHK_TempStr & "</div>"
 	Else
-		PersonalInfoManage
+		PersonalInfoManage()
 	End If
-	SiteBottom_Spend
+	SiteBottom_Spend()
 End If
-closeDataBase
+closeDataBase()
 
 Function DisplayForm
 
@@ -65,14 +65,14 @@ Function DisplayForm
 				</script>
 				<form name=DellClientForm action=PrintMessage.asp method=post onSubmit="submitonce(this);" target="_blank">
 					<input type=hidden name=submitflag value="dk9@dl9s92lw_SWxl">
-					<%If CheckSupervisorUserName = 0 and GBL_CHK_User <> "Angel" and GBL_CHK_User <> "SpiderMan" Then%>
-					<b>¾¯¸æ£º<p></b><font color=Red class=redfont><b>´òÓ¡ÊÕ¼şÏäÈ«²¿¶ÌÏûÏ¢Ö»ÄÜÊä³öÒ»´Î<br>
-					£¬ÔÚ´òÓ¡½áÊøºó£¬ÂÛÌ³½«»á×Ô¶¯Çå³ıÄãµÄËùÓĞÊÕ¼şÏäÏûÏ¢£®</b><br>
+					<%If CheckSupervisorUserName() = 0 and GBL_CHK_User <> "Angel" and GBL_CHK_User <> "SpiderMan" Then%>
+					<b>è­¦å‘Šï¼š<p></b><font color=Red class=redfont><b>æ‰“å°æ”¶ä»¶ç®±å…¨éƒ¨çŸ­æ¶ˆæ¯åªèƒ½è¾“å‡ºä¸€æ¬¡<br>
+					ï¼Œåœ¨æ‰“å°ç»“æŸåï¼Œè®ºå›å°†ä¼šè‡ªåŠ¨æ¸…é™¤ä½ çš„æ‰€æœ‰æ”¶ä»¶ç®±æ¶ˆæ¯ï¼</b><br>
 					<%Else%>
-					<font color=Blue class=bluefont><b>ÄúÊÇÌØÊâÓÃ»§£¬´òÓ¡ºó²¢²»Çå³ıÄúµÄÊÕ¼şÏä£¬Çë·ÅĞÄÊ¹ÓÃ£®</b><br>
+					<font color=Blue class=bluefont><b>æ‚¨æ˜¯ç‰¹æ®Šç”¨æˆ·ï¼Œæ‰“å°åå¹¶ä¸æ¸…é™¤æ‚¨çš„æ”¶ä»¶ç®±ï¼Œè¯·æ”¾å¿ƒä½¿ç”¨ï¼</b><br>
 					<%End If%>
 					
-					<div class=value2><input type=submit value=È·¶¨²Ù×÷ class="fmbtn btn_3"></div>
+					<div class=value2><input type=submit value=ç¡®å®šæ“ä½œ class="fmbtn btn_3"></div>
 				</form>
 	<%
 
@@ -82,7 +82,7 @@ End Function
 Function PersonalInfoManage
 
 	Dim ToUser
-	If CheckSupervisorUserName = 0 Then
+	If CheckSupervisorUserName() = 0 Then
 		ToUser = GBL_CHK_User
 	Else
 		ToUser = Trim(Left(Request.QueryString("ToUser"),14))
@@ -101,12 +101,12 @@ Function PersonalInfoManage
 	Set Rs = LDExeCute(SQL,0)
 
 	Dim TempN,N,SuperFlag
-	SuperFlag = CheckSupervisorUserName
+	SuperFlag = CheckSupervisorUserName()
 	If GBL_UserID < 1 Then SuperFlag = 0
 	
 	Dim Content,Number
 	Number = 0
-	If Rs.Eof Then Response.Write "<p align=center><b><font color=Red class=redfont>ÄúµÄÊÕ¼şÏäÎª¿Õ£¡</font></b>"
+	If Rs.Eof Then Response.Write "<p align=center><b><font color=Red class=redfont>æ‚¨çš„æ”¶ä»¶ç®±ä¸ºç©ºï¼</font></b>"
 		
 	Do while Not Rs.Eof
 %>
@@ -125,10 +125,10 @@ Function PersonalInfoManage
 	
 	<tr class=TBBG9> 
 		<td class=TBBG1>
-			<%Response.Write "<font color=gray class=grayfont>±àºÅ£º</font>" & Rs(0) & " &nbsp;"
-			Response.Write "<font color=gray class=grayfont>·¢ËÍÈË£º</font><a href=" & RW_User(0,"",Rs(1),"") & " target=_blank>" & htmlencode(Rs(1)) & "</a> &nbsp;"
-			Response.Write "<font color=gray class=grayfont>Ê±¼ä£º</font>" & htmlencode(RestoreTime(Rs(6))) & " &nbsp;"
-			If SuperFlag = 1 Then Response.Write "<font color=gray class=grayfont>IP£º</font>" & Rs(5)%>
+			<%Response.Write "<font color=gray class=grayfont>ç¼–å·ï¼š</font>" & Rs(0) & " &nbsp;"
+			Response.Write "<font color=gray class=grayfont>å‘é€äººï¼š</font><a href=" & RW_User(0,"",Rs(1),"") & " target=_blank>" & htmlencode(Rs(1)) & "</a> &nbsp;"
+			Response.Write "<font color=gray class=grayfont>æ—¶é—´ï¼š</font>" & htmlencode(RestoreTime(Rs(6))) & " &nbsp;"
+			If SuperFlag = 1 Then Response.Write "<font color=gray class=grayfont>IPï¼š</font>" & Rs(5)%>
 		</td>
 	</tr>
 	<tr class=TBBG9> 
@@ -166,10 +166,10 @@ Function PersonalInfoManage
 	Loop
 	Rs.Close
 	Set Rs = Nothing
-	If Number > 0 Then Response.Write "<p><span class=bluefont><b>¹²" & Number & "Ìõ¶ÌÏûÏ¢</b></span></p>"
-	If CheckSupervisorUserName = 0 and GBL_CHK_User <> "Angel" and GBL_CHK_User <> "SpiderMan" Then
+	If Number > 0 Then Response.Write "<p><span class=bluefont><b>å…±" & Number & "æ¡çŸ­æ¶ˆæ¯</b></span></p>"
+	If CheckSupervisorUserName() = 0 and GBL_CHK_User <> "Angel" and GBL_CHK_User <> "SpiderMan" Then
 		CALL LDExeCute("delete from LeadBBS_InfoBox where ToUser='" & Replace(GBL_CHK_User,"'","''") & "'",1)
-		Response.Write "(ÒÑ¾­É¾³ı)"
+		Response.Write "(å·²ç»åˆ é™¤)"
 	End If
 
 End Function
@@ -185,7 +185,7 @@ function Message_Code(Str)
 	re.IgnoreCase = True
 	If DEF_EnableImagesUBB = 1 then
 		UBBStrCnt = OneLevelCode(UBBStrCnt, "[IMG]", "[/IMG]", "<IMG SRC="," border=0 onLoad=""javascript:if(this.width>450)this.width=450;"" onMouseover=""javascript:if(this.width>450)this.width=450;"" align=middle>")
-		UBBStrCnt = OneLevelCode(UBBStrCnt, "[IMGA]", "[/IMGA]", "<IMG SRC="," border=0 alt=°´´ËÔÚĞÂ´°¿Úä¯ÀÀÍ¼Æ¬ onclick=""javascript:window.open(this.src);"" onLoad=""javascript:if(this.width>450)this.width=450;"" onMouseover=""javascript:if(this.width>450)this.width=450;"" style=""cursor:hand"" align=middle>")
+		UBBStrCnt = OneLevelCode(UBBStrCnt, "[IMGA]", "[/IMGA]", "<IMG SRC="," border=0 alt=æŒ‰æ­¤åœ¨æ–°çª—å£æµè§ˆå›¾ç‰‡ onclick=""javascript:window.open(this.src);"" onLoad=""javascript:if(this.width>450)this.width=450;"" onMouseover=""javascript:if(this.width>450)this.width=450;"" style=""cursor:hand"" align=middle>")
 	End If
 	Message_Code = UBBStrCnt
 

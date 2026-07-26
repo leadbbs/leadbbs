@@ -1,18 +1,18 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/User_Setup.asp -->
-<!-- #include file=../inc/Board_popfun.asp -->
-<!-- #include file=../inc/Limit_fun.asp -->
-<!-- #include file=inc/UserTopic.asp -->
-<!-- #include file=../inc/Constellation2.asp -->
-<!-- #include file=../a/inc/upload1_fun.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/User_Setup.asp"-->
+<!--#include file="../inc/Board_popfun.asp"-->
+<!--#include file="../inc/Limit_fun.asp"-->
+<!--#include file="inc/UserTopic.asp"-->
+<!--#include file="../inc/Constellation2.asp"-->
+<!--#include file="../a/inc/upload1_fun.asp"-->
 <%DEF_BBS_HomeUrl = "../"%>
-<!-- #include file=../inc/Upload_Fun.asp -->
-<!-- #include file=inc/popfun.asp -->
-<!-- #include file=inc/cms_fun.asp -->
-<!-- #include file=inc/center_editfile.asp -->
-<!-- #include file=inc/center_setchannel.asp -->
-<!-- #include file=../a/inc/Editor.asp -->
-<!-- #include file=../a/inc/Editor_Fun.asp -->
+<!--#include file="../inc/Upload_Fun.asp"-->
+<!--#include file="inc/popfun.asp"-->
+<!--#include file="inc/cms_fun.asp"-->
+<!--#include file="inc/center_editfile.asp"-->
+<!--#include file="inc/center_setchannel.asp"-->
+<!--#include file="../a/inc/Editor.asp"-->
+<!--#include file="../a/inc/Editor_Fun.asp"-->
 <%
 Dim Form_Submitflag,Form_Action,Form_ActionStr,GBL_AjaxFlag,Form_UpClass
 Dim LMT_EnableUpload
@@ -25,7 +25,7 @@ UploadPhotoUrl = DEF_BBS_HomeUrl & DEF_CMS_UploadPhotoUrl
 UploadOneDayMaxNum = DEF_CMSUploadOneDayMaxNum
 upload_NoteLength = 255
 
-Main
+Main()
 
 Sub Page_Expires
 
@@ -39,9 +39,9 @@ End Sub
 
 Sub Main
 
-	Page_Expires
-	initDatabase
-	User_GetStartValue
+	Page_Expires()
+	initDatabase()
+	User_GetStartValue()
 
 	If GBL_AjaxFlag = 0 Then
 		article_center_Head(Form_ActionStr)
@@ -50,25 +50,25 @@ Sub Main
 	End If
 	UpdateOnlineUserAtInfo GBL_board_ID,Form_ActionStr
 	GBL_CHK_TempStr=""
-	If GBL_UserID = 0 Then GBL_CHK_TempStr = GBL_CHK_TempStr & "Î´µÇÂ¼»òÃÜÂë´íÎó.<br>" & VbCrLf
+	If GBL_UserID = 0 Then GBL_CHK_TempStr = GBL_CHK_TempStr & "æœªç™»å½•æˆ–å¯†ç é”™è¯¯.<br>" & VbCrLf
 
 	If GBL_AjaxFlag = 0 Then UserTopicTopInfo("user")
 
 	If GBL_CHK_Flag=1 Then
 		If GBL_CHK_TempStr = "" Then
-			Main_Action
+			Main_Action()
 		Else
 			cms_DisplayLoginForm(GBL_CHK_TempStr)
 		End If
 	Else
 		If Form_Submitflag = "" Then
-			cms_DisplayLoginForm("ÇëÏÈµÇÂ¼")
+			cms_DisplayLoginForm("è¯·å…ˆç™»å½•")
 		Else
 			cms_DisplayLoginForm("<span class=redfont>" & GBL_CHK_TempStr & "</span>")
 		End If
 	End If
 
-	closeDataBase
+	closeDataBase()
 	If GBL_AjaxFlag = 0 Then cms_UserTopicBottomInfo
 	If GBL_AjaxFlag = 0 Then cms_center_Bottom
 	If Form_UpFlag = 1 Then Set Form_UpClass = Nothing
@@ -99,22 +99,22 @@ Sub User_GetStartValue
 	End If
 	Select Case Form_Action
 		case "newsclass":
-			Form_ActionStr = "Ìí¼ÓÎÄÕÂ·ÖÀà(¹ÜÀíÔ±)"
-			if GetFormData("form_modifyid") <> "" and GetFormData("form_modifyid") <> "0" Then Form_ActionStr = "±à¼­ÎÄÕÂ·ÖÀà(¹ÜÀíÔ±)"
+			Form_ActionStr = "æ·»åŠ æ–‡ç« åˆ†ç±»(ç®¡ç†å‘˜)"
+			if GetFormData("form_modifyid") <> "" and GetFormData("form_modifyid") <> "0" Then Form_ActionStr = "ç¼–è¾‘æ–‡ç« åˆ†ç±»(ç®¡ç†å‘˜)"
 		case "newsarticle":
-			Form_ActionStr = "Ìí¼ÓÎÄÕÂÄÚÈİ"
-			if GetFormData("form_modifyid") <> "" and GetFormData("form_modifyid") <> "0" Then Form_ActionStr = "±à¼­ÎÄÕÂÄÚÈİ"
+			Form_ActionStr = "æ·»åŠ æ–‡ç« å†…å®¹"
+			if GetFormData("form_modifyid") <> "" and GetFormData("form_modifyid") <> "0" Then Form_ActionStr = "ç¼–è¾‘æ–‡ç« å†…å®¹"
 		case "newsmanage":
-			Form_ActionStr = "¹ÜÀíÎÄÕÂ"
+			Form_ActionStr = "ç®¡ç†æ–‡ç« "
 		case "editfile":
-			Form_ActionStr = "±à¼­ÆäËüĞÅÏ¢"
+			Form_ActionStr = "ç¼–è¾‘å…¶å®ƒä¿¡æ¯"
 		case "setchannel":
-			Form_ActionStr = "ÉèÖÃÀ¸Ä¿ÄÚÈİ"
+			Form_ActionStr = "è®¾ç½®æ ç›®å†…å®¹"
 		case "updatecache":
-			Form_ActionStr = "¸üĞÂ»º´æ"
+			Form_ActionStr = "æ›´æ–°ç¼“å­˜"
 		Case Else
 			Form_Action = "newsmanage"
-			Form_ActionStr = "¹ÜÀíÎÄÕÂ"
+			Form_ActionStr = "ç®¡ç†æ–‡ç« "
 	End Select			
 
 End Sub
@@ -122,38 +122,38 @@ End Sub
 
 Sub Main_Action
 
-	If Check_jdsupervisor = 0 and (CheckUserAnnounceLimit = 0 or GBL_UserID < 1) Then
-		Response.Write "<span class=cms_error>ÄúÎŞÈ¨½øĞĞ´Ë²Ù×÷,¿ÉÄÜ´ËÓÃ»§Î´ÈÏÖ¤,»òÒÑ±»½ûÓÃÏà¹ØÈ¨ÏŞ.</span>"
+	If Check_jdsupervisor() = 0 and (CheckUserAnnounceLimit() = 0 or GBL_UserID < 1) Then
+		Response.Write "<span class=cms_error>æ‚¨æ— æƒè¿›è¡Œæ­¤æ“ä½œ,å¯èƒ½æ­¤ç”¨æˆ·æœªè®¤è¯,æˆ–å·²è¢«ç¦ç”¨ç›¸å…³æƒé™.</span>"
 		Exit Sub
 	End if
 	Select Case Form_Action
 		case "newsclass":
-			center_newsclass
+			center_newsclass()
 		case "newsarticle":
-			center_newsarticle
+			center_newsarticle()
 		case "newsmanage":
-			center_newsmanage
+			center_newsmanage()
 		case "editfile":
-			center_editfile
+			center_editfile()
 		case "setchannel":
-			center_setchannel
+			center_setchannel()
 		case "updatecache":
-			center_updatecache
+			center_updatecache()
 	End Select
 
 End Sub
 
 sub center_updatecache
 
-	Response.Write "<div class=""cms_ok"">¿ªÊ¼¸üĞÂ»º´æ£®£®£®</div>"
-	Response.Write "<div class=""cms_ok"">¿ªÊ¼¶ÁÈ¡»º´æÄÚÈİ²¢Õ¹Ê¾£®£®£®</div>"
+	Response.Write "<div class=""cms_ok"">å¼€å§‹æ›´æ–°ç¼“å­˜ï¼ï¼ï¼</div>"
+	Response.Write "<div class=""cms_ok"">å¼€å§‹è¯»å–ç¼“å­˜å†…å®¹å¹¶å±•ç¤ºï¼ï¼ï¼</div>"
 	Response.Write "<div style=""zoom:0.8;max-height:600px;overflow:auto;"">"
 	dim cmscacheClass
 	set cmscacheClass = new cms_cache_Class
 	cmscacheClass.updatecache
 	set cmscacheClass = nothing
 	response.Write "</div>"
-	Response.Write "<div class=""clear""></div><div class=""cms_ok"" style=""width:100%;"">»º´æ¸üĞÂÍê³É£®</div>"
+	Response.Write "<div class=""clear""></div><div class=""cms_ok"" style=""width:100%;"">ç¼“å­˜æ›´æ–°å®Œæˆï¼</div>"
 
 End sub
 %>

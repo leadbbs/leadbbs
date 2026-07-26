@@ -1,76 +1,76 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
 <table border=0 cellpadding=3 cellspacing=0 width=350 style="cursor: move;" onmousedown="LD.move.mousedown(this.parentNode,event);"><tr valign=top><td>
 <table border=0 cellpadding=3 cellspacing=0 width=100%>
 <tr>
-	<td onclick="symbol_cc(1)"><span class="clicktext" id="card1">����</span></td>
-	<td onclick="symbol_cc(2)"><span class="clicktext" id="card2">���</span></td>
-	<td onclick="symbol_cc(3)"><span class="clicktext" id="card3">��ѧ</span></td>
-	<td onclick="symbol_cc(4)"><span class="clicktext" id="card4">��λ</span></td>
-	<td onclick="symbol_cc(5)"><span class="clicktext" id="card5">����</span></td>
-	<td onclick="symbol_cc(6)"><span class="clicktext" id="card6">ƴ��</span></td>
+	<td onclick="symbol_cc(1)"><span class="clicktext" id="card1">特殊</span></td>
+	<td onclick="symbol_cc(2)"><span class="clicktext" id="card2">标点</span></td>
+	<td onclick="symbol_cc(3)"><span class="clicktext" id="card3">数学</span></td>
+	<td onclick="symbol_cc(4)"><span class="clicktext" id="card4">单位</span></td>
+	<td onclick="symbol_cc(5)"><span class="clicktext" id="card5">数字</span></td>
+	<td onclick="symbol_cc(6)"><span class="clicktext" id="card6">拼音</span></td>
 	</tr><tr>
-	<td onclick="symbol_cc(7)"><span class="clicktext" id="card7">����</span></td>
-	<td onclick="symbol_cc(8)"><span class="clicktext" id="card8">ϣ��</span></td>
-	<td onclick="symbol_cc(9)"><span class="clicktext" id="card9">����</span></td>
-	<td onclick="symbol_cc(10)" colspan="3"><span class="clicktext" id="card10">ע��������</span></td>
+	<td onclick="symbol_cc(7)"><span class="clicktext" id="card7">日文</span></td>
+	<td onclick="symbol_cc(8)"><span class="clicktext" id="card8">希腊</span></td>
+	<td onclick="symbol_cc(9)"><span class="clicktext" id="card9">俄文</span></td>
+	<td onclick="symbol_cc(10)" colspan="3"><span class="clicktext" id="card10">注音及其它</span></td>
 </tr>
 <tr><td colspan=6><hr class=splitline></td></tr>
 <tr>
 	<td bgcolor=#ffffff colspan=11 style="cursor:pointer">
 	<table border=0 cellpadding=5 cellspacing=0 id="content1" width="100%">
 	<tr>
-		<td>�����������졨�������������������������I�G�����ߩh�i�l�m�j�k�|�}�~��ᨒ�ѡ��������I�J�L�K�ΨO���ܨM���&yen;&pound;&#8482;&reg;&copy;</td>
+		<td>＃＠＆＊※§〃№〓○●△▲◎☆★◇◆□■▽▼㊣℅ˉ￣＿﹉﹊﹍﹎﹋﹌﹟﹠﹡♀♂⊕⊙↑↓←→↖↗↙↘∥∣／＼∕﹨�&yen;&pound;&#8482;&reg;&copy;</td>
 	</tr>
 	</table>
 	<table border=0 cellpadding=5 cellspacing=0 id="content2" style="display:none" width="100%">
 	<tr>
-		<td>�����������������U���E��F�����������o�p�q���r�s�t�u��-��-�����n������������񡲡���㡾��������硴����塸����顺�����v�w�x�y�z�{''""�����A�@</td>
+		<td>，、。．；：？！︰…‥′‵々～‖ˇˉ﹐﹑﹒·﹔﹕﹖﹗｜-︱-︳︴﹏（）︵︶｛｝︷︸〔〕︹︺【】︻︼《》︽︾〈〉︿﹀「」﹁﹂『』﹃﹄﹙﹚﹛﹜﹝﹞''""〝〞ˋˊ</td>
 	</tr>
 	</table>
 	<table border=0 cellpadding=5 cellspacing=0 id="content3" style="display:none" width="100%">
 	<tr>
-		<td>�֡ԡ٣��ܡݣ����ڡۡˡ��������£��ҡӡءޡġšơǡȡɡʡߡ�͡ΡϡСѡաס̨Q�R�P�ԩ������������N�S�S�R</td>
+		<td>≈≡≠＝≤≥＜＞≮≯∷±＋－×÷／∫∮∝∞∧∨∑∏∪∩∈∵∴⊥∥∠⌒⊙≌∽√≦≧≒≡﹢﹣﹤﹥﹦～∟⊿㏒㏑</td>
 	</tr>
 	</table>
 	<table border=0 cellpadding=5 cellspacing=0 id="content4" style="display:none" width="100%">
 	<tr>
-		<td>����磤����꣥����H�����멈�T�L�M�N�Q�O�J�K�P����</td>
+		<td>°′″＄￥〒￠￡％＠℃℉﹩﹪‰﹫㏕㎜㎝㎞㏎㎡㎎㎏㏄°○¤</td>
 	</tr>
 	</table>
 	<table border=0 cellpadding=5 cellspacing=0 id="content5" style="display:none" width="100%">
 	<tr>
-		<td>����������������������������������������������������������������������������¢âĢŢƢǢȢɢʢˢ̢͢΢ϢТѢҢӢԢբ֢עآ٢ڢۢܢݢޢߢ��������������</td>
+		<td>ⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩⅪⅫ⒈⒉⒊⒋⒌⒍⒎⒏⒐⒑⒒⒓⒔⒕⒖⒗⒘⒙⒚⒛⑴⑵⑶⑷⑸⑹⑺⑻⑼⑽⑾⑿⒀⒁⒂⒃⒄⒅⒆⒇①②③④⑤⑥⑦⑧⑨⑩㈠㈡㈢㈣㈤㈥㈦㈧㈨㈩</td>
 	</tr>
 	</table>
 	<table border=0 cellpadding=0 cellspacing=0 id="content6" style="display:none" width="100%">
 	<tr>
-		<td>����������������������������������������������������������������</td>
+		<td>āáǎàōóǒòēéěèīíǐìūúǔùǖǘǚǜüêɑ�绩建鲸卡�</td>
 	</tr>
 	</table>
 	
 	
 	<table border=0 cellpadding=0 cellspacing=0 id="content7" style="display:none" width="100%">
 	<tr>
-		<td>�������������������������������������������������������������������¤äĤŤƤǤȤɤʤˤ̤ͤΤϤФѤҤӤԤդ֤פؤ٤ڤۤܤݤޤߤ��������������������󥡥����������������������������������������������������������������¥åĥťƥǥȥɥʥ˥̥ͥΥϥХѥҥӥԥե֥ץإ٥ڥۥܥݥޥߥ��������������������������</td>
+		<td>ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをんァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶ</td>
 	</tr>
 	</table>
 	
 	
 	<table border=0 cellpadding=0 cellspacing=0 id="content8" style="display:none" width="100%">
 	<tr>
-		<td>���������������������������������������������������¦æĦŦƦǦȦɦʦ˦̦ͦΦϦЦѦҦӦԦզ֦צ�</td>
+		<td>ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩαβγδεζηθικλμνξοπρστυφχψω</td>
 	</tr>
 	</table>
 	
 	<table border=0 cellpadding=0 cellspacing=0 id="content9" style="display:none" width="100%">
 	<tr>
-		<td>�������������������������������������������������������������������ѧҧӧԧէ֧קا٧ڧۧܧݧާߧ�������������������</td>
+		<td>АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя</td>
 	</tr>
 	</table>
 	
 	<table border=0 cellpadding=0 cellspacing=0 id="content10" style="display:none" width="100%">
 	<tr>
-		<td>�ŨƨǨȨɨʨ˨̨ͨΨϨШѨҨӨԨը֨רب٨ڨۨܨݨިߨ���������</td>
+		<td>ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦㄧㄨ</td>
 	</tr>
 	</table>
 	

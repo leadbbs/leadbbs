@@ -1,29 +1,29 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Ubbcode_Setup.asp -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Ubbcode_Setup.asp"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Const MaxLinkNum = 100
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-CheckSupervisorPass
+CheckSupervisorPass()
 
 Dim Form_FiltrateBadWordString,Form_DEF_MaxUBBNumber,Form_DEF_UbbUnderwriteImages,Form_DEF_UbbDefaultEdit
 Dim Form_DEF_UbbIconG,Form_DEF_UbbLinkData,Form_DEF_SafeUrl
 
-GetDefaultValue
+GetDefaultValue()
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
-DisplayUserNavigate("UBB±àÂë²ÎÊıÉèÖÃ")
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
+DisplayUserNavigate("UBBç¼–ç å‚æ•°è®¾ç½®")
 If GBL_CHK_Flag = 1 Then
-	UbbcodeSetup
+	UbbcodeSetup()
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Function UbbcodeSetup
@@ -32,32 +32,32 @@ Function UbbcodeSetup
 <form name="pollform3sdx" method="post" action="UbbcodeSetup.asp">
 <input type="hidden" name="SubmitFlag" value=yes>
 <p>
-		ÉèÖÃ£º<a href=SiteSetup.asp>ÂÛÌ³³£ÓÃ²ÎÊı</a> <a href=UploadSetup.asp>ÉÏ´«²ÎÊı</a>
-		<a href=../User/UserSetup.asp>ÓÃ»§×¢²á²ÎÊı</a>
-		<span class=grayfont>UBB±àÂë²ÎÊı</span>
-		<br><span class=grayfont>(ÏÂÃæÎªÍøÕ¾²ÎÊı£¬Çë×¢ÒâĞŞ¸Ä£¬´íÎóµÄÉèÖÃ½«»á·¢ÉúÑÏÖØ´íÎó)<br><br>
-		Èç¹ûÔÚÉèÖÃºó·¢ÏÖÍøÕ¾²»ÄÜÕı³£ÔËĞĞ£¬Çë½«LeadBBS×îĞÂ°æµÄinc/UbbcodeSetup.asp¸²¸Ç»ØÈ¥</span>
+		è®¾ç½®ï¼š<a href=SiteSetup.asp>è®ºå›å¸¸ç”¨å‚æ•°</a> <a href=UploadSetup.asp>ä¸Šä¼ å‚æ•°</a>
+		<a href=../User/UserSetup.asp>ç”¨æˆ·æ³¨å†Œå‚æ•°</a>
+		<span class=grayfont>UBBç¼–ç å‚æ•°</span>
+		<br><span class=grayfont>(ä¸‹é¢ä¸ºç½‘ç«™å‚æ•°ï¼Œè¯·æ³¨æ„ä¿®æ”¹ï¼Œé”™è¯¯çš„è®¾ç½®å°†ä¼šå‘ç”Ÿä¸¥é‡é”™è¯¯)<br><br>
+		å¦‚æœåœ¨è®¾ç½®åå‘ç°ç½‘ç«™ä¸èƒ½æ­£å¸¸è¿è¡Œï¼Œè¯·å°†LeadBBSæœ€æ–°ç‰ˆçš„inc/UbbcodeSetup.aspè¦†ç›–å›å»</span>
 </p>
 <%If Request.Form("SubmitFlag") <> "" Then
-	CheckLinkValue
+	CheckLinkValue()
 End If%>
 <b><span class=redfont><%=GBL_CHK_TempStr%></span></b>
 <p>
 <%
 If Request.Form("SubmitFlag") <> "" Then
 	If GBL_CHK_TempStr <> "" Then
-		DisplayDatabaseLink
+		DisplayDatabaseLink()
 	Else
-		MakeDataBaseLinkFile
+		MakeDataBaseLinkFile()
 		Exit Function
 	End If
 Else
-	DisplayDatabaseLink
+	DisplayDatabaseLink()
 End If
 %>
 </p>
-<input type=submit name=Ìá½» value=Ìá½» class=fmbtn>
-<input type=reset name=È¡Ïû value=È¡Ïû class=fmbtn>
+<input type=submit name=æäº¤ value=æäº¤ class=fmbtn>
+<input type=reset name=å–æ¶ˆ value=å–æ¶ˆ class=fmbtn>
 </form>
 <%
 
@@ -65,7 +65,7 @@ End Function
 
 Function CheckLinkValue
 
-	GetFormValue
+	GetFormValue()
 
 End Function
 
@@ -74,52 +74,52 @@ Function DisplayDatabaseLink
 		%>
 		<table border=0 cellpadding=0 cellspacing=0 width="100%" class=frame_table>
 		<tr>
-			<td class=tdbox width=120>Ôà×Ö¹ıÂË</td>
+			<td class=tdbox width=120>è„å­—è¿‡æ»¤</td>
 			<td class=tdbox><input class=fminpt type="text" name="Form_FiltrateBadWordString" maxlength="5024" size="50" value="<%=htmlencode(Form_FiltrateBadWordString)%>"><span class=grayfont> <br>
-			Ê¹ÓÃ|·ûºÅ·Ö¸ô£¬Ôà×Ö·û×Ô¶¯Ìæ»»Îª£ªºÅ</span></td>
+			ä½¿ç”¨|ç¬¦å·åˆ†éš”ï¼Œè„å­—ç¬¦è‡ªåŠ¨æ›¿æ¢ä¸ºï¼Šå·</span></td>
 		</tr>
 		<tr>
-			<td class=tdbox>±íÇéÊıÁ¿</td>
+			<td class=tdbox>è¡¨æƒ…æ•°é‡</td>
 			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_MaxUBBNumber" maxlength="3" size="10" value="<%=htmlencode(Form_DEF_MaxUBBNumber)%>">
-			<br><span class=grayfont>(Ã¿±íÇé·ûºÅ×î¶àÔÊĞíÏÔÊ¾ÊıÁ¿£¬¶à³öµÄ²»ÔÙ±àÂëÎª±íÇéÍ¼Æ¬)</span></td>
+			<br><span class=grayfont>(æ¯è¡¨æƒ…ç¬¦å·æœ€å¤šå…è®¸æ˜¾ç¤ºæ•°é‡ï¼Œå¤šå‡ºçš„ä¸å†ç¼–ç ä¸ºè¡¨æƒ…å›¾ç‰‡)</span></td>
 		</tr>
 		<tr>
-			<td class=tdbox>Ç©ÃûÍ¼Æ¬</td>
+			<td class=tdbox>ç­¾åå›¾ç‰‡</td>
 			<td class=tdbox><table border=0 cellpadding=0 cellspacing=0><tr>
-				<td><input class=fmchkbox type=radio name=Form_DEF_UbbUnderwriteImages value=0<%If Form_DEF_UbbUnderwriteImages = 0 Then%> checked<%End If%>></td><td>¹Ø±Õ</td>
-          		<td><input class=fmchkbox type=radio name=Form_DEF_UbbUnderwriteImages value=1<%If Form_DEF_UbbUnderwriteImages = 1 Then%> checked<%End If%>></td><td>ÆôÓÃ</td>
-          		<td>&nbsp; (<span class=grayfont>ÊÇ·ñÔÊĞíÍ¼Æ¬×÷ÎªÇ©Ãû</span>)</td>
+				<td><input class=fmchkbox type=radio name=Form_DEF_UbbUnderwriteImages value=0<%If Form_DEF_UbbUnderwriteImages = 0 Then%> checked<%End If%>></td><td>å…³é—­</td>
+          		<td><input class=fmchkbox type=radio name=Form_DEF_UbbUnderwriteImages value=1<%If Form_DEF_UbbUnderwriteImages = 1 Then%> checked<%End If%>></td><td>å¯ç”¨</td>
+          		<td>&nbsp; (<span class=grayfont>æ˜¯å¦å…è®¸å›¾ç‰‡ä½œä¸ºç­¾å</span>)</td>
           		</tr></table></td>
 		</tr>
 		<tr>
-			<td class=tdbox>·¢ÌûÄ£Ê½</td>
+			<td class=tdbox>å‘å¸–æ¨¡å¼</td>
 			<td class=tdbox><table border=0 cellpadding=0 cellspacing=0><tr>
-				<td><input class=fmchkbox type=radio name=Form_DEF_UbbDefaultEdit value=0<%If Form_DEF_UbbDefaultEdit = 0 Then%> checked<%End If%>></td><td>ÆÕÍ¨Ä£Ê½</td>
-          		<td><input class=fmchkbox type=radio name=Form_DEF_UbbDefaultEdit value=1<%If Form_DEF_UbbDefaultEdit = 1 Then%> checked<%End If%>></td><td>¸ß¼¶Ä£Ê½</td>
+				<td><input class=fmchkbox type=radio name=Form_DEF_UbbDefaultEdit value=0<%If Form_DEF_UbbDefaultEdit = 0 Then%> checked<%End If%>></td><td>æ™®é€šæ¨¡å¼</td>
+          		<td><input class=fmchkbox type=radio name=Form_DEF_UbbDefaultEdit value=1<%If Form_DEF_UbbDefaultEdit = 1 Then%> checked<%End If%>></td><td>é«˜çº§æ¨¡å¼</td>
           		</tr></table>
-          		&nbsp; (<span class=grayfont>Ö¸¶¨Ä¬ÈÏµÄ·¢ÌûÄ£Ê½£¬¸ß¼¶Ä£Ê½ÔÊĞíÔÚÏß±à¼­ÍøÒ³</span>)</td>
+          		&nbsp; (<span class=grayfont>æŒ‡å®šé»˜è®¤çš„å‘å¸–æ¨¡å¼ï¼Œé«˜çº§æ¨¡å¼å…è®¸åœ¨çº¿ç¼–è¾‘ç½‘é¡µ</span>)</td>
 		</tr>
 		<tr>
-			<td class=tdbox width=50>±íÇé·ÖÀà</td>
+			<td class=tdbox width=50>è¡¨æƒ…åˆ†ç±»</td>
 			<td class=tdbox>
 			<textarea cols=80 name=Form_DEF_UbbIconG style="width: 100%;height:110px; word-break: break-all;" class=fmtxtra><%If Form_DEF_UbbIconG <> "" Then Response.Write VbCrLf & Server.htmlEncode(Form_DEF_UbbIconG)%></textarea>
 			<br/>
-			Ê¹ÓÃµ¥½Çµ¥¿Õ¸ñ·Ö¸ô£¬ÀıÈç ¾­µä±íÇé 1 25 ´ú±í¾­µä±íÇé·ÖÀà¶ÔÓ¦±àºÅ1-25,¶à·ÖÀàÓÃ»»ĞĞÇø·Ö
-			×î¶à50¸ö·ÖÀà ×î´óÊı×Ö<%=DEF_UBBiconNumber%></td>
+			ä½¿ç”¨å•è§’å•ç©ºæ ¼åˆ†éš”ï¼Œä¾‹å¦‚ ç»å…¸è¡¨æƒ… 1 25 ä»£è¡¨ç»å…¸è¡¨æƒ…åˆ†ç±»å¯¹åº”ç¼–å·1-25,å¤šåˆ†ç±»ç”¨æ¢è¡ŒåŒºåˆ†
+			æœ€å¤š50ä¸ªåˆ†ç±» æœ€å¤§æ•°å­—<%=DEF_UBBiconNumber%></td>
 		</tr>
 		<tr>
-			<td class=tdbox width=50>ÄÚÈİÁ´½Ó</td>
+			<td class=tdbox width=50>å†…å®¹é“¾æ¥</td>
 			<td class=tdbox>
 			<textarea cols=180 name=Form_DEF_UbbLinkData style="width: 100%;height:220px; word-break: break-all;" class=fmtxtra><%If Form_DEF_UbbLinkData <> "" Then Response.Write VbCrLf & Server.htmlEncode(Form_DEF_UbbLinkData)%></textarea>
 			<br/>
-			Ê¹ÓÃµ¥½Çµ¥¿Õ¸ñ·Ö¸ô£¬ÀıÈç LeadBBS http://www.leadbbs.com/ ´ú±í½«Ìû×ÓÖĞµÄËùÓĞleadbbs×Ö·ûÌí¼ÓÁ´½Óµ½http://www.leadbbs.com/ ×¢Òâ×Ö·ûµÄÑ¡Ôñ ·ñÔòÌæ»»»áÓĞËù»ìÂÒ
-			<br/>×î¶à50¸öÏîÄ¿</td>
+			ä½¿ç”¨å•è§’å•ç©ºæ ¼åˆ†éš”ï¼Œä¾‹å¦‚ LeadBBS http://www.leadbbs.com/ ä»£è¡¨å°†å¸–å­ä¸­çš„æ‰€æœ‰leadbbså­—ç¬¦æ·»åŠ é“¾æ¥åˆ°http://www.leadbbs.com/ æ³¨æ„å­—ç¬¦çš„é€‰æ‹© å¦åˆ™æ›¿æ¢ä¼šæœ‰æ‰€æ··ä¹±
+			<br/>æœ€å¤š50ä¸ªé¡¹ç›®</td>
 			
 		</tr>
 		<tr>
-			<td class=tdbox width=120>°²È«ÍøÖ·</td>
+			<td class=tdbox width=120>å®‰å…¨ç½‘å€</td>
 			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_SafeUrl" maxlength="5024" size="50" value="<%=htmlencode(Form_DEF_SafeUrl)%>"><span class=grayfont> <br>
-			Ê¹ÓÃ|·ûºÅ·Ö¸ô£¬×¢ÒâÍøÖ·Ö»ÄÜ°üº¬1-2µãºÅ£¬Àı£º|leadbbs.com|youbute.com|sina.com.cn|
+			ä½¿ç”¨|ç¬¦å·åˆ†éš”ï¼Œæ³¨æ„ç½‘å€åªèƒ½åŒ…å«1-2ç‚¹å·ï¼Œä¾‹ï¼š|leadbbs.com|youbute.com|sina.com.cn|
 			</span></td>
 		</tr>
 		</table>
@@ -167,14 +167,20 @@ Function GetFormValue
 	Form_DEF_UbbLinkData = Trim(Request.Form("Form_DEF_UbbLinkData"))
 	Form_DEF_SafeUrl = Trim(Request.Form("Form_DEF_SafeUrl"))
 
-	If inStr(Form_FiltrateBadWordString,"""") or inStr(Form_FiltrateBadWordString,"%") Then GBL_CHK_TempStr = "Ôà×Ö¹ıÂË²»ÄÜ°üº¬ÓĞÒıºÅ»ò°Ù·ÖºÅ<br>" & VbCrLf
-	If isNumeric(Form_DEF_MaxUBBNumber) = 0 Then GBL_CHK_TempStr = "±íÇéÊıÁ¿±ØĞëÎªÊı×Ö<br>" & VbCrLf
-	If isNumeric(Form_DEF_UbbUnderwriteImages) = 0 Then GBL_CHK_TempStr = "ÊÇ·ñÔÊĞíÇ©ÃûÍ¼Æ¬±ØĞëÎªÊı×Ö<br>" & VbCrLf
-	If isNumeric(Form_DEF_UbbDefaultEdit) = 0 Then GBL_CHK_TempStr = "·¢ÌûÄ£Ê½±ØĞëÎªÊı×Ö<br>" & VbCrLf
-	If inStr(Form_DEF_SafeUrl,"""") or inStr(Form_DEF_SafeUrl,"%") Then GBL_CHK_TempStr = "°²È«ÍøÖ·ÁĞ±í²»ÄÜ°üº¬ÓĞÒıºÅ»ò°Ù·ÖºÅ<br>" & VbCrLf
+	If inStr(Form_FiltrateBadWordString,"""") or inStr(Form_FiltrateBadWordString,"%") Then GBL_CHK_TempStr = "è„å­—è¿‡æ»¤ä¸èƒ½åŒ…å«æœ‰å¼•å·æˆ–ç™¾åˆ†å·<br>" & VbCrLf
+	If isNumeric(Form_DEF_MaxUBBNumber) = 0 Then GBL_CHK_TempStr = "è¡¨æƒ…æ•°é‡å¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
+	If isNumeric(Form_DEF_UbbUnderwriteImages) = 0 Then GBL_CHK_TempStr = "æ˜¯å¦å…è®¸ç­¾åå›¾ç‰‡å¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
+	If isNumeric(Form_DEF_UbbDefaultEdit) = 0 Then GBL_CHK_TempStr = "å‘å¸–æ¨¡å¼å¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
+	If inStr(Form_DEF_SafeUrl,"""") or inStr(Form_DEF_SafeUrl,"%") Then GBL_CHK_TempStr = "å®‰å…¨ç½‘å€åˆ—è¡¨ä¸èƒ½åŒ…å«æœ‰å¼•å·æˆ–ç™¾åˆ†å·<br>" & VbCrLf
 	
 	Dim TempA,TempB,a,b,c,Num,N,aa,bb,cc,Counter
-	TempA = Split(Form_DEF_UbbIconG,VbCrLf)
+	' Upstream drops a well-formed è¡¨æƒ…åˆ†ç±» line whose range exceeds DEF_UBBiconNumber without
+	' saying so, and the shipped default is one of those (è˜‘è‡ç‚¹ç‚¹ 62 280 against a limit of 99,
+	' with images only up to em100). Opening this page and pressing æäº¤ therefore deleted an
+	' emoticon group silently. The line is still dropped â€” it points at images that do not
+	' exist â€” but the admin is now told which one and why.
+	Dim DroppedStr : DroppedStr = ""
+	TempA = SplitLines(Form_DEF_UbbIconG)
 	aa = ""
 	bb = ""
 	cc = ""
@@ -190,6 +196,10 @@ Function GetFormValue
 				If isNumeric(b) and isNumeric(c) Then
 					b = Fix(cCur(b))
 					c = Fix(cCur(c))
+					If Not (c >= b and c <= DEF_UBBiconNumber and b <= DEF_UBBiconNumber) Then
+						DroppedStr = DroppedStr & "<br>è¡¨æƒ…åˆ†ç±» <b>" & htmlencode(Trim(TempA(N))) &_
+							"</b> å·²å¿½ç•¥ï¼šç¼–å·å¿…é¡»åœ¨ 1-" & DEF_UBBiconNumber & " ä¹‹é—´ã€‚"
+					End If
 					If c >= b and c <= DEF_UBBiconNumber and b <= DEF_UBBiconNumber Then
 						a = Replace(a,"server","")
 						a = Replace(a,"<" & "%","")
@@ -288,13 +298,14 @@ Function MakeDataBaseLinkFile
 
 	TempStr = TempStr & "%" & chr(62) & VbCrLf
 
+	If DroppedStr <> "" Then Response.Write "<div class=alert>" & DroppedStr & "</div>"
 	ADODB_SaveToFile TempStr,"../../inc/Ubbcode_Setup.asp"
 	CALL Update_InsertSetupRID(1051,"inc/Ubbcode_Setup.asp",1,TempStr," and ClassNum=" & 1)
 	
 	If GBL_CHK_TempStr = "" Then
-		Response.Write "<br><span class=greenfont>2.³É¹¦Íê³ÉÉèÖÃ£¡</span>"
+		Response.Write "<br><span class=greenfont>2.æˆåŠŸå®Œæˆè®¾ç½®ï¼</span>"
 	Else
-		%><%=GBL_CHK_TempStr%><br>·şÎñÆ÷²»Ö§³ÖÔÚÏßĞ´ÈëÎÄ¼ş¹¦ÄÜ£¬ÇëÊ¹ÓÃFTPµÈ¹¦ÄÜ£¬½«<span class=redfont>../../inc/Ubbcode_Setup.asp</span>ÎÄ¼şÌæ»»³É¿òÖĞÄÚÈİ(×¢Òâ±¸·İ)<p>
+		%><%=GBL_CHK_TempStr%><br>æœåŠ¡å™¨ä¸æ”¯æŒåœ¨çº¿å†™å…¥æ–‡ä»¶åŠŸèƒ½ï¼Œè¯·ä½¿ç”¨FTPç­‰åŠŸèƒ½ï¼Œå°†<span class=redfont>../../inc/Ubbcode_Setup.asp</span>æ–‡ä»¶æ›¿æ¢æˆæ¡†ä¸­å†…å®¹(æ³¨æ„å¤‡ä»½)<p>
 		<textarea name="fileContent" cols="80" rows="30" class=fmtxtra><%=Server.htmlencode(TempStr)%></textarea><%
 		GBL_CHK_TempStr = ""
 	End If

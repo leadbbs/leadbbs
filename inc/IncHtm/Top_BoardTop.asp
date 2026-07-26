@@ -8,158 +8,158 @@ Sub Top_BoardTop_View
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="table_in">
 	<tr class=tbinhead>
 		<td wdith=8% ><div class=value>&nbsp;</div></td>
-		<td width=77% ><div class=value>°æÃæ</div></td>
-		<td wdith=15% ><div class=value>·¢Ìû</div></td>
+		<td width=77% ><div class=value>ç‰ˆé¢</div></td>
+		<td wdith=15% ><div class=value>å‘å¸–</div></td>
 	</tr>
 	<tr>
 		<td class=tdbox>1</td>
 		<td class=tdbox>
-			<a href=../b/forum-200-1.html>ÂÛÌ³ÌÖÂÛ×¨Çø</a></td>
+			<a href=../b/forum-200-1.html>è®ºå›è®¨è®ºä¸“åŒº</a></td>
 		<td class=tdbox>514862</td>
 		</tr>	<tr>
 		<td class=tdbox>2</td>
 		<td class=tdbox>
-			<a href=../b/forum-230-1.html>ASPÌÖÂÛÇø</a></td>
+			<a href=../b/forum-230-1.html>ASPè®¨è®ºåŒº</a></td>
 		<td class=tdbox>481186</td>
 		</tr>	<tr>
 		<td class=tdbox>3</td>
 		<td class=tdbox>
-			<a href=../b/forum-333-1.html>¿ªÐÄ¹àË®</a></td>
+			<a href=../b/forum-333-1.html>å¼€å¿ƒçŒæ°´</a></td>
 		<td class=tdbox>355445</td>
 		</tr>	<tr>
 		<td class=tdbox>4</td>
 		<td class=tdbox>
-			<a href=../b/forum-10-1.html>·ç¸ñÃÀ»¯</a></td>
+			<a href=../b/forum-10-1.html>é£Žæ ¼ç¾ŽåŒ–</a></td>
 		<td class=tdbox>291150</td>
 		</tr>	<tr>
 		<td class=tdbox>5</td>
 		<td class=tdbox>
-			<a href=../b/forum-125-1.html>ÌùÍ¼Âþ»­</a></td>
+			<a href=../b/forum-125-1.html>è´´å›¾æ¼«ç”»</a></td>
 		<td class=tdbox>110609</td>
 		</tr>	<tr>
 		<td class=tdbox>6</td>
 		<td class=tdbox>
-			<a href=../b/forum-100-1.html>À×öª¶þ</a></td>
+			<a href=../b/forum-100-1.html>é›·éœ†äºŒ</a></td>
 		<td class=tdbox>81017</td>
 		</tr>	<tr>
 		<td class=tdbox>7</td>
 		<td class=tdbox>
-			<a href=../b/forum-2200-1.html>ÇéÈËµº</a></td>
+			<a href=../b/forum-2200-1.html>æƒ…äººå²›</a></td>
 		<td class=tdbox>78807</td>
 		</tr>	<tr>
 		<td class=tdbox>8</td>
 		<td class=tdbox>
-			<a href=../b/forum-2-1.html>Õ¾³¤½»Á÷</a></td>
+			<a href=../b/forum-2-1.html>ç«™é•¿äº¤æµ</a></td>
 		<td class=tdbox>65500</td>
 		</tr>	<tr>
 		<td class=tdbox>9</td>
 		<td class=tdbox>
-			<a href=../b/forum-8-1.html>²å¼þºÍÔöÇ¿</a></td>
+			<a href=../b/forum-8-1.html>æ’ä»¶å’Œå¢žå¼º</a></td>
 		<td class=tdbox>55759</td>
 		</tr>	<tr>
 		<td class=tdbox>10</td>
 		<td class=tdbox>
-			<a href=../b/forum-120-1.html>Ì¸ÌìËµµØ</a></td>
+			<a href=../b/forum-120-1.html>è°ˆå¤©è¯´åœ°</a></td>
 		<td class=tdbox>52586</td>
 		</tr>	<tr>
 		<td class=tdbox>11</td>
 		<td class=tdbox>
-			<a href=../b/forum-205-1.html>dotNet¼¼Êõ</a></td>
+			<a href=../b/forum-205-1.html>dotNetæŠ€æœ¯</a></td>
 		<td class=tdbox>24924</td>
 		</tr>	<tr>
 		<td class=tdbox>12</td>
 		<td class=tdbox>
-			<a href=../b/forum-210-1.html>ÆäËüÔ´´úÂë</a></td>
+			<a href=../b/forum-210-1.html>å…¶å®ƒæºä»£ç </a></td>
 		<td class=tdbox>24192</td>
 		</tr>	<tr>
 		<td class=tdbox>13</td>
 		<td class=tdbox>
-			<a href=../b/forum-260-1.html>µçÄÔ°®ºÃÕß</a></td>
+			<a href=../b/forum-260-1.html>ç”µè„‘çˆ±å¥½è€…</a></td>
 		<td class=tdbox>21916</td>
 		</tr>	<tr>
 		<td class=tdbox>14</td>
 		<td class=tdbox>
-			<a href=../b/forum-115-1.html>ÒôÀÖÎÞÏÞ</a></td>
+			<a href=../b/forum-115-1.html>éŸ³ä¹æ— é™</a></td>
 		<td class=tdbox>18946</td>
 		</tr>	<tr>
 		<td class=tdbox>15</td>
 		<td class=tdbox>
-			<a href=../b/forum-900-1.html>ÂÛÌ³½¨ÒéÇø</a></td>
+			<a href=../b/forum-900-1.html>è®ºå›å»ºè®®åŒº</a></td>
 		<td class=tdbox>17540</td>
 		</tr>	<tr>
 		<td class=tdbox>16</td>
 		<td class=tdbox>
-			<a href=../b/forum-950-1.html>°æÖ÷½»Á÷Çø</a></td>
+			<a href=../b/forum-950-1.html>ç‰ˆä¸»äº¤æµåŒº</a></td>
 		<td class=tdbox>12518</td>
 		</tr>	<tr>
 		<td class=tdbox>17</td>
 		<td class=tdbox>
-			<a href=../b/forum-119-1.html>Ó°ÊÓµØ´ø</a></td>
+			<a href=../b/forum-119-1.html>å½±è§†åœ°å¸¦</a></td>
 		<td class=tdbox>7239</td>
 		</tr>	<tr>
 		<td class=tdbox>18</td>
 		<td class=tdbox>
-			<a href=../b/forum-300-1.html>°ËÊ®Äê´ú</a></td>
+			<a href=../b/forum-300-1.html>å…«åå¹´ä»£</a></td>
 		<td class=tdbox>7043</td>
 		</tr>	<tr>
 		<td class=tdbox>19</td>
 		<td class=tdbox>
-			<a href=../b/forum-400-1.html>ÌåÓý×¨Çø</a></td>
+			<a href=../b/forum-400-1.html>ä½“è‚²ä¸“åŒº</a></td>
 		<td class=tdbox>6948</td>
 		</tr>	<tr>
 		<td class=tdbox>20</td>
 		<td class=tdbox>
-			<a href=../b/forum-220-1.html>¼¼Êõ¾«»ªÇø</a></td>
+			<a href=../b/forum-220-1.html>æŠ€æœ¯ç²¾åŽåŒº</a></td>
 		<td class=tdbox>6619</td>
 		</tr>	<tr>
 		<td class=tdbox>21</td>
 		<td class=tdbox>
-			<a href=../b/forum-222-1.html>JAVA¼¼Êõ</a></td>
+			<a href=../b/forum-222-1.html>JAVAæŠ€æœ¯</a></td>
 		<td class=tdbox>5623</td>
 		</tr>	<tr>
 		<td class=tdbox>22</td>
 		<td class=tdbox>
-			<a href=../b/forum-270-1.html>·þÎñÆ÷¼¼Êõ/ÍøÂç°²È«</a></td>
+			<a href=../b/forum-270-1.html>æœåŠ¡å™¨æŠ€æœ¯/ç½‘ç»œå®‰å…¨</a></td>
 		<td class=tdbox>4726</td>
 		</tr>	<tr>
 		<td class=tdbox>23</td>
 		<td class=tdbox>
-			<a href=../b/forum-212-1.html>PHPÑ§Ï°</a></td>
+			<a href=../b/forum-212-1.html>PHPå­¦ä¹ </a></td>
 		<td class=tdbox>3814</td>
 		</tr>	<tr>
 		<td class=tdbox>24</td>
 		<td class=tdbox>
-			<a href=../b/forum-520-1.html>×¨Òµ·þÎñÇø</a></td>
+			<a href=../b/forum-520-1.html>ä¸“ä¸šæœåŠ¡åŒº</a></td>
 		<td class=tdbox>3293</td>
 		</tr>	<tr>
 		<td class=tdbox>25</td>
 		<td class=tdbox>
-			<a href=../b/forum-208-1.html>ÂÛÌ³¿Õ¼ä·þÎñ</a></td>
+			<a href=../b/forum-208-1.html>è®ºå›ç©ºé—´æœåŠ¡</a></td>
 		<td class=tdbox>1972</td>
 		</tr>	<tr>
 		<td class=tdbox>26</td>
 		<td class=tdbox>
-			<a href=../b/forum-1234-1.html>²âÊÔ°æÃæ</a></td>
+			<a href=../b/forum-1234-1.html>æµ‹è¯•ç‰ˆé¢</a></td>
 		<td class=tdbox>1127</td>
 		</tr>	<tr>
 		<td class=tdbox>27</td>
 		<td class=tdbox>
-			<a href=../b/forum-116-1.html>LeadBBSµçÌ¨</a></td>
+			<a href=../b/forum-116-1.html>LeadBBSç”µå°</a></td>
 		<td class=tdbox>1083</td>
 		</tr>	<tr>
 		<td class=tdbox>28</td>
 		<td class=tdbox>
-			<a href=../b/forum-110-1.html>À×öªÏñ²á</a></td>
+			<a href=../b/forum-110-1.html>é›·éœ†åƒå†Œ</a></td>
 		<td class=tdbox>772</td>
 		</tr>	<tr>
 		<td class=tdbox>29</td>
 		<td class=tdbox>
-			<a href=../b/forum-925-1.html>ÍøÕ¾¹«¸æÇø</a></td>
+			<a href=../b/forum-925-1.html>ç½‘ç«™å…¬å‘ŠåŒº</a></td>
 		<td class=tdbox>637</td>
 		</tr>	<tr>
 		<td class=tdbox>30</td>
 		<td class=tdbox>
-			<a href=../b/forum-117-1.html>¼«ËÙÕÒ¸è</a></td>
+			<a href=../b/forum-117-1.html>æžé€Ÿæ‰¾æ­Œ</a></td>
 		<td class=tdbox>451</td>
 		</tr>	</table>
 <%

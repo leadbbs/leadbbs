@@ -1,5 +1,5 @@
 <%
-const DEF_SendDelay = 3600 '·¢ËÍÓÊ¼ş»ò¶ÌĞÅ¼ä¸ôÊ±¼ä(Ãë)
+const DEF_SendDelay = 3600 'å‘é€é‚®ä»¶æˆ–çŸ­ä¿¡é—´éš”æ—¶é—´(ç§’)
 
 Class User_GetPass
 
@@ -20,7 +20,7 @@ Class User_GetPass
 			case "send":
 				viewSendForm("")
 			case else
-				VierGetPassForm
+				VierGetPassForm()
 		end select
 
 	End Sub
@@ -38,7 +38,7 @@ Class User_GetPass
 		SQL = sql_select("Select t1.id,t1.username,t1.sessionid,t1.userlimit,t1.mail,t1.mobiletel,t1.remark from LeadBBS_User as t1 where " & column & "='" & replace(nstr,"'","''") & "'",1)
 		set rs = ldexecute(sql,0)
 		if rs.eof then
-			viewsendform("´ËÓÊ¼ş»òÊÖ»úºÅÂë´ÓÎ´×¢²á¹ı.")
+			viewsendform("æ­¤é‚®ä»¶æˆ–æ‰‹æœºå·ç ä»æœªæ³¨å†Œè¿‡.")
 			rs.close
 			set rs = nothing
 			exit sub
@@ -54,11 +54,11 @@ Class User_GetPass
 		rs.close
 		set rs = nothing
 		
-		CheckisBoardMaster
+		Call CheckisBoardMaster()
 		
 		'GBL_BoardMasterFlag >= 4 or 
-		if CheckSupervisorNameOnly = 1 then
-			viewsendform("´Ë×¢²áÓÃ»§ÒÑ±»ÉèÖÃÎª½ûÓÃ´Ë¹¦ÄÜ£¬ÇëÁªÏµ¹ÜÀíÔ±.")
+		if CheckSupervisorNameOnly() = 1 then
+			viewsendform("æ­¤æ³¨å†Œç”¨æˆ·å·²è¢«è®¾ç½®ä¸ºç¦ç”¨æ­¤åŠŸèƒ½ï¼Œè¯·è”ç³»ç®¡ç†å‘˜.")
 			gbl_userid = 0
 			exit sub
 		end if
@@ -67,7 +67,7 @@ Class User_GetPass
 		dim tmp
 		tmp = markReplace(remark,1,DEF_Now)
 
-		'·¢ËÍ¼¤»îÂë
+		'å‘é€æ¿€æ´»ç 
 		dim activeCode,ResetCode
 		activeCode = ""
 		ResetCode = ""
@@ -76,13 +76,13 @@ Class User_GetPass
 		if sessionLimit <> "" then
 			sessionLimit = restoretime(gettimevalue(sessionLimit))
 			if datediff("s",sessionLimit,DEF_Now) < DEF_SendDelay then
-				viewsendform("ÉÏ´Î·¢ËÍÊ±¸ô²»¾Ã£¬Çë" & fix((DEF_SendDelay-datediff("s",sessionLimit,DEF_Now))/60) & "·ÖÖÓºóÔÙ³¢ÊÔ.")
+				viewsendform("ä¸Šæ¬¡å‘é€æ—¶éš”ä¸ä¹…ï¼Œè¯·" & fix((DEF_SendDelay-datediff("s",sessionLimit,DEF_Now))/60) & "åˆ†é’Ÿåå†å°è¯•.")
 				exit sub
 			end if
 		end if
 		
 		Randomize
-		'ÖØÖÃÃÜÂëÑéÖ¤Âë14Î»Êı×Ö
+		'é‡ç½®å¯†ç éªŒè¯ç 14ä½æ•°å­—
 		ResetCode = Fix(Rnd*99999999)+1
 		do while ResetCode < 1000000
 			ResetCode = Fix(Rnd*99999999)+1
@@ -106,7 +106,7 @@ Class User_GetPass
 					If Rs.Eof Then
 						Rs.Close
 						Set Rs = Nothing
-						'Response.Write "<div class=alert>´ËÓÃ»§ÎŞ·¨ÓÉÓÃ»§½øĞĞ¼¤»î£¬Í£Ö¹·¢ËÍÓÊ¼ş£¬ÇëÁªÏµ¹ÜÀíÔ±.</div>" & VbCrLf
+						'Response.Write "<div class=alert>æ­¤ç”¨æˆ·æ— æ³•ç”±ç”¨æˆ·è¿›è¡Œæ¿€æ´»ï¼Œåœæ­¢å‘é€é‚®ä»¶ï¼Œè¯·è”ç³»ç®¡ç†å‘˜.</div>" & VbCrLf
 						'Exit Sub
 					else
 						dim ndatetime
@@ -115,19 +115,19 @@ Class User_GetPass
 						Rs.Close
 						Set Rs = Nothing
 						ActiveSendFlag = 1
-						'DEF_SendDelayÃë²ÅÔÊĞíÒ»´ÎÕÒ»Ø
+						'DEF_SendDelayç§’æ‰å…è®¸ä¸€æ¬¡æ‰¾å›
 						if datediff("s",ndatetime,DEF_Now) < DEF_SendDelay then
-							'Response.Write "<div class=alert>ÉÏ´Î·¢ËÍÊ±¸ô²»¾Ã£¬Çë" & fix((DEF_SendDelay-datediff("s",ndatetime,DEF_Now))/60) & "·ÖÖÓºóÔÙ³¢ÊÔ.</div>" & VbCrLf
+							'Response.Write "<div class=alert>ä¸Šæ¬¡å‘é€æ—¶éš”ä¸ä¹…ï¼Œè¯·" & fix((DEF_SendDelay-datediff("s",ndatetime,DEF_Now))/60) & "åˆ†é’Ÿåå†å°è¯•.</div>" & VbCrLf
 							'Exit Sub
 						else
 							'SendGetPassMail gbl_chk_user,Mail,"",activeCode,ResetCode
 							'call ldexecute("update LeadBBS_SpecialUser set ndatetime=" & Gettimevalue(DEF_Now) & " where userid=" & userid,1)
-							'Response.Write "<div class='alert greenfont'>ĞÂµÄÃÜÂë¼°¼¤»îÂëÒÑ¾­·¢ËÍµ½ÄúµÄ×¢²áÓÊÏä¡£</div>" & VbCrLf
+							'Response.Write "<div class='alert greenfont'>æ–°çš„å¯†ç åŠæ¿€æ´»ç å·²ç»å‘é€åˆ°æ‚¨çš„æ³¨å†Œé‚®ç®±ã€‚</div>" & VbCrLf
 						end if
 					End If
 		else
 			if gettype = 1 then
-				viewsendform("´ËÓÃ»§ÒÑ¼¤»î£¬ÎŞĞèÔÙ´Î¼¤»î.")
+				viewsendform("æ­¤ç”¨æˆ·å·²æ¿€æ´»ï¼Œæ— éœ€å†æ¬¡æ¿€æ´».")
 				exit sub
 			end if
 		End If
@@ -142,13 +142,13 @@ Class User_GetPass
 				resetcode = 0
 			end if
 			send_return = SendtoMobile(MobileTel,gbl_chk_user,activeCode,resetcode)
-			objectName = "ÊÖ»ú"
+			objectName = "æ‰‹æœº"
 		else
 			send_return = SendGetPassMail(gbl_chk_user,Mail,"",activeCode,ResetCode)
-			objectName = "ÓÊÏä"
+			objectName = "é‚®ç®±"
 		end if
 		if send_return > 0 then
-			Response.Write "<p><b><a href=UserGetPass.asp?act=active class=greenfont>Ïà¹ØĞÅÏ¢ÒÑ·¢ËÍÖÁÄúµÄ" & objectName & "£¬µã´Ë¼¤»î»òÖØÖÃÃÜÂë£®</a></b></p>"
+			Response.Write "<p><b><a href=UserGetPass.asp?act=active class=greenfont>ç›¸å…³ä¿¡æ¯å·²å‘é€è‡³æ‚¨çš„" & objectName & "ï¼Œç‚¹æ­¤æ¿€æ´»æˆ–é‡ç½®å¯†ç ï¼</a></b></p>"
 	
 			if tmp(0) = "none" then tmp(0) = remark
 			dim tmp2
@@ -170,24 +170,24 @@ Class User_GetPass
 
 		dim tel,smsbody
 		tel = Form_MobileTel
-		smsbody = "×ğ¾´µÄÓÃ»§" & Form_UserName & "£¬"
+		smsbody = "å°Šæ•¬çš„ç”¨æˆ·" & Form_UserName & "ï¼Œ"
 		if AttestNumber <> "" then
-			smsbody = smsbody &"ÄúµÄ¼¤»îÂëÎª" & AttestNumber & "£¬"
+			smsbody = smsbody &"æ‚¨çš„æ¿€æ´»ç ä¸º" & AttestNumber & "ï¼Œ"
 		end if
 		if resetcode <> "" then
-			smsbody = smsbody &"ÖØÖÃÃÜÂë±æÊ¶ÂëÎª" & resetcode & "£¬"
+			smsbody = smsbody &"é‡ç½®å¯†ç è¾¨è¯†ç ä¸º" & resetcode & "ï¼Œ"
 		end if
 		if DEF_UserActivationExpiresDay > 0 and DEF_UserActivationExpiresDay < 3650 then
-			smsbody = smsbody & DEF_UserActivationExpiresDay & "ÌìÄÚÓĞĞ§£¬"
+			smsbody = smsbody & DEF_UserActivationExpiresDay & "å¤©å†…æœ‰æ•ˆï¼Œ"
 		end if
-		smsbody = smsbody & "¸ĞĞ»ÄúµÄÊ¹ÓÃ£¡"
+		smsbody = smsbody & "æ„Ÿè°¢æ‚¨çš„ä½¿ç”¨ï¼"
 		
 		dim errid
 		errid = SendSMS_Message(tel,smsbody,AttestNumber,resetcode)
 		if errid < 0 then
-			Response.Write "<p>¶ÌĞÅ·¢ËÍÊ§°Ü£¬´íÎóºÅ£º" & errid & "</p>"
+			Response.Write "<p>çŸ­ä¿¡å‘é€å¤±è´¥ï¼Œé”™è¯¯å·ï¼š" & errid & "</p>"
 		else
-			'Response.Write "<p><b><a href=UserGetPass.asp?act=active class=greenfont>Ïà¹ØĞÅÏ¢ÒÑ·¢ËÍÖÁÄúµÄÊÖ»ú£¬µã´Ë¼¤»î»òÖØÖÃÃÜÂë£®</a></b></p>"
+			'Response.Write "<p><b><a href=UserGetPass.asp?act=active class=greenfont>ç›¸å…³ä¿¡æ¯å·²å‘é€è‡³æ‚¨çš„æ‰‹æœºï¼Œç‚¹æ­¤æ¿€æ´»æˆ–é‡ç½®å¯†ç ï¼</a></b></p>"
 		end if
 		SendtoMobile = errid
 	
@@ -202,7 +202,7 @@ Class User_GetPass
 
 		if DEF_User_GetPassMode < 3 then
 		%>
-		<div class=redfont><b>ÏµÍ³ÉèÖÃ²»Ö§³ÖÊÖ»ú»òÓÊÏäÕÒ»Ø!</b></div>
+		<div class=redfont><b>ç³»ç»Ÿè®¾ç½®ä¸æ”¯æŒæ‰‹æœºæˆ–é‚®ç®±æ‰¾å›!</b></div>
 		<%
 			exit sub
 		end if
@@ -219,15 +219,15 @@ Class User_GetPass
 		<div class=redfont><b><%=t%></b></div>
 	<div class=title>
 	<%if gettype = "1" then
-		Response.write "ÖØĞÂ·¢ËÍ¼¤»îÂë£¬"
+		Response.write "é‡æ–°å‘é€æ¿€æ´»ç ï¼Œ"
 	else
-		response.write "Íü¼ÇÁËÃÜÂë?¡¡"
-	end if%>ÇëÊäÈëÄúµÄ<%
+		response.write "å¿˜è®°äº†å¯†ç ?ã€€"
+	end if%>è¯·è¾“å…¥æ‚¨çš„<%
 		select case DEF_User_GetPassMode
 			case 3:
-				getinfo = "×¢²áÓÊÏä"
+				getinfo = "æ³¨å†Œé‚®ç®±"
 			case 4:
-				getinfo = "×¢²áÓÊÏä»òÊÖ»úºÅÂë"
+				getinfo = "æ³¨å†Œé‚®ç®±æˆ–æ‰‹æœºå·ç "
 		end select%><%=getinfo%></div>
 	<form action=<%=DEF_BBS_HomeUrl%>User/UserGetPass.asp method="post" onSubmit="submit_disable(this);">
 		<%=getinfo%>: <input name=SendInfo type=text maxlength=50 size=22 value="<%
@@ -235,25 +235,25 @@ Class User_GetPass
 		%>" class=fminpt><br><br>
 		<input type=hidden value="send" name=act>
 		<input type=hidden value="<%=htmlencode(request("gettype"))%>" name=gettype>
-		<input type=submit value="Ìá½»" class="fmbtn btn_3">
+		<input type=submit value="æäº¤" class="fmbtn btn_3">
 	</form>
 	<br>
-	<div class=value2>×¢Òâ£º ²¿·ÖÌØÊâÓÃ»§¿ÉÄÜ²»Ö§³ÖÕÒ»ØÃÜÂë
+	<div class=value2>æ³¨æ„ï¼š éƒ¨åˆ†ç‰¹æ®Šç”¨æˆ·å¯èƒ½ä¸æ”¯æŒæ‰¾å›å¯†ç 
 	</div>
 		<%
 		Else
 			select case DEF_User_GetPassMode
-				case 3: '½öÓÊÏäÕÒ»Ø
+				case 3: 'ä»…é‚®ç®±æ‰¾å›
 					if inStr(SendInfo,"@") < 1 then
-						viewsendform("´íÎóµÄÓÊ¼şµØÖ·!")
+						viewsendform("é”™è¯¯çš„é‚®ä»¶åœ°å€!")
 						exit sub
 					end if
 					call sendCodeInfo(SendInfo,1)
-				case 4: 'ÊÖ»ú»òÓÊÏäÕÒ»Ø
+				case 4: 'æ‰‹æœºæˆ–é‚®ç®±æ‰¾å›
 					if inStr(SendInfo,"@") < 1 then
 						SendInfo = fix(ccur(toNum(SendInfo,0)))
 						if SendInfo < 10000000000 then
-							viewsendform("´íÎóµÄÓÊ¼şµØÖ·»òÊÖ»úºÅÂë!")
+							viewsendform("é”™è¯¯çš„é‚®ä»¶åœ°å€æˆ–æ‰‹æœºå·ç !")
 							exit sub
 						end if
 						call sendCodeInfo(SendInfo,2)
@@ -270,7 +270,7 @@ Class User_GetPass
 	
 		if DEF_User_GetPassMode < 3 then
 		%>
-		<div class=redfont><b>±¾Õ¾Î´¿ªÆôÊÖ»ú»òÓÊÏä¹¦ÄÜ!</b></div>
+		<div class=redfont><b>æœ¬ç«™æœªå¼€å¯æ‰‹æœºæˆ–é‚®ç®±åŠŸèƒ½!</b></div>
 		<%
 			exit sub
 		end if
@@ -300,7 +300,7 @@ Class User_GetPass
 		if gettype = "bind" then
 			if ttt(0) = 0 then
 				%>
-				<div class=redfont><b>´Ë²Ù×÷ĞëÏÈµÇÂ¼ÕÊºÅ£®</b></div>
+				<div class=redfont><b>æ­¤æ“ä½œé¡»å…ˆç™»å½•å¸å·ï¼</b></div>
 				<%
 				exit sub
 			end if
@@ -318,26 +318,26 @@ Class User_GetPass
 		If (SendInfo = "" or t <> "") or submitflag = "" Then%>
 		<div class=redfont><b><%=t%></b></div>
 	<div class=title>
-	ÇëÊäÈë<%
+	è¯·è¾“å…¥<%
 		if gettype = "bind" then
-			Response.write "´ı°ó¶¨µÄ"
+			Response.write "å¾…ç»‘å®šçš„"
 		else
 			gettype = "unbind"
-			response.write "´ıÈ¡Ïû°ó¶¨µÄ"
+			response.write "å¾…å–æ¶ˆç»‘å®šçš„"
 		end if
 		select case DEF_User_GetPassMode
 			case 3:
-				getinfo = "ÓÊÏä"
+				getinfo = "é‚®ç®±"
 			case 4:
-				getinfo = "ÓÊÏä»òÊÖ»úºÅÂë"
+				getinfo = "é‚®ç®±æˆ–æ‰‹æœºå·ç "
 		end select%><%=getinfo%></div>
 	<form action=<%=DEF_BBS_HomeUrl%>User/UserGetPass.asp method="post" onSubmit="submit_disable(this);">
-		<%=getinfo%>£º <input name=SendInfo type=text maxlength=50 size=22 value="<%
+		<%=getinfo%>ï¼š <input name=SendInfo type=text maxlength=50 size=22 value="<%
 			Response.Write htmlencode(SendInfo)
 		%>" class=fminpt><br><br><%
 		if verifycode = "yes" then
 			%>
-			ÈÏÖ¤Âë£º <input name=specialcode type=text maxlength=50 size=22 value="<%=htmlencode(specialcode)%>" class=fminpt><br><br>
+			è®¤è¯ç ï¼š <input name=specialcode type=text maxlength=50 size=22 value="<%=htmlencode(specialcode)%>" class=fminpt><br><br>
 			<%
 		end if%>
 		<input type=hidden value="send" name=act>
@@ -349,34 +349,34 @@ Class User_GetPass
 			%>
 			
 			<label>
-			<input class=fmchkbox type=radio name=unbindtype value=0 <%If unbindtype = "0" Then Response.Write " checked"%>>½â³ıµ±Ç°ÊäÈëµÄÓÊÏä»òÊÖ»ú
+			<input class=fmchkbox type=radio name=unbindtype value=0 <%If unbindtype = "0" Then Response.Write " checked"%>>è§£é™¤å½“å‰è¾“å…¥çš„é‚®ç®±æˆ–æ‰‹æœº
 			</label>
 			<label>
-			<input class=fmchkbox type=radio name=unbindtype value=1 <%If unbindtype = "1" Then Response.Write " checked"%>>½â³ı¹ØÁªÕÊ»§µÄÊÖ»ú
+			<input class=fmchkbox type=radio name=unbindtype value=1 <%If unbindtype = "1" Then Response.Write " checked"%>>è§£é™¤å…³è”å¸æˆ·çš„æ‰‹æœº
 			</label>
 			
 			<label>
-			<input class=fmchkbox type=radio name=unbindtype value=2 <%If unbindtype = "2" Then Response.Write " checked"%>>½â³ı¹ØÁªÕÊ»§µÄÓÊÏä
+			<input class=fmchkbox type=radio name=unbindtype value=2 <%If unbindtype = "2" Then Response.Write " checked"%>>è§£é™¤å…³è”å¸æˆ·çš„é‚®ç®±
 			</label>
 			<br /><br />
 			<%
 		end if%>
-		<input type=submit value="Ìá½»" class="fmbtn btn_3">
+		<input type=submit value="æäº¤" class="fmbtn btn_3">
 	</form>
 	<br>
-	<div class=value2>×¢Òâ£º ²¿·ÖÌØÊâÓÃ»§¿ÉÄÜ²»Ö§³Ö´Ë¹¦ÄÜ
+	<div class=value2>æ³¨æ„ï¼š éƒ¨åˆ†ç‰¹æ®Šç”¨æˆ·å¯èƒ½ä¸æ”¯æŒæ­¤åŠŸèƒ½
 	</div>
 		<%
 		Else
 			select case DEF_User_GetPassMode
-				case 3: '½öÓÊÏä
+				case 3: 'ä»…é‚®ç®±
 					if inStr(SendInfo,"@") < 1 then
-						viewsendform_bind("´íÎóµÄÓÊ¼şµØÖ·!")
+						viewsendform_bind("é”™è¯¯çš„é‚®ä»¶åœ°å€!")
 						exit sub
 					end if
 					if verifycode = "yes" then
 						if toNum(specialcode,0) = 0 then
-							viewsendform_bind("×¢Òâ£ºÇëÕıÈ·ÌîĞ´ÈÏÖ¤Âë!")
+							viewsendform_bind("æ³¨æ„ï¼šè¯·æ­£ç¡®å¡«å†™è®¤è¯ç !")
 							exit sub
 						else
 							call SpecialCode_bin(SendInfo,1,gettype,unbindtype)
@@ -384,10 +384,10 @@ Class User_GetPass
 					else
 						call sendCodeInfo_bind(SendInfo,1,gettype,unbindtype)
 					end if
-				case 4: 'ÊÖ»ú»òÓÊÏä		
+				case 4: 'æ‰‹æœºæˆ–é‚®ç®±		
 					if verifycode = "yes" then
 						if toNum(specialcode,0) = 0 then
-							viewsendform_bind("ÇëÕıÈ·ÌîĞ´ÈÏÖ¤Âë!")
+							viewsendform_bind("è¯·æ­£ç¡®å¡«å†™è®¤è¯ç !")
 							exit sub
 						else
 							call SpecialCode_bin(SendInfo,gettype,unbindtype,specialcode)
@@ -396,7 +396,7 @@ Class User_GetPass
 						if inStr(SendInfo,"@") < 1 then
 							SendInfo = fix(ccur(toNum(SendInfo,0)))
 							if SendInfo < 10000000000 then
-								viewsendform_bind("´íÎóµÄÓÊ¼şµØÖ·»òÊÖ»úºÅÂë!")
+								viewsendform_bind("é”™è¯¯çš„é‚®ä»¶åœ°å€æˆ–æ‰‹æœºå·ç !")
 								exit sub
 							end if
 							call sendCodeInfo_bind(SendInfo,2,gettype,unbindtype)
@@ -411,7 +411,7 @@ Class User_GetPass
 	
 	private function get_bind_mobileandMail(userid)
 	
-		if userid < 0 then '°ó¶¨±ØĞëÏÈµÇÂ¼
+		if userid < 0 then 'ç»‘å®šå¿…é¡»å…ˆç™»å½•
 			get_bind_mobileandMail = array(0,"","")
 			exit function
 		end if
@@ -440,17 +440,17 @@ Class User_GetPass
 		dim rs,sql,assort,bindStr
 		if gettype = "bind" then
 			assort = 101
-			bindStr = "°ó¶¨"
+			bindStr = "ç»‘å®š"
 		else
 			assort = 100
-			bindStr = "½â³ı°ó¶¨"
+			bindStr = "è§£é™¤ç»‘å®š"
 		end if
 		
 		dim UserID,UserName,errNum,ndatetime,didTime,re_code,SpecialID
 		sql = sql_select("select id,UserID,UserName,BoardID,Assort,ndatetime,ExpiresTime,WhyString from leadbbs_specialuser where username='" & replace(nstr,"'","''") & "' and assort=" & assort,1)
 		set rs = ldexecute(sql,0)
 		if rs.eof then
-				viewsendform_bind("´ËÈÏÖ¤ĞÅÏ¢ÒÑÍê³É»òÊ§Ğ§.")
+				viewsendform_bind("æ­¤è®¤è¯ä¿¡æ¯å·²å®Œæˆæˆ–å¤±æ•ˆ.")
 				rs.close
 				set rs = nothing
 				exit sub
@@ -467,7 +467,7 @@ Class User_GetPass
 		
 		if errNum > 30 then
 			if datediff("s",didTime,DEF_Now) < DEF_SendDelay then
-				Response.Write "<div class=alert>´íÎó´ÎÊı¹ı¶à£¬Çë" & fix((DEF_SendDelay-datediff("s",didTime,DEF_Now))/60) & "·ÖÖÓºóÔÙ³¢ÊÔ.</div>" & VbCrLf
+				Response.Write "<div class=alert>é”™è¯¯æ¬¡æ•°è¿‡å¤šï¼Œè¯·" & fix((DEF_SendDelay-datediff("s",didTime,DEF_Now))/60) & "åˆ†é’Ÿåå†å°è¯•.</div>" & VbCrLf
 				Exit Sub
 			else
 				errNum = 0
@@ -489,7 +489,7 @@ Class User_GetPass
 			whereNameType = "mobiletel"
 		end if
 		dim columnName
-		if assort = 100 then '½â°ó£¬»ñÈ¡ÈÏÖ¤Âë
+		if assort = 100 then 'è§£ç»‘ï¼Œè·å–è®¤è¯ç 
 			dim tmp,t,code
 			if inStr(re_code,"|") then
 				tmp = split(re_code,"|")
@@ -505,7 +505,7 @@ Class User_GetPass
 		end if
 		
 		if re_code <> specialcode then
-				viewsendform_bind("ÈÏÖ¤Âë´íÎó£¬Äã»¹ÓĞ" & (31-errNum) & "´ÎÖØÊÔ»ú»á.")
+				viewsendform_bind("è®¤è¯ç é”™è¯¯ï¼Œä½ è¿˜æœ‰" & (31-errNum) & "æ¬¡é‡è¯•æœºä¼š.")
 				exit sub
 		end if
 
@@ -514,7 +514,7 @@ Class User_GetPass
 		if assort = 100 and whereNameType = "mobiletel" then
 			cur_nstr = toNum(cur_nstr,0)
 			if cur_nstr = 0 then
-				viewsendform_bind("ÊÖ»úºÅÂë´íÎó£¬Äã»¹ÓĞ" & (31-errNum) & "´ÎÖØÊÔ»ú»á.")
+				viewsendform_bind("æ‰‹æœºå·ç é”™è¯¯ï¼Œä½ è¿˜æœ‰" & (31-errNum) & "æ¬¡é‡è¯•æœºä¼š.")
 				exit sub
 			end if
 		end if
@@ -528,9 +528,9 @@ Class User_GetPass
 		sql = "delete from leadbbs_specialUser where ID=" & SpecialID
 		call ldexecute(sql,1)
 		if assort = 100 then 'unbind
-			Response.Write "<div class=bbs_ok>" & bindStr & " " & cur_nstr & "µÄÏà¹Ø°ó¶¨³É¹¦!</div>" & VbCrLf
+			Response.Write "<div class=bbs_ok>" & bindStr & " " & cur_nstr & "çš„ç›¸å…³ç»‘å®šæˆåŠŸ!</div>" & VbCrLf
 		else
-			Response.Write "<div class=bbs_ok>" & bindStr & " " & cur_nstr & "³É¹¦!</div>" & VbCrLf
+			Response.Write "<div class=bbs_ok>" & bindStr & " " & cur_nstr & "æˆåŠŸ!</div>" & VbCrLf
 		end if
 	
 	end sub
@@ -562,14 +562,14 @@ Class User_GetPass
 		set rs = ldexecute(sql,0)
 		if rs.eof then
 			if gettype = "unbind" then
-				viewsendform_bind("´ËÓÊ¼ş»òÊÖ»úºÅÂë²»´æÔÚ£¬È¡Ïû°ó¶¨²Ù×÷ÖĞÖ¹.")
+				viewsendform_bind("æ­¤é‚®ä»¶æˆ–æ‰‹æœºå·ç ä¸å­˜åœ¨ï¼Œå–æ¶ˆç»‘å®šæ“ä½œä¸­æ­¢.")
 				rs.close
 				set rs = nothing
 				exit sub
 			end if
 		else
 			if gettype = "bind" then
-				viewsendform_bind("´ËÓÊ¼ş»òÊÖ»úºÅÂëÒÑ±»°ó¶¨£¬²»ÄÜÔÙ´Î°ó¶¨.")
+				viewsendform_bind("æ­¤é‚®ä»¶æˆ–æ‰‹æœºå·ç å·²è¢«ç»‘å®šï¼Œä¸èƒ½å†æ¬¡ç»‘å®š.")
 				rs.close
 				set rs = nothing
 				exit sub
@@ -577,7 +577,7 @@ Class User_GetPass
 		end if
 		dim Mail,MobileTel
 		if not rs.eof then
-			'°óÏà¹ØÕÊ»§Îª¹ÜÀíÔ±Ôò²»ÔÊĞí´Ë²Ù×÷
+			'ç»‘ç›¸å…³å¸æˆ·ä¸ºç®¡ç†å‘˜åˆ™ä¸å…è®¸æ­¤æ“ä½œ
 			GBL_CHK_UserLimit = ccur(rs(3))
 			gbl_userid = ccur(rs(0))
 			userid = gbl_userid
@@ -591,22 +591,22 @@ Class User_GetPass
 			if gettype = "unbind" then
 				if unbindtype = "1" then
 					if MobileTel & "" = "" or MobileTel & "" = "0" then
-						viewsendform_bind("´ËÓÃ»§ÎŞÏà¹ØµÄ°ó¶¨ÊÖ»ú£¬ÎŞĞèÈ¡Ïû.")
+						viewsendform_bind("æ­¤ç”¨æˆ·æ— ç›¸å…³çš„ç»‘å®šæ‰‹æœºï¼Œæ— éœ€å–æ¶ˆ.")
 						exit sub
 					end if
 				elseif unbindtype = "2" then
 					if Mail & "" = "" then
-						viewsendform_bind("´ËÓÃ»§ÎŞÏà¹ØµÄ°ó¶¨ÓÊÏä£¬ÎŞĞèÈ¡Ïû.")
+						viewsendform_bind("æ­¤ç”¨æˆ·æ— ç›¸å…³çš„ç»‘å®šé‚®ç®±ï¼Œæ— éœ€å–æ¶ˆ.")
 						exit sub
 					end if
 				end if
 			end if
 			
-			CheckisBoardMaster
+			Call CheckisBoardMaster()
 			
 			'GBL_BoardMasterFlag >= 4 or 
-			if CheckSupervisorNameOnly = 1 then
-				viewsendform_bind("´Ë×¢²áÓÃ»§ÒÑ±»ÉèÖÃÎª½ûÓÃ´Ë¹¦ÄÜ£¬ÇëÁªÏµ¹ÜÀíÔ±.")
+			if CheckSupervisorNameOnly() = 1 then
+				viewsendform_bind("æ­¤æ³¨å†Œç”¨æˆ·å·²è¢«è®¾ç½®ä¸ºç¦ç”¨æ­¤åŠŸèƒ½ï¼Œè¯·è”ç³»ç®¡ç†å‘˜.")
 				gbl_userid = 0
 				exit sub
 			end if
@@ -628,7 +628,7 @@ Class User_GetPass
 		set rs = ldexecute(sql,0)
 		
 		Randomize
-		'ÖØÖÃÃÜÂëÑéÖ¤Âë14Î»Êı×Ö
+		'é‡ç½®å¯†ç éªŒè¯ç 14ä½æ•°å­—
 		dim ResetCode
 		ResetCode = Fix(Rnd*99999999)+1
 		do while ResetCode < 1000000
@@ -647,11 +647,11 @@ Class User_GetPass
 		rs.close
 		set rs = nothing
 
-		'·¢ËÍ¼¤»îÂë
-		'·¢ËÍÑéÖ¤ÂëÓĞÊ±¼ä¼ä¸ô£¬²»ÄÜÎŞÏŞ·¢ËÍ
+		'å‘é€æ¿€æ´»ç 
+		'å‘é€éªŒè¯ç æœ‰æ—¶é—´é—´éš”ï¼Œä¸èƒ½æ— é™å‘é€
 		if lastSendTime <> "" then
 			if datediff("s",lastSendTime,DEF_Now) < DEF_SendDelay then
-				viewsendform_bind("ÉÏ´Î·¢ËÍÊ±¸ô²»¾Ã£¬Çë" & fix((DEF_SendDelay-datediff("s",lastSendTime,DEF_Now))/60) & "·ÖÖÓºóÔÙ³¢ÊÔ.")
+				viewsendform_bind("ä¸Šæ¬¡å‘é€æ—¶éš”ä¸ä¹…ï¼Œè¯·" & fix((DEF_SendDelay-datediff("s",lastSendTime,DEF_Now))/60) & "åˆ†é’Ÿåå†å°è¯•.")
 				exit sub
 			end if
 		end if
@@ -659,13 +659,13 @@ Class User_GetPass
 		dim objectName,send_return
 		if ty = 2 then
 			send_return = SendtoMobile_bind(nstr,ResetCode)
-			objectName = "ÊÖ»ú"
+			objectName = "æ‰‹æœº"
 		else
 			send_return = SendGetPassMail_bind(nstr,ResetCode)
-			objectName = "ÓÊÏä"
+			objectName = "é‚®ç®±"
 		end if
 		if send_return > 0 then
-			Response.Write "<p><b><a href=UserGetPass.asp?act=send&moreact=bind&gettype=" & gettype & "&verifycode=yes&SendInfo=" & urlencode(nstr) & " class=greenfont>Ïà¹ØÈÏÖ¤ÂëĞÅÏ¢ÒÑ·¢ËÍÖÁÄúµÄ" & objectName & "£¬µã´Ë¼ÌĞø²Ù×÷£®</a></b></p>"
+			Response.Write "<p><b><a href=UserGetPass.asp?act=send&moreact=bind&gettype=" & gettype & "&verifycode=yes&SendInfo=" & urlencode(nstr) & " class=greenfont>ç›¸å…³è®¤è¯ç ä¿¡æ¯å·²å‘é€è‡³æ‚¨çš„" & objectName & "ï¼Œç‚¹æ­¤ç»§ç»­æ“ä½œï¼</a></b></p>"
 		
 			dim ndatetime : ndatetime = gettimevalue(DEF_Now)
 			if lastSendTime = "" then
@@ -693,21 +693,21 @@ Class User_GetPass
 
 		dim tel,smsbody
 		tel = Form_MobileTel
-		smsbody = "×ğ¾´µÄÓÃ»§£¬"
+		smsbody = "å°Šæ•¬çš„ç”¨æˆ·ï¼Œ"
 		if AttestNumber <> "" then
-			smsbody = smsbody &"ÄúµÄÈÏÖ¤ÂëÎª" & AttestNumber & "£¬"
+			smsbody = smsbody &"æ‚¨çš„è®¤è¯ç ä¸º" & AttestNumber & "ï¼Œ"
 		end if
 		if DEF_UserActivationExpiresDay > 0 and DEF_UserActivationExpiresDay < 3650 then
-			smsbody = smsbody & DEF_UserActivationExpiresDay & "ÌìÄÚÓĞĞ§£¬"
+			smsbody = smsbody & DEF_UserActivationExpiresDay & "å¤©å†…æœ‰æ•ˆï¼Œ"
 		end if
-		smsbody = smsbody & "¸ĞĞ»ÄúµÄÊ¹ÓÃ£¡"
+		smsbody = smsbody & "æ„Ÿè°¢æ‚¨çš„ä½¿ç”¨ï¼"
 		
 		dim errid
 		errid = SendSMS_Message(tel,smsbody,0,AttestNumber)
 		if errid < 0 then
-			Response.Write "<p>¶ÌĞÅ·¢ËÍÊ§°Ü£¬´íÎóºÅ£º" & errid & "</p>"
+			Response.Write "<p>çŸ­ä¿¡å‘é€å¤±è´¥ï¼Œé”™è¯¯å·ï¼š" & errid & "</p>"
 		else
-			'³É¹¦
+			'æˆåŠŸ
 		end if
 		SendtoMobile_bind = errid
 	
@@ -717,11 +717,11 @@ Class User_GetPass
 	
 		SendUser = Trim(Request.Form("SendUser"))
 		If DEF_User_GetPassMode = 0 Then
-			Response.Write "<div class=alert>ÂÛÌ³ÒÑ¾­¹Ø±ÕÃÜÂëÕÒ»Ø¹¦ÄÜ¡£</div>" & VbCrLf
+			Response.Write "<div class=alert>è®ºå›å·²ç»å…³é—­å¯†ç æ‰¾å›åŠŸèƒ½ã€‚</div>" & VbCrLf
 			Exit Sub
 		End If
 		If DEF_BBS_EmailMode = 0 and SendUser  <> "" and DEF_User_GetPassMode >= 2 Then
-			Response.Write "<div class=alert>ÂÛÌ³½ûÖ¹·¢ËÍÓÊ¼ş£¬ÃÜÂëÕÒ»Ø¹¦ÄÜ²»ÄÜÊ¹ÓÃ¡£</div>" & VbCrLf
+			Response.Write "<div class=alert>è®ºå›ç¦æ­¢å‘é€é‚®ä»¶ï¼Œå¯†ç æ‰¾å›åŠŸèƒ½ä¸èƒ½ä½¿ç”¨ã€‚</div>" & VbCrLf
 			Exit Sub
 		End If
 		If Request.Form("act") = "getpass" Then
@@ -731,7 +731,7 @@ Class User_GetPass
 			SendPassword1 = Left(Request.Form("SendPassword1"),14)
 	
 			If Len(SendUser) > 30 Then
-				Response.Write "<div class=alert>´íÎó: ÓÃ»§ÃûÌ«³¤.</div>" & VbCrLf
+				Response.Write "<div class=alert>é”™è¯¯: ç”¨æˆ·åå¤ªé•¿.</div>" & VbCrLf
 				Exit Sub
 			End If
 
@@ -741,7 +741,7 @@ Class User_GetPass
 			If Rs.Eof Then
 				Rs.Close
 				Set Rs = Nothing
-				Response.Write "<div class=alert>´íÎó: ²»´æÔÚµÄÓÃ»§Ãû.</div>" & VbCrLf
+				Response.Write "<div class=alert>é”™è¯¯: ä¸å­˜åœ¨çš„ç”¨æˆ·å.</div>" & VbCrLf
 				Exit Sub
 			End If
 	
@@ -755,20 +755,20 @@ Class User_GetPass
 			Rs.Close
 			Set Rs = Nothing
 			'If SendEmail = "" or isNull(SendEmail) Then
-			'	Response.Write "<div class=alert>´íÎó: ´ËÓÃ»§×¢²áÊ±Î´Ìá¹©Email£¬ÎŞ·¨ÕÒ»ØÃÜÂë.</div>" & VbCrLf
+			'	Response.Write "<div class=alert>é”™è¯¯: æ­¤ç”¨æˆ·æ³¨å†Œæ—¶æœªæä¾›Emailï¼Œæ— æ³•æ‰¾å›å¯†ç .</div>" & VbCrLf
 			'	Exit Sub
 			'End If
 	
 			SQL = GBL_CHK_User
 			GBL_CHK_User = SendUser
-			CheckisBoardMaster
+			Call CheckisBoardMaster()
 			If Len(Answer) < 32 or GBL_BoardMasterFlag >= 4 or (GBL_CHK_User <> "" and inStr(GBL_CHK_User,",") = 0 and inStr(LCase(DEF_SupervisorUserName),"," & LCase(GBL_CHK_User) & ",") > 0) Then
-				Response.Write "<div class=alert>´íÎó: ´ËÓÃ»§Î´ÉêÇëÃÜÂë±£»¤£¬ÎŞ·¨Ê¹ÓÃÕÒ»ØÃÜÂë»Ö¸´¹¦ÄÜ¡£<br>ÇëÁªÏµ¹ÜÀíÔ±Éè¶¨ÃÜÂë±£»¤¡£</div>" & VbCrLf
+				Response.Write "<div class=alert>é”™è¯¯: æ­¤ç”¨æˆ·æœªç”³è¯·å¯†ç ä¿æŠ¤ï¼Œæ— æ³•ä½¿ç”¨æ‰¾å›å¯†ç æ¢å¤åŠŸèƒ½ã€‚<br>è¯·è”ç³»ç®¡ç†å‘˜è®¾å®šå¯†ç ä¿æŠ¤ã€‚</div>" & VbCrLf
 				Exit Sub
 			End If
 			GBL_CHK_User = SQL
 			
-			'¼ÓÈë²Â²âÆµÂÊ¼ì²â£¬·ÀÖ¹ÎŞÇîÆÆ½â
+			'åŠ å…¥çŒœæµ‹é¢‘ç‡æ£€æµ‹ï¼Œé˜²æ­¢æ— ç©·ç ´è§£
 			dim tmp,newTmp,saveInfo,spTmp
 			tmp = markReplace(remark,3,"test")
 			saveInfo = tmp(1)
@@ -789,7 +789,7 @@ Class User_GetPass
 				errNum = toNum(spTmp(1),0)
 				if errNum > 30 then
 					if datediff("s",didTime,DEF_Now) < DEF_SendDelay then
-						Response.Write "<div class=alert>´íÎó´ÎÊı¹ı¶à£¬Çë" & fix((DEF_SendDelay-datediff("s",didTime,DEF_Now))/60) & "·ÖÖÓºóÔÙ³¢ÊÔ.</div>" & VbCrLf
+						Response.Write "<div class=alert>é”™è¯¯æ¬¡æ•°è¿‡å¤šï¼Œè¯·" & fix((DEF_SendDelay-datediff("s",didTime,DEF_Now))/60) & "åˆ†é’Ÿåå†å°è¯•.</div>" & VbCrLf
 						Exit Sub
 					else
 						errNum = 0
@@ -813,31 +813,31 @@ Class User_GetPass
 			end if
 	
 			If SendAnswer = "" and SendQuestion = "" and SendPassword1 = "" and SendPassword2 = "" Then
-				DisplaySubmitForm
+				DisplaySubmitForm()
 			Else
 				Dim NumCheck
-				NumCheck = CheckRndNumber	
+				NumCheck = CheckRndNumber()	
 				Randomize
 				Session(DEF_MasterCookies & "RndNum") = Fix(Rnd*9999)+1
 				If NumCheck = 0 Then
-					Response.Write "<div class=alert>ÑéÖ¤ÂëÌîĞ´´íÎó£¬Äú»¹ÓĞ" & remainNum & "´Î³¢ÊÔ»ú»á!</div>" & VbCrLf
-					DisplaySubmitForm
+					Response.Write "<div class=alert>éªŒè¯ç å¡«å†™é”™è¯¯ï¼Œæ‚¨è¿˜æœ‰" & remainNum & "æ¬¡å°è¯•æœºä¼š!</div>" & VbCrLf
+					DisplaySubmitForm()
 					Exit Sub
 				End If
 	
 				If Len(SendPassword2) < DEF_UserShortestPassword or Len(SendPassword1) < DEF_UserShortestPassword or SendPassword1 <> SendPassword2 Then
-					Response.Write "<div class=alert>ĞÂµÄÃÜÂë²»ÄÜÉÙÓÚ4Î»£¬²¢ÇÒĞÂÃÜÂëÓëÑéÖ¤ÃÜÂë±ØĞëÏàÍ¬¡£</div>" & VbCrLf
+					Response.Write "<div class=alert>æ–°çš„å¯†ç ä¸èƒ½å°‘äº4ä½ï¼Œå¹¶ä¸”æ–°å¯†ç ä¸éªŒè¯å¯†ç å¿…é¡»ç›¸åŒã€‚</div>" & VbCrLf
 					SendQuestion = ""
-					DisplaySubmitForm
+					DisplaySubmitForm()
 					Exit Sub
 				End If
 			
 				If MD5(SendAnswer) <> Answer and Mid(MD5(SendAnswer),9,16) <> Answer Then
-					Response.Write "<div class=alert>ÃÜÂëµÄÌáÊ¾´ğ°¸ÌîĞ´´íÎó£¬Äú»¹ÓĞ" & remainNum & "´Î³¢ÊÔ»ú»á£¬»òÇëÁªÏµ¹ÜÀíÔ±!</div>" & VbCrLf
+					Response.Write "<div class=alert>å¯†ç çš„æç¤ºç­”æ¡ˆå¡«å†™é”™è¯¯ï¼Œæ‚¨è¿˜æœ‰" & remainNum & "æ¬¡å°è¯•æœºä¼šï¼Œæˆ–è¯·è”ç³»ç®¡ç†å‘˜!</div>" & VbCrLf
 					SendQuestion = ""
-					DisplaySubmitForm
+					DisplaySubmitForm()
 					CALL LDExeCute("Update LeadBBS_OnlineUser Set LastDoingTime=" & GetTimeValue(DEF_Now) & " where SessionID=" & Session.SessionID,1)
-					UpdateSessionValue 18,GetTimeValue(DEF_Now),0
+					Call UpdateSessionValue(18,GetTimeValue(DEF_Now),0)
 					Exit Sub
 				End If
 				
@@ -845,14 +845,14 @@ Class User_GetPass
 				SendPass = MD5(SendPassword2)
 				CALL LDExeCute("Update LeadBBS_User Set Pass='" & Replace(SendPass,"'","''") & "' where UserName='" & Replace(SendUser,"'","''") & "'",1)
 				If Lcase(GBL_CHK_User) = Lcase(SendUser) Then UpdateSessionValue 7,SendPass,0
-				Response.Write "<div class=alert>ÃÜÂëÒÑ¾­³É¹¦¸ü¸Ä£¬ÇëÊ¹ÓÃĞÂµÄÃÜÂë<a href=""Login.asp?R=Yes"">µÇÂ¼</a>ÄúµÄÕËºÅ!</div>" & VbCrLf
+				Response.Write "<div class=alert>å¯†ç å·²ç»æˆåŠŸæ›´æ”¹ï¼Œè¯·ä½¿ç”¨æ–°çš„å¯†ç <a href=""Login.asp?R=Yes"">ç™»å½•</a>æ‚¨çš„è´¦å·!</div>" & VbCrLf
 				If SendEmail <> "" and DEF_User_GetPassMode >= 2 and GetBinarybit(GBL_CHK_UserLimit,1) = 1 Then
 					SQL = "Select BoardID,ndatetime from LeadBBS_SpecialUser where UserID=" & GBL_UserID
 					Set Rs = LDExeCute(SQL,0)
 					If Rs.Eof Then
 						Rs.Close
 						Set Rs = Nothing
-						Response.Write "<div class=alert>´ËÓÃ»§ÎŞ·¨ÓÉÓÃ»§½øĞĞ¼¤»î£¬Í£Ö¹·¢ËÍÓÊ¼ş£¬ÇëÁªÏµ¹ÜÀíÔ±.</div>" & VbCrLf
+						Response.Write "<div class=alert>æ­¤ç”¨æˆ·æ— æ³•ç”±ç”¨æˆ·è¿›è¡Œæ¿€æ´»ï¼Œåœæ­¢å‘é€é‚®ä»¶ï¼Œè¯·è”ç³»ç®¡ç†å‘˜.</div>" & VbCrLf
 						Exit Sub
 					End If
 					dim ndatetime
@@ -860,21 +860,21 @@ Class User_GetPass
 					ndatetime = restoretime(rs(1))
 					Rs.Close
 					Set Rs = Nothing
-					'DEF_SendDelayÃë²ÅÔÊĞíÒ»´ÎÕÒ»Ø
+					'DEF_SendDelayç§’æ‰å…è®¸ä¸€æ¬¡æ‰¾å›
 					if datediff("s",ndatetime,DEF_Now) < DEF_SendDelay then
-						Response.Write "<div class=alert>ÉÏ´Î·¢ËÍÊ±¸ô²»¾Ã£¬Çë" & fix((DEF_SendDelay-datediff("s",ndatetime,DEF_Now))/60) & "·ÖÖÓºóÔÙ³¢ÊÔ.</div>" & VbCrLf
+						Response.Write "<div class=alert>ä¸Šæ¬¡å‘é€æ—¶éš”ä¸ä¹…ï¼Œè¯·" & fix((DEF_SendDelay-datediff("s",ndatetime,DEF_Now))/60) & "åˆ†é’Ÿåå†å°è¯•.</div>" & VbCrLf
 						Exit Sub
 					else
 						SendGetPassMail SendUser,SendEmail,SendPassword2,SQL,""
 						call ldexecute("update LeadBBS_SpecialUser set ndatetime=" & Gettimevalue(DEF_Now) & " where userid=" & GBL_UserID,1)
-						Response.Write "<div class='alert greenfont'>Í¬Ê±£¬ĞÂµÄÃÜÂë¼°¼¤»îÂëÒÑ¾­·¢ËÍµ½ÄúµÄ×¢²áÓÊÏä¡£</div>" & VbCrLf
+						Response.Write "<div class='alert greenfont'>åŒæ—¶ï¼Œæ–°çš„å¯†ç åŠæ¿€æ´»ç å·²ç»å‘é€åˆ°æ‚¨çš„æ³¨å†Œé‚®ç®±ã€‚</div>" & VbCrLf
 					end if
 				End If
 				CALL LDExeCute("Update LeadBBS_OnlineUser Set LastDoingTime=" & GetTimeValue(DEF_Now) & " where SessionID=" & Session.SessionID,1)
-				UpdateSessionValue 18,GetTimeValue(DEF_Now),0
+				Call UpdateSessionValue(18,GetTimeValue(DEF_Now),0)
 			End If
 		Else
-			DisplaySubmitForm
+			DisplaySubmitForm()
 		End If
 	
 	End Sub
@@ -883,37 +883,38 @@ Class User_GetPass
 	
 		If Question = "" Then Question = SendQuestion
 		If SendAnswer = "" and SendUser = "" and SendQuestion = "" Then%>
-	<div class=title>Ê¹ÓÃÃÜ±£ÕÒ»ØÃÜÂë£¬ÇëÏÈÊäÈëÄúÒªÕÒ»ØµÄÓÃ»§Ãû¡£</div>
+	<div class=title>ä½¿ç”¨å¯†ä¿æ‰¾å›å¯†ç ï¼Œè¯·å…ˆè¾“å…¥æ‚¨è¦æ‰¾å›çš„ç”¨æˆ·åã€‚</div>
 	<form action=<%=DEF_BBS_HomeUrl%>User/UserGetPass.asp method="post" onSubmit="submit_disable(this);">
-		ÓÃ»§Ãû: <input name=SendUser type=text maxlength=20 size=22 value="<%
+		ç”¨æˆ·å: <input name=SendUser type=text maxlength=20 size=22 value="<%
 		If GBL_CHK_user = "" or isNull(GBL_CHK_user) Then
 			Response.Write htmlencode(Request("user"))
 		Else
 			Response.Write htmlencode(GBL_CHK_user)
 		End If%>" class=fminpt><br>
 		<input type=hidden value="getpass" name=act><br>
-		<input type=submit value="È¡»ØÃÜÂë" class="fmbtn btn_3">
+		<input type=submit value="å–å›å¯†ç " class="fmbtn btn_3">
 	</form>
 	<br>
-	<div class=value2>×¢Òâ£º °æÖ÷ÒÔÉÏÓÃ»§²»Ö§³ÖÕÒ»ØÃÜÂë
+	<div class=value2>æ³¨æ„ï¼š ç‰ˆä¸»ä»¥ä¸Šç”¨æˆ·ä¸æ”¯æŒæ‰¾å›å¯†ç 
 	</div>
 		<%
 		Else
-			'If SendAnswer = "" and SendQuestion = "" and SendPassword1 = "" and SendPassword2 = "" Then%>
+			'If SendAnswer = "" and SendQuestion = "" and SendPassword1 = "" and SendPassword2 = "" Then
+%>
 		<script language="javascript">	
 		var ValidationPassed = true;
 		function submitonce(theform)
 		{
 			if(theform.sendanswer.value=="")
 			{
-				alert("ÇëÊäÈëÄãµÄÌáÊ¾´ğ°¸!\n");
+				alert("è¯·è¾“å…¥ä½ çš„æç¤ºç­”æ¡ˆ!\n");
 				ValidationPassed = false;
 				theform.sendanswer.focus();
 				return;
 			}
 			if(theform.sendpassword1.value=="")
 			{
-				alert("ÇëÊäÈëÄãµÄÃÜÂë!\n");
+				alert("è¯·è¾“å…¥ä½ çš„å¯†ç !\n");
 				ValidationPassed = false;
 				theform.sendpassword1.focus();
 				return;
@@ -921,7 +922,7 @@ Class User_GetPass
 	
 			if(theform.sendpassword2.value=="")
 			{
-				alert("ÇëÊäÈëÄãµÄÑéÖ¤ÃÜÂë£¡\n");
+				alert("è¯·è¾“å…¥ä½ çš„éªŒè¯å¯†ç ï¼\n");
 				ValidationPassed = false;
 				theform.sendpassword2.focus();
 				return;
@@ -929,7 +930,7 @@ Class User_GetPass
 	
 			if(theform.sendpassword1.value!=theform.sendpassword2.value)
 			{
-				alert("ÄãµÄÁ½´ÎÃÜÂëÊäÈë²»ÏàÍ¬£¡\n");
+				alert("ä½ çš„ä¸¤æ¬¡å¯†ç è¾“å…¥ä¸ç›¸åŒï¼\n");
 				ValidationPassed = false;
 				theform.sendpassword1.focus();
 				return;
@@ -939,30 +940,30 @@ Class User_GetPass
 		}
 		</script>
 	<div class=title>
-	ÇëÊäÈëÄúµÄÓÃ»§Ãû¼°Ïà¹ØĞÅÏ¢¡£</div>
+	è¯·è¾“å…¥æ‚¨çš„ç”¨æˆ·ååŠç›¸å…³ä¿¡æ¯ã€‚</div>
 	<form action=<%=DEF_BBS_HomeUrl%>User/UserGetPass.asp method="post" onSubmit="submitonce(this);return ValidationPassed;">
 		<div class="value2">
-		ÓÃ»§Ãû³Æ£º<input name=SendUser type=text maxlength=20 size=22 value="<%=htmlencode(SendUser)%>" class="fminpt input_2">
+		ç”¨æˆ·åç§°ï¼š<input name=SendUser type=text maxlength=20 size=22 value="<%=htmlencode(SendUser)%>" class="fminpt input_2">
 		</div>
 		<input type=hidden value="getpass" name=act>
 		<div class="value2">
-		ÃÜÂëÌáÊ¾£º<input name=sendquestion value="<%=htmlencode(Question)%>" maxlength=14 size=22 readonly class="fminpt input_2">
+		å¯†ç æç¤ºï¼š<input name=sendquestion value="<%=htmlencode(Question)%>" maxlength=14 size=22 readonly class="fminpt input_2">
 		</div>
 		<div class="value2">
-		ÌáÊ¾´ğ°¸£º<input name=sendanswer type=text maxlength=20 size=22 value="<%=htmlencode(SendAnswer)%>" class="fminpt input_2">
+		æç¤ºç­”æ¡ˆï¼š<input name=sendanswer type=text maxlength=20 size=22 value="<%=htmlencode(SendAnswer)%>" class="fminpt input_2">
 		</div>
 		<div class="value2">
-		ĞÂµÄÃÜÂë£º<input name=sendpassword1 type=password maxlength=14 size=22 value="<%=htmlencode(SendPassword1)%>" class="fminpt input_2">
+		æ–°çš„å¯†ç ï¼š<input name=sendpassword1 type=password maxlength=14 size=22 value="<%=htmlencode(SendPassword1)%>" class="fminpt input_2">
 		</div>
 		<div class="value2">
-		ÑéÖ¤ÃÜÂë£º<input name=sendpassword2 type=password maxlength=14 size=22 value="<%=htmlencode(SendPassword2)%>" class="fminpt input_2">
+		éªŒè¯å¯†ç ï¼š<input name=sendpassword2 type=password maxlength=14 size=22 value="<%=htmlencode(SendPassword2)%>" class="fminpt input_2">
 		</div>
 		<%If DEF_EnableAttestNumber > 0 Then%>
-			<div class="value2">ÑéÖ¤Âë£º<%
-			Response.Write displayVerifycode%></div><%
+			<div class="value2">éªŒè¯ç ï¼š<%
+			Response.Write displayVerifycode()%></div><%
 		End If%>
 		<br />
-		<input type=submit value="È¡»ØÃÜÂë" class="fmbtn btn_3">
+		<input type=submit value="å–å›å¯†ç " class="fmbtn btn_3">
 	</form>
 		<%
 			'End If
@@ -976,34 +977,34 @@ Class User_GetPass
 		HomeUrl = LD_GetUrl(1)
 	
 		Dim MailBody,Topic,TextBody
-		Topic = "ÄúÔÚ" & DEF_SiteNameString & "µÄÃÜÂëÕÒ»Ø"
+		Topic = "æ‚¨åœ¨" & DEF_SiteNameString & "çš„å¯†ç æ‰¾å›"
 		MailBody = "<html>"
 		TextBody = ""
-		MailBody = MailBody & "<title>ÕËºÅĞÅÏ¢</title>"
+		MailBody = MailBody & "<title>è´¦å·ä¿¡æ¯</title>"
 		MailBody = MailBody & "<BODY>"
 		MailBody = MailBody & "<table BORDER=0 WIDTH=95% ALIGN=CENTER><TBODY><tr>"
 		MailBody = MailBody & "<TD valign=MIDDLE ALIGN=TOP><HR WIDTH=100% SIZE=1>"
 		TextBody = TextBody & "------------------------------------------" & VbCrLf
-		MailBody = MailBody & VbCrLf & htmlencode(Form_UserName)&"£¬ÄúºÃ£º<br><br>"
-		TextBody = TextBody & htmlencode(Form_UserName)&"£¬ÄúºÃ£º" & VbCrLf & VbCrLf
-		MailBody = MailBody & "ÄúÔÚ±¾ÂÛÌ³Ê¹ÓÃÁËÃÜÂëÕÒ»Ø£¬ÏÂÃæÊÇÄúµÄÕËºÅĞÅÏ¢£¡<br><br>"
-		TextBody = TextBody & "ÄúÔÚ±¾ÂÛÌ³Ê¹ÓÃÁËÃÜÂëÕÒ»Ø£¬ÏÂÃæÊÇÄúµÄÕËºÅĞÅÏ¢£¡" & VbCrLf & VbCrLf
-		MailBody = MailBody & "ÓÃ»§Ãû£º"&htmlencode(Form_UserName)&"<br>"
-		TextBody = TextBody & "ÓÃ»§Ãû£º"&htmlencode(Form_UserName) & VbCrLf
+		MailBody = MailBody & VbCrLf & htmlencode(Form_UserName)&"ï¼Œæ‚¨å¥½ï¼š<br><br>"
+		TextBody = TextBody & htmlencode(Form_UserName)&"ï¼Œæ‚¨å¥½ï¼š" & VbCrLf & VbCrLf
+		MailBody = MailBody & "æ‚¨åœ¨æœ¬è®ºå›ä½¿ç”¨äº†å¯†ç æ‰¾å›ï¼Œä¸‹é¢æ˜¯æ‚¨çš„è´¦å·ä¿¡æ¯ï¼<br><br>"
+		TextBody = TextBody & "æ‚¨åœ¨æœ¬è®ºå›ä½¿ç”¨äº†å¯†ç æ‰¾å›ï¼Œä¸‹é¢æ˜¯æ‚¨çš„è´¦å·ä¿¡æ¯ï¼" & VbCrLf & VbCrLf
+		MailBody = MailBody & "ç”¨æˆ·åï¼š"&htmlencode(Form_UserName)&"<br>"
+		TextBody = TextBody & "ç”¨æˆ·åï¼š"&htmlencode(Form_UserName) & VbCrLf
 		if pass <> "" then
-			MailBody = MailBody & "ÃÜ¡¡Âë£º" & pass & "<br>"
-			TextBody = TextBody & "ÃÜ¡¡Âë£º" & pass & VbCrLf
+			MailBody = MailBody & "å¯†ã€€ç ï¼š" & pass & "<br>"
+			TextBody = TextBody & "å¯†ã€€ç ï¼š" & pass & VbCrLf
 		end if
 		If ActiveCode <> "" Then
-			MailBody = MailBody & "¼¤»îÂë£º" & ActiveCode & "<br>"
-			TextBody = TextBody & "¼¤»îÂë£º" & ActiveCode & VbCrLf
+			MailBody = MailBody & "æ¿€æ´»ç ï¼š" & ActiveCode & "<br>"
+			TextBody = TextBody & "æ¿€æ´»ç ï¼š" & ActiveCode & VbCrLf
 		End If
 		If ResetCode <> "" Then
-			MailBody = MailBody & "ÖØÖÃÃÜÂëÑéÖ¤Âë£º" & ResetCode & "<br>"
-			TextBody = TextBody & "ÖØÖÃÃÜÂëÑéÖ¤Âë£º" & ResetCode & VbCrLf
+			MailBody = MailBody & "é‡ç½®å¯†ç éªŒè¯ç ï¼š" & ResetCode & "<br>"
+			TextBody = TextBody & "é‡ç½®å¯†ç éªŒè¯ç ï¼š" & ResetCode & VbCrLf
 		End If
 		MailBody = MailBody & "<br><br>"
-		MailBody = MailBody & "<CENTER><font COLOR=RED><a href=""" & HomeUrl & """>»¶Ó­¹âÁÙÂÛÌ³£¡</a></font>"
+		MailBody = MailBody & "<CENTER><font COLOR=RED><a href=""" & HomeUrl & """>æ¬¢è¿å…‰ä¸´è®ºå›ï¼</a></font>"
 		MailBody = MailBody & "</td></tr></table><br><HR WIDTH=95% SIZE=1>"
 		MailBody = MailBody & "<p ALIGN=CENTER>" & DEF_SiteNameString & " <a href=http://www.leadbbs.com target=_blank class=NavColor>" & DEF_Version & "</a></P>"
 		TextBody = TextBody & VbCrLf & DEF_BBS_HomeUrl & VbCrLf
@@ -1014,21 +1015,21 @@ Class User_GetPass
 		Select Case DEF_BBS_EmailMode
 			Case 1: If SendEasyMail(Form_Mail,Topic,MailBody,TextBody) = 1 Then
 						SendGetPassMail = 1
-						Response.Write "<br><br>×ÊÁÏ³É¹¦·¢ËÍµ½ÄúµÄ×¢²áÓÊÏä£¡"
+						Response.Write "<br><br>èµ„æ–™æˆåŠŸå‘é€åˆ°æ‚¨çš„æ³¨å†Œé‚®ç®±ï¼"
 					Else
-						Response.Write "<br><br>ÂÛÌ³Î´ÕıÈ·ÉèÖÃÓÊ¼ş·¢ËÍ£¬×ÊÁÏ·¢ËÍÊ§°Ü£¡"
+						Response.Write "<br><br>è®ºå›æœªæ­£ç¡®è®¾ç½®é‚®ä»¶å‘é€ï¼Œèµ„æ–™å‘é€å¤±è´¥ï¼"
 					End If
 			Case 2: If SendJmail(Form_Mail,Topic,MailBody) = 1 Then
 						SendGetPassMail = 1
-						Response.Write "<br><br>×ÊÁÏ³É¹¦·¢ËÍµ½ÄúµÄ×¢²áÓÊÏä£¡"
+						Response.Write "<br><br>èµ„æ–™æˆåŠŸå‘é€åˆ°æ‚¨çš„æ³¨å†Œé‚®ç®±ï¼"
 					Else
-						Response.Write "<br><br>ÂÛÌ³Î´ÕıÈ·ÉèÖÃÓÊ¼ş·¢ËÍ£¬×ÊÁÏ·¢ËÍÊ§°Ü2£¡"
+						Response.Write "<br><br>è®ºå›æœªæ­£ç¡®è®¾ç½®é‚®ä»¶å‘é€ï¼Œèµ„æ–™å‘é€å¤±è´¥2ï¼"
 					End If
 			Case 3: If SendCDOMail(Form_Mail,Topic,TextBody) = 1 Then
 						SendGetPassMail = 1
-						Response.Write "<br><br>×ÊÁÏ³É¹¦·¢ËÍµ½ÄúµÄ×¢²áÓÊÏä£¡"
+						Response.Write "<br><br>èµ„æ–™æˆåŠŸå‘é€åˆ°æ‚¨çš„æ³¨å†Œé‚®ç®±ï¼"
 					Else
-						Response.Write "<br><br>ÂÛÌ³Î´ÕıÈ·ÉèÖÃÓÊ¼ş·¢ËÍ£¬×ÊÁÏ·¢ËÍÊ§°Ü£¡"
+						Response.Write "<br><br>è®ºå›æœªæ­£ç¡®è®¾ç½®é‚®ä»¶å‘é€ï¼Œèµ„æ–™å‘é€å¤±è´¥ï¼"
 					End If
 			Case Else: 
 		End Select
@@ -1042,21 +1043,21 @@ Class User_GetPass
 		HomeUrl = LD_GetUrl(1)
 	
 		Dim MailBody,Topic,TextBody
-		Topic = "ÄúÔÚ" & DEF_SiteNameString & "µÄÈÏÖ¤ÂëĞÅÏ¢"
+		Topic = "æ‚¨åœ¨" & DEF_SiteNameString & "çš„è®¤è¯ç ä¿¡æ¯"
 		MailBody = "<html>"
 		TextBody = ""
-		MailBody = MailBody & "<title>ÕËºÅĞÅÏ¢</title>"
+		MailBody = MailBody & "<title>è´¦å·ä¿¡æ¯</title>"
 		MailBody = MailBody & "<BODY>"
 		MailBody = MailBody & "<table BORDER=0 WIDTH=95% ALIGN=CENTER><TBODY><tr>"
 		MailBody = MailBody & "<TD valign=MIDDLE ALIGN=TOP><HR WIDTH=100% SIZE=1>"
 		TextBody = TextBody & "------------------------------------------" & VbCrLf
-		MailBody = MailBody & "ÄúÔÚ±¾ÂÛÌ³Ïà¹Ø²Ù×÷µÄÈÏÖ¤ÂëÎª£º<br><br>"
-		TextBody = TextBody & "ÄúÔÚ±¾ÂÛÌ³Ïà¹Ø²Ù×÷µÄÈÏÖ¤ÂëÎª£º" & VbCrLf & VbCrLf
+		MailBody = MailBody & "æ‚¨åœ¨æœ¬è®ºå›ç›¸å…³æ“ä½œçš„è®¤è¯ç ä¸ºï¼š<br><br>"
+		TextBody = TextBody & "æ‚¨åœ¨æœ¬è®ºå›ç›¸å…³æ“ä½œçš„è®¤è¯ç ä¸ºï¼š" & VbCrLf & VbCrLf
 
-		MailBody = MailBody & "ÈÏÖ¤Âë£º" & ActiveCode & "<br>"
-		TextBody = TextBody & "ÈÏÖ¤Âë£º" & ActiveCode & VbCrLf
+		MailBody = MailBody & "è®¤è¯ç ï¼š" & ActiveCode & "<br>"
+		TextBody = TextBody & "è®¤è¯ç ï¼š" & ActiveCode & VbCrLf
 		MailBody = MailBody & "<br><br>"
-		MailBody = MailBody & "<CENTER><font COLOR=RED><a href=""" & HomeUrl & """>»¶Ó­¹âÁÙÂÛÌ³£¡</a></font>"
+		MailBody = MailBody & "<CENTER><font COLOR=RED><a href=""" & HomeUrl & """>æ¬¢è¿å…‰ä¸´è®ºå›ï¼</a></font>"
 		MailBody = MailBody & "</td></tr></table><br><HR WIDTH=95% SIZE=1>"
 		MailBody = MailBody & "<p ALIGN=CENTER>" & DEF_SiteNameString & " <a href=http://www.leadbbs.com target=_blank class=NavColor>" & DEF_Version & "</a></P>"
 		TextBody = TextBody & VbCrLf & DEF_BBS_HomeUrl & VbCrLf
@@ -1067,21 +1068,21 @@ Class User_GetPass
 		Select Case DEF_BBS_EmailMode
 			Case 1: If SendEasyMail(Form_Mail,Topic,MailBody,TextBody) = 1 Then
 						SendGetPassMail_bind = 1
-						Response.Write "<br><br>×ÊÁÏ³É¹¦·¢ËÍµ½ÄúµÄ×¢²áÓÊÏä£¡"
+						Response.Write "<br><br>èµ„æ–™æˆåŠŸå‘é€åˆ°æ‚¨çš„æ³¨å†Œé‚®ç®±ï¼"
 					Else
-						Response.Write "<br><br>ÂÛÌ³Î´ÕıÈ·ÉèÖÃÓÊ¼ş·¢ËÍ£¬×ÊÁÏ·¢ËÍÊ§°Ü£¡"
+						Response.Write "<br><br>è®ºå›æœªæ­£ç¡®è®¾ç½®é‚®ä»¶å‘é€ï¼Œèµ„æ–™å‘é€å¤±è´¥ï¼"
 					End If
 			Case 2: If SendJmail(Form_Mail,Topic,MailBody) = 1 Then
 						SendGetPassMail_bind = 1
-						Response.Write "<br><br>×ÊÁÏ³É¹¦·¢ËÍµ½ÄúµÄ×¢²áÓÊÏä£¡"
+						Response.Write "<br><br>èµ„æ–™æˆåŠŸå‘é€åˆ°æ‚¨çš„æ³¨å†Œé‚®ç®±ï¼"
 					Else
-						Response.Write "<br><br>ÂÛÌ³Î´ÕıÈ·ÉèÖÃÓÊ¼ş·¢ËÍ£¬×ÊÁÏ·¢ËÍÊ§°Ü2£¡"
+						Response.Write "<br><br>è®ºå›æœªæ­£ç¡®è®¾ç½®é‚®ä»¶å‘é€ï¼Œèµ„æ–™å‘é€å¤±è´¥2ï¼"
 					End If
 			Case 3: If SendCDOMail(Form_Mail,Topic,TextBody) = 1 Then
 						SendGetPassMail_bind = 1
-						Response.Write "<br><br>×ÊÁÏ³É¹¦·¢ËÍµ½ÄúµÄ×¢²áÓÊÏä£¡"
+						Response.Write "<br><br>èµ„æ–™æˆåŠŸå‘é€åˆ°æ‚¨çš„æ³¨å†Œé‚®ç®±ï¼"
 					Else
-						Response.Write "<br><br>ÂÛÌ³Î´ÕıÈ·ÉèÖÃÓÊ¼ş·¢ËÍ£¬×ÊÁÏ·¢ËÍÊ§°Ü£¡"
+						Response.Write "<br><br>è®ºå›æœªæ­£ç¡®è®¾ç½®é‚®ä»¶å‘é€ï¼Œèµ„æ–™å‘é€å¤±è´¥ï¼"
 					End If
 			Case Else: 
 		End Select
@@ -1175,7 +1176,7 @@ Class User_UserReset
 
 		If Request.Form("act") = "reset" Then
 			If Len(pass1) < DEF_UserShortestPassword or Len(pass1) < DEF_UserShortestPassword or pass1 <> pass2 Then
-				VierForm("ĞÂµÄÃÜÂë²»ÄÜÉÙÓÚ" & DEF_UserShortestPassword & "Î»£¬²¢ÇÒĞÂÃÜÂëÓëÖØ¸´ÃÜÂë±ØĞëÏàÍ¬¡£")
+				Call VierForm("æ–°çš„å¯†ç ä¸èƒ½å°‘äº" & DEF_UserShortestPassword & "ä½ï¼Œå¹¶ä¸”æ–°å¯†ç ä¸é‡å¤å¯†ç å¿…é¡»ç›¸åŒã€‚")
 				Exit Sub
 			End If
 			
@@ -1195,7 +1196,7 @@ Class User_UserReset
 			SQL = sql_select("Select t1.id,t1.username,t1.sessionid,t1.userlimit,t1.mail,t1.mobiletel,t1.remark from LeadBBS_User as t1 where " & column,1)
 			set rs = ldexecute(sql,0)
 			if rs.eof then
-				VierForm("´ËÓÃ»§Ãû£¨»òÓÊÏä¡¢ÊÖ»ú)´ÓÎ´×¢²á¹ı.")
+				Call VierForm("æ­¤ç”¨æˆ·åï¼ˆæˆ–é‚®ç®±ã€æ‰‹æœº)ä»æœªæ³¨å†Œè¿‡.")
 				rs.close
 				set rs = nothing
 				exit sub
@@ -1213,13 +1214,13 @@ Class User_UserReset
 			rs.close
 			set rs = nothing
 			
-			CheckisBoardMaster
+			Call CheckisBoardMaster()
 			
 			
 			
 			'GBL_BoardMasterFlag >= 4 or 
-			if CheckSupervisorNameOnly = 1 then
-				VierForm("´ËÓÃ»§ÊôÓÚ¹ÜÀí×é£¬ÎŞ·¨ÖØÖÃÃÜÂë.")
+			if CheckSupervisorNameOnly() = 1 then
+				Call VierForm("æ­¤ç”¨æˆ·å±äºç®¡ç†ç»„ï¼Œæ— æ³•é‡ç½®å¯†ç .")
 				gbl_userid = 0
 				gbl_chk_user = ""
 				exit sub
@@ -1228,7 +1229,7 @@ Class User_UserReset
 			gbl_chk_user = ""
 	
 			if get_sessionid < 1000 then
-				VierForm("ÄúÎ´»ñµÃ¹ıÖØÖÃÑéÖ¤Âë£¬»òÖØÖÃÑéÖ¤ÂëÒÑÎŞĞ§£¬ÇëÖØĞÂ»ñÈ¡.")
+				Call VierForm("æ‚¨æœªè·å¾—è¿‡é‡ç½®éªŒè¯ç ï¼Œæˆ–é‡ç½®éªŒè¯ç å·²æ— æ•ˆï¼Œè¯·é‡æ–°è·å–.")
 				exit sub
 			end if
 			
@@ -1237,7 +1238,7 @@ Class User_UserReset
 			errNum = toNum(tmp(1),0)
 			
 			if errNum > 50 then
-				VierForm("ÄúµÄÊ§°Ü´ÎÊıÒÑ³¬¹ı50´Î£¬ÖØÖÃÑéÖ¤Âë²»ÔÙÓĞĞ§£¬ĞèÒªÖØĞÂ»ñÈ¡²ÅÄÜÖØÖÃ.")
+				Call VierForm("æ‚¨çš„å¤±è´¥æ¬¡æ•°å·²è¶…è¿‡50æ¬¡ï¼Œé‡ç½®éªŒè¯ç ä¸å†æœ‰æ•ˆï¼Œéœ€è¦é‡æ–°è·å–æ‰èƒ½é‡ç½®.")
 				tmp = markReplace(remark,2,0)
 				sql = "update leadbbs_user set sessionid=0"
 				if tmp(0) <> "none" then
@@ -1256,16 +1257,16 @@ Class User_UserReset
 					sql = "update leadbbs_user set remark='" & replace(tmp(0),"'","''") & "' where id=" & get_userid
 					call ldexecute(sql,1)
 				end if
-				VierForm("ÖØÖÃÑéÖ¤Âë´íÎó£¬Äú»¹ÓĞ" & (51-errNum) & "´Î³¢ÊÔ»ú»á.")
+				Call VierForm("é‡ç½®éªŒè¯ç é”™è¯¯ï¼Œæ‚¨è¿˜æœ‰" & (51-errNum) & "æ¬¡å°è¯•æœºä¼š.")
 				Exit Sub
 			End If
 	
 			Dim NewPass
 			NewPass = MD5(pass1)
 			CALL LDExeCute("Update LeadBBS_User Set sessionid=0,Pass='" & Replace(NewPass,"'","''") & "' where id=" & get_userid,1)
-			Response.Write "<div class=alert>ÃÜÂëÒÑ¾­³É¹¦¸ü¸Ä£¬ÇëÊ¹ÓÃĞÂµÄÃÜÂë<a href=""Login.asp?R=Yes"">µÇÂ¼</a>ÄúµÄÕÊºÅ!</div>" & VbCrLf
+			Response.Write "<div class=alert>å¯†ç å·²ç»æˆåŠŸæ›´æ”¹ï¼Œè¯·ä½¿ç”¨æ–°çš„å¯†ç <a href=""Login.asp?R=Yes"">ç™»å½•</a>æ‚¨çš„å¸å·!</div>" & VbCrLf
 		Else
-			VierForm("")
+			Call VierForm("")
 		End If
 	
 	End Sub
@@ -1273,33 +1274,33 @@ Class User_UserReset
 	Private Sub VierForm(str)%>
 
 	<div class='alert redfont'><%=str%></div>
-	<div class=title>ÇëÊäÈëÄúÒªÖØÖÃÃÜÂëµÄÓÃ»§Ãû(»òÓÊÏä¡¢ÊÖ»ú)£¬ÖØÖÃÑéÖ¤Âë¼°ĞÂµÄÃÜÂë¡£</div>
+	<div class=title>è¯·è¾“å…¥æ‚¨è¦é‡ç½®å¯†ç çš„ç”¨æˆ·å(æˆ–é‚®ç®±ã€æ‰‹æœº)ï¼Œé‡ç½®éªŒè¯ç åŠæ–°çš„å¯†ç ã€‚</div>
 	<form action=<%=DEF_BBS_HomeUrl%>User/UserGetPass.asp method="post" onSubmit="submit_disable(this);">
-		<div class="value2">ÓÃ¡¡ ¡¡»§£º¡¡<input name=username type=text maxlength=155 size=22 value="<%=htmlencode(username)%>" class='fminpt input_2'>
-		 <span class=grayfont>»òÕßÊÇÓÊÏä¡¢ÊÖ»úºÅÂë</span></div>
+		<div class="value2">ç”¨ã€€ ã€€æˆ·ï¼šã€€<input name=username type=text maxlength=155 size=22 value="<%=htmlencode(username)%>" class='fminpt input_2'>
+		 <span class=grayfont>æˆ–è€…æ˜¯é‚®ç®±ã€æ‰‹æœºå·ç </span></div>
 		<input name=act type=hidden value="reset">
 		<div class="value2">
-		ÖØÖÃÑéÖ¤Âë£º <input name=AttestNumber type=text maxlength=30 size=22 value="<%If AttestNumber > 0 Then Response.Write AttestNumber%>" class="fminpt input_2">
-		<span class=grayfont>·¢ËÍÖÁÄúÊÖ»ú»òÓÊÏäµÄÖØÖÃÑéÖ¤Âë</span>
+		é‡ç½®éªŒè¯ç ï¼š <input name=AttestNumber type=text maxlength=30 size=22 value="<%If AttestNumber > 0 Then Response.Write AttestNumber%>" class="fminpt input_2">
+		<span class=grayfont>å‘é€è‡³æ‚¨æ‰‹æœºæˆ–é‚®ç®±çš„é‡ç½®éªŒè¯ç </span>
 		</div>
-		<div class="value2">ĞÂµÄÃÜÂë£º¡¡ <input name=pass1 type=password maxlength=20 size=22 value="<%=htmlencode(pass1)%>" class='fminpt input_2'>
+		<div class="value2">æ–°çš„å¯†ç ï¼šã€€ <input name=pass1 type=password maxlength=20 size=22 value="<%=htmlencode(pass1)%>" class='fminpt input_2'>
 		</div>
-		<div class="value2">ÖØ¸´ÃÜÂë£º¡¡ <input name=pass2 type=password maxlength=20 size=22 value="<%=htmlencode(pass1)%>" class='fminpt input_2'>
-		<span class=grayfont>Á½´ÎÃÜÂëÊäÈë±ØĞëÏàÍ¬</span>
+		<div class="value2">é‡å¤å¯†ç ï¼šã€€ <input name=pass2 type=password maxlength=20 size=22 value="<%=htmlencode(pass1)%>" class='fminpt input_2'>
+		<span class=grayfont>ä¸¤æ¬¡å¯†ç è¾“å…¥å¿…é¡»ç›¸åŒ</span>
 		</div>
-		<br /><input type=submit value="Ìá½»ÖØÖÃ" class="fmbtn btn_3">
+		<br /><input type=submit value="æäº¤é‡ç½®" class="fmbtn btn_3">
 	</form>
 	<br />
-	<div class=title>ËµÃ÷£º</div>
+	<div class=title>è¯´æ˜ï¼š</div>
 	<ul>
-	<li>ÈôÄúÎ´ÊÕµ½»òÊÇ»¹Ã»ÓĞÖØÖÃÑéÖ¤Âë£¬<a href=usergetpass.asp?act=send>µãÏÂ·½µÄÊ¹ÓÃÓÊÏä»òÊÖ»úºÅÂëÕÒ»ØÃÜÂë</a>¡£</li>
-	<li>Ä³Ğ©ÕËºÅÖ»ÄÜÓÉ¹ÜÀíÔ±²ÅÄÜÖØÖÃ£¬±ÈÈç°æÖ÷Éí·İµÄÓÃ»§¡£</li>
+	<li>è‹¥æ‚¨æœªæ”¶åˆ°æˆ–æ˜¯è¿˜æ²¡æœ‰é‡ç½®éªŒè¯ç ï¼Œ<a href=usergetpass.asp?act=send>ç‚¹ä¸‹æ–¹çš„ä½¿ç”¨é‚®ç®±æˆ–æ‰‹æœºå·ç æ‰¾å›å¯†ç </a>ã€‚</li>
+	<li>æŸäº›è´¦å·åªèƒ½ç”±ç®¡ç†å‘˜æ‰èƒ½é‡ç½®ï¼Œæ¯”å¦‚ç‰ˆä¸»èº«ä»½çš„ç”¨æˆ·ã€‚</li>
 	</ul>
 
 	<%
 	
 		If DEF_User_GetPassMode = 2 Then
-			Response.Write "<br><a href=UserGetPass.asp><font color=red class=redfont><b>ÈôÄúµÄÓÊÏäÎ´ÊÕµ½¼¤»îÂëĞÅ¼ş£¬¿ÉÒÔÊ¹ÓÃÃÜÂëÕÒ»Ø¹¦ÄÜÒªÇóÔÙ´Î·¢ËÍ£¡</b></font></a>"
+			Response.Write "<br><a href=UserGetPass.asp><font color=red class=redfont><b>è‹¥æ‚¨çš„é‚®ç®±æœªæ”¶åˆ°æ¿€æ´»ç ä¿¡ä»¶ï¼Œå¯ä»¥ä½¿ç”¨å¯†ç æ‰¾å›åŠŸèƒ½è¦æ±‚å†æ¬¡å‘é€ï¼</b></font></a>"
 		End If
 	
 	End Sub

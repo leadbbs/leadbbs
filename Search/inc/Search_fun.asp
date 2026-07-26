@@ -1,6 +1,6 @@
 <%
-Const DEF_BBS_MaxListPage = 10 'ËÑË÷½á¹û×î¶àÏÔÊ¾Ò³Êı(¹ı´ó¿ÉÄÜÓ°ÏìĞÔÄÜ£¬Ä¬ÈÏÇëÉèÎª10)
-Const DEF_BBS_MaxWords = 300 'ËÑË÷½á¹ûµÄÌû×ÓÄÚÈİÂÔÒªÏÔÊ¾³¤¶È(×î¶àÏÔÊ¾×Ö½Ú)
+Const DEF_BBS_MaxListPage = 10 'æœç´¢ç»“æœæœ€å¤šæ˜¾ç¤ºé¡µæ•°(è¿‡å¤§å¯èƒ½å½±å“æ€§èƒ½ï¼Œé»˜è®¤è¯·è®¾ä¸º10)
+Const DEF_BBS_MaxWords = 300 'æœç´¢ç»“æœçš„å¸–å­å†…å®¹ç•¥è¦æ˜¾ç¤ºé•¿åº¦(æœ€å¤šæ˜¾ç¤ºå­—èŠ‚)
 Dim LMT_Key
 
 Sub DisplayAnnouncesSplitPages
@@ -20,14 +20,14 @@ Sub DisplayAnnouncesSplitPages
 	SessionKey = ""
 	If DEF_UsedDataBase = 0 and DEF_BBS_SearchMode = 2 and (key <> "") Then
 		Dim Noise_Chinese
-		Noise_Chinese = Array("~","!","@","#","$","%","^","&","*","(",")","_","+","=","`","[","]","{","}",";",":","""","'",",","<",">",".","/","\","|","?","_","about","1","2","3","4","5","6","7","8","9","0","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","after","all","also","an","and","another","any","are","as","at","be","because","been","before","being","between","both","but","by","came","can","come","could","did","do","each","for","from","get","got","had","has","have","he","her","here","him","himself","his","how","if","in","into","is","it","like","make","many","me","might","more","most","much","must","my","never","now","of","on","only","or","other","our","out","over","said","same","see","should","since","some","still","such","take","than","that","the","their","them","then","there","these","they","this","those","through","to","too","under","up","very","was","way","we","well","were","what","where","which","while","who","with","would","you","your","µÄ","Ò»","²»","ÔÚ","ÈË","ÓĞ","ÊÇ","Îª","ÒÔ","ÓÚ","ÉÏ","Ëû","¶ø","ºó","Ö®","À´","¼°","ÁË","Òò","ÏÂ","¿É","µ½","ÓÉ","Õâ","Óë","Ò²","´Ë","µ«","²¢","¸ö","Æä","ÒÑ","ÎŞ","Ğ¡","ÎÒ","ÃÇ","Æğ","×î","ÔÙ","½ñ","È¥","ºÃ","Ö»","ÓÖ","»ò","ºÜ","Òà","Ä³","°Ñ","ÄÇ","Äã","ÄË","Ëü")
+		Noise_Chinese = Array("~","!","@","#","$","%","^","&","*","(",")","_","+","=","`","[","]","{","}",";",":","""","'",",","<",">",".","/","\","|","?","_","about","1","2","3","4","5","6","7","8","9","0","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","after","all","also","an","and","another","any","are","as","at","be","because","been","before","being","between","both","but","by","came","can","come","could","did","do","each","for","from","get","got","had","has","have","he","her","here","him","himself","his","how","if","in","into","is","it","like","make","many","me","might","more","most","much","must","my","never","now","of","on","only","or","other","our","out","over","said","same","see","should","since","some","still","such","take","than","that","the","their","them","then","there","these","they","this","those","through","to","too","under","up","very","was","way","we","well","were","what","where","which","while","who","with","would","you","your","çš„","ä¸€","ä¸","åœ¨","äºº","æœ‰","æ˜¯","ä¸º","ä»¥","äº","ä¸Š","ä»–","è€Œ","å","ä¹‹","æ¥","åŠ","äº†","å› ","ä¸‹","å¯","åˆ°","ç”±","è¿™","ä¸","ä¹Ÿ","æ­¤","ä½†","å¹¶","ä¸ª","å…¶","å·²","æ— ","å°","æˆ‘","ä»¬","èµ·","æœ€","å†","ä»Š","å»","å¥½","åª","åˆ","æˆ–","å¾ˆ","äº¦","æŸ","æŠŠ","é‚£","ä½ ","ä¹ƒ","å®ƒ")
 
 		FullTextKey = Replace(FullTextKey,"!"," ")
 		FullTextKey = Replace(FullTextKey,"]"," ")
 		FullTextKey = Replace(FullTextKey,"["," ")
 		FullTextKey = Replace(FullTextKey,")"," ")
 		FullTextKey = Replace(FullTextKey,"("," ")
-		FullTextKey = Replace(FullTextKey,"¡¡"," ")
+		FullTextKey = Replace(FullTextKey,"ã€€"," ")
 		FullTextKey = Replace(FullTextKey,"-"," ")
 		FullTextKey = Replace(FullTextKey,"/"," ")
 		FullTextKey = Replace(FullTextKey,"+"," ")
@@ -38,7 +38,7 @@ Sub DisplayAnnouncesSplitPages
 	
 		For N = 0 To Ubound(Noise_Chinese,1)
 			If FullTextKey=Noise_Chinese(N) Then
-				GBL_CHK_TempStr = "ÄãÊäÈëµÄËÑË÷´Ê<font color=ff0000 class=redfont>" & htmlencode(Noise_Chinese(N)) & "</font>ÊôÓÚºöÂÔ´Ê£¬ÏµÍ³ÒÑ¾­ºöÂÔËÑË÷¹ı³Ì¡£"
+				GBL_CHK_TempStr = "ä½ è¾“å…¥çš„æœç´¢è¯<font color=ff0000 class=redfont>" & htmlencode(Noise_Chinese(N)) & "</font>å±äºå¿½ç•¥è¯ï¼Œç³»ç»Ÿå·²ç»å¿½ç•¥æœç´¢è¿‡ç¨‹ã€‚"
 				Exit for
 			End If
 		Next
@@ -53,7 +53,7 @@ Sub DisplayAnnouncesSplitPages
 				IFlag = 1
 				For I = 0 To Ubound(Noise_Chinese,1)
 					If TempKey(N)=Noise_Chinese(I) Then
-						'Response.Write "<br>ºöÂÔ" & TempKey(N)
+						'Response.Write "<br>å¿½ç•¥" & TempKey(N)
 						IFlag = 0
 						Exit for
 					End If
@@ -87,10 +87,10 @@ Sub DisplayAnnouncesSplitPages
 		If Sch_AncTitle = 0 and Mode = 0 Then Mode = 1
 		If Mode <> 1 Then SessionKey = Left(key,20)
 		Select Case Mode
-			'°´×÷Õß
+			'æŒ‰ä½œè€…
 			Case 1: CloseDatabase
 					Response.Redirect "../User/" & RW_User(0,"n",key,"")
-			'°´Ìû×ÓÖ÷Ìâ
+			'æŒ‰å¸–å­ä¸»é¢˜
 			Case Else: 
 					BoardID2 = Left(Request.QueryString("BoardID2"),14)
 					If BoardID2 = "" Then BoardID2 = Left(Request.QueryString("bd"),14)
@@ -110,11 +110,11 @@ Sub DisplayAnnouncesSplitPages
 		End Select
 	Else
 		If DEF_BBS_SearchMode = 0 Then
-			GBL_CHK_TempStr = "ÂÛÌ³²»ÔÊĞíËÑË÷£¡"
+			GBL_CHK_TempStr = "è®ºå›ä¸å…è®¸æœç´¢ï¼"
 		ElseIf key <> "" Then
-			GBL_CHK_TempStr = "ÄúÊäÈëµÄÄÚÈİÃ»ÓĞ±»ÁĞÈë²éÑ¯·¶Î§¡£"
+			GBL_CHK_TempStr = "æ‚¨è¾“å…¥çš„å†…å®¹æ²¡æœ‰è¢«åˆ—å…¥æŸ¥è¯¢èŒƒå›´ã€‚"
 		Else
-			GBL_CHK_TempStr = "ÇëÊäÈëËÑË÷¹Ø¼ü´Ê£¡"
+			GBL_CHK_TempStr = "è¯·è¾“å…¥æœç´¢å…³é”®è¯ï¼"
 		End If
 	End If
 
@@ -158,8 +158,8 @@ Sub DisplayAnnouncesSplitPages
 
 		SQL = sql_select("select TT.id,TT.ParentID,TT.ChildNum,TT.Layer,TT.Title,TT.FaceIcon,TT.NDateTime,TT.Hits,TT.Length,TT.UserName,TT.UserID,TT.RootIDBak,TT.TopicSortID,TT.LastUser,TT.NotReplay,TT.GoodFlag,TT.BoardID,TT.TopicType,TT.PollNum,TT.TitleStyle,TT.Content,TU.TrueName from LeadBBS_Announce as TT " & " right join containstable(LeadBBS_Announce," & SQLEndString & ",'" & Replace(FullTextKey,"'","''") & "'," & DEF_BBS_MaxListPage * (DEF_TopicContentMaxListNum + 1) & ") as T1 ON TT.id = T1.[KEY] left join LeadBBS_User as TU on TU.Id=TT.Userid order by tt.id desc",First + DEF_TopicContentMaxListNum + 1)
 	ElseIf Key <> "" and (DEF_BBS_SearchMode = 1 or DEF_BBS_SearchMode = 2) Then
-		If Replace(key,"¥®","") = "" Then
-			GBL_CHK_TempStr = "ÇëÊäÈëËÑË÷¹Ø¼ü´Ê£¡"
+		If Replace(key,"ã‚®","") = "" Then
+			GBL_CHK_TempStr = "è¯·è¾“å…¥æœç´¢å…³é”®è¯ï¼"
 		End If
 		SQL = "select TT.id,TT.ParentID,TT.ChildNum,TT.Layer,TT.Title,TT.FaceIcon,TT.NDateTime,TT.Hits,TT.Length,TT.UserName,TT.UserID,TT.RootIDBak,TT.TopicSortID,TT.LastUser,TT.NotReplay,TT.GoodFlag,TT.BoardID,TT.TopicType,TT.PollNum,TT.TitleStyle,TT.Content,TU.TrueName from LeadBBS_Announce as TT left join LeadBBS_User as TU on TU.Id=TT.Userid " & SQLEndString
 		If First > 0 Then SQL = SQL & " and T1.ID>" & First
@@ -176,7 +176,7 @@ Sub DisplayAnnouncesSplitPages
 			Rs.Close
 			Set Rs = Nothing
 			Err.Clear
-			ExcuteErr = "ÄúÊäÈëµÄÄÚÈİÃ»ÓĞ±»ÁĞÈë²éÑ¯·¶Î§»òÆäËü´íÎó¡£"
+			ExcuteErr = "æ‚¨è¾“å…¥çš„å†…å®¹æ²¡æœ‰è¢«åˆ—å…¥æŸ¥è¯¢èŒƒå›´æˆ–å…¶å®ƒé”™è¯¯ã€‚"
 		End if
 	End If
 
@@ -187,7 +187,7 @@ Sub DisplayAnnouncesSplitPages
 		If SessionKey <> "" and Session(DEF_MasterCookies & "Sch") & "" = "" Then Session(DEF_MasterCookies & "Sch") = SessionKey
 		If LastSearchTime < Sch_LimitTime Then
 			If SessionKey <> "" and Session(DEF_MasterCookies & "Sch") <> SessionKey Then
-				GBL_CHK_TempStr = "ËÑË÷ÏŞÏŞÖÆ£º" & Sch_LimitTime & "ÃëÄÚÖ»ÔÊĞíËÑË÷Ò»´Î£¬ÇëÉÔºòÔÙÊÔ¡£"
+				GBL_CHK_TempStr = "æœç´¢é™é™åˆ¶ï¼š" & Sch_LimitTime & "ç§’å†…åªå…è®¸æœç´¢ä¸€æ¬¡ï¼Œè¯·ç¨å€™å†è¯•ã€‚"
 			Else
 				If SessionKey <> "" Then Session(DEF_MasterCookies & "Sch") = SessionKey
 			End If
@@ -198,7 +198,7 @@ Sub DisplayAnnouncesSplitPages
 	Else
 		If DEF_BBS_SearchMode = 1 or DEF_BBS_SearchMode = 2 Then
 			If LastSearchTime < Sch_LimitTime Then
-				GBL_CHK_TempStr = "ËÑË÷ÏŞÏŞÖÆ£º" & Sch_LimitTime & "ÃëÄÚÖ»ÔÊĞíËÑË÷Ò»´Î£¬ÇëÉÔºòÔÙÊÔ¡£"
+				GBL_CHK_TempStr = "æœç´¢é™é™åˆ¶ï¼š" & Sch_LimitTime & "ç§’å†…åªå…è®¸æœç´¢ä¸€æ¬¡ï¼Œè¯·ç¨å€™å†è¯•ã€‚"
 			Else
 				Session(DEF_MasterCookies & "Schtime") = GetTimeValue(DEF_Now)
 			End If
@@ -251,12 +251,12 @@ Sub DisplayAnnouncesSplitPages
 	If ThisPageNum > RecordCount Then RecordCount = ThisPageNum
 
 	'If Page > 0 Then
-	'	PageSplitString = PageSplitString & "<a href=Search.asp" & SQL & ">Ê×Ò³</a>"
+	'	PageSplitString = PageSplitString & "<a href=Search.asp" & SQL & ">é¦–é¡µ</a>"
 	'Else
-	'	PageSplitString = PageSplitString & "<font color=888888 class=grayfont>Ê×Ò³</font>"
+	'	PageSplitString = PageSplitString & "<font color=888888 class=grayfont>é¦–é¡µ</font>"
 	'End If
 	'If RecordCount > DEF_TopicContentMaxListNum Then
-	'	PageSplitString = PageSplitString & " <a href=Search.asp" & SQL & "&Page=" & Page + 1 & ">ÏÂÒ»Ò³</a>"
+	'	PageSplitString = PageSplitString & " <a href=Search.asp" & SQL & "&Page=" & Page + 1 & ">ä¸‹ä¸€é¡µ</a>"
 	'End If
 
 	Dim Search_MaxID,Search_MinID
@@ -272,13 +272,13 @@ Sub DisplayAnnouncesSplitPages
 			PageSplitString = PageSplitString & "<a href=Search.asp" & SQL & "&Page=0>1</a>"
 		
 			if Page <> 1 Then
-				PageSplitString = PageSplitString & "<a href=Search.asp" & SQL & "&Page=" & Page-1 & ">ÉÏÒ³"
-				If (Page - DEF_DisplayJumpPageNum) > 0 Then PageSplitString = PageSplitString & "¡­"
+				PageSplitString = PageSplitString & "<a href=Search.asp" & SQL & "&Page=" & Page-1 & ">ä¸Šé¡µ"
+				If (Page - DEF_DisplayJumpPageNum) > 0 Then PageSplitString = PageSplitString & "â€¦"
 				PageSplitString = PageSplitString & "</a>"
 			End If
 		Else
-			'PageSplitString = PageSplitString & "Ê×Ò³"
-			'PageSplitString = PageSplitString & "ÉÏÒ³"
+			'PageSplitString = PageSplitString & "é¦–é¡µ"
+			'PageSplitString = PageSplitString & "ä¸Šé¡µ"
 		End If
 		
 		Dim DN
@@ -332,20 +332,20 @@ Sub DisplayAnnouncesSplitPages
 		End If
 	
 		If Page >= MaxPage Then
-			'PageSplitString = PageSplitString & "ÏÂÒ³"
-			'PageSplitString = PageSplitString & "Î²Ò³"
+			'PageSplitString = PageSplitString & "ä¸‹é¡µ"
+			'PageSplitString = PageSplitString & "å°¾é¡µ"
 		Else
 			If Page <> MaxPage-1 Then
 				PageSplitString = PageSplitString & "<a href=Search.asp" & SQL & "&Page=" & Page + 1 & ">"
-				If (Page + DN) < MaxPage Then PageSplitString = PageSplitString & "¡­"
-				PageSplitString = PageSplitString & "ÏÂÒ³</a>"
+				If (Page + DN) < MaxPage Then PageSplitString = PageSplitString & "â€¦"
+				PageSplitString = PageSplitString & "ä¸‹é¡µ</a>"
 			End If
 			PageSplitString = PageSplitString & "<a href=Search.asp" & SQL & "&Page=" & MaxPage & ">" & MaxPage + 1 & "</a>"
 		End If
-		'PageSplitString = PageSplitString & " ´ËÒ³<b>" & ThisPageNum & "</b>Ìõ Ã¿Ò³<b>" & DEF_TopicContentMaxListNum + 1 & "</b>Ìõ"
+		'PageSplitString = PageSplitString & " æ­¤é¡µ<b>" & ThisPageNum & "</b>æ¡ æ¯é¡µ<b>" & DEF_TopicContentMaxListNum + 1 & "</b>æ¡"
 		
 		If cCur(All_Count) = DEF_BBS_MaxListPage * (DEF_TopicContentMaxListNum + 1) Then
-			PageSplitString = PageSplitString & "<b>½á¹ûÊıÁ¿Ô½³ö·¶Î§£¬¸ü¶à¼ÇÂ¼ÒÑºöÂÔ</b>"
+			PageSplitString = PageSplitString & "<b>ç»“æœæ•°é‡è¶Šå‡ºèŒƒå›´ï¼Œæ›´å¤šè®°å½•å·²å¿½ç•¥</b>"
 		End If
 	Else
 		PageSplitString = PageSplitString & ""
@@ -363,18 +363,18 @@ Sub DisplayAnnouncesSplitPages
 					PageSplitString = PageSplitString & " <a href=Search.asp" & SQL & "&Page=" & N-1 & ">" & N & "</a>"
 				End If
 		Next
-		'PageSplitString = PageSplitString & " Ò³"
+		'PageSplitString = PageSplitString & " é¡µ"
 	
-		'PageSplitString = PageSplitString & " ´ËÒ³<b>" & ThisPageNum & "</b>Ìõ Ã¿Ò³<b>" & DEF_TopicContentMaxListNum + 1 & "</b>Ìõ"
+		'PageSplitString = PageSplitString & " æ­¤é¡µ<b>" & ThisPageNum & "</b>æ¡ æ¯é¡µ<b>" & DEF_TopicContentMaxListNum + 1 & "</b>æ¡"
 	End If
 	PageSplitString = PageSplitString & "</div></td></tr></table>"
 	If ThisPageNum < DEF_TopicContentMaxListNum and GBL_ShowBottomSure = 0 Then GBL_SiteBottomString = ""
 
 	If isArray(GetData_2) = False Then
-		Response.Write "<div class=alert>²éÑ¯½á¹û£ºÎŞ·ûºÏÄÚÈİ£¡[<a href=Search.asp>·µ»Ø</a>]</div>"
+		Response.Write "<div class=alert>æŸ¥è¯¢ç»“æœï¼šæ— ç¬¦åˆå†…å®¹ï¼[<a href=Search.asp>è¿”å›</a>]</div>"
 	Else
 		Response.Write PageSplitString
-		DisplayAnnounceData 0,ThisPageNum-1,1,GetData_2,1
+		Call DisplayAnnounceData(0,ThisPageNum-1,1,GetData_2,1)
 		Response.Write PageSplitString
 	End If
 	Set Rs = Nothing
@@ -403,7 +403,7 @@ Sub DisplayAnnounceData(For1,For2,StepValue,GetData,AllFlag)
 		If GetData(8,N) > 1024 Then
 			GetData(8,N) = cLng(GetData(8,N)/1024) & " KB"
 		Else
-			GetData(8,N) = GetData(8,N) & " ×Ö½Ú"
+			GetData(8,N) = GetData(8,N) & " å­—èŠ‚"
 		End If
 
 		If cCur(GetData(1,n)) = 0 Then
@@ -435,7 +435,7 @@ Sub DisplayAnnounceData(For1,For2,StepValue,GetData,AllFlag)
 			Temp2 = Application(DEF_MasterCookies & "BoardInfo" & GetData(16,N))
 		End If
 		If isArray(Temp2) = False Then
-			'Response.Write "´íÎóÂÛÌ³·¢Éú´íÎó,ÇëÁªÏµ¹ÜÀíÔ±!<br>" & VbCrLf
+			'Response.Write "é”™è¯¯è®ºå›å‘ç”Ÿé”™è¯¯,è¯·è”ç³»ç®¡ç†å‘˜!<br>" & VbCrLf
 			ForumPass = "a"
 			BoardLimit = 0
 			OtherLimit = 0
@@ -451,23 +451,23 @@ Sub DisplayAnnounceData(For1,For2,StepValue,GetData,AllFlag)
 		
 		
 		'If GBL_NoneLimitFlag = 0 and (ForumPass <> "" or GetBinarybit(BoardLimit,7) = 1 or GetBinarybit(BoardLimit,2) = 1 or GetBinarybit(BoardLimit,15) = 1 or OtherLimit > 0) Then
-		'	GetData(4,n) = "<font color=gray calss=grayfont>´ËÌû×Ó±êÌâÒÑÉèÖÃÎªÒş²Ø</font>"
+		'	GetData(4,n) = "<font color=gray calss=grayfont>æ­¤å¸–å­æ ‡é¢˜å·²è®¾ç½®ä¸ºéšè—</font>"
 		'	GetData(19,n) = 1
-		'	GetData(20,n) = "<font color=gray calss=grayfont>´ËÌû×ÓÄÚÈİÊôÓÚÏŞÖÆ°æÃæ£¬Çëµã»÷Ö÷Ìâ²é¿´...</font>"
+		'	GetData(20,n) = "<font color=gray calss=grayfont>æ­¤å¸–å­å†…å®¹å±äºé™åˆ¶ç‰ˆé¢ï¼Œè¯·ç‚¹å‡»ä¸»é¢˜æŸ¥çœ‹...</font>"
 		'End If
 
 		If GBL_NoneLimitFlag = 0 and GBL_CheckLimitTitle(ForumPass,BoardLimit,OtherLimit,HiddenFlag) = 1 Then
-			GetData(4,n) = "<span calss=grayfont>´ËÌû×Ó±êÌâÒÑÉèÖÃÎªÒş²Ø</span>"
+			GetData(4,n) = "<span calss=grayfont>æ­¤å¸–å­æ ‡é¢˜å·²è®¾ç½®ä¸ºéšè—</span>"
 			GetData(19,n) = 1
 		End If
-		If GBL_CheckLimitContent(ForumPass,BoardLimit,OtherLimit,HiddenFlag) = 1 Then GetData(20,n) = "<span calss=grayfont>´ËÌû×ÓÄÚÈİÊôÓÚÏŞÖÆ°æÃæ£¬Çëµã»÷Ö÷Ìâ²é¿´</span>"
+		If GBL_CheckLimitContent(ForumPass,BoardLimit,OtherLimit,HiddenFlag) = 1 Then GetData(20,n) = "<span calss=grayfont>æ­¤å¸–å­å†…å®¹å±äºé™åˆ¶ç‰ˆé¢ï¼Œè¯·ç‚¹å‡»ä¸»é¢˜æŸ¥çœ‹</span>"
 
-		If GetData(17,n) <> 80 and GetData(17,n) <> 0 Then GetData(20,n) = "<span calss=grayfont>´ËÌû×ÓÄÚÈİÓĞËùÏŞÖÆ£¬Çëµã»÷Ö÷Ìâ²é¿´...</span>"
+		If GetData(17,n) <> 80 and GetData(17,n) <> 0 Then GetData(20,n) = "<span calss=grayfont>æ­¤å¸–å­å†…å®¹æœ‰æ‰€é™åˆ¶ï¼Œè¯·ç‚¹å‡»ä¸»é¢˜æŸ¥çœ‹...</span>"
 
 		If left(GetData(4,N),3) = "re:" and GetData(4,N) <> "re:" Then GetData(4,N) = Mid(GetData(4,N),4)
 		If GetData(19,n) <> 1 and strLength(GetData(4,N))>Temp Then GetData(4,N) = LeftTrue(GetData(4,N),Temp-3) & "..."
 		
-		If GetData(19,n) <> 1 Then GetData(4,n) = htmlEncode(GetData(4,n)) '·Çhtml¹ıÂË
+		If GetData(19,n) <> 1 Then GetData(4,n) = htmlEncode(GetData(4,n)) 'éhtmlè¿‡æ»¤
 
 		If isArray(LMT_Key) Then
 			Temp4 = LMT_Key(0)
@@ -519,7 +519,7 @@ Sub DisplayAnnounceData(For1,For2,StepValue,GetData,AllFlag)
 		End If
 
 		If ccur(GetData(15,n)) = 1 Then
-			Response.Write "<img src=../images/" & GBL_DefineImage & "jh1.GIF border=0 title=¾«»ªÌû×Ó align=absbottom>"
+			Response.Write "<img src=../images/" & GBL_DefineImage & "jh1.GIF border=0 title=ç²¾åå¸–å­ align=absbottom>"
 		End If
 
 		If BoardName <> "" Then Response.Write " <span class=grayfont>-</span> <a href=../b/" & RW_b(GetData(16,N),0,"") & "><span class=greenfont>" & BoardName & "</span></a>"
@@ -527,7 +527,7 @@ Sub DisplayAnnounceData(For1,For2,StepValue,GetData,AllFlag)
 
 		Response.Write GetData(20,N)
 		GetData(10,N) = cCur(GetData(10,N))
-		Response.Write "<div class=value2><span class=grayfont>×÷Õß£º"
+		Response.Write "<div class=value2><span class=grayfont>ä½œè€…ï¼š"
 		If GetData(10,N) > 0 Then
 			Response.Write "<a href=../User/" & RW_User(GetData(10,N),"","","") & "><span class=greenfont>" & htmlencode(GetTrueName(GetData(9,N),GetData(21,N))) & "</span></a>"
 		Else
@@ -536,16 +536,16 @@ Sub DisplayAnnounceData(For1,For2,StepValue,GetData,AllFlag)
 
 		'If isNull(GetData(18,N)) Then GetData(18,N) = 0
 		'If GetData(17,n) = 80 Then
-		'	Response.Write "¹²" & cCur(GetData(18,N)) & "Æ±"
+		'	Response.Write "å…±" & cCur(GetData(18,N)) & "ç¥¨"
 		'Else
 		'	Response.Write GetData(2,N) & "/" & GetData(7,N)
 		'End If
 		Temp = RestoreTime(GetData(6,N))
 		If DateDiff("d",Temp,DEF_Now)<1 Then
-			Response.Write " ·¢±íÓÚ <span class=redfont>" & Temp & "</span>"
+			Response.Write " å‘è¡¨äº <span class=redfont>" & Temp & "</span>"
 		Else
-			Response.Write " ·¢±íÓÚ " & Temp
-			Response.Write " " & DateDiff("d",Temp,DEF_Now) & "ÌìÇ°"
+			Response.Write " å‘è¡¨äº " & Temp
+			Response.Write " " & DateDiff("d",Temp,DEF_Now) & "å¤©å‰"
 		End If
 		Response.Write "</span></div></td></tr>"
 		If N = For2 Then Response.Write "<tr><td><hr class=splitline></td></tr>"

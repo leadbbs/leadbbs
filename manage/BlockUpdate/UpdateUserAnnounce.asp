@@ -1,23 +1,23 @@
 <%
 sub UpdateUserAnnounce()
 
-	If CheckSupervisorUserName = 0 or GBL_UserID = 0 Then Exit sub
+	If CheckSupervisorUserName() = 0 or GBL_UserID = 0 Then Exit sub
 
 	Dim ReCount
 	ReCount = Request("ReCount")
 	If ReCount <> "1" Then ReCount = ""
 	If Request("SureFlag") <> "E72ksiOkw2" Then
 		%>
-			<p>ÖØÐÂÍ³¼ÆËùÓÐÓÃ»§·¢ÌûÊýÁ¿(<%
-			if ReCount <> "1" then response.write "²»"%>ÖØ¼Æ<%=DEF_PointsName(0)%>)
+			<p>é‡æ–°ç»Ÿè®¡æ‰€æœ‰ç”¨æˆ·å‘å¸–æ•°é‡(<%
+			if ReCount <> "1" then response.write "ä¸"%>é‡è®¡<%=DEF_PointsName(0)%>)
 			<form action=UpdateUnderWritePrintColumn.asp method=post>
-			<b><font color=ff0000 class=redfont>È·¶¨´Ë²Ù×÷Âð?<br>
+			<b><font color=ff0000 class=redfont>ç¡®å®šæ­¤æ“ä½œå—?<br>
 			<br>
 			<input type=hidden name=SureFlag value="E72ksiOkw2">
 			<input type=hidden name=ReCount value="<%=ReCount%>">
 			<input type=hidden name=flag value="<%=htmlencode(GBL_MANAGE_Flag)%>">
 			
-			<input type=submit value=È·¶¨½øÐÐ class=fmbtn>
+			<input type=submit value=ç¡®å®šè¿›è¡Œ class=fmbtn>
 			</form>
 		<%
 	Else
@@ -45,7 +45,7 @@ sub UpdateUserAnnounce()
 		
 		If Request("executepage") = "" Then
 		%>
-		<p style="font-size:9pt">ÏÂÃæ¿ªÊ¼ÖØÐÂ¼ÆËãÓÃ»§Êý¾Ý£¬¹²ÓÐ<%=RecordCount%>¸öÓÃ»§´ý¸üÐÂ
+		<p style="font-size:9pt">ä¸‹é¢å¼€å§‹é‡æ–°è®¡ç®—ç”¨æˆ·æ•°æ®ï¼Œå…±æœ‰<%=RecordCount%>ä¸ªç”¨æˆ·å¾…æ›´æ–°
 	
 		<table width="400" border="0" cellspacing="1" cellpadding="1">
 			<tr> 
@@ -54,7 +54,7 @@ sub UpdateUserAnnounce()
 			<tr> 
 				<td bgcolor=ffffff height=9><img src=../pic/progressbar.gif width=0 height=16 id=img1 name=img1 align=middle></td></tr></table>
 		</td></tr></table> <span id=txt1 name=txt1 style="font-size:9pt">0</span><span style="font-size:9pt">%</span>
-		<span id=tm1 name=tm1 style="font-size:9pt">ÕýÔÚ¹ÀËãÐèÒªÊ±¼ä...</span>
+		<span id=tm1 name=tm1 style="font-size:9pt">æ­£åœ¨ä¼°ç®—éœ€è¦æ—¶é—´...</span>
 		<script src="<%=DEF_BBS_HomeUrl%>inc/js/bar.js?ver=<%=DEF_Jer%>" type="text/javascript"></script>
 		<script>
 			Upl_url = "Io_Info.asp?id=<%=Urlencode(GBL_CHK_User)%>";
@@ -169,7 +169,7 @@ sub UpdateUserAnnounce()
 			End If
 		Loop
 		%>
-		Íê³É
+		å®Œæˆ
 		<%Application.Contents.Remove("Io_" & GBL_CHK_User)
 		application.contents.removeall
 	End If

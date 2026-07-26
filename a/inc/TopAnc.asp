@@ -1,48 +1,48 @@
-<%Rem ¹Ì¶¥Ìû×Ó
+<%Rem å›ºé¡¶å¸–å­
 Function CheckTopAncSure
 	
-	If CheckSure = 0 Then Exit Function
+	If CheckSure() = 0 Then Exit Function
 	
 	If Form_ParentID <> 0 Then
-		Processor_ErrMsg "Òª´¦ÀíµÄÌû×Ó±ØĞëÎªÖ÷ÌâÌû×Ó£¡"
+		Call Processor_ErrMsg("è¦å¤„ç†çš„å¸–å­å¿…é¡»ä¸ºä¸»é¢˜å¸–å­ï¼")
 		CheckTopAncSure = 0
 		Exit Function
 	End if
 
-	CheckisBoardMaster
+	CheckisBoardMaster()
 	If GBL_BoardMasterFlag < 5 or GetBinarybit(GBL_CHK_UserLimit,4) = 1 Then
 		CheckTopAncSure = 0
-		Processor_ErrMsg "´íÎó£¬È¨ÏŞ²»×ã£¡"
+		Call Processor_ErrMsg("é”™è¯¯ï¼Œæƒé™ä¸è¶³ï¼")
 		Exit Function
 	End If
 
-	CheckAllTopAnnounceFlag
+	CheckAllTopAnnounceFlag()
 
 	AllTopFlag = 0
 	If inStr(application(DEF_MasterCookies & "TopAncList" & GBL_Board_BoardAssort),"," & LMT_AncID & ",") Then AllTopFlag = 1
 	If inStr(application(DEF_MasterCookies & "TopAncList"),"," & LMT_AncID & ",") Then AllTopFlag = 2
 	If GBL_BoardMasterFlag < 7 and AllTopFlag=2 Then
 		CheckTopAncSure = 0
-		Processor_ErrMsg "´íÎó,È¨ÏŞ²»×ã£¬×Ü¹Ì¶¥ÌûÎŞÈ¨ÏŞÈ¡Ïû£¡"
+		Call Processor_ErrMsg("é”™è¯¯,æƒé™ä¸è¶³ï¼Œæ€»å›ºé¡¶å¸–æ— æƒé™å–æ¶ˆï¼")
 		Exit Function
 	End If
 	If GBL_BoardMasterFlag < 6 and AllTopFlag=1 Then
 		CheckTopAncSure = 0
-		Processor_ErrMsg "´íÎó£¬È¨ÏŞ²»×ã£¬×Ü¹Ì¶¥ÌûÎŞÈ¨ÏŞÈ¡Ïû£¡"
+		Call Processor_ErrMsg("é”™è¯¯ï¼Œæƒé™ä¸è¶³ï¼Œæ€»å›ºé¡¶å¸–æ— æƒé™å–æ¶ˆï¼")
 		Exit Function
 	End If
 	
 	If Form_RootID < DEF_BBS_TOPMinID Then
-		RootStr = "¹Ì¶¥"
-		If CheckMakeTopAnnounceOver = 1 then
-			Processor_ErrMsg "´íÎó£¬ÖÃ¶¥µÄÌû×ÓÌ«¶à£¬²»ÄÜÔÙ½øĞĞÖÃ¶¥²Ù×÷£¡"
+		RootStr = "å›ºé¡¶"
+		If CheckMakeTopAnnounceOver() = 1 then
+			Call Processor_ErrMsg("é”™è¯¯ï¼Œç½®é¡¶çš„å¸–å­å¤ªå¤šï¼Œä¸èƒ½å†è¿›è¡Œç½®é¡¶æ“ä½œï¼")
 			CheckTopAncSure = 0
 			Exit Function
 		Else
 			CheckTopAncSure = 1
 		End If
 	Else
-		RootStr = "È¡Ïû¹Ì¶¥"
+		RootStr = "å–æ¶ˆå›ºé¡¶"
 		CheckTopAncSure = 1
 	End If
 
@@ -95,14 +95,14 @@ End Function
 Function DisplayTopAncAnnounce
 
 	If LMT_AncID = 0 Then
-		Processor_ErrMsg "´íÎó£¬Î´Ñ¡ÔñÒª" & RootStr & "µÄÌû×Ó£¡" & VbCrLf
+		Call Processor_ErrMsg("é”™è¯¯ï¼Œæœªé€‰æ‹©è¦" & RootStr & "çš„å¸–å­ï¼" & VbCrLf)
 		Exit Function
 	End if
 	If Request.Form("SureFlag")="1" Then
 		MakeTopAnc(LMT_AncID)
-		Processor_Done "³É¹¦" & RootStr & "ÂÛÌ³Ìû×Ó¡£"
+		Call Processor_Done("æˆåŠŸ" & RootStr & "è®ºå›å¸–å­ã€‚")
 	Else
-		Processor_form "TopAnc",RootStr
+		Call Processor_form("TopAnc",RootStr)
 	End If
 
 End Function
@@ -180,7 +180,7 @@ Function MakeTopAnc(AnnounceID)
 	End If
 	Set Rs = Nothing
 
-	If CheckSupervisorUserName = 0 Then
+	If CheckSupervisorUserName() = 0 Then
 		CALL LDExeCute("Update LeadBBS_User Set LastWriteTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
 		UpdateSessionValue 13,GetTimeValue(DEF_Now),0
 	End If

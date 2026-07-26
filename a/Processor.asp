@@ -1,22 +1,22 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/Upload_Setup.asp -->
-<!-- #include file=../inc/Limit_Fun.asp -->
-<!-- #include file=inc/MakeAnnounceTop.asp -->
-<!-- #include file=inc/AllTopAnc.asp -->
-<!-- #include file=inc/TopAnc.asp -->
-<!-- #include file=inc/MoveAnnounce.asp -->
-<!-- #include file=inc/RepairAnnounce.asp -->
-<!-- #include file=inc/TypeAnnounce.asp -->
-<!-- #include file=inc/DelAnnounce.asp -->
-<!-- #include file=inc/MakeGoodAnnounce.asp -->
-<!-- #include file=inc/AddFriend.asp -->
-<!-- #include file=../User/inc/Fun_SendMessage.asp -->
-<!-- #include file=inc/DelUpload_Fun.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/Upload_Setup.asp"-->
+<!--#include file="../inc/Limit_Fun.asp"-->
+<!--#include file="inc/MakeAnnounceTop.asp"-->
+<!--#include file="inc/AllTopAnc.asp"-->
+<!--#include file="inc/TopAnc.asp"-->
+<!--#include file="inc/MoveAnnounce.asp"-->
+<!--#include file="inc/RepairAnnounce.asp"-->
+<!--#include file="inc/TypeAnnounce.asp"-->
+<!--#include file="inc/DelAnnounce.asp"-->
+<!--#include file="inc/MakeGoodAnnounce.asp"-->
+<!--#include file="inc/AddFriend.asp"-->
+<!--#include file="../User/inc/Fun_SendMessage.asp"-->
+<!--#include file="inc/DelUpload_Fun.asp"-->
 <%
-Const LMT_MaxCollectAnnounce = 500 '×î¶àÔÊĞíÊÕ²ØÌû×ÓÊıÁ¿
-Const LMT_Prc_anonymity = 1 '¹ÜÀíÕßÊÇ·ñÄäÃû¶ÌÏûÏ¢Í¨ÖªÓÃ»§£º 0 ÄäÃûÎªÏµÍ³ 1 Ô­²Ù×÷ÈË
-Const LMT_Prc_MsgFlag = 2 '¹ÜÀíÔ±ÊÇ·ñ¶ÌÏûÏ¢Í¨ÖªÓÃ»§£º 0 Ä¬ÈÏÑ¡ÏîÎª²»Í¨Öª,µ«¿ÉÑ¡ÔñÊÇ·ñÍ¨Öª 1 Ä¬ÈÏ¶ÌÏûÏ¢Í¨Öª,Ò²¿ÉÑ¡ÔñÊÇ·ñÍ¨Öª 2.Ç¿ÖÆ¶ÌÏûÏ¢Í¨Öª,²»¿ÉÊÇ·ñÍ¨Öª
+Const LMT_MaxCollectAnnounce = 500 'æœ€å¤šå…è®¸æ”¶è—å¸–å­æ•°é‡
+Const LMT_Prc_anonymity = 1 'ç®¡ç†è€…æ˜¯å¦åŒ¿åçŸ­æ¶ˆæ¯é€šçŸ¥ç”¨æˆ·ï¼š 0 åŒ¿åä¸ºç³»ç»Ÿ 1 åŸæ“ä½œäºº
+Const LMT_Prc_MsgFlag = 2 'ç®¡ç†å‘˜æ˜¯å¦çŸ­æ¶ˆæ¯é€šçŸ¥ç”¨æˆ·ï¼š 0 é»˜è®¤é€‰é¡¹ä¸ºä¸é€šçŸ¥,ä½†å¯é€‰æ‹©æ˜¯å¦é€šçŸ¥ 1 é»˜è®¤çŸ­æ¶ˆæ¯é€šçŸ¥,ä¹Ÿå¯é€‰æ‹©æ˜¯å¦é€šçŸ¥ 2.å¼ºåˆ¶çŸ­æ¶ˆæ¯é€šçŸ¥,ä¸å¯æ˜¯å¦é€šçŸ¥
 DEF_BBS_HomeUrl = "../"
 
 Dim Prc_User
@@ -24,11 +24,113 @@ Dim Prc_User
 Dim LMT_AncID,GoodAssort,Form_ParentID,Form_RootID,Form_RootIDBak,AjaxFlag
 Dim RootStr,AllTopFlag,Part,PartStr,Action_Str
 
+' --- AxonASP fix: these checker Functions MUST be defined BEFORE the dispatcher
+' (LoginAccuessFul) that calls them. AxonASP silently returns empty for a Function
+' referenced from inside another Function when it is defined LATER in the file. ---
+Function CheckSure
+
+	If LMT_AncID = 0 Then
+		Call Processor_ErrMsg("è¯·å…ˆé€‰æ‹©è¦æ“ä½œçš„è®°å½•ã€‚" & VbCrLf)
+		CheckSure = 0
+		Exit Function
+	End if
+
+	Dim Rs,SQL,TmpArr,TmpID
+	If inStr(LMT_AncID,",") Then
+		TmpArr = Split(LMT_AncID,",")
+		TmpID = TmpArr(0)
+	Else
+		TmpID = LMT_AncID
+	End If
+	SQL = sql_select("Select BoardID,GoodAssort,ParentID,UserID,RootID,RootIDBak from LeadBBS_Announce where id=" & TmpID,1)
+	Set Rs = LDExeCute(SQL,0)
+	If Rs.Eof Then
+		Call Processor_ErrMsg("é€‰æ‹©çš„è®°å½•å·²ä¸å­˜åœ¨ã€‚" & VbCrLf)
+		Rs.Close
+		Set Rs = Nothing
+		CheckSure = 0
+		Exit Function
+	End if
+
+	GBL_Board_ID = Rs("BoardID")
+	GoodAssort = cCur(Rs("GoodAssort"))
+	Form_ParentID = cCur(Rs("ParentID"))
+	Form_RootID = cCur(Rs("RootID"))
+	Form_RootIDBak = cCur(Rs("RootIDBak"))
+	Rs.Close
+	Set Rs = Nothing
+
+	Dim Temp
+	Temp = Application(DEF_MasterCookies & "BoardInfo" & GBL_Board_ID)
+	If isArray(Temp) = False Then
+		ReloadBoardInfo(GBL_Board_ID)
+		Temp = Application(DEF_MasterCookies & "BoardInfo" & GBL_Board_ID)
+	End If
+	If isArray(Temp) = False Then
+		Call Processor_ErrMsg("è®ºå›å‘ç”Ÿé”™è¯¯ï¼Œè¯·è”ç³»ç®¡ç†å‘˜ï¼" & VbCrLf)
+		CheckSure = 0
+		Set Rs = Nothing
+	End If
+	GBL_Board_BoardName = Temp(0,0)
+	GBL_Board_MasterList = Temp(10,0)
+	GBL_Board_BoardLimit = Temp(9,0)
+	GBL_Board_BoardAssort = cCur(Temp(1,0))
+	GBL_Board_AssortMaster = Temp(35,0)
+	CheckSure = 1
+	
+End Function
+
+Function CheckTopSure
+
+	If CheckSure() = 0 Then Exit Function
+	
+	If Form_ParentID <> 0 Then
+		Call Processor_ErrMsg("è¦å¤„ç†çš„å¸–å­å¿…é¡»ä¸ºä¸»é¢˜å¸–å­")
+		CheckTopSure = 0
+		Exit Function
+	End if
+
+	CheckisBoardMaster()
+	If GBL_UserID >= 1 and (GBL_BoardMasterFlag >= 5 and GetBinarybit(GBL_CHK_UserLimit,4) = 0) Then
+		CheckTopSure = 1
+	Else
+		CheckTopSure = 0
+		Call Processor_ErrMsg("é”™è¯¯ï¼Œæƒé™ä¸è¶³ï¼")
+	End If
+
+End Function
+
+Function CheckIsCanCollSure
+
+	If CheckSure() = 0 Then Exit Function
+	If Form_ParentID <> 0 Then
+		Call Processor_ErrMsg("è¦å¤„ç†çš„å¸–å­å¿…é¡»ä¸ºä¸»é¢˜å¸–å­")
+		CheckIsCanCollSure = 0
+		Exit Function
+	End if
+
+	CheckisBoardMaster()
+	CheckAccessLimit()
+	If GBL_CHK_TempStr <> "" or GetBinarybit(GBL_CHK_UserLimit,1) = 1 Then
+		Call Processor_ErrMsg("æ‚¨çš„æƒé™ä¸è¶³." & VbCrLf)
+		CheckIsCanCollSure = 0
+		Exit Function
+	End If
+	
+	If CheckWriteEventSpace() = 0 Then
+		Call Processor_ErrMsg("<b><font color=Red Class=redfont>æ‚¨çš„æ“ä½œè¿‡é¢‘ï¼Œè¯·ç¨å€™å†è¯•!</font></b> <br>" & VbCrLf)
+		CheckIsCanCollSure = 0
+		Exit Function
+	End If
+	CheckIsCanCollSure = 1
+
+End Function
+
 Function LoginAccuessFul
 
 	Action_Str = Request("Action")
 
-	If AjaxFlag = 0 Then BBS_SiteHead DEF_SiteNameString & " - " & KillHTMLLabel(GBL_Board_BoardName),GBL_board_ID,"¹ÜÀí"
+	If AjaxFlag = 0 Then BBS_SiteHead DEF_SiteNameString & " - " & KillHTMLLabel(GBL_Board_BoardName),GBL_board_ID,"ç®¡ç†"
 	
 	If AjaxFlag = 0 Then Boards_Body_Head("")
 	
@@ -72,148 +174,52 @@ Function LoginAccuessFul
 			Prc_User = GBL_CHK_User
 		End If
 		Select Case Action_Str
-			Case "Collect": If CheckIsCanCollSure = 1 Then DisplayCollectAnnounce
-			Case "Top": If CheckTopSure = 1 Then DisplayMakeTopAnnounce
-			Case "Repair": If CheckRepairSure = 1 Then DisplayRepairAnnounce
-			Case "mirror","Move": If CheckMoveSure = 1 Then DisplayMoveAnnounce
-			Case "TopAnc": If CheckTopAncSure = 1 Then DisplayTopAncAnnounce
-			Case "AllTopAnc": If CheckAllTopAncSure = 1 Then DisplayAllTopAncAnnounce
-			Case "TypeSet": If CheckTypeSetSure = 1 Then DisplayTypeSetAnnounce
-			Case "Del": If CheckDelSure = 1 Then DisplayDelAnnounce
-			Case "MakeGood": If CheckMakeGoodSure = 1 Then DisplayMakeGoodAnnounce
-			Case "AddFriend": If CheckAddFriendSure = 1 Then DisplayAddFriend
-			Case Else: Processor_ErrMsg "Î´Ñ¡Ôñ´¦ÀíÈÎÎñ£¡"
+			Case "Collect": If CheckIsCanCollSure() = 1 Then Call DisplayCollectAnnounce()
+			Case "Top": If CheckTopSure() = 1 Then Call DisplayMakeTopAnnounce()
+			Case "Repair": If CheckRepairSure() = 1 Then DisplayRepairAnnounce()
+			Case "mirror","Move": If CheckMoveSure() = 1 Then DisplayMoveAnnounce()
+			Case "TopAnc": If CheckTopAncSure() = 1 Then DisplayTopAncAnnounce()
+			Case "AllTopAnc": If CheckAllTopAncSure() = 1 Then DisplayAllTopAncAnnounce()
+			Case "TypeSet": If CheckTypeSetSure() = 1 Then DisplayTypeSetAnnounce
+			Case "Del": If CheckDelSure() = 1 Then DisplayDelAnnounce
+			Case "MakeGood": If CheckMakeGoodSure() = 1 Then DisplayMakeGoodAnnounce
+			Case "AddFriend": If CheckAddFriendSure() = 1 Then DisplayAddFriend()
+			Case Else: Processor_ErrMsg "æœªé€‰æ‹©å¤„ç†ä»»åŠ¡ï¼"
 		End Select
 	Else
 		If Request("submitflag") = "" Then
-			Processor_ErrMsg "ÇëÏÈµÇÂ¼£¡"
+			Call Processor_ErrMsg("è¯·å…ˆç™»å½•ï¼")
 		Else
-			Processor_ErrMsg GBL_CHK_TempStr
+			Call Processor_ErrMsg(GBL_CHK_TempStr)
 		End If
 	End If
 
 End Function
 
-Function CheckSure
 
-	If LMT_AncID = 0 Then
-		Processor_ErrMsg "ÇëÏÈÑ¡ÔñÒª²Ù×÷µÄ¼ÇÂ¼¡£" & VbCrLf
-		CheckSure = 0
-		Exit Function
-	End if
-
-	Dim Rs,SQL,TmpArr,TmpID
-	If inStr(LMT_AncID,",") Then
-		TmpArr = Split(LMT_AncID,",")
-		TmpID = TmpArr(0)
-	Else
-		TmpID = LMT_AncID
-	End If
-	SQL = sql_select("Select BoardID,GoodAssort,ParentID,UserID,RootID,RootIDBak from LeadBBS_Announce where id=" & TmpID,1)
-	Set Rs = LDExeCute(SQL,0)
-	If Rs.Eof Then
-		Processor_ErrMsg "Ñ¡ÔñµÄ¼ÇÂ¼ÒÑ²»´æÔÚ¡£" & VbCrLf
-		Rs.Close
-		Set Rs = Nothing
-		CheckSure = 0
-		Exit Function
-	End if
-
-	GBL_Board_ID = Rs("BoardID")
-	GoodAssort = cCur(Rs("GoodAssort"))
-	Form_ParentID = cCur(Rs("ParentID"))
-	Form_RootID = cCur(Rs("RootID"))
-	Form_RootIDBak = cCur(Rs("RootIDBak"))
-	Rs.Close
-	Set Rs = Nothing
-
-	Dim Temp
-	Temp = Application(DEF_MasterCookies & "BoardInfo" & GBL_Board_ID)
-	If isArray(Temp) = False Then
-		ReloadBoardInfo(GBL_Board_ID)
-		Temp = Application(DEF_MasterCookies & "BoardInfo" & GBL_Board_ID)
-	End If
-	If isArray(Temp) = False Then
-		Processor_ErrMsg "ÂÛÌ³·¢Éú´íÎó£¬ÇëÁªÏµ¹ÜÀíÔ±£¡" & VbCrLf
-		CheckSure = 0
-		Set Rs = Nothing
-	End If
-	GBL_Board_BoardName = Temp(0,0)
-	GBL_Board_MasterList = Temp(10,0)
-	GBL_Board_BoardLimit = Temp(9,0)
-	GBL_Board_BoardAssort = cCur(Temp(1,0))
-	GBL_Board_AssortMaster = Temp(35,0)
-	CheckSure = 1
-	
-End Function
-
-Function CheckTopSure
-
-	If CheckSure = 0 Then Exit Function
-	
-	If Form_ParentID <> 0 Then
-		Processor_ErrMsg "Òª´¦ÀíµÄÌû×Ó±ØĞëÎªÖ÷ÌâÌû×Ó"
-		CheckTopSure = 0
-		Exit Function
-	End if
-
-	CheckisBoardMaster
-	If GBL_UserID >= 1 and (GBL_BoardMasterFlag >= 5 and GetBinarybit(GBL_CHK_UserLimit,4) = 0) Then
-		CheckTopSure = 1
-	Else
-		CheckTopSure = 0
-		Processor_ErrMsg "´íÎó£¬È¨ÏŞ²»×ã£®"
-	End If
-
-End Function
 
 
 Function DisplayMakeTopAnnounce
 
 	If Request.Form("SureFlag")="1" Then
 		CALL MakeAnnounceTop(LMT_AncID,"")
-		If CheckSupervisorUserName = 0 Then
+		If CheckSupervisorUserName() = 0 Then
 			CALL LDExeCute("Update LeadBBS_User Set LastWriteTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
 			UpdateSessionValue 13,GetTimeValue(DEF_Now),0
 		End If
-		Processor_Done("³É¹¦ÌáÉıÂÛÌ³Ìû×Ó£¡")
+		Processor_Done("æˆåŠŸæå‡è®ºå›å¸–å­ï¼")
 	Else
-		Processor_form "Top","ÌáÉı"
+		Call Processor_form("Top","æå‡")
 	End If
 
 End Function
 
-Rem ÊÕ²ØÌû×Ó
-Function CheckIsCanCollSure
-
-	If CheckSure = 0 Then Exit Function
-	If Form_ParentID <> 0 Then
-		Processor_ErrMsg "Òª´¦ÀíµÄÌû×Ó±ØĞëÎªÖ÷ÌâÌû×Ó"
-		CheckIsCanCollSure = 0
-		Exit Function
-	End if
-
-	CheckisBoardMaster
-	CheckAccessLimit
-	If GBL_CHK_TempStr <> "" or GetBinarybit(GBL_CHK_UserLimit,1) = 1 Then
-		Processor_ErrMsg "ÄúµÄÈ¨ÏŞ²»×ã." & VbCrLf
-		CheckIsCanCollSure = 0
-		Exit Function
-	End If
-	
-	If CheckWriteEventSpace = 0 Then
-		Processor_ErrMsg "<b><font color=Red Class=redfont>ÄúµÄ²Ù×÷¹ıÆµ£¬ÇëÉÔºòÔÙÊÔ!</font></b> <br>" & VbCrLf
-		CheckIsCanCollSure = 0
-		Exit Function
-	End If
-	CheckIsCanCollSure = 1
-
-End Function
+Rem æ”¶è—å¸–å­
 
 Sub DisplayCollectAnnounce
 
 	If LMT_AncID = 0 Then
-		Processor_ErrMsg "´íÎó£¬ÒªÊÕ²ØµÄÖ÷Ìâ²»´æÔÚ£¡" & VbCrLf
+		Call Processor_ErrMsg("é”™è¯¯ï¼Œè¦æ”¶è—çš„ä¸»é¢˜ä¸å­˜åœ¨ï¼" & VbCrLf)
 		Exit Sub
 	End if
 	If Request.Form("SureFlag")="1" Then
@@ -231,15 +237,15 @@ Sub DisplayCollectAnnounce
 		Set Rs = Nothing
 
 		If SQL > LMT_MaxCollectAnnounce Then
-			Processor_ErrMsg "´íÎó£¬ÄúÊÕ²ØÌûÊıÒÑ¾­³¬¹ı" & LMT_MaxCollectAnnounce & "Ìû£¬²»ÄÜÔÙÊÕ²Ø£¡" & VbCrLf
+			Call Processor_ErrMsg("é”™è¯¯ï¼Œæ‚¨æ”¶è—å¸–æ•°å·²ç»è¶…è¿‡" & LMT_MaxCollectAnnounce & "å¸–ï¼Œä¸èƒ½å†æ”¶è—ï¼" & VbCrLf)
 			Exit Sub
 		End if
 		
 		SQL = sql_select("Select ID from LeadBBS_CollectAnc where AnnounceID=" & LMT_AncID & " and UserID=" & GBL_UserID,1)
 		Set Rs = LDExeCute(SQL,0)
 		If Not Rs.Eof Then
-			Processor_ErrMsg "ÄúÒÑ¾­ÊÕ²Ø¹ı´ËÌû£¡"
-			//Processor_ErrMsg "<div id=collect_msg>ÄúÒÑ¾­ÊÕ²Ø¹ı´ËÌû£¡ <a href=""javascript:p_url = '" & DEF_BBS_HomeUrl & "User/DeleteMessage.asp';" & VbCrLf & "p_para='AjaxFlag=1&FriendFlag=2&DeleteSureFlag=dk9@dl9s92lw_SWxl&MessageID=';" & VbCrLf & "p_command = '$id(\'collect_msg\').innerHTML=tmp';" & VbCrLf & "p_type = 1;" & VbCrLf & "p_once(" & Rs(0) & ");"">µã»÷ÖØĞÂÉ¾³ı´ËÊÕ²Ø¡£</a></div>" & VbCrLf
+			Call Processor_ErrMsg("æ‚¨å·²ç»æ”¶è—è¿‡æ­¤å¸–ï¼")
+			//Processor_ErrMsg "<div id=collect_msg>æ‚¨å·²ç»æ”¶è—è¿‡æ­¤å¸–ï¼ <a href=""javascript:p_url = '" & DEF_BBS_HomeUrl & "User/DeleteMessage.asp';" & VbCrLf & "p_para='AjaxFlag=1&FriendFlag=2&DeleteSureFlag=dk9@dl9s92lw_SWxl&MessageID=';" & VbCrLf & "p_command = '$id(\'collect_msg\').innerHTML=tmp';" & VbCrLf & "p_type = 1;" & VbCrLf & "p_once(" & Rs(0) & ");"">ç‚¹å‡»é‡æ–°åˆ é™¤æ­¤æ”¶è—ã€‚</a></div>" & VbCrLf
 			Rs.Close
 			Set Rs = Nothing
 			Exit Sub
@@ -247,16 +253,16 @@ Sub DisplayCollectAnnounce
 		Rs.Close
 		Set Rs = Nothing
 
-		Processor_Done("ÄãËùÒªÊÕ²ØµÄÌû×ÓÒÑ³É¹¦Ìí¼ÓÖÁÊÕ²ØÁĞ±í£¡")
+		Processor_Done("ä½ æ‰€è¦æ”¶è—çš„å¸–å­å·²æˆåŠŸæ·»åŠ è‡³æ”¶è—åˆ—è¡¨ï¼")
 		CALL LDExeCute(" insert into LeadBBS_CollectAnc(AnnounceID,UserID) Values(" & LMT_AncID & "," & GBL_UserID & ")",1)
 
 		Set Rs = Nothing
-		If CheckSupervisorUserName = 0 Then
+		If CheckSupervisorUserName() = 0 Then
 			CALL LDExeCute("Update LeadBBS_User Set LastWriteTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
 			UpdateSessionValue 13,GetTimeValue(DEF_Now),0
 		End If
 	Else
-		Processor_form "Collect","ÊÕ²Ø"
+		Call Processor_form("Collect","æ”¶è—")
 	End If
 
 End Sub
@@ -273,22 +279,22 @@ Sub Processor_MsgForm
 			Response.Write " checked"
 		Case 2
 			Response.Write " checked disabled"
-	End Select%> onclick="if(this.checked){$id('SendWhyshidden').style.display='block';}else{$id('SendWhyshidden').style.display='none';}">¶ÌÏûÏ¢Í¨Öª·¢ÌûÈË
+	End Select%> onclick="if(this.checked){$id('SendWhyshidden').style.display='block';}else{$id('SendWhyshidden').style.display='none';}">çŸ­æ¶ˆæ¯é€šçŸ¥å‘å¸–äºº
 	</div>
 	<div class=value2>
 	<span id=SendWhyshidden name=SendWhyshidden<%If LMT_Prc_MsgFlag = 0 Then Response.Write " style=display:none"%>> 
-	²Ù×÷Ô­Òò <input maxlength=24 name=SendWhys id=SendWhys value="" size="15" class='fminpt input_3'>
+	æ“ä½œåŸå›  <input maxlength=24 name=SendWhys id=SendWhys value="" size="15" class='fminpt input_3'>
 	<select name=swys onchange="$id('SendWhys').value=this.value;">
-	<option value="">--Ñ¡ÔñÔ­Òò--
-	<option value="ÄÚÈİÎ¥¹æ">ÄÚÈİÎ¥¹æ
-	<option value="¹ã¸æÌû">¹ã¸æÌû
-	<option value="¶ñÒâ¹àË®">¶ñÒâ¹àË®
-	<option value="ÖØ¸´Ìû">ÖØ¸´Ìû
+	<option value="">--é€‰æ‹©åŸå› --
+	<option value="å†…å®¹è¿è§„">å†…å®¹è¿è§„
+	<option value="å¹¿å‘Šå¸–">å¹¿å‘Šå¸–
+	<option value="æ¶æ„çŒæ°´">æ¶æ„çŒæ°´
+	<option value="é‡å¤å¸–">é‡å¤å¸–
 	<option value="">
-	<option value="¹ÄÀøÔ­´´">¹ÄÀøÔ­´´
-	<option value="±íÊ¾ÔŞÍ¬">±íÊ¾ÔŞÍ¬
-	<option value="ºÃÌû">ºÃÌû
-	<option value="ºÜÓĞ°ïÖú">ºÜÓĞ°ïÖú
+	<option value="é¼“åŠ±åŸåˆ›">é¼“åŠ±åŸåˆ›
+	<option value="è¡¨ç¤ºèµåŒ">è¡¨ç¤ºèµåŒ
+	<option value="å¥½å¸–">å¥½å¸–
+	<option value="å¾ˆæœ‰å¸®åŠ©">å¾ˆæœ‰å¸®åŠ©
 	</select>
 	</span>
 	</div>
@@ -298,9 +304,9 @@ End Sub
 
 Sub Processor_form(Action,Str)
 
-	Processor_Head
+	Processor_Head()
 	%>
-	<form action=<%=DEF_BBS_HomeUrl%>a/Processor.asp?action=<%=Action%>&b=<%=GBL_Board_ID%>&ID=<%=LMT_AncID%> onSubmit="submit_disable(this);" method="post"<%
+	<form action=<%=DEF_BBS_HomeUrl%>a/Processor.asp?action=<%=Action%>&b=<%=GBL_Board_ID%>&ID=<%=LngStr(LMT_AncID)%> onSubmit="submit_disable(this);" method="post"<%
 	If AjaxFlag = 1 Then
 		Response.Write " target=""hidden_frame"""
 	End If
@@ -308,23 +314,23 @@ Sub Processor_form(Action,Str)
 		<input type=hidden name=SureFlag value="1">
 		<input type=hidden name=JsFlag value="1">
 		<input type=hidden name=AjaxFlag value="<%=AjaxFlag%>">
-		<input type=hidden name=ID value="<%=LMT_AncID%>">
+		<input type=hidden name=ID value="<%=LngStr(LMT_AncID)%>">
 		<input type=hidden name=BoardID value="<%=GBL_Board_ID%>">
-		<div class=value2><%=Str%>Ìû×Ó£º<%
+		<div class=value2><%=Str%>å¸–å­ï¼š<%
 		If inStr(LMT_AncID,",") Then
-			Response.Write "<b>¹²" & Len(LMT_AncID)-Len(Replace(LMT_AncID,",","")) + 1 & "Ìõ¼ÇÂ¼</b>"
+			Response.Write "<b>å…±" & Len(LMT_AncID)-Len(Replace(LMT_AncID,",","")) + 1 & "æ¡è®°å½•</b>"
 		Else
-			Response.Write "<b>¹²1Ìõ¼ÇÂ¼</b>"
+			Response.Write "<b>å…±1æ¡è®°å½•</b>"
 		End If
 		If Action = "Del" Then%></div>
 		<%
-			Processor_MsgForm
+			Processor_MsgForm()
 		End If
 		%>
-		<br><div class=value2><input type=submit value=È·¶¨ class="fmbtn btn_2"></div>
+		<br><div class=value2><input type=submit value=ç¡®å®š class="fmbtn btn_2"></div>
 	</form>
 	<%
-	Processor_Bottom
+	Processor_Bottom()
 
 End Sub
 
@@ -352,7 +358,7 @@ End Sub
 
 Sub Processor_Done(Str)
 
-	Processor_Head
+	Processor_Head()
 	Dim Fresh,url
 	Select Case Action_Str
 		Case "Del"
@@ -378,11 +384,11 @@ Sub Processor_Done(Str)
 	End If
 	If AjaxFlag = 0 Then
 		Response.Write "<ul>"
-		If LMT_AncID > 0 Then Response.Write "<li><a href=" & RW_a(GBL_Board_ID,LMT_AncID,1,1,"") & ">·µ»Øµ±Ç°Ìû×Ó</a></li>"
-		If GBL_Board_ID > 0 Then Response.Write "<li><a href=../b/" & RW_b(GBL_Board_ID,0,"") & ">·µ»Øµ±Ç°°æÃæ</a></li>"
+		If LMT_AncID > 0 Then Response.Write "<li><a href=" & RW_a(GBL_Board_ID,LMT_AncID,1,1,"") & ">è¿”å›å½“å‰å¸–å­</a></li>"
+		If GBL_Board_ID > 0 Then Response.Write "<li><a href=../b/" & RW_b(GBL_Board_ID,0,"") & ">è¿”å›å½“å‰ç‰ˆé¢</a></li>"
 		Response.Write "<ul><br>"
 	End If
-	Processor_Bottom
+	Processor_Bottom()
 
 End Sub
 
@@ -530,20 +536,20 @@ Function UpdateBoardAnnounceNum(BoardList,TopicNum,AnnounceNum,TodayAnnounce,Goo
 		End If
 		If isArray(Temp) = True Then
 			If TopicNum <> 0 Then
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(5,0))+TopicNum,5
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(29,0))+TopicNum,29
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(5,0))+TopicNum,5)
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(29,0))+TopicNum,29)
 			End If
 			If AnnounceNum <> 0 Then
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(6,0))+AnnounceNum,6
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(30,0))+AnnounceNum,30
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(6,0))+AnnounceNum,6)
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(30,0))+AnnounceNum,30)
 			End If
 			If TodayAnnounce <> 0 Then
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(18,0))+TodayAnnounce,18
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(31,0))+TodayAnnounce,31
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(18,0))+TodayAnnounce,18)
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(31,0))+TodayAnnounce,31)
 			End If
 			If GoodNum <> 0 Then
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(13,0))+GoodNum,13
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(32,0))+GoodNum,32
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(13,0))+GoodNum,13)
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(32,0))+GoodNum,32)
 			End If
 		End If
 	Next
@@ -623,20 +629,20 @@ Function UpdateBoardAnnounceNum(BoardList,TopicNum,AnnounceNum,TodayAnnounce,Goo
 		End If
 		If isArray(Temp) = True Then
 			If TopicNum <> 0 Then
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(5,0))+TopicNum,5
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(29,0))+TopicNum,29
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(5,0))+TopicNum,5)
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(29,0))+TopicNum,29)
 			End If
 			If AnnounceNum <> 0 Then
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(6,0))+AnnounceNum,6
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(30,0))+AnnounceNum,30
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(6,0))+AnnounceNum,6)
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(30,0))+AnnounceNum,30)
 			End If
 			If TodayAnnounce <> 0 Then
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(18,0))+TodayAnnounce,18
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(31,0))+TodayAnnounce,31
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(18,0))+TodayAnnounce,18)
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(31,0))+TodayAnnounce,31)
 			End If
 			If GoodNum <> 0 Then
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(13,0))+GoodNum,13
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(32,0))+GoodNum,32
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(13,0))+GoodNum,13)
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(32,0))+GoodNum,32)
 			End If
 		End If
 	Next
@@ -650,11 +656,11 @@ Sub Processor_ErrMsg(str)
 		Global_ErrMsg(str)
 	Else
 		If AjaxFlag = 1 and Request.Form("JsFlag")="1" Then%>
-		<script>parent.layer_outmsg("anc_delbody","<div class=\"ajaxbox\"><b>ÌáÊ¾ĞÅÏ¢</b>£º<span class=\"redfont\"><%=Replace(Replace(Replace(Str,"\","\\"),"""","\"""),VbCrLf,"\n")%></span></div>");</script>
+		<script>parent.layer_outmsg("anc_delbody","<div class=\"ajaxbox\"><b>æç¤ºä¿¡æ¯</b>ï¼š<span class=\"redfont\"><%=Replace(Replace(Replace(Str,"\","\\"),"""","\"""),VbCrLf,"\n")%></span></div>");</script>
 		<%
 		Else%>
 	<div class="ajaxbox">
-	<b>ÌáÊ¾ĞÅÏ¢</b>£º
+	<b>æç¤ºä¿¡æ¯</b>ï¼š
 		<span class="redfont">
 			<%=Str%>
 		</span>
@@ -675,16 +681,16 @@ Sub Main
 		AjaxFlag = 0
 	End If
 
-	initDatabase
-	LoginAccuessFul
-	closeDataBase
+	initDatabase()
+	LoginAccuessFul()
+	closeDataBase()
 	If AjaxFlag = 0 Then
-		Boards_Body_Bottom
+		Boards_Body_Bottom()
 		If GBL_ShowBottomSure = 0 Then GBL_SiteBottomString = ""
-		SiteBottom
+		SiteBottom()
 	End If
 
 End Sub
 
-Main
+Main()
 %>

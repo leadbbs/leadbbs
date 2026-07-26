@@ -134,18 +134,18 @@ function topic_playImg(sel,start)
 	//}
 }
 
-var topic_time = 5000,playflag=1;//Éè¶¨µÄÊ±¼ä¼ä¸ô
-var topic_index;//Ä¿Ç°ÏÔÊ¾µÄÍ¼Æ¬±àºÅ
-var topic_n = -1;//×Ü¹²µÄÍ¼Æ¬Á¿
-var duration = 3;//blendTransÂË¾µÊ¹ÓÃµÄÒ»¸ö²ÎÊıÖµ£¬ºóÃæ»áÓĞËµÃ÷
+var topic_time = 5000,playflag=1;//è®¾å®šçš„æ—¶é—´é—´éš”
+var topic_index;//ç›®å‰æ˜¾ç¤ºçš„å›¾ç‰‡ç¼–å·
+var topic_n = -1;//æ€»å…±çš„å›¾ç‰‡é‡
+var duration = 3;//blendTransæ»¤é•œä½¿ç”¨çš„ä¸€ä¸ªå‚æ•°å€¼ï¼Œåé¢ä¼šæœ‰è¯´æ˜
 var topic_imgWidth = 140
 var topic_imgHeight = 105
 var topic_imgstart = 1;
-//Í¼Æ¬¼¯Êı×é¶ÔÏó
-¡¡¡¡function ImgArray(len)
-¡¡¡¡{
-¡¡¡¡¡¡this.length=len;
-¡¡ }
+//å›¾ç‰‡é›†æ•°ç»„å¯¹è±¡
+ã€€ã€€function ImgArray(len)
+ã€€ã€€{
+ã€€ã€€ã€€this.length=len;
+ã€€ }
 
 var ImgName,ImgName_Open,Img_Title;
 

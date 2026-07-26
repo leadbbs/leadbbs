@@ -1,8 +1,8 @@
-<!-- #include file=cache/CACHE_CMS_Announcement.asp -->
-<!-- #include file=cache/CACHE_CMS_HOMECONTENT.asp -->
-<!-- #include file=cache/CACHE_CMS_HOMESIDE.asp -->
-<!-- #include file=cache/CACHE_CMS_INSIDE.asp -->
-<!-- #include file=cache/CACHE_CMS_NAVIGATECLASS.asp -->
+<!--#include file="cache/CACHE_CMS_Announcement.asp"-->
+<!--#include file="cache/CACHE_CMS_HOMECONTENT.asp"-->
+<!--#include file="cache/CACHE_CMS_HOMESIDE.asp"-->
+<!--#include file="cache/CACHE_CMS_INSIDE.asp"-->
+<!--#include file="cache/CACHE_CMS_NAVIGATECLASS.asp"-->
 <%
 const CMS_AnnouncementClassID = 1
 
@@ -29,7 +29,7 @@ class cms_cache_Class
 			tmptime = GetTimeValue(CMS_Announcement_UpdateTime)
 		End If
 		If forceRefresh = 1 or ((t < 0 or t > DEF_UpdateInterval or Err) and Application(DEF_MasterCookies & "_CMS_Announcement") & "" <> "yes") Then
-			'∑¿÷π∂‡÷ÿ–¥»Î
+			'Èò≤Ê≠¢Â§öÈáçÂÜôÂÖ•
 			Application.Lock
 			Application(DEF_MasterCookies & "_CMS_Announcement") = "yes"
 			Application.UnLock
@@ -38,9 +38,9 @@ class cms_cache_Class
 				Err.clear
 			End If
 			Application.Contents.Remove(DEF_MasterCookies & "_CMS_Announcement")
-			CMS_Announcement_View
+			Call CMS_Announcement_View()
 		Else
-			CMS_Announcement_View
+			Call CMS_Announcement_View()
 		End If
 	
 	end sub
@@ -97,7 +97,7 @@ class cms_cache_Class
 		End If
 	
 		If forceRefresh = 1 or ((t < 0 or t > DEF_UpdateInterval or Err) and Application(DEF_MasterCookies & "_CMS_HOMECONTENT") & "" <> "yes") Then
-			'∑¿÷π∂‡÷ÿ–¥»Î
+			'Èò≤Ê≠¢Â§öÈáçÂÜôÂÖ•
 			Application.Lock
 			Application(DEF_MasterCookies & "_CMS_HOMECONTENT") = "yes"
 			Application.UnLock
@@ -106,9 +106,9 @@ class cms_cache_Class
 				Err.clear
 			End If
 			Application.Contents.Remove(DEF_MasterCookies & "_CMS_HOMECONTENT")
-			CMS_HOMECONTENT_View
+			Call CMS_HOMECONTENT_View()
 		Else
-			CMS_HOMECONTENT_View
+			Call CMS_HOMECONTENT_View()
 		End If
 	
 	end sub
@@ -120,7 +120,7 @@ class cms_cache_Class
 		form_content = ADODB_LoadFile(DEF_BBS_HomeUrl & "article/inc/cache/home_channellist_0.asp")
 		dim tmp,n,tmp2,existn
 		dim form_type,form_title,form_listnum,form_id,form_extendflag,form_style
-		tmp = split(form_content,VbCrLf)
+		tmp = SplitLines(form_content)   ' ¬ß36: the data file is LF-only, Split(...,VbCrLf) collapses it
 		for n = 0 to ubound(tmp)
 			tmp2 = split(tmp(n),"#~#^#")
 			if ubound(tmp2) >= 4 then
@@ -183,7 +183,13 @@ class cms_cache_Class
 			end if
 		next
 		'response.Write str
-		if str = "" then str = "<" & "%Response.Redirect Rw_boards(0)" & "%" & ">" & VbCrLf
+		' Upstream defect: with no channel configured, the generated cache file falls back to a
+		' bare RELATIVE redirect ‚Äî but that file is #included by every CMS page, not just the
+		' home page. From article/center.asp it resolved to article/boards.asp and 404'd, so
+		' "Êõ¥Êñ∞ÁºìÂ≠ò" in the CMS admin answered 404 instead of a result page. Keep the bounce the
+		' fallback is for (an unconfigured CMS home goes to the forum) but scope it to the home
+		' page and make it root-relative.
+		if str = "" then str = "<" & "%If InStr(LCase(Request.ServerVariables(""SCRIPT_NAME"")),""index.asp"") > 0 Then Response.Redirect """ & DEF_InstallDir & """ & Rw_boards(0)" & "%" & ">" & VbCrLf
 		Str = "<" & "%" & VbCrLf &_
 		"Dim CMS_HOMECONTENT_UpdateTime" & VbCrLf &_
 		"CMS_HOMECONTENT_UpdateTime = """ & htmlencode(DEF_Now) & """" & VbCrLf &_
@@ -228,7 +234,7 @@ class cms_cache_Class
 			tmptime = GetTimeValue(CMS_HOMESIDE_UpdateTime)
 		End If
 		If forceRefresh = 1 or ((t < 0 or t > DEF_UpdateInterval or Err) and Application(DEF_MasterCookies & "_CMS_HOMESIDE") & "" <> "yes") Then
-			'∑¿÷π∂‡÷ÿ–¥»Î
+			'Èò≤Ê≠¢Â§öÈáçÂÜôÂÖ•
 			Application.Lock
 			Application(DEF_MasterCookies & "_CMS_HOMESIDE") = "yes"
 			Application.UnLock
@@ -237,9 +243,9 @@ class cms_cache_Class
 				Err.clear
 			End If
 			Application.Contents.Remove(DEF_MasterCookies & "_CMS_HOMESIDE")
-			CMS_HOMESIDE_View
+			Call CMS_HOMESIDE_View()
 		Else
-			CMS_HOMESIDE_View
+			Call CMS_HOMESIDE_View()
 		End If
 	
 	end sub
@@ -307,7 +313,7 @@ class cms_cache_Class
 			tmptime = GetTimeValue(CMS_INSIDE_UpdateTime)
 		End If
 		If forceRefresh = 1 or ((t < 0 or t > DEF_UpdateInterval or Err) and Application(DEF_MasterCookies & "_CMS_INSIDE") & "" <> "yes") Then
-			'∑¿÷π∂‡÷ÿ–¥»Î
+			'Èò≤Ê≠¢Â§öÈáçÂÜôÂÖ•
 			Application.Lock
 			Application(DEF_MasterCookies & "_CMS_INSIDE") = "yes"
 			Application.UnLock
@@ -316,9 +322,9 @@ class cms_cache_Class
 				Err.clear
 			End If
 			Application.Contents.Remove(DEF_MasterCookies & "_CMS_INSIDE")
-			CMS_INSIDE_View
+			Call CMS_INSIDE_View()
 		Else
-			CMS_INSIDE_View
+			Call CMS_INSIDE_View()
 		End If
 	
 	end sub
@@ -388,24 +394,24 @@ class cms_cache_Class
 	
 	end function
 
-	rem …˙≥…∂•≤ø∑÷¿‡µº∫Ωª∫¥Ê	
+	rem ÁîüÊàêÈ°∂ÈÉ®ÂàÜÁ±ªÂØºËà™ÁºìÂ≠ò	
 	public sub CMS_NAVIGATECLASS
 
 		Dim t
 		'on error resume next
 		t = DateDiff("s",CMS_NAVIGATECLASS_UpdateTime,DEF_Now)
 		If forceRefresh = 1 or ((t < 0 or t > DEF_UpdateInterval or Err) and Application(DEF_MasterCookies & "_CMS_NAVIGATECLASS") & "" <> "yes") Then
-			'∑¿÷π∂‡÷ÿ–¥»Î
+			'Èò≤Ê≠¢Â§öÈáçÂÜôÂÖ•
 			Application.Lock
 			Application(DEF_MasterCookies & "_CMS_NAVIGATECLASS") = "yes"
 			Application.UnLock
-			CMS_NAVIGATECLASS_MakeFile
+			CMS_NAVIGATECLASS_MakeFile()
 			If Err Then
 				Err.clear
 			End If
 			Application.Contents.Remove(DEF_MasterCookies & "_CMS_NAVIGATECLASS")
 		Else
-			CMS_NAVIGATECLASS_View
+			Call CMS_NAVIGATECLASS_View()
 		End If
 	
 	end sub
@@ -416,7 +422,7 @@ class cms_cache_Class
 		dim classid
 		classid = tonum(request.querystring("classid"),0)
 		str = article_view_newsClass("listflag=1 or listflag=2",classid)
-		CMS_NAVIGATECLASS_View
+		Call CMS_NAVIGATECLASS_View()
 		Str = "<" & "%" & VbCrLf &_
 		"Dim CMS_NAVIGATECLASS_UpdateTime" & VbCrLf &_
 		"CMS_NAVIGATECLASS_UpdateTime = """ & htmlencode(DEF_Now) & """" & VbCrLf &_
@@ -540,11 +546,11 @@ class cms_cache_Class
 	public sub updatecache
 	
 		forceRefresh = 1
-		Announcement
-		CMS_HOMECONTENT
-		CMS_HOMESIDE
-		CMS_INSIDE
-		CMS_NAVIGATECLASS
+		Announcement()
+		CMS_HOMECONTENT()
+		CMS_HOMESIDE()
+		CMS_INSIDE()
+		CMS_NAVIGATECLASS()
 	
 	End sub
 

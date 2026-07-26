@@ -1,47 +1,47 @@
 <BBSData>
-	<LastTid>×îºóÌû×ÓºÅ</LastTid>
-	<Version>bbsÔËÐÐ³ÌÐò°æ±¾ºÅ</Version>
-	<Frequency>×¥È¡Æµ¶È(Ãë)</Frequency>
-	<Concurrent>²¢·¢×¥È¡(²¢·¢½ø³ÌÊý)</Concurrent>
-	<BBSName>ÂÛÌ³Ãû³Æ</BBSName>
-	<BBSURL>ÂÛÌ³URL</BBSURL>
+	<LastTid>æœ€åŽå¸–å­å·</LastTid>
+	<Version>bbsè¿è¡Œç¨‹åºç‰ˆæœ¬å·</Version>
+	<Frequency>æŠ“å–é¢‘åº¦(ç§’)</Frequency>
+	<Concurrent>å¹¶å‘æŠ“å–(å¹¶å‘è¿›ç¨‹æ•°)</Concurrent>
+	<BBSName>è®ºå›åç§°</BBSName>
+	<BBSURL>è®ºå›URL</BBSURL>
 <ChannelInfo>
-<ForumName>×ÓÂÛÌ³Ãû³Æ </ForumName>
-<ForumUrl>×ÓÂÛÌ³URL </ForumUrl>
-<ForumType>×ÓÂÛÌ³·ÖÀà</ForumType>
-<Language>ÓïÑÔ£¬Big5/ GBK/UTF-8</Language>
+<ForumName>å­è®ºå›åç§° </ForumName>
+<ForumUrl>å­è®ºå›URL </ForumUrl>
+<ForumType>å­è®ºå›åˆ†ç±»</ForumType>
+<Language>è¯­è¨€ï¼ŒBig5/ GBK/UTF-8</Language>
 	</ChannelInfo>
 <StatusElement>
-<Link>Ìû×ÓURL</Link>
-<ReplyTime>×îºó»Ø¸´Ê±¼ä£»time stamp UnixÏµÍ³±ê×¼Ê±¼äÃëÊý</ReplyTime>
-<PostTime>·¢ÌûÊ±¼ä£»time stamp UnixÏµÍ³±ê×¼Ê±¼äÃëÊý</PostTime>
-<ReplyNum>»Ø¸´Êý</ReplyTime>
-<ViewNum>ä¯ÀÀÊý</ViewNum> 
-<Sticky>ÖÃ¶¥£ºtrue/false</Sticky>
-<Digest>¾«»ª£ºtrue/false</Digest> 
-<Deleted>É¾³ý£ºtrue/false</Delete>
-<Locked>Ëø¶¨£ºtrue/false</Locked> 
-<Access>ÓÐÈ¨·ÃÎÊ£ºtrue/false</Access> 
+<Link>å¸–å­URL</Link>
+<ReplyTime>æœ€åŽå›žå¤æ—¶é—´ï¼›time stamp Unixç³»ç»Ÿæ ‡å‡†æ—¶é—´ç§’æ•°</ReplyTime>
+<PostTime>å‘å¸–æ—¶é—´ï¼›time stamp Unixç³»ç»Ÿæ ‡å‡†æ—¶é—´ç§’æ•°</PostTime>
+<ReplyNum>å›žå¤æ•°</ReplyTime>
+<ViewNum>æµè§ˆæ•°</ViewNum> 
+<Sticky>ç½®é¡¶ï¼štrue/false</Sticky>
+<Digest>ç²¾åŽï¼štrue/false</Digest> 
+<Deleted>åˆ é™¤ï¼štrue/false</Delete>
+<Locked>é”å®šï¼štrue/false</Locked> 
+<Access>æœ‰æƒè®¿é—®ï¼štrue/false</Access> 
 <StatusElement>
 <PageInfo>
 <ContentElement>
-<Title>±êÌâ</Title>
-<Content>Ìû×ÓÕýÎÄ</Content>	[CDATAÊý¾ÝÀàÐÍ]
-<Author> ×÷Õß</Author>
+<Title>æ ‡é¢˜</Title>
+<Content>å¸–å­æ­£æ–‡</Content>	[CDATAæ•°æ®ç±»åž‹]
+<Author> ä½œè€…</Author>
 <Attachment>
 <URL>url</URL>
 <MIMEType>MIME type</MIMEType>
-<Description>ÃèÊö</Description>
+<Description>æè¿°</Description>
 </Attachment>
 <ContentElement>
 		<ReplyInfo>
-			<Title>±êÌâ</Title>
-			<Author>×÷Õß</Author>
-			<Content>ÄÚÈÝ</Content>[CDATAÊý¾ÝÀàÐÍ]
+			<Title>æ ‡é¢˜</Title>
+			<Author>ä½œè€…</Author>
+			<Content>å†…å®¹</Content>[CDATAæ•°æ®ç±»åž‹]
 <Attachment>
 <URL>url</URL>
 <MIMEType>MIME type</MIMEType>
-<Description>ÃèÊö</Description>
+<Description>æè¿°</Description>
 </Attachment>
 		</ReplyInfo>
 	</PageInfo>
@@ -50,49 +50,49 @@
 
 
 <BBSData>
-	<LastTid>×îºóÌû×ÓºÅ</LastTid>
-	<Version>bbsÔËÐÐ³ÌÐò°æ±¾ºÅ</Version>
-	<Frequency>×¥È¡Æµ¶È(Ãë)</Frequency>
-	<Concurrent>²¢·¢×¥È¡(²¢·¢½ø³ÌÊý)</Concurrent>
-	<BBSName>ÂÛÌ³Ãû³Æ</BBSName>
-	<BBSURL>ÂÛÌ³URL</BBSURL>
+	<LastTid>æœ€åŽå¸–å­å·</LastTid>
+	<Version>bbsè¿è¡Œç¨‹åºç‰ˆæœ¬å·</Version>
+	<Frequency>æŠ“å–é¢‘åº¦(ç§’)</Frequency>
+	<Concurrent>å¹¶å‘æŠ“å–(å¹¶å‘è¿›ç¨‹æ•°)</Concurrent>
+	<BBSName>è®ºå›åç§°</BBSName>
+	<BBSURL>è®ºå›URL</BBSURL>
 <ChannelInfo>
-<ForumName>×ÓÂÛÌ³Ãû³Æ </ForumName>
-<ForumUrl>×ÓÂÛÌ³URL </ForumUrl>
-<ForumType>×ÓÂÛÌ³·ÖÀà</ForumType>
-<Language>ÓïÑÔ£¬Big5/ GBK/UTF-8</Language>
+<ForumName>å­è®ºå›åç§° </ForumName>
+<ForumUrl>å­è®ºå›URL </ForumUrl>
+<ForumType>å­è®ºå›åˆ†ç±»</ForumType>
+<Language>è¯­è¨€ï¼ŒBig5/ GBK/UTF-8</Language>
 	</ChannelInfo>
 <StatusElement>
-<Link>Ìû×ÓURL</Link>
-<ReplyTime>×îºó»Ø¸´Ê±¼ä£»time stamp UnixÏµÍ³±ê×¼Ê±¼äÃëÊý</ReplyTime>
-<PostTime>·¢ÌûÊ±¼ä£»time stamp UnixÏµÍ³±ê×¼Ê±¼äÃëÊý</PostTime>
-<ReplyNum>»Ø¸´Êý</ReplyTime>
-<ViewNum>ä¯ÀÀÊý</ViewNum> 
-<Sticky>ÖÃ¶¥£ºtrue/false</Sticky>
-<Digest>¾«»ª£ºtrue/false</Digest> 
-<Deleted>É¾³ý£ºtrue/false</Delete>
-<Locked>Ëø¶¨£ºtrue/false</Locked> 
-<Access>ÓÐÈ¨·ÃÎÊ£ºtrue/false</Access> 
+<Link>å¸–å­URL</Link>
+<ReplyTime>æœ€åŽå›žå¤æ—¶é—´ï¼›time stamp Unixç³»ç»Ÿæ ‡å‡†æ—¶é—´ç§’æ•°</ReplyTime>
+<PostTime>å‘å¸–æ—¶é—´ï¼›time stamp Unixç³»ç»Ÿæ ‡å‡†æ—¶é—´ç§’æ•°</PostTime>
+<ReplyNum>å›žå¤æ•°</ReplyTime>
+<ViewNum>æµè§ˆæ•°</ViewNum> 
+<Sticky>ç½®é¡¶ï¼štrue/false</Sticky>
+<Digest>ç²¾åŽï¼štrue/false</Digest> 
+<Deleted>åˆ é™¤ï¼štrue/false</Delete>
+<Locked>é”å®šï¼štrue/false</Locked> 
+<Access>æœ‰æƒè®¿é—®ï¼štrue/false</Access> 
 <StatusElement>
 <PageInfo>
 <ContentElement>
-<Title>±êÌâ</Title>
-<Content>Ìû×ÓÕýÎÄ</Content>	[CDATAÊý¾ÝÀàÐÍ]
-<Author> ×÷Õß</Author>
+<Title>æ ‡é¢˜</Title>
+<Content>å¸–å­æ­£æ–‡</Content>	[CDATAæ•°æ®ç±»åž‹]
+<Author> ä½œè€…</Author>
 <Attachment>
 <URL>url</URL>
 <MIMEType>MIME type</MIMEType>
-<Description>ÃèÊö</Description>
+<Description>æè¿°</Description>
 </Attachment>
 <ContentElement>
 		<ReplyInfo>
-			<Title>±êÌâ</Title>
-			<Author>×÷Õß</Author>
-			<Content>ÄÚÈÝ</Content>[CDATAÊý¾ÝÀàÐÍ]
+			<Title>æ ‡é¢˜</Title>
+			<Author>ä½œè€…</Author>
+			<Content>å†…å®¹</Content>[CDATAæ•°æ®ç±»åž‹]
 <Attachment>
 <URL>url</URL>
 <MIMEType>MIME type</MIMEType>
-<Description>ÃèÊö</Description>
+<Description>æè¿°</Description>
 </Attachment>
 		</ReplyInfo>
 	</PageInfo>

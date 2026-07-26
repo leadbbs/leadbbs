@@ -1,86 +1,90 @@
-<!-- #include file=../../inc/BBSSetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSSetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
-DisplayUserNavigate("È«ÎÄË÷Òı¹¦ÄÜ¹ÜÀí")
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
+DisplayUserNavigate("å…¨æ–‡ç´¢å¼•åŠŸèƒ½ç®¡ç†")
 If GBL_CHK_Flag=1 Then
-	LoginAccuessFul
+	LoginAccuessFul()
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If	
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Sub LoginAccuessFul
 
+	' Everything on this page is an MSSQL command (sp_fulltext_*, DBCC SHRINKFILE, @@TRANCOUNT).
+	' Upstream computed the "unsupported" message into GBL_CHK_TempStr and never printed it, so
+	' on any other backend the page rendered as a bare heading with no explanation at all.
 	If DEF_UsedDataBase <> 0 Then
-		GBL_CHK_TempStr = "<div class=alert>AccessÊı¾İ¿â²»Ö§³ÖÈ«ÎÄË÷Òı·şÎñ!</div>"
+		Response.Write "<div class=alert>å…¨æ–‡ç´¢å¼•åŠæ•°æ®åº“æ—¥å¿—ç®¡ç†ä¸º MSSQL ä¸“æœ‰åŠŸèƒ½ï¼Œ" &_
+			"å½“å‰è®ºå›æ‰€ç”¨çš„æ•°æ®åº“ä¸æ”¯æŒï¼Œæ­¤é¡µæ— å¯ç”¨æ“ä½œã€‚</div>"
 		Exit Sub
 	End If%>
 
-<div class=frametitle>Êı¾İ¿âÈ«ÎÄË÷Òı³£ÓÃ¿ØÖÆÃüÁî</div>
+<div class=frametitle>æ•°æ®åº“å…¨æ–‡ç´¢å¼•å¸¸ç”¨æ§åˆ¶å‘½ä»¤</div>
 <div class=frameline>
-		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=1','','width=300,height=20 scrollbars=yes,status=no');"><span class=greenfont>ÎªÊı¾İ¿âÆôÓÃÈ«ÎÄË÷Òı</span></a>
-		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=2','','width=300,height=20 scrollbars=yes,status=no');"><span class=redfont>ÎªÊı¾İ¿â½ûÓÃÈ«ÎÄË÷Òı</span></a> (ÒÑ¾­Æô¶¯ÇĞ¼É²»ÒªÔÙÆôÓÃ,ÏÈÆôÓÃÏÂÃæÁ½ÏîÊÔÊÔ)
+		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=1','','width=300,height=20 scrollbars=yes,status=no');"><span class=greenfont>ä¸ºæ•°æ®åº“å¯ç”¨å…¨æ–‡ç´¢å¼•</span></a>
+		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=2','','width=300,height=20 scrollbars=yes,status=no');"><span class=redfont>ä¸ºæ•°æ®åº“ç¦ç”¨å…¨æ–‡ç´¢å¼•</span></a> (å·²ç»å¯åŠ¨åˆ‡å¿Œä¸è¦å†å¯ç”¨,å…ˆå¯ç”¨ä¸‹é¢ä¸¤é¡¹è¯•è¯•)
 </div>
 <div class=frameline>
-		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=3','','width=300,height=20 scrollbars=yes,status=no');"><span class=greenfont>Æô¶¯È«ÎÄË÷ÒıÔöÁ¿Ìî³ä</span></a>
-		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=4','','width=300,height=20 scrollbars=yes,status=no');"><span class=redfont>Í£Ö¹È«ÎÄË÷ÒıÔöÁ¿Ìî³ä</span></a> (ÂÛÌ³ÓĞÌû×Óµ«Ê²Ã´¶«Î÷Ò²ËÑ²»µ½ÇëÆôÓÃ)
+		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=3','','width=300,height=20 scrollbars=yes,status=no');"><span class=greenfont>å¯åŠ¨å…¨æ–‡ç´¢å¼•å¢é‡å¡«å……</span></a>
+		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=4','','width=300,height=20 scrollbars=yes,status=no');"><span class=redfont>åœæ­¢å…¨æ–‡ç´¢å¼•å¢é‡å¡«å……</span></a> (è®ºå›æœ‰å¸–å­ä½†ä»€ä¹ˆä¸œè¥¿ä¹Ÿæœä¸åˆ°è¯·å¯ç”¨)
 </div>
 <div class=frameline>
-		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=5','','width=300,height=20 scrollbars=yes,status=no');"><span class=greenfont>Æô¶¯¸üĞÂºóÌ¨ÖĞµÄË÷Òı</span></a>
-		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=6','','width=300,height=20 scrollbars=yes,status=no');"><span class=redfont>Í£Ö¹¸üĞÂºóÌ¨ÖĞµÄË÷Òı</span></a> (ÂÛÌ³ĞÂÌûÁË·¢ÁË°ëÌìµ«ËÑË÷²»µ½ÇëÆôÓÃ
+		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=5','','width=300,height=20 scrollbars=yes,status=no');"><span class=greenfont>å¯åŠ¨æ›´æ–°åå°ä¸­çš„ç´¢å¼•</span></a>
+		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=6','','width=300,height=20 scrollbars=yes,status=no');"><span class=redfont>åœæ­¢æ›´æ–°åå°ä¸­çš„ç´¢å¼•</span></a> (è®ºå›æ–°å¸–äº†å‘äº†åŠå¤©ä½†æœç´¢ä¸åˆ°è¯·å¯ç”¨
 </div>
 <div class=frameline>
-		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=7','','width=300,height=20 scrollbars=yes,status=no');"><span class=bluefont>½«µ±Ç°Ò»ÏµÁĞ¸ú×ÙµÄ±ä»¯´«²¥µ½È«ÎÄË÷Òı(¸üĞÂË÷Òı)</span></a>
+		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=7','','width=300,height=20 scrollbars=yes,status=no');"><span class=bluefont>å°†å½“å‰ä¸€ç³»åˆ—è·Ÿè¸ªçš„å˜åŒ–ä¼ æ’­åˆ°å…¨æ–‡ç´¢å¼•(æ›´æ–°ç´¢å¼•)</span></a>
 </div>
 		
-<div class=frametitle>ÆäËü³£ÓÃÃüÁî</div>
+<div class=frametitle>å…¶å®ƒå¸¸ç”¨å‘½ä»¤</div>
 <div class=frameline>
-		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=8','','width=300,height=20 scrollbars=yes,status=no');"><span class=bluefont>Çå³ıMSSQLµ±Ç°Ê¹ÓÃÊı¾İ¿âÈÕÖ¾(É¾³ıºó²»¿É»Ö¸´ÈÕÖ¾£¬µ±ÈÕÖ¾ÂúÊ±ÇëÊ¹ÓÃ´ËÃüÁî£¬Çë×¢Òâ¾­³£Çå³ı)</span></a><br>
-		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=9','','width=300,height=20 scrollbars=yes,status=no');"><span class=bluefont>ÊÕËõMSSQLµ±Ç°Ê¹ÓÃÊı¾İ¿âÈÕÖ¾ÎÄ¼ş(ËõĞ¡LogÎÄ¼şÀ´ÊÍ·ÅÓ²ÅÌ¿Õ¼ä¸øÏµÍ³)</span></a><br>
-		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=10','','width=300,height=20 scrollbars=yes,status=no');"><span class=bluefont>ÊÕËõMSSQLµ±Ç°Ê¹ÓÃÊı¾İ¿âµÄÊı¾İÎÄ¼ş(<span class=redfont>ÇëĞ¡ĞÄÊ¹ÓÃ´ËÏî£¬Ê¹ÓÃÈ«ÎÄË÷ÒıÊı¾İ¿â¿ÉÄÜ»á²úÉúÒ»Ğ©²»ÎÈ¶¨</span>)</span></a>
+		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=8','','width=300,height=20 scrollbars=yes,status=no');"><span class=bluefont>æ¸…é™¤MSSQLå½“å‰ä½¿ç”¨æ•°æ®åº“æ—¥å¿—(åˆ é™¤åä¸å¯æ¢å¤æ—¥å¿—ï¼Œå½“æ—¥å¿—æ»¡æ—¶è¯·ä½¿ç”¨æ­¤å‘½ä»¤ï¼Œè¯·æ³¨æ„ç»å¸¸æ¸…é™¤)</span></a><br>
+		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=9','','width=300,height=20 scrollbars=yes,status=no');"><span class=bluefont>æ”¶ç¼©MSSQLå½“å‰ä½¿ç”¨æ•°æ®åº“æ—¥å¿—æ–‡ä»¶(ç¼©å°Logæ–‡ä»¶æ¥é‡Šæ”¾ç¡¬ç›˜ç©ºé—´ç»™ç³»ç»Ÿ)</span></a><br>
+		<a href=#29 onclick="javascript:window.open('ExeCuteFullTEXTCommands.asp?ExeFlag=10','','width=300,height=20 scrollbars=yes,status=no');"><span class=bluefont>æ”¶ç¼©MSSQLå½“å‰ä½¿ç”¨æ•°æ®åº“çš„æ•°æ®æ–‡ä»¶(<span class=redfont>è¯·å°å¿ƒä½¿ç”¨æ­¤é¡¹ï¼Œä½¿ç”¨å…¨æ–‡ç´¢å¼•æ•°æ®åº“å¯èƒ½ä¼šäº§ç”Ÿä¸€äº›ä¸ç¨³å®š</span>)</span></a>
 </div>
 <%
-	DisplayOtherInfo
+	DisplayOtherInfo()
 
 End Sub
 
 Sub DisplayOtherInfo
 
-	Response.Write "<div class=frametitle>Êı¾İ¿â²ÎÊı²Î¿¼</div>"
+	Response.Write "<div class=frametitle>æ•°æ®åº“å‚æ•°å‚è€ƒ</div>"
 	Response.Write "<table border=0 cellpadding=0 cellspacing=0 width=100% class=frame_table>"
 	Dim Rs,SQL
 	SQL = "Select @@TRANCOUNT,@@VERSION,@@SERVERNAME,@@LANGUAGE,@@CONNECTIONS,@@CPU_BUSY,@@IDLE,@@IO_BUSY,@@LOCK_TIMEOUT,@@MAX_CONNECTIONS,@@TOTAL_READ,@@TOTAL_WRITE,CURRENT_USER,APP_NAME(),HOST_NAME(),DB_NAME(DB_ID()),DATABASEPROPERTY(DB_NAME(DB_ID()), 'IsFulltextEnabled')"
 	Set Rs = LDExeCute(SQL,0)
 	If Not Rs.Eof Then
-		Response.Write "<tr><td class=tdbox width=200>µ±Ç°Á¬½ÓµÄ»î¶¯ÊÂÎñÊı</td><td class=tdbox>" & Rs(0) & "¸ö</td>"
-		Response.Write "<tr><td class=tdbox>µ±Ç°°²×°µÄÈÕÆÚ¡¢°æ±¾ºÍ´¦ÀíÆ÷ÀàĞÍ</td><td class=tdbox>" & Rs(1) & "</td>"
-		Response.Write "<tr><td class=tdbox>±¾µØ·şÎñÆ÷Ãû³Æ</td><td class=tdbox>" & Rs(2) & "</td>"
-		Response.Write "<tr><td class=tdbox>µ±Ç°Ê¹ÓÃµÄÓïÑÔÃû</td><td class=tdbox>" & Rs(3) & "</td>"
-		Response.Write "<tr><td class=tdbox>×ÔÉÏ´ÎÆô¶¯ÒÔÀ´Á¬½Ó»òÊÔÍ¼Á¬½Ó´ÎÊı</td><td class=tdbox>" & Rs(4) & "´Î</td>"
-		Response.Write "<tr><td class=tdbox>×ÔÉÏ´ÎÆô¶¯ÒÔÀ´CPUµÄ¹¤×÷Ê±¼ä</td><td class=tdbox>" & Rs(5) & "ºÁÃë£¨»ùÓÚÏµÍ³¼ÆÊ±Æ÷µÄ·Ö±æÂÊ£©</td>"
-		Response.Write "<tr><td class=tdbox>×ÔÉÏ´ÎÆô¶¯ºóÏĞÖÃµÄÊ±¼ä</td><td class=tdbox>" & Rs(6) & "ºÁÃë£¨»ùÓÚÏµÍ³¼ÆÊ±Æ÷µÄ·Ö±æÂÊ£©</td>"
-		Response.Write "<tr><td class=tdbox>×ÔÉÏ´ÎÆô¶¯ºóÓÃÓÚÖ´ĞĞÊäÈëÊä³öÊ±¼ä</td><td class=tdbox>" & Rs(7) & "ºÁÃë£¨»ùÓÚÏµÍ³¼ÆÊ±Æ÷µÄ·Ö±æÂÊ£©</td>"
+		Response.Write "<tr><td class=tdbox width=200>å½“å‰è¿æ¥çš„æ´»åŠ¨äº‹åŠ¡æ•°</td><td class=tdbox>" & Rs(0) & "ä¸ª</td>"
+		Response.Write "<tr><td class=tdbox>å½“å‰å®‰è£…çš„æ—¥æœŸã€ç‰ˆæœ¬å’Œå¤„ç†å™¨ç±»å‹</td><td class=tdbox>" & Rs(1) & "</td>"
+		Response.Write "<tr><td class=tdbox>æœ¬åœ°æœåŠ¡å™¨åç§°</td><td class=tdbox>" & Rs(2) & "</td>"
+		Response.Write "<tr><td class=tdbox>å½“å‰ä½¿ç”¨çš„è¯­è¨€å</td><td class=tdbox>" & Rs(3) & "</td>"
+		Response.Write "<tr><td class=tdbox>è‡ªä¸Šæ¬¡å¯åŠ¨ä»¥æ¥è¿æ¥æˆ–è¯•å›¾è¿æ¥æ¬¡æ•°</td><td class=tdbox>" & Rs(4) & "æ¬¡</td>"
+		Response.Write "<tr><td class=tdbox>è‡ªä¸Šæ¬¡å¯åŠ¨ä»¥æ¥CPUçš„å·¥ä½œæ—¶é—´</td><td class=tdbox>" & Rs(5) & "æ¯«ç§’ï¼ˆåŸºäºç³»ç»Ÿè®¡æ—¶å™¨çš„åˆ†è¾¨ç‡ï¼‰</td>"
+		Response.Write "<tr><td class=tdbox>è‡ªä¸Šæ¬¡å¯åŠ¨åé—²ç½®çš„æ—¶é—´</td><td class=tdbox>" & Rs(6) & "æ¯«ç§’ï¼ˆåŸºäºç³»ç»Ÿè®¡æ—¶å™¨çš„åˆ†è¾¨ç‡ï¼‰</td>"
+		Response.Write "<tr><td class=tdbox>è‡ªä¸Šæ¬¡å¯åŠ¨åç”¨äºæ‰§è¡Œè¾“å…¥è¾“å‡ºæ—¶é—´</td><td class=tdbox>" & Rs(7) & "æ¯«ç§’ï¼ˆåŸºäºç³»ç»Ÿè®¡æ—¶å™¨çš„åˆ†è¾¨ç‡ï¼‰</td>"
 		
-		Response.Write "<tr><td class=tdbox>·µ»Øµ±Ç°»á»°µÄµ±Ç°Ëø³¬Ê±ÉèÖÃ</td><td class=tdbox>" & Rs(8) & "ºÁÃë</td>"
-		Response.Write "<tr><td class=tdbox>ÔÊĞíµÄÍ¬Ê±ÓÃ»§Á¬½ÓµÄ×î´óÊı</td><td class=tdbox>" & Rs(9) & "ÈË(32767±íÊ¾Î´ÅäÖÃ)</td>"
-		Response.Write "<tr><td class=tdbox>×ÔÉÏ´ÎÆô¶¯ºó¶ÁÈ¡´ÅÅÌµÄ´ÎÊı</td><td class=tdbox>" & Rs(10) & "´Î£¨²»ÊÇ¶ÁÈ¡¸ßËÙ»º´æ£©</td>"
-		Response.Write "<tr><td class=tdbox>×ÔÉÏ´ÎÆô¶¯ºóĞ´Èë´ÅÅÌµÄ´ÎÊı</td><td class=tdbox>" & Rs(11) & "´Î</td>"
-		Response.Write "<tr><td class=tdbox>µ±Ç°µÇÂ¼ÓÃ»§Ãû</td><td class=tdbox>" & Rs(12) & "</td>"
-		Response.Write "<tr><td class=tdbox>µ±Ç°»á»°µÄÓ¦ÓÃ³ÌĞòÃû³Æ</td><td class=tdbox>" & Rs(13) & "</td>"
-		Response.Write "<tr><td class=tdbox>¹¤×÷Õ¾Ãû³Æ</td><td class=tdbox>" & Rs(14) & "</td>"
-		Response.Write "<tr><td class=tdbox>Êı¾İ¿âÃû³Æ</td><td class=tdbox>" & Rs(15) & "</td>"
-		Response.Write "<tr><td class=tdbox>Êı¾İ¿âÊÇ·ñÈ«ÎÄÆôÓÃ</td><td class=tdbox>" & Replace(Replace(Rs(16) & "","0","·ñ"),"1","ÊÇ") & "</td>"
+		Response.Write "<tr><td class=tdbox>è¿”å›å½“å‰ä¼šè¯çš„å½“å‰é”è¶…æ—¶è®¾ç½®</td><td class=tdbox>" & Rs(8) & "æ¯«ç§’</td>"
+		Response.Write "<tr><td class=tdbox>å…è®¸çš„åŒæ—¶ç”¨æˆ·è¿æ¥çš„æœ€å¤§æ•°</td><td class=tdbox>" & Rs(9) & "äºº(32767è¡¨ç¤ºæœªé…ç½®)</td>"
+		Response.Write "<tr><td class=tdbox>è‡ªä¸Šæ¬¡å¯åŠ¨åè¯»å–ç£ç›˜çš„æ¬¡æ•°</td><td class=tdbox>" & Rs(10) & "æ¬¡ï¼ˆä¸æ˜¯è¯»å–é«˜é€Ÿç¼“å­˜ï¼‰</td>"
+		Response.Write "<tr><td class=tdbox>è‡ªä¸Šæ¬¡å¯åŠ¨åå†™å…¥ç£ç›˜çš„æ¬¡æ•°</td><td class=tdbox>" & Rs(11) & "æ¬¡</td>"
+		Response.Write "<tr><td class=tdbox>å½“å‰ç™»å½•ç”¨æˆ·å</td><td class=tdbox>" & Rs(12) & "</td>"
+		Response.Write "<tr><td class=tdbox>å½“å‰ä¼šè¯çš„åº”ç”¨ç¨‹åºåç§°</td><td class=tdbox>" & Rs(13) & "</td>"
+		Response.Write "<tr><td class=tdbox>å·¥ä½œç«™åç§°</td><td class=tdbox>" & Rs(14) & "</td>"
+		Response.Write "<tr><td class=tdbox>æ•°æ®åº“åç§°</td><td class=tdbox>" & Rs(15) & "</td>"
+		Response.Write "<tr><td class=tdbox>æ•°æ®åº“æ˜¯å¦å…¨æ–‡å¯ç”¨</td><td class=tdbox>" & Replace(Replace(Rs(16) & "","0","å¦"),"1","æ˜¯") & "</td>"
 
 		Response.write "</tr>"
 	End If
@@ -88,25 +92,25 @@ Sub DisplayOtherInfo
 	Set Rs = Nothing
 	Response.Write "</table>"
 	
-	Response.Write "<div class=frametitle>²é¿´Êı¾İ¿â±íĞÅÏ¢</div><div class=frameline><a href=TableInfo.asp?tb=LeadBBS_Announce>µã»÷ÕâÀï²é¿´±íLeadBBS_AnnounceĞÅÏ¢</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Assort>µã»÷ÕâÀï²é¿´±íLeadBBS_Assort</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Boards>µã»÷ÕâÀï²é¿´±íLeadBBS_Boards</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_CollectAnc>µã»÷ÕâÀï²é¿´±íLeadBBS_CollectAnc</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_ForbidIP>µã»÷ÕâÀï²é¿´±íLeadBBS_ForbidIP</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_FriendUser>µã»÷ÕâÀï²é¿´±íLeadBBS_FriendUser</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_GoodAssort>µã»÷ÕâÀï²é¿´±íLeadBBS_GoodAssort</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_InfoBox>µã»÷ÕâÀï²é¿´±íLeadBBS_InfoBox</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_IPAddress>µã»÷ÕâÀï²é¿´±íLeadBBS_IPAddress</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Link>µã»÷ÕâÀï²é¿´±íLeadBBS_Link</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_onlineUser>µã»÷ÕâÀï²é¿´±íLeadBBS_onlineUser</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Setup>µã»÷ÕâÀï²é¿´±íLeadBBS_Setup</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_SiteInfo>µã»÷ÕâÀï²é¿´±íLeadBBS_SiteInfo</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_SpecialUser>µã»÷ÕâÀï²é¿´±íLeadBBS_SpecialUser</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_TopAnnounce>µã»÷ÕâÀï²é¿´±íLeadBBS_TopAnnounce</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Upload>µã»÷ÕâÀï²é¿´±íLeadBBS_Upload</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_User>µã»÷ÕâÀï²é¿´±íLeadBBS_User</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_UserFace>µã»÷ÕâÀï²é¿´±íLeadBBS_UserFace</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_VoteItem>µã»÷ÕâÀï²é¿´±íLeadBBS_VoteItem</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_VoteUser>µã»÷ÕâÀï²é¿´±íLeadBBS_VoteUser</a></div>"
+	Response.Write "<div class=frametitle>æŸ¥çœ‹æ•°æ®åº“è¡¨ä¿¡æ¯</div><div class=frameline><a href=TableInfo.asp?tb=LeadBBS_Announce>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_Announceä¿¡æ¯</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Assort>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_Assort</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Boards>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_Boards</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_CollectAnc>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_CollectAnc</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_ForbidIP>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_ForbidIP</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_FriendUser>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_FriendUser</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_GoodAssort>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_GoodAssort</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_InfoBox>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_InfoBox</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_IPAddress>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_IPAddress</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Link>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_Link</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_onlineUser>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_onlineUser</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Setup>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_Setup</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_SiteInfo>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_SiteInfo</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_SpecialUser>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_SpecialUser</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_TopAnnounce>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_TopAnnounce</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Upload>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_Upload</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_User>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_User</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_UserFace>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_UserFace</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_VoteItem>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_VoteItem</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_VoteUser>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_VoteUser</a></div>"
 
 End Sub%>

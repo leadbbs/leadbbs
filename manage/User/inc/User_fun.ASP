@@ -10,7 +10,7 @@ Dim Form_Password1,Form_Password2,Form_byear,Form_bday,Form_bmonth
 Dim Form_FaceHeight,Form_FaceWidth,Form_FaceUrl,Form_UserLimit
 Dim Form_Question,Form_Answer,Form_UserTitle,Form_CachetValue,Form_LockIP,Form_CharmPoint
 
-Rem =====³õÊ¼»¯±äÁ¿=====
+Rem =====åˆå§‹åŒ–å˜é‡=====
 Form_Sex = 0
 Form_Online = 0
 Form_Officer = 0
@@ -18,13 +18,13 @@ Form_UserLevel = 0
 'Form_Userphoto = "224"
 Form_Points = 0
 Form_ID=0
-Form_ApplyTime=GetTimeValue(DEF_Now)
+Form_ApplyTime=LngStr(GetTimeValue(DEF_Now))	'AxonASP (#22): rendered into the form, so it must not be scientific notation
 Form_Prevtime = Form_ApplyTime
 Form_Login_oknum = 0
 Form_Login_falsenum = 0
 Form_CachetValue = 0
 Form_CharmPoint = 0
-Rem =====³õÊ¼»¯½áÊø=====
+Rem =====åˆå§‹åŒ–ç»“æŸ=====
 
 Function checkFormDate
 
@@ -99,112 +99,112 @@ Function checkFormDate
 	Form_ID = cCur(Form_ID)
 	If Form_ID>0 Then
 		If CheckUserIDExist(Form_ID) = 0 Then
-			GBL_CHK_TempStr = "ÓÃ»§ID²»´æÔÚ£¬²»ÄÜÍê³ÉĞŞ¸Ä! <br>" & VbCrLf
+			GBL_CHK_TempStr = "ç”¨æˆ·IDä¸å­˜åœ¨ï¼Œä¸èƒ½å®Œæˆä¿®æ”¹! <br>" & VbCrLf
 			GBL_CHK_Flag = 0
 			Exit Function
 		End If
 	End If
 
 	If Form_UserName="" then
-		GBL_CHK_TempStr = "ÇëÊäÈëÓÃ»§Ãû!<br>"
+		GBL_CHK_TempStr = "è¯·è¾“å…¥ç”¨æˆ·å!<br>"
 		GBL_CHK_Flag = 0
 		Exit Function
 	else
-			If Form_UserName = "ÓÎ¿Í" Then
-				GBL_CHK_TempStr = "²»ÔÊĞíÊ¹ÓÃ´ËÓÃ»§Ãû!<br>"
+			If Form_UserName = "æ¸¸å®¢" Then
+				GBL_CHK_TempStr = "ä¸å…è®¸ä½¿ç”¨æ­¤ç”¨æˆ·å!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
 		
 			If inStr(Form_UserName,"'")>0 or inStr(Form_UserName,chr(34))>0 then
-				GBL_CHK_TempStr = "ÓÃ»§Ãû²»ÄÜ°üº¬'»ò" & chr(34) & "·ûºÅ!<br>"
+				GBL_CHK_TempStr = "ç”¨æˆ·åä¸èƒ½åŒ…å«'æˆ–" & chr(34) & "ç¬¦å·!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
 			If inStr(Form_UserName,"`")>0 or inStr(Form_UserName,"~")>0 or inStr(Form_UserName,"&")>0 then
-				GBL_CHK_TempStr = "ÓÃ»§Ãû²»ÄÜ°üº¬`»ò&·ûºÅ!<br>"
+				GBL_CHK_TempStr = "ç”¨æˆ·åä¸èƒ½åŒ…å«`æˆ–&ç¬¦å·!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
 			If inStr(Form_UserName,"!")>0 or inStr(Form_UserName,"@")>0 or inStr(Form_UserName,"^")>0 then
-				GBL_CHK_TempStr = "ÓÃ»§Ãû²»ÄÜ°üº¬!@^·ûºÅ!<br>"
+				GBL_CHK_TempStr = "ç”¨æˆ·åä¸èƒ½åŒ…å«!@^ç¬¦å·!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
 			If inStr(Form_UserName,"#")>0 or inStr(Form_UserName,"$")>0 or inStr(Form_UserName,"%")>0 then
-				GBL_CHK_TempStr = "ÓÃ»§Ãû²»ÄÜ°üº¬#$%·ûºÅ!<br>"
+				GBL_CHK_TempStr = "ç”¨æˆ·åä¸èƒ½åŒ…å«#$%ç¬¦å·!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
 			If inStr(Form_UserName,"*")>0 or inStr(Form_UserName,"(")>0 or inStr(Form_UserName,")")>0 then
-				GBL_CHK_TempStr = "ÓÃ»§Ãû²»ÄÜ°üº¬*()·ûºÅ!<br>"
+				GBL_CHK_TempStr = "ç”¨æˆ·åä¸èƒ½åŒ…å«*()ç¬¦å·!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
 			If inStr(Form_UserName,"+")>0 or inStr(Form_UserName,"=")>0 or inStr(Form_UserName,"|")>0 then
-				GBL_CHK_TempStr = "ÓÃ»§Ãû²»ÄÜ°üº¬+=|·ûºÅ!<br>"
+				GBL_CHK_TempStr = "ç”¨æˆ·åä¸èƒ½åŒ…å«+=|ç¬¦å·!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
 			'If inStr(Form_UserName," ")>0 or inStr(Form_UserName,chr(10))>0 or inStr(Form_UserName,chr(13))>0 then
-			'	GBL_CHK_TempStr = "ÓÃ»§Ãû²»ÄÜ°üº¬¿Õ¸ñ,»»ĞĞµÈ·ûºÅ!<br>"
+			'	GBL_CHK_TempStr = "ç”¨æˆ·åä¸èƒ½åŒ…å«ç©ºæ ¼,æ¢è¡Œç­‰ç¬¦å·!<br>"
 			'	GBL_CHK_Flag = 0
 			'	Exit Function
 			'End If
 			If inStr(Form_UserName,chr(127))>0 or inStr(Form_UserName,chr(9))>0 then
-				GBL_CHK_TempStr = "ÓÃ»§Ãû²»ÄÜ°üº¬ÖÆ±í·ûµÈ·ûºÅ!<br>"
+				GBL_CHK_TempStr = "ç”¨æˆ·åä¸èƒ½åŒ…å«åˆ¶è¡¨ç¬¦ç­‰ç¬¦å·!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
 			If inStr(Form_UserName,"[")>0 or inStr(Form_UserName,"]")>0 or inStr(Form_UserName,"\")>0 then
-				GBL_CHK_TempStr = "ÓÃ»§Ãû²»ÄÜ°üº¬[]\µÈ·ûºÅ!<br>"
+				GBL_CHK_TempStr = "ç”¨æˆ·åä¸èƒ½åŒ…å«[]\ç­‰ç¬¦å·!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
 			If inStr(Form_UserName,"{")>0 or inStr(Form_UserName,"}")>0 or inStr(Form_UserName,";")>0 then
-				GBL_CHK_TempStr = "ÓÃ»§Ãû²»ÄÜ°üº¬{};µÈ·ûºÅ!<br>"
+				GBL_CHK_TempStr = "ç”¨æˆ·åä¸èƒ½åŒ…å«{};ç­‰ç¬¦å·!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
 			If inStr(Form_UserName,":")>0 or inStr(Form_UserName,",")>0 or inStr(Form_UserName,".")>0 then
-				GBL_CHK_TempStr = "ÓÃ»§Ãû²»ÄÜ°üº¬:,.µÈ·ûºÅ!<br>"
+				GBL_CHK_TempStr = "ç”¨æˆ·åä¸èƒ½åŒ…å«:,.ç­‰ç¬¦å·!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
 			If inStr(Form_UserName,"<")>0 or inStr(Form_UserName,">")>0 or inStr(Form_UserName,"/")>0 or inStr(Form_UserName,"?")>0 then
-				GBL_CHK_TempStr = "ÓÃ»§Ãû²»ÄÜ°üº¬<>?/µÈ·ûºÅ!<br>"
+				GBL_CHK_TempStr = "ç”¨æˆ·åä¸èƒ½åŒ…å«<>?/ç­‰ç¬¦å·!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
 	End If
 
 	If Len(Form_UserName) > 20 then
-		GBL_CHK_TempStr = "ÓÃ»§ÃûÌ«³¤!<br>"
+		GBL_CHK_TempStr = "ç”¨æˆ·åå¤ªé•¿!<br>"
 		GBL_CHK_Flag = 0
 		Exit Function
 	End If
 	
 	If ApplyFlag = 1 Then
 		If CheckUserNameExist(Form_UserName) = 1 Then
-			GBL_CHK_TempStr = "ÓÃ»§ÃûÒÑ¾­´æÔÚ£¬ÇëÓÃÆäËüÓÃ»§Ãû! <br>" & VbCrLf
+			GBL_CHK_TempStr = "ç”¨æˆ·åå·²ç»å­˜åœ¨ï¼Œè¯·ç”¨å…¶å®ƒç”¨æˆ·å! <br>" & VbCrLf
 			GBL_CHK_Flag = 0
 			Exit Function
 		End If
 	End If
 	'If Form_Answer="" then
-	'	GBL_CHK_TempStr = "ÇëÊäÈëÃÜÂëÌáÊ¾´ğ°¸!<br>"
+	'	GBL_CHK_TempStr = "è¯·è¾“å…¥å¯†ç æç¤ºç­”æ¡ˆ!<br>"
 	'	GBL_CHK_Flag = 0
 	'	Exit Function
 	'End If
 	If len(Form_Answer)>20 then
-		GBL_CHK_TempStr = "ÃÜÂëÌáÊ¾´ğ°¸²»ÄÜ³¬¹ı20¸ö×Ö!<br>"
+		GBL_CHK_TempStr = "å¯†ç æç¤ºç­”æ¡ˆä¸èƒ½è¶…è¿‡20ä¸ªå­—!<br>"
 		GBL_CHK_Flag = 0
 		Exit Function
 	End If
 
 	If Form_LockIP <> "" Then
 		If StrLength(Form_LockIP) > 15 or isNumeric(Replace(Form_LockIP,".","")) = 0 or (Replace(Form_LockIP,".","",1,3,0) = Replace(Form_LockIP,".","",1,2,0)) Then
-			GBL_CHK_TempStr = "£É£ĞËø¶¨ÌîĞ´´íÎó£¬ÇëÊäÈëÕıÈ·µÄ£É£ĞµØÖ·!<br>"
+			GBL_CHK_TempStr = "ï¼©ï¼°é”å®šå¡«å†™é”™è¯¯ï¼Œè¯·è¾“å…¥æ­£ç¡®çš„ï¼©ï¼°åœ°å€!<br>"
 			GBL_CHK_Flag = 0
 			Exit Function
 		End If
@@ -215,74 +215,74 @@ Function checkFormDate
 		Form_Password2 = ""
 	Else
 		If Form_Password1="" then
-			GBL_CHK_TempStr = "ÇëÊäÈëÃÜÂë!<br>"
+			GBL_CHK_TempStr = "è¯·è¾“å…¥å¯†ç !<br>"
 			GBL_CHK_Flag = 0
 			Exit Function
 		End If
 		If Len(Form_Password1) > 20 then
-			GBL_CHK_TempStr = "ÃÜÂëÌ«³¤!<br>"
+			GBL_CHK_TempStr = "å¯†ç å¤ªé•¿!<br>"
 			GBL_CHK_Flag = 0
 			Exit Function
 		End If
 	
 		If Form_Password2="" then
-			GBL_CHK_TempStr = "ÇëÊäÈëÑéÖ¤ÃÜÂë!<br>"
+			GBL_CHK_TempStr = "è¯·è¾“å…¥éªŒè¯å¯†ç !<br>"
 			GBL_CHK_Flag = 0
 			Exit Function
 		End If
 		If Len(Form_Password2) > 20 then
-			GBL_CHK_TempStr = "ÑéÖ¤ÃÜÂëÌ«³¤!<br>"
+			GBL_CHK_TempStr = "éªŒè¯å¯†ç å¤ªé•¿!<br>"
 			GBL_CHK_Flag = 0
 			Exit Function
 		End If
 		If Form_Password2 = "" then
-			GBL_CHK_TempStr = "ÇëÌîĞ´ÃÜÂë!<br>"
+			GBL_CHK_TempStr = "è¯·å¡«å†™å¯†ç !<br>"
 			GBL_CHK_Flag = 0
 			Exit Function
 		End If
 		If Form_Password1 <> Form_Password2 then
-			GBL_CHK_TempStr = "Á½´ÎÃÜÂëÊäÈë²»ÏàÍ¬!<br>"
+			GBL_CHK_TempStr = "ä¸¤æ¬¡å¯†ç è¾“å…¥ä¸ç›¸åŒ!<br>"
 			GBL_CHK_Flag = 0
 			Exit Function
 		End If
 		'If Form_Password2 = Form_UserName or Len(Form_Password2)<4 Then
-		'	GBL_CHK_TempStr = "ÃÜÂë²»ÄÜºÍÓÃ»§ÃûÏàÍ¬£¬²¢ÇÒ²»ÄÜĞ¡ÓÚËÄÎ»!<br>"
+		'	GBL_CHK_TempStr = "å¯†ç ä¸èƒ½å’Œç”¨æˆ·åç›¸åŒï¼Œå¹¶ä¸”ä¸èƒ½å°äºå››ä½!<br>"
 		'	GBL_CHK_Flag = 0
 		'	Exit Function
 		'End If
 		'If Len(Form_Password2) = 4 and isNumeric(Form_Password2) Then
-		'	GBL_CHK_TempStr = "ÃÜÂëÌ«¼òµ¥!<br>"
+		'	GBL_CHK_TempStr = "å¯†ç å¤ªç®€å•!<br>"
 		'	GBL_CHK_Flag = 0
 		'	Exit Function
 		'End If
 	End If
 
 	If Len(Form_Mail) > 60 then
-		GBL_CHK_TempStr = "ÓÊÏäµØÖ·²»ÄÜ³¤ÓÚ60¸ö×Ö·û!<br>"
+		GBL_CHK_TempStr = "é‚®ç®±åœ°å€ä¸èƒ½é•¿äº60ä¸ªå­—ç¬¦!<br>"
 		GBL_CHK_Flag = 0
 		Exit Function
 	End If
 
 	'If Form_Mail = "" then
-	'	GBL_CHK_TempStr = "ÓÊÏäµØÖ·±ØĞëÌîĞ´!<br>"
+	'	GBL_CHK_TempStr = "é‚®ç®±åœ°å€å¿…é¡»å¡«å†™!<br>"
 	'	GBL_CHK_Flag = 0
 	'	Exit Function
 	'End If
 
 	If inStr(Form_Mail,"@") = false then
-		GBL_CHK_TempStr = "ÓÊÏäµØÖ·´íÎó!<br>"
+		GBL_CHK_TempStr = "é‚®ç®±åœ°å€é”™è¯¯!<br>"
 		GBL_CHK_Flag = 0
 		Exit Function
 	End If
 
 	If Form_ICQ <> "" then
 		If IsNumeric(Form_ICQ) = 0 or instr(Form_ICQ,",")>0 then
-			GBL_CHK_TempStr = "ICQºÅÂë±ØĞëÊÇÊı×Ö!<br>"
+			GBL_CHK_TempStr = "ICQå·ç å¿…é¡»æ˜¯æ•°å­—!<br>"
 			GBL_CHK_Flag = 0
 			Exit Function
 		else 
 			If Form_ICQ>1999999999 then
-				GBL_CHK_TempStr = "ICQºÅÂë´íÎó!<br>"
+				GBL_CHK_TempStr = "ICQå·ç é”™è¯¯!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
@@ -291,12 +291,12 @@ Function checkFormDate
 
 	If Form_OICQ <> "" then
 		If IsNumeric(Form_OICQ) = 0 or instr(Form_OICQ,",")>0 then
-			GBL_CHK_TempStr = "ÄãµÄOICQ(QQ)ºÅÂë±ØĞëÊÇÊı×Ö!<br>"
+			GBL_CHK_TempStr = "ä½ çš„OICQ(QQ)å·ç å¿…é¡»æ˜¯æ•°å­—!<br>"
 			GBL_CHK_Flag = 0
 			Exit Function
 		else
 			If Form_OICQ>9999999999 then
-				GBL_CHK_TempStr = "ÄãµÄOICQ(QQ)ºÅÂë´íÎó!<br>"
+				GBL_CHK_TempStr = "ä½ çš„OICQ(QQ)å·ç é”™è¯¯!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
@@ -304,12 +304,12 @@ Function checkFormDate
 	End If
 	If Form_MobileTel <> "" Then
 		If IsNumeric(Form_MobileTel) = 0 or instr(Form_MobileTel,",")>0 Then
-			GBL_CHK_TempStr = "ÄãµÄÊÖ»úºÅÂë±ØĞëÊÇÊı×Ö!<br>"
+			GBL_CHK_TempStr = "ä½ çš„æ‰‹æœºå·ç å¿…é¡»æ˜¯æ•°å­—!<br>"
 			GBL_CHK_Flag = 0
 			Exit Function
 		else
 			If Form_MobileTel>999999999999999 Then
-				GBL_CHK_TempStr = "ÄãµÄÊÖ»úºÅÂë´íÎó!<br>"
+				GBL_CHK_TempStr = "ä½ çš„æ‰‹æœºå·ç é”™è¯¯!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
@@ -317,26 +317,26 @@ Function checkFormDate
 	End If
 
 	If Len(Form_Address) > 150 then
-		GBL_CHK_TempStr = "µØÖ·Ì«³¤!<br>"
+		GBL_CHK_TempStr = "åœ°å€å¤ªé•¿!<br>"
 		GBL_CHK_Flag = 0
 		Exit Function
 	End If
 
-	If Form_Sex <> "ÃÜ" and Form_Sex <> "ÄĞ" and Form_Sex <> "Å®" then
-		GBL_CHK_TempStr = "ĞÔ±ğ´íÎó!<br>"
+	If Form_Sex <> "å¯†" and Form_Sex <> "ç”·" and Form_Sex <> "å¥³" then
+		GBL_CHK_TempStr = "æ€§åˆ«é”™è¯¯!<br>"
 		GBL_CHK_Flag = 0
 		Exit Function
 	End If
 
 	If Form_byear <> "" and Form_byear <> "19" then
 		If IsNumeric(Form_byear) = 0 or instr(Form_byear,",")>0 then
-			GBL_CHK_TempStr = "³öÉúÄê´íÎó!<br>"
+			GBL_CHK_TempStr = "å‡ºç”Ÿå¹´é”™è¯¯!<br>"
 			GBL_CHK_Flag = 0
 			Exit Function
 		else
 			Form_byear = cCur(Form_byear)
 			If (Form_byear>year(DEF_Now) or Form_byear<1900) then
-				GBL_CHK_TempStr = "³öÉúÄê´íÎó!1<br>"
+				GBL_CHK_TempStr = "å‡ºç”Ÿå¹´é”™è¯¯!1<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
@@ -347,13 +347,13 @@ Function checkFormDate
 
 	If Form_bmonth <> "" then
 		If IsNumeric(Form_bmonth) = 0 or instr(Form_bmonth,",")>0 then
-			GBL_CHK_TempStr = "³öÉúÔÂ·İ´íÎó!<br>"
+			GBL_CHK_TempStr = "å‡ºç”Ÿæœˆä»½é”™è¯¯!<br>"
 			GBL_CHK_Flag = 0
 			Exit Function
 		else
 			If Form_bmonth>12 or Form_bmonth<0 then
 				Form_bmonth = cCur(Form_bmonth)
-				GBL_CHK_TempStr = "³öÉúÔÂ·İ´íÎó!<br>"
+				GBL_CHK_TempStr = "å‡ºç”Ÿæœˆä»½é”™è¯¯!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
@@ -364,13 +364,13 @@ Function checkFormDate
 
 	If Form_bday <> "" then
 		If IsNumeric(Form_bday) = 0 or instr(Form_bday,",")>0 then
-			GBL_CHK_TempStr = "³öÉúÈÕÆÚ´íÎó!<br>"
+			GBL_CHK_TempStr = "å‡ºç”Ÿæ—¥æœŸé”™è¯¯!<br>"
 			GBL_CHK_Flag = 0
 			Exit Function
 		else
 			If Form_bday>31 or Form_bday<0 then
 				Form_bday = cCur(Form_bday)
-				GBL_CHK_TempStr = "³öÉúÈÕÆÚ´íÎó!<br>"
+				GBL_CHK_TempStr = "å‡ºç”Ÿæ—¥æœŸé”™è¯¯!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
@@ -381,7 +381,7 @@ Function checkFormDate
 
 
 	If strLength(Form_Homepage) > 250 then
-		GBL_CHK_TempStr = "Ö÷Ò³µØÖ·Ì«³¤!<br>"
+		GBL_CHK_TempStr = "ä¸»é¡µåœ°å€å¤ªé•¿!<br>"
 		GBL_CHK_Flag = 0
 		Exit Function
 	End If
@@ -390,10 +390,10 @@ Function checkFormDate
 	If dateflag = 1 then Form_birthday = GetTimeValue(dateserial(Form_byear,Form_bmonth,Form_bday))
 
 	If isNumeric(Form_Userphoto) = 0 or instr(Form_Userphoto,",")>0 then
-		If Form_Sex = "ÄĞ" then
+		If Form_Sex = "ç”·" then
 			Form_Userphoto = 1
 		else
-			If Form_Sex = "Å®" then
+			If Form_Sex = "å¥³" then
 				Form_Userphoto = 2
 			else
 				Form_Userphoto = 3
@@ -404,10 +404,10 @@ Function checkFormDate
 	Form_Userphoto = cCur(Form_Userphoto)
 	
 	If Form_Userphoto < 1 or Form_Userphoto > DEF_faceMaxNum Then
-		If Form_Sex = "ÄĞ" then
+		If Form_Sex = "ç”·" then
 			Form_Userphoto = 1
 		else
-			If Form_Sex = "Å®" then
+			If Form_Sex = "å¥³" then
 				Form_Userphoto = 2
 			else
 				Form_Userphoto = 3
@@ -415,27 +415,27 @@ Function checkFormDate
 		End If
 	End If
 	
-	Rem -----------ÌØÊâÊı¾İÑéÖ¤-------------
+	Rem -----------ç‰¹æ®Šæ•°æ®éªŒè¯-------------
 	If Len(Form_Underwrite) > 255 then
-		GBL_CHK_TempStr = "ÓÃ»§Ç©ÃûÌ«³¤£¬²»ÄÜ³¬¹ı255×Ö·û!<br>"
+		GBL_CHK_TempStr = "ç”¨æˆ·ç­¾åå¤ªé•¿ï¼Œä¸èƒ½è¶…è¿‡255å­—ç¬¦!<br>"
 		GBL_CHK_Flag = 0
 		Exit Function
 	End If
 	
 	if len(Form_ApplyTime)<14 or isDate(RestoreTime(Form_ApplyTime))=false Then
-		GBL_CHK_TempStr = "ÉêÇëÊ±¼ä´íÎó£¬¿ÉÄÜ²»ÊÇÕı³£µÄÈÕÆÚ¸ñÊ½»òÎ´ÌîĞ´! <br>" & VbCrLf
+		GBL_CHK_TempStr = "ç”³è¯·æ—¶é—´é”™è¯¯ï¼Œå¯èƒ½ä¸æ˜¯æ­£å¸¸çš„æ—¥æœŸæ ¼å¼æˆ–æœªå¡«å†™! <br>" & VbCrLf
 		GBL_CHK_Flag = 0
 		Exit Function
 	End If
 	
 	If IsNumeric(Form_UserLevel) = 0 or instr(Form_UserLevel,",")>0 then
-		GBL_CHK_TempStr = "ÓÃ»§" & DEF_PointsName(3) & "±ØĞëÊÇÊı×Ö! <br>" & VbCrLf
+		GBL_CHK_TempStr = "ç”¨æˆ·" & DEF_PointsName(3) & "å¿…é¡»æ˜¯æ•°å­—! <br>" & VbCrLf
 		GBL_CHK_Flag = 0
 		Exit Function
 	End If
 	Form_UserLevel = cCur(Form_UserLevel)
 	If Form_UserLevel<0 or Form_UserLevel>DEF_UserLevelNum Then
-		GBL_CHK_TempStr = "ÓÃ»§" & DEF_PointsName(3) & "±ØĞë´óµÈÓÚ0²¢ÇÒĞ¡ÓÚ" & DEF_UserLevelNum & "! <br>" & VbCrLf
+		GBL_CHK_TempStr = "ç”¨æˆ·" & DEF_PointsName(3) & "å¿…é¡»å¤§ç­‰äº0å¹¶ä¸”å°äº" & DEF_UserLevelNum & "! <br>" & VbCrLf
 		GBL_CHK_Flag = 0
 		Exit Function
 	End If
@@ -451,27 +451,27 @@ Function checkFormDate
 	Next
 	If Form_Officer<>"0" Then Form_Officer = Mid(Form_Officer,3)
 	If Len(Form_Officer)>255 Then
-		GBL_CHK_TempStr = "ËùÈÎ¹ÙÖ°Ì«¶à!<br>" & VbCrLf
+		GBL_CHK_TempStr = "æ‰€ä»»å®˜èŒå¤ªå¤š!<br>" & VbCrLf
 		GBL_CHK_Flag = 0
 		Exit Function
 	End If
 
 	If IsNumeric(Form_Points) = 0 or instr(Form_Points,",")>0 then
-		GBL_CHK_TempStr = "ÓÃ»§" & DEF_PointsName(0) & "±ØĞëÊÇÊı×Ö! <br>" & VbCrLf
+		GBL_CHK_TempStr = "ç”¨æˆ·" & DEF_PointsName(0) & "å¿…é¡»æ˜¯æ•°å­—! <br>" & VbCrLf
 		GBL_CHK_Flag = 0
 		Exit Function
 	End If
 	Form_Points = cCur(Form_Points)
 
 	If IsNumeric(Form_Online) = 0 or instr(Form_Online,",")>0 then
-		GBL_CHK_TempStr = "ÓÃ»§ÔÚÏß×´Ì¬±ØĞëÊÇÊı×Ö! <br>" & VbCrLf
+		GBL_CHK_TempStr = "ç”¨æˆ·åœ¨çº¿çŠ¶æ€å¿…é¡»æ˜¯æ•°å­—! <br>" & VbCrLf
 		GBL_CHK_Flag = 0
 		Exit Function
 	End If
 	Form_Online = cCur(Form_Online)
 	
 	if len(Form_Prevtime)<14 or isDate(RestoreTime(Form_Prevtime))=false Then
-		GBL_CHK_TempStr = "×îºóµÇÂ¼Ê±¼ä´íÎó£¬¿ÉÄÜ²»ÊÇÕı³£µÄÈÕÆÚ¸ñÊ½»òÎ´ÌîĞ´! <br>" & VbCrLf
+		GBL_CHK_TempStr = "æœ€åç™»å½•æ—¶é—´é”™è¯¯ï¼Œå¯èƒ½ä¸æ˜¯æ­£å¸¸çš„æ—¥æœŸæ ¼å¼æˆ–æœªå¡«å†™! <br>" & VbCrLf
 		GBL_CHK_Flag = 0
 		Exit Function
 	End If
@@ -481,7 +481,7 @@ Function checkFormDate
 		Exit Function
 	End If
 	If IsNumeric(Form_Login_falsenum) = 0 or instr(Form_Login_falsenum,",")>0 then
-		GBL_CHK_TempStr = "³Ö°ÜµÇ´Î±ØĞëÊÇÊı×Ö! <br>" & VbCrLf
+		GBL_CHK_TempStr = "æŒè´¥ç™»æ¬¡å¿…é¡»æ˜¯æ•°å­—! <br>" & VbCrLf
 		GBL_CHK_Flag = 0
 		Exit Function
 	End If
@@ -493,14 +493,14 @@ Function checkFormDate
 		
 		If IsNumeric(Form_FaceWidth) = 0 or instr(Form_FaceWidth,",")>0 or Form_FaceWidth = "" then
 			If Form_FaceUrl <> "" Then
-				GBL_CHK_TempStr = "×Ô¶¨ÒåÍ·Ïñ¿í¶ÈÌîĞ´´íÎó!<br>"
+				GBL_CHK_TempStr = "è‡ªå®šä¹‰å¤´åƒå®½åº¦å¡«å†™é”™è¯¯!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
 		End If		
 		If IsNumeric(Form_FaceHeight) = 0 or instr(Form_FaceHeight,",")>0 or Form_FaceHeight = "" then
 			If Form_FaceUrl <> "" Then
-				GBL_CHK_TempStr = "×Ô¶¨ÒåÍ·Ïñ¸ß¶ÈÌîĞ´´íÎó!<br>"
+				GBL_CHK_TempStr = "è‡ªå®šä¹‰å¤´åƒé«˜åº¦å¡«å†™é”™è¯¯!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
@@ -510,7 +510,7 @@ Function checkFormDate
 			Form_FaceWidth = cCur(Form_FaceWidth)
 			Form_FaceHeight = cCur(Form_FaceHeight)
 			If Form_FaceWidth <20 or Form_FaceWidth > DEF_AllFaceMaxWidth or Form_FaceHeight < 20 or Form_FaceHeight > DEF_AllFaceMaxWidth*2 Then
-				GBL_CHK_TempStr = "×Ô¶¨ÒåÍ·Ïñ¸ß¶ÈºÍ¿í¶È´óĞ¡Ö»ÄÜÔÚ20-" & DEF_AllFaceMaxWidth & "Ö®¼ä!<br>"
+				GBL_CHK_TempStr = "è‡ªå®šä¹‰å¤´åƒé«˜åº¦å’Œå®½åº¦å¤§å°åªèƒ½åœ¨20-" & DEF_AllFaceMaxWidth & "ä¹‹é—´!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
@@ -535,7 +535,7 @@ Function checkFormDate
 			Dim Temp
 			Temp = Lcase(Right(Form_FaceUrl,4))
 			If Temp <> ".gif" and Temp <> ".jpg" and Temp <> "jpeg" and Temp <> ".jpe" and Temp<>".png" Then
-				GBL_CHK_TempStr = "×Ô¶¨Í·ÏñÌîĞ´´íÎó£¬±ØĞëÊÇjpg,gif,pngµÈÍ¼Ïñ¸ñÊ½!<br>"
+				GBL_CHK_TempStr = "è‡ªå®šå¤´åƒå¡«å†™é”™è¯¯ï¼Œå¿…é¡»æ˜¯jpg,gif,pngç­‰å›¾åƒæ ¼å¼!<br>"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
@@ -547,10 +547,10 @@ Function checkFormDate
 				if (Err = 0) Then
 					if not fs.FileExists(Server.Mappath("../" & Form_FaceUrl)) then
 						if err Then
-							GBL_CHK_TempStr = "×Ô¶¨Í·ÏñÌîĞ´´íÎó£¬ÇëÈ·¶¨ÊÇ·ñÌîĞ´ÕıÈ·!<br>"
+							GBL_CHK_TempStr = "è‡ªå®šå¤´åƒå¡«å†™é”™è¯¯ï¼Œè¯·ç¡®å®šæ˜¯å¦å¡«å†™æ­£ç¡®!<br>"
 							err.clear
 						Else
-							GBL_CHK_TempStr = "×Ô¶¨Í·ÏñÌîĞ´´íÎó£¬±¾·şÎñÆ÷ÉÏÃ»ÓĞ´ËÎÄ¼ş!<br>"
+							GBL_CHK_TempStr = "è‡ªå®šå¤´åƒå¡«å†™é”™è¯¯ï¼Œæœ¬æœåŠ¡å™¨ä¸Šæ²¡æœ‰æ­¤æ–‡ä»¶!<br>"
 						End If
 						GBL_CHK_Flag = 0
 						Set fs = Nothing
@@ -563,7 +563,7 @@ Function checkFormDate
 					'	TempW = DEF_AllFaceMaxWidth
 					'	TempH = DEF_AllFaceMaxWidth
 					'	If CheckIsGoodImg(Server.Mappath("../" & Form_FaceUrl),TempW,TempH*2) = 0 Then
-					'		GBL_CHK_TempStr = "×Ô¶¨Í·Ïñ´íÎó£¬Ô­ÒòÊÇ" & GBL_CHK_TempStr & "!<br>"
+					'		GBL_CHK_TempStr = "è‡ªå®šå¤´åƒé”™è¯¯ï¼ŒåŸå› æ˜¯" & GBL_CHK_TempStr & "!<br>"
 					'		GBL_CHK_Flag = 0
 					'		Exit Function
 					'	Else
@@ -578,7 +578,7 @@ Function checkFormDate
 
 	'Form_PrintUnderwrite = UBB_Code_UnderWrite(Form_Underwrite)
 	If StrLength(Form_PrintUnderwrite) > 1024 Then 
-		GBL_CHK_TempStr = "Ç©ÃûÌ«³¤!<br>"
+		GBL_CHK_TempStr = "ç­¾åå¤ªé•¿!<br>"
 		GBL_CHK_Flag = 0
 		Exit Function
 	End If
@@ -595,14 +595,14 @@ Function CheckIsGoodImg(LoadFile,W,H)
 	Set MyObj = Server.CreateObject("Persits.Jpeg")
 	If err Then
 		CheckIsGoodImg = 0
-		GBL_CHK_TempStr = "Î´°²×°aspJpeg×é¼ş£¡"
+		GBL_CHK_TempStr = "æœªå®‰è£…aspJpegç»„ä»¶ï¼"
 		Exit Function
 	End If
 	'MyObj.EnableLZW = True
 	MyObj.Open(LoadFile)
 	if err Then
 		CheckIsGoodImg = 0
-		GBL_CHK_TempStr = "·ÇÍ¼ÏñÎÄ¼ş£¡"
+		GBL_CHK_TempStr = "éå›¾åƒæ–‡ä»¶ï¼"
 		Set MyObj = Nothing
 		Exit Function
 	End If
@@ -616,7 +616,7 @@ Function CheckIsGoodImg(LoadFile,W,H)
 	
 	If Img_Height > H or Img_Height < 20 or Img_Width > W or Img_Width < 20 Then
 		CheckIsGoodImg = 0
-		GBL_CHK_TempStr = "Í¼Ïñ´óĞ¡²»·ûºÏÒªÇó£¡"
+		GBL_CHK_TempStr = "å›¾åƒå¤§å°ä¸ç¬¦åˆè¦æ±‚ï¼"
 		Exit Function
 	End If
 	
@@ -627,7 +627,7 @@ Function CheckIsGoodImg(LoadFile,W,H)
 
 End Function
 
-Rem ¼ì²âÄ³ÓÃ»§ÃûÊÇ·ñ´æÔÚ
+Rem æ£€æµ‹æŸç”¨æˆ·åæ˜¯å¦å­˜åœ¨
 Function CheckUserNameExist(UserName)
 
 	Dim Rs
@@ -642,7 +642,7 @@ Function CheckUserNameExist(UserName)
 
 End Function
 
-Rem ¼ì²âÄ³ÓÃ»§ÃûIDÊÇ·ñ´æÔÚ
+Rem æ£€æµ‹æŸç”¨æˆ·åIDæ˜¯å¦å­˜åœ¨
 Function CheckUserIDExist(UserID)
 
 	Dim Rs
@@ -681,7 +681,7 @@ End Function
 Function DisplayOfficerList
 
 	Dim Temp_N
-	Response.Write "<br><p><u>" & DEF_PointsName(9) & "¶ÔÕÕ±í</u><br><img src=" & DEF_BBS_HomeUrl & "images/NULL.GIF height=5 width=3><br>"
+	Response.Write "<br><p><u>" & DEF_PointsName(9) & "å¯¹ç…§è¡¨</u><br><img src=" & DEF_BBS_HomeUrl & "images/NULL.GIF height=5 width=3><br>"
 	For Temp_N = 0 to DEF_UserOfficerNum
 		Response.Write Temp_N & " - "
 		%>
@@ -695,7 +695,7 @@ End Function
 Function DisplayLevelList
 
 	Dim Temp_N
-	Response.Write "<br><p><u>" & DEF_PointsName(3) & "¶ÔÕÕ±í</u><br><img src=" & DEF_BBS_HomeUrl & "images/NULL.GIF height=5 width=3><br>"
+	Response.Write "<br><p><u>" & DEF_PointsName(3) & "å¯¹ç…§è¡¨</u><br><img src=" & DEF_BBS_HomeUrl & "images/NULL.GIF height=5 width=3><br>"
 	For Temp_N = 0 to DEF_UserLevelNum
 		Response.Write Temp_N & " - " & DEF_UserLevelString(Temp_N) & "<br>" & VbCrLf
 	Next

@@ -1,7 +1,7 @@
-<% @codepage=936 EnableSessionState=False%>
+<% @codepage=65001 EnableSessionState=False%>
 <%
 Option Explicit
-Response.Charset = "gb2312"
+Response.Charset = "utf-8"
 Dim id
 id=Request.QueryString("id")
 If Len(ID) > 20 Then

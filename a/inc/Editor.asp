@@ -5,7 +5,7 @@ Sub Editor_View(Edt_MiniMode,Form_Content)
 <script>
 var editFile_dir = "<%=DEF_BBS_HomeUrl%>a/";
 </script>
-<!-- #include file=post_layer.asp -->
+<!--#include file="post_layer.asp"-->
 <div class="editor_top">
 <table border=0 cellpadding=0 cellspacing=0 width="100%">
 <tr><td>
@@ -16,13 +16,13 @@ var editFile_dir = "<%=DEF_BBS_HomeUrl%>a/";
 <table border=0 cellpadding=0 cellspacing=0><tr>
 <td class=ico>
 	<div class="layer_item">
-	<div class="layer_icon_title"><a href="javascript:;" onclick="return false"><img src="<%=DEF_BBS_HomeUrl%>images/blank.gif" width="22" height="22" title="×ÖÌå" class="a_pic" style="background-position:0px -44px" /></a></div>
+	<div class="layer_icon_title"><a href="javascript:;" onclick="return false"><img src="<%=DEF_BBS_HomeUrl%>images/blank.gif" width="22" height="22" title="å­—ä½“" class="a_pic" style="background-position:0px -44px" /></a></div>
 	<div class="layer_iteminfo" id="menu_info_face" onclick="this.style.display='none';">
 	<ul class="menu_list">
-	<li unselectable=on class="menuhead">×ÖÌå</li>
-	<li unselectable=on onclick="insert('ËÎÌå');" style="font-family:ËÎÌå">ËÎÌå</li>
-	<li unselectable=on onclick="insert('ºÚÌå');" style="font-family:ºÚÌå">ºÚÌå</li>
-	<li unselectable=on onclick="insert('Î¢ÈíÑÅºÚ');" style="font-family:Î¢ÈíÑÅºÚ">Î¢ÈíÑÅºÚ</li>
+	<li unselectable=on class="menuhead">å­—ä½“</li>
+	<li unselectable=on onclick="insert('å®‹ä½“');" style="font-family:å®‹ä½“">å®‹ä½“</li>
+	<li unselectable=on onclick="insert('é»‘ä½“');" style="font-family:é»‘ä½“">é»‘ä½“</li>
+	<li unselectable=on onclick="insert('å¾®è½¯é›…é»‘');" style="font-family:å¾®è½¯é›…é»‘">å¾®è½¯é›…é»‘</li>
 	<li unselectable=on onclick="insert('Arial');" style="font-family:Arial">Arial</li>
 	<li unselectable=on onclick="insert('Arial Black');" style="font-family:Arial Black">Arial Black</li>
 	<li unselectable=on onclick="insert('Century Gothic');" style="font-family:Century Gothic">Century Gothic</li>
@@ -39,10 +39,10 @@ var editFile_dir = "<%=DEF_BBS_HomeUrl%>a/";
 </td>
 <td class=ico>
 	<div class="layer_item" unselectable=on>
-	<div class="layer_icon_title"><a href="javascript:;" onclick="return false"><img src="<%=DEF_BBS_HomeUrl%>images/blank.gif" class="a_pic" style="background-position:0px -462px;" title="×ÖºÅ" /></a></div>
+	<div class="layer_icon_title"><a href="javascript:;" onclick="return false"><img src="<%=DEF_BBS_HomeUrl%>images/blank.gif" class="a_pic" style="background-position:0px -462px;" title="å­—å·" /></a></div>
 	<div class="layer_iteminfo" onclick="this.style.display='none';">
 	<ul class="menu_list">
-	<li unselectable=on class="menuhead">ÎÄ×Ö´óĞ¡</li>
+	<li unselectable=on class="menuhead">æ–‡å­—å¤§å°</li>
 	<li unselectable=on onclick="addcontent(3,'font-size:8px;');" style="font-size:8px;">8</li>
 	<li unselectable=on onclick="addcontent(3,'font-size:9px;');" style="font-size:9px;">9</li>
 	<li unselectable=on onclick="addcontent(3,'font-size:10px;');" style="font-size:10px;">10</li>
@@ -80,42 +80,42 @@ var editFile_dir = "<%=DEF_BBS_HomeUrl%>a/";
 	</div>
 	</div>
 	</td>
-<td width=23 class=ico><a href=#ic title=¼Ó´Ö onclick="addcontent(0,'B','/B');" class="a_pic" style="background-position:0px -242px;"></a></td>
-<td width=23 class=ico><a href=#ic title=Ğ±Ìå onclick="addcontent(0,'I','/I');" class="a_pic" style="background-position:0px -726px;"></a></td>
-<td width=23 class=ico><a href=#ic title=ÏÂ»®Ïß onclick="addcontent(0,'U','/U');" class="a_pic" style="background-position:0px -330px;"></a></td>
-<td width=23 class=ico><a href=#ic title=ÖĞ»®Ïß onclick="addcontent(0,'STRIKE','/STRIKE');" class="a_pic" style="background-position:0px -440px;"></a></td>
+<td width=23 class=ico><a href=#ic title=åŠ ç²— onclick="addcontent(0,'B','/B');" class="a_pic" style="background-position:0px -242px;"></a></td>
+<td width=23 class=ico><a href=#ic title=æ–œä½“ onclick="addcontent(0,'I','/I');" class="a_pic" style="background-position:0px -726px;"></a></td>
+<td width=23 class=ico><a href=#ic title=ä¸‹åˆ’çº¿ onclick="addcontent(0,'U','/U');" class="a_pic" style="background-position:0px -330px;"></a></td>
+<td width=23 class=ico><a href=#ic title=ä¸­åˆ’çº¿ onclick="addcontent(0,'STRIKE','/STRIKE');" class="a_pic" style="background-position:0px -440px;"></a></td>
 <td><div class="a_pic" style="background-position:0px -638px;width:10px;height:16px;"></div></td><td>
-<td width=23 class=ico><a href=#ic title=¼ôÇĞ onclick="addcontent(2,'cut');" class="a_pic" style="background-position:0px -132px"></a></td>
-<td width=23 class=ico><a href=#ic title=¸´ÖÆ onclick="addcontent(2,'copy');" class="a_pic" style="background-position:0px -176px"></a></td>
-<td width=23 class=ico><a href=#ic title=³£¹æÕ³Ìù onclick="addcontent(2,'paste');" class="a_pic" style="background-position:0px -572px;"></a></td>
-<td width=23 class=ico><a href=#ic title=É¾³ı onclick="addcontent(2,'delete');" class="a_pic" style="background-position:0px -110px"></a></td>
-<td width=23 class=ico><a href=#ic title=Çå³ıÑùÊ½ onclick="addcontent(2,'RemoveFormat');" class="a_pic" style="background-position:0px -506px;"></a></td>
+<td width=23 class=ico><a href=#ic title=å‰ªåˆ‡ onclick="addcontent(2,'cut');" class="a_pic" style="background-position:0px -132px"></a></td>
+<td width=23 class=ico><a href=#ic title=å¤åˆ¶ onclick="addcontent(2,'copy');" class="a_pic" style="background-position:0px -176px"></a></td>
+<td width=23 class=ico><a href=#ic title=å¸¸è§„ç²˜è´´ onclick="addcontent(2,'paste');" class="a_pic" style="background-position:0px -572px;"></a></td>
+<td width=23 class=ico><a href=#ic title=åˆ é™¤ onclick="addcontent(2,'delete');" class="a_pic" style="background-position:0px -110px"></a></td>
+<td width=23 class=ico><a href=#ic title=æ¸…é™¤æ ·å¼ onclick="addcontent(2,'RemoveFormat');" class="a_pic" style="background-position:0px -506px;"></a></td>
 <td><div class="a_pic" style="background-position:0px -638px;width:10px;height:16px;"></div></td><td>
-<td width=23 class=ico><a href=#ic title=³·Ïû onclick="addcontent(2,'undo');" class="a_pic" style="background-position:0px -308px;"></a></td>
-<td width=23 class=ico><a href=#ic title=»Ö¸´ onclick="addcontent(2,'redo');" class="a_pic" style="background-position:0px -528px;"></a></td>
+<td width=23 class=ico><a href=#ic title=æ’¤æ¶ˆ onclick="addcontent(2,'undo');" class="a_pic" style="background-position:0px -308px;"></a></td>
+<td width=23 class=ico><a href=#ic title=æ¢å¤ onclick="addcontent(2,'redo');" class="a_pic" style="background-position:0px -528px;"></a></td>
 <td><div class="a_pic" style="background-position:0px -638px;width:10px;height:16px;"></div></td><td>
-<td width=23 class=ico><a href=#ic title=ÒıÓÃ onclick="insert('quote');" class="a_pic" style="background-position:0px -550px;"></a></td>
-<td width=23 class=ico><a href=#ic title=´úÂë onclick="insert('code');" class="a_pic" style="background-position:0px -220px;"></a></td>
+<td width=23 class=ico><a href=#ic title=å¼•ç”¨ onclick="insert('quote');" class="a_pic" style="background-position:0px -550px;"></a></td>
+<td width=23 class=ico><a href=#ic title=ä»£ç  onclick="insert('code');" class="a_pic" style="background-position:0px -220px;"></a></td>
 <td><div class="a_pic" style="background-position:0px -638px;width:10px;height:16px;"></div></td><td>
-<td width=23 class=ico><a href=#ic title=²åÈëÌØÊâ×Ö·û onclick="editor_view(this,'editor_symbol','symbol.asp?id=56','symbol.js?id=31');" class="a_pic" style="background-position:0px -374px;"></a></td>
-<td width=23 class=ico><a href=#ic title=²åÈë·Ö¸ôÏß onclick="addcontent(0,'hr');" class="a_pic" style="background-position:0px 0px"></a></td>
-<td width=23 class=ico><a href=#ic title=È«ÆÁÇĞ»» id="editor_fullscr" class="a_pic" style="background-position:0px -792px"></a></td>
+<td width=23 class=ico><a href=#ic title=æ’å…¥ç‰¹æ®Šå­—ç¬¦ onclick="editor_view(this,'editor_symbol','symbol.asp?id=56','symbol.js?id=31');" class="a_pic" style="background-position:0px -374px;"></a></td>
+<td width=23 class=ico><a href=#ic title=æ’å…¥åˆ†éš”çº¿ onclick="addcontent(0,'hr');" class="a_pic" style="background-position:0px 0px"></a></td>
+<td width=23 class=ico><a href=#ic title=å…¨å±åˆ‡æ¢ id="editor_fullscr" class="a_pic" style="background-position:0px -792px"></a></td>
 </tr></table></td>
 </tr></table>
 <table border=0 cellpadding=0 cellspacing=0 width=100%>
 <tr height=29>
 <td>
 <table border=0 cellpadding=0 cellspacing=0><tr height=29 align=center>
-<td width=23 class=ico><a href=#ic title=²åÈë±íÇé onclick="editor_view(this,'editor_icon','','icon.asp');" class="a_pic" style="background-position:0px -88px"></a></td>
-<td width=23 class=ico><a href=#ic title=×ó¶ÔÆë onclick="addcontent(0,'ALIGN','/ALIGN','left');" class="a_pic" style="background-position:0px -682px;"></a></td>
-<td width=23 class=ico><a href=#ic title=¾ÓÖĞ¶ÔÆë onclick="addcontent(0,'ALIGN','/ALIGN','center');" class="a_pic" style="background-position:0px -704px;"></a></td>
-<td width=23 class=ico><a href=#ic title=ÓÒ¶ÔÆë onclick="addcontent(0,'ALIGN','/ALIGN','right');" class="a_pic" style="background-position:0px -660px;"></a></td>
+<td width=23 class=ico><a href=#ic title=æ’å…¥è¡¨æƒ… onclick="editor_view(this,'editor_icon','','icon.asp');" class="a_pic" style="background-position:0px -88px"></a></td>
+<td width=23 class=ico><a href=#ic title=å·¦å¯¹é½ onclick="addcontent(0,'ALIGN','/ALIGN','left');" class="a_pic" style="background-position:0px -682px;"></a></td>
+<td width=23 class=ico><a href=#ic title=å±…ä¸­å¯¹é½ onclick="addcontent(0,'ALIGN','/ALIGN','center');" class="a_pic" style="background-position:0px -704px;"></a></td>
+<td width=23 class=ico><a href=#ic title=å³å¯¹é½ onclick="addcontent(0,'ALIGN','/ALIGN','right');" class="a_pic" style="background-position:0px -660px;"></a></td>
 <td><div class="a_pic" style="background-position:0px -638px;width:10px;height:16px;"></div></td><td>
-<td width=23 class=ico><a href=#ic title=±àºÅ onclick="addcontent(2,'insertorderedlist');" class="a_pic" style="background-position:0px -748px;"></a></td>
-<td width=23 class=ico><a href=#ic title=ÏîÄ¿·ûºÅ onclick="addcontent(2,'insertunorderedlist');" class="a_pic" style="background-position:0px -770px;"></a></td>
+<td width=23 class=ico><a href=#ic title=ç¼–å· onclick="addcontent(2,'insertorderedlist');" class="a_pic" style="background-position:0px -748px;"></a></td>
+<td width=23 class=ico><a href=#ic title=é¡¹ç›®ç¬¦å· onclick="addcontent(2,'insertunorderedlist');" class="a_pic" style="background-position:0px -770px;"></a></td>
 <td width=23>
 	<div class="layer_item">
-	<div class="layer_icon_title"><a href="javascript:;" onclick="return false"><img src="<%=DEF_BBS_HomeUrl%>images/blank.gif" class="a_pic" style="background-position:0px -616px;" title="ĞĞ¾à" /></a></div>
+	<div class="layer_icon_title"><a href="javascript:;" onclick="return false"><img src="<%=DEF_BBS_HomeUrl%>images/blank.gif" class="a_pic" style="background-position:0px -616px;" title="è¡Œè·" /></a></div>
 	<div class="layer_iteminfo" id="menu_info_lineheight" onclick="this.style.display='none';">
 	<ul class="menu_list">
 	<li unselectable=on onclick="addcontent(3,'line-height','1');">100%</li>
@@ -131,29 +131,29 @@ var editFile_dir = "<%=DEF_BBS_HomeUrl%>a/";
 
 </td>
 <td><div class="a_pic" style="background-position:0px -638px;width:10px;height:16px;"></div></td><td>
-<td width=23 class=ico><a href=#ic title=ÉÏ±ê onclick="addcontent(0,'SUP','/SUP');" class="a_pic" style="background-position:0px -396px;"></a></td>
-<td width=23 class=ico><a href=#ic title=ÏÂ±ê onclick="addcontent(0,'SUB','/SUB');" class="a_pic" style="background-position:0px -418px;"></a></td>
+<td width=23 class=ico><a href=#ic title=ä¸Šæ ‡ onclick="addcontent(0,'SUP','/SUP');" class="a_pic" style="background-position:0px -396px;"></a></td>
+<td width=23 class=ico><a href=#ic title=ä¸‹æ ‡ onclick="addcontent(0,'SUB','/SUB');" class="a_pic" style="background-position:0px -418px;"></a></td>
 <td><div class="a_pic" style="background-position:0px -638px;width:10px;height:16px;"></div></td><td>
-<td width=23 class=ico><a href=#ic title=×ÖÌåÑÕÉ« onclick="editor_sAction = 'forecolor';editor_view(this,'editor_selcolor','','selcolor.js');" class="a_pic" style="background-position:0px -66px"></a></td>
-<td width=23 class=ico><a href=#ic title=×ÖÌå±³¾°ÑÕÉ« onclick="editor_sAction = 'backcolor';editor_view(this,'editor_selcolor','','selcolor.js');" class="a_pic" style="background-position:0px -264px;"></a></td>
+<td width=23 class=ico><a href=#ic title=å­—ä½“é¢œè‰² onclick="editor_sAction = 'forecolor';editor_view(this,'editor_selcolor','','selcolor.js');" class="a_pic" style="background-position:0px -66px"></a></td>
+<td width=23 class=ico><a href=#ic title=å­—ä½“èƒŒæ™¯é¢œè‰² onclick="editor_sAction = 'backcolor';editor_view(this,'editor_selcolor','','selcolor.js');" class="a_pic" style="background-position:0px -264px;"></a></td>
 <td><div class="a_pic" style="background-position:0px -638px;width:10px;height:16px;"></div></td><td>
-<td width=23 class=ico><a href=#ic title=²åÈë»òĞŞ¸Ä³¬¼¶Á´½Ó onclick="edt_link();" class="a_pic" style="background-position:0px -154px"></a></td>
-<td width=23 class=ico><a href=#ic title=È¡Ïû³¬¼¶Á´½Ó»ò±êÇ© onclick="addcontent(2,'UnLink');" class="a_pic" style="background-position:0px -286px;"></a></td>
+<td width=23 class=ico><a href=#ic title=æ’å…¥æˆ–ä¿®æ”¹è¶…çº§é“¾æ¥ onclick="edt_link();" class="a_pic" style="background-position:0px -154px"></a></td>
+<td width=23 class=ico><a href=#ic title=å–æ¶ˆè¶…çº§é“¾æ¥æˆ–æ ‡ç­¾ onclick="addcontent(2,'UnLink');" class="a_pic" style="background-position:0px -286px;"></a></td>
 <td><div class="a_pic" style="background-position:0px -638px;width:10px;height:16px;"></div></td><td>
-<td width=23 class=ico><a href=#ic unselectable=on title=²åÈë»òĞŞ¸Ä±í¸ñ onclick="if(typeof(editor_inittable)=='function')editor_inittable();editor_view(this,'editor_insttable','table.asp','table.js');" class="a_pic" style="background-position:0px -352px;"></a></td>
-<td width=23 class=ico><a href=#ic title=²åÈë»òĞŞ¸ÄÍ¼Æ¬ onclick="if(typeof(editor_InitimgDocument)=='function')editor_InitimgDocument();editor_view(this,'editor_img','img.asp','img.js');" class="a_pic" style="background-position:0px -22px"></a></td>
-<td width=23 class=ico><a href=#ic title=²åÈë¶àÃ½Ìå onclick="if(typeof(editor_Initmedia)=='function')editor_Initmedia();editor_view(this,'editor_media','media.asp?0','media.js?0');" class="a_pic" style="background-position:0px -594px;"></a></td>
+<td width=23 class=ico><a href=#ic unselectable=on title=æ’å…¥æˆ–ä¿®æ”¹è¡¨æ ¼ onclick="if(typeof(editor_inittable)=='function')editor_inittable();editor_view(this,'editor_insttable','table.asp','table.js');" class="a_pic" style="background-position:0px -352px;"></a></td>
+<td width=23 class=ico><a href=#ic title=æ’å…¥æˆ–ä¿®æ”¹å›¾ç‰‡ onclick="if(typeof(editor_InitimgDocument)=='function')editor_InitimgDocument();editor_view(this,'editor_img','img.asp','img.js');" class="a_pic" style="background-position:0px -22px"></a></td>
+<td width=23 class=ico><a href=#ic title=æ’å…¥å¤šåª’ä½“ onclick="if(typeof(editor_Initmedia)=='function')editor_Initmedia();editor_view(this,'editor_media','media.asp?0','media.js?0');" class="a_pic" style="background-position:0px -594px;"></a></td>
 <td><div class="a_pic" style="background-position:0px -638px;width:10px;height:16px;"></div></td><td>
 <td class=ico>
 	<div class="layer_item">
-	<div class="layer_icon_title"><a href="javascript:;" onclick="return false"><img src="<%=DEF_BBS_HomeUrl%>images/blank.gif" width="22" height="22" title="ìÅ²Ê×Ö" class="a_pic" style="background-position:0px -814px" /></a></div>
+	<div class="layer_icon_title"><a href="javascript:;" onclick="return false"><img src="<%=DEF_BBS_HomeUrl%>images/blank.gif" width="22" height="22" title="ç‚«å½©å­—" class="a_pic" style="background-position:0px -814px" /></a></div>
 	<div class="layer_iteminfo" id="menu_info_face" onclick="this.style.display='none';">
 	<ul class="menu_list">
-	<li unselectable=on class="menuhead">ÎÄ×ÖĞã</li>
+	<li unselectable=on class="menuhead">æ–‡å­—ç§€</li>
 	<li unselectable=on onclick="addcontent(0,'tshow','/tshow','2,22,12,#056f34');"><img src=<%=DEF_BBS_HomeUrl%>images/font/font_2_demo.png></li>
 	<li unselectable=on onclick="addcontent(0,'tshow','/tshow','1,40,14,#9b1916');"><img src=<%=DEF_BBS_HomeUrl%>images/font/font_1_demo.png></li>
-	<li unselectable=on onclick="addcontent(0,'FLY','/FLY');">·ÉĞĞ</li>
-	<li unselectable=on onclick="addcontent(0,'SHADOW','/SHADOW','2,gray,2');">ÒõÓ°×Ö</li>
+	<li unselectable=on onclick="addcontent(0,'FLY','/FLY');">é£è¡Œ</li>
+	<li unselectable=on onclick="addcontent(0,'SHADOW','/SHADOW','2,gray,2');">é˜´å½±å­—</li>
 	</ul>
 	</div>
 	</div>
@@ -172,14 +172,14 @@ var editFile_dir = "<%=DEF_BBS_HomeUrl%>a/";
 	<td align="left" valign="top">
 	<div id="LEADEDT_TXT" style="display:block;">
 	<map name="LEADEDT_Map1">
-	<area shape="polygon" coords="5, 3, 12, 14, 43, 14, 49, 6, 43, 0" alt="´¿ÎÄ±¾ºÍ±àÂë±à¼­Ä£Ê½" onclick="edt_setmode(1);">
-	<area shape="polygon" coords="87, 14, 91, 5, 87, 0, 50, 0, 46, 9, 49, 14" alt="HTML´úÂë±à¼­Ä£Ê½" onclick="edt_setmode(0);">
+	<area shape="polygon" coords="5, 3, 12, 14, 43, 14, 49, 6, 43, 0" alt="çº¯æ–‡æœ¬å’Œç¼–ç ç¼–è¾‘æ¨¡å¼" onclick="edt_setmode(1);">
+	<area shape="polygon" coords="87, 14, 91, 5, 87, 0, 50, 0, 46, 9, 49, 14" alt="HTMLä»£ç ç¼–è¾‘æ¨¡å¼" onclick="edt_setmode(0);">
 	</map> <img src="<%=DEF_BBS_HomeUrl%>images/blank.gif" class="a_editmode a_modeedit" usemap="#LEADEDT_Map1" border="0"></div>
 
 	<div id="LEADEDT_EDIT" style="display:none">
 	<map name="LEADEDT_Map2">
-	<area shape="polygon" coords="5, 3, 12, 14, 43, 14, 49, 6, 43, 0" alt="´¿ÎÄ±¾ºÍ±àÂë±à¼­Ä£Ê½" onclick="edt_setmode(1);">
-	<area shape="polygon" coords="87, 14, 91, 5, 87, 0, 50, 0, 46, 9, 49, 14" alt="HTML´úÂë±à¼­Ä£Ê½" onclick="edt_setmode(0);">
+	<area shape="polygon" coords="5, 3, 12, 14, 43, 14, 49, 6, 43, 0" alt="çº¯æ–‡æœ¬å’Œç¼–ç ç¼–è¾‘æ¨¡å¼" onclick="edt_setmode(1);">
+	<area shape="polygon" coords="87, 14, 91, 5, 87, 0, 50, 0, 46, 9, 49, 14" alt="HTMLä»£ç ç¼–è¾‘æ¨¡å¼" onclick="edt_setmode(0);">
 	</map> <img src="<%=DEF_BBS_HomeUrl%>images/blank.gif" class="a_editmode a_modetext" usemap="#LEADEDT_Map2" border="0"></div>
 	</td>
 	<td align=right>

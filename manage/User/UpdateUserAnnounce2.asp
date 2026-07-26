@@ -1,32 +1,32 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Rem -------------------------------------------------------
-Rem ------------ÖØËãËùÓÐÓÃ»§Ìû×ÓÊýÁ¿-----------------------
+Rem ------------é‡ç®—æ‰€æœ‰ç”¨æˆ·å¸–å­æ•°é‡-----------------------
 Rem -------------------------------------------------------
-initDatabase
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
-UpdateUserAnnounce
-CloseDatabase
-frame_BottomInfo
+initDatabase()
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
+UpdateUserAnnounce()
+CloseDatabase()
+frame_BottomInfo()
 Manage_Sitebottom("none")
 
 Function UpdateUserAnnounce()
 
-	If CheckSupervisorUserName = 0 or GBL_UserID = 0 Then Exit Function
+	If CheckSupervisorUserName() = 0 or GBL_UserID = 0 Then Exit Function
 
 	If Request.Form("SureFlag") <> "E72ksiOkw2" Then
 		%>
 			<p><form action=UpdateUserAnnounce2.asp method=post>
-			<b><font color=ff0000 class=redfont>È·¶¨´Ë²Ù×÷Âð?<br>
+			<b><font color=ff0000 class=redfont>ç¡®å®šæ­¤æ“ä½œå—?<br>
 			<br>
 			<input type=hidden name=SureFlag value="E72ksiOkw2">
 			<input type=hidden name=ID value="<%=Left(Request("ID"),14)%>">
 			
-			<input type=submit value=È·¶¨½øÐÐ class=fmbtn>
+			<input type=submit value=ç¡®å®šè¿›è¡Œ class=fmbtn>
 			</form>
 		<%
 	Else
@@ -45,7 +45,7 @@ Function UpdateUserAnnounce()
 		If Rs.Eof Then
 			Rs.Close
 			Set Rs = Nothing
-			Response.Write "´íÎó£¬²»´æÔÚµÄÓÃ»§"
+			Response.Write "é”™è¯¯ï¼Œä¸å­˜åœ¨çš„ç”¨æˆ·"
 			Exit Function
 		Else
 			UserName = Rs(1)
@@ -118,7 +118,7 @@ Function UpdateUserAnnounce()
 			Set Rs = Nothing
 			CALL LDExeCute("Update LeadBBS_User Set MessageFlag=1 where ID=" & NowID,1)
 		End If
-		Response.Write "Íê³ÉÓÃ»§" & htmlencode(UserName) & "ÐÞ¸´£¡"
+		Response.Write "å®Œæˆç”¨æˆ·" & htmlencode(UserName) & "ä¿®å¤ï¼"
 	End If
 
 End Function

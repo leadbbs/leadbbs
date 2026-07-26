@@ -1,1 +1,1 @@
-<div class="swap_collapse" onclick="swap_view('master_part_1',this);"><span>ÂÛÌ³Ö÷Çø</span></div><ul id="master_part_1"><li><a href="javascript:url_to(100);">²âÊÔ×¨Çø</A></li><li><a href="javascript:url_to(444);">»ØÊÕÕ¾</A></li></ul>
+<div class="swap_collapse" onclick="swap_view('master_part_1',this);"><span>è®ºå›ä¸»åŒº</span></div><ul id="master_part_1"><li><a href="javascript:url_to(100);">æµ‹è¯•ä¸“åŒº</A></li><li><a href="javascript:url_to(444);">å›žæ”¶ç«™</A></li></ul>

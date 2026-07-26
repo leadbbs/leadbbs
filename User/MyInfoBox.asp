@@ -1,20 +1,20 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/Board_Popfun.asp -->
-<!-- #include file=inc/UserTopic.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
+<!--#include file="inc/UserTopic.asp"-->
 <%
 DEF_BBS_HomeUrl = "../"
 Dim Evol,CheckBoxValue
 
-Main
+Main()
 
 Sub Main
 
-	initDatabase
+	initDatabase()
 	GBL_CHK_TempStr = ""
 	
 	
 	If GBL_UserID = 0 or GBL_CHK_User = "" Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "<div class=alert>ÄãÃ»ÓĞµÇÂ¼</div>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "<div class=alert>ä½ æ²¡æœ‰ç™»å½•</div>" & VbCrLf
 	End If
 	
 	Dim Start
@@ -23,57 +23,57 @@ Sub Main
 	Start = cCur(Start)
 	If Start < 0 Then Start = 0
 	
-	BBS_SiteHead DEF_SiteNameString & " - ¶ÌÏûÏ¢",0,"¶ÌÏûÏ¢"
+	BBS_SiteHead DEF_SiteNameString & " - çŸ­æ¶ˆæ¯",0,"çŸ­æ¶ˆæ¯"
 	UserTopicTopInfo("user")
-	UpdateOnlineUserAtInfo GBL_board_ID,"ÎÒµÄÊÕ¼şÏä"
+	UpdateOnlineUserAtInfo GBL_board_ID,"æˆ‘çš„æ”¶ä»¶ç®±"
 	
 	If GBL_CHK_TempStr <> "" Then
 		Response.Write "<div class='alert redfont'>" & GBL_CHK_TempStr & "</div>"
 	Else
-		PersonalInfoManage%>
+		PersonalInfoManage()%>
 		<script type="text/javascript">
 			function killall(str)
 			{
 				//window.open('DeleteMessage.asp?kasdie=3&ClearFlag='+str,'','width=450,height=37,scrollbars=auto,status=no');
 				
 				//getAJAX('DeleteMessage.asp','AjaxFlag=1&ClearFlag='+str+'&DeleteSureFlag=dk9@dl9s92lw_SWxl','alert(tmp);this.location="MyInfoBox.asp";',1);
-				if (confirm('É¾³ı²Ù×÷½«²»¿ÉÄæ,È·¶¨¼ÌĞøÂğ?'))
+				if (confirm('åˆ é™¤æ“ä½œå°†ä¸å¯é€†,ç¡®å®šç»§ç»­å—?'))
 				p_once("&ClearFlag="+str,1);
 			}
 			</script>
 			<div class=value2>
-			<a href="SendMessage.asp"><b>Ğ´¶ÌÏûÏ¢</b></a>
-			<a href='javascript:killall("dkeJje5");'><img src=../images/<%=GBL_DefineImage%>clear.gif align=middle>Çå¿ÕÎÒµÄÊÕ¼şÏä</a>
+			<a href="SendMessage.asp"><b>å†™çŸ­æ¶ˆæ¯</b></a>
+			<a href='javascript:killall("dkeJje5");'><img src=../images/<%=GBL_DefineImage%>clear.gif align=middle>æ¸…ç©ºæˆ‘çš„æ”¶ä»¶ç®±</a>
 			</div>
-			<%If GBL_UserID > 0 and CheckSupervisorUserName = 1 Then%>
+			<%If GBL_UserID > 0 and CheckSupervisorUserName() = 1 Then%>
 			<hr class=splitline>
-			<div class=title>¹ÜÀíÔ±¹¦ÄÜ</div>
+			<div class=title>ç®¡ç†å‘˜åŠŸèƒ½</div>
 			<form action=MyInfoBox.asp method=Get>
-			<div class=value2>²é¿´ÓÃ»§ <input class='fminpt input_2' type=text name=ToUser size=14> µÄÊÕ¼şÏä
-			<input type=submit value=²é¿´ name=²é¿´ class="fmbtn btn_2">
+			<div class=value2>æŸ¥çœ‹ç”¨æˆ· <input class='fminpt input_2' type=text name=ToUser size=14> çš„æ”¶ä»¶ç®±
+			<input type=submit value=æŸ¥çœ‹ name=æŸ¥çœ‹ class="fmbtn btn_2">
 			</div>
 			</form>
 			<div class=value2><form action=MyInfoBox.asp?Evol=n method=Post>
-				²é¿´ÓÃ»§ <input class='fminpt input_2' type=text name=FromUser size=14> µÄ·¢¼şÏä
-				<input type=submit value=²é¿´ name=²é¿´ class="fmbtn btn_2"></form>
+				æŸ¥çœ‹ç”¨æˆ· <input class='fminpt input_2' type=text name=FromUser size=14> çš„å‘ä»¶ç®±
+				<input type=submit value=æŸ¥çœ‹ name=æŸ¥çœ‹ class="fmbtn btn_2"></form>
 			</div>
 			<%End If%>
 			<div class=value2>
-			<%If CheckSupervisorUserName = 1 Then%><a href='javascript:killall("dkeJje6");'><img src=../images/<%=GBL_DefineImage%>clear.gif align=middle>Çå¿ÕËùÓĞÈËµÄÊÕ¼şÏä</a><%End If%>
-			<a href='PrintMessage.asp'><img src=../images/<%=GBL_DefineImage%>print.gif align=middle>´òÓ¡È«²¿¶ÌÏûÏ¢¼°Çå¿ÕÊÕ¼şÏä</a>
+			<%If CheckSupervisorUserName() = 1 Then%><a href='javascript:killall("dkeJje6");'><img src=../images/<%=GBL_DefineImage%>clear.gif align=middle>æ¸…ç©ºæ‰€æœ‰äººçš„æ”¶ä»¶ç®±</a><%End If%>
+			<a href='PrintMessage.asp'><img src=../images/<%=GBL_DefineImage%>print.gif align=middle>æ‰“å°å…¨éƒ¨çŸ­æ¶ˆæ¯åŠæ¸…ç©ºæ”¶ä»¶ç®±</a>
 			</div>
 	<%
 	End If
-	UserTopicBottomInfo
-	closeDataBase
-	SiteBottom
+	UserTopicBottomInfo()
+	closeDataBase()
+	SiteBottom()
 
 End Sub
 
 Function PersonalInfoSend
 
 	Dim FromUser
-	If CheckSupervisorUserName = 0 Then
+	If CheckSupervisorUserName() = 0 Then
 		FromUser = GBL_CHK_User
 	Else
 		FromUser = Trim(Left(Request("FromUser"),14))
@@ -99,21 +99,21 @@ Function PersonalInfoSend
 	Rs.close
 	Set Rs = Nothing
 	dim I
-	MyinfoBox_NavInfo
+	MyinfoBox_NavInfo()
 	If FromUser <> GBL_CHK_User Then
 	%>
-	<b title="Äã·¢¸ø±ğÈËµÄÏûÏ¢"><%=htmlencode(FromUser)%>µÄ·¢¼şÏä</b>
+	<b title="ä½ å‘ç»™åˆ«äººçš„æ¶ˆæ¯"><%=htmlencode(FromUser)%>çš„å‘ä»¶ç®±</b>
 	<%
 	End If
 	%>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class=table_in>
 	  <tr class=tbinhead>
-	    <td><div class=value>Ö÷Ìâ(µã¡ùºÅ¿ÉĞŞ¸ÄÎ´ÔÄ¶Á¶ÌÏûÏ¢)</div></td>
-	    <td width=210><div class=value>·¢ËÍÊ±¼äºÍ½ÓÊÕÈË</div></td>
+	    <td><div class=value>ä¸»é¢˜(ç‚¹â€»å·å¯ä¿®æ”¹æœªé˜…è¯»çŸ­æ¶ˆæ¯)</div></td>
+	    <td width=210><div class=value>å‘é€æ—¶é—´å’Œæ¥æ”¶äºº</div></td>
 	  </tr>
 	<%
 	If Num = -1 Then
-		Response.Write "<tr><td colspan=2 class=tdbox>Ã»ÓĞÈÎºÎÏûÏ¢!</td></tr>"
+		Response.Write "<tr><td colspan=2 class=tdbox>æ²¡æœ‰ä»»ä½•æ¶ˆæ¯!</td></tr>"
 	End If
 
 	Dim TempN,n
@@ -123,9 +123,9 @@ Function PersonalInfoSend
 		For n = 0 to Num
 			Response.Write "<tr><td class=tdbox>"
 			If ccur(GetData(4,N)) = 0 Then
-				Response.Write "<a href=""SendMessage.asp?ModifyMessageID=" & GetData(0,n) & """><span class=greenfont>¡ù</span></a> "
+				Response.Write "<a href=""SendMessage.asp?ModifyMessageID=" & GetData(0,n) & """><span class=greenfont>â€»</span></a> "
 			Else
-				Response.Write "¡ù "
+				Response.Write "â€» "
 			End If
 			Response.Write "<a href=""LookMessage.asp?MessageID=" & GetData(0,n) & """>"
 			If GetData(5,N) = "" Then Response.Write "<b>"
@@ -137,7 +137,7 @@ Function PersonalInfoSend
 			Else
 				If ccur(GetData(6,n)) = 0 Then
 					If GetData(4,N) = 0 Then
-						Response.Write " <span class=greenfont>ĞÂ</span></a>"
+						Response.Write " <span class=greenfont>æ–°</span></a>"
 					Else
 						Response.Write "</a>"
 					End If
@@ -145,13 +145,13 @@ Function PersonalInfoSend
 					SQL = DateDiff("d",Now,RestoreTime(GetData(6,n)))
 					If GetData(4,N) = 0 Then
 						If SQL > 0 Then
-							Response.Write "</a> <span class=greenfont>±£´æ" & SQL & "Ìì</span>"
+							Response.Write "</a> <span class=greenfont>ä¿å­˜" & SQL & "å¤©</span>"
 						Else
-							Response.Write "</a> <span class=greenfont>µ½ÆÚ</span>"
+							Response.Write "</a> <span class=greenfont>åˆ°æœŸ</span>"
 						End If
 					Else
 						If SQL > 0 Then
-							Response.Write "</a> <span class=grayfont>±£´æ" & SQL & "Ìì</span>"
+							Response.Write "</a> <span class=grayfont>ä¿å­˜" & SQL & "å¤©</span>"
 						Else
 							Response.Write "</a>"
 						End If
@@ -167,7 +167,7 @@ Function PersonalInfoSend
 	End If
 	%>
 	      </table>
-	<div class=title>ÕâÊÇÄúÒÑ¾­·¢ËÍ¸øËûÈËµÄÏûÏ¢£¬½ö¹©²é¿´£¬²¢ÎŞÉ¾³ıÈ¨ÏŞ</div>
+	<div class=title>è¿™æ˜¯æ‚¨å·²ç»å‘é€ç»™ä»–äººçš„æ¶ˆæ¯ï¼Œä»…ä¾›æŸ¥çœ‹ï¼Œå¹¶æ— åˆ é™¤æƒé™</div>
 		<%
 
 End Function
@@ -176,11 +176,11 @@ Sub PersonalInfoManage
 
 	Evol = Request("Evol")
 	If Evol = "n" Then
-		PersonalInfoSend
+		PersonalInfoSend()
 		Exit Sub
 	End If
 	Dim ToUser
-	If CheckSupervisorUserName = 0 Then
+	If CheckSupervisorUserName() = 0 Then
 		ToUser = GBL_CHK_User
 	Else
 		ToUser = Trim(Left(Request.QueryString("ToUser"),14))
@@ -195,7 +195,7 @@ Sub PersonalInfoManage
 	
 	CheckBoxValue = Request("CheckBoxValue")
 	Dim AllPrintingString
-	If Request("AllPrinting")="Yesing" and CheckSupervisorUserName = 1 Then
+	If Request("AllPrinting")="Yesing" and CheckSupervisorUserName() = 1 Then
 		sql="select count(*) from LeadBBS_InfoBox where Readflag=0"
 		AllPrintingString = "&AllPrinting=Yesing"
 	Else
@@ -245,7 +245,7 @@ Sub PersonalInfoManage
 		End If
 	End If
 
-	If Request("AllPrinting")="Yesing" and CheckSupervisorUserName = 1 Then
+	If Request("AllPrinting")="Yesing" and CheckSupervisorUserName() = 1 Then
 	Else
 		If WhereFlag = 0 Then
 			SQLendString = " where (ToUser='" & Replace(ToUser,"'","''") & "')"
@@ -323,10 +323,10 @@ Sub PersonalInfoManage
 		Rs.Close
 		Set Rs = Nothing
 
-		If RecordCount >= LMT_MaxMessageNumber and Start=999999999 and CheckSupervisorUserName = 0 Then
+		If RecordCount >= LMT_MaxMessageNumber and Start=999999999 and CheckSupervisorUserName() = 0 Then
 			%>
 			<script type="text/javascript">
-				alert("ÄãµÄÊÕ¼şÏäÒÑÂú£¬²»ÄÜÔÙ½ÓÊÕĞÂÏûÏ¢£¬\nÊÕ¼şÏä×î¶àÔÊĞí´æ·Å<%=LMT_MaxMessageNumber%>ÌõÏûÏ¢£®");
+				alert("ä½ çš„æ”¶ä»¶ç®±å·²æ»¡ï¼Œä¸èƒ½å†æ¥æ”¶æ–°æ¶ˆæ¯ï¼Œ\næ”¶ä»¶ç®±æœ€å¤šå…è®¸å­˜æ”¾<%=LMT_MaxMessageNumber%>æ¡æ¶ˆæ¯ï¼");
 			</script>
 		<%
 		End If
@@ -370,15 +370,15 @@ Sub PersonalInfoManage
 	
 		Dim EndwriteQueryString,PageSplictString
 		EndwriteQueryString = "?Z38=0"
-		If CheckSupervisorUserName = 1 and ToUser <> GBL_CHK_User Then EndwriteQueryString = EndwriteQueryString & "&ToUser=" & urlencode(ToUser)
+		If CheckSupervisorUserName() = 1 and ToUser <> GBL_CHK_User Then EndwriteQueryString = EndwriteQueryString & "&ToUser=" & urlencode(ToUser)
 	
 		PageSplictString = PageSplictString & "<div class=j_page>"
 		If FirstID >= MaxRecordID Then
-			'PageSplictString = PageSplictString & "Ê×Ò³" & VbCrLf
-			'PageSplictString = PageSplictString & " ÉÏÒ³" & VbCrLf
+			'PageSplictString = PageSplictString & "é¦–é¡µ" & VbCrLf
+			'PageSplictString = PageSplictString & " ä¸Šé¡µ" & VbCrLf
 		Else
-			PageSplictString = PageSplictString & "<a href=""MyInfoBox.asp" & EndwriteQueryString & AllPrintingString & "&Start=0"">Ê×Ò³</a> " & VbCrLf
-			PageSplictString = PageSplictString & " <a href=""MyInfoBox.asp" & EndwriteQueryString & "&Start=" & FirstID & AllPrintingString & "&UpDownPageFlag=1"">ÉÏÒ³</a> " & VbCrLf
+			PageSplictString = PageSplictString & "<a href=""MyInfoBox.asp" & EndwriteQueryString & AllPrintingString & "&Start=0"">é¦–é¡µ</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=""MyInfoBox.asp" & EndwriteQueryString & "&Start=" & LngStr(FirstID) & AllPrintingString & "&UpDownPageFlag=1"">ä¸Šé¡µ</a> " & VbCrLf
 		End If
 
 		If LastID < MaxRecordID and LastID <> 0 then
@@ -386,24 +386,24 @@ Sub PersonalInfoManage
 		End If
 	
 		If LastID <= MinRecordID Then
-			'PageSplictString = PageSplictString & " ÏÂÒ³" & VbCrLf
-			'PageSplictString = PageSplictString & " Î²Ò³" & VbCrLf
+			'PageSplictString = PageSplictString & " ä¸‹é¡µ" & VbCrLf
+			'PageSplictString = PageSplictString & " å°¾é¡µ" & VbCrLf
 		Else
-			PageSplictString = PageSplictString & "<a href=""MyInfoBox.asp" & EndwriteQueryString & "&Start=" & LastID & AllPrintingString &""">ÏÂÒ³</a>" & VbCrLf
-			PageSplictString = PageSplictString & "<a href=""MyInfoBox.asp" & EndwriteQueryString & AllPrintingString & "&Start=1&UpDownPageFlag=1"">Î²Ò³</a>" & VbCrLf
+			PageSplictString = PageSplictString & "<a href=""MyInfoBox.asp" & EndwriteQueryString & "&Start=" & LngStr(LastID) & AllPrintingString &""">ä¸‹é¡µ</a>" & VbCrLf
+			PageSplictString = PageSplictString & "<a href=""MyInfoBox.asp" & EndwriteQueryString & AllPrintingString & "&Start=1&UpDownPageFlag=1"">å°¾é¡µ</a>" & VbCrLf
 		End If
 		
-		PageSplictString = PageSplictString & "<b>¹²" & RecordCount & "</b>"
+		PageSplictString = PageSplictString & "<b>å…±" & RecordCount & "</b>"
 		'If (RecordCount mod DEF_TopicContentMaxListNum)=0 Then
-		'	PageSplictString = PageSplictString & " ¼Æ<b>" & clng(RecordCount/DEF_TopicContentMaxListNum) & "</b>Ò³"
+		'	PageSplictString = PageSplictString & " è®¡<b>" & clng(RecordCount/DEF_TopicContentMaxListNum) & "</b>é¡µ"
 		'Else
 		'	If RecordCount>=DEF_TopicContentMaxListNum Then
-		'		PageSplictString = PageSplictString & " ¼Æ<b>" & clng(RecordCount/DEF_TopicContentMaxListNum)+1 & "</b>Ò³"
+		'		PageSplictString = PageSplictString & " è®¡<b>" & clng(RecordCount/DEF_TopicContentMaxListNum)+1 & "</b>é¡µ"
 		'	Else
-		'		PageSplictString = PageSplictString & " ¼Æ<b>1</b>Ò³"
+		'		PageSplictString = PageSplictString & " è®¡<b>1</b>é¡µ"
 		'	End If
 		'End If
-		'PageSplictString = PageSplictString & " Ã¿Ò³<b>" & DEF_TopicContentMaxListNum & "</b>Ìõ¼ÇÂ¼"
+		'PageSplictString = PageSplictString & " æ¯é¡µ<b>" & DEF_TopicContentMaxListNum & "</b>æ¡è®°å½•"
 		PageSplictString = PageSplictString & "</div>"
 	End If
 	%>
@@ -418,13 +418,13 @@ Sub PersonalInfoManage
 	<%MyinfoBox_NavInfo%>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class=table_in>
 	<tr class=tbinhead>
-		<td><div class=value>Ö÷Ìâ</div></td>
-		<td width=190><div class=value>·¢ËÍÊ±¼äºÍ·¢ËÍÈË</div></td>
+		<td><div class=value>ä¸»é¢˜</div></td>
+		<td width=190><div class=value>å‘é€æ—¶é—´å’Œå‘é€äºº</div></td>
 		<td width=80>&nbsp;</td>
 	</tr>
 	<%
 	If Num = -1 Then
-		Response.Write "<tr><td colspan=3 class=tdbox>ÄúµÄÊÕ¼şÏäÔİÎŞÏûÏ¢.</td></tr>"
+		Response.Write "<tr><td colspan=3 class=tdbox>æ‚¨çš„æ”¶ä»¶ç®±æš‚æ— æ¶ˆæ¯.</td></tr>"
 	End If
 
 	Dim Index,color
@@ -445,7 +445,7 @@ Sub PersonalInfoManage
 			End If
 			Response.Write "<tr>"
 			Response.Write "<td class=tdbox>"
-			Response.Write "<a href=""LookMessage.asp?MessageID=" & GetData(0,n) & AllPrintingString & """ title=±àºÅ" & GetData(0,n) & color & ">"
+			Response.Write "<a href=""LookMessage.asp?MessageID=" & GetData(0,n) & AllPrintingString & """ title=ç¼–å·" & GetData(0,n) & color & ">"
 			If GetData(5,N) = "" Then Response.Write "<b>"
 			If StrLength(getData(2,n)) > DEF_BBS_DisplayTopicLength - 13 Then GetData(2,n) = LeftTrue(getData(2,n),DEF_BBS_DisplayTopicLength-13) & "..."
 
@@ -455,7 +455,7 @@ Sub PersonalInfoManage
 			Else
 				If ccur(GetData(6,n)) = 0 Then
 					If GetData(4,N) = 0 Then
-						Response.Write " <span class=greenfont>ĞÂ</span></a>"
+						Response.Write " <span class=greenfont>æ–°</span></a>"
 					Else
 						Response.Write "</a>"
 					End If
@@ -463,13 +463,13 @@ Sub PersonalInfoManage
 					SQL = DateDiff("d",Now,RestoreTime(GetData(6,n)))
 					If GetData(4,N) = 0 Then
 						If SQL > 0 Then
-							Response.Write "</a> <span class=greenfont>±£´æ" & SQL & "Ìì</span>"
+							Response.Write "</a> <span class=greenfont>ä¿å­˜" & SQL & "å¤©</span>"
 						Else
-							Response.Write "</a> <span class=greenfont>µ½ÆÚ</span>"
+							Response.Write "</a> <span class=greenfont>åˆ°æœŸ</span>"
 						End If
 					Else
 						If SQL > 0 Then
-							Response.Write "</a> <span class=grayfont>±£´æ" & SQL & "Ìì</span>"
+							Response.Write "</a> <span class=grayfont>ä¿å­˜" & SQL & "å¤©</span>"
 						Else
 							Response.Write "</a>"
 						End If
@@ -481,13 +481,13 @@ Sub PersonalInfoManage
 		   	If GetData(1,n) <> "[LeadBBS]" Then
 		   		Response.Write "<a href=""../User/" & RW_User(0,"",GetData(1,n),"") & """>" & htmlencode(GetData(1,n)) & "</a>"
 		   	Else
-		   		Response.Write "<span class=bluefont>ÏµÍ³</span>"
+		   		Response.Write "<span class=bluefont>ç³»ç»Ÿ</span>"
 		   	End If
 			Response.Write "</td><td align=center class=tdbox>"
-			If (GetData(5,N) <> "" or CheckSupervisorUserName = 1) Then
+			If (GetData(5,N) <> "" or CheckSupervisorUserName() = 1) Then
 				%>
-				<input class="fmchkbox" type="checkbox" name="ids" id="ids<%=Index%>" value="<%=GetData(0,n)%>" /><%
-				Response.Write "<a href='javascript:p_once(" & GetData(0,n) & ");'>É¾³ı</a>"
+				<input class="fmchkbox" type="checkbox" name="ids" id="ids<%=Index%>" value="<%=LngStr(GetData(0,n))%>" /><%
+				Response.Write "<a href='javascript:p_once(" & GetData(0,n) & ");'>åˆ é™¤</a>"
 				Index = Index + 1
 			End If
 			Response.Write "</tr>" & VbCrLf
@@ -497,17 +497,17 @@ Sub PersonalInfoManage
 	If PageSplictString<>"" Then Response.Write "<tr><td colspan=3 class=tdbox align=right>" & PageSplictString & "</td></tr>"
 	%>
 	<tr><td colspan=3 class=tdbox align=right>
-	<input class="fmchkbox" type="checkbox" name="selmsg" id="selmsg" value="1" onclick="achoose();" />Ñ¡ÔñËùÓĞ¼ÇÂ¼
-	<input type=button value="ÅúÁ¿É¾³ı" onclick="pchoose();" class="fmbtn btn_4">
+	<input class="fmchkbox" type="checkbox" name="selmsg" id="selmsg" value="1" onclick="achoose();" />é€‰æ‹©æ‰€æœ‰è®°å½•
+	<input type=button value="æ‰¹é‡åˆ é™¤" onclick="pchoose();" class="fmbtn btn_4">
 	</td></tr>
 	</table>
 	<%
 	If RecordCount > 0 Then
-		Response.Write "<div class=title>¹²<b>" & RecordCount & "</b>ÌõÏûÏ¢"
+		Response.Write "<div class=title>å…±<b>" & RecordCount & "</b>æ¡æ¶ˆæ¯"
 		If NewNum = 0 Then
-			Response.Write "£¬ ËùÓĞÏûÏ¢Äú¶¼ÒÑä¯ÀÀ¹ı"
+			Response.Write "ï¼Œ æ‰€æœ‰æ¶ˆæ¯æ‚¨éƒ½å·²æµè§ˆè¿‡"
 		Else
-			Response.Write "£¬ Î´ä¯ÀÀ¹ıµÄÏûÏ¢ÓĞ<b>" & NewNum & "</b>Ìõ"
+			Response.Write "ï¼Œ æœªæµè§ˆè¿‡çš„æ¶ˆæ¯æœ‰<b>" & NewNum & "</b>æ¡"
 		End If
 		Response.Write "</div>"
 	End If
@@ -521,31 +521,31 @@ Sub MyinfoBox_NavInfo
 	Response.Write "<div class='user_item_nav fire'><ul>"
 	Response.Write "<li><div class=name>" & htmlencode(GBL_CHK_User) & "</div></li>"
 	If Evol = "A" or Evol = "" Then
-		Response.Write "	<li><div class=navactive><span>ÊÕ¼şÏä</span></div></li>"
+		Response.Write "	<li><div class=navactive><span>æ”¶ä»¶ç®±</span></div></li>"
 	Else
-		Response.Write "	<li><a href=""MyInfoBox.asp?Evol=A"">ÊÕ¼şÏä</a></li>"
+		Response.Write "	<li><a href=""MyInfoBox.asp?Evol=A"">æ”¶ä»¶ç®±</a></li>"
 	End If
 
 	If Evol = "n" Then
-		Response.Write "	<li><div class=navactive>ÒÑ·¢ËÍ</div></li>"
+		Response.Write "	<li><div class=navactive>å·²å‘é€</div></li>"
 	Else
-		Response.Write "	<li><a href=""MyInfoBox.asp?Evol=n"">ÒÑ·¢ËÍ</a></li>"
+		Response.Write "	<li><a href=""MyInfoBox.asp?Evol=n"">å·²å‘é€</a></li>"
 	End If
 
 	If Evol = "g" Then
-		Response.Write "	<li><div class=navactive>ĞÂµÄÏûÏ¢</div></li>"
+		Response.Write "	<li><div class=navactive>æ–°çš„æ¶ˆæ¯</div></li>"
 	Else
-		Response.Write "	<li><a href=""MyInfoBox.asp?CheckBoxValue=yes"">ĞÂµÄÏûÏ¢</a></li>"
+		Response.Write "	<li><a href=""MyInfoBox.asp?CheckBoxValue=yes"">æ–°çš„æ¶ˆæ¯</a></li>"
 	End If
 
-	If CheckSupervisorUserName = 1 Then
+	If CheckSupervisorUserName() = 1 Then
 		If Evol <> "e" Then
-			Response.Write "<li><a href=""MyInfoBox.asp?AllPrinting=Yesing"">²é¿´È«²¿ÏûÏ¢</a></li>"
+			Response.Write "<li><a href=""MyInfoBox.asp?AllPrinting=Yesing"">æŸ¥çœ‹å…¨éƒ¨æ¶ˆæ¯</a></li>"
 		Else
-			Response.Write "<li><div class=navactive>²é¿´È«²¿ÏûÏ¢</div></li>"
+			Response.Write "<li><div class=navactive>æŸ¥çœ‹å…¨éƒ¨æ¶ˆæ¯</div></li>"
 		End If
 	End If
-	Response.Write "	<li><a href=""SendMessage.asp"">·¢ËÍÏûÏ¢</a></li>"
+	Response.Write "	<li><a href=""SendMessage.asp"">å‘é€æ¶ˆæ¯</a></li>"
 	Response.Write "</ul></div>"
 	
 

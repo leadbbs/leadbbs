@@ -1,9 +1,9 @@
-<%Const Chat_MaxCache = 50 '×î´óÁÄÌìÐÅÏ¢»º´æÊý
-Const Chat_MaxSessionCache = 10 'Ë½ÁÄ×î´óÁÄÌìÐÅÏ¢»º´æÊý
-Const Chat_WorldDelay = 1.0 'ÊÀ½çÆµµÀÏÞÖÆ(Ãë,¿ÉÒÔÊÇÐ¡Êý)
-Const Chat_GetDelay = 2.5 'ÊÀ½çÆµµÀÏÞÖÆ(Ãë,¿ÉÒÔÊÇÐ¡Êý)
-Const Chat_MaxInput = 127 'ÁÄÌì×î³¤×Ö·ûÊý
-Const Chat_DEF_ColorSpend = 1 '·¢´øÑÕÉ«ÁÄÌìÄÚÈÝ»¨·Ñ»ý·Ö
+<%Const Chat_MaxCache = 50 'æœ€å¤§èŠå¤©ä¿¡æ¯ç¼“å­˜æ•°
+Const Chat_MaxSessionCache = 10 'ç§èŠæœ€å¤§èŠå¤©ä¿¡æ¯ç¼“å­˜æ•°
+Const Chat_WorldDelay = 1.0 'ä¸–ç•Œé¢‘é“é™åˆ¶(ç§’,å¯ä»¥æ˜¯å°æ•°)
+Const Chat_GetDelay = 2.5 'ä¸–ç•Œé¢‘é“é™åˆ¶(ç§’,å¯ä»¥æ˜¯å°æ•°)
+Const Chat_MaxInput = 127 'èŠå¤©æœ€é•¿å­—ç¬¦æ•°
+Const Chat_DEF_ColorSpend = 1 'å‘å¸¦é¢œè‰²èŠå¤©å†…å®¹èŠ±è´¹ç§¯åˆ†
 Dim Chat_EnablePageRequest
-Chat_EnablePageRequest = 0 'ÊÇ·ñÔÊÐíµ±Ç°Ò³ÃæÇëÇóË½ÁÄÐÅÏ¢
+Chat_EnablePageRequest = 0 'æ˜¯å¦å…è®¸å½“å‰é¡µé¢è¯·æ±‚ç§èŠä¿¡æ¯
 %>

@@ -1,4 +1,4 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
 <table border=0 cellpadding=0 cellspacing=0 style="cursor: move;" onmousedown="LD.move.mousedown(this.parentNode,event);">
 <tr>
 	<td style="padding:0px 0px 5px 0px;">
@@ -7,10 +7,10 @@
 	</div>
 	<br>
 	<fieldset>
-	<legend>图片来源</legend>
+	<legend>鍥剧墖鏉ユ簮</legend>
 	<table border=0 cellpadding=5 cellspacing=0>
 	<tr>
-		<td noWrap>网络地址:</td>
+		<td noWrap>缃戠粶鍦板潃:</td>
 		<td><input type=text id="img_d_fromurl" style="width:243px" size=255 value="" class="fminpt input_3">
 	</tr>
 	</table>
@@ -20,23 +20,23 @@
 <tr>
 	<td style="padding:0px 0px 5px 0px;">
 	<fieldset>
-	<legend>显示效果</legend>
+	<legend>鏄剧ず鏁堟灉</legend>
 	<table border=0 cellpadding=5 cellspacing=0>
 	<tr>
-		<td noWrap>边框粗细:</td>
+		<td noWrap>杈规绮楃粏:</td>
 		<td><input type=text id=img_d_border size=10 value="" ONKEYPRESS="event.returnValue=IsDigit(event);" class="fminpt input_1"></td>
-		<td noWrap>对齐方式:</td>
+		<td noWrap>瀵归綈鏂瑰紡:</td>
 		<td>
 			<select id=img_d_align>
-			<option value='absmiddle' selected>绝对居中</option>
-			<option value='left'>居左</option>
-			<option value='right'>居右</option>
-			<option value='top'>顶部</option>
-			<option value='middle'>中部</option>
-			<option value='bottom'>底部</option>
-			<option value='absbottom'>绝对底部</option>
-			<option value='baseline'>基线</option>
-			<option value='texttop'>文本顶部</option>
+			<option value='absmiddle' selected>缁濆灞呬腑</option>
+			<option value='left'>灞呭乏</option>
+			<option value='right'>灞呭彸</option>
+			<option value='top'>椤堕儴</option>
+			<option value='middle'>涓儴</option>
+			<option value='bottom'>搴曢儴</option>
+			<option value='absbottom'>缁濆搴曢儴</option>
+			<option value='baseline'>鍩虹嚎</option>
+			<option value='texttop'>鏂囨湰椤堕儴</option>
 			</select></td>
 	</tr>
 	</table>
@@ -48,12 +48,12 @@
 <tr>
 	<td style="padding:0px 0px 5px 0px;">
 	<fieldset>
-	<legend>图片大小</legend>
+	<legend>鍥剧墖澶у皬</legend>
 	<table border=0 cellpadding=5 cellspacing=0>
 	<tr>
-		<td noWrap>宽度:</td>
+		<td noWrap>瀹藉害:</td>
 		<td><input type=text id=img_d_width size=10 value="" ONKEYPRESS="event.returnValue=IsDigit(event);" class="fminpt input_1"></td>
-		<td noWrap>高度:</td>
+		<td noWrap>楂樺害:</td>
 		<td><input type=text id=img_d_height size=10 value="" ONKEYPRESS="event.returnValue=IsDigit(event);" class="fminpt input_1"></td>
 	</tr>
 	</table>
@@ -62,6 +62,6 @@
 </tr>
 
 <tr><td align=right>
-<span class="clicktext" onclick="if(editor_imgok()==true)LD.hide('editor_img');">确定</span>
+<span class="clicktext" onclick="if(editor_imgok()==true)LD.hide('editor_img');">纭畾</span>
 </td></tr>
 </table>

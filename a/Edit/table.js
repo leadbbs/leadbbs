@@ -1,5 +1,5 @@
 var sAction = "INSERT";
-var sTitle = "²åÈë";
+var sTitle = "æ’å…¥";
 
 var oControl;
 var oSeletion;
@@ -25,7 +25,7 @@ var sBackGround = "";
 function editor_inittable()
 {
 	sAction = "INSERT";
-	sTitle = "²åÈë";
+	sTitle = "æ’å…¥";
 	
 	sRow = "2";
 	sCol = "2";
@@ -60,7 +60,7 @@ function editor_inittable()
 			if (oSelection.item(0).tagName == "TABLE")
 			{
 				sAction = "MODI";
-				sTitle = "ĞŞ¸Ä";
+				sTitle = "ä¿®æ”¹";
 				oControl = oSelection.item(0);
 				sRow = oControl.rows.length;
 				sCol = getColCount(oControl);
@@ -83,11 +83,11 @@ function editor_inittable()
 }
 editor_inittable();
 
-// ³õÊ¼Öµ
+// åˆå§‹å€¼
 function editor_tableInitDocument(){
 	SearchSelectValue($id("d_align"), sAlign.toLowerCase());
 
-	// ĞŞ¸Ä×´Ì¬Ê±È¡Öµ
+	// ä¿®æ”¹çŠ¶æ€æ—¶å–å€¼
 	if (sAction == "MODI"){
 		if (sWidth == ""){
 			bCheck = false;
@@ -136,7 +136,7 @@ function editor_tableInitDocument(){
 
 }
 
-// ÅĞ¶ÏÖµÊÇ·ñ´óÓÚ0
+// åˆ¤æ–­å€¼æ˜¯å¦å¤§äº0
 function MoreThanOne(obj, sErr){
 	var b=false;
 	if (obj.value!=""){
@@ -152,7 +152,7 @@ function MoreThanOne(obj, sErr){
 	return true;
 }
 
-// µÃµ½±í¸ñÁĞÊı
+// å¾—åˆ°è¡¨æ ¼åˆ—æ•°
 function getColCount(oTable) {
 	var intCount = 0;
 	if (oTable != null) {
@@ -163,7 +163,7 @@ function getColCount(oTable) {
 	return intCount;
 }
 
-// Ôö¼ÓĞĞ
+// å¢åŠ è¡Œ
 function InsertRows( oTable ) {
 	if ( oTable ) {
 		var elRow=oTable.insertRow();
@@ -174,7 +174,7 @@ function InsertRows( oTable ) {
 	}
 }
 
-// Ôö¼ÓÁĞ
+// å¢åŠ åˆ—
 function InsertCols( oTable ) {
 	if ( oTable ) {
 		for(var i=0; i<oTable.rows.length; i++){
@@ -184,14 +184,14 @@ function InsertCols( oTable ) {
 	}
 }
 
-// É¾³ıĞĞ
+// åˆ é™¤è¡Œ
 function DeleteRows( oTable ) {
 	if ( oTable ) {
 		oTable.deleteRow();
 	}
 }
 
-// É¾³ıÁĞ
+// åˆ é™¤åˆ—
 function DeleteCols( oTable ) {
 	if ( oTable ) {
 		for(var i=0;i<oTable.rows.length;i++){
@@ -201,13 +201,13 @@ function DeleteCols( oTable ) {
 }
 
 
-// Ö»ÔÊĞíÊäÈëÊı×Ö
+// åªå…è®¸è¾“å…¥æ•°å­—
 function IsDigit(e){
 	var evt = window.event?window.event:e,target=evt.srcElement||evt.target;
   return ((evt.keyCode >= 48) && (evt.keyCode <= 57));
 }
 
-// ËÑË÷ÏÂÀ­¿òÖµÓëÖ¸¶¨ÖµÆ¥Åä£¬²¢Ñ¡ÔñÆ¥ÅäÏî
+// æœç´¢ä¸‹æ‹‰æ¡†å€¼ä¸æŒ‡å®šå€¼åŒ¹é…ï¼Œå¹¶é€‰æ‹©åŒ¹é…é¡¹
 function SearchSelectValue(o_Select, s_Value){
 	for (var i=0;i<o_Select.length;i++){
 		if (o_Select.options[i].value == s_Value){
@@ -218,7 +218,7 @@ function SearchSelectValue(o_Select, s_Value){
 	return false;
 }
 
-// »ù±¾ĞÅÏ¢ÌáÊ¾£¬µÃµ½½¹µã²¢Ñ¡¶¨
+// åŸºæœ¬ä¿¡æ¯æç¤ºï¼Œå¾—åˆ°ç„¦ç‚¹å¹¶é€‰å®š
 function BaseAlert(theText,notice){
 	alert(notice);
 	theText.focus();
@@ -227,25 +227,25 @@ function BaseAlert(theText,notice){
 }
 function editor_insttablesubmit()
 {
-	// ±ß¿òÑÕÉ«µÄÓĞĞ§ĞÔ
+	// è¾¹æ¡†é¢œè‰²çš„æœ‰æ•ˆæ€§
 	sBorderColor = $id("d_bordercolor").value;
 	sBgColor = $id("d_bgcolor").value;
-	// ĞĞÊıµÄÓĞĞ§ĞÔ
-	if (!MoreThanOne($id("d_row"),'ÎŞĞ§µÄĞĞÊı£¬ÖÁÉÙÒª1ĞĞ£¡')) return false;
-	// ÁĞÊıµÄÓĞĞ§ĞÔ
-	if (!MoreThanOne($id("d_col"),'ÎŞĞ§µÄÁĞÊı£¬ÖÁÉÙÒª1ÁĞ£¡')) return false;
-	// ±ßÏß´ÖÏ¸µÄÓĞĞ§ĞÔ
+	// è¡Œæ•°çš„æœ‰æ•ˆæ€§
+	if (!MoreThanOne($id("d_row"),'æ— æ•ˆçš„è¡Œæ•°ï¼Œè‡³å°‘è¦1è¡Œï¼')) return false;
+	// åˆ—æ•°çš„æœ‰æ•ˆæ€§
+	if (!MoreThanOne($id("d_col"),'æ— æ•ˆçš„åˆ—æ•°ï¼Œè‡³å°‘è¦1åˆ—ï¼')) return false;
+	// è¾¹çº¿ç²—ç»†çš„æœ‰æ•ˆæ€§
 	if ($id("d_border").value == "") $id("d_border").value = "0";
 	if ($id("d_cellpadding").value == "") $id("d_cellpadding").value = "0";
 	if ($id("d_cellspacing").value == "") $id("d_cellspacing").value = "0";
-	// È¥Ç°µ¼0
+	// å»å‰å¯¼0
 	$id("d_border").value = parseFloat($id("d_border").value);
 	$id("d_cellpadding").value = parseFloat($id("d_cellpadding").value);
 	$id("d_cellspacing").value = parseFloat($id("d_cellspacing").value);
-	// ¿í¶ÈÓĞĞ§ÖµĞÔ
+	// å®½åº¦æœ‰æ•ˆå€¼æ€§
 	var sWidth = "";
 	if ($id("d_check").checked){
-		if (!MoreThanOne($id("d_widthvalue"),'ÎŞĞ§µÄ±í¸ñ¿í¶È£¡')) return false;
+		if (!MoreThanOne($id("d_widthvalue"),'æ— æ•ˆçš„è¡¨æ ¼å®½åº¦ï¼')) return false;
 		sWidth = $id("d_widthvalue").value + $id("d_widthunit").value;
 	}
 
@@ -258,13 +258,13 @@ function editor_insttablesubmit()
 	sBackGround = $id("d_bgurl").value;
 
 	if (sAction == "MODI") {
-		// ĞŞ¸ÄĞĞÊı
+		// ä¿®æ”¹è¡Œæ•°
 		var xCount = sRow - oControl.rows.length;
   		if (xCount > 0)
 	  		for (var i = 0; i < xCount; i++) InsertRows(oControl);
   		else
 	  		for (var i = 0; i > xCount; i--) DeleteRows(oControl);
-		// ĞŞ¸ÄÁĞÊı
+		// ä¿®æ”¹åˆ—æ•°
   		var xCount = sCol - getColCount(oControl);
   		if (xCount > 0)
   			for (var i = 0; i < xCount; i++) InsertCols(oControl);
@@ -275,7 +275,7 @@ function editor_insttablesubmit()
 			oControl.width = sWidth;
 		}
 		catch(e) {
-			//alert("¶Ô²»Æğ£¬ÇëÄúÊäÈëÓĞĞ§µÄ¿í¶ÈÖµ£¡\n£¨Èç£º90%  200  300px  10cm£©");
+			//alert("å¯¹ä¸èµ·ï¼Œè¯·æ‚¨è¾“å…¥æœ‰æ•ˆçš„å®½åº¦å€¼ï¼\nï¼ˆå¦‚ï¼š90%  200  300px  10cmï¼‰");
 		}
 
 		oControl.align			= sAlign;

@@ -44,18 +44,18 @@ Public Sub DisplayBoard_HTML_Fun_Simple(BoardID,BoardAssort,BoardName,BoardIntro
 			<td colspan="<%=simn%>">
 			<div class="b_assort">
 				<div class="b_assort_title">
-				<span class="clicktext" title="¹Ø±Õ/Õ¹¿ª" onclick="LD.blist.assort_disable('<%=BoardAssort%>');"><a href=javascript:; id="b_assort_img_<%=BoardAssort%>" class="b_assort_close<%If inStr(Boards_dis_assortStr,"," & BoardAssort & ",") Then Response.Write "_swap"%>" alt="¹Ø±Õ/Õ¹¿ª"></a></span>
+				<span class="clicktext" title="å…³é—­/å±•å¼€" onclick="LD.blist.assort_disable('<%=BoardAssort%>');"><a href=javascript:; id="b_assort_img_<%=BoardAssort%>" class="b_assort_close<%If inStr(Boards_dis_assortStr,"," & BoardAssort & ",") Then Response.Write "_swap"%>" alt="å…³é—­/å±•å¼€"></a></span>
 				
 		<%
 		If DEF_BBS_HomeUrl = "" or DEF_BBS_HomeUrl = "./" Then
 			Response.Write "<a href=""" & DEF_BBS_HomeUrl & RW_boards(BoardAssort) & """ id=""b_assort_link_" & BoardAssort & """><b>" & AssortName & "</b></a>"
 		Else
 			RewriteStr = RW_b(BoardAssort,1,"")
-			Response.Write "<a href=""" & DEF_BBS_HomeUrl & "b/" & RewriteStr & """><b>" & AssortName & "</b></a> [×Ó°æ¿é] "
+			Response.Write "<a href=""" & DEF_BBS_HomeUrl & "b/" & RewriteStr & """><b>" & AssortName & "</b></a> [å­ç‰ˆå—] "
 			BoardAssort = "b" & BoardAssort
 		End If
 		%></div>
-				<span class="clicktext" title="¼òÔ¼/ÍêÕû" onclick="LD.blist.assort_click('<%=BoardAssort%>',1);"><img src="<%=DEF_BBS_HomeUrl%>images/blank.gif" class="b_assort_mini_swap" alt="¼òÔ¼/ÍêÕû" /></span>
+				<span class="clicktext" title="ç®€çº¦/å®Œæ•´" onclick="LD.blist.assort_click('<%=BoardAssort%>',1);"><img src="<%=DEF_BBS_HomeUrl%>images/blank.gif" class="b_assort_mini_swap" alt="ç®€çº¦/å®Œæ•´" /></span>
 		<%
 		If AssortMaster <> "" and DEF_BBS_HomeUrl = "" Then
 			Response.Write "<div class=""b_assort_master"">"
@@ -105,24 +105,24 @@ Public Sub DisplayBoard_HTML_Fun_Simple(BoardID,BoardAssort,BoardName,BoardIntro
 			
 			
 	If LastTopicName = "" or LastTopicName = null Then
-		Response.Write "<a>×îĞÂ£ºÎŞ</a>"
+		Response.Write "<a>æœ€æ–°ï¼šæ— </a>"
 	Else
 		'If StrLength(LastTopicName) > 23 Then LastTopicName = LeftTrue(LastTopicName,23-3) & "..."
 		LastTopicName = HtmlEncode(LastTopicName)
 		Response.Write "<div class=""oneline newtopic"">"
-		If LastTopicName = "ÒÑÉèÖÃÎªÒş²Ø" and LastWriter = "" Then
-			Response.Write "<a>×îĞÂ£ºÒÑÉèÖÃÎªÒş²Ø</a>"
+		If LastTopicName = "å·²è®¾ç½®ä¸ºéšè—" and LastWriter = "" Then
+			Response.Write "<a>æœ€æ–°ï¼šå·²è®¾ç½®ä¸ºéšè—</a>"
 		Else
 			If cCur(LastAnnounceID) = 0 Then
-				Response.Write "<a>×îĞÂ£º" & HtmlEncode(LastTopicName) & "</a>"
+				Response.Write "<a>æœ€æ–°ï¼š" & HtmlEncode(LastTopicName) & "</a>"
 			Else
-				Response.Write "<a href=""" & DEF_BBS_HomeUrl & "a/" & RW_a(BoardID,LastAnnounceID,1,0,"&lastpage=1") & """><span class=""word-break-all"">×îĞÂ£º" & htmlencode(LastTopicName) & "</span></a>"
+				Response.Write "<a href=""" & DEF_BBS_HomeUrl & "a/" & RW_a(BoardID,LastAnnounceID,1,0,"&lastpage=1") & """><span class=""word-break-all"">æœ€æ–°ï¼š" & htmlencode(LastTopicName) & "</span></a>"
 			End If
 		End If
 		Response.Write "</div>"
 	End If
 			%>
-			<div class="oneline topiccount"><a>Ö÷Ìâ£º<%=TopicNum%>, ×ÜÌû<%=AnnounceNum%></a></div>
+			<div class="oneline topiccount"><a>ä¸»é¢˜ï¼š<%=TopicNum%>, æ€»å¸–<%=AnnounceNum%></a></div>
 			<div class="oneline boarddesc" style="display:none;">
 				<span><%=BoardIntro%></span>
 			</div>
@@ -141,24 +141,24 @@ Function DisplayBoard_HTML_GetBoardType(ForumPass,BoardLimit)
 
 	Dim Tmp
 	If ForumPass <> "" Then
-		Tmp = "±£ÃÜÂÛÌ³"
+		Tmp = "ä¿å¯†è®ºå›"
 	Else
 		If GetBinarybit(BoardLimit,7) = 1 Then
-			Tmp = DEF_PointsName(8) & "×¨Çø"
+			Tmp = DEF_PointsName(8) & "ä¸“åŒº"
 		Else
 			If GetBinarybit(BoardLimit,4) = 1 and GetBinarybit(BoardLimit,3) = 1 and GetBinarybit(BoardLimit,6) = 1 Then
-				Tmp = "Ö»¶ÁÂÛÌ³"
+				Tmp = "åªè¯»è®ºå›"
 			Else
 				If GetBinarybit(BoardLimit,2) = 1 Then
-					Tmp = "ÕıÊ½ÓÃ»§ÂÛÌ³"
+					Tmp = "æ­£å¼ç”¨æˆ·è®ºå›"
 				Else
 					If GetBinarybit(BoardLimit,1) = 1 Then
-						Tmp = "×¢²áÈÏÖ¤ÂÛÌ³"
+						Tmp = "æ³¨å†Œè®¤è¯è®ºå›"
 					Else
 						If GetBinarybit(BoardLimit,9) = 1 Then
-							Tmp = "¿ª·ÅÂÛÌ³"
+							Tmp = "å¼€æ”¾è®ºå›"
 						Else
-							Tmp = "³£¹æÂÛÌ³"
+							Tmp = "å¸¸è§„è®ºå›"
 						End If
 					End If
 				End If
@@ -194,17 +194,17 @@ Public Sub DisplayBoard_HTML_Fun(BoardID,BoardAssort,BoardName,BoardIntro,LastWr
 			<td>
 				<div class="b_assort">
 				<div class="b_assort_title">
-				<span class="clicktext" title="¹Ø±Õ/Õ¹¿ª" onclick="LD.blist.assort_disable('<%=BoardAssort%>');"><a href=javascript:; id="b_assort_img_<%=BoardAssort%>" class="b_assort_close<%If inStr(Boards_dis_assortStr,"," & BoardAssort & ",") Then Response.Write "_swap"%>" alt="¹Ø±Õ/Õ¹¿ª"></a></span>
+				<span class="clicktext" title="å…³é—­/å±•å¼€" onclick="LD.blist.assort_disable('<%=BoardAssort%>');"><a href=javascript:; id="b_assort_img_<%=BoardAssort%>" class="b_assort_close<%If inStr(Boards_dis_assortStr,"," & BoardAssort & ",") Then Response.Write "_swap"%>" alt="å…³é—­/å±•å¼€"></a></span>
 		<%
 		If DEF_BBS_HomeUrl = "" or DEF_BBS_HomeUrl = "./" Then
 			Response.Write "<a href=""" & DEF_BBS_HomeUrl & RW_boards(BoardAssort) & """ id=""b_assort_link_" & BoardAssort & """><b>" & AssortName & "</b></a>"
 		Else
 			RewriteStr = RW_b(BoardAssort,1,"")
-			Response.Write "<a href=""" & DEF_BBS_HomeUrl & "b/" & RewriteStr & """><b>" & AssortName & "</b></a> [×Ó°æ¿é] "
+			Response.Write "<a href=""" & DEF_BBS_HomeUrl & "b/" & RewriteStr & """><b>" & AssortName & "</b></a> [å­ç‰ˆå—] "
 			BoardAssort = "b" & BoardAssort
 		End If%></div>
 				
-				<span class="clicktext" title="¼òÔ¼/ÍêÕû" onclick="LD.blist.assort_click('<%=BoardAssort%>',0);"><img src="<%=DEF_BBS_HomeUrl%>images/blank.gif" class="b_assort_mini" alt="¼òÔ¼/ÍêÕû" /></span>
+				<span class="clicktext" title="ç®€çº¦/å®Œæ•´" onclick="LD.blist.assort_click('<%=BoardAssort%>',0);"><img src="<%=DEF_BBS_HomeUrl%>images/blank.gif" class="b_assort_mini" alt="ç®€çº¦/å®Œæ•´" /></span>
 		<%
 		If AssortMaster <> "" and DEF_BBS_HomeUrl = "" Then
 			Response.Write "<div class=""b_assort_master"">"
@@ -238,9 +238,9 @@ Public Sub DisplayBoard_HTML_Fun(BoardID,BoardAssort,BoardName,BoardIntro,LastWr
 		<a href="<%=DEF_BBS_HomeUrl%>b/<%=RewriteStr%>"><b><%=BoardName%></b></a>
 		
 	<a href="<%=DEF_BBS_HomeUrl%>a/a2.asp?B=<%=BoardID%>" class="post">
-		<img src="<%=DEF_BBS_HomeUrl%>images/<%=GBL_DefineImage%>BoardTopic/post.gif" title="·¢±íÌû×Ó" alt="·¢±íÌû×Ó" /></a>
+		<img src="<%=DEF_BBS_HomeUrl%>images/<%=GBL_DefineImage%>BoardTopic/post.gif" title="å‘è¡¨å¸–å­" alt="å‘è¡¨å¸–å­" /></a>
 	<a href="<%=DEF_BBS_HomeUrl%>b/<%=RW_b(BoardID,1,"&e=0")%>" class="elist">
-		<img src="<%=DEF_BBS_HomeUrl%>images/<%=GBL_DefineImage%>BoardTopic/elist.gif" title="²é¿´¾«»ª" alt="²é¿´¾«»ª" /></a>
+		<img src="<%=DEF_BBS_HomeUrl%>images/<%=GBL_DefineImage%>BoardTopic/elist.gif" title="æŸ¥çœ‹ç²¾å" alt="æŸ¥çœ‹ç²¾å" /></a>
 	</div>
 	<div class="oneline boarddesc">
 		<span><%=BoardIntro%></span>
@@ -251,42 +251,42 @@ Public Sub DisplayBoard_HTML_Fun(BoardID,BoardAssort,BoardName,BoardIntro,LastWr
 	</div>
 	</td>
 	<td width="100" valign="top" class="tdbox">
-		<span class="name">Ö÷Ìâ</span> <%=TopicNum%><br />
-		<span class="name">ĞÂÌû</span> <b<%If TodayAnnounce>0 Then Response.Write " class=""redfont"""%>><%=TodayAnnounce%></b><br />
-		<span class="name">×ÜÁ¿</span> <%=AnnounceNum%>
+		<span class="name">ä¸»é¢˜</span> <%=TopicNum%><br />
+		<span class="name">æ–°å¸–</span> <b<%If TodayAnnounce>0 Then Response.Write " class=""redfont"""%>><%=TodayAnnounce%></b><br />
+		<span class="name">æ€»é‡</span> <%=AnnounceNum%>
 	</td>
 	<td align="left" width="222" valign="top" class="tdbox">
 	<%
 	Dim Temp
 	If LastTopicName = "" or LastTopicName = null Then
-		Response.Write "<span class=""name"">·¢±í£ºÎŞ</span>"
+		Response.Write "<span class=""name"">å‘è¡¨ï¼šæ— </span>"
 	Else
 		'If StrLength(LastTopicName) > 31 Then LastTopicName = LeftTrue(LastTopicName,31-3) & "..."
 		LastTopicName = HtmlEncode(LastTopicName)
 		Response.Write "<div class=""oneline"">"
-		If LastTopicName = "ÒÑÉèÖÃÎªÒş²Ø" and LastWriter = "" Then
-			Response.Write "<span class=""name"">·¢±í£º</span>ÒÑÉèÖÃÎªÒş²Ø"
+		If LastTopicName = "å·²è®¾ç½®ä¸ºéšè—" and LastWriter = "" Then
+			Response.Write "<span class=""name"">å‘è¡¨ï¼š</span>å·²è®¾ç½®ä¸ºéšè—"
 			Temp = 1
 		Else
 			If cCur(LastAnnounceID) = 0 Then
-				Response.Write "<span class=""name"">×îĞÂ£º</span><a>" & HtmlEncode(LastTopicName) & "</a>"
+				Response.Write "<span class=""name"">æœ€æ–°ï¼š</span><a>" & HtmlEncode(LastTopicName) & "</a>"
 			Else
-				Response.Write "<span class=""name"">×îĞÂ£º</span><a href=""" & DEF_BBS_HomeUrl & "a/" & RW_a(BoardID,LastAnnounceID,1,0,"&lastpage=1") & """><span class=""word-break-all"">" & htmlencode(LastTopicName) & "</span></a>"
+				Response.Write "<span class=""name"">æœ€æ–°ï¼š</span><a href=""" & DEF_BBS_HomeUrl & "a/" & RW_a(BoardID,LastAnnounceID,1,0,"&lastpage=1") & """><span class=""word-break-all"">" & htmlencode(LastTopicName) & "</span></a>"
 			End If
 		End If
 		Response.Write "</div>"
 	End If
 	Response.Write "<div class=""oneline"">"
 	If LastWriter = "" and Temp <> 1 Then
-		Response.Write "<span class=""name"">×÷Õß£º</span>"
-		LastWriter = "ÎŞ"
+		Response.Write "<span class=""name"">ä½œè€…ï¼š</span>"
+		LastWriter = "æ— "
 		Response.Write LastWriter
 		Response.Write "</div>"
 	Else
-		Response.Write "<span class=""name"">×÷Õß£º</span>"
-		If LastWriter <> "ÓÎ¿Í" Then
+		Response.Write "<span class=""name"">ä½œè€…ï¼š</span>"
+		If LastWriter <> "æ¸¸å®¢" Then
 			If Temp = 1 Then
-				Response.Write "Òş²Ø"
+				Response.Write "éšè—"
 			Else
 				if inStr(replace(replace(LastWriter,"QQ#",""),"LD#",""),"#") then
 					Response.Write "<a href=""" & DEF_BBS_HomeUrl & "User/" & RW_User(urlEncode(Mid(LastWriter,inStrRev(LastWriter,"#")+1)),"","","") & """>" & HtmlEncode(Mid(LastWriter,1,inStrRev(LastWriter,"#")-1)) & "</a>"
@@ -302,9 +302,9 @@ Public Sub DisplayBoard_HTML_Fun(BoardID,BoardAssort,BoardName,BoardIntro,LastWr
 			LastWriteTime = RestoreTime(LastWriteTime)
 			LastWriteTime = ConvertTimeString(LastWriteTime)
 		Else
-			LastWriteTime = "ÎŞ"
+			LastWriteTime = "æ— "
 		End If%>
-			<div class="oneline"><span class="name">Ê±¼ä£º</span><a><%=LastWriteTime%></a></div>
+			<div class="oneline"><span class="name">æ—¶é—´ï¼š</span><a><%=LastWriteTime%></a></div>
 		<%
 	End If%>
 	</td>
@@ -328,19 +328,19 @@ End Sub
 Private Sub DisplayBoard_HTML_MastList(s,num,flag)
 
 	If "?LeadBBS?" = s Then
-		Response.Write "È«Ìå" & DEF_PointsName(8)
+		Response.Write "å…¨ä½“" & DEF_PointsName(8)
 	Else
 		If s = "" or s = null Then
-			Response.Write flag & "£ºÎŞ"
+			Response.Write flag & "ï¼šæ— "
 			Exit Sub
 		End If
 		Dim ss,n,m
 		ss = Split(s,",")
 		m = Ubound(ss,1)
 		If m >= num Then
-			%><%=flag%>£º<%
+			%><%=flag%>ï¼š<%
 		Else%>
-			<%=flag%>£º<%
+			<%=flag%>ï¼š<%
 		End If
 		For n = 0 to m
 			If n >= num Then Exit For
@@ -353,7 +353,7 @@ Private Sub DisplayBoard_HTML_MastList(s,num,flag)
 				<div class="layer_iteminfo">
 				<ul class="menu_list">
 					<%
-			Response.Write "<li><b>¸ü¶à" & flag & "</b></li>"
+			Response.Write "<li><b>æ›´å¤š" & flag & "</b></li>"
 			Dim t
 			t = n
 			For n = t to m

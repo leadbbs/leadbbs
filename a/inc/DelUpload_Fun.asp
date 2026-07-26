@@ -38,7 +38,7 @@ Sub DelUpload_DeleteUpload(id)
 	If UploadListNum = 0 Then Exit Sub
 	For EditN = 0 to UploadListNum - 1
 		GBL_CHK_UserLimit = cCur("0" & UploadListData(11,EditN))
-		CheckIsBoardMaster
+		CheckIsBoardMaster()
 		If UploadListData(2,EditN) <> "" Then DeleteFiles(Server.MapPath(Replace(DEF_BBS_HomeUrl & DEF_BBS_UploadPhotoUrl & UploadListData(2,EditN),"/","\")))
 		If UploadListData(3,EditN) <> "" Then DeleteFiles(Server.MapPath(Replace(DEF_BBS_HomeUrl & DEF_BBS_UploadPhotoUrl & UploadListData(3,EditN),"/","\")))
 		CALL LDExeCute("Delete from LeadBBS_Upload where id=" & UploadListData(0,EditN),1)
@@ -89,7 +89,7 @@ Function DeleteFiles(path)
 	Set fs = Server.CreateObject(DEF_FSOString)
 	If err <> 0 Then
 		Err.Clear
-		'Response.Write "<br>·şÎñÆ÷²»Ö§³ÖFSO£¬Ó²ÅÌÎÄ¼şÎ´É¾³ı£®"
+		'Response.Write "<br>æœåŠ¡å™¨ä¸æ”¯æŒFSOï¼Œç¡¬ç›˜æ–‡ä»¶æœªåˆ é™¤ï¼"
 		Exit Function
 	End If
 	If fs.FileExists(path) Then

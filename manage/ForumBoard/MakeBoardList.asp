@@ -1,52 +1,52 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
-<!-- #include file=inc/ForumBoard_fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
+<!--#include file="inc/ForumBoard_fun.asp"-->
 <%
 Server.ScriptTimeOut = 300
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 		Response.Write GBL_CHK_TempStr
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
-DisplayUserNavigate("ĞŞ¸´²¢Í³¼ÆÂÛÌ³ËùÓĞ°æÃæÊı¾İ")
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
+DisplayUserNavigate("ä¿®å¤å¹¶ç»Ÿè®¡è®ºå›æ‰€æœ‰ç‰ˆé¢æ•°æ®")
 
 If GBL_CHK_Flag=1 Then
 	If Request.Form("submitflag") = "yes" then
-		UpdateBoardAnnounceNum2
-		ReloadBoardListData
-		Update_boardCacheData
-		Response.Write "<div class=alertdone>ÖØĞÂÖÆ×÷ÂÛÌ³ÁĞ±íÍê±Ï£¡</div>" & VbCrLf
+		UpdateBoardAnnounceNum2()
+		ReloadBoardListData()
+		Update_boardCacheData()
+		Response.Write "<div class=alertdone>é‡æ–°åˆ¶ä½œè®ºå›åˆ—è¡¨å®Œæ¯•ï¼</div>" & VbCrLf
 	Else
 		%>
 			<div class=frameline>
-			×¢Òâ£º´Ë¹¦ÄÜ½«ĞŞ¸´ÒÔÏÂÄÚÈİ£º
+			æ³¨æ„ï¼šæ­¤åŠŸèƒ½å°†ä¿®å¤ä»¥ä¸‹å†…å®¹ï¼š
 			</div>
 			<ol class=listli>
-			<li>ĞŞ¸´ËùÓĞ°æÃæ(°üÀ¨²»¿É¼û°æÃæ)Ìû×Ó×ÜÊı£¬Ö÷Ìâ×ÜÊı£¬¾«»ªÌû×Ó×ÜÊı</li>
-			<li>ĞŞ¸´°æÃæµÄÉÏ¼¶°æÃæÁĞ±í</li>
-			<li>ÖØĞÂÖÆ×÷ÂÛÌ³Ìø×ªÏÂÀ­°æÃæÁĞ±í(ĞèÒªfsoÖ§³Ö)</li>
-			<li>ÖØĞÂÖÆ×÷×ªÌûÊ±µÄÏÂÀ­°æÃæÁĞ±í(ĞèÒªfsoÖ§³Ö)</li>
+			<li>ä¿®å¤æ‰€æœ‰ç‰ˆé¢(åŒ…æ‹¬ä¸å¯è§ç‰ˆé¢)å¸–å­æ€»æ•°ï¼Œä¸»é¢˜æ€»æ•°ï¼Œç²¾åå¸–å­æ€»æ•°</li>
+			<li>ä¿®å¤ç‰ˆé¢çš„ä¸Šçº§ç‰ˆé¢åˆ—è¡¨</li>
+			<li>é‡æ–°åˆ¶ä½œè®ºå›è·³è½¬ä¸‹æ‹‰ç‰ˆé¢åˆ—è¡¨(éœ€è¦fsoæ”¯æŒ)</li>
+			<li>é‡æ–°åˆ¶ä½œè½¬å¸–æ—¶çš„ä¸‹æ‹‰ç‰ˆé¢åˆ—è¡¨(éœ€è¦fsoæ”¯æŒ)</li>
 			</ol>
-			<div class=alert>ÒòºÄÊ±½Ï³¤£¬½¨ÒéÏÈÔİÍ£ÂÛÌ³·ÃÎÊºóÔÙ½øĞĞ´Ë²Ù×÷¡£</div>
-			<div class=frameline>È·ÈÏĞÅÏ¢£º ÕæµÄÒª¿ªÊ¼ĞŞ¸´ËùÓĞ°æÃæÂğ£¿µã»÷ĞŞ¸´ºóÇëÄÍĞÄµÈ´ı³ÌĞòÍê³ÉÖ´ĞĞ¡£</div>
+			<div class=alert>å› è€—æ—¶è¾ƒé•¿ï¼Œå»ºè®®å…ˆæš‚åœè®ºå›è®¿é—®åå†è¿›è¡Œæ­¤æ“ä½œã€‚</div>
+			<div class=frameline>ç¡®è®¤ä¿¡æ¯ï¼š çœŸçš„è¦å¼€å§‹ä¿®å¤æ‰€æœ‰ç‰ˆé¢å—ï¼Ÿç‚¹å‡»ä¿®å¤åè¯·è€å¿ƒç­‰å¾…ç¨‹åºå®Œæˆæ‰§è¡Œã€‚</div>
 			<div class=frameline>
 			<form action=MakeBoardList.asp method=post name=LeadBBSFm id=LeadBBSFm>
 			<input name=submitflag value=yes type=hidden>
-			<input type=submit value="µã»÷È·ÈÏ¿ªÊ¼ĞŞ¸´" onclick="javascript:LeadBBSFm.submit();this.disabled=true;" class=fmbtn>
+			<input type=submit value="ç‚¹å‡»ç¡®è®¤å¼€å§‹ä¿®å¤" onclick="javascript:LeadBBSFm.submit();this.disabled=true;" class=fmbtn>
 			</form>
 			</div>
 		<%
 	End If
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 
@@ -81,7 +81,7 @@ Function UpdateBoardAnnounceNum2
 			Rs.Close
 			Set Rs = Nothing
 
-			Set Rs = LDExeCute("select count(*) from LeadBBS_Announce where BoardID=" & getData(0,N) & " and ndatetime>" & Left(GetTimeValue(DEF_Now),8) & "000000",0)
+			Set Rs = LDExeCute("select count(*) from LeadBBS_Announce where BoardID=" & getData(0,N) & " and ndatetime>" & Left(LngStr(GetTimeValue(DEF_Now)),8) & "000000",0)
 			If Rs.Eof Then
 				TodayAnnounce = 0
 			Else
@@ -198,7 +198,7 @@ Function UpdateBoardAnnounceNum2
 			End If
 			ReloadBoardInfo(GetData(0,N))
 			ReloadTopicAssort(GetData(0,N))
-			Response.Write GetData(1,N) & "Íê³É¸üĞÂ<br>" & VbCrLf
+			Response.Write GetData(1,N) & "å®Œæˆæ›´æ–°<br>" & VbCrLf
 		Next
 	End If
 
@@ -231,7 +231,7 @@ End Function
 Sub ReloadTopicAssort(BoardID)
 
 	Dim Rs
-	Set Rs = LDExeCute("select ID,AssortName,0,0,0 from LeadBBS_GoodAssort where BoardID=" & BoardID & " Order by BoardID,OrderID",0)
+	Set Rs = LDExeCute("select ID,AssortName,0,0 as c0_dup2,0 as c0_dup3 from LeadBBS_GoodAssort where BoardID=" & BoardID & " Order by BoardID,OrderID",0)
 	If Not Rs.Eof Then
 		Application.Lock
 		Application(DEF_MasterCookies & "BoardInfo" & BoardID & "_TI") = Rs.GetRows(-1)

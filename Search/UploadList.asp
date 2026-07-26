@@ -1,28 +1,28 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/Upload_Setup.asp -->
-<!-- #include file=../inc/Board_Popfun.asp -->
-<!-- #include file=../User/inc/UserTopic.asp -->
-<!-- #include file=inc/Upload_fun.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Upload_Setup.asp"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
+<!--#include file="../User/inc/UserTopic.asp"-->
+<!--#include file="inc/Upload_fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../"
 
 Sub Main
 
 	'GBL_CHK_PWdFlag = 0
-	initDatabase
+	initDatabase()
 	GBL_CHK_TempStr = ""
-	BBS_SiteHead DEF_SiteNameString & " - ÂÛÌ³¸½¼þ",0,"ÂÛÌ³¸½¼þ"
-	UpdateOnlineUserAtInfo 0,"ÂÛÌ³¸½¼þ"
+	BBS_SiteHead DEF_SiteNameString & " - è®ºå›é™„ä»¶",0,"è®ºå›é™„ä»¶"
+	UpdateOnlineUserAtInfo 0,"è®ºå›é™„ä»¶"
 	If GBL_UserID < 1 Then
-		GBL_CHK_TempStr = "Ö»ÓÐ×¢²áÓÃ»§²ÅÄÜ²é¿´ÂÛÌ³¸½¼þ¡£"
+		GBL_CHK_TempStr = "åªæœ‰æ³¨å†Œç”¨æˆ·æ‰èƒ½æŸ¥çœ‹è®ºå›é™„ä»¶ã€‚"
 	Else
-		If GBL_CHK_OnlineTime < DEF_NeedOnlineTime Then GBL_CHK_TempStr = "ÔÚÏßÊ±¼ä(" & DEF_PointsName(4) & ")²»×ã£¬Ö»ÓÐÔÚÏßÊ±¼ä³¬¹ý" & DEF_NeedOnlineTime & "ÃëµÄÓÃ»§²ÅÄÜÊ¹ÓÃ´Ë¹¦ÄÜ¡£"
+		If GBL_CHK_OnlineTime < DEF_NeedOnlineTime Then GBL_CHK_TempStr = "åœ¨çº¿æ—¶é—´(" & DEF_PointsName(4) & ")ä¸è¶³ï¼Œåªæœ‰åœ¨çº¿æ—¶é—´è¶…è¿‡" & DEF_NeedOnlineTime & "ç§’çš„ç”¨æˆ·æ‰èƒ½ä½¿ç”¨æ­¤åŠŸèƒ½ã€‚"
 	End If
 	
 	'If GetBinarybit(GBL_CHK_UserLimit,11) = 1 and (GetBinarybit(GBL_CHK_UserLimit,10) = 1 or GetBinarybit(GBL_CHK_UserLimit,8) = 1) Then
 	'If CheckSupervisorUserName = 1 or (GetBinarybit(GBL_CHK_UserLimit,10) = 1 or GetBinarybit(GBL_CHK_UserLimit,8) = 1) or GetBinarybit(GBL_CHK_UserLimit,14) = 1 Then
 	'Else
-		'GBL_CHK_TempStr = "È«²¿¸½¼þ²é¿´ÒÑÉèÎªÖ»ÔÊÐí°æÖ÷²é¿´£®"
+		'GBL_CHK_TempStr = "å…¨éƒ¨é™„ä»¶æŸ¥çœ‹å·²è®¾ä¸ºåªå…è®¸ç‰ˆä¸»æŸ¥çœ‹ï¼Ž"
 	'End If
 
 	UserTopicTopInfo("forum")
@@ -31,11 +31,11 @@ Sub Main
 	Else
 		Response.Write "<div class=alert>" & GBL_CHK_TempStr & "</div>"
 	End If
-	closeDataBase
-	UserTopicBottomInfo
-	SiteBottom
+	closeDataBase()
+	UserTopicBottomInfo()
+	SiteBottom()
 
 End Sub
 
-Main
+Main()
 %>

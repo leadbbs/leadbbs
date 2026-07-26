@@ -1,24 +1,24 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
-<!-- #include file=inc/ForumBoard_fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
+<!--#include file="inc/ForumBoard_fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
-DisplayUserNavigate("ÂÛÌ³°æÃæ¹ÜÀí")
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
+DisplayUserNavigate("è®ºå›ç‰ˆé¢ç®¡ç†")
 If GBL_CHK_Flag=1 Then
-	LoginAccuessFul
+	LoginAccuessFul()
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Function LoginAccuessFul
@@ -27,7 +27,7 @@ Function LoginAccuessFul
 	Dim Rs
 	Set Rs = LDExeCute("Select T1.BoardID,T1.BoardAssort,T1.BoardName,T1.OrderID,T2.AssortName,T1.ParentBoard from LeadBBS_Boards as T1 left join LeadBBS_Assort as T2 on T1.BoardAssort=T2.AssortID order by T1.BoardAssort,T1.ParentBoard,T1.OrderID",0)
 	If Rs.Eof Then
-		Response.Write "»¹Ã»ÓĞÈÎºÎÂÛÌ³£¬ÇëÏÈÌí¼Ó°É!"
+		Response.Write "è¿˜æ²¡æœ‰ä»»ä½•è®ºå›ï¼Œè¯·å…ˆæ·»åŠ å§!"
 		Rs.Close
 		Set Rs = Nothing
 		Exit Function
@@ -46,14 +46,14 @@ function opw(f,r,id)
 	document.location.href = f+'?B=<%=GBL_board_ID%>&'+r+'='+id;
 }
 </script>
-<a href=ForumBoardJoin.asp>µã»÷ÕâÀïÔö¼ÓÂÛÌ³</a> <br>
-<span class=redfont>[<u>É¾³ı°æÃæÈ«²¿Ìû×Ó</u>»ò<u>ºÏ²¢°æÃæ</u>ºóÇë<b>ÖØ×öÂÛÌ³ÁĞ±í¼°ĞŞ¸´</b>ÒÔ±£Ö¤ÂÛÌ³Ìû×ÓÊıÁ¿Í³¼ÆÕıÈ·]</span>
+<a href=ForumBoardJoin.asp>ç‚¹å‡»è¿™é‡Œå¢åŠ è®ºå›</a> <br>
+<span class=redfont>[<u>åˆ é™¤ç‰ˆé¢å…¨éƒ¨å¸–å­</u>æˆ–<u>åˆå¹¶ç‰ˆé¢</u>åè¯·<b>é‡åšè®ºå›åˆ—è¡¨åŠä¿®å¤</b>ä»¥ä¿è¯è®ºå›å¸–å­æ•°é‡ç»Ÿè®¡æ­£ç¡®]</span>
 <table border=0 cellpadding=0 cellspacing=0 width="100%" class=frame_table>
 	<tr class=frame_tbhead>
 		<td width="8%"><div class=value>ID</div></td>
-		<td width="62%"><div class=value>ÂÛÌ³Ãû³Æ</div></td>
-		<td width="20%"><div class=value>·ÖÀà</div></td>
-		<td width="10%"><div class=value>Ë³Ğò</div></td>
+		<td width="62%"><div class=value>è®ºå›åç§°</div></td>
+		<td width="20%"><div class=value>åˆ†ç±»</div></td>
+		<td width="10%"><div class=value>é¡ºåº</div></td>
 	</tr>
 	<%
 	Dim CountN,TempN
@@ -71,12 +71,12 @@ function opw(f,r,id)
 		Response.Write "          <td class=tdbox>"
 		Response.Write GBL_GetData(0,TempN) & "</td>" & VbCrLf
 		Response.Write "          <td class=tdbox>"
-		If cCur(GBL_GetData(5,TempN)) > 0 and cCur(GBL_GetData(5,TempN)) <> cCur(GBL_GetData(0,TempN)) Then Response.Write "<font color=Red class=redfont title=""×Ó°æÃæ"">©À</font>"
-		Response.Write GBL_GetData(2,TempN) & " <a href=ForumBoardModify.asp?GBL_MODIFYID=" & GBL_GetData(0,TempN) & ">ĞŞ¸Ä</a> <a href=ForumBoardDelete.asp?GBL_DELETEID=" & GBL_GetData(0,TempN) & " title=³¹µ×É¾³ıÒ»¸öÎŞÈÎºÎ·¢ÌûµÄ°æÃæ>É¾°æÃæ</a>" & VbCrLf
-		Response.Write "          <a href='javascript:opw(""ForumBoardDeleteAnnounce.asp"",""DelBoardID""," & GBL_GetData(0,TempN) & ");' title=Çå¿Õ´Ë°æÃæµÄËùÓĞÌû×Ó£¬²»¼õÓÃ»§" & DEF_PointsName(0) & ">É¾Ìû×Ó</a>"
-		Response.Write "          <a href='javascript:opw(""BoardMoveAnnounce.asp"",""MoveFromBoardID""," & GBL_GetData(0,TempN) & ");' title=ºÏ²¢(×ªÒÆ)´Ë°æÈ«²¿Ìû×Óµ½ÆäËü°æÃæ>ºÏ²¢</a>"
+		If cCur(GBL_GetData(5,TempN)) > 0 and cCur(GBL_GetData(5,TempN)) <> cCur(GBL_GetData(0,TempN)) Then Response.Write "<font color=Red class=redfont title=""å­ç‰ˆé¢"">â”œ</font>"
+		Response.Write GBL_GetData(2,TempN) & " <a href=ForumBoardModify.asp?GBL_MODIFYID=" & GBL_GetData(0,TempN) & ">ä¿®æ”¹</a> <a href=ForumBoardDelete.asp?GBL_DELETEID=" & GBL_GetData(0,TempN) & " title=å½»åº•åˆ é™¤ä¸€ä¸ªæ— ä»»ä½•å‘å¸–çš„ç‰ˆé¢>åˆ ç‰ˆé¢</a>" & VbCrLf
+		Response.Write "          <a href='javascript:opw(""ForumBoardDeleteAnnounce.asp"",""DelBoardID""," & GBL_GetData(0,TempN) & ");' title=æ¸…ç©ºæ­¤ç‰ˆé¢çš„æ‰€æœ‰å¸–å­ï¼Œä¸å‡ç”¨æˆ·" & DEF_PointsName(0) & ">åˆ å¸–å­</a>"
+		Response.Write "          <a href='javascript:opw(""BoardMoveAnnounce.asp"",""MoveFromBoardID""," & GBL_GetData(0,TempN) & ");' title=åˆå¹¶(è½¬ç§»)æ­¤ç‰ˆå…¨éƒ¨å¸–å­åˆ°å…¶å®ƒç‰ˆé¢>åˆå¹¶</a>"
 		%>
-		<a href=../BlockUpdate/UpdateRootMaxMinAnnounceID.asp?ID=<%=GBL_GetData(0,TempN)%>&BlockType=2 title="ËùÓĞÖ÷Ìâ½«°´ÕÕ×îºó»Ø¸´Ê±¼äÀ´ÖØÖÃÅÅĞò£¬ÊÊÓÃÓÚ°æÃæºÏ²¢ºóµÄÅÅĞòĞŞ¸´">ÖØÖÃÅÅĞò</a>
+		<a href=../BlockUpdate/UpdateRootMaxMinAnnounceID.asp?ID=<%=GBL_GetData(0,TempN)%>&BlockType=2 title="æ‰€æœ‰ä¸»é¢˜å°†æŒ‰ç…§æœ€åå›å¤æ—¶é—´æ¥é‡ç½®æ’åºï¼Œé€‚ç”¨äºç‰ˆé¢åˆå¹¶åçš„æ’åºä¿®å¤">é‡ç½®æ’åº</a>
 		<%
 		Response.write "			</td>"
 		Response.Write "          <td class=tdbox><a href=../ForumCategory/ForumCategoryManage.asp?action=edit&GBL_MODIFYID=" & GBL_GetData(1,TempN) & ">" & GBL_GetData(4,TempN) & "</a></td>" & VbCrLf

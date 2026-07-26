@@ -1,5 +1,5 @@
 <%
-Const ViewSelectListFlag = 1'0 ÖÆ±í·ûÏÔÊ¾ 1.¿Õ¸ñËõ½ø£¬ÓĞÏÂ¼¶ÓÃ+ºÅ´úÌæ
+Const ViewSelectListFlag = 1'0 åˆ¶è¡¨ç¬¦æ˜¾ç¤º 1.ç©ºæ ¼ç¼©è¿›ï¼Œæœ‰ä¸‹çº§ç”¨+å·ä»£æ›¿
 Dim GBL_AssortID,GBL_AssortName
 Dim GBL_BoardID,GBL_BoardAssort,GBL_BoardName,GBL_BoardIntro,GBL_LastWriter,GBL_LastWriteTime,GBL_TopicNum
 Dim GBL_AnnounceNum,GBL_BoardManage,GBL_ForumPass,GBL_HiddenFlag,GBL_BoardLimit,GBL_MasterList,GBL_OrderID,GBL_OrderID_Old
@@ -9,6 +9,9 @@ Dim GBL_ParentBoard,GBL_LowerBoard,GBL_OtherLimit,GBL_OtherLimit_Part1,GBL_Other
 Dim GBL_BoardAssort_Old,GBL_ParentBoard_Old
 Dim GBL_LowerBoardTemp
 
+GBL_OrderID = 0     ' AxonASP (#25): IsNumeric(Empty) is False here but True in VBScript,
+                    ' so an uninitialised OrderID failed validation and made it impossible
+                    ' to add a board (ForumBoardJoin has no OrderID field).
 GBL_OrderID_Old = 0
 GBL_ParentBoard = 0
 GBL_LowerBoard = ""
@@ -32,14 +35,14 @@ GBL_LimitMonthStart = 0
 GBL_LimitMonthEnd = 0
 
 Dim GBL_HiddenFlagData,GBL_HiddenFlagNum
-GBL_HiddenFlagData = Array("Õı³£ÏÔÊ¾","ÂÛÌ³ÁĞ±íÖĞÒş²Ø","¹Ø±ÕÂÛÌ³")
+GBL_HiddenFlagData = Array("æ­£å¸¸æ˜¾ç¤º","è®ºå›åˆ—è¡¨ä¸­éšè—","å…³é—­è®ºå›")
 GBL_HiddenFlagNum = Ubound(GBL_HiddenFlagData,1)
 
 GBL_LastWriteTime = GetTimeValue(DEF_Now)
 GBL_TopicNum = 0
 GBL_AnnounceNum = 0
 
-Rem ÄÚÈİÑéÖ¤
+Rem å†…å®¹éªŒè¯
 Function CheckFormForumBoardData
 
 	Dim GBL_MasterListArray,GBL_MasterList_OldD
@@ -47,65 +50,65 @@ Function CheckFormForumBoardData
 	GBL_MasterList_OldD = GBL_MasterList
 
 	If isNumeric(GBL_BoardID) = False Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ±ØĞëÎªÂÛÌ³°æÃæIDÖ¸¶¨Ò»¸ö´óÓÚ0µÄÊı×Ö£¬¶ø²»ÄÜÊÇÆäËü×Ö·û¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: å¿…é¡»ä¸ºè®ºå›ç‰ˆé¢IDæŒ‡å®šä¸€ä¸ªå¤§äº0çš„æ•°å­—ï¼Œè€Œä¸èƒ½æ˜¯å…¶å®ƒå­—ç¬¦ã€‚<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
 
 	GBL_BoardID = cCur(GBL_BoardID)
 	If GBL_BoardID > 2147479999 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ÂÛÌ³°æÃæID±àĞ´Ì«´ó¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: è®ºå›ç‰ˆé¢IDç¼–å†™å¤ªå¤§ã€‚<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
 
 	If GBL_BoardID < 1 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ±ØĞëÎªÂÛÌ³°æÃæIDÖ¸¶¨Ò»¸ö´óÓÚ0µÄÊı×Ö¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: å¿…é¡»ä¸ºè®ºå›ç‰ˆé¢IDæŒ‡å®šä¸€ä¸ªå¤§äº0çš„æ•°å­—ã€‚<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
 
 	If isNumeric(GBL_OrderID) = False Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ±ØĞëÎªÂÛÌ³°æÃæÅÅÁĞË³ĞòÖ¸¶¨Ò»¸ö´óÓÚ0µÄÊı×Ö£¬¶ø²»ÄÜÊÇÆäËü×Ö·û¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: å¿…é¡»ä¸ºè®ºå›ç‰ˆé¢æ’åˆ—é¡ºåºæŒ‡å®šä¸€ä¸ªå¤§äº0çš„æ•°å­—ï¼Œè€Œä¸èƒ½æ˜¯å…¶å®ƒå­—ç¬¦ã€‚<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
 
 	GBL_OrderID = cCur(GBL_OrderID)
 	If GBL_OrderID < 0 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ±ØĞëÎªÂÛÌ³ÅÅÁĞË³ĞòÖ¸¶¨Ò»¸ö´óÓÚ0µÄÊı×Ö¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: å¿…é¡»ä¸ºè®ºå›æ’åˆ—é¡ºåºæŒ‡å®šä¸€ä¸ªå¤§äº0çš„æ•°å­—ã€‚<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
 	
 
 	If isNumeric(GBL_BoardAssort) = 0 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ±ØĞëÎªÂÛÌ³·ÖÀàIDÖ¸¶¨Ò»¸ö´óÓÚ0µÄÊı×Ö£¬¶ø²»ÄÜÊÇÆäËü×Ö·û¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: å¿…é¡»ä¸ºè®ºå›åˆ†ç±»IDæŒ‡å®šä¸€ä¸ªå¤§äº0çš„æ•°å­—ï¼Œè€Œä¸èƒ½æ˜¯å…¶å®ƒå­—ç¬¦ã€‚<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
 
 	GBL_BoardAssort = cCur(GBL_BoardAssort)
 	If GBL_BoardAssort < 1 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ±ØĞëÎªÂÛÌ³·ÖÀàIDÖ¸¶¨Ò»¸ö´óÓÚ0µÄÊı×Ö¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: å¿…é¡»ä¸ºè®ºå›åˆ†ç±»IDæŒ‡å®šä¸€ä¸ªå¤§äº0çš„æ•°å­—ã€‚<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
 
 	If len(GBL_BoardName)<1 or GBL_BoardName = "" Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ÂÛÌ³°æÃæÃû³ÆÊÇ±ØÌîÏî<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: è®ºå›ç‰ˆé¢åç§°æ˜¯å¿…å¡«é¡¹<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
 
 	If strLength(GBL_BoardName) > 250 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ÂÛÌ³°æÃæÃû³Æ³¤¶È²»ÄÜ³¬¹ı250¸ö×Ö·û<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: è®ºå›ç‰ˆé¢åç§°é•¿åº¦ä¸èƒ½è¶…è¿‡250ä¸ªå­—ç¬¦<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
 	
 	If inStr(LCase(GBL_BoardName),"""") > 0 or inStr(LCase(GBL_BoardName),"<script") > 0 or inStr(LCase(GBL_BoardName),"<\script") > 0 or inStr(LCase(GBL_BoardName),"</script") > 0 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ÂÛÌ³°æÃæÃû³Æ²»ÔÊĞí²åÈëjsµÈÆäËü±àÂë£¬²»ÔÊĞíÊ¹ÓÃË«ÒıºÅ<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: è®ºå›ç‰ˆé¢åç§°ä¸å…è®¸æ’å…¥jsç­‰å…¶å®ƒç¼–ç ï¼Œä¸å…è®¸ä½¿ç”¨åŒå¼•å·<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
@@ -115,65 +118,65 @@ Function CheckFormForumBoardData
 	Temp2 = Ubound(FobWords,1)
 	For TempN = 1 to Temp2
 		If inStr(GBL_BoardName,ChrW(FobWords(TempN))) > 0 Then
-			'GBL_CHK_TempStr = GBL_CHK_TempStr & "ÂÛÌ³Ãû³ÆÖĞµÄ×Ö·û<u>" & ChrW(FobWords(TempN)) & "</u>ÊôÓÚ·Ç·¨×Ö·û!<br>"
+			'GBL_CHK_TempStr = GBL_CHK_TempStr & "è®ºå›åç§°ä¸­çš„å­—ç¬¦<u>" & ChrW(FobWords(TempN)) & "</u>å±äºéæ³•å­—ç¬¦!<br>"
 			'GBL_CHK_Flag = 0
 			'Exit Function
 		End If
 	Next
 
 	If strLength(GBL_BoardIntro) > 500 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ÂÛÌ³°æÃæÂÛÌ³°æÃæ¼òµ¥ÃèÊö³¤¶È²»ÄÜ³¬¹ı500¸ö×Ö·û<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: è®ºå›ç‰ˆé¢è®ºå›ç‰ˆé¢ç®€å•æè¿°é•¿åº¦ä¸èƒ½è¶…è¿‡500ä¸ªå­—ç¬¦<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
 	
 	If inStr(GBL_BoardIntro,"<script") > 0 or inStr(GBL_BoardIntro,"<\script") > 0 or inStr(GBL_BoardIntro,"</script") > 0 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: °æÃæ¼ò½é²»ÔÊĞí²åÈëjsµÈÆäËü±àÂë<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ç‰ˆé¢ç®€ä»‹ä¸å…è®¸æ’å…¥jsç­‰å…¶å®ƒç¼–ç <br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
 
 	If strLength(GBL_BoardIntro) > 500 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ÂÛÌ³°æÃæÂÛÌ³°æÃæ¼òµ¥ÃèÊö³¤¶È²»ÄÜ³¬¹ı500¸ö×Ö·û<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: è®ºå›ç‰ˆé¢è®ºå›ç‰ˆé¢ç®€å•æè¿°é•¿åº¦ä¸èƒ½è¶…è¿‡500ä¸ªå­—ç¬¦<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
 		
 
 	If Len(GBL_LastWriter) > 20 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ÂÛÌ³°æÃæ×îºó·¢±íÌû×Ó×÷Õß³¤¶È²»ÄÜ³¬¹ı20¸ö×Ö<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: è®ºå›ç‰ˆé¢æœ€åå‘è¡¨å¸–å­ä½œè€…é•¿åº¦ä¸èƒ½è¶…è¿‡20ä¸ªå­—<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
 
 	If isDate(RestoreTime(GBL_LastWriteTime)) = False and GBL_LastWriteTime <> 0 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ÂÛÌ³°æÃæ×îºó·¢±íÌû×ÓµÄÊ±¼ä±ØĞë·ûºÏÈÕÆÚ¸ñÊ½¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: è®ºå›ç‰ˆé¢æœ€åå‘è¡¨å¸–å­çš„æ—¶é—´å¿…é¡»ç¬¦åˆæ—¥æœŸæ ¼å¼ã€‚<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
 
 	If isNumeric(GBL_TopicNum) = 0 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: °æÃæÓµÓĞµÄÌû×ÓÖ÷ÌâÊı±ØĞëÊÇÒ»¸öÊı×Ö£¬¶ø²»ÄÜÊÇÆäËü×Ö·û¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ç‰ˆé¢æ‹¥æœ‰çš„å¸–å­ä¸»é¢˜æ•°å¿…é¡»æ˜¯ä¸€ä¸ªæ•°å­—ï¼Œè€Œä¸èƒ½æ˜¯å…¶å®ƒå­—ç¬¦ã€‚<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
 	GBL_TopicNum = cCur(GBL_TopicNum)
 
 	If isNumeric(GBL_AnnounceNum) = 0 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: °æÃæÓµÓĞµÄÌû×ÓÊı±ØĞëÊÇÒ»¸öÊı×Ö£¬¶ø²»ÄÜÊÇÆäËü×Ö·û¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ç‰ˆé¢æ‹¥æœ‰çš„å¸–å­æ•°å¿…é¡»æ˜¯ä¸€ä¸ªæ•°å­—ï¼Œè€Œä¸èƒ½æ˜¯å…¶å®ƒå­—ç¬¦ã€‚<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
 	GBL_AnnounceNum = cCur(GBL_AnnounceNum)
 	
 	If Len(GBL_ForumPass) > 20 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ÂÛÌ³·ÃÎÊÃÜÂë²»ÄÜ³¬¹ı20Î»¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: è®ºå›è®¿é—®å¯†ç ä¸èƒ½è¶…è¿‡20ä½ã€‚<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
 
 	If StrLength(GBL_BoardImgUrl) > 255 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ÂÛÌ³Í¼Æ¬urlÌ«³¤£¬²»ÄÜ³¬¹ı255×Ö½Ú¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: è®ºå›å›¾ç‰‡urlå¤ªé•¿ï¼Œä¸èƒ½è¶…è¿‡255å­—èŠ‚ã€‚<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
@@ -241,7 +244,7 @@ Function CheckFormForumBoardData
 	'End If
 
 	If isNumeric(GBL_ParentBoard) = 0 Then
-		GBL_CHK_TempStr = "´íÎó£¬ÉÏ¼¶°æÃæÖ¸¶¨´íÎó£¬ÎŞÉÏ¼¶°æÃæÇëÌîĞ´Êı×Ö0"
+		GBL_CHK_TempStr = "é”™è¯¯ï¼Œä¸Šçº§ç‰ˆé¢æŒ‡å®šé”™è¯¯ï¼Œæ— ä¸Šçº§ç‰ˆé¢è¯·å¡«å†™æ•°å­—0"
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
@@ -255,7 +258,7 @@ Function CheckFormForumBoardData
 	Else
 		GBL_MasterList = ""
 		If Ubound(GBL_MasterListArray,1) > DEF_MaxBoardMastNum - 1 Then
-			GBL_CHK_TempStr = "´íÎó£¬°æÖ÷×î¶àÖ»ÄÜÉèÖÃ" & DEF_MaxBoardMastNum & "¸ö"
+			GBL_CHK_TempStr = "é”™è¯¯ï¼Œç‰ˆä¸»æœ€å¤šåªèƒ½è®¾ç½®" & DEF_MaxBoardMastNum & "ä¸ª"
 			CheckFormForumBoardData = 0
 			GBL_MasterList = GBL_MasterList_OldD
 			Exit Function
@@ -265,7 +268,7 @@ Function CheckFormForumBoardData
 			If Trim(GBL_MasterListArray(TempN)) <> "" Then
 				TempName = CheckUserNameExist(GBL_MasterListArray(TempN))
 				If TempName = "" Then
-					GBL_CHK_TempStr = "Error: " & DEF_PointsName(8) & "ÁĞ±í´íÎó£¬ÓÃ»§" & htmlencode(GBL_MasterListArray(TempN)) & "²»´æÔÚ£¡<br>" & VbCrLf
+					GBL_CHK_TempStr = "Error: " & DEF_PointsName(8) & "åˆ—è¡¨é”™è¯¯ï¼Œç”¨æˆ·" & htmlencode(GBL_MasterListArray(TempN)) & "ä¸å­˜åœ¨ï¼<br>" & VbCrLf
 					CheckFormForumBoardData = 0
 					GBL_MasterList = GBL_MasterList_OldD
 					Exit Function
@@ -283,7 +286,7 @@ Function CheckFormForumBoardData
 	If isNumeric(GBL_OtherLimit_Part2) = 0 Then GBL_OtherLimit_Part2 = 0
 	GBL_OtherLimit_Part2 = Fix(cCur(GBL_OtherLimit_Part2))
 	If GBL_OtherLimit_Part2 < 0 or GBL_OtherLimit_Part2 > 999999999999 Then 
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ¸ü¶à·ÃÎÊÏŞÖÆÊıÖµ´íÎó£¬±ØĞë´óÓÚÁã£¡<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: æ›´å¤šè®¿é—®é™åˆ¶æ•°å€¼é”™è¯¯ï¼Œå¿…é¡»å¤§äºé›¶ï¼<br>" & VbCrLf
 		CheckFormForumBoardData = 0
 		Exit Function
 	End If
@@ -310,7 +313,7 @@ Function CheckFormForumBoardData
 
 End Function
 
-Rem ¼ì²âÄ³ÓÃ»§ÃûÊÇ·ñ´æÔÚ
+Rem æ£€æµ‹æŸç”¨æˆ·åæ˜¯å¦å­˜åœ¨
 Function CheckUserNameExist(UserName)
 
 	Dim Rs
@@ -325,7 +328,7 @@ Function CheckUserNameExist(UserName)
 
 End Function
 
-Rem ¼ì²âÄ³·ÖÀàIDÊÇ·ñ´æÔÚ
+Rem æ£€æµ‹æŸåˆ†ç±»IDæ˜¯å¦å­˜åœ¨
 Function CheckForumAssortIDExist(AssortID)
 
 	Dim Rs
@@ -340,7 +343,7 @@ Function CheckForumAssortIDExist(AssortID)
 
 End Function
 
-Rem ¼ì²âÄ³°æÃæIDÊÇ·ñ´æÔÚ
+Rem æ£€æµ‹æŸç‰ˆé¢IDæ˜¯å¦å­˜åœ¨
 Function CheckForumBoardIDExist(BoardID)
 
 	Dim Rs
@@ -355,7 +358,7 @@ Function CheckForumBoardIDExist(BoardID)
 
 End Function
 
-Rem ¼ì²âÄ³°æÃæÃû³ÆÊÇ·ñ´æÔÚ
+Rem æ£€æµ‹æŸç‰ˆé¢åç§°æ˜¯å¦å­˜åœ¨
 Function CheckForumBoardNameExist(BoardName)
 
 	Dim Rs
@@ -370,7 +373,7 @@ Function CheckForumBoardNameExist(BoardName)
 
 End Function
 
-Rem É¾³ıÄ³°æÃæ
+Rem åˆ é™¤æŸç‰ˆé¢
 Function DeleteForumBoard(BoardID)
 
 	Dim Rs,ParentBoard,MasterList
@@ -378,12 +381,12 @@ Function DeleteForumBoard(BoardID)
 	If Rs.Eof Then
 		Rs.Close
 		Set Rs = Nothing
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ÂÛÌ³°æÃæIDºÅ" & BoardID & "²»´æÔÚ!<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: è®ºå›ç‰ˆé¢IDå·" & BoardID & "ä¸å­˜åœ¨!<br>" & VbCrLf
 		DeleteForumBoard = 0
 		Exit Function
 	Else
 		If Rs(1) & "" <> "" Then
-			GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ´Ë°æÃæÓµÓĞ×Ó£¨ÏÂ¼¶£©ÂÛÌ³£¬²»ÄÜÉ¾³ı!<br>" & VbCrLf
+			GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: æ­¤ç‰ˆé¢æ‹¥æœ‰å­ï¼ˆä¸‹çº§ï¼‰è®ºå›ï¼Œä¸èƒ½åˆ é™¤!<br>" & VbCrLf
 			Rs.Close
 			Set Rs = Nothing
 			Exit Function
@@ -394,7 +397,7 @@ Function DeleteForumBoard(BoardID)
 		Set Rs = Nothing
 		Set Rs = LDExeCute(sql_select("Select ID from LeadBBS_Announce where BoardID=" & BoardID,1),0)
 		If Not Rs.Eof Then
-			GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ´Ë°æÃæÏÂ»¹ÓĞÌû×Ó´æÔÚ£¬²»ÄÜÍê³ÉÉ¾³ı²Ù×÷!<br>" & VbCrLf
+			GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: æ­¤ç‰ˆé¢ä¸‹è¿˜æœ‰å¸–å­å­˜åœ¨ï¼Œä¸èƒ½å®Œæˆåˆ é™¤æ“ä½œ!<br>" & VbCrLf
 			DeleteForumBoard = 0
 			Rs.Close
 			Set Rs = Nothing
@@ -404,7 +407,7 @@ Function DeleteForumBoard(BoardID)
 		Set Rs = Nothing
 		CALL LDExeCute("delete from LeadBBS_GoodAssort where BoardID=" & BoardID,1)
 		CALL LDExeCute("delete from LeadBBS_Boards where BoardID=" & BoardID,1)
-		UpdateMasterList MasterList,0
+		Call UpdateMasterList(MasterList,0)
 		DeleteForumBoard = 1
 	End if
 	ReloadBoardInfo(BoardID)
@@ -412,30 +415,30 @@ Function DeleteForumBoard(BoardID)
 		UpdateParentBoard_LowerBoardColumn2(ParentBoard)
 		ReloadBoardInfo(ParentBoard)
 	End If
-	ReloadBoardListData
+	ReloadBoardListData()
 
-	Update_boardCacheData
+	Update_boardCacheData()
 
 End Function
 
-Rem ²åÈëÄ³°æÃæ
+Rem æ’å…¥æŸç‰ˆé¢
 Function InsertForumBoard
 
 	If CheckForumAssortIDExist(GBL_BoardAssort) = 0 Then
 		InsertForumBoard = 0
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "°æÃæËùÔÚµÄ·ÖÀàIDºÅ" & GBL_BoardAssort & "²»´æÔÚ!<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "ç‰ˆé¢æ‰€åœ¨çš„åˆ†ç±»IDå·" & GBL_BoardAssort & "ä¸å­˜åœ¨!<br>" & VbCrLf
 		Exit Function
 	End If
 
 	If CheckForumBoardIDExist(GBL_BoardID) = 1 Then
 		InsertForumBoard = 0
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "°æÃæIDºÅ" & GBL_BoardID & "ÒÑ¾­´æÔÚ!<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "ç‰ˆé¢IDå·" & GBL_BoardID & "å·²ç»å­˜åœ¨!<br>" & VbCrLf
 		Exit Function
 	End If
 
 	If CheckForumBoardNameExist(GBL_BoardName) = 1 Then
 		InsertForumBoard = 0
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "°æÃæÃû³Æ" & htmlencode(GBL_BoardName) & "ÒÑ¾­´æÔÚ!<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "ç‰ˆé¢åç§°" & htmlencode(GBL_BoardName) & "å·²ç»å­˜åœ¨!<br>" & VbCrLf
 		Exit Function
 	End If
 
@@ -448,15 +451,15 @@ Function InsertForumBoard
 	If GBL_MasterList <> "?LeadBBS?" Then UpdateMasterList GBL_MasterList,1
 
 	ReloadBoardInfo(GBL_BoardID)
-	ReloadBoardListData
+	ReloadBoardListData()
 
-	Update_boardCacheData
+	Update_boardCacheData()
 
 	InsertForumBoard = 1
 
 End Function
 
-Rem µÃµ½Ä³°æÃæĞÅÏ¢
+Rem å¾—åˆ°æŸç‰ˆé¢ä¿¡æ¯
 Function GetForumBoardData(BoardID)
 
 	Dim Rs
@@ -476,27 +479,27 @@ Function GetForumBoardData(BoardID)
 
 End Function
 
-Rem ¸üĞÂÄ³°æÃæ
+Rem æ›´æ–°æŸç‰ˆé¢
 Function UpdateForumBoard
 	
 	If isNumeric(GBL_MODIFYID) = 0 or GBL_MODIFYID = "" Then GBL_MODIFYID = 0
 	GBL_MODIFYID = cCur(GBL_MODIFYID)
 	If GBL_MODIFYID = 0 or GBL_MODIFYID<1 then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ÒªĞŞ¸ÄµÄ°æÃæ²»´æÔÚ£¡<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: è¦ä¿®æ”¹çš„ç‰ˆé¢ä¸å­˜åœ¨ï¼<br>" & VbCrLf
 		GBL_CHK_Flag = 0
 		UpdateForumBoard = 0
 		Exit Function
 	End If
 
 	If GetForumBoardData(GBL_MODIFYID) = 0 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: °æÃæIDºÅ" & GBL_BoardID & "²»´æÔÚÎŞ·¨Íê³ÉĞŞ¸Ä¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ç‰ˆé¢IDå·" & GBL_BoardID & "ä¸å­˜åœ¨æ— æ³•å®Œæˆä¿®æ”¹ã€‚<br>" & VbCrLf
 		GBL_CHK_Flag = 0
 		UpdateForumBoard = 0
 		Exit Function
 	End If
 
 	If cCur(GBL_GetData(0,0))<>GBL_BoardID and CheckForumBoardIDExist(GBL_BoardID) = 1 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: °æÃæIDºÅ" & GBL_BoardID & "ÒÑ¾­´æÔÚ£¬ÇëÊ¹ÓÃÆäËüIDºÅ¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ç‰ˆé¢IDå·" & GBL_BoardID & "å·²ç»å­˜åœ¨ï¼Œè¯·ä½¿ç”¨å…¶å®ƒIDå·ã€‚<br>" & VbCrLf
 		GBL_CHK_Flag = 0
 		UpdateForumBoard = 0
 		Exit Function
@@ -504,7 +507,7 @@ Function UpdateForumBoard
 	
 	If GBL_ParentBoard > 0 Then
 		If CheckForumBoardIDExist(GBL_ParentBoard) = 0 Then
-			GBL_CHK_TempStr = "ÉÏ¼¶°æÃæ±àºÅ" & GBL_ParentBoard & "²»´æÔÚ£¬ÇëÕıÈ·ÌîĞ´£¡<br>" & VbCrLf
+			GBL_CHK_TempStr = "ä¸Šçº§ç‰ˆé¢ç¼–å·" & GBL_ParentBoard & "ä¸å­˜åœ¨ï¼Œè¯·æ­£ç¡®å¡«å†™ï¼<br>" & VbCrLf
 			GBL_CHK_Flag = 0
 			UpdateForumBoard = 0
 			Exit Function
@@ -524,7 +527,7 @@ Function UpdateForumBoard
 	Dim Temp
 	Temp = CheckForumBoardNameExist(GBL_BoardName)
 	'If Temp<>0 and Temp<>cCur(GBL_GetData(0,0)) Then
-	'	GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ÒÑ¾­´æÔÚÃû³ÆÎª<b>" & htmlencode(GBL_BoardName) & "</b>µÄ°æÃæ<br>" & VbCrLf
+	'	GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: å·²ç»å­˜åœ¨åç§°ä¸º<b>" & htmlencode(GBL_BoardName) & "</b>çš„ç‰ˆé¢<br>" & VbCrLf
 	'	GBL_CHK_Flag = 0
 	'	UpdateForumBoard = 0
 	'	Exit Function
@@ -552,16 +555,16 @@ Function UpdateForumBoard
 	If GBL_ParentBoard <> GBL_ParentBoard_Old or GBL_OrderID_Old <> GBL_OrderID Then
 		UpdateParentBoard_LowerBoardColumn2(GBL_ParentBoard_Old)
 		UpdateParentBoard_LowerBoardColumn2(GBL_ParentBoard)
-		UpdateParentBoardStrColumn GBL_ParentBoard_Old,GBL_ParentBoard,cCur(GBL_GetData(0,0))
+		Call UpdateParentBoardStrColumn(GBL_ParentBoard_Old,GBL_ParentBoard,cCur(GBL_GetData(0,0)))
 	End If
 
 	
 	If GBL_MasterList <> "?LeadBBS?" and GBL_MasterList_Old <> GBL_MasterList Then UpdateMasterList GBL_MasterList,1
 
 	ReloadBoardInfo(GBL_GetData(0,0))
-	ReloadBoardListData
+	ReloadBoardListData()
 
-	Update_boardCacheData
+	Update_boardCacheData()
 
 	UpdateForumBoard = 1
 
@@ -569,7 +572,7 @@ End Function
 
 Function UpdateMasterList(MasterList,Flag)
 
-	Rem ÖØĞÂ¸üĞÂÂÛÌ³ÓÃ»§°æÖ÷×´Ì¬
+	Rem é‡æ–°æ›´æ–°è®ºå›ç”¨æˆ·ç‰ˆä¸»çŠ¶æ€
 	Dim TA,N
 
 	TA = Split(MasterList,",")
@@ -579,7 +582,7 @@ Function UpdateMasterList(MasterList,Flag)
 
 End Function
 
-Rem ÉèÖÃÄ³ÓÃ»§ÊÇ·ñ°æÖ÷
+Rem è®¾ç½®æŸç”¨æˆ·æ˜¯å¦ç‰ˆä¸»
 Function SetUserMastFlag(UserName,Fla)
 
 	Dim Flag
@@ -631,7 +634,7 @@ Function SetUserMastFlag(UserName,Fla)
 
 End Function
 
-Rem ÅĞ¶Ï¸¸¼¶ÂÛÌ³Óëµ±Ç°ÂÛÌ³µÄ¹ØÏµ
+Rem åˆ¤æ–­çˆ¶çº§è®ºå›ä¸å½“å‰è®ºå›çš„å…³ç³»
 Function CheckBoardRelation(ParentBoard,BoardID)
 
 	If ParentBoard = 0 Then
@@ -645,7 +648,7 @@ Function CheckBoardRelation(ParentBoard,BoardID)
 		CheckBoardRelation = 0
 		Rs.close
 		Set Rs = Nothing
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "¸¸¼¶°æÃæIDºÅ" & ParentBoard & "²»´æÔÚ£¬ÇëÕıÈ·ÌîĞ´¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "çˆ¶çº§ç‰ˆé¢IDå·" & ParentBoard & "ä¸å­˜åœ¨ï¼Œè¯·æ­£ç¡®å¡«å†™ã€‚<br>" & VbCrLf
 		Exit Function
 	Else
 		BoardAssort = cCur(Rs(0))
@@ -654,13 +657,13 @@ Function CheckBoardRelation(ParentBoard,BoardID)
 	Set Rs = Nothing
 	
 	If BoardAssort <> GBL_BoardAssort Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "µ±Ç°°æÃæËùÔÚ·ÖÀà±ØĞëÓë¸¸¼¶°æÃæ±£³ÖÒ»ÖÂ£¬ÇëÕıÈ·ÌîĞ´¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "å½“å‰ç‰ˆé¢æ‰€åœ¨åˆ†ç±»å¿…é¡»ä¸çˆ¶çº§ç‰ˆé¢ä¿æŒä¸€è‡´ï¼Œè¯·æ­£ç¡®å¡«å†™ã€‚<br>" & VbCrLf
 		CheckBoardRelation = 0
 		Exit Function
 	End If
 
 	If GBL_LowerBoard & "" <> "" and GBL_BoardAssort_Old <> GBL_BoardAssort Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "´Ë°æÃæ´æÔÚÏÂ¼¶°æÃæ£¬ËùÒÔ½ûÖ¹ĞŞ¸ÄËùÊô·ÖÀà¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "æ­¤ç‰ˆé¢å­˜åœ¨ä¸‹çº§ç‰ˆé¢ï¼Œæ‰€ä»¥ç¦æ­¢ä¿®æ”¹æ‰€å±åˆ†ç±»ã€‚<br>" & VbCrLf
 		CheckBoardRelation = 0
 		Exit Function
 	End If
@@ -671,7 +674,7 @@ Function CheckBoardRelation(ParentBoard,BoardID)
 	For N = 1 to 20
 		If ParentBoardTemp = 0 then Exit for
 		If ParentBoardTemp = GBL_BoardID Then
-			GBL_CHK_TempStr = GBL_CHK_TempStr & "¸¸¼¶ÂÛÌ³Ö¸¶¨´íÎó£¬µ±Ç°°æÃæÒÑ¾­ÊÇËùÌîÉÏ¼¶ÂÛÌ³µÄÉÏ¼¶»òµ±Ç°°æÃæ¡£<br>" & VbCrLf
+			GBL_CHK_TempStr = GBL_CHK_TempStr & "çˆ¶çº§è®ºå›æŒ‡å®šé”™è¯¯ï¼Œå½“å‰ç‰ˆé¢å·²ç»æ˜¯æ‰€å¡«ä¸Šçº§è®ºå›çš„ä¸Šçº§æˆ–å½“å‰ç‰ˆé¢ã€‚<br>" & VbCrLf
 			CheckBoardRelation = 0
 			Exit Function
 		End If
@@ -691,7 +694,7 @@ Function CheckBoardRelation(ParentBoard,BoardID)
 
 End Function
 
-Rem ¼ì²âÊÇ·ñ»¹¿ÉÒÔĞŞ¸ÄÎª¸¸¼¶°æÃæµÄ×Ó°æÃæ
+Rem æ£€æµ‹æ˜¯å¦è¿˜å¯ä»¥ä¿®æ”¹ä¸ºçˆ¶çº§ç‰ˆé¢çš„å­ç‰ˆé¢
 Function UpdateParentBoard_LowerBoardColumn(ParentBoard,BoardID)
 
 	If ParentBoard = GBL_ParentBoard_Old Then
@@ -704,7 +707,7 @@ Function UpdateParentBoard_LowerBoardColumn(ParentBoard,BoardID)
 		UpdateParentBoard_LowerBoardColumn = 0
 		Rs.close
 		Set Rs = Nothing
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "¸¸¼¶°æÃæIDºÅ" & ParentBoard & "²»´æÔÚ£¬ÇëÕıÈ·ÌîĞ´¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "çˆ¶çº§ç‰ˆé¢IDå·" & ParentBoard & "ä¸å­˜åœ¨ï¼Œè¯·æ­£ç¡®å¡«å†™ã€‚<br>" & VbCrLf
 		Exit Function
 	Else
 		GBL_LowerBoardTemp = Rs(0)
@@ -712,9 +715,9 @@ Function UpdateParentBoard_LowerBoardColumn(ParentBoard,BoardID)
 	End if
 	Rs.Close
 	Set Rs = Nothing
-	Rem ÕâÀï¸ü¸Ä»ù±¾µÄ¿ÉÔÊĞíµÄ²ãÊıÏŞÖÆ
+	Rem è¿™é‡Œæ›´æ”¹åŸºæœ¬çš„å¯å…è®¸çš„å±‚æ•°é™åˆ¶
 	If Len(ParentBoardStr & "," & BoardID) > 55 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "ÂÛÌ³¿ÉÔÊĞí²ãÊı³¬³ö£¬Çë¸ü¸Ä¸¸¼¶°æÃæ£¬ĞŞ¸ÄÊ§°Ü¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "è®ºå›å¯å…è®¸å±‚æ•°è¶…å‡ºï¼Œè¯·æ›´æ”¹çˆ¶çº§ç‰ˆé¢ï¼Œä¿®æ”¹å¤±è´¥ã€‚<br>" & VbCrLf
 		UpdateParentBoard_LowerBoardColumn = 0
 		Exit Function
 	End If
@@ -722,7 +725,7 @@ Function UpdateParentBoard_LowerBoardColumn(ParentBoard,BoardID)
 	If inStr("," & GBL_LowerBoardTemp & ",","," & BoardID & ",") Then
 	Else
 		If Len(GBL_LowerBoardTemp & "," & BoardID) > 255 Then
-			GBL_CHK_TempStr = GBL_CHK_TempStr & "Ñ¡ÔñµÄ¸¸¼¶°æÒÑ¾­´ïµ½ÔÊĞíµÄ×î¶à×ÓÂÛÌ³ÊıÄ¿£¬ĞŞ¸ÄÊ§°Ü¡£<br>" & VbCrLf
+			GBL_CHK_TempStr = GBL_CHK_TempStr & "é€‰æ‹©çš„çˆ¶çº§ç‰ˆå·²ç»è¾¾åˆ°å…è®¸çš„æœ€å¤šå­è®ºå›æ•°ç›®ï¼Œä¿®æ”¹å¤±è´¥ã€‚<br>" & VbCrLf
 			UpdateParentBoard_LowerBoardColumn = 0
 			Exit Function
 		End If
@@ -731,7 +734,7 @@ Function UpdateParentBoard_LowerBoardColumn(ParentBoard,BoardID)
 
 End Function
 
-Rem ¸üĞÂ¸¸¼¶°æÃæµÄ×Ó°æÃæÊı¾İ
+Rem æ›´æ–°çˆ¶çº§ç‰ˆé¢çš„å­ç‰ˆé¢æ•°æ®
 Function UpdateParentBoard_LowerBoardColumn2(ParentBoard)
 
 	If ParentBoard < 1 Then Exit Function
@@ -754,7 +757,7 @@ Function UpdateParentBoard_LowerBoardColumn2(ParentBoard)
 
 End Function
 
-Rem ¸üĞÂ¸¸¼¶°æÃæÊı¾İ
+Rem æ›´æ–°çˆ¶çº§ç‰ˆé¢æ•°æ®
 Function UpdateParentBoardStrColumn(ParentOld,ParentNew,BoardID)
 
 	If ParentOld = ParentNew Then Exit Function
@@ -862,8 +865,8 @@ case "BoardJump.asp":
 	TempStr = TempStr & "	-->" & VbCrLf
 	TempStr = TempStr & "	" & Chr(60) & "/script>" & VbCrLf
 	TempStr = TempStr & "	<select name=""jumpto"" onchange=""surfto1(this)"" style=""width:100px;"">" & VbCrLf
-	TempStr = TempStr & "		<option value=""" & RW_boards(0) & """>ÇĞ»»°æÃæ¡­</option>" & VbCrLf
-	TempStr = TempStr & "		<option value=""" & RW_boards(0) & """>ÂÛÌ³Ê×Ò³</option>" & VbCrLf
+	TempStr = TempStr & "		<option value=""" & RW_boards(0) & """>åˆ‡æ¢ç‰ˆé¢â€¦</option>" & VbCrLf
+	TempStr = TempStr & "		<option value=""" & RW_boards(0) & """>è®ºå›é¦–é¡µ</option>" & VbCrLf
 
 	If BoardNum = -1 Then
 	Else
@@ -874,46 +877,46 @@ case "BoardJump.asp":
 			If CurrentAssosrt<>cCur(GetData(1,N)) Then
 				CurrentAssosrt = cCur(GetData(1,N))
 				If LastAssosrt = CurrentAssosrt Then
-					WriteStr = "©¸©Ğ"
+					WriteStr = "â””â”¬"
 				Else
-					WriteStr = "©À©Ğ"
+					WriteStr = "â”œâ”¬"
 				End If
-				If ViewSelectListFlag = 1 Then WriteStr = "£«"
+				If ViewSelectListFlag = 1 Then WriteStr = "ï¼‹"
 				TempStr = TempStr & "		<option value=""" & RW_boards(GetData(14,N)) & """>" & WriteStr & KillHTMLLabel(GetData(15,N) & "") & "</option>" & VbCrLf
 			End If
 			
 			If N >= BoardNum Then
 				If LastAssosrt = CurrentAssosrt Then
 					If GetData(16,n) & ""  = "" Then
-						WriteStr = "¡¡©¸"
+						WriteStr = "ã€€â””"
 					Else
-						WriteStr = "¡¡©À"
+						WriteStr = "ã€€â”œ"
 					End if
 				Else
-					WriteStr = "©¦©¸"
+					WriteStr = "â”‚â””"
 				End If
 
 				If ViewSelectListFlag = 1 Then
-					WriteStr = "¡¡"
-					If GetData(16,n) & "" <> "" Then WriteStr = "¡¡£«"
+					WriteStr = "ã€€"
+					If GetData(16,n) & "" <> "" Then WriteStr = "ã€€ï¼‹"
 				End If
 			Else
 				If CurrentAssosrt<>cCur(GetData(1,N+1)) Then
 					If LastAssosrt = CurrentAssosrt Then
-						WriteStr = "¡¡©¸"
+						WriteStr = "ã€€â””"
 					Else
-						WriteStr = "©¦©¸"
+						WriteStr = "â”‚â””"
 					End If
 				Else
 					If LastAssosrt = CurrentAssosrt Then
-						WriteStr = "¡¡©À"
+						WriteStr = "ã€€â”œ"
 					Else
-						WriteStr = "©¦©À"
+						WriteStr = "â”‚â”œ"
 					End If
 				End If
 				If ViewSelectListFlag = 1 Then
-					WriteStr = "¡¡"
-					If GetData(16,n) & "" <> "" Then WriteStr = "¡¡£«"
+					WriteStr = "ã€€"
+					If GetData(16,n) & "" <> "" Then WriteStr = "ã€€ï¼‹"
 				End If
 			End If
 			WriteStr = WriteStr & KillHTMLLabel(GetData(2,N))
@@ -923,7 +926,7 @@ case "BoardJump.asp":
 			TempStr = TempStr & "		<option value=""b/" & RW_b(GetData(0,N),0,"") & """>" & WriteStr & "" & "</option>" & VbCrLf
 			GBL_LowBoardString = ""
 			GBL_LoopN = 0
-			GetLowBoardString GetData(16,n),filename
+			Call GetLowBoardString(GetData(16,n),filename)
 			If GBL_LowBoardString <> "" Then TempStr = TempStr & GBL_LowBoardString
 		Next
 	End If
@@ -948,7 +951,7 @@ Case "BoardJump2.asp":
 	End If
 case "BoardForMoveList.asp":
 	TempStr = TempStr & "	<select name=""BoardID2"">" & VbCrLf
-	TempStr = TempStr & "		<option value=""0"">Ñ¡Ôñ°æÃæ¡­</option>" & VbCrLf
+	TempStr = TempStr & "		<option value=""0"">é€‰æ‹©ç‰ˆé¢â€¦</option>" & VbCrLf
 
 	If BoardNum = -1 Then
 	Else
@@ -959,45 +962,45 @@ case "BoardForMoveList.asp":
 			If CurrentAssosrt<>cCur(GetData(1,N)) Then
 				CurrentAssosrt = cCur(GetData(1,N))
 				If LastAssosrt = CurrentAssosrt Then
-					WriteStr = "©¸©Ğ"
+					WriteStr = "â””â”¬"
 				Else
-					WriteStr = "©À©Ğ"
+					WriteStr = "â”œâ”¬"
 				End If
-				If ViewSelectListFlag = 1 Then WriteStr = "£«"
+				If ViewSelectListFlag = 1 Then WriteStr = "ï¼‹"
 				TempStr = TempStr & "		<option value=""0"">" & WriteStr & KillHTMLLabel(GetData(15,N)) & "" & VbCrLf
 			End If
 			If N >= BoardNum Then
 				If LastAssosrt = CurrentAssosrt Then
 					If GetData(16,n) & ""  = "" Then
-						WriteStr = "¡¡©¸"
+						WriteStr = "ã€€â””"
 					Else
-						WriteStr = "¡¡©À"
+						WriteStr = "ã€€â”œ"
 					End if
 				Else
-					WriteStr = "©¦©¸"
+					WriteStr = "â”‚â””"
 				End If
 
 				If ViewSelectListFlag = 1 Then
-					WriteStr = "¡¡"
-					If GetData(16,n) & "" <> "" Then WriteStr = "¡¡£«"
+					WriteStr = "ã€€"
+					If GetData(16,n) & "" <> "" Then WriteStr = "ã€€ï¼‹"
 				End If
 			Else
 				If CurrentAssosrt<>cCur(GetData(1,N+1)) Then
 					If LastAssosrt = CurrentAssosrt Then
-						WriteStr = "¡¡©¸"
+						WriteStr = "ã€€â””"
 					Else
-						WriteStr = "©¦©¸"
+						WriteStr = "â”‚â””"
 					End If
 				Else
 					If LastAssosrt = CurrentAssosrt Then
-						WriteStr = "¡¡©À"
+						WriteStr = "ã€€â”œ"
 					Else
-						WriteStr = "©¦©À"
+						WriteStr = "â”‚â”œ"
 					End If
 				End If
 				If ViewSelectListFlag = 1 Then
-					WriteStr = "¡¡"
-					If GetData(16,n) & "" <> "" Then WriteStr = "¡¡£«"
+					WriteStr = "ã€€"
+					If GetData(16,n) & "" <> "" Then WriteStr = "ã€€ï¼‹"
 				End If
 			End If
 			WriteStr = WriteStr & KillHTMLLabel(GetData(2,N))
@@ -1007,7 +1010,7 @@ case "BoardForMoveList.asp":
 			TempStr = TempStr & "		<option value=" & GetData(0,N) & ">" & WriteStr & "" & VbCrLf
 			GBL_LowBoardString = ""
 			GBL_LoopN = 0
-			GetLowBoardString_Move GetData(16,n)
+			Call GetLowBoardString_Move(GetData(16,n))
 			If GBL_LowBoardString <> "" Then TempStr = TempStr & GBL_LowBoardString
 			
 		Next
@@ -1026,11 +1029,11 @@ case "data_boardlist.asp"
 			If CurrentAssosrt<>cCur(GetData(1,N)) Then
 				CurrentAssosrt = cCur(GetData(1,N))
 				If LastAssosrt = CurrentAssosrt Then
-					WriteStr = "©¸©Ğ"
+					WriteStr = "â””â”¬"
 				Else
-					WriteStr = "©À©Ğ"
+					WriteStr = "â”œâ”¬"
 				End If
-				If ViewSelectListFlag = 1 Then WriteStr = "£«"
+				If ViewSelectListFlag = 1 Then WriteStr = "ï¼‹"
 				If N = 0 Then
 					TempStr = TempStr & "{" & VbCrLf
 				Else
@@ -1042,35 +1045,35 @@ case "data_boardlist.asp"
 			If N >= BoardNum Then
 				If LastAssosrt = CurrentAssosrt Then
 					If GetData(16,n) & ""  = "" Then
-						WriteStr = "¡¡©¸"
+						WriteStr = "ã€€â””"
 					Else
-						WriteStr = "¡¡©À"
+						WriteStr = "ã€€â”œ"
 					End if
 				Else
-					WriteStr = "©¦©¸"
+					WriteStr = "â”‚â””"
 				End If
 
 				If ViewSelectListFlag = 1 Then
-					WriteStr = "¡¡"
-					If GetData(16,n) & "" <> "" Then WriteStr = "¡¡£«"
+					WriteStr = "ã€€"
+					If GetData(16,n) & "" <> "" Then WriteStr = "ã€€ï¼‹"
 				End If
 			Else
 				If CurrentAssosrt<>cCur(GetData(1,N+1)) Then
 					If LastAssosrt = CurrentAssosrt Then
-						WriteStr = "¡¡©¸"
+						WriteStr = "ã€€â””"
 					Else
-						WriteStr = "©¦©¸"
+						WriteStr = "â”‚â””"
 					End If
 				Else
 					If LastAssosrt = CurrentAssosrt Then
-						WriteStr = "¡¡©À"
+						WriteStr = "ã€€â”œ"
 					Else
-						WriteStr = "©¦©À"
+						WriteStr = "â”‚â”œ"
 					End If
 				End If
 				If ViewSelectListFlag = 1 Then
-					WriteStr = "¡¡"
-					If GetData(16,n) & "" <> "" Then WriteStr = "¡¡£«"
+					WriteStr = "ã€€"
+					If GetData(16,n) & "" <> "" Then WriteStr = "ã€€ï¼‹"
 				End If
 			End If
 			WriteStr = WriteStr & KillHTMLLabel(GetData(2,N))
@@ -1082,7 +1085,7 @@ case "data_boardlist.asp"
 			TempStr = TempStr & "	""text"":""" & htmlencode(WriteStr) & """" & VbCrLf & "}"
 			GBL_LowBoardString = ""
 			GBL_LoopN = 0
-			GetLowBoardString_Json GetData(16,n)
+			Call GetLowBoardString_Json(GetData(16,n))
 			If GBL_LowBoardString <> "" Then TempStr = TempStr & GBL_LowBoardString
 			
 		Next
@@ -1093,9 +1096,9 @@ end select
 	
 	ADODB_SaveToFile TempStr,"../../inc/IncHtm/" & savefile & ""
 	If GBL_CHK_TempStr = "" Then
-		Response.Write "<br><font color=Green class=greenfont>2.³É¹¦¸üĞÂÎÄ¼ş../../inc/IncHtm/" & savefile & "£¡</font>"
+		Response.Write "<br><font color=Green class=greenfont>2.æˆåŠŸæ›´æ–°æ–‡ä»¶../../inc/IncHtm/" & savefile & "ï¼</font>"
 	Else
-		%><p><%=GBL_CHK_TempStr%><br>·şÎñÆ÷²»Ö§³ÖÔÚÏßĞ´ÈëÎÄ¼ş¹¦ÄÜ£¬ÇëÊ¹ÓÃFTPµÈ¹¦ÄÜ£¬<br>½«<font color=Red Class=redfont>inc/IncHtm/<%=savefile%></font>ÎÄ¼şÌæ»»³ÉÏÂ¿òÖĞÄÚÈİ(×¢Òâ±¸·İ)<p>
+		%><p><%=GBL_CHK_TempStr%><br>æœåŠ¡å™¨ä¸æ”¯æŒåœ¨çº¿å†™å…¥æ–‡ä»¶åŠŸèƒ½ï¼Œè¯·ä½¿ç”¨FTPç­‰åŠŸèƒ½ï¼Œ<br>å°†<font color=Red Class=redfont>inc/IncHtm/<%=savefile%></font>æ–‡ä»¶æ›¿æ¢æˆä¸‹æ¡†ä¸­å†…å®¹(æ³¨æ„å¤‡ä»½)<p>
 		<textarea name="fileContent" cols="80" rows="20" class=fmtxtra><%=Server.htmlencode(TempStr)%></textarea><%
 		GBL_CHK_TempStr = ""
 	End If
@@ -1126,25 +1129,25 @@ Function GetLowBoardString(LowBoardStr,filename)
 			If Temp(8,0) = 0 Then
 				If N >= BoardNum Then
 					If LastAssosrt = CurrentAssosrt Then
-						WriteStr = "¡¡" & String(GBL_LoopN, "©¦") & "©À"
+						WriteStr = "ã€€" & String(GBL_LoopN, "â”‚") & "â”œ"
 					Else
-						WriteStr = "©¦" & String(GBL_LoopN, "©¦") & "©À"
+						WriteStr = "â”‚" & String(GBL_LoopN, "â”‚") & "â”œ"
 					End If
 				Else
 					If LastAssosrt = CurrentAssosrt Then
-						WriteStr = "¡¡©À"
+						WriteStr = "ã€€â”œ"
 					Else
-						WriteStr = "©¦" & String(GBL_LoopN, "©¦") & "©À"
+						WriteStr = "â”‚" & String(GBL_LoopN, "â”‚") & "â”œ"
 					End If
 				End If
 				If ViewSelectListFlag = 1 Then
 					If Temp(27,0) & "" <> "" Then
-						WriteStr = String(GBL_LoopN + 1, "¡¡") & "£«"
+						WriteStr = String(GBL_LoopN + 1, "ã€€") & "ï¼‹"
 					Else
-						WriteStr = String(GBL_LoopN + 1, "¡¡")
+						WriteStr = String(GBL_LoopN + 1, "ã€€")
 					End If
 				End If
-				'WriteStr = String(GBL_LoopN, "¡¡") & WriteStr
+				'WriteStr = String(GBL_LoopN, "ã€€") & WriteStr
 				WriteStr = WriteStr & KillHTMLLabel(Temp(0,0))
 				If StrLength(WriteStr) > 21 Then
 					WriteStr = LeftTrue(WriteStr,18) & "..."
@@ -1180,25 +1183,25 @@ Function GetLowBoardString_Move(LowBoardStr)
 			If Temp(8,0) = 0 Then
 				If N >= BoardNum Then
 					If LastAssosrt = CurrentAssosrt Then
-						WriteStr = "©¦" & String(GBL_LoopN, "©¦") & "©À"
+						WriteStr = "â”‚" & String(GBL_LoopN, "â”‚") & "â”œ"
 					Else
-						WriteStr = "©¦" & String(GBL_LoopN, "©¦") & "©À"
+						WriteStr = "â”‚" & String(GBL_LoopN, "â”‚") & "â”œ"
 					End If
 				Else
 					If LastAssosrt = CurrentAssosrt Then
-						WriteStr = "©¦©À"
+						WriteStr = "â”‚â”œ"
 					Else
-						WriteStr = "©¦" & String(GBL_LoopN, "©¦") & "©À"
+						WriteStr = "â”‚" & String(GBL_LoopN, "â”‚") & "â”œ"
 					End If
 				End If
 				If ViewSelectListFlag = 1 Then
 					If Temp(27,0) & "" <> "" Then
-						WriteStr = String(GBL_LoopN + 1, "¡¡") & "£«"
+						WriteStr = String(GBL_LoopN + 1, "ã€€") & "ï¼‹"
 					Else
-						WriteStr = String(GBL_LoopN + 1, "¡¡")
+						WriteStr = String(GBL_LoopN + 1, "ã€€")
 					End If
 				End If
-				'WriteStr = String(GBL_LoopN, "¡¡") & WriteStr
+				'WriteStr = String(GBL_LoopN, "ã€€") & WriteStr
 				WriteStr = WriteStr & KillHTMLLabel(Temp(0,0))
 				If StrLength(WriteStr) > 21 Then
 					WriteStr = LeftTrue(WriteStr,18) & "..."
@@ -1234,25 +1237,25 @@ Function GetLowBoardString_Json(LowBoardStr)
 			If Temp(8,0) = 0 Then
 				If N >= BoardNum Then
 					If LastAssosrt = CurrentAssosrt Then
-						WriteStr = "©¦" & String(GBL_LoopN, "©¦") & "©À"
+						WriteStr = "â”‚" & String(GBL_LoopN, "â”‚") & "â”œ"
 					Else
-						WriteStr = "©¦" & String(GBL_LoopN, "©¦") & "©À"
+						WriteStr = "â”‚" & String(GBL_LoopN, "â”‚") & "â”œ"
 					End If
 				Else
 					If LastAssosrt = CurrentAssosrt Then
-						WriteStr = "©¦©À"
+						WriteStr = "â”‚â”œ"
 					Else
-						WriteStr = "©¦" & String(GBL_LoopN, "©¦") & "©À"
+						WriteStr = "â”‚" & String(GBL_LoopN, "â”‚") & "â”œ"
 					End If
 				End If
 				If ViewSelectListFlag = 1 Then
 					If Temp(27,0) & "" <> "" Then
-						WriteStr = String(GBL_LoopN + 1, "¡¡") & "£«"
+						WriteStr = String(GBL_LoopN + 1, "ã€€") & "ï¼‹"
 					Else
-						WriteStr = String(GBL_LoopN + 1, "¡¡")
+						WriteStr = String(GBL_LoopN + 1, "ã€€")
 					End If
 				End If
-				'WriteStr = String(GBL_LoopN, "¡¡") & WriteStr
+				'WriteStr = String(GBL_LoopN, "ã€€") & WriteStr
 				WriteStr = WriteStr & KillHTMLLabel(Temp(0,0))
 				If StrLength(WriteStr) > 21 Then
 					WriteStr = LeftTrue(WriteStr,18) & "..."

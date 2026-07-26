@@ -1,4 +1,4 @@
-<!-- #include file=cms_article_fun.asp -->
+<!--#include file="cms_article_fun.asp"-->
 <%
 sub center_newsclass
 
@@ -17,12 +17,12 @@ class center_newsClass_Class
 
 	Private Sub Class_Initialize
 	
-		StyleItem = Array("1|±êÌâ¼Ó´ó","2|Õ¹Ê¾ÄÚÈİÌáÒª","3|Õ¹Ê¾Ïà¹ØÍ¼Æ¬","4|ÓĞÍ¼Æ¬Ê±Òş²Ø±êÌâ","5|½öÊ×Ìõ¼ÇÂ¼±êÌâ¼Ó´ó¼°Õ¹Ê¾Í¼Æ¬","6|Ïà¹ØÍ¼Æ¬ÏÔÊ¾Îª´óÍ¼Æ¬","7|¼ÇÂ¼Ë³Ğò¶ÁÈ¡(¾ÉµÄ¼ÇÂ¼ÓÅÏÈ)","8|¶¥²¿µ¼º½ÒÔÏÂÀ­²Ëµ¥ĞÎÊ½Õ¹Ê¾ÏÂ¼¶·ÖÀà»òÎÄÕÂ(ÔÚµ¼º½À¸ÏÔÊ¾Ê±²ÅÓĞĞ§)","9|²àÀ¸Õ¹Ê¾Îª´Ë·ÖÀàÏÂµÚÒ»ÆªÎÄÕÂÄÚÈİ(±ØĞëÎªhtml,½öÔÚ¿ªÆô²àÀ¸µ÷ÓÃÊ±ÓĞĞ§)","10|ÎÄÕÂÁĞ±íÒÔÍ¼ÎÄĞÎÊ½Õ¹Ê¾","11|´Ë·ÖÀà½ûÖ¹Õ¹Ê¾(²»»á½«´Ë·ÖÀà×÷ÎªÓĞĞ§µÄÁ´½Ó)")
+		StyleItem = Array("1|æ ‡é¢˜åŠ å¤§","2|å±•ç¤ºå†…å®¹æè¦","3|å±•ç¤ºç›¸å…³å›¾ç‰‡","4|æœ‰å›¾ç‰‡æ—¶éšè—æ ‡é¢˜","5|ä»…é¦–æ¡è®°å½•æ ‡é¢˜åŠ å¤§åŠå±•ç¤ºå›¾ç‰‡","6|ç›¸å…³å›¾ç‰‡æ˜¾ç¤ºä¸ºå¤§å›¾ç‰‡","7|è®°å½•é¡ºåºè¯»å–(æ—§çš„è®°å½•ä¼˜å…ˆ)","8|é¡¶éƒ¨å¯¼èˆªä»¥ä¸‹æ‹‰èœå•å½¢å¼å±•ç¤ºä¸‹çº§åˆ†ç±»æˆ–æ–‡ç« (åœ¨å¯¼èˆªæ æ˜¾ç¤ºæ—¶æ‰æœ‰æ•ˆ)","9|ä¾§æ å±•ç¤ºä¸ºæ­¤åˆ†ç±»ä¸‹ç¬¬ä¸€ç¯‡æ–‡ç« å†…å®¹(å¿…é¡»ä¸ºhtml,ä»…åœ¨å¼€å¯ä¾§æ è°ƒç”¨æ—¶æœ‰æ•ˆ)","10|æ–‡ç« åˆ—è¡¨ä»¥å›¾æ–‡å½¢å¼å±•ç¤º","11|æ­¤åˆ†ç±»ç¦æ­¢å±•ç¤º(ä¸ä¼šå°†æ­¤åˆ†ç±»ä½œä¸ºæœ‰æ•ˆçš„é“¾æ¥)")
 		If getformdata("action2") = "delete" then
 			dim tmpidlist
 			tmpidlist = getformdata("idlist")
 			if instr("," & tmpidlist & ",",",1,") then
-				response.Write "<div class=ajaxbox><div class=cms_error>±àºÅÎª1µÄ·ÖÀà½ûÖ¹É¾³ı£®.</div></div>"
+				response.Write "<div class=ajaxbox><div class=cms_error>ç¼–å·ä¸º1çš„åˆ†ç±»ç¦æ­¢åˆ é™¤ï¼.</div></div>"
 				exit sub
 			else
 				if cms_checkdeleteform("article_newsclass",1) = 1 then
@@ -39,7 +39,7 @@ class center_newsClass_Class
 			submitflag = GetFormData("submitflag")
 			If form_modifyid > 0 Then
 				if private_getnewsClassinfo(form_modifyid) = 0 Then
-					response.write "<span class=cms_error>ÄúÎŞÈ¨½øĞĞ´Ë²Ù×÷.</span>"
+					response.write "<span class=cms_error>æ‚¨æ— æƒè¿›è¡Œæ­¤æ“ä½œ.</span>"
 					exit sub
 				End if
 			End If
@@ -47,9 +47,9 @@ class center_newsClass_Class
 				If form_modifyid > 0 Then
 				Else
 				End If
-				center_newsClass_Form
+				center_newsClass_Form()
 			else
-				private_getformdata
+				private_getformdata()
 			end if
 		else
 			dim centermanagenewsClassClass
@@ -78,7 +78,7 @@ class center_newsClass_Class
 			rs.close
 			set rs = nothing
 			if checkid = form_modifyid and form_modifyid <> 0 then
-				CheckErrorStr = "ÉÏ¼¶·ÖÀà´íÎó£¬ÒòÎª´Ë·ÖÀàÒÑ¾­ÊÇÑ¡Ôñ·ÖÀàµÄÉÏ¼¶£®"
+				CheckErrorStr = "ä¸Šçº§åˆ†ç±»é”™è¯¯ï¼Œå› ä¸ºæ­¤åˆ†ç±»å·²ç»æ˜¯é€‰æ‹©åˆ†ç±»çš„ä¸Šçº§ï¼"
 				exit function
 			end if
 		next
@@ -97,14 +97,14 @@ class center_newsClass_Class
 		form_ParentID = toNum(GetFormData("form_ParentID"),0)
 		form_classname_side = lefttrue(getformdata("form_classname_side"),255)
 		
-		form_classname = FormClass_CheckFormValue(form_classname,"·ÖÀàÃû³Æ","string","none","=~~~",255)
+		form_classname = FormClass_CheckFormValue(form_classname,"åˆ†ç±»åç§°","string","none","=~~~",255)
 		
-		If CheckErrorStr = "" Then form_listflag = FormClass_CheckFormValue(form_listflag,"ÊÇ·ñÔÚÏà¹ØÒ³ÁĞ³ö´Ë·ÖÀà£º","int","none","0|1|2|3|4|5",2)
-		If CheckErrorStr = "" Then form_orderflag = FormClass_CheckFormValue(form_orderflag,"ÅÅÁĞË³Ğò","int",0,"<~~~1|>~~~10000000",12)
-		If CheckErrorStr = "" Then form_listNum = FormClass_CheckFormValue(form_listNum,"²àÀ¸Õ¹Ê¾¼ÇÂ¼ÊıÄ¿","int",1,"<~~~1|>~~~20",12)
+		If CheckErrorStr = "" Then form_listflag = FormClass_CheckFormValue(form_listflag,"æ˜¯å¦åœ¨ç›¸å…³é¡µåˆ—å‡ºæ­¤åˆ†ç±»ï¼š","int","none","0|1|2|3|4|5",2)
+		If CheckErrorStr = "" Then form_orderflag = FormClass_CheckFormValue(form_orderflag,"æ’åˆ—é¡ºåº","int",0,"<~~~1|>~~~10000000",12)
+		If CheckErrorStr = "" Then form_listNum = FormClass_CheckFormValue(form_listNum,"ä¾§æ å±•ç¤ºè®°å½•æ•°ç›®","int",1,"<~~~1|>~~~20",12)
 		
 		if CheckErrorStr = "" then
-			checkParentID
+			checkParentID()
 		end if
 		
 		
@@ -120,9 +120,9 @@ class center_newsClass_Class
 		
 		If CheckErrorStr <> "" Then
 			Response.Write "<span class=cms_error>" & CheckErrorStr & "</span>"
-			center_newsClass_Form
+			center_newsClass_Form()
 		Else
-			private_Saveformdata
+			private_Saveformdata()
 		End If 
 	
 	End Sub
@@ -141,7 +141,7 @@ class center_newsClass_Class
 				",classname_side='" & cms_sql(form_classname_side) & "'"&_
 				" where id=" & form_modifyid
 			call ldexecute(sql,1)
-			Response.Write "<span class=cms_ok>³É¹¦±à¼­ĞÅÏ¢.</span>"
+			Response.Write "<span class=cms_ok>æˆåŠŸç¼–è¾‘ä¿¡æ¯.</span>"
 		else
 			sql = "insert into article_newsclass(classname,listflag,orderflag,liststyle,listNum,ParentID,classname_side)" &_
 				" values('" & cms_sql(form_classname) & "'," & form_listflag & "" &_
@@ -152,7 +152,7 @@ class center_newsClass_Class
 				",'" & cms_sql(form_classname_side) & "'" &_
 				")"
 			call ldexecute(sql,1)
-			Response.Write "<span class=cms_ok>³É¹¦Ìí¼ÓĞÂĞÅÏ¢.</span>"
+			Response.Write "<span class=cms_ok>æˆåŠŸæ·»åŠ æ–°ä¿¡æ¯.</span>"
 		end if
 		UpdateCacheData("data_artileclass.asp")
 
@@ -194,12 +194,12 @@ class center_newsClass_Class
 		CALL FormClass_Head(Form_ActionStr,0,"center.asp?action=newsclass")
 		CALL FormClass_ItemPring("","hidden","form_modifyid",form_modifyid,"","","","","")
 		CALL FormClass_ItemPring("","hidden","submitflag","yes","","","","","")
-		CALL FormClass_ItemPring("ÊÇ·ñÔÚÏà¹ØÒ³ÁĞ³ö´Ë·ÖÀà£º","select","form_listflag",form_listflag,"","","","0~~~ÍêÈ«²»ÏÔÊ¾|1~~~ÍêÈ«ÏÔÊ¾|2~~~Ö»ÏÔÊ¾ÔÚ¶¥À¸(²»ÏÔÊ¾ÔÚ²àÀ¸)|3~~~Ö»ÏÔÊ¾ÔÚËùÓĞ²àÀ¸|4~~~Ö»ÏÔÊ¾ÔÚÊ×Ò³²àÀ¸|5~~~ÏÔÊ¾ÔÚÄÚÒ³²àÀ¸","")
-		CALL FormClass_ItemPring("ÏÔÊ¾Ë³Ğò£º","input","form_orderflag",form_orderflag,2,8,"Êı×ÖÔ½Ğ¡ÅÅÁĞÔ½Ç°","","")
-		CALL FormClass_ItemPring("ÎÄÕÂ·ÖÀàÃû³Æ£º","input","form_classname",form_classname,3,255,"±ØÌî£¬¿ÉÁíĞĞÊ¹ÓÃÁ´½Ó£¬¸ñÊ½Îª <u>³¬¼¶Á´½Ó(http:¿ªÍ·)|·ÖÀàÃû³Æ</u>","","")
-		CALL FormClass_ItemPring("²àÀ¸Õ¹Ê¾ÑùÊ½","splitchecked","form_liststyle",form_liststyle,"","","",StyleItem,"")
-		CALL FormClass_ItemPring("²àÀ¸Õ¹Ê¾¼ÇÂ¼ÊıÄ¿","input","form_listNum",form_listNum,2,2,"²àÀ¸Õ¹Ê¾´Ë·ÖÀàËùÔÊĞíÏÔÊ¾µÄÊıÁ¿","","")
-		CALL FormClass_ItemPring("Õ¹Ê¾ÔÚ²àÀ¸µÄÃû³Æ£º","input","form_classname_side",form_classname_side,3,255,"ÈôÖ¸¶¨£¬²àÀ¸ÓÅÏÈÊ¹ÓÃ´ËÃû³Æ","","")
+		CALL FormClass_ItemPring("æ˜¯å¦åœ¨ç›¸å…³é¡µåˆ—å‡ºæ­¤åˆ†ç±»ï¼š","select","form_listflag",form_listflag,"","","","0~~~å®Œå…¨ä¸æ˜¾ç¤º|1~~~å®Œå…¨æ˜¾ç¤º|2~~~åªæ˜¾ç¤ºåœ¨é¡¶æ (ä¸æ˜¾ç¤ºåœ¨ä¾§æ )|3~~~åªæ˜¾ç¤ºåœ¨æ‰€æœ‰ä¾§æ |4~~~åªæ˜¾ç¤ºåœ¨é¦–é¡µä¾§æ |5~~~æ˜¾ç¤ºåœ¨å†…é¡µä¾§æ ","")
+		CALL FormClass_ItemPring("æ˜¾ç¤ºé¡ºåºï¼š","input","form_orderflag",form_orderflag,2,8,"æ•°å­—è¶Šå°æ’åˆ—è¶Šå‰","","")
+		CALL FormClass_ItemPring("æ–‡ç« åˆ†ç±»åç§°ï¼š","input","form_classname",form_classname,3,255,"å¿…å¡«ï¼Œå¯å¦è¡Œä½¿ç”¨é“¾æ¥ï¼Œæ ¼å¼ä¸º <u>è¶…çº§é“¾æ¥(http:å¼€å¤´)|åˆ†ç±»åç§°</u>","","")
+		CALL FormClass_ItemPring("ä¾§æ å±•ç¤ºæ ·å¼","splitchecked","form_liststyle",form_liststyle,"","","",StyleItem,"")
+		CALL FormClass_ItemPring("ä¾§æ å±•ç¤ºè®°å½•æ•°ç›®","input","form_listNum",form_listNum,2,2,"ä¾§æ å±•ç¤ºæ­¤åˆ†ç±»æ‰€å…è®¸æ˜¾ç¤ºçš„æ•°é‡","","")
+		CALL FormClass_ItemPring("å±•ç¤ºåœ¨ä¾§æ çš„åç§°ï¼š","input","form_classname_side",form_classname_side,3,255,"è‹¥æŒ‡å®šï¼Œä¾§æ ä¼˜å…ˆä½¿ç”¨æ­¤åç§°","","")
 		Dim str
 		
 			str = "<input class=""easyui-combobox"" id=""form_ParentID"" name=""form_ParentID"" value=""" & form_ParentID & """ data-options=""" & VbCrLf &_
@@ -210,8 +210,8 @@ class center_newsClass_Class
 					"	panelHeight: 'auto'," & VbCrLf &_
 					"	formatter: formatItem" & VbCrLf &_
 					""">" & VbCrLf
-		CALL FormClass_ItemPring("ÉÏ¼¶·ÖÀà","other",str,form_ParentID,2,12,"","","")
-		FormClass_End
+		CALL FormClass_ItemPring("ä¸Šçº§åˆ†ç±»","other",str,form_ParentID,2,12,"","","")
+		Call FormClass_End()
 	
 	End Sub
 
@@ -261,11 +261,11 @@ class center_newsClass_Class
 	
 		TempStr = DEF_pageHeader & TempStr & "]"
 		
-		ADODB_SaveToFile TempStr,DEF_BBS_HomeUrl & "inc/IncHtm/" & savefile & ""
+		Call ADODB_SaveToFile(TempStr,DEF_BBS_HomeUrl & "inc/IncHtm/" & savefile & "")
 		If GBL_CHK_TempStr = "" Then
-			Response.Write "<br><span class=cms_ok>2.³É¹¦¸üĞÂÎÄ¼ş../../inc/IncHtm/" & savefile & "£¡</span>"
+			Response.Write "<br><span class=cms_ok>2.æˆåŠŸæ›´æ–°æ–‡ä»¶../../inc/IncHtm/" & savefile & "ï¼</span>"
 		Else
-			%><p><%=GBL_CHK_TempStr%><br>·şÎñÆ÷²»Ö§³ÖÔÚÏßĞ´ÈëÎÄ¼ş¹¦ÄÜ£¬ÇëÊ¹ÓÃFTPµÈ¹¦ÄÜ£¬<br>½«<span Class=cms_error>inc/IncHtm/<%=savefile%></span>ÎÄ¼şÌæ»»³ÉÏÂ¿òÖĞÄÚÈİ(×¢Òâ±¸·İ)<p>
+			%><p><%=GBL_CHK_TempStr%><br>æœåŠ¡å™¨ä¸æ”¯æŒåœ¨çº¿å†™å…¥æ–‡ä»¶åŠŸèƒ½ï¼Œè¯·ä½¿ç”¨FTPç­‰åŠŸèƒ½ï¼Œ<br>å°†<span Class=cms_error>inc/IncHtm/<%=savefile%></span>æ–‡ä»¶æ›¿æ¢æˆä¸‹æ¡†ä¸­å†…å®¹(æ³¨æ„å¤‡ä»½)<p>
 			<textarea name="fileContent" cols="80" rows="20" class=fmtxtra><%=Server.htmlencode(TempStr)%></textarea><%
 			GBL_CHK_TempStr = ""
 		End If
@@ -325,7 +325,7 @@ class center_managenewsClass_Class
 		class_selcolumn = "id,classname"
 		CALL splitpage_returnData(class_sql,class_idname,class_page,class_selcolumn,0)
 		
-		private_managelist
+		private_managelist()
 		
 		CALL splitpage_viewpagelist("center.asp?action=newsclass&list=1",splitpage_maxpage,splitpage_page,"")
 			
@@ -333,15 +333,15 @@ class center_managenewsClass_Class
 	
 	private sub private_managelist
 	
-		cms_selectFormScript("center.asp?action=newsclass")
+		Call cms_selectFormScript("center.asp?action=newsclass")
 		%>
-		<div class="title"><div class="titlebg">¹ÜÀíÎÄÕÂ·ÖÀà <a href=center.asp?action=newsclass>µã´ËÌí¼ÓĞÂ·ÖÀà</a></div></div>
+		<div class="title"><div class="titlebg">ç®¡ç†æ–‡ç« åˆ†ç±» <a href=center.asp?action=newsclass>ç‚¹æ­¤æ·»åŠ æ–°åˆ†ç±»</a></div></div>
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" class=table_in>
 				<tr class="tbinhead cms_tbinhead">
-					<td width=60><div class=cms_value>±àºÅ</div></td>
-					<td><div class=cms_value>·ÖÀàÃû³Æ</div></td>
-					<td>±à¼­</td>
-					<td>À¸Ä¿</td>
+					<td width=60><div class=cms_value>ç¼–å·</div></td>
+					<td><div class=cms_value>åˆ†ç±»åç§°</div></td>
+					<td>ç¼–è¾‘</td>
+					<td>æ ç›®</td>
 				</tr>
 				<%dim n
 				for n = 0 to splitpage_num%>
@@ -351,10 +351,10 @@ class center_managenewsClass_Class
 					If ccur(splitpage_getdata(0,n)) <> 1 then
 					%><input class="fmchkbox" type="checkbox" name="ids" id="ids<%=n%>" value="<%=splitpage_getdata(0,n)%>" onclick="delbody_view(this);" /><%
 					else
-						Response.Write "<span class=""grayfont"">[Ê×Ò³¹«¸æÀ¸×¨ÓÃ·ÖÀà]</span>"
+						Response.Write "<span class=""grayfont"">[é¦–é¡µå…¬å‘Šæ ä¸“ç”¨åˆ†ç±»]</span>"
 					end if%></span><a href=center.asp?action=newsclass&form_modifyid=<%=splitpage_getdata(0,n)%>><%=splitpage_getdata(1,n)%></a></td>
-					<td class=tdbox><a href=center.asp?action=newsclass&form_modifyid=<%=splitpage_getdata(0,n)%>>±à¼­<a></td>
-					<td class=tdbox><a href=center.asp?action=setchannel&form_fileid=<%=splitpage_getdata(0,n)%>>À¸Ä¿Éè¶¨<a></td>
+					<td class=tdbox><a href=center.asp?action=newsclass&form_modifyid=<%=splitpage_getdata(0,n)%>>ç¼–è¾‘<a></td>
+					<td class=tdbox><a href=center.asp?action=setchannel&form_fileid=<%=splitpage_getdata(0,n)%>>æ ç›®è®¾å®š<a></td>
 				</tr>
 				<%next%>
 		</table>

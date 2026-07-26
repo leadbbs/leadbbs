@@ -15,7 +15,7 @@ PUBLIC Sub DisplayAnnouncesSplit
 	else
 		if ccur(rs(1)) <> gbl_board_id then
 			gbl_board_id = rs(1)
-			Borad_GetBoardIDValue(gbl_board_id)
+			Call Borad_GetBoardIDValue(gbl_board_id)
 		end if
 		if ccur(rs(2)) <> 0 then rootid = 0
 		childNum = ccur(rs(0))
@@ -29,7 +29,7 @@ PUBLIC Sub DisplayAnnouncesSplit
 	class_page = 0
 	class_sql = "select {~~~} from LeadBBS_Announce as T1 left join LeadBBS_User as T2 on T2.Id=T1.Userid " & sql_extend
 	class_idname = "T1.id"
-	class_selcolumn = "T1.id,T1.Title,T1.ndatetime,T1.UserName,T1.UserID,T1.TitleStyle,T2.UserName,T2.ID,T2.TrueName,T1.BoardID"
+	class_selcolumn = "T1.id,T1.Title,T1.ndatetime,T1.UserName,T1.UserID,T1.TitleStyle,T2.UserName as username_dup2,T2.ID as id_dup2,T2.TrueName,T1.BoardID"
 	splitpage_orderstr = "T1.id asc"
 	
 	class_page = fix(toNum(Request("page"),0))
@@ -42,7 +42,7 @@ PUBLIC Sub DisplayAnnouncesSplit
 		Dim TArray,ForumPass,BoardLimit,OtherLimit,HiddenFlag
 		TArray = Application(DEF_MasterCookies & "BoardInfo" & GBL_Board_ID)
 		If isArray(TArray) = False Then
-			ReloadBoardInfo(GBL_Board_ID)
+			Call ReloadBoardInfo(GBL_Board_ID)
 			TArray = Application(DEF_MasterCookies & "BoardInfo" & GBL_Board_ID)
 		End If
 		If isArray(TArray) = False Then
@@ -54,7 +54,7 @@ PUBLIC Sub DisplayAnnouncesSplit
 			HiddenFlag = TArray(8,0)
 		End If
 		If GBL_CheckLimitTitle(ForumPass,BoardLimit,OtherLimit,HiddenFlag) = 1 Then
-			Response.Write "<ul><li>œﬁ÷∆∞Ê√Ê“—Ω˚”√¥Àπ¶ƒ‹.</li></ul>"
+			Response.Write "<ul><li>ÈôêÂà∂ÁâàÈù¢Â∑≤Á¶ÅÁî®Ê≠§ÂäüËÉΩ.</li></ul>"
 			Exit Sub
 		End If
 		DisplaySmallAnnounceData 0,Ubound(splitpage_getdata,2),1,splitpage_getdata
@@ -63,7 +63,7 @@ PUBLIC Sub DisplayAnnouncesSplit
 	dim extendurl,tmp
 	extendurl = ""
 	tmp = "&ID=" & RootID
-	'PageSplitString = PageSplitString & " <a href=#no onclick='getAJAX(""b.asp"",""ol=3" & tmp & """,""Lead" & RootID & """);'>Œ≤“≥</a>"
+	'PageSplitString = PageSplitString & " <a href=#no onclick='getAJAX(""b.asp"",""ol=3" & tmp & """,""Lead" & RootID & """);'>Â∞æÈ°µ</a>"
 	CALL splitpage_viewpagelist("b.asp?b=" & GBL_board_ID,splitpage_maxpage,splitpage_page,"Lead" & RootID & "|" & "ol=3" & tmp & "|$(\'#Lead" & RootID & "\').parent().ScrollTo(600);")
 
 end sub
@@ -76,9 +76,9 @@ Private Sub DisplaySmallAnnounceData(For1,For2,StepValue,GetData)
 		If RootID <> cCur(GetData(0,N)) Then
 			Response.Write "<li>" & VbCrLf	
 			If N = For2 Then
-				Response.Write "©∏" & VbCrLf
+				Response.Write "‚îî" & VbCrLf
 			Else
-				Response.Write "©¿" & VbCrLf
+				Response.Write "‚îú" & VbCrLf
 			End If
 			Response.Write "<a href=" & DEF_BBS_HomeUrl & "a/" & RW_a(GBL_Board_ID,GetData(0,N),1,1,"re=1") & ">" & VbCrLf
 		End If
@@ -87,7 +87,7 @@ Private Sub DisplaySmallAnnounceData(For1,For2,StepValue,GetData)
 		If GetData(5,n) <> 1 Then GetData(1,n) = Replace(GetData(1,n) & "","<","&lt;")
 		GetData(1,n) = DisplayAnnounceTitle(GetData(1,n),GetData(5,n))
 		If GetData(5,n) >=60 Then
-			GetData(1,n) = "Ã˚◊”µ»¥˝…Û∫À÷–..."
+			GetData(1,n) = "Â∏ñÂ≠êÁ≠âÂæÖÂÆ°Ê†∏‰∏≠..."
 			GetData(5,n) = 1
 		End If
 		GetData(1,n) = Replace(Replace(GetData(1,N) & "","\","\\"),"""","\""")

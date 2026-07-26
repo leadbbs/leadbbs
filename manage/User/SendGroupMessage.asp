@@ -1,54 +1,54 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../../inc/Limit_Fun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
-<!-- #include file=../../User/inc/Fun_SendMessage.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../../inc/Limit_Fun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
+<!--#include file="../../User/inc/Fun_SendMessage.asp"-->
 <%
 Server.ScriptTimeOut = 99999
 DEF_BBS_HomeUrl = "../../"
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-checkSupervisorPass
+checkSupervisorPass()
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
 
 
 Dim Sdm_FromUser,Sdm_ToUser,Sdm_Title,Sdm_Content,Smd_ToUserID,SdM_ToUserClass
 Sdm_FromUser = GBL_CHK_User
 
 SdM_ToUserClass = 0
-frame_TopInfo
-DisplayUserNavigate("ÂÛÌ³¶ÌÏûÏ¢Èº·¢")%>
+frame_TopInfo()
+DisplayUserNavigate("è®ºå›çŸ­æ¶ˆæ¯ç¾¤å‘")%>
 <p>
 <%
 If GBL_CHK_Flag=1 Then
 	If GBL_CHK_TempStr="" Then
 		If Request.Form("submitFlag")<>"" Then
-			CheckSubmitFormData
+			CheckSubmitFormData()
 			If GBL_CHK_TempStr = "" Then
-				WriteNewMessageToDatabase
+				WriteNewMessageToDatabase()
 			Else
 				Response.Write "<div class=alert>" & GBL_CHK_TempStr & "</div>" & VbCrLf
-				NewMessageForm
+				NewMessageForm()
 			End If
 		Else
-			NewMessageForm
+			NewMessageForm()
 		End If
 	Else
 		Response.Write GBL_CHK_TempStr
 	End If
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Function NewMessageForm
 
 	Dim TempN
 %>
-	<div class=frametitle>Èº·¢ËÍĞÂµÄ¶ÌĞÅÏ¢</b>£¨¼Ó¡°<span class=redfont><b>*</b></span>¡±ºÅÎª±ØÌîÏî£©
+	<div class=frametitle>ç¾¤å‘é€æ–°çš„çŸ­ä¿¡æ¯</b>ï¼ˆåŠ â€œ<span class=redfont><b>*</b></span>â€å·ä¸ºå¿…å¡«é¡¹ï¼‰
 	</div>
 	<br>
 	<script language="javascript">
@@ -98,7 +98,7 @@ Function NewMessageForm
 	
 	<tr> 
 		<td class=tdbox width=120>
-			·¢ËÍÕß</td>
+			å‘é€è€…</td>
 		<td class=tdbox>
 			<%=Sdm_FromUser%>
 			<input name=submitFlag value="<%=Second(time)&minute(time)%>" type=hidden>
@@ -106,25 +106,25 @@ Function NewMessageForm
 	</tr>
 	<tr>
 		<td class=tdbox>
-			<%If CheckSupervisorUserName = 0 Then%><font color="#CC0000" class=redfont><b>*</b></font><%End If%>½ÓÊÕÈË</td>
+			<%If CheckSupervisorUserName() = 0 Then%><font color="#CC0000" class=redfont><b>*</b></font><%End If%>æ¥æ”¶äºº</td>
 		<td class=tdbox>
 			<select name=SdM_ToUserClass>
-				<option value=0<%If SdM_ToUserClass = 0 Then Response.Write " selected"%>>È«Ìå°æÖ÷</option>
-				<option value=1<%If SdM_ToUserClass = 1 Then Response.Write " selected"%>>È«Ìå<%=DEF_PointsName(6)%></option>
-				<option value=2<%If SdM_ToUserClass = 2 Then Response.Write " selected"%>>È«Ìå<%=DEF_PointsName(5)%></option>
-				<option value=4<%If SdM_ToUserClass = 4 Then Response.Write " selected"%>>È«Ìå<%=DEF_PointsName(10)%></option>
-				<option value=5<%If SdM_ToUserClass = 5 Then Response.Write " selected"%>>×î½üÈı¸öÔÂÓĞÀ´·ÃµÄËùÓĞÓÃ»§(½¨ÒéÊ¹ÓÃ)</option>
-				<option value=3<%If SdM_ToUserClass = 3 Then Response.Write " selected"%>>È«ÌåÓÃ»§£¬Õ¼ÓÃ×ÊÔ´´ó£¬½÷É÷Ê¹ÓÃ</option>
+				<option value=0<%If SdM_ToUserClass = 0 Then Response.Write " selected"%>>å…¨ä½“ç‰ˆä¸»</option>
+				<option value=1<%If SdM_ToUserClass = 1 Then Response.Write " selected"%>>å…¨ä½“<%=DEF_PointsName(6)%></option>
+				<option value=2<%If SdM_ToUserClass = 2 Then Response.Write " selected"%>>å…¨ä½“<%=DEF_PointsName(5)%></option>
+				<option value=4<%If SdM_ToUserClass = 4 Then Response.Write " selected"%>>å…¨ä½“<%=DEF_PointsName(10)%></option>
+				<option value=5<%If SdM_ToUserClass = 5 Then Response.Write " selected"%>>æœ€è¿‘ä¸‰ä¸ªæœˆæœ‰æ¥è®¿çš„æ‰€æœ‰ç”¨æˆ·(å»ºè®®ä½¿ç”¨)</option>
+				<option value=3<%If SdM_ToUserClass = 3 Then Response.Write " selected"%>>å…¨ä½“ç”¨æˆ·ï¼Œå ç”¨èµ„æºå¤§ï¼Œè°¨æ…ä½¿ç”¨</option>
 		</td>
 	</tr>
 	<tr> 
-		<td class=tdbox align=left width=20%><font color="#CC0000" class=redfont><b>*</b></font>ĞÅÏ¢±êÌâ</td>
+		<td class=tdbox align=left width=20%><font color="#CC0000" class=redfont><b>*</b></font>ä¿¡æ¯æ ‡é¢˜</td>
 		<td class=tdbox height=24 valign=top width=80%>
 			<input class=fminpt name=SdM_Title value="<%=htmlencode(SdM_Title)%>" size=60 maxlength=50>
 		</td>
 	</tr>
 	<tr> 
-		<td class=tdbox align=left width=20%>¶ÌÏûÏ¢ÄÚÈİ<br><br><a href="javascript:smilie('[IMG][/IMG]');">Ö§³Ö[IMG]±ê<br>Ç©²åÈëÍ¼Æ¬</td>
+		<td class=tdbox align=left width=20%>çŸ­æ¶ˆæ¯å†…å®¹<br><br><a href="javascript:smilie('[IMG][/IMG]');">æ”¯æŒ[IMG]æ ‡<br>ç­¾æ’å…¥å›¾ç‰‡</td>
 		<td class=tdbox height=24 valign=top width=80%>
 			<textarea cols=58 name="SdM_Content" rows=10" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" class=fmtxtra><%If SdM_Content<>"" Then Response.Write VbCrLf & Htmlencode(SdM_Content)%></textarea>
 		</td>
@@ -135,13 +135,13 @@ Function NewMessageForm
 	<tr>
 		<td class=tdbox width=20%>&nbsp;&nbsp;</td>
 		<td class=tdbox>
-			<input type="submit" name="Submit" value="Ìá½»" class=fmbtn> &nbsp;
-			<input type="reset" name="reset" value="Çå³ı" class=fmbtn>
+			<input type="submit" name="Submit" value="æäº¤" class=fmbtn> &nbsp;
+			<input type="reset" name="reset" value="æ¸…é™¤" class=fmbtn>
 		</td>
 	</tr>
 	</table>
 	</form>
-	<p>×¢£ºËùÓĞ¶ÌÏûÏ¢¾ùÒÔÏµÍ³Éí·İ·¢ËÍ</p>
+	<p>æ³¨ï¼šæ‰€æœ‰çŸ­æ¶ˆæ¯å‡ä»¥ç³»ç»Ÿèº«ä»½å‘é€</p>
 <%
 End Function
 
@@ -154,22 +154,22 @@ Function CheckSubmitFormData
 	If SdM_ToUserClass <> "0" and SdM_ToUserClass <> "1" and SdM_ToUserClass <> "2" and SdM_ToUserClass <> "3" and SdM_ToUserClass <> "4" and SdM_ToUserClass <> "5" Then SdM_ToUserClass = -1
 	SdM_ToUserClass = cCur(SdM_ToUserClass)
 	If SdM_ToUserClass = -1 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "´íÎó£¬½ÓÊÕ¶ÔÏóÑ¡Ôñ´íÎó!<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "é”™è¯¯ï¼Œæ¥æ”¶å¯¹è±¡é€‰æ‹©é”™è¯¯!<br>" & VbCrLf
 		Exit Function
 	End If
 
 	If len(SdM_Title) > 50 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "´íÎó£¬ĞÅÏ¢±êÌâÇë²»Òª³¬¹ı50¸ö×Ö. <br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "é”™è¯¯ï¼Œä¿¡æ¯æ ‡é¢˜è¯·ä¸è¦è¶…è¿‡50ä¸ªå­—. <br>" & VbCrLf
 		Exit Function
 	End if
 
 	If SdM_Title = "" Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "´íÎó£¬ĞÅÏ¢±êÌâ±ØĞëÌîĞ´. <br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "é”™è¯¯ï¼Œä¿¡æ¯æ ‡é¢˜å¿…é¡»å¡«å†™. <br>" & VbCrLf
 		Exit Function
 	End if
 
 	If Len(SdM_Content) > DEF_MaxTextLength then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "´íÎó£¬ÄÚÈİ²»ÄÜ³¬¹ı" & DEF_MaxTextLength & "¸ö×Ö!<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "é”™è¯¯ï¼Œå†…å®¹ä¸èƒ½è¶…è¿‡" & DEF_MaxTextLength & "ä¸ªå­—!<br>" & VbCrLf
 		Exit Function
 	End If
 
@@ -197,7 +197,7 @@ Function WriteNewMessageToDatabase
 		Else
 			Rs.Close
 			Set Rs = Nothing
-			Response.Write "<p>Ã»ÓĞÈÎºÎ°æÖ÷£¬Èº·¢½áÊø£¡<br>" & VbCrLf
+			Response.Write "<p>æ²¡æœ‰ä»»ä½•ç‰ˆä¸»ï¼Œç¾¤å‘ç»“æŸï¼<br>" & VbCrLf
 		End If
 	Case 1:
 		Set Rs = LDExeCute("select UserName from LeadBBS_SpecialUser Where Assort=2",0)
@@ -274,7 +274,7 @@ End Function
 Sub SendMsg(SdM_toUser)
 
 	If CheckUserNameExist(SdM_ToUser) = 0 Then
-		Response.Write "<br><span class=redfont>ÓÃ»§ " & htmlencode(SdM_toUser) & " ²»´æÔÚ£¬·¢ËÍ¶ÌÏûÏ¢Ê§°Ü£¡</font>"
+		Response.Write "<br><span class=redfont>ç”¨æˆ· " & htmlencode(SdM_toUser) & " ä¸å­˜åœ¨ï¼Œå‘é€çŸ­æ¶ˆæ¯å¤±è´¥ï¼</font>"
 		Exit Sub
 	End If
 
@@ -286,7 +286,7 @@ Sub SendMsg(SdM_toUser)
 
 End Sub
 
-Rem ¼ì²âÄ³ÓÃ»§ÃûIDÊÇ·ñ´æÔÚ
+Rem æ£€æµ‹æŸç”¨æˆ·åIDæ˜¯å¦å­˜åœ¨
 Function CheckUserNameExist(UserName)
 
 	Dim Rs

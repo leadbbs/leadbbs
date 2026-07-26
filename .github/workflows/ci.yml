@@ -1,0 +1,160 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  AXONASP_VERSION: '2.3.5'
+  LEADBBS_URL: 'http://localhost:9596'
+  LEADBBS_ADMIN_USER: admin
+  LEADBBS_ADMIN_PASS: leadbbs123
+  LEADBBS_ADMIN_ANSWER: leadbbsans
+
+jobs:
+  test:
+    name: browser suites
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      # MariaDB is started by hand rather than as a service container because
+      # lower_case_table_names=1 is a server start-up option and LeadBBS cannot work without
+      # it: the app spells its tables in several different cases, and on Linux the mismatched
+      # queries return EMPTY rather than erroring, which looks like an empty forum.
+      - name: Start MariaDB
+        run: |
+          docker run -d --name mariadb -p 3306:3306 \
+            -e MARIADB_ROOT_PASSWORD=leadbbs \
+            -e MARIADB_DATABASE=leadbbs \
+            mariadb:11 --lower-case-table-names=1 --max-allowed-packet=64M
+          for i in $(seq 1 60); do
+            docker exec mariadb mariadb -uroot -pleadbbs -e 'SELECT 1' >/dev/null 2>&1 && break
+            sleep 2
+          done
+          docker exec mariadb mariadb -uroot -pleadbbs -e "SHOW VARIABLES LIKE 'lower_case_table_names'"
+
+      - name: Load the fixture database
+        run: |
+          docker exec -i mariadb mariadb -uroot -pleadbbs leadbbs < test/fixtures/seed.sql
+          docker exec mariadb mariadb -uroot -pleadbbs leadbbs \
+            -e "SELECT COUNT(*) AS boards FROM leadbbs_boards; SELECT COUNT(*) AS users FROM leadbbs_user;"
+
+      # AxonASP is MPL-2.0 and is NOT vendored here; CI installs the same pinned build the
+      # port was developed and tested against.
+      - name: Install AxonASP ${{ env.AXONASP_VERSION }}
+        run: |
+          curl -fsSL -o /tmp/axonasp.deb \
+            "https://github.com/guimaraeslucas/axonasp/releases/download/v${AXONASP_VERSION}/axonasp_${AXONASP_VERSION}_amd64.deb"
+          sudo dpkg -i /tmp/axonasp.deb || sudo apt-get -f install -y
+          AXON_BIN=$(dpkg -L axonasp | grep -E '/axonasp-http$' | head -1)
+          test -n "$AXON_BIN"
+          echo "AXONASP_HOME=$(dirname "$AXON_BIN")" >> "$GITHUB_ENV"
+          "$AXON_BIN" --version || true
+
+      - uses: oven-sh/setup-bun@v2
+      - name: Install Chromium for Playwright
+        run: bunx playwright install --with-deps chromium
+
+      - name: Configure the forum
+        run: |
+          # inc/BBSSetup.asp ships as upstream does: a stub that redirects to the web
+          # installer, which writes the real file. CI has no installer to drive, so it puts the
+          # matching post-install fixture in place and fills in the connection string. AxonASP
+          # parses this ODBC-style string with its own native MySQL driver — no unixODBC needed.
+          sed -e 's#__CONNECTION_STRING__#Driver={Mysql ODBC 5.2 ANSI Driver};SERVER=127.0.0.1;DATABASE=leadbbs;UID=root;PWD=leadbbs;charset=utf8;#' \
+              test/fixtures/BBSSetup.ci.asp > inc/BBSSetup.asp
+          grep -c 'DEF_AccessDatabase = "Driver=' inc/BBSSetup.asp
+          sed -e "s#^web_root = .*#web_root = \"${GITHUB_WORKSPACE}/\"#" \
+              axonasp.example.toml > axonasp.toml
+          grep -E '^(web_root|server_port|vm_pool_size)' axonasp.toml
+          # directories the application writes to; git cannot carry empty ones
+          mkdir -p temp images/upload images/temp data/backup
+          chmod -R 777 temp images/upload images/temp data/backup
+          # the case aliases are committed; this only covers files added since
+          ./make-compat-symlinks.sh
+
+      - name: Start AxonASP
+        run: |
+          ./start-server.sh > axonasp.log 2>&1 &
+          for i in $(seq 1 60); do
+            curl -fsS -o /dev/null "$LEADBBS_URL/Boards.asp" && break
+            sleep 2
+          done
+          curl -fsS -o /dev/null -w 'Boards.asp -> %{http_code}\n' "$LEADBBS_URL/Boards.asp"
+
+      - name: Run the browser suites
+        # run-all.sh restarts AxonASP between suites (§32), so it needs to know where the
+        # server lives. It can derive that from its own location, but say it explicitly: when
+        # it cannot, the failure is a confusing `cd: test/browser/../..` rather than a clear
+        # error, which is exactly how the first CI run died.
+        env:
+          LEADBBS_HOME: ${{ github.workspace }}
+          LEADBBS_START: ${{ github.workspace }}/start-server.sh
+          LEADBBS_LOG: ${{ github.workspace }}/axonasp.log
+        run: bash test/browser/run-all.sh
+
+      - name: Collect logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failure-logs
+          path: |
+            axonasp.log
+            /var/log/axonasp/
+          if-no-files-found: ignore
+          retention-days: 7
+
+  release:
+    name: package release
+    needs: test
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      # git archive, NOT `zip -r`: the ~1,130 case-alias symlinks must stay symlinks. A plain
+      # zip dereferences them into copies, which breaks the files LeadBBS rewrites at runtime
+      # (a write through one name leaves the other stale). export-ignore in .gitattributes
+      # keeps test/, docs/, tools/ and .github/ out of the package.
+      - name: Build the release archives
+        run: |
+          NAME="leadbbs-${GITHUB_REF_NAME#v}-linux"
+          git archive --format=zip    -o "${NAME}.zip"    HEAD
+          git archive --format=tar.gz -o "${NAME}.tar.gz" HEAD
+          mkdir -p /tmp/verify && unzip -q "${NAME}.zip" -d /tmp/verify
+          echo "symlinks preserved in the zip: $(find /tmp/verify -type l | wc -l)"
+          test "$(find /tmp/verify -type l | wc -l)" -gt 1000
+          test ! -e /tmp/verify/test && test ! -e /tmp/verify/docs
+          # The §32 watchdog is an operational necessity, not documentation -- a deployment that
+          # unzips the release and never clones the repo still has to get it.
+          test -f /tmp/verify/leadbbs-healthcheck.sh
+          sha256sum "${NAME}.zip" "${NAME}.tar.gz" | tee SHA256SUMS
+          echo "ASSET=${NAME}" >> "$GITHUB_ENV"
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ${{ env.ASSET }}.zip
+            ${{ env.ASSET }}.tar.gz
+            SHA256SUMS
+          body: |
+            Built from a green run of the full browser suite.
+
+            **Deploy:** unzip, run `./make-compat-symlinks.sh`, copy `axonasp.example.toml` to
+            `axonasp.toml` and set `web_root`, then `./start-server.sh` and open `/install/`.
+            Delete `install/` afterwards. See the README for the MariaDB
+            `lower_case_table_names=1` requirement.
+
+            Requires AxonASP (MPL-2.0), installed separately:
+            https://github.com/guimaraeslucas/axonasp/releases

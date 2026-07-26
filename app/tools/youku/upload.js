@@ -3,7 +3,7 @@
  *
  * mmSWFUpload 1.0: Flash upload dialog - http://profandesign.se/swfupload/,  http://www.vinterwebb.se/
  *
- * SWFUpload is (c) 2006-2007 Lars Huring, Olov Nilzén and Mammon Media and is released under the MIT License:
+ * SWFUpload is (c) 2006-2007 Lars Huring, Olov Nilzé–š and Mammon Media and is released under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  *
  * SWFUpload 2 is (c) 2007-2008 Jake Roberts and is released under the MIT License:
@@ -1432,12 +1432,12 @@ if (typeof(SWFUpload) === "function") {
 /**
  * Copyright 2012 1Verge, Inc.
  *
- * »ùÓÚ±íµ¥ÉÏ´«ºÍ»ùÓÚHTML5ÉÏ´«³ÌĞò 
- * ¿ÉÊµÏÖÎÄ¼şµÄ·ÖÆ¬´æ´¢¼°¶ÏµãĞø´« 
- * Ö§³ÖCORS(Cross-Origin Resource Sharing),¿ÉÒÔÊ¹ÓÃAJAX¿çÓòÎÄ¼ş´«Êä¼°»ñÈ¡Êı¾İ
+ * åŸºäºè¡¨å•ä¸Šä¼ å’ŒåŸºäºHTML5ä¸Šä¼ ç¨‹åº 
+ * å¯å®ç°æ–‡ä»¶çš„åˆ†ç‰‡å­˜å‚¨åŠæ–­ç‚¹ç»­ä¼  
+ * æ”¯æŒCORS(Cross-Origin Resource Sharing),å¯ä»¥ä½¿ç”¨AJAXè·¨åŸŸæ–‡ä»¶ä¼ è¾“åŠè·å–æ•°æ®
  * 
- * ËµÃ÷£º ±¾³ÌĞòÖ»ÊÇ¼òµ¥½éÉÜ½Ó¿ÚµÄÊ¹ÓÃ·½Ê½£¬¼°ÉÏ´«Âß¼­
- * ´úÂë±¾Éí²»ÑÏ½÷£¬½ö¹©²Î¿¼
+ * è¯´æ˜ï¼š æœ¬ç¨‹åºåªæ˜¯ç®€å•ä»‹ç»æ¥å£çš„ä½¿ç”¨æ–¹å¼ï¼ŒåŠä¸Šä¼ é€»è¾‘
+ * ä»£ç æœ¬èº«ä¸ä¸¥è°¨ï¼Œä»…ä¾›å‚è€ƒ
  */
 var URI = "https://openapi.youku.com/";
 
@@ -1543,7 +1543,7 @@ var URI = "https://openapi.youku.com/";
 			$("form[name='video-upload'] textarea[name='description']").val(name);
 		});
 
-		// »ñÈ¡ÊÓÆµ·ÖÀà
+		// è·å–è§†é¢‘åˆ†ç±»
 		$.ajax({
 			type: 'GET',
 			url: uploadOptions["api_url"] + "v2/schemas/video/category.json",
@@ -1570,13 +1570,13 @@ var URI = "https://openapi.youku.com/";
 		var fileSize = file.fileSize || file.size;
 		var result = false;
 		if(fileSize >fileSizeLimit){
-			alert("ÊÓÆµÎÄ¼ş´óĞ¡³¬¹ıÏŞÖÆ£¬ÇëËõĞ¡ÊÓÆµÎÄ¼şºóÖØĞÂÑ¡ÔñÎÄ¼ş");
+			alert("è§†é¢‘æ–‡ä»¶å¤§å°è¶…è¿‡é™åˆ¶ï¼Œè¯·ç¼©å°è§†é¢‘æ–‡ä»¶åé‡æ–°é€‰æ‹©æ–‡ä»¶");
 			result = true;
 		}
 		return result;
 	}
 
-    // ±íµ¥ĞÎÊ½ÉÏ´«ÊÓÆµ
+    // è¡¨å•å½¢å¼ä¸Šä¼ è§†é¢‘
     var uploadFormData = function (){
         var file = $("form[name='video-upload'] input[name='FileData']")[0].files[0];
         var fileSize = file.fileSize || file.size;
@@ -1593,14 +1593,14 @@ var URI = "https://openapi.youku.com/";
             if (response["upload_server_name"]) {
                 success(response["upload_server_name"]);
             } else {
-                alert("ÉÏ´«ÎÄ¼şÊ§°Ü");
+                alert("ä¸Šä¼ æ–‡ä»¶å¤±è´¥");
             }
         }
         xhr.open("post",uploadOptions["upload_url"],true);
         xhr.send(formData);
     };
 
-    // ÉÏ´«ÊÓÆµ
+    // ä¸Šä¼ è§†é¢‘
 	window.uploadStreamData = uploadStreamData;
     var uploadStreamData = function (start){
 		if(!isCancelUpload){
@@ -1620,7 +1620,7 @@ var URI = "https://openapi.youku.com/";
 					}});
 					return;
 				}else{
-					//Ğ´Èë±¾µØÊı¾İ
+					//å†™å…¥æœ¬åœ°æ•°æ®
 					setLocalData(fileSize,{uploadurl:uploadOptions["upload_url"],uploadtoken:uploadOptions["upload_token"]});
 				}
 			}
@@ -1661,13 +1661,13 @@ var URI = "https://openapi.youku.com/";
 				}
 			}
 
-			//Á¬½ÓÒÑ¶Ï¿ª
+			//è¿æ¥å·²æ–­å¼€
 			xhr.onerror = function(){
-				//alert("¶Ï¿ª");
+				//alert("æ–­å¼€");
 				localUploadFileSize = fileSize;
-				//Ğ´Èë±¾µØÊı¾İ
+				//å†™å…¥æœ¬åœ°æ•°æ®
 				//setLocalData(fileSize,{uploadurl:uploadOptions["upload_url"],uploadtoken:uploadOptions["upload_token"]});
-				//ÖØÊÔ
+				//é‡è¯•
 				resumeBrokenTransfer(0);
 			};
 			xhr.open("post",uploadOptions["upload_url"],true);
@@ -1850,8 +1850,8 @@ var URI = "https://openapi.youku.com/";
 						$(window).unbind("beforeunload");
 					}
 					if (data.video_id) {
-						//var tpl = '<div class="alert alert-success"><h1>ÉÏ´«³É¹¦£¡</h1><br>';
-						//tpl += "<p>ÊÓÆµÕıÔÚ×ªÂëÖĞ£¬×ªÂëÍê³Éºó£¬Äú¿ÉÒÔÍ¨¹ıÒÔÏÂµØÖ·¹Û¿´ÊÓÆµ£º";
+						//var tpl = '<div class="alert alert-success"><h1>ä¸Šä¼ æˆåŠŸï¼</h1><br>';
+						//tpl += "<p>è§†é¢‘æ­£åœ¨è½¬ç ä¸­ï¼Œè½¬ç å®Œæˆåï¼Œæ‚¨å¯ä»¥é€šè¿‡ä»¥ä¸‹åœ°å€è§‚çœ‹è§†é¢‘ï¼š";
 						//tpl += "<br>http://v.youku.com/v_show/id_" + data.video_id + ".html</p></div>";
 						//$("#upload-status-wraper").html(tpl);
 						$("#upload-status-wraper").hide();
@@ -1870,14 +1870,14 @@ var URI = "https://openapi.youku.com/";
 						}
 						
 					}else {
-						$("#upload-status-wraper").html('<div class="alert alert-success"><h1>ÉÏ´«Ê§°Ü£¡</h1></div>');
+						$("#upload-status-wraper").html('<div class="alert alert-success"><h1>ä¸Šä¼ å¤±è´¥ï¼</h1></div>');
 					}
 				}
 			});
 		}
     }
 
-	 // È¡ÏûÉÏ´«ÈÎÎñ
+	 // å–æ¶ˆä¸Šä¼ ä»»åŠ¡
     var cancelUploadTask = function (uploadToken){
 		isCancelUpload = true;
 		if (!window['USE_STREAM_UPLOAD']) {
@@ -1903,13 +1903,13 @@ var URI = "https://openapi.youku.com/";
                 if (data.upload_token) {
                    uploadagain();
                 }else {
-                    alert("È¡ÏûÉÏ´«ÈÎÎñÊ§°Ü");
+                    alert("å–æ¶ˆä¸Šä¼ ä»»åŠ¡å¤±è´¥");
                 }
             }
         });
 	}
 
-    // ´´½¨ÉÏ´«ÈÎÎñ
+    // åˆ›å»ºä¸Šä¼ ä»»åŠ¡
     var createUploadTask = function (){
 		isCancelUpload = false;
         var params = {
@@ -1933,11 +1933,11 @@ var URI = "https://openapi.youku.com/";
 		}
 		
 		if($.trim(params.title) == ""){
-			alert("±êÌâ²»ÄÜÎª¿Õ");
+			alert("æ ‡é¢˜ä¸èƒ½ä¸ºç©º");
 			return;
 		}
 		if($.trim(params.tags) == ""){
-			alert("±êÇ©²»ÄÜÎª¿Õ");
+			alert("æ ‡ç­¾ä¸èƒ½ä¸ºç©º");
 			return;
 		}
 		window.uploadTitle = params.title;
@@ -1953,10 +1953,10 @@ var URI = "https://openapi.youku.com/";
             success:function(data) { 
 				var uploadToken = data.upload_token;
                 if (uploadToken) {
-                    var tpl = '<h1>ÕıÔÚÉÏ´«ÊÓÆµ</h1><p>Çë²»Òª¹Ø±Õä¯ÀÀÆ÷£¬´Ë²Ù×÷»áÔì³ÉÉÏ´«Ê§°Ü!';
-                    tpl += '<br>ÉÏ´«ĞèÒªÒ»¶ÎÊ±¼ä£¬ÇëÄÍĞÄµÈ´ı.</p><br><div class="progress progress-success" style="margin-bottom: 9px;">';
+                    var tpl = '<h1>æ­£åœ¨ä¸Šä¼ è§†é¢‘</h1><p>è¯·ä¸è¦å…³é—­æµè§ˆå™¨ï¼Œæ­¤æ“ä½œä¼šé€ æˆä¸Šä¼ å¤±è´¥!';
+                    tpl += '<br>ä¸Šä¼ éœ€è¦ä¸€æ®µæ—¶é—´ï¼Œè¯·è€å¿ƒç­‰å¾….</p><br><div class="progress progress-success" style="margin-bottom: 9px;">';
                     tpl += '<div class="bar" style="width: 0%"></div></div><div class="progress-extended">';
-                    tpl +=  '<span id="tdCurrentSpeed">00.00 kbit/s</span> | <span id="tdTimeRemaining">00:00:00</span> | <span id="tdPercentUploaded">00.00 %</span> | <span id="tdSizeUploaded">00.00 KB</span> / <span id="bytestotal">00.00 KB</span></div><button type="button" style="float:right;" class="btn btn-primary start" id="btn-upload-stop"><span>È¡ÏûÉÏ´«</span></button>';
+                    tpl +=  '<span id="tdCurrentSpeed">00.00 kbit/s</span> | <span id="tdTimeRemaining">00:00:00</span> | <span id="tdPercentUploaded">00.00 %</span> | <span id="tdSizeUploaded">00.00 KB</span> / <span id="bytestotal">00.00 KB</span></div><button type="button" style="float:right;" class="btn btn-primary start" id="btn-upload-stop"><span>å–æ¶ˆä¸Šä¼ </span></button>';
                     var form = $("form[name='video-upload']");
 					form.removeClass();
 					form.attr("style","width:0px;height:0px;overflow:hidden;");
@@ -1965,7 +1965,7 @@ var URI = "https://openapi.youku.com/";
 						cancelUploadTask(uploadToken);
 					});
                     startVideoUpload(data.upload_token);
-					var alertStr = "ÄúÕıÔÚÉÏ´«ÊÓÆµ£¬¹Ø±Õ´ËÒ³Ãæ½«»áÖĞ¶ÏÉÏ´«£¬½¨ÒéÄúµÈ´ıÉÏ´«Íê³ÉºóÔÙ¹Ø±Õ´ËÒ³Ãæ¡£";
+					var alertStr = "æ‚¨æ­£åœ¨ä¸Šä¼ è§†é¢‘ï¼Œå…³é—­æ­¤é¡µé¢å°†ä¼šä¸­æ–­ä¸Šä¼ ï¼Œå»ºè®®æ‚¨ç­‰å¾…ä¸Šä¼ å®Œæˆåå†å…³é—­æ­¤é¡µé¢ã€‚";
 					if(browserJudge() == "chrome"){
 						$(window).unbind("unload");
 						$(window).bind("unload",function(){
@@ -1993,7 +1993,7 @@ var URI = "https://openapi.youku.com/";
 								$("#login").show();
 								break;
 							case "newWindow":
-								window.open (redirectUri, 'µÇÂ¼', 'width=580,height=400, top=0,left=0, toolbar=no,  menubar=no, scrollbars=no, resizable=no,location=no, status=no')  
+								window.open (redirectUri, 'ç™»å½•', 'width=580,height=400, top=0,left=0, toolbar=no,  menubar=no, scrollbars=no, resizable=no,location=no, status=no')  
 								break;
 							case "currentWindow":
 								window.location.href=redirectUri;
@@ -2003,99 +2003,99 @@ var URI = "https://openapi.youku.com/";
 						var error = "";
 						switch(code){
 							case 1001:
-								error = "·şÎñÁÙÊ±²»¿ÉÓÃ";
+								error = "æœåŠ¡ä¸´æ—¶ä¸å¯ç”¨";
 								break;
 							case 1002:
-								error = "·şÎñÊı¾İ³öÏÖÒì³£";
+								error = "æœåŠ¡æ•°æ®å‡ºç°å¼‚å¸¸";
 								break;
 							case 1003:
-								error = "IPÏŞÖÆ·ÃÎÊ";
+								error = "IPé™åˆ¶è®¿é—®";
 								break;
 							case 1004:
-								error = "¿Í»§IDÎª¿Õ";
+								error = "å®¢æˆ·IDä¸ºç©º";
 							case 1005:
-								error = "¿Í»§IDÎŞĞ§";
+								error = "å®¢æˆ·IDæ— æ•ˆ";
 								break;
 							case 1006:
-								error = "ÎŞÈ¨ÏŞµ÷ÓÃ,ĞèÒª¸ß¼¶±ğ";
+								error = "æ— æƒé™è°ƒç”¨,éœ€è¦é«˜çº§åˆ«";
 								break;
 							case 1010:
-								error = "ÇëÇó±ØĞëÊÇPOST·½Ê½";
+								error = "è¯·æ±‚å¿…é¡»æ˜¯POSTæ–¹å¼";
 								break;
 							case 1011:
-								error = "²»Ö§³ÖÕâÖÖÊı¾İ¸ñÊ½";
+								error = "ä¸æ”¯æŒè¿™ç§æ•°æ®æ ¼å¼";
 								break;
 							case 1012:
-								error = "È±Ê§±ØĞë²ÎÊı";
+								error = "ç¼ºå¤±å¿…é¡»å‚æ•°";
 								break;
 							case 1013:
-								error = "ÎŞĞ§µÄ²ÎÊı";
+								error = "æ— æ•ˆçš„å‚æ•°";
 								break;
 							case 1014:
-								error = "³¬³ö×î´óÆ¥ÅäÏŞ¶î";
+								error = "è¶…å‡ºæœ€å¤§åŒ¹é…é™é¢";
 								break;
 							case 1015:
-								error = "¿Í»§ SECRET Îª¿Õ";
+								error = "å®¢æˆ· SECRET ä¸ºç©º";
 								break;
 							case 1016:
-								error = "¿Í»§ SECRET ÎŞĞ§";
+								error = "å®¢æˆ· SECRET æ— æ•ˆ";
 								break;
 							case 120010101:
-								error = "±êÌâ²»ÄÜÎª¿Õ";
+								error = "æ ‡é¢˜ä¸èƒ½ä¸ºç©º";
 								break;
 							case 120010102:
-								error = "±êÌâ×î¶àÌîĞ´30¸ö×Ö";
+								error = "æ ‡é¢˜æœ€å¤šå¡«å†™30ä¸ªå­—";
 								break;
 							case 120010103:
-								error = "±êÌâ²»¿ÉÒÔÖ»ÓÃÊı×Ö±íÊ¾£¬Çë²¹³ä»òÊ¹ÓÃ¼ò½àÃ÷È·µÄÎÄ×Ö";
+								error = "æ ‡é¢˜ä¸å¯ä»¥åªç”¨æ•°å­—è¡¨ç¤ºï¼Œè¯·è¡¥å……æˆ–ä½¿ç”¨ç®€æ´æ˜ç¡®çš„æ–‡å­—";
 								break;
 							case 120010104:
-								error = "±êÌâº¬ÓĞÍøÕ¾½ûÖ¹ÄÚÈİ£¬ÇëÄú¸ü»»ÆäËû±êÌâ";
+								error = "æ ‡é¢˜å«æœ‰ç½‘ç«™ç¦æ­¢å†…å®¹ï¼Œè¯·æ‚¨æ›´æ¢å…¶ä»–æ ‡é¢˜";
 								break;
 							case 120010111:
-								error = "´ËÓÃ»§ÒÑ¾­ÉÏ´«¹ı¸ÃÊÓÆµ";
+								error = "æ­¤ç”¨æˆ·å·²ç»ä¸Šä¼ è¿‡è¯¥è§†é¢‘";
 								break;
 							case 120010121:
-								error = "±êÇ©²»ÄÜÎª¿Õ";
+								error = "æ ‡ç­¾ä¸èƒ½ä¸ºç©º";
 								break;
 							case 120010122:
-								error = "Äú¶¨ÒåµÄ±êÇ©¸öÊı³¬¹ıÁË10¸ö£¬ÇëÉ¾³ı±êÇ©¸öÊı";
+								error = "æ‚¨å®šä¹‰çš„æ ‡ç­¾ä¸ªæ•°è¶…è¿‡äº†10ä¸ªï¼Œè¯·åˆ é™¤æ ‡ç­¾ä¸ªæ•°";
 								break;
 							case 120010123:
-								error = "±êÇ©ÖĞº¬ÓĞÃô¸Ğ×Ö·û";
+								error = "æ ‡ç­¾ä¸­å«æœ‰æ•æ„Ÿå­—ç¬¦";
 								break;
 							case 120010124:
-								error = "µ¥¸ö±êÇ©×îÉÙ2¸ö×ÖÄ¸";
+								error = "å•ä¸ªæ ‡ç­¾æœ€å°‘2ä¸ªå­—æ¯";
 								break;
 							case 120010125:
-								error = "µ¥¸ö±êÇ©×î¶à12¸ö×ÖÄ¸";
+								error = "å•ä¸ªæ ‡ç­¾æœ€å¤š12ä¸ªå­—æ¯";
 								break;
 							case 120010126:
-								error = "µ¥¸ö±êÇ©×îÉÙ2¸öºº×Ö";
+								error = "å•ä¸ªæ ‡ç­¾æœ€å°‘2ä¸ªæ±‰å­—";
 								break;
 							case 120010127:
-								error = "µ¥¸ö±êÇ©×î¶à6¸öºº×Ö";
+								error = "å•ä¸ªæ ‡ç­¾æœ€å¤š6ä¸ªæ±‰å­—";
 								break;
 							case 120010131:
-								error = "·ÖÀà²»ÄÜÎª¿Õ";
+								error = "åˆ†ç±»ä¸èƒ½ä¸ºç©º";
 								break;
 							case 120010132:
-								error = "ÄúÑ¡ÔñµÄ·ÖÀà¸öÊı³¬¹ıÁË1¸ö£¬Çë¼õÉÙ·ÖÀàÑ¡Ôñ¸öÊı";
+								error = "æ‚¨é€‰æ‹©çš„åˆ†ç±»ä¸ªæ•°è¶…è¿‡äº†1ä¸ªï¼Œè¯·å‡å°‘åˆ†ç±»é€‰æ‹©ä¸ªæ•°";
 								break;
 							case 120010141:
-								error = "ÃèÊöĞÅÏ¢º¬ÓĞÍøÕ¾½ûÖ¹ÄÚÈİ£¬Çë¼ì²é²¢ÖØĞÂÌá½»";
+								error = "æè¿°ä¿¡æ¯å«æœ‰ç½‘ç«™ç¦æ­¢å†…å®¹ï¼Œè¯·æ£€æŸ¥å¹¶é‡æ–°æäº¤";
 								break;
 							case 120010142:
-								error = "ÃèÊöĞÅÏ¢×î¶àÄÜÌîĞ´2000¸ö×Ö·û";
+								error = "æè¿°ä¿¡æ¯æœ€å¤šèƒ½å¡«å†™2000ä¸ªå­—ç¬¦";
 								break;
 							case 120010145:
-								error = "¹Û¿´ÃÜÂë±ØĞë×ÖÄ¸Êı×Ö×é³É£¬×ö¶à32Î»";
+								error = "è§‚çœ‹å¯†ç å¿…é¡»å­—æ¯æ•°å­—ç»„æˆï¼Œåšå¤š32ä½";
 								break;
 							case 120010151:
-								error = "ÉÏ´«ÈÎÎñÎŞĞ§";
+								error = "ä¸Šä¼ ä»»åŠ¡æ— æ•ˆ";
 								break;
 							case 120010152:
-								error = "²åÈëÊÓÆµ³ö´í";
+								error = "æ’å…¥è§†é¢‘å‡ºé”™";
 								break;
 						}
 						alert(code+error);
@@ -2151,7 +2151,7 @@ var URI = "https://openapi.youku.com/";
 				var serverData = data.upload_server_name;
 				success(serverData);
 		 }else{
-			alert("ÎÄ¼şÉÏ´«Ê§°Üerror="+data.error.code);
+			alert("æ–‡ä»¶ä¸Šä¼ å¤±è´¥error="+data.error.code);
 		 }
 	}
 	
@@ -2174,19 +2174,19 @@ var URI = "https://openapi.youku.com/";
 			// Handle this error separately because we don't want to create a FileProgress element for it.
 			switch (errorCode) {
 			case SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED:
-				alert("ÄúÑ¡ÔñµÄÎÄ¼ş¹ı¶à.\n" + (message === 0 ? "ÉÏ´«ÎÄ¼şÊıÁ¿±»ÏŞÖÆ." : "ÇëÑ¡Ôñ " + (message > 1 ? "´óÓÚ " + message + "¸öÎÄ¼ş." : "Ò»¸öÎÄ¼ş.")));
+				alert("æ‚¨é€‰æ‹©çš„æ–‡ä»¶è¿‡å¤š.\n" + (message === 0 ? "ä¸Šä¼ æ–‡ä»¶æ•°é‡è¢«é™åˆ¶." : "è¯·é€‰æ‹© " + (message > 1 ? "å¤§äº " + message + "ä¸ªæ–‡ä»¶." : "ä¸€ä¸ªæ–‡ä»¶.")));
 				return;
 			case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT:
-				alert("ÎÄ¼ş¹ı´ó.");
+				alert("æ–‡ä»¶è¿‡å¤§.");
 				return;
 			case SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE:
-				alert("ÎÄ¼şÑ¡ÔñÊÇ¿Õ£¬ÇëÑ¡ÔñÆäËûÎÄ¼ş.");
+				alert("æ–‡ä»¶é€‰æ‹©æ˜¯ç©ºï¼Œè¯·é€‰æ‹©å…¶ä»–æ–‡ä»¶.");
 				return;
 			case SWFUpload.QUEUE_ERROR.INVALID_FILETYPE:
-				alert("¸ÃÎÄ¼şÀàĞÍ²»ÔÊĞíÉÏ´«.");
+				alert("è¯¥æ–‡ä»¶ç±»å‹ä¸å…è®¸ä¸Šä¼ .");
 				return;
 			default:
-				alert("ÉÏ´«³öÏÖ´íÎó£¬ÇëÔÙÊÔÒ»´Î.");
+				alert("ä¸Šä¼ å‡ºç°é”™è¯¯ï¼Œè¯·å†è¯•ä¸€æ¬¡.");
 				return;
 			}
 		} catch (e) {
@@ -2207,16 +2207,16 @@ var URI = "https://openapi.youku.com/";
 			// Handle this error separately because we don't want to create a FileProgress element for it.
 			switch (errorCode) {
 			case SWFUpload.UPLOAD_ERROR.MISSING_UPLOAD_URL:
-				alert("ÅäÖÃ´íÎó£¬ÇëÉÔºòÖØÊÔ");
+				alert("é…ç½®é”™è¯¯ï¼Œè¯·ç¨å€™é‡è¯•");
 				return;
 			case SWFUpload.UPLOAD_ERROR.UPLOAD_LIMIT_EXCEEDED:
-				alert("Ö»ÄÜÉÏ´«Ò»¸öÎÄ¼ş");
+				alert("åªèƒ½ä¸Šä¼ ä¸€ä¸ªæ–‡ä»¶");
 				return;
 			case SWFUpload.UPLOAD_ERROR.FILE_CANCELLED:
 			case SWFUpload.UPLOAD_ERROR.UPLOAD_STOPPED:
 				break;
 			default:
-				alert("ÉÏ´«´íÎó£¬ÇëÖØÊÔ");
+				alert("ä¸Šä¼ é”™è¯¯ï¼Œè¯·é‡è¯•");
 				return;
 			}
 		

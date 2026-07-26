@@ -126,32 +126,32 @@ Function Upload_List(UserID,upNum,FileUrl,Col)
 	
 		PageSplictString = PageSplictString & "<div class=j_page>"
 		If FirstID >= MaxRecordID Then
-			'PageSplictString = PageSplictString & "Ê×Ò³" & VbCrLf
-			'PageSplictString = PageSplictString & " ÉÏÒ³" & VbCrLf
+			'PageSplictString = PageSplictString & "é¦–é¡µ" & VbCrLf
+			'PageSplictString = PageSplictString & " ä¸Šé¡µ" & VbCrLf
 		else
-			PageSplictString = PageSplictString & "<a href=""" & EndwriteQueryString & "?Start=0"">Ê×Ò³</a>" & VbCrLf
-			PageSplictString = PageSplictString & "<a href=""" & EndwriteQueryString & "?Start=" & FirstID & "&UpDownPageFlag=1"">ÉÏÒ³</a>" & VbCrLf
+			PageSplictString = PageSplictString & "<a href=""" & EndwriteQueryString & "?Start=0"">é¦–é¡µ</a>" & VbCrLf
+			PageSplictString = PageSplictString & "<a href=""" & EndwriteQueryString & "?Start=" & LngStr(FirstID) & "&UpDownPageFlag=1"">ä¸Šé¡µ</a>" & VbCrLf
 		end if
 	
 		If LastID <= MinRecordID Then
-			'PageSplictString = PageSplictString & " ÏÂÒ³" & VbCrLf
-			'PageSplictString = PageSplictString & " Î²Ò³" & VbCrLf
+			'PageSplictString = PageSplictString & " ä¸‹é¡µ" & VbCrLf
+			'PageSplictString = PageSplictString & " å°¾é¡µ" & VbCrLf
 		else
-			PageSplictString = PageSplictString & " <a href=""" & EndwriteQueryString & "?Start=" & LastID & """>ÏÂÒ³</a> " & VbCrLf
-			PageSplictString = PageSplictString & " <a href=""" & EndwriteQueryString & "?Start=1&UpDownPageFlag=1"">Î²Ò³</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=""" & EndwriteQueryString & "?Start=" & LngStr(LastID) & """>ä¸‹é¡µ</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=""" & EndwriteQueryString & "?Start=1&UpDownPageFlag=1"">å°¾é¡µ</a> " & VbCrLf
 		end if
 		
-		PageSplictString = PageSplictString & "<b>¹²" & recordCount & "</b>"
+		PageSplictString = PageSplictString & "<b>å…±" & recordCount & "</b>"
 		'If (recordCount mod DEF_TopicContentMaxListNum)=0 Then
-		'	PageSplictString = PageSplictString & " ¼Æ<b>" & clng(recordCount/DEF_TopicContentMaxListNum) & "</b>Ò³"
+		'	PageSplictString = PageSplictString & " è®¡<b>" & clng(recordCount/DEF_TopicContentMaxListNum) & "</b>é¡µ"
 		'Else
 		'	If recordCount>=DEF_TopicContentMaxListNum Then
-		'		PageSplictString = PageSplictString & " ¼Æ<b>" & clng(recordCount/DEF_TopicContentMaxListNum)+1 & "</b>Ò³"
+		'		PageSplictString = PageSplictString & " è®¡<b>" & clng(recordCount/DEF_TopicContentMaxListNum)+1 & "</b>é¡µ"
 		'	Else
-		'		PageSplictString = PageSplictString & " ¼Æ<b>1</b>Ò³"
+		'		PageSplictString = PageSplictString & " è®¡<b>1</b>é¡µ"
 		'	End If
 		'End If
-		'PageSplictString = PageSplictString & " Ã¿Ò³<b>" & DEF_TopicContentMaxListNum & "</b>Ìõ¼ÇÂ¼"
+		'PageSplictString = PageSplictString & " æ¯é¡µ<b>" & DEF_TopicContentMaxListNum & "</b>æ¡è®°å½•"
 		PageSplictString = PageSplictString & "</div>"
 	
 	End If
@@ -180,13 +180,13 @@ Function Upload_List(UserID,upNum,FileUrl,Col)
 		Temp = Fix(50/Col) & "%"
 	End If
 	For N = 1 to Col%>
-	    <td width=<%=Temp%>><div class=value>ËõÂÔÍ¼/ÏÂÔØ</div></td>
-	    <td align=left width=<%=Fix(100/Col)%>%><div class=value>ĞÅÏ¢</div></td>
+	    <td width=<%=Temp%>><div class=value>ç¼©ç•¥å›¾/ä¸‹è½½</div></td>
+	    <td align=left width=<%=Fix(100/Col)%>%><div class=value>ä¿¡æ¯</div></td>
 	    <%Next%>
 	  </tr>
 	<%
 	If Num = -1 Then
-		response.write "<tr><td colspan=2 class=tdbox>Ã»ÓĞÈÎºÎÉÏ´«¸½¼ş!</td></tr>"
+		response.write "<tr><td colspan=2 class=tdbox>æ²¡æœ‰ä»»ä½•ä¸Šä¼ é™„ä»¶!</td></tr>"
 	end if
 	
 	Dim DeleteEnable
@@ -224,42 +224,42 @@ Function Upload_List(UserID,upNum,FileUrl,Col)
 				Response.Write "<a href=""" & fUrl & """ target=_blank>"
 				Response.Write "<img src=""" & fUrl & """" & WidthHeight & " style='border-color:white' border=2></a></td></tr></table>"
 			ElseIf GetData(2,n) <> "" and GetData(5,N) = 1 Then
-				Response.Write "<a href=""" & fUrl & """ target=_blank>È«ÆÁ²¥·Å</a>"
+				Response.Write "<a href=""" & fUrl & """ target=_blank>å…¨å±æ’­æ”¾</a>"
 			Else
-				Response.Write "<a href=""" & fUrl & "&down=1"">ÏÂÔØ</a>"
+				Response.Write "<a href=""" & fUrl & "&down=1"">ä¸‹è½½</a>"
 			End If
 			Response.Write "</td><td align=left class=tdbox>"
 			
 			If isNull(GetData(6,N)) Then
-				Response.Write "×÷Õß£ºÎŞ"
+				Response.Write "ä½œè€…ï¼šæ— "
 			Else
-				Response.Write "×÷Õß£º<a href=""../user/" & RW_User(GetData(1,n),"","","") & """>" & htmlencode(GetTrueName(GetData(6,n),GetData(13,n))) & "</a>"
+				Response.Write "ä½œè€…ï¼š<a href=""../user/" & RW_User(GetData(1,n),"","","") & """>" & htmlencode(GetTrueName(GetData(6,n),GetData(13,n))) & "</a>"
 			End If
-			Response.Write "<br>Ê±¼ä£º" & Left(RestoreTime(GetData(4,n)),16)
+			Response.Write "<br>æ—¶é—´ï¼š" & Left(RestoreTime(GetData(4,n)),16)
 			If GetData(2,n) <> "" Then
 				Temp = inStrRev(GetData(2,n),".")
 				Temp = Mid(GetData(2,n),Temp+1)
 			Else
 				Temp = "file"
 			End If
-			Response.Write "<br>ÀàĞÍ£º<img src=../images/fileType/" & Temp & ".gif align=absmiddle width=16>"
+			Response.Write "<br>ç±»å‹ï¼š<img src=../images/fileType/" & Temp & ".gif align=absmiddle width=16>"
 			If GetData(5,N) = 0 Then
-				Response.Write "Í¼Æ¬ÎÄ¼ş"
+				Response.Write "å›¾ç‰‡æ–‡ä»¶"
 			ElseIf GetData(5,N) = 1 Then
-				Response.Write "Flash¶¯»­"
+				Response.Write "FlashåŠ¨ç”»"
 			Else
-				Response.Write "ÆäËüÎÄ¼ş"
+				Response.Write "å…¶å®ƒæ–‡ä»¶"
 			End If
 			
-			If GBL_CHK_User = GetData(6,n) or CheckSupervisorUserName = 1 or DeleteEnable = 1 Then
+			If GBL_CHK_User = GetData(6,n) or CheckSupervisorUserName() = 1 or DeleteEnable = 1 Then
 				%>
-				<input class="fmchkbox" type="checkbox" name="ids" id="ids<%=Index%>" value="<%=GetData(0,N)%>" /><%
-				Response.Write "<a href='javascript:p_once(" & GetData(0,N) & ");'>É¾³ı</a>"
+				<input class="fmchkbox" type="checkbox" name="ids" id="ids<%=Index%>" value="<%=LngStr(GetData(0,N))%>" /><%
+				Response.Write "<a href='javascript:p_once(" & GetData(0,N) & ");'>åˆ é™¤</a>"
 				Index = Index + 1
 			End If
 			
-			If GetData(5,N) <> 0 Then Response.Write "<br>ÏÂÔØ£º" & GetData(7,n) & " ´Î"
-			If GetData(8,N) <> "" Then Response.Write "<br>×¢ÊÍ£º" & HtmlEncode(GetData(8,n))
+			If GetData(5,N) <> 0 Then Response.Write "<br>ä¸‹è½½ï¼š" & GetData(7,n) & " æ¬¡"
+			If GetData(8,N) <> "" Then Response.Write "<br>æ³¨é‡Šï¼š" & HtmlEncode(GetData(8,n))
 			
 			GetData(12,N) = GetData(12,N) & ""
 			If "0" & GetData(9,N) = "0" & GetData(11,N) Then
@@ -271,7 +271,7 @@ Function Upload_List(UserID,upNum,FileUrl,Col)
 			If Len(GetData(12,N) & "") > 25 Then
 				GetData(12,N) = Left(GetData(12,N),25) & "..."
 			End If
-			If cCur("0" & GetData(11,N)) <> 0 Then Response.Write "<br>Ìû×Ó£º<a href=""" & DEF_BBS_HomeUrl & "a/" & RW_a(GetData(10,N),GetData(11,N),1,1,Temp) & """>" & htmlencode(GetData(12,N)) & "</a>"
+			If cCur("0" & GetData(11,N)) <> 0 Then Response.Write "<br>å¸–å­ï¼š<a href=""" & DEF_BBS_HomeUrl & "a/" & RW_a(GetData(10,N),GetData(11,N),1,1,Temp) & """>" & htmlencode(GetData(12,N)) & "</a>"
 
 			Response.Write "</td>"
 	
@@ -286,8 +286,8 @@ Function Upload_List(UserID,upNum,FileUrl,Col)
 	If PageSplictString<>"" Then Response.Write "<tr><td colspan=" & Col * 2 & " class=tdbox>" & PageSplictString & "</td></tr>"
 	%>
 		<tr><td colspan=<%=Col * 2%> class=tdbox align=right>
-		<input class="fmchkbox" type="checkbox" name="selmsg" id="selmsg" value="1" onclick="achoose();" />Ñ¡ÔñËùÓĞ¼ÇÂ¼
-		<input type=button value="ÅúÁ¿É¾³ı" onclick="pchoose();" class="fmbtn btn_4">
+		<input class="fmchkbox" type="checkbox" name="selmsg" id="selmsg" value="1" onclick="achoose();" />é€‰æ‹©æ‰€æœ‰è®°å½•
+		<input type=button value="æ‰¹é‡åˆ é™¤" onclick="pchoose();" class="fmbtn btn_4">
 		</td></tr>
 	      </table><%
 

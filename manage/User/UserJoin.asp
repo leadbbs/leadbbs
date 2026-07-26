@@ -1,11 +1,11 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/User_Setup.ASP -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../../inc/ubbcode.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
-<!-- #include file=inc/User_fun.asp -->
-<!-- #include file=../../inc/Limit_Fun.asp -->
-<!-- #include file=../../inc/Constellation2.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/User_Setup.ASP"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../../inc/ubbcode.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
+<!--#include file="inc/User_fun.asp"-->
+<!--#include file="../../inc/Limit_Fun.asp"-->
+<!--#include file="../../inc/Constellation2.asp"-->
 <%
 ApplyFlag = 1
 DEF_BBS_HomeUrl = "../../"
@@ -13,37 +13,37 @@ Form_FaceWidth = DEF_AllFaceMaxWidth
 Form_FaceHeight = DEF_AllFaceMaxWidth
 Dim GBL_ID
 CursorLocation = 3
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
-DisplayUserNavigate("Ìí¼ÓĞÂÓÃ»§")
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
+DisplayUserNavigate("æ·»åŠ æ–°ç”¨æˆ·")
 If GBL_CHK_Flag=1 Then
 	If Request.Form("SubmitFlag")="29d98Sasphouseasp8asphnet" Then
 		GBL_CHK_TempStr = ""
-		checkFormDate
+		checkFormDate()
 		
 		If GBL_CHK_Flag = 0 Then
 			Response.WRite "<div class=alert>" & GBL_CHK_TempStr & "</div>" & VbCrLf
-			JoinForm
+			JoinForm()
 		Else
-			If saveFormData = 1 Then
-				DisplayAccessFull
+			If saveFormData() = 1 Then
+				DisplayAccessFull()
 			Else
 				Response.WRite "<div class=alert>" & GBL_CHK_TempStr & "</div>" & VbCrLf
-				JoinForm
+				JoinForm()
 			End If
 		End If
 	Else
-		JoinForm
+		JoinForm()
 	End If
 Else
-	DisplayLoginForm
+	DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Function JoinForm%>
@@ -51,7 +51,7 @@ Function JoinForm%>
 	<style type=text/css>
 		.input
 		{
-			FONT-FAMILY: ËÎÌå;
+			FONT-FAMILY: å®‹ä½“;
 			border-left:0px;
 			border-right:0px;
 			border-top:0px;
@@ -61,7 +61,7 @@ Function JoinForm%>
 		}
 		.inputs
 		{
-			FONT-FAMILY: ËÎÌå;
+			FONT-FAMILY: å®‹ä½“;
 			border-left:0px;
 			border-right:0px;
 			border-top:0px;
@@ -71,7 +71,7 @@ Function JoinForm%>
 		}
 		.inputss
 		{
-			FONT-FAMILY: ËÎÌå;
+			FONT-FAMILY: å®‹ä½“;
 			border-left:0px;
 			border-right:0px;
 			border-top:0px;
@@ -117,7 +117,7 @@ Function JoinForm%>
 			}
 			else
 			{
-				alert("´íÎó!´ËÍ¼Ïñ´úºÅ²»´æÔÚ!");
+				alert("é”™è¯¯!æ­¤å›¾åƒä»£å·ä¸å­˜åœ¨!");
 				document.faceimg.src='<%=DEF_BBS_HomeUrl%>images/null.gif';
 				document.form1.Form_userphoto.value='';
 				ValidationPassed = false;
@@ -125,7 +125,7 @@ Function JoinForm%>
 		}
 		else
 		{
-			alert("´íÎó!´ËÍ¼Ïñ´úºÅ²»´æÔÚ!\nÍ¼Ïñ´úºÅ±ØĞëÊÇ3Î»Êı<%if len(Cstr(DEF_faceMaxNum))>3 then Response.Write "»òÒÔÉÏ"%>,±ÈÈç 001 ,×î´óÎª<%=DEF_faceMaxNum%>");
+			alert("é”™è¯¯!æ­¤å›¾åƒä»£å·ä¸å­˜åœ¨!\nå›¾åƒä»£å·å¿…é¡»æ˜¯3ä½æ•°<%if len(Cstr(DEF_faceMaxNum))>3 then Response.Write "æˆ–ä»¥ä¸Š"%>,æ¯”å¦‚ 001 ,æœ€å¤§ä¸º<%=DEF_faceMaxNum%>");
 			document.faceimg.src='<%=DEF_BBS_HomeUrl%>images/null.gif';
 			document.form1.Form_userphoto.value='';
 			ValidationPassed = false;
@@ -140,7 +140,7 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_FaceWidth.value))
 			{
-				alert("×Ô¶¨ÒåÍ·Ïñ¿í¶È±ØĞëÊÇÊı×Ö£¡\n");
+				alert("è‡ªå®šä¹‰å¤´åƒå®½åº¦å¿…é¡»æ˜¯æ•°å­—ï¼\n");
 				obj.Form_FaceWidth.focus();
 				return;
 			}
@@ -148,7 +148,7 @@ Function JoinForm%>
 			{
 				if(obj.Form_FaceWidth.value<20 || obj.Form_FaceWidth.value><%=DEF_AllFaceMaxWidth%>)
 				{
-					alert("×Ô¶¨ÒåÍ·Ïñ¿í¶È±ØĞëÔÚ20-<%=DEF_AllFaceMaxWidth%>Ö®¼ä£¡\n");
+					alert("è‡ªå®šä¹‰å¤´åƒå®½åº¦å¿…é¡»åœ¨20-<%=DEF_AllFaceMaxWidth%>ä¹‹é—´ï¼\n");
 					obj.Form_FaceWidth.focus();
 					return;
 				}
@@ -159,7 +159,7 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_FaceHeight.value))
 			{
-				alert("×Ô¶¨ÒåÍ·Ïñ¸ß¶È±ØĞëÊÇÊı×Ö£¡\n");
+				alert("è‡ªå®šä¹‰å¤´åƒé«˜åº¦å¿…é¡»æ˜¯æ•°å­—ï¼\n");
 				obj.Form_FaceHeight.focus();
 				return;
 			}
@@ -167,7 +167,7 @@ Function JoinForm%>
 			{
 				if(obj.Form_FaceHeight.value<20 || obj.Form_FaceHeight.value><%=DEF_AllFaceMaxWidth%>)
 				{
-					alert("×Ô¶¨ÒåÍ·Ïñ¸ß¶È±ØĞëÔÚ20-<%=DEF_AllFaceMaxWidth%>Ö®¼ä£¡\n");
+					alert("è‡ªå®šä¹‰å¤´åƒé«˜åº¦å¿…é¡»åœ¨20-<%=DEF_AllFaceMaxWidth%>ä¹‹é—´ï¼\n");
 					obj.Form_FaceHeight.focus();
 					return;
 				}
@@ -188,7 +188,7 @@ Function JoinForm%>
 	{
 		if(obj.Form_username.value=="")
 		{
-			alert("ÇëÊäÈëÄãµÄÓÃ»§Ãû!\n");
+			alert("è¯·è¾“å…¥ä½ çš„ç”¨æˆ·å!\n");
 			ValidationPassed = false;
 			obj.Form_username.focus();
 			return;
@@ -196,7 +196,7 @@ Function JoinForm%>
 		
 		if(obj.Form_username.value.length<1)
 		{
-			alert("ÓÃ»§Ãû³¤¶ÈÖÁÉÙĞèÒª1¸ö×Ö·û!\n");
+			alert("ç”¨æˆ·åé•¿åº¦è‡³å°‘éœ€è¦1ä¸ªå­—ç¬¦!\n");
 			ValidationPassed = false;
 			obj.Form_username.focus();
 			return;
@@ -204,7 +204,7 @@ Function JoinForm%>
 
 		if(obj.Form_password1.value=="")
 		{
-			alert("ÇëÊäÈëÄãµÄÃÜÂë!\n");
+			alert("è¯·è¾“å…¥ä½ çš„å¯†ç !\n");
 			ValidationPassed = false;
 			obj.Form_password1.focus();
 			return;
@@ -212,7 +212,7 @@ Function JoinForm%>
 
 		if(obj.Form_password2.value=="")
 		{
-			alert("ÇëÊäÈëÄãµÄÑéÖ¤ÃÜÂë£¡\n");
+			alert("è¯·è¾“å…¥ä½ çš„éªŒè¯å¯†ç ï¼\n");
 			ValidationPassed = false;
 			obj.Form_password2.focus();
 			return;
@@ -220,7 +220,7 @@ Function JoinForm%>
 
 		if(obj.Form_password1.value!=obj.Form_password2.value)
 		{
-			alert("ÄãµÄÁ½´ÎÃÜÂëÊäÈë²»ÏàÍ¬£¡\n");
+			alert("ä½ çš„ä¸¤æ¬¡å¯†ç è¾“å…¥ä¸ç›¸åŒï¼\n");
 			ValidationPassed = false;
 			obj.Form_password1.focus();
 			return;
@@ -229,7 +229,7 @@ Function JoinForm%>
 
 		if(obj.Form_Question.value=="")
 		{
-			alert("ÇëÊäÈëÃÜÂëÌáÊ¾!\n");
+			alert("è¯·è¾“å…¥å¯†ç æç¤º!\n");
 			ValidationPassed = false;
 			obj.Form_Question.focus();
 			return;
@@ -237,7 +237,7 @@ Function JoinForm%>
 
 		if(obj.Form_Answer.value=="")
 		{
-			alert("ÇëÊäÈëÌáÊ¾´ğ°¸!\n");
+			alert("è¯·è¾“å…¥æç¤ºç­”æ¡ˆ!\n");
 			ValidationPassed = false;
 			obj.Form_Answer.focus();
 			return;
@@ -246,7 +246,7 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_icq.value))
 			{
-				alert("Î¹,ÄãÌîÈëÁËICQ¿òÖĞÌîÈëÁË¶«Î÷,µ«ÄãµÄICQºÅÂëÔõÃ´²»ÊÇÕıÕûÊı£¡\n");
+				alert("å–‚,ä½ å¡«å…¥äº†ICQæ¡†ä¸­å¡«å…¥äº†ä¸œè¥¿,ä½†ä½ çš„ICQå·ç æ€ä¹ˆä¸æ˜¯æ­£æ•´æ•°ï¼\n");
 				ValidationPassed = false;
 				obj.Form_icq.focus();
 				return;
@@ -257,7 +257,7 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_oicq.value))
 			{
-				alert("Î¹,ÄãÌîÈëÁËOICQ¿òÖĞÌîÈëÁË¶«Î÷,µ«ÄãµÄOICQºÅÂëÔõÃ´²»ÊÇÕıÕûÊı?\n");
+				alert("å–‚,ä½ å¡«å…¥äº†OICQæ¡†ä¸­å¡«å…¥äº†ä¸œè¥¿,ä½†ä½ çš„OICQå·ç æ€ä¹ˆä¸æ˜¯æ­£æ•´æ•°?\n");
 				ValidationPassed = false;
 				obj.Form_oicq.focus();
 				return;
@@ -268,7 +268,7 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_byear.value))
 			{
-				alert("Î¹,ÄãÌîÈëÁËÄãµÄ³öÉúÄê,µ«ÄãµÄÄê·İÔõÃ´²»ÊÇÕıÕûÊı£¡\n");
+				alert("å–‚,ä½ å¡«å…¥äº†ä½ çš„å‡ºç”Ÿå¹´,ä½†ä½ çš„å¹´ä»½æ€ä¹ˆä¸æ˜¯æ­£æ•´æ•°ï¼\n");
 				ValidationPassed = false;
 				obj.Form_byear.focus();
 				return;
@@ -279,7 +279,7 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_bmonth.value))
 			{
-				alert("Î¹,ÄãÌîÈëÁËÄãµÄ³öÉúÔÂ,µ«ÄãµÄÔÂ·İÔõÃ´²»ÊÇÕıÕûÊı£¡\n");
+				alert("å–‚,ä½ å¡«å…¥äº†ä½ çš„å‡ºç”Ÿæœˆ,ä½†ä½ çš„æœˆä»½æ€ä¹ˆä¸æ˜¯æ­£æ•´æ•°ï¼\n");
 				ValidationPassed = false;
 				obj.Form_bmonth.focus();
 				return;
@@ -290,7 +290,7 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_bday.value))
 			{
-				alert("Î¹,ÄãÌîÈëÁËÄãµÄ³öÉúÈÕ,µ«ÄãµÄ³öÉúÈÕÔõÃ´²»ÊÇÕıÕûÊı£¡\n");
+				alert("å–‚,ä½ å¡«å…¥äº†ä½ çš„å‡ºç”Ÿæ—¥,ä½†ä½ çš„å‡ºç”Ÿæ—¥æ€ä¹ˆä¸æ˜¯æ­£æ•´æ•°ï¼\n");
 				ValidationPassed = false;
 				obj.Form_bday.focus();
 				return;
@@ -301,7 +301,7 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_bday.value))
 			{
-				alert("ÓÃ»§Í¼Ïñ,Ö»ÄÜÊÇ001-318Ö®¼äµÄÕıÕûÊı£¡\n");
+				alert("ç”¨æˆ·å›¾åƒ,åªèƒ½æ˜¯001-318ä¹‹é—´çš„æ­£æ•´æ•°ï¼\n");
 				ValidationPassed = false;
 				obj.Form_bday.focus();
 				return;
@@ -310,17 +310,17 @@ Function JoinForm%>
 		
 		if(obj.Form_Underwrite.value.length>255)
 		{
-			alert("ÓÃ»§Ç©ÃûÄÚÈİÒªĞ¡ÓÚ255¸ö×Ö·û!\n");
+			alert("ç”¨æˆ·ç­¾åå†…å®¹è¦å°äº255ä¸ªå­—ç¬¦!\n");
 			ValidationPassed = false;
 			obj.Form_Underwrite.focus();
 			return;
 		}
-		//ÆäËü×ÊÁÏ
+		//å…¶å®ƒèµ„æ–™
 		
 
 		if(obj.Form_ApplyTime.value=="")
 		{
-			alert("ÉêÇëÊ±¼ä¿É²»ÄÜÍüÁËÑ½!\n");
+			alert("ç”³è¯·æ—¶é—´å¯ä¸èƒ½å¿˜äº†å‘€!\n");
 			ValidationPassed = false;
 			obj.Form_ApplyTime.focus();
 			return;
@@ -330,14 +330,14 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_ApplyTime.value))
 			{
-				alert("Î¹,ÄúÌîÈëÁËÉêÇëÊ±¼ä,ÉêÇëÊ±¼äĞèÒªÊÇÕıÕûÊıµÄàŞ£¡\n");
+				alert("å–‚,æ‚¨å¡«å…¥äº†ç”³è¯·æ—¶é—´,ç”³è¯·æ—¶é—´éœ€è¦æ˜¯æ­£æ•´æ•°çš„å™¢ï¼\n");
 				ValidationPassed = false;
 				obj.Form_ApplyTime.focus();
 				return;
 			}
 			if (obj.Form_ApplyTime.value.length!=14)
 			{
-				alert("ÉêÇëÊ±¼ä±ØĞëÊÇ14Î»µÄàŞ£¡\n");
+				alert("ç”³è¯·æ—¶é—´å¿…é¡»æ˜¯14ä½çš„å™¢ï¼\n");
 				ValidationPassed = false;
 				obj.Form_ApplyTime.focus();
 				return;
@@ -346,21 +346,21 @@ Function JoinForm%>
 		
 		if(obj.Form_Online.value=="")
 		{
-			alert("ÔÚÏß×´Ì¬¿É²»ÄÜÍüÁËÑ½!\n");
+			alert("åœ¨çº¿çŠ¶æ€å¯ä¸èƒ½å¿˜äº†å‘€!\n");
 			ValidationPassed = false;
 			obj.Form_Online.focus();
 			return;
 		}
 		if (! isnum(obj.Form_Online.value))
 		{
-			alert("ÔÚÏß×´Ì¬±ØĞëÊÇÕıÕûÊı¡£\n");
+			alert("åœ¨çº¿çŠ¶æ€å¿…é¡»æ˜¯æ­£æ•´æ•°ã€‚\n");
 			ValidationPassed = false;
 			obj.Form_Online.focus();
 			return;
 		}
 		if(obj.Form_Prevtime.value=="")
 		{
-			alert("×îºóµÇÂ¼Ê±¼ä¿É²»ÄÜÍüÁËÑ½!\n");
+			alert("æœ€åç™»å½•æ—¶é—´å¯ä¸èƒ½å¿˜äº†å‘€!\n");
 			ValidationPassed = false;
 			obj.Form_Prevtime.focus();
 			return;
@@ -370,14 +370,14 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_Prevtime.value))
 			{
-				alert("Î¹,ÄúÌîÈëÁË×îºóµÇÂ¼Ê±¼ä,×îºóµÇÂ¼Ê±¼äĞèÒªÊÇÕıÕûÊıµÄàŞ£¡\n");
+				alert("å–‚,æ‚¨å¡«å…¥äº†æœ€åç™»å½•æ—¶é—´,æœ€åç™»å½•æ—¶é—´éœ€è¦æ˜¯æ­£æ•´æ•°çš„å™¢ï¼\n");
 				ValidationPassed = false;
 				obj.Form_Prevtime.focus();
 				return;
 			}
 			if (obj.Form_Prevtime.value.length!=14)
 			{
-				alert("×îºóµÇÂ¼Ê±¼ä±ØĞëÊÇ14Î»µÄàŞ£¡\n");
+				alert("æœ€åç™»å½•æ—¶é—´å¿…é¡»æ˜¯14ä½çš„å™¢ï¼\n");
 				ValidationPassed = false;
 				obj.Form_Prevtime.focus();
 				return;
@@ -386,21 +386,21 @@ Function JoinForm%>
 		
 		if(obj.Form_UserLevel.value=="")
 		{
-			alert("ÓÃ»§<%=DEF_PointsName(3)%>¿É²»ÄÜÍüÁËÑ½!\n");
+			alert("ç”¨æˆ·<%=DEF_PointsName(3)%>å¯ä¸èƒ½å¿˜äº†å‘€!\n");
 			ValidationPassed = false;
 			obj.Form_UserLevel.focus();
 			return;
 		}
 		if (! isnum(obj.Form_UserLevel.value))
 		{
-			alert("ÓÃ»§<%=DEF_PointsName(3)%>±ØĞëÊÇÕıÕûÊı¡£\n");
+			alert("ç”¨æˆ·<%=DEF_PointsName(3)%>å¿…é¡»æ˜¯æ­£æ•´æ•°ã€‚\n");
 			ValidationPassed = false;
 			obj.Form_UserLevel.focus();
 			return;
 		}
 		if (obj.Form_UserLevel.value><%=DEF_UserLevelNum%>||obj.Form_UserLevel.value<0)
 		{
-			alert("ÓÃ»§<%=DEF_PointsName(3)%>Öµ±ØĞëÊÇ´óµÈÓÚ0²¢ÇÒĞ¡ÓÚ<%=DEF_UserLevelNum%>¡£\n");
+			alert("ç”¨æˆ·<%=DEF_PointsName(3)%>å€¼å¿…é¡»æ˜¯å¤§ç­‰äº0å¹¶ä¸”å°äº<%=DEF_UserLevelNum%>ã€‚\n");
 			ValidationPassed = false;
 			obj.Form_UserLevel.focus();
 			return;
@@ -408,14 +408,14 @@ Function JoinForm%>
 
 		if(obj.Form_Points.value=="")
 		{
-			alert("ÓÃ»§<%=DEF_PointsName(0)%>¿É²»ÄÜÍüÁËÑ½!\n");
+			alert("ç”¨æˆ·<%=DEF_PointsName(0)%>å¯ä¸èƒ½å¿˜äº†å‘€!\n");
 			ValidationPassed = false;
 			obj.Form_Points.focus();
 			return;
 		}
 		if (! isnum(obj.Form_Points.value))
 		{
-			alert("ÓÃ»§<%=DEF_PointsName(0)%>±ØĞëÊÇÕıÕûÊı¡£\n");
+			alert("ç”¨æˆ·<%=DEF_PointsName(0)%>å¿…é¡»æ˜¯æ­£æ•´æ•°ã€‚\n");
 			ValidationPassed = false;
 			obj.Form_Points.focus();
 			return;
@@ -423,7 +423,7 @@ Function JoinForm%>
 		
 		if(obj.Form_Officer.value=="")
 		{
-			alert("<%=DEF_PointsName(9)%>¿É²»ÄÜÍüÁËÑ½!\n");
+			alert("<%=DEF_PointsName(9)%>å¯ä¸èƒ½å¿˜äº†å‘€!\n");
 			ValidationPassed = false;
 			obj.Form_Officer.focus();
 			return;
@@ -434,7 +434,7 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_FaceWidth.value))
 			{
-				alert("×Ô¶¨ÒåÍ·Ïñ¿í¶È±ØĞëÊÇÊı×Ö£¡\n");
+				alert("è‡ªå®šä¹‰å¤´åƒå®½åº¦å¿…é¡»æ˜¯æ•°å­—ï¼\n");
 				ValidationPassed = false;
 				obj.Form_FaceWidth.focus();
 				return;
@@ -443,7 +443,7 @@ Function JoinForm%>
 			{
 				if(obj.Form_FaceWidth.value<20 || obj.Form_FaceWidth.value><%=DEF_AllFaceMaxWidth%>)
 				{
-					alert("×Ô¶¨ÒåÍ·Ïñ¿í¶È±ØĞëÔÚ20-<%=DEF_AllFaceMaxWidth%>Ö®¼ä£¡\n");
+					alert("è‡ªå®šä¹‰å¤´åƒå®½åº¦å¿…é¡»åœ¨20-<%=DEF_AllFaceMaxWidth%>ä¹‹é—´ï¼\n");
 					ValidationPassed = false;
 					obj.Form_FaceWidth.focus();
 					return;
@@ -455,7 +455,7 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_FaceHeight.value))
 			{
-				alert("×Ô¶¨ÒåÍ·Ïñ¸ß¶È±ØĞëÊÇÊı×Ö£¡\n");
+				alert("è‡ªå®šä¹‰å¤´åƒé«˜åº¦å¿…é¡»æ˜¯æ•°å­—ï¼\n");
 				ValidationPassed = false;
 				obj.Form_FaceHeight.focus();
 				return;
@@ -464,7 +464,7 @@ Function JoinForm%>
 			{
 				if(obj.Form_FaceHeight.value<20 || obj.Form_FaceHeight.value><%=DEF_AllFaceMaxWidth%>)
 				{
-					alert("×Ô¶¨ÒåÍ·Ïñ¸ß¶È±ØĞëÔÚ20-<%=DEF_AllFaceMaxWidth%>Ö®¼ä£¡\n");
+					alert("è‡ªå®šä¹‰å¤´åƒé«˜åº¦å¿…é¡»åœ¨20-<%=DEF_AllFaceMaxWidth%>ä¹‹é—´ï¼\n");
 					ValidationPassed = false;
 					obj.Form_FaceHeight.focus();
 					return;
@@ -479,11 +479,11 @@ Function JoinForm%>
 </head>
 
 <form action=UserJoin.asp method=post name=form1 onSubmit="return ValidationPassed">
-	<div class=frameline>ĞÂÓÃ»§×¢²á</div>
+	<div class=frameline>æ–°ç”¨æˆ·æ³¨å†Œ</div>
 	<table border=0 cellpadding=0 cellspacing=0 width="100%" class=frame_table>
 			<tr>
 				<td class=tdbox width=120>
-					<p>*ÓÃ»§Ãû³Æ£º 
+					<p>*ç”¨æˆ·åç§°ï¼š 
 				</td>
 				<td class=tdbox>
 					<p>
@@ -492,7 +492,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>*ÄãµÄÃÜÂë£º 
+					<p>*ä½ çš„å¯†ç ï¼š 
 				</td>
 				<td class=tdbox>
 					<input name=SubmitFlag type=hidden value="29d98Sasphouseasp8asphnet">
@@ -501,7 +501,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>*ÑéÖ¤ÃÜÂë£º 
+					<p>*éªŒè¯å¯†ç ï¼š 
 				</td>
 				<td class=tdbox>
 					<input maxlength=20 name="Form_password2" size=36 class=fminpt type=password Value="<% If Form_password2<>"" Then Response.Write Server.HtmlEncode(Form_password2)%>">
@@ -509,7 +509,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>*µç×ÓÓÊ¼ş£º 
+					<p>*ç”µå­é‚®ä»¶ï¼š 
 				</td>
 				<td class=tdbox>
 					<input maxLength=60 name=Form_mail size=36 class=fminpt Value="<% If Form_mail<>"" Then Response.Write Server.HtmlEncode(Form_mail)%>">
@@ -517,7 +517,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>*ÃÜÂëÌáÊ¾£º 
+					<p>*å¯†ç æç¤ºï¼š 
 				</td>
 				<td class=tdbox>
 					<input maxLength=20 name=Form_Question class=fminpt size=36 Value="<% If Form_Question<>"" Then Response.Write Server.HtmlEncode(Form_Question)%>">
@@ -525,7 +525,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>*ÌáÊ¾´ğ°¸£º
+					<p>*æç¤ºç­”æ¡ˆï¼š
 				</td>
 				<td class=tdbox>
 					<input maxlength=20 name=Form_Answer class=fminpt size=36 Value="<% If Form_Answer<>"" Then Response.Write Server.HtmlEncode(Form_Answer)%>">
@@ -533,7 +533,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>Ö÷Ò³µØÖ·£º
+					<p>ä¸»é¡µåœ°å€ï¼š
 				</td>
 				<td class=tdbox>
 					<input maxlength=250 name=Form_homepage size=36 class=fminpt Value="<% If Form_homepage<>"" Then Response.Write Server.HtmlEncode(Form_homepage)%>">
@@ -541,7 +541,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>ICQ ºÅÂë£º
+					<p>ICQ å·ç ï¼š
 				</td>
 				<td class=tdbox>
 					<input maxlength=10 name=Form_icq size=36 class=fminpt Value="<% If Form_icq<>"" Then Response.Write Server.HtmlEncode(Form_icq)%>">
@@ -549,7 +549,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>OICQºÅÂë£º
+					<p>OICQå·ç ï¼š
 				</td>
 				<td class=tdbox>
 					<input maxlength=10 name=Form_oicq size=36 class=fminpt Value="<% If Form_oicq<>"" Then Response.Write Server.HtmlEncode(Form_oicq)%>">
@@ -557,7 +557,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>ÄãµÄµØÖ·£º
+					<p>ä½ çš„åœ°å€ï¼š
 				</td>
 				<td class=tdbox>
 					<input maxlength=150 name=Form_address size=36 class=fminpt Value="<% If Form_address<>"" Then Response.Write Server.HtmlEncode(Form_address)%>">
@@ -565,31 +565,31 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>ÄãµÄĞÔ±ğ£º
+					<p>ä½ çš„æ€§åˆ«ï¼š
 				</td>
 				<td class=tdbox>
 					<table border=0 cellpadding=0 cellspacing=0>
 						<tr>
-							<td><input class=fmchkbox type=radio name=Form_sex value=ÄĞ <%If Form_sex = "ÄĞ" Then Response.Write " checked"%>></td><td>ÄĞ</td>
-							<td><input class=fmchkbox type=radio name=Form_sex value=Å® <%If Form_sex = "Å®" Then Response.Write " checked"%>></td><td>Å®</td>
-							<td><input class=fmchkbox type=radio name=Form_sex value=ÃÜ <%If Form_sex = "ÃÜ" Then Response.Write " checked"%>></td><td>±£ÃÜ</td>
+							<td><input class=fmchkbox type=radio name=Form_sex value=ç”· <%If Form_sex = "ç”·" Then Response.Write " checked"%>></td><td>ç”·</td>
+							<td><input class=fmchkbox type=radio name=Form_sex value=å¥³ <%If Form_sex = "å¥³" Then Response.Write " checked"%>></td><td>å¥³</td>
+							<td><input class=fmchkbox type=radio name=Form_sex value=å¯† <%If Form_sex = "å¯†" Then Response.Write " checked"%>></td><td>ä¿å¯†</td>
 		 				</tr>
 		  			</table>
 				</td>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>ÓÃ»§Í·Ïñ£º
+					<p>ç”¨æˆ·å¤´åƒï¼š
 				</td>
 				<td class=tdbox>
 					<input onchange="javascript:changeface();" maxlength=3 name=Form_userphoto size=3 class=fminpt Value="<% If Form_userphoto<>"" Then Response.Write Server.HtmlEncode(string(4-len(cstr(Form_userphoto)),"0")&Form_userphoto)%>">
-					<span style='cursor:hand' title='²é¿´Í·Ïñ´úºÅ' onclick="setface();">²é¿´Í·Ïñ´úºÅ</span>
+					<span style='cursor:hand' title='æŸ¥çœ‹å¤´åƒä»£å·' onclick="setface();">æŸ¥çœ‹å¤´åƒä»£å·</span>
 					<%If Form_userphoto<>"" and isNumeric(Form_userphoto) Then%><img name=faceimg id=faceimg src=<%=DEF_BBS_HomeUrl%>images/face/<%=string(4-len(cstr(Form_userphoto)),"0")&Form_userphoto%>.gif align=middle width=62 height=62><%Else%><img name=faceimg id=faceimg src=<%=DEF_BBS_HomeUrl%>images/null.gif align=middle><%End If%>
 				</td>
 			</tr><%If DEF_AllDefineFace <> 0 Then%>
 			<tr>
 				<td class=tdbox>
-					<p>×Ô¶¨Í·Ïñ£º
+					<p>è‡ªå®šå¤´åƒï¼š
 				</td>
 				<td class=tdbox>
 					<input onchange="javascript:changeface2();" maxlength=250 name=Form_FaceUrl size=26 class=fminpt Value="<%=HtmlEncode(Form_FaceUrl)%>">
@@ -597,16 +597,16 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>Í·Ïñ´óĞ¡£º
+					<p>å¤´åƒå¤§å°ï¼š
 				</td>
 				<td class=tdbox>
-					×Ô¶¨Í·Ïñ¿í: <input onchange="javascript:changeface2();" maxlength=<%=len(DEF_AllFaceMaxWidth)%> name=Form_FaceWidth size=3 class=fminpt Value="<%=HtmlEncode(Form_FaceWidth)%>">(20-<%=DEF_AllFaceMaxWidth%>)
-					¸ß: <input onchange="javascript:changeface2();" maxlength=<%=len(DEF_AllFaceMaxWidth)%> name=Form_FaceHeight size=3 class=fminpt Value="<%=HtmlEncode(Form_FaceHeight)%>">(20-<%=DEF_AllFaceMaxWidth%>)
+					è‡ªå®šå¤´åƒå®½: <input onchange="javascript:changeface2();" maxlength=<%=len(DEF_AllFaceMaxWidth)%> name=Form_FaceWidth size=3 class=fminpt Value="<%=HtmlEncode(Form_FaceWidth)%>">(20-<%=DEF_AllFaceMaxWidth%>)
+					é«˜: <input onchange="javascript:changeface2();" maxlength=<%=len(DEF_AllFaceMaxWidth)%> name=Form_FaceHeight size=3 class=fminpt Value="<%=HtmlEncode(Form_FaceHeight)%>">(20-<%=DEF_AllFaceMaxWidth%>)
 				</td>
 			</tr><%End If%>
 			<tr>
 				<td class=tdbox>
-					<p>ÄãµÄÉúÈÕ£º 
+					<p>ä½ çš„ç”Ÿæ—¥ï¼š 
 				</td>
 				<td class=tdbox align="left">
 					<p>
@@ -614,14 +614,14 @@ Function JoinForm%>
 						Response.Write Server.HtmlEncode(Form_byear)
 					Else
 						Response.Write "19"
-					End If%>"> Äê 
+					End If%>"> å¹´ 
 					<input maxlength=2 name=Form_bmonth size=2 class=fminpt Value="<% If Form_bmonth<>"" Then Response.Write Server.HtmlEncode(Form_bmonth)%>">
-					ÔÂ <input maxlength=2 name=Form_bday size=2 class=fminpt Value="<% If Form_bday<>"" Then Response.Write Server.HtmlEncode(Form_bday)%>">
-					ÈÕ</td>
+					æœˆ <input maxlength=2 name=Form_bday size=2 class=fminpt Value="<% If Form_bday<>"" Then Response.Write Server.HtmlEncode(Form_bday)%>">
+					æ—¥</td>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>Ç©Ãû-UBB£º
+					<p>ç­¾å-UBBï¼š
 				</td>
 				<td class=tdbox>
 					<textarea name=Form_Underwrite rows=5 cols=36 class=fmtxtra><%If Form_Underwrite <> "" Then Response.Write VbCrLf & htmlEncode(Form_Underwrite)%></textarea>
@@ -629,11 +629,11 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox colspan=2 bgcolor=F7F7F7 align=center height=25 class=TBfour>
-					:::::::::::ÌØÊâ×ÊÁÏ:::::::::::</td>
+					:::::::::::ç‰¹æ®Šèµ„æ–™:::::::::::</td>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>ÉêÇëÊ±¼ä£º
+					<p>ç”³è¯·æ—¶é—´ï¼š
 				</td>
 				<td class=tdbox>
 					<input maxlength=14 name=Form_ApplyTime size=14 class=fminpt Value="<% If Form_ApplyTime<>"" Then Response.Write Server.HtmlEncode(Form_ApplyTime)%>">
@@ -649,7 +649,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>ÔÚÏß×´Ì¬£º
+					<p>åœ¨çº¿çŠ¶æ€ï¼š
 				</td>
 				<td class=tdbox>
 					<input maxlength=8 name=Form_Online size=8 class=fminpt Value="<% If Form_Online<>"" Then Response.Write Server.HtmlEncode(Form_Online)%>">
@@ -657,7 +657,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>×îºóµÇÂ¼£º
+					<p>æœ€åç™»å½•ï¼š
 				</td>
 				<td class=tdbox>
 					<input maxlength=14 name=Form_Prevtime size=14 class=fminpt Value="<% If Form_Prevtime<>"" Then Response.Write Server.HtmlEncode(Form_Prevtime)%>">
@@ -665,7 +665,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>ÓÃ»§<%=DEF_PointsName(3)%>£º
+					<p>ç”¨æˆ·<%=DEF_PointsName(3)%>ï¼š
 				</td>
 				<td class=tdbox>
 					<input maxlength=8 name=Form_UserLevel size=8 class=fminpt Value="<% If Form_UserLevel<>"" Then Response.Write Server.HtmlEncode(Form_UserLevel)%>">
@@ -673,7 +673,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>ÓÃ»§IPÖ·£º
+					<p>ç”¨æˆ·IPå€ï¼š
 				</td>
 				<td class=tdbox>
 					<input maxlength=50 name=Form_IP size=36 class=fminpt Value="<% If Form_UserLevel<>"" Then Response.Write Server.HtmlEncode(Form_IP)%>">
@@ -681,7 +681,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>ÓÃ»§<%=DEF_PointsName(0)%>£º
+					<p>ç”¨æˆ·<%=DEF_PointsName(0)%>ï¼š
 				</td>
 				<td class=tdbox>
 					<input maxlength=14 name=Form_Points size=14 class=fminpt Value="<% If Form_Points<>"" Then Response.Write Server.HtmlEncode(Form_Points)%>">
@@ -689,7 +689,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p><%=DEF_PointsName(9)%>£º
+					<p><%=DEF_PointsName(9)%>ï¼š
 				</td>
 				<td class=tdbox>
 					<input maxlength=255 name=Form_Officer size=36 class=fminpt Value="<% If Form_Officer<>"" Then Response.Write Server.HtmlEncode(Form_Officer)%>">
@@ -698,8 +698,8 @@ Function JoinForm%>
 	<tr>
 		<td class=tdbox>&nbsp;</td>
 		<td class=tdbox>
-			<input name=submit type=submit value=" Éê Çë " onclick="form_onsubmit(this.form)" class=fmbtn>
-			<input name=b1 type=reset value=" ÖØ Ğ´ " class=fmbtn>
+			<input name=submit type=submit value=" ç”³ è¯· " onclick="form_onsubmit(this.form)" class=fmbtn>
+			<input name=b1 type=reset value=" é‡ å†™ " class=fmbtn>
 		</td>
 	</tr>
 	</table>
@@ -711,7 +711,7 @@ Function saveFormData
 
 	Dim Rs
 	Set Rs = Server.CreateObject("ADODB.RecordSet")
-	Rs.Open sql_select("Select * from LeadBBS_User",1),con,1,3
+	Rs.Open "Select * from LeadBBS_User Where 1=0",con,1,3
 	Rs.Addnew
 	Rs("UserName") = Form_UserName
 	If Form_Mail<>"" Then Rs("Mail") = Form_Mail
@@ -731,7 +731,7 @@ Function saveFormData
 		If temp > 1950 and temp < 2050 Then Rs("NongLiBirth") = GetNongLiTimeValue(ConvertToNongLi(RestoreTime(Form_birthday)))
 	End If
 
-	REM ÌØÊâÊı¾İ
+	REM ç‰¹æ®Šæ•°æ®
 	Rs("ApplyTime") = Form_ApplyTime
 	Rs("IP") = Form_IP
 	Rs("UserLevel") = Form_UserLevel
@@ -761,7 +761,7 @@ End Function
 
 Function DisplayAccessFull%>
 
-	<p><b>Ìí¼Ó³É¹¦£¬<a href=UserModify.asp?Form_ID=<%=Form_ID%>>µã»÷ÕâÀïĞŞ¸Ä×ÊÁÏ</a>!</b><br>
+	<p><b>æ·»åŠ æˆåŠŸï¼Œ<a href=UserModify.asp?Form_ID=<%=Form_ID%>>ç‚¹å‡»è¿™é‡Œä¿®æ”¹èµ„æ–™</a>!</b><br>
 	<br>
 	</p>
 

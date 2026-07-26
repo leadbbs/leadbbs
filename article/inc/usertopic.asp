@@ -13,21 +13,21 @@ Sub cms_DisplayUserCenter(info)
 	<%
 	%>
 			<div class="user_itemlist">
-			<%If Check_jdsupervisor = 1 Then%>
-			<div class="swap_collapse" onclick="swap_view('master_part_4',this);"><span>×Ü¹ÜÀíÔ±</span></div>
+			<%If Check_jdsupervisor() = 1 Then%>
+			<div class="swap_collapse" onclick="swap_view('master_part_4',this);"><span>æ€»ç®¡ç†å‘˜</span></div>
 			<ul id="master_part_4">
-			<li><a href="<%=DEF_BBS_HomeUrl%>article/center.asp?action=newsclass&list=1"><div class=ttt>·ÖÀà¹ÜÀí</div></A></li>			
-			<li><a href="<%=DEF_BBS_HomeUrl%>article/center.asp?action=newsclass"><div class=ttt>·ÖÀàÌí¼Ó</div></A></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>article/center.asp?action=newsclass&list=1"><div class=ttt>åˆ†ç±»ç®¡ç†</div></A></li>			
+			<li><a href="<%=DEF_BBS_HomeUrl%>article/center.asp?action=newsclass"><div class=ttt>åˆ†ç±»æ·»åŠ </div></A></li>
 			<li><hr class=splitline></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>article/center.asp?action=newsarticle"><div class=ttt>ÎÄÕÂÌí¼Ó</div></A></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>article/center.asp?action=newsmanage"><div class=ttt>ÎÄÕÂ¹ÜÀí</div></A></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>article/center.asp?action=newsarticle"><div class=ttt>æ–‡ç« æ·»åŠ </div></A></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>article/center.asp?action=newsmanage"><div class=ttt>æ–‡ç« ç®¡ç†</div></A></li>
 			<li><hr class=splitline></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>article/center.asp?action=setchannel"><div class=ttt>ÉèÖÃÊ×Ò³À¸Ä¿ÄÚÈİ</div></A></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>article/center.asp?action=editfile&form_fileid=0"><div class=ttt>±à¼­Ê×Ò³Í¼Æ¬ĞÂÎÅ</div></A></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>article/center.asp?action=editfile&form_fileid=1"><div class=ttt>×Ô¶¨ÒåÍøÕ¾µ×²¿ĞÅÏ¢</div></A></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>article/center.asp?action=editfile&form_fileid=2"><div class=ttt>CSSÑùÊ½±í</div></A></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>article/center.asp?action=setchannel"><div class=ttt>è®¾ç½®é¦–é¡µæ ç›®å†…å®¹</div></A></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>article/center.asp?action=editfile&form_fileid=0"><div class=ttt>ç¼–è¾‘é¦–é¡µå›¾ç‰‡æ–°é—»</div></A></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>article/center.asp?action=editfile&form_fileid=1"><div class=ttt>è‡ªå®šä¹‰ç½‘ç«™åº•éƒ¨ä¿¡æ¯</div></A></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>article/center.asp?action=editfile&form_fileid=2"><div class=ttt>CSSæ ·å¼è¡¨</div></A></li>
 			<li><hr class=splitline></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>article/center.asp?action=updatecache"><div class=ttt>Á¢¼´¸üĞÂÏµÍ³»º´æ</div></A></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>article/center.asp?action=updatecache"><div class=ttt>ç«‹å³æ›´æ–°ç³»ç»Ÿç¼“å­˜</div></A></li>
 			</ul>
 			<%
 			end if%>
@@ -38,7 +38,7 @@ End Sub
 
 Function cms_DisplayLoginForm(title)
 
-	response.Write "<span class=cms_error>È¨ÏŞ²»×ã£¡</span>"
+	response.Write "<span class=cms_error>æƒé™ä¸è¶³ï¼</span>"
 
 End Function
 
@@ -49,9 +49,9 @@ Sub cms_manage_Navigate(Str)
 	
 		<div class="navigate_sty">
 			<div class="navigate_string">
-			<a name=home>µ±Ç°Î»ÖÃ£º</a>
+			<a name=home>å½“å‰ä½ç½®ï¼š</a>
 			<%
-			Response.Write "<a href=" & DEF_BBS_HomeUrl & "index.asp target=_blank><span class=""navigate_string_home"">CMSÊ×Ò³</span></a>"
+			Response.Write "<a href=" & DEF_BBS_HomeUrl & "index.asp target=_blank><span class=""navigate_string_home"">CMSé¦–é¡µ</span></a>"
 			
 			Response.write Str%>
 		</div>
@@ -81,13 +81,13 @@ End Sub
 Sub article_center_Head(headString)
 	
 	Dim Temp
-	GetStyleInfo
+	GetStyleInfo()
 	%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"  xml:lang="zh-CN" lang="zh-CN">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="description" content="<%=htmlencode(DEF_GBL_Description)%>" />
 	<title>
 		<%

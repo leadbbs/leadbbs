@@ -1,6 +1,6 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/Board_popfun.asp -->
-<!-- #include file=inc/UserTopic.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Board_popfun.asp"-->
+<!--#include file="inc/UserTopic.asp"-->
 <%
 DEF_BBS_HomeUrl = "../"
 GBL_CHK_PWdFlag = 0
@@ -23,7 +23,7 @@ End Sub
 
 Public Sub Main_Style
 
-	OpenDatabase
+	Call OpenDatabase()
 	GBL_CHK_TempStr = ""
 
 	Dim HomeUrl,u
@@ -56,11 +56,11 @@ Public Sub Main_Style
 		If inStr(u,"/user/boardstyle.asp") > 0 Then u = ""
 	End If
 	
-	If AjaxFlag = 0 Then BBS_SiteHead DEF_SiteNameString & " - Ñ¡Ôñ·ç¸ñ",0,"Ñ¡Ôñ·ç¸ñ"
+	If AjaxFlag = 0 Then Call BBS_SiteHead(DEF_SiteNameString & " - é€‰æ‹©é£æ ¼",0,"é€‰æ‹©é£æ ¼")
 	dim jsflag
 	jsflag = left(request("jsflag"),1)
 	If AjaxFlag = 0 Then
-		Boards_Body_Head("")
+		Call Boards_Body_Head("")
 		%>
 		<div class='alertbox fire'>
 		<%
@@ -76,15 +76,15 @@ Public Sub Main_Style
 	Else
 		DisplayBoardStyleList(u)
 	End If
-	closeDataBase
+	Call closeDataBase()
 	if jsflag = "" then
 	%>
 	</div>
 	<%
 	end if
 	If AjaxFlag = 0 Then
-		Boards_Body_Bottom
-		sitebottom
+		Call Boards_Body_Bottom()
+		Call sitebottom()
 	End If
 
 End Sub
@@ -98,9 +98,9 @@ Private Function DisplayBoardStyleList(u)
 	Temp = Application(DEF_MasterCookies & "BoardInfo" & SetBoardID)
 	If isArray(Temp) = True Then
 		If Temp(24,0) <> "" or Temp(25,0) <> "" Then
-			Response.Write "<p><b><font color=red class=redfont>´Ë°æÃæ²»ÔÊĞíÉèÖÃÎªÆäËü·ç¸ñä¯ÀÀ¡£</font></b>"
+			Response.Write "<p><b><font color=red class=redfont>æ­¤ç‰ˆé¢ä¸å…è®¸è®¾ç½®ä¸ºå…¶å®ƒé£æ ¼æµè§ˆã€‚</font></b>"
 			
-			If u <> "" Then Response.Write "<p>-- ·µ»ØÍøÒ³<a href=" & u & ">" & u & "</a>"
+			If u <> "" Then Response.Write "<p>-- è¿”å›ç½‘é¡µ<a href=" & u & ">" & u & "</a>"
 			Exit Function
 		End If
 	End If
@@ -126,7 +126,7 @@ Private Function DisplayBoardStyleList(u)
 	
 	<li style="width:100%;">
 	<span class="title">
-	<a onclick="getAJAX(this.href+'&AjaxFlag=1&jsflag=1','','stylelist');return false;" href="<%=DEF_InstallDir & "User/BoardStyle.asp?b=" & htmlencode(SetBoardID) & "&u=" & urlencode(u) & "&action=extended"%>">¸ü¶à·ç¸ñ...</a>
+	<a onclick="getAJAX(this.href+'&AjaxFlag=1&jsflag=1','','stylelist');return false;" href="<%=DEF_InstallDir & "User/BoardStyle.asp?b=" & htmlencode(SetBoardID) & "&u=" & urlencode(u) & "&action=extended"%>">æ›´å¤šé£æ ¼...</a>
 	</span>
 	</li>
 	</ul>
@@ -309,29 +309,29 @@ Private Function SetBoardStyle(u)
 		//-->
 		</script>
 			<form action=BoardStyle.asp method=post onSubmit="submitonce(this);return ValidationPassed;">
-			<div class=title>ÇëÈ·¶¨ÉèÖÃµ±Ç°·ç¸ñÎª:  <%=BoardStyle%></div>
+			<div class=title>è¯·ç¡®å®šè®¾ç½®å½“å‰é£æ ¼ä¸º:  <%=BoardStyle%></div>
 			<br>
 			<div class=value2>
 			<input type=hidden name=SureFlag value="E72ksiOkw2">
 			<input type=hidden name=b value="<%=SetBoardID%>">
 			<input type=hidden name=s value="<%=BoardStyle%>">
 			<input type=hidden name=u value="<%=HtmlEncode(u)%>">
-			<input type=submit value=È·¶¨ÉèÖÃ class="fmbtn btn_3">
+			<input type=submit value=ç¡®å®šè®¾ç½® class="fmbtn btn_3">
 			</div>
 			</form>
 		<%
 	Else	
 		If SetBoardID < 1 Then
 			Response.Cookies(DEF_MasterCookies & "style").Expires = Date + 365
-			'Õë¶Ô¶à¸ö°æÃæ²»Í¬·ç¸ñĞèÇó Response.Cookies(DEF_MasterCookies & "style")("border0") = BoardStyle
+			'é’ˆå¯¹å¤šä¸ªç‰ˆé¢ä¸åŒé£æ ¼éœ€æ±‚ Response.Cookies(DEF_MasterCookies & "style")("border0") = BoardStyle
 			Response.Cookies(DEF_MasterCookies & "style")("border") = BoardStyle
 			Response.Cookies(DEF_MasterCookies & "style").Domain = DEF_AbsolutHome
 			If AjaxFlag = 0 or BoardStyle >= 1000 Then
 				if u = "" then u = DEF_BBS_HomeUrl
 				If u <> "" or BoardStyle >= 1000 Then Response.Redirect u
 				Response.Write "<br>"
-				If u <> "" Then Response.Write "<br>-- ·µ»ØÍøÒ³<a href=" & u & ">" & u & "</a>"
-				Response.Write "<br>-- <a href=../Boards.asp>·µ»ØÊ×Ò³</a>"
+				If u <> "" Then Response.Write "<br>-- è¿”å›ç½‘é¡µ<a href=" & u & ">" & u & "</a>"
+				Response.Write "<br>-- <a href=../Boards.asp>è¿”å›é¦–é¡µ</a>"
 			End If
 			Exit Function
 		End If
@@ -340,7 +340,7 @@ Private Function SetBoardStyle(u)
 		Set Rs = LDExeCute(sql_select("Select BoardName,BoardStyle from LeadBBS_Boards where BoardID=" & SetBoardID,1),0)
 		If Not Rs.Eof Then
 			Response.Cookies(DEF_MasterCookies & "style").Expires = Date + 365
-			'Õë¶Ô¶à¸ö°æÃæ²»Í¬·ç¸ñĞèÇó Response.Cookies(DEF_MasterCookies & "style")("border" & SetBoardID) = cCur(BoardStyle)
+			'é’ˆå¯¹å¤šä¸ªç‰ˆé¢ä¸åŒé£æ ¼éœ€æ±‚ Response.Cookies(DEF_MasterCookies & "style")("border" & SetBoardID) = cCur(BoardStyle)
 			Response.Cookies(DEF_MasterCookies & "style")("border") = cCur(BoardStyle)
 			Response.Cookies(DEF_MasterCookies & "style").Domain = DEF_AbsolutHome
 			BoardName = Rs(0)
@@ -353,9 +353,9 @@ Private Function SetBoardStyle(u)
 				Response.Redirect u
 			end if
 			Response.write "<br>"
-			If u <> "" Then Response.Write "<br>-- ·µ»ØÍøÒ³<a href=" & u & ">" & u & "</a>"
-			Response.Write "<br>-- ·µ»Ø°æÃæ<a href=../b/" & RW_b(SetBoardID,0,"") & ">" & BoardName & "</a>"
-			Response.Write "<br>-- <a href=../" & RW_boards(0) & ">·µ»ØÊ×Ò³</a>"
+			If u <> "" Then Response.Write "<br>-- è¿”å›ç½‘é¡µ<a href=" & u & ">" & u & "</a>"
+			Response.Write "<br>-- è¿”å›ç‰ˆé¢<a href=../b/" & RW_b(SetBoardID,0,"") & ">" & BoardName & "</a>"
+			Response.Write "<br>-- <a href=../" & RW_boards(0) & ">è¿”å›é¦–é¡µ</a>"
 		End If
 	End If
 

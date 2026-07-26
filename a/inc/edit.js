@@ -92,7 +92,7 @@ function onPaste() {
 		var re = /<\w[^>]* class="?MsoNormal"?/gi ;
 		if ( re.test( sHTML ) )
 		{
-			if ( confirm( "ÄãÒªÕ³ÌùµÄÄÚÈİºÃÏóÊÇ´ÓWordÖĞ¿½³öÀ´µÄ£¬ÊÇ·ñÒªÏÈÇå³ıWord¸ñÊ½ÔÙÕ³Ìù£¿" ) )
+			if ( confirm( "ä½ è¦ç²˜è´´çš„å†…å®¹å¥½è±¡æ˜¯ä»Wordä¸­æ‹·å‡ºæ¥çš„ï¼Œæ˜¯å¦è¦å…ˆæ¸…é™¤Wordæ ¼å¼å†ç²˜è´´ï¼Ÿ" ) )
 			{
 				cleanAndPaste( sHTML ) ;
 				return false ;
@@ -150,7 +150,7 @@ function PasteWord(){
 	LEADEDT.focus();
 	if (BrowserInfo.IsIE55OrMore)
 		cleanAndPaste( GetClipboardHTML() ) ;
-	else if ( confirm( "´Ë¹¦ÄÜÒªÇóIE5.5°æ±¾ÒÔÉÏ£¬Äãµ±Ç°µÄä¯ÀÀÆ÷²»Ö§³Ö£¬ÊÇ·ñ°´³£¹æÕ³Ìù½øĞĞ£¿" ) )
+	else if ( confirm( "æ­¤åŠŸèƒ½è¦æ±‚IE5.5ç‰ˆæœ¬ä»¥ä¸Šï¼Œä½ å½“å‰çš„æµè§ˆå™¨ä¸æ”¯æŒï¼Œæ˜¯å¦æŒ‰å¸¸è§„ç²˜è´´è¿›è¡Œï¼Ÿ" ) )
 		format("paste") ;
 	LEADEDT.focus();
 }
@@ -165,7 +165,7 @@ function PasteText(){
 
 function validateMode() {
 	if (bEditMode) return true;
-	alert("Ğè×ª»»Îª±à¼­×´Ì¬ºóÔÙÊ¹ÓÃ´Ë¹¦ÄÜ£¡");
+	alert("éœ€è½¬æ¢ä¸ºç¼–è¾‘çŠ¶æ€åå†ä½¿ç”¨æ­¤åŠŸèƒ½ï¼");
 	LEADEDT.focus();
 	return false;
 }
@@ -295,7 +295,7 @@ function insert(what) {
 
 var bEditMode=true;
 var sCurrMode = "EDIT";
-var bodyTag = "<head><style type=\"text/css\">body,a,table,div,span,td,th,input,select{font-size:9pt;font-family:\"ËÎÌå,Verdana,Arial\";Color:#000000;}</style><meta http-equiv=Content-Type content=\"text/html; charset=gbk\"></head><body bgcolor=\"#FFFFFF\" MONOSPACE>" ;
+var bodyTag = "<head><style type=\"text/css\">body,a,table,div,span,td,th,input,select{font-size:9pt;font-family:\"å®‹ä½“,Verdana,Arial\";Color:#000000;}</style><meta http-equiv=Content-Type content=\"text/html; charset=gbk\"></head><body bgcolor=\"#FFFFFF\" MONOSPACE>" ;
 var sContentName = "Form_Content" ;
 var objContent = document.getElementsByName(sContentName)[0];
 

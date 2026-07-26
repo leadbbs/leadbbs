@@ -1,11 +1,11 @@
-<!-- #include file=inc/BBSsetup.asp -->
-<!-- #include file=inc/User_Setup.ASP -->
-<!-- #include file=inc/Board_Popfun.asp -->
-<!-- #include file=inc/Fun/ViewOnline_fun.asp -->
-<!-- #include file=inc/Templet/HTML/Normal_0.asp -->
-<!-- #include file=inc/IncHtm/BoardLink.asp -->
-<!-- #include file=inc/Fun/VierAnc_Fun.asp -->
-<!-- #include file=inc/IncHtm/Boards_Side.asp -->
+<!--#include file="inc/BBSsetup.asp"-->
+<!--#include file="inc/User_Setup.ASP"-->
+<!--#include file="inc/Board_Popfun.asp"-->
+<!--#include file="inc/Fun/ViewOnline_fun.asp"-->
+<!--#include file="inc/Templet/HTML/Normal_0.asp"-->
+<!--#include file="inc/IncHtm/BoardLink.asp"-->
+<!--#include file="inc/Fun/VierAnc_Fun.asp"-->
+<!--#include file="inc/IncHtm/Boards_Side.asp"-->
 <!--#include file="plug-ins/HomePageStar/HomePageStar.asp"-->
 <%
 DEF_BBS_HomeUrl = ""
@@ -70,7 +70,7 @@ Sub DisplayBoard_JS
 			GetData(9,0) = cCur(GetData(9,0))
 			If GetData(9,0) > 1 Then
 				If GBL_CheckLimitTitle(ForumPass,GetData(9,0),GetData(36,0),GetData(8,0)) = 1 Then
-					GetData(20,0) = "ÒÑÉèÖÃÎªÒş²Ø"
+					GetData(20,0) = "å·²è®¾ç½®ä¸ºéšè—"
 					GetData(3,0) = ""
 				End If
 			End If
@@ -106,7 +106,7 @@ Sub DisplayBoard_HTML
 		If GBL_REQ_Assort = 0 or (GBL_REQ_Assort > 0 and GBL_REQ_Assort = cCur(Blist(1,n))) Then
 			If ShowFlag = 0 Then
 				ShowFlag = 1
-				Global_TableHead
+				Global_TableHead()
 			End If
 
 			ForumPass = GetData(7,0)
@@ -114,7 +114,7 @@ Sub DisplayBoard_HTML
 			GetData(9,0) = cCur(GetData(9,0))
 			If GetData(9,0) > 1 Then
 				If GBL_CheckLimitTitle(ForumPass,GetData(9,0),GetData(36,0),GetData(8,0)) = 1 Then
-					GetData(20,0) = "ÒÑÉèÖÃÎªÒş²Ø"
+					GetData(20,0) = "å·²è®¾ç½®ä¸ºéšè—"
 					GetData(3,0) = ""
 				End If
 			End If
@@ -129,7 +129,7 @@ Sub DisplayBoard_HTML
 	Set BoardClass = Nothing
 	If ShowFlag = 1 Then
 		Response.Write "</table></div></div>"
-		Global_TableBottom
+		Global_TableBottom()
 	End If
 
 End Sub
@@ -147,7 +147,7 @@ Sub DisplayBoard
 	If isArray(Blist) = True Then
 		BoardNum = Ubound(Blist,2)
 	Else
-		ReloadBoardListData
+		ReloadBoardListData()
 		Blist = Application(DEF_MasterCookies & "BList")
 		If isArray(Blist) = True Then
 			BoardNum = Ubound(Blist,2)
@@ -157,14 +157,14 @@ Sub DisplayBoard
 	End If
 
 	If BoardNum = -1 Then%>
-		<!--ÂÛÌ³ÔİÎŞ°æÃæĞÅÏ¢.-->
+		<!--è®ºå›æš‚æ— ç‰ˆé¢ä¿¡æ¯.-->
 		<%
 	Else
-		Boards_CloseAssort
-		DisplayBoard_HTML
+		Boards_CloseAssort()
+		DisplayBoard_HTML()
 	End If
 	
-	Boards_LinkandOnlineInfo
+	Boards_LinkandOnlineInfo()
 	
 
 End Sub
@@ -178,8 +178,8 @@ Sub Boards_LinkandOnlineInfo
 		<tr><td>
 			<div class="b_assort">
 				<div class="b_assort_title">
-				<span class="clicktext" title="¹Ø±Õ/Õ¹¿ª" onclick="LD.blist.assort_disable('blink');"><img src="<%=DEF_BBS_HomeUrl%>images/blank.gif" id="b_assort_img_blink" class="b_assort_close<%If inStr(Boards_dis_assortStr,",blink,") Then Response.Write "_swap"%>" alt="¹Ø±Õ/Õ¹¿ª" /></span>
-					<b>ÓÑÇéÁ´½Ó</b>
+				<span class="clicktext" title="å…³é—­/å±•å¼€" onclick="LD.blist.assort_disable('blink');"><img src="<%=DEF_BBS_HomeUrl%>images/blank.gif" id="b_assort_img_blink" class="b_assort_close<%If inStr(Boards_dis_assortStr,",blink,") Then Response.Write "_swap"%>" alt="å…³é—­/å±•å¼€" /></span>
+					<b>å‹æƒ…é“¾æ¥</b>
 				</div>
 			</div>
 		</td></tr>
@@ -198,10 +198,10 @@ Sub Boards_LinkandOnlineInfo
 	</div>
 	<%
 		End If
-	LeadBBSHomePageStar
-	Boards_ShowOnline
+	LeadBBSHomePageStar()
+	Boards_ShowOnline()
 	
-	Global_TableBottom 
+	Global_TableBottom()
 
 End Sub
 
@@ -262,7 +262,7 @@ Sub DisplayBoardInfo
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
 			<td>
-				<b><a href="User/LookMessage.asp">¹«¸æ</a>£º</b>
+				<b><a href="User/LookMessage.asp">å…¬å‘Š</a>ï¼š</b>
 				</td>
 			<td>
 				<%Boards_pubmessage%>
@@ -272,26 +272,26 @@ Sub DisplayBoardInfo
 			If Application(DEF_MasterCookies & "PubMsg") <> VbCrLf & VbCrLf Then ReloadPubMessageInfo
 			End If%>
 		<div class="boards_bbsinfo_2">
-			<div class="layer_item" style="display:inline"><span class="layer_item_title"><b>ÂÛÌ³ĞÅÏ¢</b></span>
+			<div class="layer_item" style="display:inline"><span class="layer_item_title"><b>è®ºå›ä¿¡æ¯</b></span>
 				<div class="layer_iteminfo">
 					<%
-				Response.Write "<ul class=""menu_list""><li>Ö÷Ìâ£º" & TopicNum & "</li><li>»Ø¸´£º" & AnnounceNum-TopicNum & "</li>"
-				Response.Write "<li>×òÈÕÌû£º" & YesterdayAnc & "´Î</li>"
-				Response.Write "<li>Ò³Á÷Á¿£º" & PageCount & "´Î</li>"
-				Response.Write "<li>×î¸ßÈÕ·¢£º" & MaxAnnounce & "<br />·¢ÉúÊ±¼ä£º" & RestoreTime(MaxAncTime) & "</li>"
-				Response.Write "<li>×¢²áÓÃ»§£º" & UserCount & "</li>"
-				Response.Write "<li>×îĞÂ¼ÓÈë£º<a href=""User/" & RW_User(0,"",LastRegUser,"") & """>" & htmlencode(LastRegUser) & "</a></li>"
+				Response.Write "<ul class=""menu_list""><li>ä¸»é¢˜ï¼š" & TopicNum & "</li><li>å›å¤ï¼š" & AnnounceNum-TopicNum & "</li>"
+				Response.Write "<li>æ˜¨æ—¥å¸–ï¼š" & YesterdayAnc & "æ¬¡</li>"
+				Response.Write "<li>é¡µæµé‡ï¼š" & PageCount & "æ¬¡</li>"
+				Response.Write "<li>æœ€é«˜æ—¥å‘ï¼š" & MaxAnnounce & "<br />å‘ç”Ÿæ—¶é—´ï¼š" & RestoreTime(MaxAncTime) & "</li>"
+				Response.Write "<li>æ³¨å†Œç”¨æˆ·ï¼š" & UserCount & "</li>"
+				Response.Write "<li>æœ€æ–°åŠ å…¥ï¼š<a href=""User/" & RW_User(0,"",LastRegUser,"") & """>" & htmlencode(LastRegUser) & "</a></li>"
 				%>
-				<li><b>ÎÒµÄĞÅÏ¢</b></li>
-				<li>ä¯ÀÀÆ÷:<%=GetSBInfo(1)%></li>
-				<li>ÏµÍ³:<%=GetSBInfo(2)%></li>
-				<li>IPµØÖ·: <%=GBL_IPAddress%></li>
+				<li><b>æˆ‘çš„ä¿¡æ¯</b></li>
+				<li>æµè§ˆå™¨:<%=GetSBInfo(1)%></li>
+				<li>ç³»ç»Ÿ:<%=GetSBInfo(2)%></li>
+				<li>IPåœ°å€: <%=GBL_IPAddress%></li>
 					</ul>
 				</div>
 			</div>
 			<%
-			If TodayAnnounce > 0 Then Response.Write "ĞÂÌû£º<b><span class=""redfont"">" & TodayAnnounce & "</span></b>£¬"
-			Response.Write "×ÜÌû£º" & AnnounceNum
+			If TodayAnnounce > 0 Then Response.Write "æ–°å¸–ï¼š<b><span class=""redfont"">" & TodayAnnounce & "</span></b>ï¼Œ"
+			Response.Write "æ€»å¸–ï¼š" & AnnounceNum
 			%>
 		</div>
 	</div>
@@ -309,14 +309,14 @@ Sub Boards_ShowOnline
 	<tr class="tbhead"><td>	
 	<div class="b_assort">
 		<span class="b_assort_title">
-			<a href="User/UserOnline.asp"><b>ÔÚÏßĞÅÏ¢</b></a> 
+			<a href="User/UserOnline.asp"><b>åœ¨çº¿ä¿¡æ¯</b></a> 
 	<a href="javascript:void(0);"<%
 	If DEF_DisplayOnlineUser >= 1 and DEF_DisplayOnlineUser<=3 Then
 		%> onclick="ShowOnline('follow0','swap_ol')"<%
-	End If%>><span class="swap_ol<%If DEF_DisplayOnlineUser = 1 Then Response.Write "_close"%>" id="swap_ol">¹²<b><%=Boards_OnlineUserNum%></b>ÈËÔÚÏß</span></a>
+	End If%>><span class="swap_ol<%If DEF_DisplayOnlineUser = 1 Then Response.Write "_close"%>" id="swap_ol">å…±<b><%=Boards_OnlineUserNum%></b>äººåœ¨çº¿</span></a>
 		</span>
-	×î¸ßÔÚÏß <%=Boards_MaxOnline%> ÈË ·¢ÉúÓÚ <%=RestoreTime(Boards_MaxolTime)%>
-	[<a href="User/<%=RW_User(0,"f","","need=23")%>">²é¿´ÔÚÏßºÃÓÑ</a>]
+	æœ€é«˜åœ¨çº¿ <%=Boards_MaxOnline%> äºº å‘ç”Ÿäº <%=RestoreTime(Boards_MaxolTime)%>
+	[<a href="User/<%=RW_User(0,"f","","need=23")%>">æŸ¥çœ‹åœ¨çº¿å¥½å‹</a>]
 	<%
 	If DEF_DisplayOnlineUser < 1 or DEF_DisplayOnlineUser > 3 Then
 		Response.Write "</div>"
@@ -350,7 +350,7 @@ Sub Boards_ShowOnline
 	If DEF_DisplayOnlineUser = 2 or DEF_DisplayOnlineUser = 3 Then%>
 		<tr><td>
 			<div class="b_list_box" id="follow0" style="DISPLAY: block">
-	          <%DisplayUserOnline 0,""%>
+	          <%DisplayUserOnline() 0,""%>
 	          	</div>
 		</td></tr>
 	<%
@@ -366,7 +366,7 @@ Sub Boards_pubmessage
 		Dim Temp,N
 		Temp = Application(DEF_MasterCookies & "PubMsg")
 		If isArray(Temp) = False Then
-			Response.Write "ÎŞ¹«¸æ¡£"
+			Response.Write "æ— å…¬å‘Šã€‚"
 			Exit Sub
 		End If
 		If Ubound(Temp,2) < 0 or GBL_Board_ID > 0 Then
@@ -384,7 +384,7 @@ Sub Boards_pubmessage
 				Else
 					Response.Write "<a href=""" & DEF_BBS_HomeUrl & "User/LookMessage.asp#" & N & """>" & Temp(0,n) & "</a>"
 				end If
-				Response.Write "<em> (" & Left(RestoreTime(Temp(1,n)),10) & ")</em>¡¡</li>"
+				Response.Write "<em> (" & Left(RestoreTime(Temp(1,n)),10) & ")</em>ã€€</li>"
 			Next
 			Response.Write "</ul>"
 			%>
@@ -469,7 +469,7 @@ Sub Boars_Side_Box_MakeFile(side)
 	Dim Str
 	If side <> "_close" Then
 	%>
-	<!-- #include file=inc/IncHtm/Boards_Side_Setup.asp -->
+	<!--#include file="inc/IncHtm/Boards_Side_Setup.asp"-->
 	<%
 		Response.Write Str
 	End If
@@ -497,7 +497,7 @@ Sub Boars_Side_Box(side)
 	 on error resume next
 	t = DateDiff("s",Boards_UpdateTime,DEF_Now)
 	If (t < 0 or t > DEF_UpdateInterval or Err) and Application(DEF_MasterCookies & "_UpdateSide") & "" <> "yes" Then
-		'·ÀÖ¹¶àÖØĞ´Èë
+		'é˜²æ­¢å¤šé‡å†™å…¥
 		Application.Lock
 		Application(DEF_MasterCookies & "_UpdateSide") = "yes"
 		Application.UnLock
@@ -507,15 +507,15 @@ Sub Boars_Side_Box(side)
 		End If
 		Application.Contents.Remove(DEF_MasterCookies & "_UpdateSide")
 	Else
-		Boars_Side_Box_View
+		Boars_Side_Box_View()
 	End If
 
 End Sub
 
 Sub Main
 
-	If CheckSystem = 1 Then Response.Redirect DEF_BBS_HomeUrl & "mini/default.asp"
-	OpenDatabase
+	If CheckSystem() = 1 Then Response.Redirect DEF_BBS_HomeUrl & "mini/default.asp"
+	OpenDatabase()
 	Dim ol,SideFlag,SideNomal
 	SideFlag = GetBinarybit(DEF_Sideparameter,1)
 	SideNomal = GetBinarybit(DEF_Sideparameter,2)
@@ -523,27 +523,27 @@ Sub Main
 	ol = Left(Request.Form("ol") & "",14)
 	Select Case ol
 		Case "1":
-			GetStyleInfo
-			DisplayUserOnline 0,""
-			CloseDataBase
+			GetStyleInfo()
+			DisplayUserOnline() 0,""
+			CloseDataBase()
 			Exit Sub
 		Case "side":
 			Boars_Side_Box("")
-			CloseDatabase
+			CloseDatabase()
 			Exit Sub
 	End Select
-	CheckUserOnline
-	If GBL_CheckPassDoneFlag <> 1 Then CheckPass
+	CheckUserOnline()
+	If GBL_CheckPassDoneFlag <> 1 Then CheckPass()
 	GBL_CHK_TempStr = ""
 	
-	CheckAssort
+	CheckAssort()
 	If GBL_REQ_Assort > 0 Then
 		BBS_SiteHead DEF_SiteNameString & " " & DEF_BBS_Name,0,""
 	Else
-		BBS_SiteHead DEF_SiteNameString & " " & DEF_BBS_Name,0,"Ê×Ò³"
+		BBS_SiteHead DEF_SiteNameString & " " & DEF_BBS_Name,0,"é¦–é¡µ"
 	End If
  
-	UpdateOnlineUserAtInfo 0,"ÂÛÌ³Ê×Ò³"
+	UpdateOnlineUserAtInfo 0,"è®ºå›é¦–é¡µ"
 
 	%>
 	<div class="area">
@@ -555,21 +555,21 @@ Sub Main
 	Else
 		Boards_Body_Head("request" & SideNomal)
 	End If
-	DisplayBoardInfo
-	DisplayBoard
-	Boards_Body_Bottom
+	DisplayBoardInfo()
+	DisplayBoard()
+	Boards_Body_Bottom()
 	%>
 	<div class="clear"></div>
 	<div class="area">
 	<div id="ad_homebottom"></div></div>
 	<%
-	getinfo
-	closeDataBase
-	SiteBottom
+	getinfo()
+	closeDataBase()
+	SiteBottom()
 
 End Sub
 
-Main
+Main()
 
 sub getinfo
 

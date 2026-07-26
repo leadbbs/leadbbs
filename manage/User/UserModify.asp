@@ -1,22 +1,22 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/User_Setup.ASP -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
-<!-- #include file=../../inc/ubbcode.asp -->
-<!-- #include file=inc/User_fun.ASP -->
-<!-- #include file=../../inc/Limit_Fun.asp -->
-<!-- #include file=../../inc/Constellation2.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/User_Setup.ASP"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
+<!--#include file="../../inc/ubbcode.asp"-->
+<!--#include file="inc/User_fun.ASP"-->
+<!--#include file="../../inc/Limit_Fun.asp"-->
+<!--#include file="../../inc/Constellation2.asp"-->
 
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
 CursorLocation = 3
-initDatabase
+initDatabase()
 
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
-Manage_sitehead DEF_SiteNameString & " - ����Ա",""
+Manage_sitehead DEF_SiteNameString & " - 管理员",""
 GBL_CHK_TempStr=""
 Form_ID = Left(Request("Form_ID"),14)
 If isNumeric(Form_ID) = 0 Then Form_ID = 0
@@ -24,30 +24,30 @@ Form_ID = cCur(Form_ID)
 If Form_ID < 0 Then Form_ID = 0
 
 If Form_ID=0 Then
-	GBL_CHK_TempStr = GBL_CHK_TempStr & "û��ѡ��Ҫ�޸ĵ��û�<br>" & VbCrLf
+	GBL_CHK_TempStr = GBL_CHK_TempStr & "没有选择要修改的用户<br>" & VbCrLf
 End If
-frame_TopInfo
-DisplayUserNavigate("�û������޸�")
+frame_TopInfo()
+DisplayUserNavigate("用户资料修改")
 If GBL_CHK_Flag=1 Then
 	If GBL_CHK_TempStr = "" Then
 		If Request.Form("SubmitFlag")="29d98Sasphouseasp8asphnet" Then
 			GBL_CHK_TempStr = ""
-			checkFormDate
+			checkFormDate()
 
 			If GBL_CHK_Flag = 0 Then
 				Response.WRite "<div class=alert>" & GBL_CHK_TempStr & "</div>" & VbCrLf
-				JoinForm
+				JoinForm()
 			Else
-				If saveFormData = 1 Then
-					displayAccessFull
+				If saveFormData() = 1 Then
+					displayAccessFull()
 				Else
 					Response.WRite "<div class=alert>" & GBL_CHK_TempStr & "</div>" & VbCrLf
-					JoinForm
+					JoinForm()
 				End If
 			End If
 		Else
 			GetUserData(Form_ID)
-			JoinForm
+			JoinForm()
 		End If
 	Else%>
 		<div class=frameline>
@@ -55,10 +55,10 @@ If GBL_CHK_Flag=1 Then
 		</div>
 	<%End If
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Function GetUserData(ID)
@@ -92,7 +92,7 @@ Function GetUserData(ID)
 		Form_bmonth = month(Form_birthday)
 	End If
 
-	REM ��������
+	REM 特殊数据
 	Form_ApplyTime = Rs("ApplyTime")
 	Form_IP = Rs("IP")
 	Form_UserLevel = Rs("UserLevel")
@@ -132,7 +132,7 @@ Function JoinForm%>
 	<style type=text/css>
 		.input
 		{
-			FONT-FAMILY: ����;
+			FONT-FAMILY: 宋体;
 			border-left:0px;
 			border-right:0px;
 			border-top:0px;
@@ -142,7 +142,7 @@ Function JoinForm%>
 		}
 		.inputs
 		{
-			FONT-FAMILY: ����;
+			FONT-FAMILY: 宋体;
 			border-left:0px;
 			border-right:0px;
 			border-top:0px;
@@ -152,7 +152,7 @@ Function JoinForm%>
 		}
 		.inputss
 		{
-			FONT-FAMILY: ����;
+			FONT-FAMILY: 宋体;
 			border-left:0px;
 			border-right:0px;
 			border-top:0px;
@@ -198,7 +198,7 @@ Function JoinForm%>
 			}
 			else
 			{
-				alert("����!��ͼ����Ų�����!");
+				alert("错误!此图像代号不存在!");
 				document.faceimg.src='<%=DEF_BBS_HomeUrl%>images/null.gif';
 				document.form1.Form_userphoto.value='';
 				ValidationPassed = false;
@@ -206,7 +206,7 @@ Function JoinForm%>
 		}
 		else
 		{
-			alert("����!��ͼ����Ų�����!\nͼ����ű�����4λ��<%if len(Cstr(DEF_faceMaxNum))>4 then Response.Write "������"%>,���� 0001 ,���Ϊ<%=DEF_faceMaxNum%>");
+			alert("错误!此图像代号不存在!\n图像代号必须是4位数<%if len(Cstr(DEF_faceMaxNum))>4 then Response.Write "或以上"%>,比如 0001 ,最大为<%=DEF_faceMaxNum%>");
 			document.faceimg.src='<%=DEF_BBS_HomeUrl%>images/null.gif';
 			document.form1.Form_userphoto.value='';
 			ValidationPassed = false;
@@ -222,7 +222,7 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_FaceWidth.value))
 			{
-				alert("�Զ���ͷ����ȱ��������֣�\n");
+				alert("自定义头像宽度必须是数字！\n");
 				obj.Form_FaceWidth.focus();
 				return;
 			}
@@ -230,7 +230,7 @@ Function JoinForm%>
 			{
 				if(obj.Form_FaceWidth.value<20 || obj.Form_FaceWidth.value><%=DEF_AllFaceMaxWidth%>)
 				{
-					alert("�Զ���ͷ����ȱ�����20-<%=DEF_AllFaceMaxWidth%>֮�䣡\n");
+					alert("自定义头像宽度必须在20-<%=DEF_AllFaceMaxWidth%>之间！\n");
 					obj.Form_FaceWidth.focus();
 					return;
 				}
@@ -241,7 +241,7 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_FaceHeight.value))
 			{
-				alert("�Զ���ͷ��߶ȱ��������֣�\n");
+				alert("自定义头像高度必须是数字！\n");
 				obj.Form_FaceHeight.focus();
 				return;
 			}
@@ -249,7 +249,7 @@ Function JoinForm%>
 			{
 				if(obj.Form_FaceHeight.value<20 || obj.Form_FaceHeight.value><%=DEF_AllFaceMaxWidth*2%>)
 				{
-					alert("�Զ���ͷ��߶ȱ�����20-<%=DEF_AllFaceMaxWidth*2%>֮�䣡\n");
+					alert("自定义头像高度必须在20-<%=DEF_AllFaceMaxWidth*2%>之间！\n");
 					obj.Form_FaceHeight.focus();
 					return;
 				}
@@ -269,7 +269,7 @@ Function JoinForm%>
 	{
 		if(obj.Form_username.value=="")
 		{
-			alert("����������û���!\n");
+			alert("请输入你的用户名!\n");
 			ValidationPassed = false;
 			obj.Form_username.focus();
 			return;
@@ -277,7 +277,7 @@ Function JoinForm%>
 		
 		if(obj.Form_username.value.length<1)
 		{
-			alert("�û�������������Ҫ1���ַ�!\n");
+			alert("用户名长度至少需要1个字符!\n");
 			ValidationPassed = false;
 			obj.Form_username.focus();
 			return;
@@ -285,7 +285,7 @@ Function JoinForm%>
 
 		//if(obj.Form_password1.value=="")
 		//{
-		//	alert("�������µ�����!\n");
+		//	alert("请输入新的密码!\n");
 		//	ValidationPassed = false;
 		//	obj.Form_password1.focus();
 		//	return;
@@ -293,7 +293,7 @@ Function JoinForm%>
 
 		//if(obj.Form_password2.value=="")
 		//{
-		//	alert("�����������֤���룡\n");
+		//	alert("请输入你的验证密码！\n");
 		//	ValidationPassed = false;
 		//	obj.Form_password2.focus();
 		//	return;
@@ -301,7 +301,7 @@ Function JoinForm%>
 
 		if(obj.Form_password1.value!=obj.Form_password2.value)
 		{
-			alert("��������������벻��ͬ��\n");
+			alert("你的两次密码输入不相同！\n");
 			ValidationPassed = false;
 			obj.Form_password1.focus();
 			return;
@@ -312,7 +312,7 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_oicq.value))
 			{
-				alert("ι,��������OICQ���������˶���,�����OICQ������ô��������?\n");
+				alert("喂,你填入了OICQ框中填入了东西,但你的OICQ号码怎么不是数字?\n");
 				ValidationPassed = false;
 				obj.Form_oicq.focus();
 				return;
@@ -323,7 +323,7 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_byear.value))
 			{
-				alert("ι,����������ĳ�����,����������ô�������֣�\n");
+				alert("喂,你填入了你的出生年,但你的年份怎么不是数字！\n");
 				ValidationPassed = false;
 				obj.Form_byear.focus();
 				return;
@@ -334,7 +334,7 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_bmonth.value))
 			{
-				alert("ι,����������ĳ�����,������·���ô�������֣�\n");
+				alert("喂,你填入了你的出生月,但你的月份怎么不是数字！\n");
 				ValidationPassed = false;
 				obj.Form_bmonth.focus();
 				return;
@@ -345,7 +345,7 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_bday.value))
 			{
-				alert("ι,����������ĳ�����,����ĳ�������ô�������֣�\n");
+				alert("喂,你填入了你的出生日,但你的出生日怎么不是数字！\n");
 				ValidationPassed = false;
 				obj.Form_bday.focus();
 				return;
@@ -356,7 +356,7 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_bday.value))
 			{
-				alert("�û�ͼ��,ֻ����001-318֮������֣�\n");
+				alert("用户图像,只能是001-318之间的数字！\n");
 				ValidationPassed = false;
 				obj.Form_bday.focus();
 				return;
@@ -365,17 +365,17 @@ Function JoinForm%>
 		
 		if(obj.Form_Underwrite.value.length>255)
 		{
-			alert("�û�ǩ������ҪС��255���ַ�!\n");
+			alert("用户签名内容要小于255个字符!\n");
 			ValidationPassed = false;
 			obj.Form_Underwrite.focus();
 			return;
 		}
-		//��������
+		//其它资料
 		
 
 		if(obj.Form_ApplyTime.value=="")
 		{
-			alert("����ʱ��ɲ�������ѽ!\n");
+			alert("申请时间可不能忘了呀!\n");
 			ValidationPassed = false;
 			obj.Form_ApplyTime.focus();
 			return;
@@ -385,14 +385,14 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_ApplyTime.value))
 			{
-				alert("ι,������������ʱ��,����ʱ����Ҫ�����ֵ��ޣ�\n");
+				alert("喂,您填入了申请时间,申请时间需要是数字的噢！\n");
 				ValidationPassed = false;
 				obj.Form_ApplyTime.focus();
 				return;
 			}
 			if (obj.Form_ApplyTime.value.length!=14)
 			{
-				alert("����ʱ�������14λ���ޣ�\n");
+				alert("申请时间必须是14位的噢！\n");
 				ValidationPassed = false;
 				obj.Form_ApplyTime.focus();
 				return;
@@ -401,21 +401,21 @@ Function JoinForm%>
 		
 		if(obj.Form_Online.value=="")
 		{
-			alert("����״̬�ɲ�������ѽ!\n");
+			alert("在线状态可不能忘了呀!\n");
 			ValidationPassed = false;
 			obj.Form_Online.focus();
 			return;
 		}
 		if (! isnum(obj.Form_Online.value))
 		{
-			alert("����״̬��������������\n");
+			alert("在线状态必须是正整数。\n");
 			ValidationPassed = false;
 			obj.Form_Online.focus();
 			return;
 		}
 		if(obj.Form_Prevtime.value=="")
 		{
-			alert("����¼ʱ��ɲ�������ѽ!\n");
+			alert("最后登录时间可不能忘了呀!\n");
 			ValidationPassed = false;
 			obj.Form_Prevtime.focus();
 			return;
@@ -425,14 +425,14 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_Prevtime.value))
 			{
-				alert("ι,������������¼ʱ��,����¼ʱ����Ҫ�����ֵ��ޣ�\n");
+				alert("喂,您填入了最后登录时间,最后登录时间需要是数字的噢！\n");
 				ValidationPassed = false;
 				obj.Form_Prevtime.focus();
 				return;
 			}
 			if (obj.Form_Prevtime.value.length!=14)
 			{
-				alert("����¼ʱ�������14λ���ޣ�\n");
+				alert("最后登录时间必须是14位的噢！\n");
 				ValidationPassed = false;
 				obj.Form_Prevtime.focus();
 				return;
@@ -441,21 +441,21 @@ Function JoinForm%>
 		
 		if(obj.Form_UserLevel.value=="")
 		{
-			alert("�û�<%=DEF_PointsName(3)%>�ɲ�������ѽ!\n");
+			alert("用户<%=DEF_PointsName(3)%>可不能忘了呀!\n");
 			ValidationPassed = false;
 			obj.Form_UserLevel.focus();
 			return;
 		}
 		if (! isnum(obj.Form_UserLevel.value))
 		{
-			alert("�û�<%=DEF_PointsName(3)%>��������������\n");
+			alert("用户<%=DEF_PointsName(3)%>必须是正整数。\n");
 			ValidationPassed = false;
 			obj.Form_UserLevel.focus();
 			return;
 		}
 		if (obj.Form_UserLevel.value><%=DEF_UserLevelNum%>||obj.Form_UserLevel.value<0)
 		{
-			alert("�û�<%=DEF_PointsName(3)%>ֵ�����Ǵ����0����С��<%=DEF_UserLevelNum%>��\n");
+			alert("用户<%=DEF_PointsName(3)%>值必须是大等于0并且小于<%=DEF_UserLevelNum%>。\n");
 			ValidationPassed = false;
 			obj.Form_UserLevel.focus();
 			return;
@@ -463,14 +463,14 @@ Function JoinForm%>
 
 		if(obj.Form_Points.value=="")
 		{
-			alert("�û�<%=DEF_PointsName(0)%>�ɲ�������ѽ!\n");
+			alert("用户<%=DEF_PointsName(0)%>可不能忘了呀!\n");
 			ValidationPassed = false;
 			obj.Form_Points.focus();
 			return;
 		}
 		if (! isnum(obj.Form_Points.value))
 		{
-			alert("�û�<%=DEF_PointsName(0)%>��������������\n");
+			alert("用户<%=DEF_PointsName(0)%>必须是正整数。\n");
 			ValidationPassed = false;
 			obj.Form_Points.focus();
 			return;
@@ -478,7 +478,7 @@ Function JoinForm%>
 		
 		if(obj.Form_Officer.value=="")
 		{
-			alert("<%=DEF_PointsName(9)%>�ɲ�������ѽ!\n");
+			alert("<%=DEF_PointsName(9)%>可不能忘了呀!\n");
 			ValidationPassed = false;
 			obj.Form_Officer.focus();
 			return;
@@ -486,14 +486,14 @@ Function JoinForm%>
 
 		if (! isnum(obj.Form_Login_oknum.value))
 		{
-			alert("�ɹ��Ǵα�������������\n");
+			alert("成功登次必须是正整数。\n");
 			ValidationPassed = false;
 			obj.Form_Login_oknum.focus();
 			return;
 		}
 		if (! isnum(obj.Form_Login_falsenum.value))
 		{
-			alert("�ְܵǴα�������������\n");
+			alert("持败登次必须是正整数。\n");
 			ValidationPassed = false;
 			obj.Form_Login_falsenum.focus();
 			return;
@@ -504,7 +504,7 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_FaceWidth.value))
 			{
-				alert("�Զ���ͷ����ȱ��������֣�\n");
+				alert("自定义头像宽度必须是数字！\n");
 				ValidationPassed = false;
 				obj.Form_FaceWidth.focus();
 				return;
@@ -513,7 +513,7 @@ Function JoinForm%>
 			{
 				if(obj.Form_FaceWidth.value<20 || obj.Form_FaceWidth.value><%=DEF_AllFaceMaxWidth%>)
 				{
-					alert("�Զ���ͷ����ȱ�����20-<%=DEF_AllFaceMaxWidth%>֮�䣡\n");
+					alert("自定义头像宽度必须在20-<%=DEF_AllFaceMaxWidth%>之间！\n");
 					ValidationPassed = false;
 					obj.Form_FaceWidth.focus();
 					return;
@@ -525,7 +525,7 @@ Function JoinForm%>
 		{
 			if (! isnum(obj.Form_FaceHeight.value))
 			{
-				alert("�Զ���ͷ��߶ȱ��������֣�\n");
+				alert("自定义头像高度必须是数字！\n");
 				ValidationPassed = false;
 				obj.Form_FaceHeight.focus();
 				return;
@@ -534,7 +534,7 @@ Function JoinForm%>
 			{
 				if(obj.Form_FaceHeight.value<20 || obj.Form_FaceHeight.value><%=DEF_AllFaceMaxWidth*2%>)
 				{
-					alert("�Զ���ͷ��߶ȱ�����20-<%=DEF_AllFaceMaxWidth%>֮�䣡\n");
+					alert("自定义头像高度必须在20-<%=DEF_AllFaceMaxWidth%>之间！\n");
 					ValidationPassed = false;
 					obj.Form_FaceHeight.focus();
 					return;
@@ -549,12 +549,12 @@ Function JoinForm%>
 </head>
 
 <form action=UserModify.asp method=post name=form1 onSubmit="return ValidationPassed">
-	<div class=frametitle>�û������޸�</div>
+	<div class=frametitle>用户资料修改</div>
 
 	<table border=0 cellpadding=0 cellspacing=0 width="100%" class=frame_table>
 			<tr>
 				<td class=tdbox width=120>
-					<p>*�û����ƣ� 
+					<p>*用户名称： 
 				</td>
 				<td class=tdbox>
 					<p>
@@ -563,7 +563,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>&nbsp;�µ����룺 
+					<p>&nbsp;新的密码： 
 				</td>
 				<td class=tdbox>
 					<input name=SubmitFlag type=hidden value="29d98Sasphouseasp8asphnet">
@@ -573,7 +573,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>&nbsp;��֤���룺 
+					<p>&nbsp;验证密码： 
 				</td>
 				<td class=tdbox>
 					<input maxlength=20 name="Form_password2" size=36 class=fminpt type=password Value="<% If Form_password2<>"" Then Response.Write Server.HtmlEncode(Form_password2)%>">
@@ -581,7 +581,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>*������ʾ�� 
+					<p>*密码提示： 
 				</td>
 				<td class=tdbox>
 					<input maxLength=20 name=Form_Question class=fminpt size=36 Value="<% If Form_Question<>"" Then Response.Write Server.HtmlEncode(Form_Question)%>">
@@ -589,23 +589,23 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>&nbsp;��ʾ�𰸣�
+					<p>&nbsp;提示答案：
 				</td>
 				<td class=tdbox>
-					<input maxlength=20 name=Form_Answer class=fminpt size=36 Value="<% If Form_Answer<>"" Then Response.Write Server.HtmlEncode(Form_Answer)%>"> ���Ŀ��Բ���д
-				</td>
-			</tr>
-			<tr>
-				<td class=tdbox>
-					<p>�ɣ�������
-				</td>
-				<td class=tdbox>
-					<input maxlength=15 name=Form_LockIP class=fminpt size=36 Value="<% If Form_LockIP<>"" Then Response.Write Server.HtmlEncode(Form_LockIP)%>"> ����������һ��IP��ַ
+					<input maxlength=20 name=Form_Answer class=fminpt size=36 Value="<% If Form_Answer<>"" Then Response.Write Server.HtmlEncode(Form_Answer)%>"> 不改可以不填写
 				</td>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>�����ʼ��� 
+					<p>ＩＰ锁定：
+				</td>
+				<td class=tdbox>
+					<input maxlength=15 name=Form_LockIP class=fminpt size=36 Value="<% If Form_LockIP<>"" Then Response.Write Server.HtmlEncode(Form_LockIP)%>"> 仅允许输入一个IP地址
+				</td>
+			</tr>
+			<tr>
+				<td class=tdbox>
+					<p>电子邮件： 
 				</td>
 				<td class=tdbox>
 					<input maxLength=60 name=Form_mail size=36 class=fminpt Value="<% If Form_mail<>"" Then Response.Write Server.HtmlEncode(Form_mail)%>">
@@ -613,7 +613,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>��ҳ��ַ��
+					<p>主页地址：
 				</td>
 				<td class=tdbox>
 					<input maxlength=250 name=Form_homepage size=36 class=fminpt Value="<% If Form_homepage<>"" Then Response.Write Server.HtmlEncode(Form_homepage)%>">
@@ -621,7 +621,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>ICQ ���룺
+					<p>ICQ 号码：
 				</td>
 				<td class=tdbox>
 					<input maxlength=14 name=Form_icq size=36 class=fminpt Value="<% If Form_icq<>"" Then Response.Write Server.HtmlEncode(Form_icq)%>">
@@ -630,7 +630,7 @@ Function JoinForm%>
 			
 			<tr>
 				<td>
-					�ֻ���
+					手机：
 				</td>
 				<td>
 					<input class='fminpt input_2' maxlength=15 name=Form_MobileTel size=14 Value="<% If Form_MobileTel<>"" and Form_MobileTel <> "0" Then Response.Write Server.HtmlEncode(Form_MobileTel)%>">
@@ -638,7 +638,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>OICQ���룺
+					<p>OICQ号码：
 				</td>
 				<td class=tdbox>
 					<input maxlength=10 name=Form_oicq size=36 class=fminpt Value="<% If Form_oicq<>"" Then Response.Write Server.HtmlEncode(Form_oicq)%>">
@@ -646,7 +646,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>��ĵ�ַ��
+					<p>你的地址：
 				</td>
 				<td class=tdbox>
 					<input maxlength=150 name=Form_address size=36 class=fminpt Value="<% If Form_address<>"" Then Response.Write Server.HtmlEncode(Form_address)%>">
@@ -654,7 +654,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>�û�ͷ�Σ�
+					<p>用户头衔：
 				</td>
 				<td class=tdbox>
 					<input maxlength=14 name=Form_UserTitle size=36 class=fminpt Value="<% If Form_UserTitle<>"" Then Response.Write Server.HtmlEncode(Form_UserTitle)%>">
@@ -662,25 +662,25 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>����Ա�
+					<p>你的性别：
 				</td>
 				<td class=tdbox>
 					<table border=0 cellpadding=0 cellspacing=0>
 						<tr>
-							<td><input class=fmchkbox type=radio name=Form_sex value=�� <%If Form_sex = "��" Then Response.Write " checked"%>></td><td>��</td>
-							<td><input class=fmchkbox type=radio name=Form_sex value=Ů <%If Form_sex = "Ů" Then Response.Write " checked"%>></td><td>Ů</td>
-							<td><input class=fmchkbox type=radio name=Form_sex value=�� <%If Form_sex = "��" Then Response.Write " checked"%>></td><td>����</td>
+							<td><input class=fmchkbox type=radio name=Form_sex value=男 <%If Form_sex = "男" Then Response.Write " checked"%>></td><td>男</td>
+							<td><input class=fmchkbox type=radio name=Form_sex value=女 <%If Form_sex = "女" Then Response.Write " checked"%>></td><td>女</td>
+							<td><input class=fmchkbox type=radio name=Form_sex value=密 <%If Form_sex = "密" Then Response.Write " checked"%>></td><td>保密</td>
 		 				</tr>
 		  			</table>
 				</td>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>�û�ͷ��
+					<p>用户头像：
 				</td>
 				<td class=tdbox>
 					<input onchange="javascript:changeface();" maxlength=4 name=Form_userphoto size=6 class=fminpt Value="<% If Form_userphoto<>"" Then Response.Write Server.HtmlEncode(string(4-len(cstr(Form_userphoto)),"0")&Form_userphoto)%>">
-					<span style='cursor:hand' title='�鿴ͷ�����' onclick="setface();">�鿴ͷ�����</span>
+					<span style='cursor:hand' title='查看头像代号' onclick="setface();">查看头像代号</span>
 					<%If DEF_AllDefineFace = 0 or Form_FaceUrl & "" = "" Then%>
 						<%If Form_userphoto<>"" and isNumeric(Form_userphoto) Then%><img name=faceimg id=faceimg src=<%=DEF_BBS_HomeUrl%>images/face/<%=string(4-len(cstr(Form_userphoto)),"0")&Form_userphoto%>.gif align=middle width=62 height=62><%Else%><img name=faceimg id=faceimg src=<%=DEF_BBS_HomeUrl%>images/null.gif align=middle><%End If%>
 					<%Else%>
@@ -692,7 +692,7 @@ Function JoinForm%>
 			</tr><%If DEF_AllDefineFace <> 0 Then%>
 			<tr>
 				<td class=tdbox>
-					<p>�Զ�ͷ��
+					<p>自定头像：
 				</td>
 				<td class=tdbox>
 					<input onchange="javascript:changeface2();" maxlength=250 name=Form_FaceUrl size=26 class=fminpt Value="<%=HtmlEncode(Form_FaceUrl)%>">
@@ -700,16 +700,16 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>ͷ���С��
+					<p>头像大小：
 				</td>
 				<td class=tdbox>
-					�Զ�ͷ���: <input onchange="javascript:changeface2();" maxlength=<%=len(DEF_AllFaceMaxWidth)%> name=Form_FaceWidth size=3 class=fminpt Value="<%=HtmlEncode(Form_FaceWidth)%>">(20-<%=DEF_AllFaceMaxWidth%>)
-					��: <input onchange="javascript:changeface2();" maxlength=<%=len(DEF_AllFaceMaxWidth*2)%> name=Form_FaceHeight size=3 class=fminpt Value="<%=HtmlEncode(Form_FaceHeight)%>">(20-<%=DEF_AllFaceMaxWidth%>)
+					自定头像宽: <input onchange="javascript:changeface2();" maxlength=<%=len(DEF_AllFaceMaxWidth)%> name=Form_FaceWidth size=3 class=fminpt Value="<%=HtmlEncode(Form_FaceWidth)%>">(20-<%=DEF_AllFaceMaxWidth%>)
+					高: <input onchange="javascript:changeface2();" maxlength=<%=len(DEF_AllFaceMaxWidth*2)%> name=Form_FaceHeight size=3 class=fminpt Value="<%=HtmlEncode(Form_FaceHeight)%>">(20-<%=DEF_AllFaceMaxWidth%>)
 				</td>
 			</tr><%End If%>
 			<tr>
 				<td class=tdbox>
-					<p>������գ� 
+					<p>你的生日： 
 				</td>
 				<td class=tdbox align="left">
 					<p>
@@ -717,14 +717,14 @@ Function JoinForm%>
 						Response.Write Server.HtmlEncode(Form_byear)
 					Else
 						Response.Write "19"
-					End If%>"> �� 
+					End If%>"> 年 
 					<input maxlength=2 name=Form_bmonth size=2 class=fminpt Value="<% If Form_bmonth<>"" Then Response.Write Server.HtmlEncode(Form_bmonth)%>">
-					�� <input maxlength=2 name=Form_bday size=2 class=fminpt Value="<% If Form_bday<>"" Then Response.Write Server.HtmlEncode(Form_bday)%>">
-					��</td>
+					月 <input maxlength=2 name=Form_bday size=2 class=fminpt Value="<% If Form_bday<>"" Then Response.Write Server.HtmlEncode(Form_bday)%>">
+					日</td>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>ǩ��-UBB��
+					<p>签名-UBB：
 				</td>
 				<td class=tdbox>
 					<textarea name=Form_Underwrite rows=5 cols=36 class=fmtxtra><%If Form_Underwrite <> "" Then Response.Write VbCrLf & htmlEncode(Form_Underwrite)%></textarea>
@@ -732,11 +732,11 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox colspan=2 bgcolor=F7F7F7 height=25 class=TBfour>
-					��չ��Ϣ</td>
+					扩展信息</td>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>����ʱ�䣺
+					<p>申请时间：
 				</td>
 				<td class=tdbox>
 					<input maxlength=14 name=Form_ApplyTime size=14 class=fminpt Value="<% If Form_ApplyTime<>"" Then Response.Write Server.HtmlEncode(Form_ApplyTime)%>">
@@ -752,7 +752,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>����״̬��
+					<p>在线状态：
 				</td>
 				<td class=tdbox>
 					<input maxlength=8 name=Form_Online size=8 class=fminpt Value="<% If Form_Online<>"" Then Response.Write Server.HtmlEncode(Form_Online)%>">
@@ -760,7 +760,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>����¼��
+					<p>最后登录：
 				</td>
 				<td class=tdbox>
 					<input maxlength=14 name=Form_Prevtime size=14 class=fminpt Value="<% If Form_Prevtime<>"" Then Response.Write Server.HtmlEncode(Form_Prevtime)%>">
@@ -768,7 +768,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>�û�<%=DEF_PointsName(3)%>��
+					<p>用户<%=DEF_PointsName(3)%>：
 				</td>
 				<td class=tdbox>
 					<input maxlength=8 name=Form_UserLevel size=8 class=fminpt Value="<% If Form_UserLevel<>"" Then Response.Write Server.HtmlEncode(Form_UserLevel)%>">
@@ -776,7 +776,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>�û�IPַ��
+					<p>用户IP址：
 				</td>
 				<td class=tdbox>
 					<input maxlength=50 name=Form_IP size=36 class=fminpt Value="<% If Form_UserLevel<>"" Then Response.Write HtmlEncode(Form_IP)%>">
@@ -784,7 +784,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>�û�<%=DEF_PointsName(0)%>��
+					<p>用户<%=DEF_PointsName(0)%>：
 				</td>
 				<td class=tdbox>
 					<input maxlength=14 name=Form_Points size=14 class=fminpt Value="<% If Form_Points<>"" Then Response.Write HtmlEncode(Form_Points)%>">
@@ -792,7 +792,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>�û�<%=DEF_PointsName(2)%>��
+					<p>用户<%=DEF_PointsName(2)%>：
 				</td>
 				<td class=tdbox>
 					<input maxlength=44 name=Form_CachetValue size=14 class=fminpt Value="<%If Form_CachetValue<>"" Then Response.Write HtmlEncode(Form_CachetValue)%>">
@@ -800,7 +800,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>�û�<%=DEF_PointsName(1)%>��
+					<p>用户<%=DEF_PointsName(1)%>：
 				</td>
 				<td class=tdbox>
 					<input maxlength=14 name=Form_CharmPoint size=14 class=fminpt Value="<%If Form_CharmPoint<>"" Then Response.Write HtmlEncode(Form_CharmPoint)%>">
@@ -808,7 +808,7 @@ Function JoinForm%>
 			</tr>			
 			<tr>
 				<td class=tdbox>
-					<p><%=DEF_PointsName(9)%>��</span>
+					<p><%=DEF_PointsName(9)%>：</span>
 				</td>
 				<td class=tdbox>
 					<input maxlength=255 name=Form_Officer size=36 class=fminpt Value="<% If Form_Officer<>"" Then Response.Write HtmlEncode(Form_Officer)%>">
@@ -816,7 +816,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>���IPַ��
+					<p>最后IP址：
 				</td>
 				<td class=tdbox>
 					<input maxlength=50 name=Form_Login_ip size=36 class=fminpt Value="<% If Form_Login_ip<>"" Then Response.Write HtmlEncode(Form_Login_ip)%>">
@@ -824,7 +824,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p title=�ɹ���¼����̳�Ĵ���>�ɹ��ǴΣ�
+					<p title=成功登录进论坛的次数>成功登次：
 				</td>
 				<td class=tdbox>
 					<input maxlength=17 name=Form_Login_oknum size=36 class=fminpt Value="<% If Form_Login_oknum<>"" Then Response.Write HtmlEncode(Form_Login_oknum)%>">
@@ -832,7 +832,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p title=������¼ʧ�ܵĴ���>�ְܵǴΣ�
+					<p title=持续登录失败的次数>持败登次：
 				</td>
 				<td class=tdbox>
 					<input maxlength=17 name=Form_Login_falsenum size=36 class=fminpt Value="<% If Form_Login_falsenum<>"" Then Response.Write HtmlEncode(Form_Login_falsenum)%>">
@@ -840,7 +840,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p title=���һ�ε�¼ʹ�õ����룬������ȷ���>ĩ�����룺
+					<p title=最后一次登录使用的密码，不管正确与否>末用密码：
 				</td>
 				<td class=tdbox>
 					<input maxlength=20 type=password name=Form_Login_lastpass size=36 class=fminpt Value="<% If Form_Login_lastpass<>"" Then Response.Write HtmlEncode(Form_Login_lastpass)%>">
@@ -848,7 +848,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p title=���һ�γɹ���¼����̳�����õģɣе�ַ>����ĩIP��
+					<p title=最后一次成功登录进论坛所登用的ＩＰ地址>正登末IP：
 				</td>
 				<td class=tdbox>
 					<input maxlength=50 name=Form_Login_RightIP size=36 class=fminpt Value="<% If Form_Login_RightIP<>"" Then Response.Write HtmlEncode(Form_Login_RightIP)%>">
@@ -856,7 +856,7 @@ Function JoinForm%>
 			</tr>
 			<tr>
 				<td class=tdbox bgcolor=F7F7F7 height=25 class=TBBG1>
-					�û�Ȩ�ޣ�</td>
+					用户权限：</td>
 				<td class=tdbox><%
 				Form_UserLimit = cCur(Form_UserLimit)
 				Dim TempN
@@ -871,38 +871,38 @@ Function JoinForm%>
 	<tr>
 		<td class=tdbox>&nbsp;</td>
 		<td class=tdbox>
-			<input name=submit type=submit value=" �� �� " onclick="form_onsubmit(this.form)" class=fmbtn>
-			<input name=b1 type=reset value=" �� д " class=fmbtn>
+			<input name=submit type=submit value=" 修 改 " onclick="form_onsubmit(this.form)" class=fmbtn>
+			<input name=b1 type=reset value=" 重 写 " class=fmbtn>
 		</td>
 	</tr>
 	</table>
-			<div class=frametitle>ע�⣺</div>
+			<div class=frametitle>注意：</div>
 			<div class=frameline>
 			<ol class=listli>
-			<li>����Ȩ�ޣ�ֻ��ӵ��<%=DEF_PointsName(6)%>Ȩ�޵Ļ�Ա�������ã�����ȡ�������ܹ̣�</li>
-			����ĳ����ԱIP��ַ�����λ�Ա���Եȵȣ�</li>
-			<li>��ֹɾ������ ��ֹ�������� ��ֹת������ ɾ���ϴ�����������<%=DEF_PointsName(8)%>��<%=DEF_PointsName(6)%>��Ч</li>
-			<li><%=DEF_PointsName(8)%>һ����ò�Ҫ�����ģ��ɰ����޸�ʱ�Զ��жϲ���</li>
-			<li>��ֹ�޸ĸ������Ϻ��������ݣ��κλ�Ա����Ч�������޸����˵����Ӽ���������</li>
-			<li>�û�Ȩ���е���������HTMLȨ��,ֻ���<%=DEF_PointsName(5)%>��<%=DEF_PointsName(8)%>������Ȩ�޵��û���Ч</li>
+			<li>特殊权限，只有拥有<%=DEF_PointsName(6)%>权限的会员才有作用，包括取消所有总固，</li>
+			屏蔽某个会员IP地址，屏蔽会员发言等等．</li>
+			<li>禁止删除帖子 禁止精华帖子 禁止转移帖子 删除上传附件，仅对<%=DEF_PointsName(8)%>或<%=DEF_PointsName(6)%>有效</li>
+			<li><%=DEF_PointsName(8)%>一项最好不要作更改，由版面修改时自动判断产生</li>
+			<li>禁止修改个人资料和帖子内容，任何会员皆有效，包括修改它人的帖子及自我资料</li>
+			<li>用户权限中的允许发表HTML权限,只针对<%=DEF_PointsName(5)%>或<%=DEF_PointsName(8)%>及以上权限的用户有效</li>
 			</ol>
 			</div>
 			<div class=frameline>
-			<%DisplayOfficerList
-			DisplayLevelList%>
+			<%DisplayOfficerList()
+			DisplayLevelList()%>
 			</div>
 </form>
 <%
 End Function
 
 Function displayAccessFull%>
-	<p>�޸ĳɹ����������£�<br>
+	<p>修改成功，资料如下：<br>
 	<br>
 	</p>
 	<table border=0 cellpadding="0" cellspacing="0" class=frame_table>
 			<tr>
 				<td class=tdbox width=120>
-					<p>*�û����ƣ� 
+					<p>*用户名称： 
 				</td>
 				<td class=tdbox>
 					<%=Server.HtmlEncode(Form_Username)%>
@@ -910,7 +910,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>*�µ����룺 
+					<p>*新的密码： 
 				</td>
 				<td class=tdbox>
 					********
@@ -918,7 +918,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>�����ʼ��� 
+					<p>电子邮件： 
 				</td>
 				<td class=tdbox>
 					<%=HtmlEncode(Form_mail)%>
@@ -926,7 +926,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>��ҳ��ַ��
+					<p>主页地址：
 				</td>
 				<td class=tdbox>
 					<%=HtmlEncode(Form_homepage)%>
@@ -934,7 +934,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>ICQ ���룺
+					<p>ICQ 号码：
 				</td>
 				<td class=tdbox>
 					<%=HtmlEncode(Form_icq)%>
@@ -942,7 +942,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>OICQ���룺
+					<p>OICQ号码：
 				</td>
 				<td class=tdbox>
 					<%=HtmlEncode(Form_oicq)%>
@@ -950,7 +950,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>��ĵ�ַ��
+					<p>你的地址：
 				</td>
 				<td class=tdbox>
 					<%=HtmlEncode(Form_address)%>
@@ -958,7 +958,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>�û�ͷ�Σ�
+					<p>用户头衔：
 				</td>
 				<td class=tdbox>
 					<%=HtmlEncode(Form_UserTitle)%>
@@ -966,7 +966,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>����Ա�
+					<p>你的性别：
 				</td>
 				<td class=tdbox>
 					<%=Form_sex%>
@@ -974,7 +974,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>�û�ͷ��
+					<p>用户头像：
 				</td>
 				<td class=tdbox>
 					<%If DEF_AllDefineFace = 0 or Form_FaceUrl = "" Then%>
@@ -987,14 +987,14 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>������գ�
+					<p>你的生日：
 				</td>
 				<td class=tdbox align="left">
 					<%If len(Form_birthday)=14 Then Response.Write RestoreTime(Form_birthday)%></td>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>ǩ��-UBB��
+					<p>签名-UBB：
 				</td>
 				<td class=tdbox>
 					<table style="table-layout:fixed; word-break:break-all" width=332 border="0" cellspacing="0" cellpadding="0"><tr><td class=tdbox>
@@ -1003,11 +1003,11 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox colspan=2 bgcolor=F7F7F7 height=25 class=TBfour>
-					��չ��Ϣ</td>
+					扩展信息</td>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>����ʱ�䣺
+					<p>申请时间：
 				</td>
 				<td class=tdbox>
 					<%If len(Form_ApplyTime)=14 Then Response.Write RestoreTime(Form_ApplyTime)%>
@@ -1023,7 +1023,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>����״̬��
+					<p>在线状态：
 				</td>
 				<td class=tdbox>
 					<%=HtmlEncode(Form_Online)%>
@@ -1031,7 +1031,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>����¼��
+					<p>最后登录：
 				</td>
 				<td class=tdbox>
 					<%If len(Form_birthday)=14 Then Response.Write RestoreTime(Form_Prevtime)%>
@@ -1039,7 +1039,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>�û�<%=DEF_PointsName(3)%>��
+					<p>用户<%=DEF_PointsName(3)%>：
 				</td>
 				<td class=tdbox>
 					<%=Form_UserLevel%>: <%=DEF_UserLevelString(Form_UserLevel)%>
@@ -1047,7 +1047,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>�û�IPַ��
+					<p>用户IP址：
 				</td>
 				<td class=tdbox>
 					<%=HtmlEncode(Form_IP)%>
@@ -1055,7 +1055,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>�û�<%=DEF_PointsName(0)%>��
+					<p>用户<%=DEF_PointsName(0)%>：
 				</td>
 				<td class=tdbox>
 					<%=HtmlEncode(Form_Points)%>
@@ -1063,7 +1063,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>�û�<%=DEF_PointsName(2)%>��
+					<p>用户<%=DEF_PointsName(2)%>：
 				</td>
 				<td class=tdbox>
 					<%
@@ -1072,7 +1072,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>�û�<%=DEF_PointsName(1)%>��
+					<p>用户<%=DEF_PointsName(1)%>：
 				</td>
 				<td class=tdbox>
 					<%
@@ -1081,7 +1081,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p><%=DEF_PointsName(9)%>��
+					<p><%=DEF_PointsName(9)%>：
 				</td>
 				<td class=tdbox>
 					<%=Form_Officer%>: <%=DisplayOfficerString(Form_Officer)%>
@@ -1089,7 +1089,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>���IPַ��
+					<p>最后IP址：
 				</td>
 				<td class=tdbox>
 					<%=Form_Login_ip%>
@@ -1097,7 +1097,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>�ɹ��ǴΣ�
+					<p>成功登次：
 				</td>
 				<td class=tdbox>
 					<%=Form_Login_oknum%>
@@ -1105,7 +1105,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>�ְܵǴΣ�
+					<p>持败登次：
 				</td>
 				<td class=tdbox>
 					<%=Form_Login_falsenum%>
@@ -1113,7 +1113,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>ĩ�����룺
+					<p>末用密码：
 				</td>
 				<td class=tdbox>
 					<%=Form_Login_lastpass%>
@@ -1121,7 +1121,7 @@ Function displayAccessFull%>
 			</tr>
 			<tr>
 				<td class=tdbox>
-					<p>����δIP��
+					<p>正登未IP：
 				</td>
 				<td class=tdbox>
 					<%=Form_Login_RightIP%>
@@ -1134,11 +1134,11 @@ Function saveFormData
 
 	Dim Rs
 	Set Rs = Server.CreateObject("ADODB.RecordSet")
-	Rs.Open sql_select("Select * from LeadBBS_User where id=" & Form_ID,1),con,1,3
+	Rs.Open "Select * from LeadBBS_User where id=" & Form_ID,con,1,3
 	If Rs.Eof Then
 		Rs.Close
 		Set Rs = Nothing
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "�����������<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "发生意外错误<br>" & VbCrLf
 		saveFormData = 0
 		Exit Function
 	End If
@@ -1168,14 +1168,14 @@ Function saveFormData
 		If temp > 1950 and temp < 2050 Then
 			Rs("NongLiBirth") = GetNongLiTimeValue(ConvertToNongLi(RestoreTime(Form_birthday)))
 		Else
-			'���������������Դ���
+			'其它出生年作了略处理
 			Rs("NongLiBirth") = GetTimeValue(DateAdd("m",-1,RestoreTime(Form_birthday)))
 		End If
 	Else
 		Rs("birthday") = Null
 	End If
 
-	REM ��������
+	REM 特殊数据
 	Rs("ApplyTime") = Form_ApplyTime
 	Rs("IP") = Form_IP
 	Rs("UserLevel") = Form_UserLevel
@@ -1215,7 +1215,7 @@ Function saveFormData
 	Set Rs = Nothing
 	saveFormData = 1
 
-	UpdateSpecialUserTable Form_UserLimit,Form_ID,Form_UserName
+	Call UpdateSpecialUserTable(Form_UserLimit,Form_ID,Form_UserName)
 
 End Function
 
@@ -1224,7 +1224,7 @@ Sub UpdateSpecialUserTable2(UserLimit,UserID,UserName,N,assort)
 	Dim Rs
 	Dim Flag
 	
-	Rem ��֤��Ա
+	Rem 认证会员
 	Flag = GetBinarybit(UserLimit,N)
 	If Flag = 0 Then
 		CALL LDExeCute("Delete from LeadBBS_SpecialUser where Assort=" & assort & " and UserID=" & UserID,1)
@@ -1244,30 +1244,30 @@ End Sub
 
 Function UpdateSpecialUserTable(UserLimit,UserID,UserName)
 
-	'����,0-��֤��Ա,1-����,2-�ܰ���,3-���λ�Ա,4-���Ի�Ա,5-���޸Ļ�Ա,6-δ����,7-������,8-רҵ�ͻ�
+	'类型,0-认证会员,1-版主,2-总版主,3-屏蔽会员,4-禁言会员,5-禁修改会员,6-未激活,7-区版主,8-专业客户
 	
-	Rem ��֤��Ա
+	Rem 认证会员
 	CALL UpdateSpecialUserTable2(UserLimit,UserID,UserName,1,6)
 
-	Rem ����ʽ��Ա
+	Rem 非正式会员
 	CALL UpdateSpecialUserTable2(UserLimit,UserID,UserName,2,0)
 	
-	Rem ����
+	Rem 版主
 	CALL UpdateSpecialUserTable2(UserLimit,UserID,UserName,8,1)
 
-	Rem �ܰ���
+	Rem 总版主
 	CALL UpdateSpecialUserTable2(UserLimit,UserID,UserName,10,2)
 	
-	Rem ���λ�Ա
+	Rem 屏蔽会员
 	CALL UpdateSpecialUserTable2(UserLimit,UserID,UserName,7,3)
 	
-	Rem ���Ի�Ա
+	Rem 禁言会员
 	CALL UpdateSpecialUserTable2(UserLimit,UserID,UserName,3,4)
 	
-	Rem ��ֹ�޸Ļ�Ա
+	Rem 禁止修改会员
 	CALL UpdateSpecialUserTable2(UserLimit,UserID,UserName,4,5)
 	
-	Rem רҵ�ͻ�
+	Rem 专业客户
 	CALL UpdateSpecialUserTable2(UserLimit,UserID,UserName,15,8)
 
 End Function%>

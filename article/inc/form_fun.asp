@@ -23,7 +23,7 @@ Sub FormClass_Head(title,enableuploadflag,actionurl)
 			lg = edt_getdoclen();
 			if(lg > <%=DEF_MaxTextLength%>)
 			{
-				alert("·¢±íµÄÄÚÈİ³¬¹ıÁË<%=DEF_MaxTextLength%>ÎÄ×Ö£¬Ä¿Ç°³¤¶È" + lg + "ÎÄ×Ö\n");
+				alert("å‘è¡¨çš„å†…å®¹è¶…è¿‡äº†<%=DEF_MaxTextLength%>æ–‡å­—ï¼Œç›®å‰é•¿åº¦" + lg + "æ–‡å­—\n");
 				ValidationPassed = false;
 				submitflag = 0;
 				return;
@@ -48,7 +48,7 @@ Sub FormClass_Head(title,enableuploadflag,actionurl)
 
 End Sub
 
-' Remark ÏîÄ¿×¢ÊÍ,maxlength,ÔÊĞí×î´ó³¤¶È inputClass,±íµ¥¿ò³¤¶ÈÀà,Êı×Ö±íÊ¾,ItemName,ÏîÃû³Æ,ItemValue,ÏîµÄÖµ,PrintType,´òÓ¡µÄÀà±ğ,SelectStr,Èç¹ûÊÇselect Àà±ğ,´ËÀàÏîµÄÖµ´®,ÒÔ|ºÅ·Ö¸ô
+' Remark é¡¹ç›®æ³¨é‡Š,maxlength,å…è®¸æœ€å¤§é•¿åº¦ inputClass,è¡¨å•æ¡†é•¿åº¦ç±»,æ•°å­—è¡¨ç¤º,ItemName,é¡¹åç§°,ItemValue,é¡¹çš„å€¼,PrintType,æ‰“å°çš„ç±»åˆ«,SelectStr,å¦‚æœæ˜¯select ç±»åˆ«,æ­¤ç±»é¡¹çš„å€¼ä¸²,ä»¥|å·åˆ†éš”
 Sub FormClass_ItemPring(title,PrintType,ItemName,Item_Value,inputClass,maxLength,reMark,SelectStr,moreEvent)
 
 	dim ItemValue
@@ -68,7 +68,7 @@ Sub FormClass_ItemPring(title,PrintType,ItemName,Item_Value,inputClass,maxLength
 	end if
 					Select Case PrintType
 						Case "verifycode":
-							Response.Write displayVerifycode
+							Response.Write displayVerifycode()
 						Case "printvalue":
 							Response.Write ItemValue
 						Case "input_notzero":
@@ -148,7 +148,8 @@ Sub FormClass_ItemPring(title,PrintType,ItemName,Item_Value,inputClass,maxLength
 									If instr(InfoText,"<span") = 0 Then%>
 										<li><span class="grayfont"><%
 										'If IndexN <= 9 Then Response.Write "0"
-										'Response.Write IndexN%></span><input type="radio" class=fmchkbox name="<%=ItemName%>" value="<%=htmlencode(InfoText)%>"<%
+										'Response.Write IndexN
+%></span><input type="radio" class=fmchkbox name="<%=ItemName%>" value="<%=htmlencode(InfoText)%>"<%
 										If instr(InfoText,"<span") Then Response.Write " disabled=""disabled"""
 										If Item_Value = InfoText Then
 											Response.Write " checked>"
@@ -180,8 +181,8 @@ Sub FormClass_End
 			<div class="itemline">
 				<span class="itemtitle">&nbsp;</span>
 				<span class="iteminfo itembottom">
-					<input name=submit2 type=submit value="Ìá½»" class="fmbtn btn_2">
-					<input name=b1 type=reset value="ÖØĞ´" class="fmbtn btn_2">
+					<input name=submit2 type=submit value="æäº¤" class="fmbtn btn_2">
+					<input name=b1 type=reset value="é‡å†™" class="fmbtn btn_2">
 				</span>
 			</div>
 			</div>
@@ -190,7 +191,7 @@ Sub FormClass_End
 
 End Sub
 
-'Formitem Òª²âÊÔµÄÖµ checktype ²âÊÔÀàĞÍ default Èô´í,Éè¶¨ÎªµÄÄ¬ÈÏÖµ inValue ÔÊĞíµÄ°üº¬Öµ´®
+'Formitem è¦æµ‹è¯•çš„å€¼ checktype æµ‹è¯•ç±»å‹ default è‹¥é”™,è®¾å®šä¸ºçš„é»˜è®¤å€¼ inValue å…è®¸çš„åŒ…å«å€¼ä¸²
 Dim CheckErrorStr
 Function FormClass_CheckFormValue(Formitem,ItemName,checktype,default,inValue,maxlength)
 
@@ -204,7 +205,7 @@ Function FormClass_CheckFormValue(Formitem,ItemName,checktype,default,inValue,ma
 			if isNumeric(Tmp_Formitem) = 0 Then
 				Tmp_Formitem = 0
 				FormClass_CheckFormValue = Tmp_Formitem
-				CheckErrorStr = CheckErrorStr & "Error: " & ItemName & "´íÎó1,ÇëÈ·ÈÏ."
+				CheckErrorStr = CheckErrorStr & "Error: " & ItemName & "é”™è¯¯1,è¯·ç¡®è®¤."
 			Else
 				FormClass_CheckFormValue = cCur(Tmp_Formitem)
 			End If
@@ -212,7 +213,7 @@ Function FormClass_CheckFormValue(Formitem,ItemName,checktype,default,inValue,ma
 			if isNumeric(Tmp_Formitem) = 0 or inStr(Tmp_Formitem,".") > 0 Then
 				Tmp_Formitem = 0
 				FormClass_CheckFormValue = Tmp_Formitem
-				CheckErrorStr = CheckErrorStr & "Error: " & ItemName & "´íÎó2,ÇëÈ·ÈÏ."
+				CheckErrorStr = CheckErrorStr & "Error: " & ItemName & "é”™è¯¯2,è¯·ç¡®è®¤."
 			Else
 				FormClass_CheckFormValue = Fix(cCur(Tmp_Formitem))
 			End If
@@ -221,9 +222,9 @@ Function FormClass_CheckFormValue(Formitem,ItemName,checktype,default,inValue,ma
 	If maxlength > 0 Then
 		If strLength(Tmp_Formitem) > maxlength Then
 			If checktype = "int" Then
-				CheckErrorStr = CheckErrorStr & "Error: " & ItemName & "Êı¾İÖµ¹ı´ó»òÌîĞ´´íÎó."
+				CheckErrorStr = CheckErrorStr & "Error: " & ItemName & "æ•°æ®å€¼è¿‡å¤§æˆ–å¡«å†™é”™è¯¯."
 			Else
-				CheckErrorStr = CheckErrorStr & "Error: " & ItemName & "¹ı³¤,²»ÄÜ³¬¹ı" & maxlength & " ×Ö½Ú."
+				CheckErrorStr = CheckErrorStr & "Error: " & ItemName & "è¿‡é•¿,ä¸èƒ½è¶…è¿‡" & maxlength & " å­—èŠ‚."
 			End If
 		End If
 	End If
@@ -241,18 +242,18 @@ Function FormClass_CheckFormValue(Formitem,ItemName,checktype,default,inValue,ma
 				select case typeTmp
 					case ">":
 						If cCur(Tmp_Formitem) > cCur(ValueTmp) Then
-							CheckErrorStr = CheckErrorStr & "Error: " & ItemName & "´íÎó,ÇëÈ·ÈÏ."
+							CheckErrorStr = CheckErrorStr & "Error: " & ItemName & "é”™è¯¯,è¯·ç¡®è®¤."
 						End If
 					case "<":
 						If cCur(Tmp_Formitem) < cCur(ValueTmp) Then
-							CheckErrorStr = CheckErrorStr & "Error: " & ItemName & "´íÎó,ÇëÈ·ÈÏ."
+							CheckErrorStr = CheckErrorStr & "Error: " & ItemName & "é”™è¯¯,è¯·ç¡®è®¤."
 						End If
 					case "=":
 						if ValueTmp = "" and Cstr(Tmp_Formitem) = Cstr(ValueTmp) Then
-							CheckErrorStr = CheckErrorStr & "Error: " & ItemName & "±ØĞëÌîĞ´,ÇëÈ·ÈÏ."
+							CheckErrorStr = CheckErrorStr & "Error: " & ItemName & "å¿…é¡»å¡«å†™,è¯·ç¡®è®¤."
 						Else
 							If Cstr(Tmp_Formitem) = Cstr(ValueTmp) Then
-								CheckErrorStr = CheckErrorStr & "Error: " & ItemName & "´íÎó5,ÇëÈ·ÈÏ."
+								CheckErrorStr = CheckErrorStr & "Error: " & ItemName & "é”™è¯¯5,è¯·ç¡®è®¤."
 							End If
 						End If
 				end select
@@ -260,7 +261,7 @@ Function FormClass_CheckFormValue(Formitem,ItemName,checktype,default,inValue,ma
 			next
 		Else
 			if inStr("|" & inValue & "|","|" & Tmp_Formitem & "|") = 0 Then
-				CheckErrorStr = CheckErrorStr & "Error: " & ItemName & "´íÎó6,ÇëÈ·ÈÏ."
+				CheckErrorStr = CheckErrorStr & "Error: " & ItemName & "é”™è¯¯6,è¯·ç¡®è®¤."
 			End if
 		End If	
 	End If
@@ -293,13 +294,13 @@ sub cms_selectFormScript(url)
 			var tmp="";
 			if(check==1)
 			{
-				tmp=" <a href=\"javascript:;\" onclick=\"a_command('ÅúÁ¿Í¨¹ıÉóºË',$id('" + obj.id + "'),'check&idlist='+p_getselected());\">ÅúÍ¨¹ıÉóºË</a>";
-				tmp+=" <a href=\"javascript:;\" onclick=\"a_command('ÅúÁ¿È¡ÏûÉóºË',$id('" + obj.id + "'),'uncheck&idlist='+p_getselected());\">ÅúÈ¡ÏûÉóºË</a>";
+				tmp=" <a href=\"javascript:;\" onclick=\"a_command('æ‰¹é‡é€šè¿‡å®¡æ ¸',$id('" + obj.id + "'),'check&idlist='+p_getselected());\">æ‰¹é€šè¿‡å®¡æ ¸</a>";
+				tmp+=" <a href=\"javascript:;\" onclick=\"a_command('æ‰¹é‡å–æ¶ˆå®¡æ ¸',$id('" + obj.id + "'),'uncheck&idlist='+p_getselected());\">æ‰¹å–æ¶ˆå®¡æ ¸</a>";
 			}
 				
-			$id('anc_msgbody').innerHTML="<div class=ajaxbox>ÒÑÑ¡Ôñ <b id=layer_selectnum>" + p_getnum() + "</b> Ìõ¼ÇÂ¼£º<br>ÇëÑ¡Ôñ£º<b><a href=\"javascript:;\" onclick=\"if(confirm('É¾³ı¼ÇÂ¼½«ÎŞ·¨»Ö¸´,È·¶¨¼ÌĞøÂğ?'))a_command('É¾³ı¼ÇÂ¼',$id('" + obj.id + "'),'delete&idlist='+p_getselected());\">ÅúÁ¿É¾³ı</a>" + tmp + "</b><br><input class=\"fmchkbox\" type=\"checkbox\" name=\"selmsg\" id=\"selmsg\" value=\"1\" onclick=\"achoose();\" />Ñ¡ÔñÈ«²¿</div>";
+			$id('anc_msgbody').innerHTML="<div class=ajaxbox>å·²é€‰æ‹© <b id=layer_selectnum>" + p_getnum() + "</b> æ¡è®°å½•ï¼š<br>è¯·é€‰æ‹©ï¼š<b><a href=\"javascript:;\" onclick=\"if(confirm('åˆ é™¤è®°å½•å°†æ— æ³•æ¢å¤,ç¡®å®šç»§ç»­å—?'))a_command('åˆ é™¤è®°å½•',$id('" + obj.id + "'),'delete&idlist='+p_getselected());\">æ‰¹é‡åˆ é™¤</a>" + tmp + "</b><br><input class=\"fmchkbox\" type=\"checkbox\" name=\"selmsg\" id=\"selmsg\" value=\"1\" onclick=\"achoose();\" />é€‰æ‹©å…¨éƒ¨</div>";
 			layer_view('',obj,'','','anc_msgbody','','',0,'',0,20);
-			$id("delinfo").innerHTML="<br><b><a class=redfont href=\"javascript:;\" onclick=\"if(confirm('É¾³ı¼ÇÂ¼½«ÎŞ·¨»Ö¸´,È·¶¨¼ÌĞøÂğ?'))a_command('É¾³ıÒÑÑ¡ÔñµÄ¼ÇÂ¼',$id('" + obj.id + "'),'delete&idlist='+p_getselected());\">É¾³ıÒÑÑ¡ÔñµÄ¼ÇÂ¼</a></b>";
+			$id("delinfo").innerHTML="<br><b><a class=redfont href=\"javascript:;\" onclick=\"if(confirm('åˆ é™¤è®°å½•å°†æ— æ³•æ¢å¤,ç¡®å®šç»§ç»­å—?'))a_command('åˆ é™¤å·²é€‰æ‹©çš„è®°å½•',$id('" + obj.id + "'),'delete&idlist='+p_getselected());\">åˆ é™¤å·²é€‰æ‹©çš„è®°å½•</a></b>";
 		}
 		</script>
 		<script src="../inc/js/p_list.js?ver=20090601.2" type="text/javascript"></script>
@@ -311,8 +312,8 @@ function cms_checkdeleteform(table,superflag)
 		dim cityid,checkLevelsql
 		checkLevelsql = ""
 		
-		if superflag = 1 and Check_jdsupervisor = 0 then
-			response.Write "<div class=ajaxbox><div class=cms_error>È¨ÏŞ²»×ã.</div></div>"
+		if superflag = 1 and Check_jdsupervisor() = 0 then
+			response.Write "<div class=ajaxbox><div class=cms_error>æƒé™ä¸è¶³.</div></div>"
 			cms_checkdeleteform = 0
 			exit function
 		end if
@@ -338,8 +339,8 @@ function cms_checkdeleteform(table,superflag)
 				call ldexecute(sql,1)
 			end if
 		next
-		if listtemp = "" then listtemp = " ÎŞ(Î´Ñ¡ÔñÈÎºÎ¼ÇÂ¼)."
-		response.Write "<div class=ajaxbox><div class=cms_ok>ÒÔÏÂ¼ÇÂ¼³É¹¦É¾³ı: " & listtemp & "</div></div>"
+		if listtemp = "" then listtemp = " æ— (æœªé€‰æ‹©ä»»ä½•è®°å½•)."
+		response.Write "<div class=ajaxbox><div class=cms_ok>ä»¥ä¸‹è®°å½•æˆåŠŸåˆ é™¤: " & listtemp & "</div></div>"
 		cms_checkdeleteform = 1
 
 end function
@@ -350,8 +351,8 @@ function cms_changeCheckedFlag(table,superflag)
 		dim cityid,checkLevelsql
 		checkLevelsql = ""
 		
-		if superflag = 1 and Check_jdsupervisor = 0 then
-			response.Write "<div class=ajaxbox><div class=cms_error>È¨ÏŞ²»×ã.</div></div>"
+		if superflag = 1 and Check_jdsupervisor() = 0 then
+			response.Write "<div class=ajaxbox><div class=cms_error>æƒé™ä¸è¶³.</div></div>"
 			cms_changeCheckedFlag = 0
 			exit function
 		end if
@@ -383,8 +384,8 @@ function cms_changeCheckedFlag(table,superflag)
 				call ldexecute(sql,1)
 			end if
 		next
-		if listtemp = "" then listtemp = " ÎŞ(Î´Ñ¡ÔñÈÎºÎ¼ÇÂ¼)."
-		response.Write "<div class=ajaxbox><div class=cms_ok>ÒÔÏÂ¼ÇÂ¼³É¹¦²Ù×÷: " & listtemp & "</div></div>"
+		if listtemp = "" then listtemp = " æ— (æœªé€‰æ‹©ä»»ä½•è®°å½•)."
+		response.Write "<div class=ajaxbox><div class=cms_ok>ä»¥ä¸‹è®°å½•æˆåŠŸæ“ä½œ: " & listtemp & "</div></div>"
 		cms_changeCheckedFlag = 1
 	
 end function

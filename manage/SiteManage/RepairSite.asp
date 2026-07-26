@@ -1,16 +1,16 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../../inc/Upload_Setup.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../../inc/Upload_Setup.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 Server.ScriptTimeOut = 6000
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
 
 Dim Form_UploadPhotoUrl_Old,Form_UploadPhotoUrl_Now
 Form_UploadPhotoUrl_Old = "images/upload/"
@@ -20,42 +20,42 @@ If GBL_CHK_Flag = 1 Then
 	GBL_CHK_TempStr = ""
 	If Request("Form_UploadPhotoUrl_Old") <> "" Then
 		Form_UploadPhotoUrl_Old = Replace(Trim(Request("Form_UploadPhotoUrl_Old")),"\","/")
-		If Right(Form_UploadPhotoUrl_Old,1) <> "/" Then GBL_CHK_TempStr = "´íÎó£¬¾ÉÉÏ´«Â·¾¶´íÎó£¬±ØÐëÊ¹ÓÃ/×÷ÎªÂ·¾¶½áÎ²"
+		If Right(Form_UploadPhotoUrl_Old,1) <> "/" Then GBL_CHK_TempStr = "é”™è¯¯ï¼Œæ—§ä¸Šä¼ è·¯å¾„é”™è¯¯ï¼Œå¿…é¡»ä½¿ç”¨/ä½œä¸ºè·¯å¾„ç»“å°¾"
 		Form_UploadPhotoUrl_Now = Replace(Trim(Request("Form_UploadPhotoUrl_Now")),"\","/")
-		If Form_UploadPhotoUrl_Now = "" or Right(Form_UploadPhotoUrl_Now,1) <> "/" Then GBL_CHK_TempStr = "´íÎó£¬ÐÂÉÏ´«Â·¾¶´íÎó"
-		If Form_UploadPhotoUrl_Now = Form_UploadPhotoUrl_Old Then GBL_CHK_TempStr = "ÐÂ¾ÉÂ·¾¶Ò»Ñù£¬ÎÞÐèÌæ»»£®"
-		If StrLength(Form_UploadPhotoUrl_Now) > 150 or StrLength(Form_UploadPhotoUrl_Old) > 150 Then GBL_CHK_TempStr = "Â·¾¶¹ý³¤£¬²»ÄÜ³¬¹ý150¸ö×Ö·û£®"
+		If Form_UploadPhotoUrl_Now = "" or Right(Form_UploadPhotoUrl_Now,1) <> "/" Then GBL_CHK_TempStr = "é”™è¯¯ï¼Œæ–°ä¸Šä¼ è·¯å¾„é”™è¯¯"
+		If Form_UploadPhotoUrl_Now = Form_UploadPhotoUrl_Old Then GBL_CHK_TempStr = "æ–°æ—§è·¯å¾„ä¸€æ ·ï¼Œæ— éœ€æ›¿æ¢ï¼Ž"
+		If StrLength(Form_UploadPhotoUrl_Now) > 150 or StrLength(Form_UploadPhotoUrl_Old) > 150 Then GBL_CHK_TempStr = "è·¯å¾„è¿‡é•¿ï¼Œä¸èƒ½è¶…è¿‡150ä¸ªå­—ç¬¦ï¼Ž"
 	End If
 	If Request("submitflag") = "yes" and GBL_CHK_TempStr = "" then
 		If Request("Form_UploadPhotoUrl_Old") <> "" Then
-			RepairUploadFaceUrl
+			RepairUploadFaceUrl()
 		Else
-			RepairSite
+			RepairSite()
 		End If
 	Else
 		If Request("Form_UploadPhotoUrl_Old") = "" Then
 		%><form action=RepairSite.asp method=post>
-			<div class=frametitle>1.Ä¬ÈÏÐÞ¸´</div>
-			<div class=frameline>×¢Òâ£º´Ë¹¦ÄÜ½«Íê³ÉÒÔÏÂ¹¦ÄÜ£º</div>
+			<div class=frametitle>1.é»˜è®¤ä¿®å¤</div>
+			<div class=frameline>æ³¨æ„ï¼šæ­¤åŠŸèƒ½å°†å®Œæˆä»¥ä¸‹åŠŸèƒ½ï¼š</div>
 			<div class=frameline>
-				1.ÖØÐÂÍ³¼ÆÃ¿¸ö°æÃæ(°üÀ¨Òþ²Ø°æÃæ)µÄÔÚÏßÈËÊý<br>
-				2.ÖØÐÂÍ³¼Æ×ÜÔÚÏßÈËÔ±<br>
-				3.ÖØÐÂÍ³¼ÆÂÛÌ³×¢²áÓÃ»§ÊýÁ¿<br>
-				4.ÖØÐÂÍ³¼ÆÂÛÌ³ÉÏ´«¸½¼þÊýÁ¿<br>
-				5.<span class=bluefont>ÐÞ¸´¹«¸æÄÚÈÝ</span><br>
-				6.<span class=bluefont>ÐÞ¸´°æÃæ×¨ÌâÇø</span><br>
+				1.é‡æ–°ç»Ÿè®¡æ¯ä¸ªç‰ˆé¢(åŒ…æ‹¬éšè—ç‰ˆé¢)çš„åœ¨çº¿äººæ•°<br>
+				2.é‡æ–°ç»Ÿè®¡æ€»åœ¨çº¿äººå‘˜<br>
+				3.é‡æ–°ç»Ÿè®¡è®ºå›æ³¨å†Œç”¨æˆ·æ•°é‡<br>
+				4.é‡æ–°ç»Ÿè®¡è®ºå›ä¸Šä¼ é™„ä»¶æ•°é‡<br>
+				5.<span class=bluefont>ä¿®å¤å…¬å‘Šå†…å®¹</span><br>
+				6.<span class=bluefont>ä¿®å¤ç‰ˆé¢ä¸“é¢˜åŒº</span><br>
 			</div>
 			<input type="hidden" name="submitflag" value="yes">
-			<div class=alert>È·ÈÏÐÅÏ¢£º ÕæµÄÒª¿ªÊ¼ÐÞ¸´ÉÏÊöÊý¾ÝÃ´£¿</div>
+			<div class=alert>ç¡®è®¤ä¿¡æ¯ï¼š çœŸçš„è¦å¼€å§‹ä¿®å¤ä¸Šè¿°æ•°æ®ä¹ˆï¼Ÿ</div>
 			<div class=frameline>
-			<input class=fmchkbox type="checkbox" name="repairFlag" value="yes" checked>Ñ¡ÖÐÔò×Ô¶¯ÐÞ¸´Ã¿¸ö°æÃæµÄÔÚÏßÈËÊý£¬·ñÔò½ö×÷²é¿´
+			<input class=fmchkbox type="checkbox" name="repairFlag" value="yes" checked>é€‰ä¸­åˆ™è‡ªåŠ¨ä¿®å¤æ¯ä¸ªç‰ˆé¢çš„åœ¨çº¿äººæ•°ï¼Œå¦åˆ™ä»…ä½œæŸ¥çœ‹
 			</div>
 			<div class=frameline>
-			<input type=submit value="µã»÷¿ªÊ¼ÐÞ¸´" class=fmbtn>
+			<input type=submit value="ç‚¹å‡»å¼€å§‹ä¿®å¤" class=fmbtn>
 			</div>
 			
 			<div class=frameline>
-				<a href=../User/ClearOnlineUser.asp>Èç¹ûÐèÒªÇå³ýËùÓÐµÄÔÚÏßÈËÔ±Ãûµ¥£¬Çëµã»÷ÕâÀï</a>
+				<a href=../User/ClearOnlineUser.asp>å¦‚æžœéœ€è¦æ¸…é™¤æ‰€æœ‰çš„åœ¨çº¿äººå‘˜åå•ï¼Œè¯·ç‚¹å‡»è¿™é‡Œ</a>
 			</div>
 			</form>
 		<%End If
@@ -63,37 +63,37 @@ If GBL_CHK_Flag = 1 Then
 			<div class=alert><%=GBL_CHK_TempStr%></div><%
 			End If%>
 			<form action=RepairSite.asp method=post>
-			<div class=frametitle>2.ÉÏ´«Â·¾¶ÐÅÏ¢ÐÞ¸´</div>
+			<div class=frametitle>2.ä¸Šä¼ è·¯å¾„ä¿¡æ¯ä¿®å¤</div>
 			<div class=frameline>
-			´Ë¹¦ÄÜ½«Íê³ÉÒÔÏÂ¹¦ÄÜ£ºÐÞ¸´ÓÃ»§±íÖÐµÄ±£´æÔÚ±¾µØÍøÕ¾µÄÍ¼Æ¬Â·¾¶<br>
-			µ±ÄãµÄ°æ±¾Îª3.14a»ò¾ÉµÄ°æ±¾Éý¼¶ÉÏÀ´£¬µ±¸Ä±äÁËÉÏ´«¸½¼þÂ·¾¶Ê±£¬<br>¿ÉÄÜ»áÐèÒª´Ë¹¦ÄÜ½øÐÐÐÞ¸´<br>
+			æ­¤åŠŸèƒ½å°†å®Œæˆä»¥ä¸‹åŠŸèƒ½ï¼šä¿®å¤ç”¨æˆ·è¡¨ä¸­çš„ä¿å­˜åœ¨æœ¬åœ°ç½‘ç«™çš„å›¾ç‰‡è·¯å¾„<br>
+			å½“ä½ çš„ç‰ˆæœ¬ä¸º3.14aæˆ–æ—§çš„ç‰ˆæœ¬å‡çº§ä¸Šæ¥ï¼Œå½“æ”¹å˜äº†ä¸Šä¼ é™„ä»¶è·¯å¾„æ—¶ï¼Œ<br>å¯èƒ½ä¼šéœ€è¦æ­¤åŠŸèƒ½è¿›è¡Œä¿®å¤<br>
 			</div>
 			<input type="hidden" name="submitflag" value="yes">
 			<div class=frameline>
-			¾ÉÉÏ´«Â·¾¶£º<input class=fminpt type="text" name="Form_UploadPhotoUrl_Old" maxlength="150" size="30" value="<%=htmlencode(Form_UploadPhotoUrl_Old)%>">
+			æ—§ä¸Šä¼ è·¯å¾„ï¼š<input class=fminpt type="text" name="Form_UploadPhotoUrl_Old" maxlength="150" size="30" value="<%=htmlencode(Form_UploadPhotoUrl_Old)%>">
 			</div>
 			<div class=frameline>
-			ÏÖÉÏ´«Â·¾¶£º<input class=fminpt type="text" name="Form_UploadPhotoUrl_Now" maxlength="150" size="30" value="<%=htmlencode(Form_UploadPhotoUrl_Now)%>">
+			çŽ°ä¸Šä¼ è·¯å¾„ï¼š<input class=fminpt type="text" name="Form_UploadPhotoUrl_Now" maxlength="150" size="30" value="<%=htmlencode(Form_UploadPhotoUrl_Now)%>">
 			</div>
-			<div class=frameline><span class=note>×¢ÒâÂ·¾¶Ö¸µÄÊÇÏà¶ÔÓÚÂÛÌ³¸ùÄ¿Â¼µÄÂ·¾¶£®Ä¬ÈÏ´æ·ÅÓÚimages/uploadÏÂÃæ</span>
+			<div class=frameline><span class=note>æ³¨æ„è·¯å¾„æŒ‡çš„æ˜¯ç›¸å¯¹äºŽè®ºå›æ ¹ç›®å½•çš„è·¯å¾„ï¼Žé»˜è®¤å­˜æ”¾äºŽimages/uploadä¸‹é¢</span>
 			</div>
-			<div class=alert>¾¯¸æ£ºÐÞ¸´Ê±¼ä¿ÉÄÜ½Ï³¤ÇÒ²»¿ÉÄæ£¬Îñ±ØÈ·ÈÏÄãÌîÐ´µÄÐÅÏ¢ÕýÈ·ÎÞÎó£¡</div>
-			<div class=frameline><input class=fmchkbox type="checkbox" name="repairAnnounce" value="yes" checked>Ñ¡ÖÐÔò¶îÍâÐÞ¸´·¢±íÌû×ÓÖÐµÄÍ¼Æ¬Â·¾¶</div>
-			<div class=frameline><input class=fmchkbox type="checkbox" name="repairUserUnderWrite" value="yes" checked>Ñ¡ÖÐÔò¶îÍâÐÞ¸´ÓÃ»§Ç©ÃûÖÐµÄÍ¼Æ¬Â·¾¶</div>
+			<div class=alert>è­¦å‘Šï¼šä¿®å¤æ—¶é—´å¯èƒ½è¾ƒé•¿ä¸”ä¸å¯é€†ï¼ŒåŠ¡å¿…ç¡®è®¤ä½ å¡«å†™çš„ä¿¡æ¯æ­£ç¡®æ— è¯¯ï¼</div>
+			<div class=frameline><input class=fmchkbox type="checkbox" name="repairAnnounce" value="yes" checked>é€‰ä¸­åˆ™é¢å¤–ä¿®å¤å‘è¡¨å¸–å­ä¸­çš„å›¾ç‰‡è·¯å¾„</div>
+			<div class=frameline><input class=fmchkbox type="checkbox" name="repairUserUnderWrite" value="yes" checked>é€‰ä¸­åˆ™é¢å¤–ä¿®å¤ç”¨æˆ·ç­¾åä¸­çš„å›¾ç‰‡è·¯å¾„</div>
 			
 			<div class=frameline>
-			<input type=submit value="µã»÷¿ªÊ¼ÐÞ¸´" class=fmbtn>
+			<input type=submit value="ç‚¹å‡»å¼€å§‹ä¿®å¤" class=fmbtn>
 			</div>
 			<div class=frameline>
-				<a href=../User/ClearOnlineUser.asp>Èç¹ûÐèÒªÇå³ýËùÓÐµÄÔÚÏßÈËÔ±Ãûµ¥£¬Çëµã»÷ÕâÀï</a>
+				<a href=../User/ClearOnlineUser.asp>å¦‚æžœéœ€è¦æ¸…é™¤æ‰€æœ‰çš„åœ¨çº¿äººå‘˜åå•ï¼Œè¯·ç‚¹å‡»è¿™é‡Œ</a>
 			</div>
 			</form>
 		<%
 	End If
 Else
-	DisplayLoginForm
+	DisplayLoginForm()
 End If
-closeDataBase
+closeDataBase()
 Manage_Sitebottom("none")
 
 
@@ -128,11 +128,11 @@ Function RepairSite
 	Set Rs = Nothing
 
 	CALL LDExeCute("Update LeadBBS_SiteInfo Set UserCount=" & UserCount & ",UploadNum=" & UploadNum,1)
-	ReloadStatisticData
+	ReloadStatisticData()
 
-	Response.Write "<br>×¢²áÓÃ»§ÊýÁ¿¼°ÉÏ´«ÎÄ¼þÊýÁ¿ÖØÐÂÍ³¼ÆÍê³É£¡"
-	SetActiveUserCount
-	Response.Write "<br>ÂÛÌ³×ÜÔÚÏßÈËÊýÖØÐÂÍ³¼ÆÍê³É£®"
+	Response.Write "<br>æ³¨å†Œç”¨æˆ·æ•°é‡åŠä¸Šä¼ æ–‡ä»¶æ•°é‡é‡æ–°ç»Ÿè®¡å®Œæˆï¼"
+	SetActiveUserCount()
+	Response.Write "<br>è®ºå›æ€»åœ¨çº¿äººæ•°é‡æ–°ç»Ÿè®¡å®Œæˆï¼Ž"
 
 	Dim GetData
 	Set Rs = LDExeCute("Select BoardID from LeadBBS_Boards",0)
@@ -161,24 +161,24 @@ Function RepairSite
 		Set Rs = Nothing
 		ReloadBoardInfo(GetData(0,n))
 		ReloadTopicAssort(GetData(0,n))
-		Response.Write "<br>°æÃæºÅ" & GetData(0,n) & "ÔÚÏßÈËÊý£¬Ô­ÏÈ" & Application(DEF_MasterCookies & "BDOL" & GetData(0,n)) & "ÈË£¬Êµ¼ÊÔÚÏß" & i & "ÈË"
+		Response.Write "<br>ç‰ˆé¢å·" & GetData(0,n) & "åœ¨çº¿äººæ•°ï¼ŒåŽŸå…ˆ" & Application(DEF_MasterCookies & "BDOL" & GetData(0,n)) & "äººï¼Œå®žé™…åœ¨çº¿" & i & "äºº"
 		If repairFlag = "yes" then
 			Application.Lock
 			Application(DEF_MasterCookies & "BDOL" & GetData(0,n)) = i
 			Application.UnLock
 		End If
 	Next
-	Response.Write "<p>ÖØÐÂÍ³¼Æ°æÃæÔÚÏßÈËÊýÍê³É£®£®"
-	ReloadPubMessageInfo
-	Response.Write "<p>ÐÞ¸´¹«¸æÄÚÈÝÍê³É£®"
-	If repairFlag <> "yes" then Response.Write "<font color=Red Class=redfont>µ«²¢Ã»ÓÐÖØÐÂÍê³É°æÃæÔÚÏßÈËÊýµÄ¸üÐÂ£®</font>"
+	Response.Write "<p>é‡æ–°ç»Ÿè®¡ç‰ˆé¢åœ¨çº¿äººæ•°å®Œæˆï¼Žï¼Ž"
+	ReloadPubMessageInfo()
+	Response.Write "<p>ä¿®å¤å…¬å‘Šå†…å®¹å®Œæˆï¼Ž"
+	If repairFlag <> "yes" then Response.Write "<font color=Red Class=redfont>ä½†å¹¶æ²¡æœ‰é‡æ–°å®Œæˆç‰ˆé¢åœ¨çº¿äººæ•°çš„æ›´æ–°ï¼Ž</font>"
 
 End Function
 
 Sub ReloadTopicAssort(BoardID)
 
 	Dim Rs
-	Set Rs = LDExeCute("select ID,AssortName,0,0,0 from LeadBBS_GoodAssort where BoardID=" & BoardID & " Order by BoardID,OrderID",0)
+	Set Rs = LDExeCute("select ID,AssortName,0,0 as c0_dup2,0 as c0_dup3 from LeadBBS_GoodAssort where BoardID=" & BoardID & " Order by BoardID,OrderID",0)
 	If Not Rs.Eof Then
 		Application.Lock
 		Application(DEF_MasterCookies & "BoardInfo" & BoardID & "_TI") = Rs.GetRows(-1)
@@ -236,7 +236,7 @@ Sub RepairUploadFaceUrl
 	If Request("executepage") = "" Then
 	%>
 	<div id="errorstr"></div>
-	<p style="font-size:9pt" id="bartitle1">ÏÂÃæ¿ªÊ¼ÐÞ¸´ÓÃ»§ÉÏ´«Í·ÏñÂ·¾¶£¬¹²ÓÐ<%=RecordCount%>¸öÓÃ»§´ý¸üÐÂ
+	<p style="font-size:9pt" id="bartitle1">ä¸‹é¢å¼€å§‹ä¿®å¤ç”¨æˆ·ä¸Šä¼ å¤´åƒè·¯å¾„ï¼Œå…±æœ‰<%=RecordCount%>ä¸ªç”¨æˆ·å¾…æ›´æ–°
 
 		<table width="400" border="0" cellspacing="1" cellpadding="1">
 			<tr> 
@@ -245,7 +245,7 @@ Sub RepairUploadFaceUrl
 			<tr> 
 				<td bgcolor=ffffff height=9><img src=../pic/progressbar.gif width=0 height=16 id=img1 name=img1 align=middle></td></tr></table>
 		</td></tr></table> <span id=txt1 name=txt1 style="font-size:9pt">0</span><span style="font-size:9pt">%</span>
-		<span id=tm1 name=tm1 style="font-size:9pt">ÕýÔÚ¹ÀËãÐèÒªÊ±¼ä...</span>
+		<span id=tm1 name=tm1 style="font-size:9pt">æ­£åœ¨ä¼°ç®—éœ€è¦æ—¶é—´...</span>
 		<script src="<%=DEF_BBS_HomeUrl%>inc/js/bar.js?ver=<%=DEF_Jer%>" type="text/javascript"></script>
 		<script>
 			Upl_url = "../BlockUpdate/Io_Info.asp?id=<%=Urlencode(GBL_CHK_User)%>";
@@ -300,8 +300,8 @@ Sub RepairUploadFaceUrl
 			Application.Contents.Remove("Io_" & GBL_CHK_User)
 		End If
 	Loop
-	%>Íê³É
-	¹²¸üÐÂ<%=UpdateNumber%>¸öÓÃ»§£¬<%=NoneUpdateNumber%>¸öÓÃ»§ÎÞÐè¸üÐÂ
+	%>å®Œæˆ
+	å…±æ›´æ–°<%=UpdateNumber%>ä¸ªç”¨æˆ·ï¼Œ<%=NoneUpdateNumber%>ä¸ªç”¨æˆ·æ— éœ€æ›´æ–°
 	<%
 	If Request("repairAnnounce") = "yes" Then RepairAnnounceUploadUrl
 	If Request("repairUserUnderWrite") = "yes" Then RepairUserUnderWriteUploadUrl
@@ -351,9 +351,9 @@ Sub RepairAnnounceUploadUrl
 	RemainTime = RecordCount
 	
 	dim titlestr
-	titlestr = "|ÏÂÃæ¿ªÊ¼ÐÞ¸´Ìû×ÓÖÐµÄÈ«²¿ÉÏ´«Ä¿Â¼ÏÂµÄÍ¼Æ¬Â·¾¶£¬¹²ÓÐ" & RecordCount & "¸öÌû×Ó´ý¸üÐÂ"
+	titlestr = "|ä¸‹é¢å¼€å§‹ä¿®å¤å¸–å­ä¸­çš„å…¨éƒ¨ä¸Šä¼ ç›®å½•ä¸‹çš„å›¾ç‰‡è·¯å¾„ï¼Œå…±æœ‰" & RecordCount & "ä¸ªå¸–å­å¾…æ›´æ–°"
 	Application.Lock
-	Application("Io_" & GBL_CHK_User) = "1|0|ÕýÔÚ¹ÀËãÊ±¼ä...|start"	
+	Application("Io_" & GBL_CHK_User) = "1|0|æ­£åœ¨ä¼°ç®—æ—¶é—´...|start"	
 	Application("Io_" & GBL_CHK_User) = "0|0|" & SpendTime & "|" & RemainTime & "|" & CountIndex & titlestr
 	Application.UnLock
 
@@ -422,8 +422,8 @@ Sub RepairAnnounceUploadUrl
 		End If
 	Loop
 	Set Re = Nothing
-	%>Íê³É
-	¹²¸üÐÂ<%=UpdateNumber%>¸öÌû×Ó£¬<%=NoneUpdateNumber%>¸öÌû×ÓÎÞÐè¸üÐÂ
+	%>å®Œæˆ
+	å…±æ›´æ–°<%=UpdateNumber%>ä¸ªå¸–å­ï¼Œ<%=NoneUpdateNumber%>ä¸ªå¸–å­æ— éœ€æ›´æ–°
 	<%
 	
 
@@ -469,12 +469,12 @@ Sub RepairUserUnderWriteUploadUrl
 	StartTime = Now
 	
 	response.Flush
-	dim titlestr: titlestr = "|ÏÂÃæ¿ªÊ¼ÐÞ¸´ÓÃ»§Ç©ÃûÖÐµÄÈ«²¿ÉÏ´«Ä¿Â¼ÏÂµÄÍ¼Æ¬Â·¾¶£¬¹²ÓÐ" & RecordCount & "¸öÓÃ»§Ç©Ãû´ý¸üÐÂ"
+	dim titlestr: titlestr = "|ä¸‹é¢å¼€å§‹ä¿®å¤ç”¨æˆ·ç­¾åä¸­çš„å…¨éƒ¨ä¸Šä¼ ç›®å½•ä¸‹çš„å›¾ç‰‡è·¯å¾„ï¼Œå…±æœ‰" & RecordCount & "ä¸ªç”¨æˆ·ç­¾åå¾…æ›´æ–°"
 	
 	SpendTime = Datediff("s",StartTime,Now)
 	RemainTime = RecordCount
 	Application.Lock
-	Application("Io_" & GBL_CHK_User) = "1|0|ÕýÔÚ¹ÀËãÊ±¼ä...|start"
+	Application("Io_" & GBL_CHK_User) = "1|0|æ­£åœ¨ä¼°ç®—æ—¶é—´...|start"
 	Application("Io_" & GBL_CHK_User) = "0|0|" & SpendTime & "|" & RemainTime & "|" & CountIndex & titlestr
 	Application.UnLock
 	
@@ -563,8 +563,8 @@ Sub RepairUserUnderWriteUploadUrl
 		End If
 	Loop
 	Set Re = Nothing
-	%>Íê³É
-	¹²¸üÐÂ<%=UpdateNumber%>¸öÇ©Ãû£¬<%=NoneUpdateNumber%>¸öÓÃ»§Ç©ÃûÎÞÐè¸üÐÂ
+	%>å®Œæˆ
+	å…±æ›´æ–°<%=UpdateNumber%>ä¸ªç­¾åï¼Œ<%=NoneUpdateNumber%>ä¸ªç”¨æˆ·ç­¾åæ— éœ€æ›´æ–°
 	<%
 	
 	

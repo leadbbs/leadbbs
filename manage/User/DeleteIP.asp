@@ -1,9 +1,9 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
-InitDatabase
+InitDatabase()
 
 Dim GBL_ID,Form_ID
 
@@ -15,14 +15,14 @@ KillID = Fix(cCur(KillID))
 If KillID < 0 Then KillID = 0
 
 GBL_CHK_TempStr=""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 Form_ID = GBL_ID
 Form_ID = cCur(Form_ID)
 If Form_ID < 0 Then Form_ID = 0
 If Form_ID=0 or GBL_CHK_Flag<>1 Then
-	GBL_CHK_TempStr = GBL_CHK_TempStr & "ÄãÃ»ÓĞµÇÂ¼<br>" & VbCrLf
+	GBL_CHK_TempStr = GBL_CHK_TempStr & "ä½ æ²¡æœ‰ç™»å½•<br>" & VbCrLf
 End If
-siteHead("   ½â³ıÆÁ±ÎµÄ£É£ĞµØÖ·")
+siteHead("   è§£é™¤å±è”½çš„ï¼©ï¼°åœ°å€")
 %>
 <script language=javascript>
 	window.moveTo(window.screen.width/2-225,window.screen.height/2-18);
@@ -39,13 +39,13 @@ siteHead("   ½â³ıÆÁ±ÎµÄ£É£ĞµØÖ·")
 		If Rs.Eof Then
 			Rs.close
 			Set Rs = Nothing
-			Response.Write "ÕÒ²»µ½¼ÇÂ¼£¡<br>" & VbCrLf
+			Response.Write "æ‰¾ä¸åˆ°è®°å½•ï¼<br>" & VbCrLf
 		Else
 			Rs.close
 			Set Rs = Nothing
 			If Request.Form("DeleteSureFlag")="dk9@dl9s92lw_SWxl" Then
 				%>
-				³É¹¦É¾³ı±àºÅÎª<font color=ff0000 class=redfont><%=KillID%></font>ÆÁ±ÎIP¶ÎÂğ!
+				æˆåŠŸåˆ é™¤ç¼–å·ä¸º<font color=ff0000 class=redfont><%=KillID%></font>å±è”½IPæ®µå—!
 				<%
 				CALL LDExeCute("Delete from LeadBBS_ForbidIP where id=" & KillID,1)
 			Else
@@ -53,9 +53,9 @@ siteHead("   ½â³ıÆÁ±ÎµÄ£É£ĞµØÖ·")
 				<form name=DellClientForm action=DeleteIP.asp method=post>
 					<input type=hidden name=DeleteSureFlag value="dk9@dl9s92lw_SWxl">
 					<input type=hidden name=KillID value="<%=htmlencode(KillID)%>">
-					<b>È·ÈÏÒªÉ¾³ı±àºÅÎª<font color=ff0000 class=redfont><%=KillID%></font>µÄÆÁ±ÎIP¶ÎÂğ£¿</b>
-					<p><input type=submit value=È·¶¨ class=fmbtn>
-					<input type=button value=²»É¾ onclick="javascript:window.close();" class=fmbtn>
+					<b>ç¡®è®¤è¦åˆ é™¤ç¼–å·ä¸º<font color=ff0000 class=redfont><%=KillID%></font>çš„å±è”½IPæ®µå—ï¼Ÿ</b>
+					<p><input type=submit value=ç¡®å®š class=fmbtn>
+					<input type=button value=ä¸åˆ  onclick="javascript:window.close();" class=fmbtn>
 				</form>
 				<%
 			End If
@@ -78,11 +78,11 @@ siteHead("   ½â³ıÆÁ±ÎµÄ£É£ĞµØÖ·")
 	<title>
 		<%=DEF_SiteNameString%>
 	</title>
-	<meta HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+	<meta HTTP-EQUIV="Content-Type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" type="text/css" href="<%=DEF_BBS_homeurl%>/inc/style.css">
 </head>
 <%
 
-closeDataBase
-SiteBottom_Spend
+closeDataBase()
+SiteBottom_Spend()
 %>

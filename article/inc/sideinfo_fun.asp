@@ -402,7 +402,7 @@ class Side_newsArticle_Class
 		class_selcolumn = "id,title"
 		CALL splitpage_returnData(class_sql,class_idname,class_page,class_selcolumn,0)
 		
-		private_managelist
+		private_managelist()
 		
 		CALL splitpage_viewpagelist("center.asp?action=newsarticle",splitpage_maxpage,splitpage_page,"")
 			
@@ -410,13 +410,13 @@ class Side_newsArticle_Class
 	
 	private sub private_managelist
 	
-		cms_selectFormScript("center.asp?action=newsarticle")
+		Call cms_selectFormScript("center.asp?action=newsarticle")
 		%>
-		<div class="title"><div class="titlebg">管理文章 <a href=center.asp?action=newsarticle>点此添加文章</a></div></div>
+		<div class="title"><div class="titlebg">绠＄悊鏂囩珷 <a href=center.asp?action=newsarticle>鐐规娣诲姞鏂囩珷</a></div></div>
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" class=table_in>
 				<tr class="tbinhead cms_tbinhead">
-					<td width=60><div class=cms_value>编号</div></td>
-					<td><div class=cms_value>分类名称</div></td>
+					<td width=60><div class=cms_value>缂栧彿</div></td>
+					<td><div class=cms_value>鍒嗙被鍚嶇О</div></td>
 				</tr>
 				<%dim n
 				for n = 0 to splitpage_num%>

@@ -1,7 +1,7 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
-<!-- #include file=inc/skin_fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
+<!--#include file="inc/skin_fun.asp"-->
 
 <%
 DEF_BBS_HomeUrl = "../../"
@@ -12,13 +12,13 @@ Dim SmallTableHead,SmallTableBottom,TempletID
 
 Sub Main
 
-	initDatabase
+	initDatabase()
 	GBL_CHK_TempStr = ""
-	checkSupervisorPass
+	checkSupervisorPass()
 	
-	Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-	frame_TopInfo
-	DisplayUserNavigate("±à¼­·ç¸ñ²ÎÊı")
+	Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+	frame_TopInfo()
+	DisplayUserNavigate("ç¼–è¾‘é£æ ¼å‚æ•°")
 	If GBL_CHK_Flag=1 Then
 		Dim ExtentSkinManager,Action
 		Action = Request.QueryString("Action")
@@ -35,23 +35,23 @@ Sub Main
 			ExtentSkinManager.ExtentSkin
 			Set ExtentSkinManager = Nothing
 		Else
-			GetDefaultValue
+			GetDefaultValue()
 			If GBL_CHK_TempStr <> "" Then
 				Response.Write "<br><br>" & GBL_CHK_TempStr
 			Else
-				Siteskin
+				Siteskin()
 			End If
 		End If
 	Else
-		DisplayLoginForm
+		DisplayLoginForm()
 	End If
-	frame_BottomInfo
-	closeDataBase
+	frame_BottomInfo()
+	closeDataBase()
 	Manage_Sitebottom("none")
 
 End Sub
 
-Main
+Main()
 
 Function Siteskin
 
@@ -60,12 +60,12 @@ Function Siteskin
 	<input type="hidden" name="SubmitFlag" value=yes>
 	<p>
 		<b>
-			ÂÛÌ³·ç¸ñ¸ü¶à²ÎÊı×Ô¶¨Òå - <%=DEF_BoardStyleString(StyleID)%></b>
+			è®ºå›é£æ ¼æ›´å¤šå‚æ•°è‡ªå®šä¹‰ - <%=DEF_BoardStyleString(StyleID)%></b>
 			<br><br><span class=grayfont>
-			´óÊäÈë¿òÇëÊ¹ÓÃhtmlÓï·¨£¬¾ßÌå·ç¸ñÇëÔÚ±¾µØµ÷ÊÔºÃºóÔÙ¾ßÌåÉè¶¨<br></span>
+			å¤§è¾“å…¥æ¡†è¯·ä½¿ç”¨htmlè¯­æ³•ï¼Œå…·ä½“é£æ ¼è¯·åœ¨æœ¬åœ°è°ƒè¯•å¥½åå†å…·ä½“è®¾å®š<br></span>
 	</p>
 	<%If Request.Form("SubmitFlag") <> "" Then
-		GetFormValue
+		GetFormValue()
 	End If
 	If GBL_CHK_TempStr <> "" Then%>
 	<div class=alert><%=GBL_CHK_TempStr%></div>
@@ -73,19 +73,19 @@ Function Siteskin
 	End If
 	If Request("SubmitFlag") <> "" Then
 		If GBL_CHK_TempStr <> "" Then
-			DisplayDatabaseLink
+			DisplayDatabaseLink()
 		Else
-			SaveStyleDefine
-			Response.Write "<div class=alertdone>³É¹¦Íê³ÉÉèÖÃ£¡</div>"
+			SaveStyleDefine()
+			Response.Write "<div class=alertdone>æˆåŠŸå®Œæˆè®¾ç½®ï¼</div>"
 			Exit Function
 		End If
 	Else
-		DisplayDatabaseLink
+		DisplayDatabaseLink()
 	End If
 	%>
 	<br>
-	<input type=submit name=Ìá½» value=Ìá½» class=fmbtn>
-	<input type=reset name=È¡Ïû value=È¡Ïû class=fmbtn>
+	<input type=submit name=æäº¤ value=æäº¤ class=fmbtn>
+	<input type=reset name=å–æ¶ˆ value=å–æ¶ˆ class=fmbtn>
 	</form>
 	<%
 
@@ -96,61 +96,61 @@ Function DisplayDatabaseLink
 	%>
 		<table border=0 cellpadding=0 cellspacing=0 width=100% class=frame_table>
 		<tr>
-			<td class=tdbox width=120>·ç¸ñ±àºÅ</td>
+			<td class=tdbox width=120>é£æ ¼ç¼–å·</td>
 			<td class=tdbox><b><%=StyleID%></b> (<%=DEF_BoardStyleString(StyleID)%>)<input name=StyleID value=<%=StyleID%> type=hidden></td>
 		</tr>
 		<!--
 		<tr>
-			<td class=tdbox>ÂÛÌ³¿í¶È</td>
-			<td class=tdbox><input class=fminpt type="text" name="ScreenWidth" maxlength="50" size="30" value="<%=htmlencode(ScreenWidth)%>"><font color=gray>(Ö§³ÖÊ¹ÓÃ°Ù·Ö±ÈºÍ¾ø¶Ô¿í¶È)</font></td>
+			<td class=tdbox>è®ºå›å®½åº¦</td>
+			<td class=tdbox><input class=fminpt type="text" name="ScreenWidth" maxlength="50" size="30" value="<%=htmlencode(ScreenWidth)%>"><font color=gray>(æ”¯æŒä½¿ç”¨ç™¾åˆ†æ¯”å’Œç»å¯¹å®½åº¦)</font></td>
 		</tr>
 		-->
 		<tr>
-			<td class=tdbox>Ö÷Ìâ³¤¶È</td>
-			<td class=tdbox><input class=fminpt type="text" name="DisplayTopicLength" maxlength="3" size="10" value="<%=htmlencode(DisplayTopicLength)%>"><font color=gray>(µ¥Î»£º×Ö½Ú£¬Ìû×ÓÖ÷ÌâÏÔÊ¾×î´ó³¤¶È£¬750¿í=54£¬770¿í=56,×î³¤Îª255×Ö½Ú)</font></td>
+			<td class=tdbox>ä¸»é¢˜é•¿åº¦</td>
+			<td class=tdbox><input class=fminpt type="text" name="DisplayTopicLength" maxlength="3" size="10" value="<%=htmlencode(DisplayTopicLength)%>"><font color=gray>(å•ä½ï¼šå­—èŠ‚ï¼Œå¸–å­ä¸»é¢˜æ˜¾ç¤ºæœ€å¤§é•¿åº¦ï¼Œ750å®½=54ï¼Œ770å®½=56,æœ€é•¿ä¸º255å­—èŠ‚)</font></td>
 		</tr>
 		<!--
 		<tr>
-			<td class=tdbox>×Ô¶¨Í¼Æ¬</td>
+			<td class=tdbox>è‡ªå®šå›¾ç‰‡</td>
 			<td class=tdbox><table border=0 cellpadding=0 cellspacing=0><tr>
-				<td><input class=fmchkbox type=radio name=DefineImage value=0<%If DefineImage = 0 Then%> checked<%End If%>></td><td>ÎŞ</td>
-          		<td><input class=fmchkbox type=radio name=DefineImage value=1<%If DefineImage = 1 Then%> checked<%End If%>></td><td>ÓĞ</td><td><font color=gray>&nbsp; (ÊÇ·ñ×Ô´øĞÂ·ç¸ñÍ¼Æ¬£¬´æ·ÅÓÚimages/skin/<%=StyleID%>/£¬²»Ö¸¶¨ÔòÊ¹ÓÃÄ¬ÈÏÍ¼Æ¬)</font></td></tr></table></td>
+				<td><input class=fmchkbox type=radio name=DefineImage value=0<%If DefineImage = 0 Then%> checked<%End If%>></td><td>æ— </td>
+          		<td><input class=fmchkbox type=radio name=DefineImage value=1<%If DefineImage = 1 Then%> checked<%End If%>></td><td>æœ‰</td><td><font color=gray>&nbsp; (æ˜¯å¦è‡ªå¸¦æ–°é£æ ¼å›¾ç‰‡ï¼Œå­˜æ”¾äºimages/skin/<%=StyleID%>/ï¼Œä¸æŒ‡å®šåˆ™ä½¿ç”¨é»˜è®¤å›¾ç‰‡)</font></td></tr></table></td>
 		</tr>
 		-->
 		<tr>
-			 <td class=tdbox>ÍøÕ¾Ê×²¿<br>ÄÚÈİ×Ô¶¨<br>Ê¹ÓÃHTML</td>
+			 <td class=tdbox>ç½‘ç«™é¦–éƒ¨<br>å†…å®¹è‡ªå®š<br>ä½¿ç”¨HTML</td>
 			<td class=tdbox><textarea name=SiteHeadString rows=5 cols=60 class=fmtxtra><%If SiteHeadString <> "" Then Response.Write VbCrLf & Server.htmlEncode(SiteHeadString)%></textarea></td>
 		</tr>
 		<tr>
-			<td class=tdbox>ÍøÕ¾Î²²¿<br>ÄÚÈİ×Ô¶¨<br>Ê¹ÓÃHTML</td>
+			<td class=tdbox>ç½‘ç«™å°¾éƒ¨<br>å†…å®¹è‡ªå®š<br>ä½¿ç”¨HTML</td>
 			<td class=tdbox><textarea name=SiteBottomString rows=5 cols=60 class=fmtxtra><%If SiteBottomString <> "" Then Response.Write VbCrLf & Server.htmlEncode(SiteBottomString)%></textarea></td>
 		</tr>
 		<tr>
-			<td class=tdbox>´ó¾Ö±í¸ñ<br>Í·²¿ÄÚÈİ<br>Ö§³ÖHTML</td>
+			<td class=tdbox>å¤§å±€è¡¨æ ¼<br>å¤´éƒ¨å†…å®¹<br>æ”¯æŒHTML</td>
 			<td class=tdbox><textarea name=TableHeadString rows=5 cols=60 class=fmtxtra><%If TableHeadString <> "" Then Response.Write VbCrLf & Server.htmlEncode(TableHeadString)%></textarea></td>
 		</tr>
 		<tr>
-			<td class=tdbox>´ó¾Ö±í¸ñ<br>Î²²¿ÄÚÈİ<br>Ö§³ÖHTML</td>
+			<td class=tdbox>å¤§å±€è¡¨æ ¼<br>å°¾éƒ¨å†…å®¹<br>æ”¯æŒHTML</td>
 			<td class=tdbox><textarea name=TableBottomString rows=5 cols=60 class=fmtxtra><%If TableBottomString <> "" Then Response.Write VbCrLf & Server.htmlEncode(TableBottomString)%></textarea></td>
 		</tr>
 		<tr>
-			<td class=tdbox>Ğ¡¾Ö±í¸ñ<br>Í·²¿ÄÚÈİ<br>Ö§³ÖHTML</td>
+			<td class=tdbox>å°å±€è¡¨æ ¼<br>å¤´éƒ¨å†…å®¹<br>æ”¯æŒHTML</td>
 			<td class=tdbox><textarea name=SmallTableHead rows=5 cols=60 class=fmtxtra><%If SmallTableHead <> "" Then Response.Write VbCrLf & Server.htmlEncode(SmallTableHead)%></textarea></td>
 		</tr>
 		<tr>
-			<td class=tdbox>Ğ¡¾Ö±í¸ñ<br>Î²²¿ÄÚÈİ<br>Ö§³ÖHTML</td>
+			<td class=tdbox>å°å±€è¡¨æ ¼<br>å°¾éƒ¨å†…å®¹<br>æ”¯æŒHTML</td>
 			<td class=tdbox><textarea name=SmallTableBottom rows=5 cols=60 class=fmtxtra><%If SmallTableBottom <> "" Then Response.Write VbCrLf & Server.htmlEncode(SmallTableBottom)%></textarea></td>
 		</tr>
 		<tr>
-			<td class=tdbox>Î²²¿ÄÚÈİ<br>±ØĞëÏÔÊ¾</td>
+			<td class=tdbox>å°¾éƒ¨å†…å®¹<br>å¿…é¡»æ˜¾ç¤º</td>
 			<td class=tdbox><table border=0 cellpadding=0 cellspacing=0><tr>
-				<td><input class=fmchkbox type=radio name=ShowBottomSure value=0<%If ShowBottomSure = 0 Then%> checked<%End If%>></td><td>ÓĞÑ¡ÔñÏÔÊ¾</td>
-          		<td><input class=fmchkbox type=radio name=ShowBottomSure value=1<%If ShowBottomSure = 1 Then%> checked<%End If%>></td><td>¿Ï¶¨ÏÔÊ¾</td><td><font color=gray>&nbsp; (ÎªÁËÃÀ¹Û£¬Ä³Ğ©Ò³ Ãæµ×²¿×Ô¶¨ÒåÄÚÈİ²»ÏëÏÔÊ¾£¬ÇëÑ¡Ôñ£¢ÓĞÑ¡Ôñ£¢£¬·ñÔòÑ¡ÔñºóÕß)</font></td></tr></table></td>
+				<td><input class=fmchkbox type=radio name=ShowBottomSure value=0<%If ShowBottomSure = 0 Then%> checked<%End If%>></td><td>æœ‰é€‰æ‹©æ˜¾ç¤º</td>
+          		<td><input class=fmchkbox type=radio name=ShowBottomSure value=1<%If ShowBottomSure = 1 Then%> checked<%End If%>></td><td>è‚¯å®šæ˜¾ç¤º</td><td><font color=gray>&nbsp; (ä¸ºäº†ç¾è§‚ï¼ŒæŸäº›é¡µ é¢åº•éƒ¨è‡ªå®šä¹‰å†…å®¹ä¸æƒ³æ˜¾ç¤ºï¼Œè¯·é€‰æ‹©ï¼‚æœ‰é€‰æ‹©ï¼‚ï¼Œå¦åˆ™é€‰æ‹©åè€…)</font></td></tr></table></td>
 		</tr>
 		<!--
 		<tr>
-			<td class=tdbox>Ê¹ÓÃÄ£°å</td>
-			<td class=tdbox><%DisplayTempletList(TempletID)%> <font color=Gray>Èô²»Ê¹ÓÃJSÄ£°å£¬ÇëÑ¡ÔñµÚÒ»Ïî</font></td>
+			<td class=tdbox>ä½¿ç”¨æ¨¡æ¿</td>
+			<td class=tdbox><%DisplayTempletList(TempletID)%> <font color=Gray>è‹¥ä¸ä½¿ç”¨JSæ¨¡æ¿ï¼Œè¯·é€‰æ‹©ç¬¬ä¸€é¡¹</font></td>
 		</tr>
 		-->
 		</table>
@@ -301,15 +301,15 @@ Sub DisplayTempletList(TempletID)
 	Set Rs = LDExeCute(SQL,0)
 	Dim Num
 	If Not rs.Eof Then
-		Response.Write "<select name=TempletID><script language=javascript>s(""9999"",""HTMLÊä³ö(·ÇJSÄ£°å)"");" & VbCrLf & "s("""
-		Response.Write Rs.GetString(,,""",""",""");" & VbCrLf & "s(""","")
+		Response.Write "<select name=TempletID><script language=javascript>s(""9999"",""HTMLè¾“å‡º(éJSæ¨¡æ¿)"");" & VbCrLf & "s("""
+		Response.Write RsGetString(Rs,""",""",""");" & VbCrLf & "s(""","")
 		%>","","","");
 		</script>
 		</select>
 		<%
 	Else
 		Num = -1
-		Response.Write "ÎŞ¿ÉÓÃÄ£°å"
+		Response.Write "æ— å¯ç”¨æ¨¡æ¿"
 	End If
 	Rs.close
 	Set Rs = Nothing

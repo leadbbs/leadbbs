@@ -1,16 +1,16 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../inc/UserTopic.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../inc/UserTopic.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
-SiteHead(DEF_SiteNameString & " - ÓÃ»§»áÔ±Çø - ÂÛÌ³ÈÕÀú")
+SiteHead(DEF_SiteNameString & " - ç”¨æˆ·ä¼šå‘˜åŒº - è®ºå›æ—¥åŽ†")
 
-UserTopicTopInfo
-DisplayUserNavigate("ÂÛÌ³ÈÕÀú")%>
+UserTopicTopInfo()
+DisplayUserNavigate("è®ºå›æ—¥åŽ†")%>
 <br><br>
 <%Help_Cal
-UserTopicBottomInfo
-sitebottom
+UserTopicBottomInfo()
+sitebottom()
 If GBL_ShowBottomSure = 1 Then Response.Write GBL_SiteBottomString
 
 Sub Help_Cal
@@ -29,25 +29,25 @@ var Today = new Date(<%=year(DEF_Now)%>,<%=month(DEF_Now)-1%>,<%=day(DEF_Now)%>,
 <BODY onload=initialize() onunload=terminate()>
 <SCRIPT language=JavaScript><!--
    if(navigator.appName == "Netscape" || parseInt(navigator.appVersion) < 4)
-   document.write("<h1>ÄãµÄä¯ÀÀÆ÷ÎÞ·¨Ö´ÐÐ´Ë³ÌÐò¡£</h1>´Ë³ÌÐòÐèÔÚ IE4 ÒÔºóµÄ°æ±¾²ÅÄÜÖ´ÐÐ!!")
+   document.write("<h1>ä½ çš„æµè§ˆå™¨æ— æ³•æ‰§è¡Œæ­¤ç¨‹åºã€‚</h1>æ­¤ç¨‹åºéœ€åœ¨ IE4 ä»¥åŽçš„ç‰ˆæœ¬æ‰èƒ½æ‰§è¡Œ!!")
 //--></SCRIPT>
 
 <DIV id=detail style="Z-INDEX: 3; FILTER: shadow(color=#333333,direction=135); WIDTH: 140px; POSITION: absolute; HEIGHT: 120px"></DIV>
 <CENTER>
 <TABLE border=0 CELLPADDING=0 CELLSPACING=0 width=100%>
   <TBODY>
-  <TR><!------------------------------ ÊÀ½çÊ±¼ä ----------------------------------->
+  <TR><!------------------------------ ä¸–ç•Œæ—¶é—´ ----------------------------------->
     <FORM name=WorldClock>
-    <TD vAlign=top align=middle width=220>±¾µØÊ±¼ä<BR><SPAN id=LocalTime 
-      style="FONT-SIZE: 9pt; COLOR: #000000; FONT-FAMILY: Arial">0000Äê0ÔÂ0ÈÕ(¡¡)Îç 
+    <TD vAlign=top align=middle width=220>æœ¬åœ°æ—¶é—´<BR><SPAN id=LocalTime 
+      style="FONT-SIZE: 9pt; COLOR: #000000; FONT-FAMILY: Arial">0000å¹´0æœˆ0æ—¥(ã€€)åˆ 
       00:00:00</SPAN> 
-      <P><SPAN id=City style="WIDTH: 150px;">ÖÐ¹ú</SPAN> 
-      <BR><SPAN id=GlobeTime>0000Äê0ÔÂ0ÈÕ(¡¡)Îç 00:00:00</SPAN><BR>
+      <P><SPAN id=City style="WIDTH: 150px;">ä¸­å›½</SPAN> 
+      <BR><SPAN id=GlobeTime>0000å¹´0æœˆ0æ—¥(ã€€)åˆ 00:00:00</SPAN><BR>
       <TABLE sCELLPADDING=0 CELLSPACING=0 width=100%>
         <TBODY>
         <TR>
           <TD align=middle>
-            <DIV id=map style="FILTER: Light; OVERFLOW: hidden; WIDTH: 190px; HEIGHT: 120px; BACKGROUND-COLOR: mediumblue"><FONT id=world style="FONT-SIZE: 185px; LEFT: 0px; COLOR: green; FONT-FAMILY: Webdings; POSITION: relative; TOP: -26px">ûû</FONT> 
+            <DIV id=map style="FILTER: Light; OVERFLOW: hidden; WIDTH: 190px; HEIGHT: 120px; BACKGROUND-COLOR: mediumblue"><FONT id=world style="FONT-SIZE: 185px; LEFT: 0px; COLOR: green; FONT-FAMILY: Webdings; POSITION: relative; TOP: -26px">îŽ¨</FONT> 
             </DIV></TD></TR></TBODY></TABLE><BR><SELECT Style="WIDTH: 190px; BACKGROUND-COLOR: <%=DEF_BBS_TableHeadColor%>" onchange=chContinent() name=continentMenu></SELECT><BR><SELECT Style="WIDTH: 190px; BACKGROUND-COLOR: <%=DEF_BBS_TableHeadColor%>" onchange=chCountry() name=countryMenu></SELECT></P></TD></FORM>
 		<FORM name=CLD>
     <TD align=middle valign=top><img src=../../images/null.gif width=5 height=4>
@@ -55,28 +55,28 @@ var Today = new Date(<%=year(DEF_Now)%>,<%=month(DEF_Now)-1%>,<%=day(DEF_Now)%>,
       <TABLE border=0 CELLPADDING=1 CELLSPACING=1 width=100% bgcolor=<%=DEF_BBS_DarkColor%> class=TBone>
         <TBODY>
         <TR>
-          <TD bgColor=<%=DEF_BBS_LightDarkColor%> colSpan=7 height=25><FONT color=#ffffff size=2>¹«Ôª<SELECT onchange=changeCld() name=SY style="BACKGROUND-COLOR: <%=DEF_BBS_LightestColor%>" class=TBBG9> 
+          <TD bgColor=<%=DEF_BBS_LightDarkColor%> colSpan=7 height=25><FONT color=#ffffff size=2>å…¬å…ƒ<SELECT onchange=changeCld() name=SY style="BACKGROUND-COLOR: <%=DEF_BBS_LightestColor%>" class=TBBG9> 
               <SCRIPT language=JavaScript><!--
           for(i=1900;i<2101;i++) document.write('<option>'+i)
             //--></SCRIPT>
-            </SELECT>Äê<SELECT onchange=changeCld() 
+            </SELECT>å¹´<SELECT onchange=changeCld() 
             name=SM style="BACKGROUND-COLOR: <%=DEF_BBS_LightestColor%>" class=TBBG9> 
               <SCRIPT language=JavaScript><!--
             for(i=1;i<13;i++) document.write('<option>'+i)
             //--></SCRIPT>
-            </SELECT>ÔÂ</FONT> <FONT id=GZ face=±ê¿¬Ìå color=#ffffff></FONT><BR></TD></TR>
+            </SELECT>æœˆ</FONT> <FONT id=GZ face=æ ‡æ¥·ä½“ color=#ffffff></FONT><BR></TD></TR>
         <TR align=middle bgColor=<%=DEF_BBS_Color%> class=TBthree>
-          <TD width=54>ÈÕ</TD>
-          <TD width=54>Ò»</TD>
-          <TD width=54>¶þ</TD>
-          <TD width=50>Èý</TD>
-          <TD width=54>ËÄ</TD>
-          <TD width=54>Îå</TD>
-          <TD width=54>Áù</TD></TR>
+          <TD width=54>æ—¥</TD>
+          <TD width=54>ä¸€</TD>
+          <TD width=54>äºŒ</TD>
+          <TD width=50>ä¸‰</TD>
+          <TD width=54>å››</TD>
+          <TD width=54>äº”</TD>
+          <TD width=54>å…­</TD></TR>
         <SCRIPT language=JavaScript><!--
             var gNum, color1, color2;
 
-            // ÐÇÆÚÁùÑÕÉ«
+            // æ˜ŸæœŸå…­é¢œè‰²
             switch (conWeekend) {
             case 1:
                color1 = 'black';
@@ -113,12 +113,12 @@ var Today = new Date(<%=year(DEF_Now)%>,<%=month(DEF_Now)-1%>,<%=day(DEF_Now)%>,
         </TBODY></TABLE></TD>
         <td width=20></td>
     <tr><td></td><td></td><td>
-    Äê<BUTTON onclick="pushBtm('YD')" class=fmbtn><B>¡ü</B></BUTTON>
-    <BUTTON onclick="pushBtm('YU')" class=fmbtn><B>¡ý</B></BUTTON> 
-      ÔÂ
-      <BUTTON onclick="pushBtm('MD')" class=fmbtn><B>¡ü</B></BUTTON>
-      <BUTTON onclick="pushBtm('MU')" class=fmbtn><B>¡ý</B></BUTTON> 
-      &nbsp; <BUTTON onclick="pushBtm('')" class=fmbtn>±¾ÔÂ</BUTTON> 
+    å¹´<BUTTON onclick="pushBtm('YD')" class=fmbtn><B>â†‘</B></BUTTON>
+    <BUTTON onclick="pushBtm('YU')" class=fmbtn><B>â†“</B></BUTTON> 
+      æœˆ
+      <BUTTON onclick="pushBtm('MD')" class=fmbtn><B>â†‘</B></BUTTON>
+      <BUTTON onclick="pushBtm('MU')" class=fmbtn><B>â†“</B></BUTTON> 
+      &nbsp; <BUTTON onclick="pushBtm('')" class=fmbtn>æœ¬æœˆ</BUTTON> 
       </TD><td width=20></td><TD></TR></FORM></TBODY></TABLE><FONT color=#ffffff>
 </FONT><BR></CENTER></FONT></FONT></BODY>
 <%

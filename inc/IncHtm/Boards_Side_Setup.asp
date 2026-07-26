@@ -1,10 +1,10 @@
 <%
 Str = Str & "		<div class=""content_side_box"">" & VbCrLf &_
-"			<div class=""title""><b>×îÐÂ¾«»ª</b></div>" & VbCrLf &_
+"			<div class=""title""><b>æœ€æ–°ç²¾åŽ</b></div>" & VbCrLf &_
 "			" & Topic_AnnounceList(0,10,0,"yes","1","0","") & VbCrLf &_
 "		</div>" & VbCrLf
 Str = Str & "		<div class=""content_side_box"">" & VbCrLf &_
-"			<div class=""title""><b>×îÐÂÖ÷Ìâ</b></div>" & VbCrLf &_
+"			<div class=""title""><b>æœ€æ–°ä¸»é¢˜</b></div>" & VbCrLf &_
 "			" & Topic_AnnounceList(0,10,0,"yes","0","0","") & VbCrLf &_
 "		</div>" & VbCrLf
 %>

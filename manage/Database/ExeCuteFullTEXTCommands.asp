@@ -1,21 +1,21 @@
-<!-- #include file=../../inc/BBSSetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSSetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
 If GBL_CHK_Flag=1 Then
 	GBL_CHK_TempStr = ""
-	ExeCuteFullTEXTCommands
+	ExeCuteFullTEXTCommands()
 	Response.Write GBL_CHK_TempStr
 Else
-	Response.Write "<span style=""FONT-FAMILY: ËÎÌå; FONT-SIZE: 12px;""><font color=ff0000 class=redfont><b>²Ù×÷Ê§°Ü!</b></font></span>"
+	Response.Write "<span style=""FONT-FAMILY: å®‹ä½“; FONT-SIZE: 12px;""><font color=ff0000 class=redfont><b>æ“ä½œå¤±è´¥!</b></font></span>"
 End If
-closeDataBase
+closeDataBase()
 
 Function ExeCuteFullTEXTCommands
 
@@ -23,18 +23,19 @@ Function ExeCuteFullTEXTCommands
 	If Request.Form("SureFlag") <> "E72ksiOkw2" Then
 		%>
 			<p><form action=ExeCuteFullTEXTCommands.asp method=post>
-			<b><font color=ff0000 class=redfont>È·¶¨´Ë²Ù×÷Âğ?<br>
+			<b><font color=ff0000 class=redfont>ç¡®å®šæ­¤æ“ä½œå—?<br>
 			<br>
 			<input type=hidden name=SureFlag value="E72ksiOkw2">
 			<input type=hidden name=ExeFlag value="<%=Request("ExeFlag")%>">
 			
-			<input type=submit value=È·¶¨½øĞĞ class=fmbtn>
+			<input type=submit value=ç¡®å®šè¿›è¡Œ class=fmbtn>
 			</form>
 		<%
 	Else
 		Dim Rs,SQL,DBName
 		If DEF_UsedDataBase <> 0 Then
-			GBL_CHK_TempStr = "<span style=""FONT-FAMILY: ËÎÌå; FONT-SIZE: 12px;color:ff0000"">AccessÊı¾İ¿â²»Ö§³ÖÈ«ÎÄË÷Òı·şÎñ!</span>"
+			' the message said "Access"; the real condition is "not MSSQL"
+			GBL_CHK_TempStr = "<span style=""FONT-FAMILY: å®‹ä½“; FONT-SIZE: 12px;color:ff0000"">å…¨æ–‡ç´¢å¼•åŠæ•°æ®åº“æ—¥å¿—ç®¡ç†ä¸º MSSQL ä¸“æœ‰åŠŸèƒ½ï¼Œå½“å‰è®ºå›æ‰€ç”¨çš„æ•°æ®åº“ä¸æ”¯æŒ!</span>"
 			Exit Function
 		End If
 	
@@ -46,19 +47,19 @@ Function ExeCuteFullTEXTCommands
 	
 		Select Case ExeFlag
 			Case 1: CALL LDExeCute("exec sp_fulltext_database N'enable'",1)
-				GBL_CHK_TempStr = "³É¹¦ÎªÊı¾İ¿âÆôÓÃÈ«ÎÄË÷Òı!<br>" & VbCrLf
+				GBL_CHK_TempStr = "æˆåŠŸä¸ºæ•°æ®åº“å¯ç”¨å…¨æ–‡ç´¢å¼•!<br>" & VbCrLf
 			Case 2: CALL LDExeCute("exec sp_fulltext_database N'disable'",1)
-				GBL_CHK_TempStr = "³É¹¦ÎªÊı¾İ¿â½ûÓÃÈ«ÎÄË÷Òı!<br>" & VbCrLf
+				GBL_CHK_TempStr = "æˆåŠŸä¸ºæ•°æ®åº“ç¦ç”¨å…¨æ–‡ç´¢å¼•!<br>" & VbCrLf
 			Case 3: CALL LDExeCute("exec sp_fulltext_table @tabname='LeadBBS_Announce',@action='start_change_tracking'",1)
-				GBL_CHK_TempStr = "³É¹¦Æô¶¯È«ÎÄË÷ÒıÔöÁ¿Ìî³ä(¸ü¸Ä¸ú×Ù)!<br>" & VbCrLf
+				GBL_CHK_TempStr = "æˆåŠŸå¯åŠ¨å…¨æ–‡ç´¢å¼•å¢é‡å¡«å……(æ›´æ”¹è·Ÿè¸ª)!<br>" & VbCrLf
 			Case 4: CALL LDExeCute("exec sp_fulltext_table @tabname='LeadBBS_Announce',@action='stop_change_tracking'",1)
-				GBL_CHK_TempStr = "³É¹¦Í£Ö¹È«ÎÄË÷ÒıÔöÁ¿Ìî³ä(¸ü¸Ä¸ú×Ù)!<br>" & VbCrLf
+				GBL_CHK_TempStr = "æˆåŠŸåœæ­¢å…¨æ–‡ç´¢å¼•å¢é‡å¡«å……(æ›´æ”¹è·Ÿè¸ª)!<br>" & VbCrLf
 			Case 5: CALL LDExeCute("exec sp_fulltext_table @tabname='LeadBBS_Announce',@action='Start_background_updateindex'",1)
-				GBL_CHK_TempStr = "³É¹¦Æô¶¯¸üĞÂºóÌ¨ÖĞµÄË÷Òı!<br>" & VbCrLf
+				GBL_CHK_TempStr = "æˆåŠŸå¯åŠ¨æ›´æ–°åå°ä¸­çš„ç´¢å¼•!<br>" & VbCrLf
 			Case 6: CALL LDExeCute("exec sp_fulltext_table @tabname='LeadBBS_Announce',@action='Stop_background_updateindex'",1)
-				GBL_CHK_TempStr = "³É¹¦Í£Ö¹¸üĞÂºóÌ¨ÖĞµÄË÷Òı!<br>" & VbCrLf
+				GBL_CHK_TempStr = "æˆåŠŸåœæ­¢æ›´æ–°åå°ä¸­çš„ç´¢å¼•!<br>" & VbCrLf
 			Case 7: CALL LDExeCute("exec sp_fulltext_table @tabname='LeadBBS_Announce',@action='update_index'",1)
-				GBL_CHK_TempStr = "³É¹¦¸üĞÂË÷Òı!<br>" & VbCrLf
+				GBL_CHK_TempStr = "æˆåŠŸæ›´æ–°ç´¢å¼•!<br>" & VbCrLf
 			Case 8: 
 					SQL = "Select DB_NAME(DB_ID())"
 					Set Rs = LDExeCute(SQL,0)
@@ -70,7 +71,7 @@ Function ExeCuteFullTEXTCommands
 					Rs.Close
 					Set Rs = Nothing
 					CALL LDExeCute("backup log [" & Replace(DBName,"'","''") & "] with no_log",1)
-					GBL_CHK_TempStr = "³É¹¦Çå³ıÏµÍ³ÈÕÖ¾!<br>" & VbCrLf
+					GBL_CHK_TempStr = "æˆåŠŸæ¸…é™¤ç³»ç»Ÿæ—¥å¿—!<br>" & VbCrLf
 			Case 9: 
 					SQL = "Select DB_NAME(DB_ID())"
 					Set Rs = LDExeCute(SQL,0)
@@ -82,7 +83,7 @@ Function ExeCuteFullTEXTCommands
 					Rs.Close
 					Set Rs = Nothing
 					CALL LDExeCute("DBCC SHRINKFILE ([" & Replace(DBName,"'","''") & "_log])",1)
-					GBL_CHK_TempStr = "³É¹¦ÊÕËõÈÕÖ¾ÎÄ¼ş" & Replace(DBName,"'","''") & "_log!<br>" & VbCrLf
+					GBL_CHK_TempStr = "æˆåŠŸæ”¶ç¼©æ—¥å¿—æ–‡ä»¶" & Replace(DBName,"'","''") & "_log!<br>" & VbCrLf
 			Case 10:
 					SQL = "Select DB_NAME(DB_ID())"
 					Set Rs = LDExeCute(SQL,0)
@@ -94,12 +95,12 @@ Function ExeCuteFullTEXTCommands
 					Rs.Close
 					Set Rs = Nothing
 					CALL LDExeCute("DBCC SHRINKFILE ([" & Replace(DBName,"'","''") & "_Data])",1)
-					GBL_CHK_TempStr = "³É¹¦ÊÕËõÊı¾İ¿âÎÄ¼ş" & Replace(DBName,"'","''") & "_Data!<br>" & VbCrLf
+					GBL_CHK_TempStr = "æˆåŠŸæ”¶ç¼©æ•°æ®åº“æ–‡ä»¶" & Replace(DBName,"'","''") & "_Data!<br>" & VbCrLf
 		End Select
 		if err.number<>0 Then
-			GBL_CHK_TempStr = "<span style=""FONT-FAMILY: ËÎÌå; FONT-SIZE: 12px;""><font color=ff0000 class=redfont><b>Êı¾İ¿â²Ù×÷Ê§°Ü£º</b></font>"&err.description & "</span>"
+			GBL_CHK_TempStr = "<span style=""FONT-FAMILY: å®‹ä½“; FONT-SIZE: 12px;""><font color=ff0000 class=redfont><b>æ•°æ®åº“æ“ä½œå¤±è´¥ï¼š</b></font>"&err.description & "</span>"
 		Else
-			GBL_CHK_TempStr = "<span style=""FONT-FAMILY: ËÎÌå; FONT-SIZE: 12px;""><font color=008800 class=greenfont><b>" & GBL_CHK_TempStr & "</b></font></span>" & VbCrLf
+			GBL_CHK_TempStr = "<span style=""FONT-FAMILY: å®‹ä½“; FONT-SIZE: 12px;""><font color=008800 class=greenfont><b>" & GBL_CHK_TempStr & "</b></font></span>" & VbCrLf
 		End If
 	End If
 

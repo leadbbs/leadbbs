@@ -1,6 +1,6 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../../User/inc/UserTopic.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../../User/inc/UserTopic.asp"-->
 <%
 DEF_BBS_homeUrl="../../"
 
@@ -10,20 +10,20 @@ Private con2,u_name
 
 Public Sub Main
 
-	InitDatabase
-	OpenDatabase_2
+	Call InitDatabase()
+	OpenDatabase_2()
 	u_name = Request.form("userid")
 	if u_name <> "" Then
-		UpdateData
-		CloseDatabase
-		CloseDatabase_2
+		UpdateData()
+		Call CloseDatabase()
+		CloseDatabase_2()
 		Response.Write "ok"
 		Exit Sub
 	End If
 	Dim appflag
 	appflag = request("appflag")
 	if appflag <> "1" then
-		BBS_SiteHead DEF_SiteNameString & " - ÍÚ½ğ×Ó",0,"<span class=navigate_string_step>ÍÚ½ğ×Ó</span>"
+		Call BBS_SiteHead(DEF_SiteNameString & " - æŒ–é‡‘å­",0,"<span class=navigate_string_step>æŒ–é‡‘å­</span>")
 	else%>
 		<html><head>
 		<style>
@@ -45,19 +45,19 @@ Public Sub Main
 	<%
 	end if
 	
-	if appflag <> "1" then UserTopicTopInfo("plug")
+	if appflag <> "1" then Call UserTopicTopInfo("plug")	'AxonASP #9: bare module-Sub call from a class body raises 800A01B6
 	
 	If GBL_CHK_User = "" then
-		Response.write "<div class=alert>ÄúÃ»ÓĞÊ¹ÓÃ´Ë¹¦ÄÜÈ¨ÏŞ£¬ÇëÏÈµÇÂ½»òÕß×¢²áÎªÂÛÌ³»áÔ±¡£</div>"
+		Response.write "<div class=alert>æ‚¨æ²¡æœ‰ä½¿ç”¨æ­¤åŠŸèƒ½æƒé™ï¼Œè¯·å…ˆç™»é™†æˆ–è€…æ³¨å†Œä¸ºè®ºå›ä¼šå‘˜ã€‚</div>"
 	Else
-		Main_Gold
+		Main_Gold()
 	End If
 	
-	CloseDatabase
-	CloseDatabase_2
-	if appflag <> "1" then UserTopicBottomInfo
+	Call CloseDatabase()
+	CloseDatabase_2()
+	if appflag <> "1" then Call UserTopicBottomInfo()	'AxonASP #9
 	if appflag <> "1" then
-		SiteBottom
+		Call SiteBottom()
 	else%>
 		</body></html>
 	<%end if
@@ -66,16 +66,17 @@ End Sub
 
 Private Sub OpenDatabase_2
 
-	'on error resume next
-	Set Con2 = Server.CreateObject("ADODB.Connection")
-	Con2.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" & Server.MapPath("normal.mdb")
-	Con2.Open
+	' AxonASP #4: Microsoft.Jet.OLEDB.4.0 is Windows-only COM and is rejected outright, so the
+	' plug-in's private normal.mdb cannot be opened. Its single table now lives in the same
+	' MariaDB database as the rest of the forum; reuse the connection InitDatabase() opened.
+	Set Con2 = Con
 
 End Sub
 
 Private Sub CloseDatabase_2
 
-	Con2.Close
+	' Con2 is the shared forum connection now, so do not close it here -- Call CloseDatabase()
+	' already did. Just drop the reference.
 	Set Con2 = Nothing
 
 End Sub
@@ -123,9 +124,9 @@ Private Sub UpdateData
 	createtime = GetTimeValue(DEF_Now)
 	recordtime = createtime
 	If exist = 0 Then
-		Con2.ExeCute("insert into Plug_Flash_Gold(username,createtime,recordtime,points) values('" & Replace(u_name,"'","''") & "'," & createtime & "," & recordtime & "," & score & ")")
+		Con2.ExeCute("insert into Plug_Flash_Gold(username,createtime,recordtime,points) values('" & Replace(u_name,"'","''") & "'," & LngStr(createtime) & "," & LngStr(recordtime) & "," & score & ")")
 	ElseIf score > points Then
-		con2.ExeCute("Update Plug_Flash_Gold Set points=" & score & ",recordtime=" & recordtime & " where username='" & Replace(u_name,"'","''") & "'")
+		con2.ExeCute("Update Plug_Flash_Gold Set points=" & score & ",recordtime=" & LngStr(recordtime) & " where username='" & Replace(u_name,"'","''") & "'")
 	End If
 	
 
@@ -134,11 +135,19 @@ End Sub
 Private Sub Main_Gold
 
 %>
-	<div class=title>ÍÚ½ğ×Ó</div>
+	<div class=title>æŒ–é‡‘å­</div>
 	<div class=value2>
-	<b>ÄúµÄ×´Ì¬</b><%ViewMyInfo%>
+	<b>æ‚¨çš„çŠ¶æ€</b><%ViewMyInfo%>
 	</div>
 	<div class=value2>
+	<%' Flash Player is gone (EOL 2021). Ruffle (https://ruffle.rs) is a Rust/WASM
+	' reimplementation, served self-hosted from inc/ruffle/ -- no CDN, so it works behind
+	' the firewall. Its polyfill replaces the <object>/<embed> below in place and keeps the
+	' a.swf?username=... query string as movie parameters, exactly as Flash did, so the
+	' markup itself is unchanged. a.swf is AVM1 (ActionScript 1/2), which Ruffle supports
+	' well.
+	%>
+	<script src="<%=DEF_BBS_homeUrl%>inc/ruffle/ruffle.js"></script>
 	<object codeBase=http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=4,0,2,0 classid=clsid:D27CDB6E-AE6D-11cf-96B8-444553540000 width=540 height=393><param name=movie value="a.swf?username=<%=urlencode(GBL_CHK_User)%>"><param name=quality value=high>
 	<embed height="393" width="540" name="plugin" src="a.swf?username=<%=urlencode(GBL_CHK_User)%>" type="application/x-shockwave-flash"/>
 	</object>
@@ -149,8 +158,8 @@ Private Sub Main_Gold
 	<%ViewData%>
 	<div class="clear"></div>
 	<hr class="splitline" />
-	<div class=title>²Ù×÷ËµÃ÷:</div>
-	<div class=value2><¡ı·½Ïò¼üÏÂ: ÈÓ¹³£¬¡ü·½Ïò¼üÉÏ: ÈÓÕ¨Ò©¡£<br /><span class=bluefont>»ñµÃ¸ß·Öºó£¬µã¡°Ìá½»·ÖÊı¡±°´Å¥²ÅÄÜ±£´æ·ÖÊı</span>.
+	<div class=title>æ“ä½œè¯´æ˜:</div>
+	<div class=value2><â†“æ–¹å‘é”®ä¸‹: æ‰”é’©ï¼Œâ†‘æ–¹å‘é”®ä¸Š: æ‰”ç‚¸è¯ã€‚<br /><span class=bluefont>è·å¾—é«˜åˆ†åï¼Œç‚¹â€œæäº¤åˆ†æ•°â€æŒ‰é’®æ‰èƒ½ä¿å­˜åˆ†æ•°</span>.
 	</div>
 <%
 
@@ -161,9 +170,9 @@ Private Sub ViewMyInfo
 	Dim Rs,createtime,recordtime,points,id
 	Set Rs = Con2.ExeCute("Select ID,username,createtime,recordtime,points from Plug_Flash_Gold where username='" & Replace(GBL_CHK_User,"'","''") & "'")
 	If Rs.Eof Then
-		createtime = "ÎŞ"
-		recordtime = "ÎŞ"
-		points = "ÎŞ"
+		createtime = "æ— "
+		recordtime = "æ— "
+		points = "æ— "
 		id = ""
 	Else
 		id = Rs(0)
@@ -175,11 +184,11 @@ Private Sub ViewMyInfo
 	Set Rs = Nothing
 	If id = "" Then
 	%>
-	<span color=gray>Äú´ÓÎ´²ÎÓëÍÚ½ğ×Ó.</span>
+	<span color=gray>æ‚¨ä»æœªå‚ä¸æŒ–é‡‘å­.</span>
 	<%
 	Else
 	%>
-	×î¸ß·Ö: <%=points%> / ´´ÔìÊ±¼ä: <%=recordtime%> / ²ÎÓëÊ±¼ä: <%=createtime%>
+	æœ€é«˜åˆ†: <%=points%> / åˆ›é€ æ—¶é—´: <%=recordtime%> / å‚ä¸æ—¶é—´: <%=createtime%>
 	<%
 	End If
 
@@ -195,13 +204,13 @@ Private Sub ViewMyInfo
 	If cstr(id & "") = "" Then
 	%>
 	<br/>
-	<span class=grayfont>Ä¿Ç°»¹Ã»ÓĞÈË²ÎÓëÍÚ½ğ×Ó.</font>
+	<span class=grayfont>ç›®å‰è¿˜æ²¡æœ‰äººå‚ä¸æŒ–é‡‘å­.</font>
 	<%
 		Exit Sub
 	Else
 		%>
 		<br />
-		¹²ÓĞ <b><%=id%></b> ÈË²ÎÓëÁËÍÚ½ğ×Ó.
+		å…±æœ‰ <b><%=id%></b> äººå‚ä¸äº†æŒ–é‡‘å­.
 		<%
 	End If
 
@@ -210,7 +219,7 @@ End Sub
 Private Sub ViewData
 
 	Dim GetData,n,count,Rs
-	Set Rs = Con2.ExeCute("Select top 10 username,points from Plug_Flash_Gold order by points desc")
+	Set Rs = Con2.ExeCute("Select username,points from Plug_Flash_Gold order by points desc LIMIT 10")
 	If Rs.Eof Then
 		Rs.Close
 		Set Rs = Nothing
@@ -225,12 +234,12 @@ Private Sub ViewData
 	%>
 	<div style="position: relative;width:100%;">
 	<div style="top:0px;width:40%;float:left;">
-		<div class=title>·ÖÊıÅÅÃû</div>
+		<div class=title>åˆ†æ•°æ’å</div>
 		<table class=table_in style="margin-right:45px;">
 		<tr class=tbinhead>
-		<td><div class=value>ÅÅÃû</div></td>
-		<td><div class=value>ÓÃ»§</div></td>
-		<td><div class=value>·ÖÊı</div></td>
+		<td><div class=value>æ’å</div></td>
+		<td><div class=value>ç”¨æˆ·</div></td>
+		<td><div class=value>åˆ†æ•°</div></td>
 		</tr>
 		<%
 		For n = 0 to count
@@ -247,7 +256,7 @@ Private Sub ViewData
 	</div>
 	<div style="top:0px;width:60%;float:right;">
 	<%
-	Set Rs = Con2.ExeCute("Select top 10 username,points,recordtime from Plug_Flash_Gold order by recordtime desc")
+	Set Rs = Con2.ExeCute("Select username,points,recordtime from Plug_Flash_Gold order by recordtime desc LIMIT 10")
 	If Rs.Eof Then
 		Rs.Close
 		Set Rs = Nothing
@@ -261,16 +270,16 @@ Private Sub ViewData
 	count = Ubound(GetData,2)
 	
 	%>
-		<div class=title>¶¯Ì¬£º</div>
+		<div class=title>åŠ¨æ€ï¼š</div>
 		<table class=table_in style="width:100%;">
 		<tr class=tbinhead>
-		<td><div class=value>×îĞÂ¸öÈË¼ÇÂ¼</div></td></tr>
+		<td><div class=value>æœ€æ–°ä¸ªäººè®°å½•</div></td></tr>
 		<tr>
 		<td class=tdbox>
 		<ul>
 		<%
 		For n = 0 to count
-			%><li><a href="<%=DEF_BBS_homeUrl%>User/<%=RW_User(0,"",GetData(0,n),"")%>" target=_blank><b><%=htmlencode(GetData(0,n))%></b></a> ´´ÔìÁË×Ô¼ºµÄ¼ÇÂ¼<%=GetData(1,n)%>·Ö, (<span class=grayfont><em><%=ConvertTimeString(RestoreTime(GetData(2,n)))%></em></span>)</li>
+			%><li><a href="<%=DEF_BBS_homeUrl%>User/<%=RW_User(0,"",GetData(0,n),"")%>" target=_blank><b><%=htmlencode(GetData(0,n))%></b></a> åˆ›é€ äº†è‡ªå·±çš„è®°å½•<%=GetData(1,n)%>åˆ†, (<span class=grayfont><em><%=ConvertTimeString(RestoreTime(GetData(2,n)))%></em></span>)</li>
 			<%
 		Next%>
 		</ul>

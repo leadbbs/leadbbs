@@ -1,11 +1,11 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-checkSupervisorPass
+checkSupervisorPass()
 
 Dim Action
 Action = Left(Request("Action"),14)
@@ -20,25 +20,25 @@ LMT_GoodNum = 0
 
 Dim LMT_ID,Old_Board
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
 
-frame_TopInfo
-DisplayUserNavigate("ÂÛÌ³°æÃæ×¨Çø¹ÜÀí")%>
-<p><a href=ForumBoardAssort.asp>¹ÜÀí°æÃæ×¨Çø</a>
-<a href=ForumBoardAssort.asp?action=Join>Ìí¼Ó°æÃæ×¨Çø</a>
+frame_TopInfo()
+DisplayUserNavigate("è®ºå›ç‰ˆé¢ä¸“åŒºç®¡ç†")%>
+<p><a href=ForumBoardAssort.asp>ç®¡ç†ç‰ˆé¢ä¸“åŒº</a>
+<a href=ForumBoardAssort.asp?action=Join>æ·»åŠ ç‰ˆé¢ä¸“åŒº</a>
 </p>
 <%If GBL_CHK_Flag=1 Then
 	Select Case Action:
-		Case "Join": Join
-		Case "Modify": Join
-		Case "Delete": Delete
-		Case "Manage": Manage
+		Case "Join": Join()
+		Case "Modify": Join()
+		Case "Delete": Delete()
+		Case "Manage": Manage()
 	End Select
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Function Join
@@ -48,34 +48,34 @@ Function Join
 		If isNumeric(LMT_ID) = 0 Then LMT_ID = 0
 		LMT_ID = Fix(cCur(LMT_ID))
 		If LMT_ID = 0 or CheckParentAssortIDExist(LMT_ID) = 0 Then
-			Response.Write "<div class=alert>±à¼­µÄ×¨Çø²»´æÔÚ!</div>" & VbCrLf
+			Response.Write "<div class=alert>ç¼–è¾‘çš„ä¸“åŒºä¸å­˜åœ¨!</div>" & VbCrLf
 			Exit Function
 		End If
 	End If
 	%>
 	<b><%
 	If Action = "Modify" Then
-		Response.Write "±à¼­"
+		Response.Write "ç¼–è¾‘"
 	Else
-		Response.Write "Ìí¼Ó"
-	End If%>°æÃæ×¨Çø</b>
+		Response.Write "æ·»åŠ "
+	End If%>ç‰ˆé¢ä¸“åŒº</b>
 	<%
 		GBL_CHK_TempStr = ""
 		If Request.Form("submitflag")="LKOkxk2" Then
-			If CheckFormData=0 Then
-				Response.Write "<div class=alert>´íÎóĞÅÏ¢£º" & GBL_CHK_TempStr & "</div>" & VbCrLf
-				DisplayJoinForm
+			If CheckFormData()=0 Then
+				Response.Write "<div class=alert>é”™è¯¯ä¿¡æ¯ï¼š" & GBL_CHK_TempStr & "</div>" & VbCrLf
+				DisplayJoinForm()
 	        		Else
-				If UpdateAssort = 0 Then
-					Response.Write "<div class=alert>²åÈë³ö´í£º" & GBL_CHK_TempStr & "</div>" & VbCrLf
-					DisplayJoinForm
+				If UpdateAssort() = 0 Then
+					Response.Write "<div class=alert>æ’å…¥å‡ºé”™ï¼š" & GBL_CHK_TempStr & "</div>" & VbCrLf
+					DisplayJoinForm()
 				Else
 					UpdateCacheData("data_goodassort.asp")
-					Response.Write "<div class=alertdone>³É¹¦²Ù×÷!</div>" & VbCrLf
+					Response.Write "<div class=alertdone>æˆåŠŸæ“ä½œ!</div>" & VbCrLf
 				End If
 			End If
 		Else
-			DisplayJoinForm
+			DisplayJoinForm()
 		End If
 
 End Function
@@ -83,7 +83,7 @@ End Function
 Function DisplayJoinForm
 
 	If Action = "Modify" Then
-		DisplayModifyForm
+		DisplayModifyForm()
 		Exit Function
 	End If%>
 	<form action=ForumBoardAssort.asp method=post name=form1 id=form1>
@@ -92,15 +92,15 @@ Function DisplayJoinForm
 		<td class=tdbox width=120>
 			<input name=action type=hidden value="Join">
 			<input name=submitflag type=hidden value="LKOkxk2">
-			ÅÅÁĞĞòºÅ£º</td>
+			æ’åˆ—åºå·ï¼š</td>
 		<td class=tdbox align=left><input name=Form_AssortID size=4 maxlength=4 value="<%=htmlencode(LMT_OrderID)%>" class=fminpt>
-			ÏÔÊ¾ÔÚ°æÃæ·ÖÀàÖĞµÄÇ°ºóË³Ğò£¬Êı×ÖÔ½Ğ¡Ô½¿¿Ç°</td>
+			æ˜¾ç¤ºåœ¨ç‰ˆé¢åˆ†ç±»ä¸­çš„å‰åé¡ºåºï¼Œæ•°å­—è¶Šå°è¶Šé å‰</td>
 	</tr>
 	<tr>
 		<td class=tdbox width=80>
-			ËùÊô°æÃæ:</td>
+			æ‰€å±ç‰ˆé¢:</td>
 		<td class=tdbox>
-			<!-- #include file=../../inc/incHTM/BoardForMoveList.asp -->
+			<!--#include file="../../inc/incHTM/BoardForMoveList.asp"-->
 		<script>
 			var provincebox = document.form1.BoardID2.options,i;
 			for(i = 0; i < provincebox.length; i++)
@@ -108,19 +108,19 @@ Function DisplayJoinForm
 				if(provincebox.options[i].value=="<%=LMT_BoardID%>")
 				{provincebox.selectedIndex = i;break;}
 			}
-		</script>²»Ñ¡Ôñ±íÊ¾ÕûÌåÂÛÌ³µÄ×¨Ìâ
+		</script>ä¸é€‰æ‹©è¡¨ç¤ºæ•´ä½“è®ºå›çš„ä¸“é¢˜
 		</td>
 	</tr>
 	<tr>
 		<td class=tdbox width=80>
-			×¨ÇøÃû³Æ£º</td>
+			ä¸“åŒºåç§°ï¼š</td>
 		<td class=tdbox align=left><input name=LMT_AssortName size=40 maxlength=255 value="<%=htmlencode(LMT_AssortName)%>" class=fminpt>
-			<br>ÔÊĞíÊ¹ÓÃHTML£¬×î³¤255×Ö</td>
+			<br>å…è®¸ä½¿ç”¨HTMLï¼Œæœ€é•¿255å­—</td>
 	</tr>
 	<tr>
 		<td class=tdbox colspan=2>
 			<input name=LMT_GoodNum type=hidden value="0">
-			<input type=submit value="Ìá½»" class=fmbtn> <input type=reset value="È¡Ïû" class=fmbtn>
+			<input type=submit value="æäº¤" class=fmbtn> <input type=reset value="å–æ¶ˆ" class=fmbtn>
 		</td>
 	</tr>
 	</table></form>
@@ -137,15 +137,15 @@ Function DisplayModifyForm
 			<input name=action type=hidden value="Modify">
 			<input name=submitflag type=hidden value="LKOkxk2">
 			<input name=ID type=hidden value="<%=LMT_ID%>">
-			ÅÅÁĞĞòºÅ£º</td>
+			æ’åˆ—åºå·ï¼š</td>
 		<td class=tdbox align=left><input name=LMT_OrderID size=4 maxlength=4 value="<%=htmlencode(LMT_OrderID)%>" class=fminpt>
-			ÏÔÊ¾ÔÚ°æÃæ·ÖÀàÖĞµÄÇ°ºóË³Ğò£¬Êı×ÖÔ½Ğ¡Ô½¿¿Ç°</td>
+			æ˜¾ç¤ºåœ¨ç‰ˆé¢åˆ†ç±»ä¸­çš„å‰åé¡ºåºï¼Œæ•°å­—è¶Šå°è¶Šé å‰</td>
 	</tr>	
 	<tr>
 		<td class=tdbox width=80>
-			ËùÊô°æÃæ:</td>
+			æ‰€å±ç‰ˆé¢:</td>
 		<td class=tdbox>
-			<!-- #include file=../../inc/incHTM/BoardForMoveList.asp -->
+			<!--#include file="../../inc/incHTM/BoardForMoveList.asp"-->
 		<script>
 			var provincebox = document.form1.BoardID2.options,i;
 			for(i = 0; i < provincebox.length; i++)
@@ -153,23 +153,23 @@ Function DisplayModifyForm
 				if(provincebox.options[i].value=="<%=LMT_BoardID%>")
 				{provincebox.selectedIndex = i;break;}
 			}
-		</script>²»Ñ¡Ôñ±íÊ¾ÕûÌåÂÛÌ³µÄ×¨Ìâ
+		</script>ä¸é€‰æ‹©è¡¨ç¤ºæ•´ä½“è®ºå›çš„ä¸“é¢˜
 		</td>
 	</tr>
 	<tr>
 		<td class=tdbox width=80>
-			×¨ÇøÃû³Æ£º</td>
+			ä¸“åŒºåç§°ï¼š</td>
 		<td class=tdbox align=left><input name=LMT_AssortName size=40 maxlength=255 value="<%=htmlencode(LMT_AssortName)%>" class=fminpt>
-			<br>ÔÊĞíÊ¹ÓÃHTML£¬×î³¤255×Ö</td>
+			<br>å…è®¸ä½¿ç”¨HTMLï¼Œæœ€é•¿255å­—</td>
 	</tr>
 	<tr>
 		<td class=tdbox width=80>
-			ÖØĞÂÍ³¼Æ£º</td>
-		<td class=tdbox align=left><input name=LMT_GoodNum type=checkbox value="yes" class=fmchkbox checked>ÖØĞÂÍ³¼Æ´Ë×¨ÇøËùÓµÓĞµÄÌû×ÓÊıÁ¿</td>
+			é‡æ–°ç»Ÿè®¡ï¼š</td>
+		<td class=tdbox align=left><input name=LMT_GoodNum type=checkbox value="yes" class=fmchkbox checked>é‡æ–°ç»Ÿè®¡æ­¤ä¸“åŒºæ‰€æ‹¥æœ‰çš„å¸–å­æ•°é‡</td>
 	</tr>
 	<tr>
 		<td class=tdbox colspan=2>
-			<input type=submit value="Ìá½»" class=fmbtn> <input type=reset value="È¡Ïû" class=fmbtn>
+			<input type=submit value="æäº¤" class=fmbtn> <input type=reset value="å–æ¶ˆ" class=fmbtn>
 		</td>
 	</tr>
 	</table></form>
@@ -190,7 +190,7 @@ Function CheckFormData
 
 	If isNumeric(LMT_BoardID) = 0 or LMT_BoardID = "" Then
 		LMT_BoardID = 0
-		'GBL_CHK_TempStr = "ÇëÑ¡ÔñÕıÈ·µÄËùÊô°æÃæ¡£<br>" & VbCrLf
+		'GBL_CHK_TempStr = "è¯·é€‰æ‹©æ­£ç¡®çš„æ‰€å±ç‰ˆé¢ã€‚<br>" & VbCrLf
 		'CheckFormData = 0
 		'Exit Function
 	End If
@@ -203,19 +203,19 @@ Function CheckFormData
 	End If
 
 	If isArray(Temp) = False Then
-		'GBL_CHK_TempStr = "ËùÊô°æÃæ²»´æÔÚ£¬ÇëÈ·¶¨ÊÇ·ñÒÑ¾­ÕıÈ·Ñ¡Ôñ!<br>" & VbCrLf
+		'GBL_CHK_TempStr = "æ‰€å±ç‰ˆé¢ä¸å­˜åœ¨ï¼Œè¯·ç¡®å®šæ˜¯å¦å·²ç»æ­£ç¡®é€‰æ‹©!<br>" & VbCrLf
 		'CheckFormData = 0
 		LMT_BoardID = 0
 	End If
 
 	If Len(LMT_AssortName) > 255 or LMT_AssortName = "" Then
-		GBL_CHK_TempStr = "±ØĞëÌîĞ´×¨ÇøÃû×Ö²¢ÇÒ²»ÄÜ³¤ÓÚ255×Ö¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = "å¿…é¡»å¡«å†™ä¸“åŒºåå­—å¹¶ä¸”ä¸èƒ½é•¿äº255å­—ã€‚<br>" & VbCrLf
 		CheckFormData = 0
 		Exit Function
 	End If
 
 	If inStr(LCase(LMT_AssortName),"'") > 0 or inStr(LCase(LMT_AssortName),"<script") > 0 or inStr(LCase(LMT_AssortName),"<\script") > 0 or inStr(LCase(LMT_AssortName),"</script") > 0 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ×¨ÇøÃû×Ö²»ÔÊĞí²åÈëµ¥ÒıºÅ»òjsµÈÆäËü±àÂë<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "Error: ä¸“åŒºåå­—ä¸å…è®¸æ’å…¥å•å¼•å·æˆ–jsç­‰å…¶å®ƒç¼–ç <br>" & VbCrLf
 		CheckFormData = 0
 		Exit Function
 	End If		
@@ -262,7 +262,7 @@ Function UpdateAssort
 
 End Function
 
-Rem ¼ì²â×¨Çø±àºÅIDÊÇ·ñ´æÔÚ
+Rem æ£€æµ‹ä¸“åŒºç¼–å·IDæ˜¯å¦å­˜åœ¨
 Function CheckParentAssortIDExist(ID)
 
 	Dim Rs
@@ -297,37 +297,37 @@ Function Manage
 		if(oldBoardID != BoardID)
 		{
 			oldBoardID = BoardID;
-			if(BoardID==0)BoardName="Ö÷×¨ÌâÇø";
-			document.write("<tr><td class=tdbox colspan=6><b>°æÃæ£º<a href=<%=DEF_BBS_HomeUrl%>b/b.asp?B=" + BoardID + ">" + BoardName + "</a></td></tr>");
+			if(BoardID==0)BoardName="ä¸»ä¸“é¢˜åŒº";
+			document.write("<tr><td class=tdbox colspan=6><b>ç‰ˆé¢ï¼š<a href=<%=DEF_BBS_HomeUrl%>b/b.asp?B=" + BoardID + ">" + BoardName + "</a></td></tr>");
 		}
 		lastID=ID;
 		document.write("<tr class=TBBG9><td class=tdbox>" + ID + "</td>");
 		document.write("<td class=tdbox><a href=ForumBoardAssort.asp?action=Modify&ID=" + ID + ">" + AssortName + "</a></td>");
 		document.write("<td class=tdbox>" + GoodNum + "</td><td class=tdbox><a href=<%=DEF_BBS_HomeUrl%>b/b.asp?B=" + BoardID + ">" + BoardName + "</a></td>");
 		document.write("<td class=tdbox>" + OrderID + "</td>");
-		document.write("<td class=tdbox><a href=ForumBoardAssort.asp?action=Delete&ID=" + ID + ">É¾³ı</a></td></tr>");
+		document.write("<td class=tdbox><a href=ForumBoardAssort.asp?action=Delete&ID=" + ID + ">åˆ é™¤</a></td></tr>");
 	}
 	</script>
 	<table border=0 cellpadding=0 cellspacing=0 width="100%" class=frame_table>
 			<tr class=frame_tbhead>
-				<td width=46><div class=value>±àºÅ</td>
-				<td><div class=value>×¨ÇøÃû³Æ(ĞŞ¸Ä)</div></td>
-				<td><div class=value>Ìû×ÓÁ¿</div></td>
-				<td><div class=value>ËùÊô°æÃæ</div></td>
-				<td><div class=value>Ë³Ğò</div></td>
-				<td><div class=value>É¾³ı</div></td>
+				<td width=46><div class=value>ç¼–å·</td>
+				<td><div class=value>ä¸“åŒºåç§°(ä¿®æ”¹)</div></td>
+				<td><div class=value>å¸–å­é‡</div></td>
+				<td><div class=value>æ‰€å±ç‰ˆé¢</div></td>
+				<td><div class=value>é¡ºåº</div></td>
+				<td><div class=value>åˆ é™¤</div></td>
 			</tr>
 				<%
 	Dim Rs,SQL
-	SQL = "select T1.ID,T1.OrderID,T1.BoardID,T1.AssortName,T1.GoodNum,T2.BoardName,T1.OrderID from LeadBBS_GoodAssort as T1 left join LeadBBS_Boards as T2 on T1.BoardID=T2.BoardID Order by T1.BoardID,T1.OrderID"
+	SQL = "select T1.ID,T1.OrderID,T1.BoardID,T1.AssortName,T1.GoodNum,T2.BoardName,T1.OrderID as orderid_dup2 from LeadBBS_GoodAssort as T1 left join LeadBBS_Boards as T2 on T1.BoardID=T2.BoardID Order by T1.BoardID,T1.OrderID"
 
-	OpenDatabase
+	OpenDatabase()
 	Set Rs = LDExeCute(SQL,0)
 	Dim Num
 	Dim GetData
 	If Not rs.Eof Then
 		Response.Write "<script language=javascript>" & VbCrLf & "s('"
-		Response.Write Rs.GetString(,,"','","');" & VbCrLf & "s('","")
+		Response.Write RsGetString(Rs,"','","');" & VbCrLf & "s('","")
 		%>','','','');
 		</script>
 		<%
@@ -350,21 +350,21 @@ Function Delete
 	ID = Fix(cCur(ID))
 	If Request.Form("DeleteSuer")="E72ksiOkw2" Then
 		If DeleteTopicAssort(ID) > 0 Then
-			Response.Write "<p><font color=008800 class=greenfont><b>ÒÑ¾­³É¹¦É¾³ı±àºÅÎª" & ID & "µÄ°æÃæ×¨Çø£¡</b></font></p>"
+			Response.Write "<p><font color=008800 class=greenfont><b>å·²ç»æˆåŠŸåˆ é™¤ç¼–å·ä¸º" & ID & "çš„ç‰ˆé¢ä¸“åŒºï¼</b></font></p>"
 		Else
 			UpdateCacheData("data_goodassort.asp")
 			Response.Write "<p><font color=ff0000 class=redfont><b>" & GBL_CHK_TempStr & "</b></font></p>"
 		End If
 	Else
 		%><p><form action=ForumBoardAssort.asp method=post>
-		×¢Òâ£ºÉ¾³ı°æÃæ×¨Çø²¢²»É¾³ıÒ»ÇĞ×¨ÇøÏÂµÄÌû×ÓĞÅÏ¢<br>
-		<br><b><font color=ff0000 class=redfont>È·ÈÏĞÅÏ¢£º ÕæµÄÒªÉ¾³ı´Ë×¨ÇøÂğ£¿<br><br>
+		æ³¨æ„ï¼šåˆ é™¤ç‰ˆé¢ä¸“åŒºå¹¶ä¸åˆ é™¤ä¸€åˆ‡ä¸“åŒºä¸‹çš„å¸–å­ä¿¡æ¯<br>
+		<br><b><font color=ff0000 class=redfont>ç¡®è®¤ä¿¡æ¯ï¼š çœŸçš„è¦åˆ é™¤æ­¤ä¸“åŒºå—ï¼Ÿ<br><br>
 		
 		<input type=hidden name=Action value="Delete">
 		<input type=hidden name=ID value="<%=urlencode(ID)%>">
 		<input type=hidden name=DeleteSuer value="E72ksiOkw2">
 
-		<input type=submit value=È·¶¨É¾³ı class=fmbtn>
+		<input type=submit value=ç¡®å®šåˆ é™¤ class=fmbtn>
 		</form>
 	<%End If
 
@@ -376,7 +376,7 @@ Function DeleteTopicAssort(ID)
 	Dim Rs,BoardID
 	Set Rs = LDExeCute(sql_select("select ID,AssortName,BoardID from LeadBBS_GoodAssort where ID=" & ID,1),0)
 	If Rs.Eof Then
-		GBL_CHK_TempStr = "´íÎó£¬²»´æÔÚ´Ë×¨ÌâÇø£®"
+		GBL_CHK_TempStr = "é”™è¯¯ï¼Œä¸å­˜åœ¨æ­¤ä¸“é¢˜åŒºï¼"
 		DeleteTopicAssort = 0
 		Rs.Close
 		Set Rs = Nothing
@@ -397,7 +397,7 @@ End Function
 Sub ReloadTopicAssort(BoardID)
 
 	Dim Rs
-	Set Rs = LDExeCute("select ID,AssortName,0,0,0 from LeadBBS_GoodAssort where BoardID=" & BoardID & " Order by BoardID,OrderID ASC",0)
+	Set Rs = LDExeCute("select ID,AssortName,0,0 as c0_dup2,0 as c0_dup3 from LeadBBS_GoodAssort where BoardID=" & BoardID & " Order by BoardID,OrderID ASC",0)
 	If Not Rs.Eof Then
 		Application.Lock
 		Application(DEF_MasterCookies & "BoardInfo" & BoardID & "_TI") = Rs.GetRows(-1)
@@ -449,8 +449,8 @@ Function UpdateCacheData(savefile)
 						TempStr = TempStr & ",{" & VbCrLf
 					End If
 					TempStr = TempStr & "	""id"":0" & "," & VbCrLf
-					If boardid=0 then getdata(3,n) = "×Ü×¨Ìâ"
-					TempStr = TempStr & "	""text"":""ËùÊô°æ¿é:" & htmlencode(KillHTMLLabel(getdata(3,n))) & """" & VbCrLf & "}"
+					If boardid=0 then getdata(3,n) = "æ€»ä¸“é¢˜"
+					TempStr = TempStr & "	""text"":""æ‰€å±ç‰ˆå—:" & htmlencode(KillHTMLLabel(getdata(3,n))) & """" & VbCrLf & "}"
 				end if
 				WriteStr = ""
 				WriteStr = WriteStr & KillHTMLLabel(GetData(2,N))
@@ -472,9 +472,9 @@ Function UpdateCacheData(savefile)
 		
 		ADODB_SaveToFile TempStr,DEF_BBS_HomeUrl & "inc/IncHtm/" & savefile & ""
 		If GBL_CHK_TempStr = "" Then
-			Response.Write "<br><span class=cms_ok>2.³É¹¦¸üĞÂÎÄ¼ş../../inc/IncHtm/" & savefile & "£¡</span>"
+			Response.Write "<br><span class=cms_ok>2.æˆåŠŸæ›´æ–°æ–‡ä»¶../../inc/IncHtm/" & savefile & "ï¼</span>"
 		Else
-			%><p><%=GBL_CHK_TempStr%><br>·şÎñÆ÷²»Ö§³ÖÔÚÏßĞ´ÈëÎÄ¼ş¹¦ÄÜ£¬ÇëÊ¹ÓÃFTPµÈ¹¦ÄÜ£¬<br>½«<span Class=cms_error>inc/IncHtm/<%=savefile%></span>ÎÄ¼şÌæ»»³ÉÏÂ¿òÖĞÄÚÈİ(×¢Òâ±¸·İ)<p>
+			%><p><%=GBL_CHK_TempStr%><br>æœåŠ¡å™¨ä¸æ”¯æŒåœ¨çº¿å†™å…¥æ–‡ä»¶åŠŸèƒ½ï¼Œè¯·ä½¿ç”¨FTPç­‰åŠŸèƒ½ï¼Œ<br>å°†<span Class=cms_error>inc/IncHtm/<%=savefile%></span>æ–‡ä»¶æ›¿æ¢æˆä¸‹æ¡†ä¸­å†…å®¹(æ³¨æ„å¤‡ä»½)<p>
 			<textarea name="fileContent" cols="80" rows="20" class=fmtxtra><%=Server.htmlencode(TempStr)%></textarea><%
 			GBL_CHK_TempStr = ""
 		End If

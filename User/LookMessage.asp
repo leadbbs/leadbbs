@@ -1,17 +1,17 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/Board_Popfun.asp -->
-<!-- #include file=inc/UserTopic.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
+<!--#include file="inc/UserTopic.asp"-->
 <%
 DEF_BBS_HomeUrl = "../"
-Const LMT_LookedMsgExpiresDay = 15 '¶ÌÏûÏ¢ÔÄ¶ÁºóµÄ±£´æÆÚÏŞ(µ¥Î»Ìì)
+Const LMT_LookedMsgExpiresDay = 15 'çŸ­æ¶ˆæ¯é˜…è¯»åçš„ä¿å­˜æœŸé™(å•ä½å¤©)
 Dim SdM_ID,SdM_Fromuser,SdM_toUser,SdM_Title,SdM_Content,SdM_IP,SdM_SendTime,SdM_ReadFlag
 Dim AllPrintingString
 
-Main
+Main()
 
 Sub Main
 
-	initDatabase
+	initDatabase()
 	GBL_CHK_TempStr = ""
 	
 	Dim MessageID
@@ -22,30 +22,30 @@ Sub Main
 	If MessageID < 0 Then MessageID = 0
 	
 	AllPrintingString = ""
-	If Request.QueryString("AllPrinting")="Yesing" and CheckSupervisorUserName = 1 Then AllPrintingString = "&AllPrinting=Yesing"
+	If Request.QueryString("AllPrinting")="Yesing" and CheckSupervisorUserName() = 1 Then AllPrintingString = "&AllPrinting=Yesing"
 	
 	GBL_CHK_TempStr=""
-	If GBL_UserID = 0 Then GBL_CHK_TempStr = GBL_CHK_TempStr & "ÄãÎ´µÇÂ¼,ÎŞ·¨½øĞĞ´Ë²Ù×÷." & VbCrLf
+	If GBL_UserID = 0 Then GBL_CHK_TempStr = GBL_CHK_TempStr & "ä½ æœªç™»å½•,æ— æ³•è¿›è¡Œæ­¤æ“ä½œ." & VbCrLf
 	
 	
 	If MessageID > 0 Then
-		BBS_SiteHead DEF_SiteNameString & " - ²é¿´¶ÌÏûÏ¢",0,"²é¿´¶ÌÏûÏ¢"
-		UpdateOnlineUserAtInfo GBL_board_ID,"²é¿´¶ÌÏûÏ¢"
+		BBS_SiteHead DEF_SiteNameString & " - æŸ¥çœ‹çŸ­æ¶ˆæ¯",0,"æŸ¥çœ‹çŸ­æ¶ˆæ¯"
+		UpdateOnlineUserAtInfo GBL_board_ID,"æŸ¥çœ‹çŸ­æ¶ˆæ¯"
 		UserTopicTopInfo("user")
 	Else
 		GBL_CHK_Flag = 0
-		BBS_SiteHead DEF_SiteNameString & " - ¹«¸æ",0,"¹«¸æ"
-		UpdateOnlineUserAtInfo GBL_board_ID,"²é¿´¹«¸æ"
+		BBS_SiteHead DEF_SiteNameString & " - å…¬å‘Š",0,"å…¬å‘Š"
+		UpdateOnlineUserAtInfo GBL_board_ID,"æŸ¥çœ‹å…¬å‘Š"
 		UserTopicTopInfo("")
 	End If
 	If MessageID = 0 Then
-		LookPubMessage
+		LookPubMessage()
 	Else
 		If GBL_CHK_TempStr <> "" Then
 			Response.Write "<div class=alert>" & GBL_CHK_TempStr & "</div>"
 		Else
 			If MessageID = 0 Then
-				GBL_CHK_TempStr = GBL_CHK_TempStr & "´íÎó£¬ÕÒ²»µ½ÕâÌõÏûÏ¢." & VbCrLf
+				GBL_CHK_TempStr = GBL_CHK_TempStr & "é”™è¯¯ï¼Œæ‰¾ä¸åˆ°è¿™æ¡æ¶ˆæ¯." & VbCrLf
 				Response.Write "<div class=alert>" & GBL_CHK_TempStr & "</div>"
 			Else
 				GBL_CHK_TempStr = ""
@@ -58,9 +58,9 @@ Sub Main
 			End if
 		End If
 	End If
-	UserTopicBottomInfo
-	closeDataBase
-	SiteBottom
+	UserTopicBottomInfo()
+	closeDataBase()
+	SiteBottom()
 
 End Sub
 
@@ -70,7 +70,7 @@ Function GetMessageValue(MessageID)
 	Dim go
 	go = Left(Request.QueryString("go"),4)
 	If go = "pre" Then
-		If CheckSupervisorUserName = 1 and AllPrintingString <> "" Then
+		If CheckSupervisorUserName() = 1 and AllPrintingString <> "" Then
 			SQL = sql_select("Select ID,FromUser,toUser,Title,Content,IP,SendTime,ReadFlag from LeadBBS_InfoBox where ID>" & MessageID & " order by ID ASC",1)
 		Else
 			SQL = sql_select("Select ID,FromUser,toUser,Title,Content,IP,SendTime,ReadFlag from LeadBBS_InfoBox where ToUser='" & Replace(GBL_CHK_User,"'","''") & "' and ID>" & MessageID & " order by ID ASC",1)
@@ -83,7 +83,7 @@ Function GetMessageValue(MessageID)
 			Set Rs = LDExeCute(SQL,0)
 		End If
 	ElseIf go = "next" Then
-		If CheckSupervisorUserName = 1 and AllPrintingString <> "" Then
+		If CheckSupervisorUserName() = 1 and AllPrintingString <> "" Then
 			SQL = sql_select("Select ID,FromUser,toUser,Title,Content,IP,SendTime,ReadFlag from LeadBBS_InfoBox where ID<" & MessageID & " order by ID DESC",1)
 		Else
 			SQL = sql_select("Select ID,FromUser,toUser,Title,Content,IP,SendTime,ReadFlag from LeadBBS_InfoBox where ToUser='" & Replace(GBL_CHK_User,"'","''") & "' and ID<" & MessageID & " order by ID DESC",1)
@@ -103,9 +103,9 @@ Function GetMessageValue(MessageID)
 	If Rs.Eof Then
 		Rs.Close
 		Set Rs = Nothing
-		GBL_CHK_TempStr = "ÎŞÏà¹Ø¶ÌÏûÏ¢¡£"
+		GBL_CHK_TempStr = "æ— ç›¸å…³çŸ­æ¶ˆæ¯ã€‚"
 	Else
-		SdM_ID = cCur(Rs(0))
+		SdM_ID = LngStr(Rs(0))
 		SdM_FromUser = Rs(1)
 		SdM_toUser = Rs(2)
 		SdM_Title = Rs(3)
@@ -116,10 +116,10 @@ Function GetMessageValue(MessageID)
 		Rs.Close
 		Set Rs = Nothing
 		If SdM_FromUser <> GBL_CHK_User and lcase(SdM_toUser) <> lcase(GBL_CHK_User) Then
-			'GBL_CHK_TempStr = "ÎŞÈ¨ÏŞÔÄ¶ÁËûÈËÏûÏ¢¡£"
+			'GBL_CHK_TempStr = "æ— æƒé™é˜…è¯»ä»–äººæ¶ˆæ¯ã€‚"
 		Else
 			If SdM_ReadFlag = 0 and lcase(SdM_toUser) = lcase(GBL_CHK_User) Then
-				CALL LDExeCute("Update LeadBBS_InfoBox Set readFlag=1,ExpiresDate=" & CLng(Left(GetTimeValue(DateAdd("d",LMT_LookedMsgExpiresDay,Now)),8)) & " where ID=" & SdM_ID,1)
+				CALL LDExeCute("Update LeadBBS_InfoBox Set readFlag=1,ExpiresDate=" & CLng(Left(LngStr(GetTimeValue(DateAdd("d",LMT_LookedMsgExpiresDay,Now))),8)) & " where ID=" & SdM_ID,1)
 			End If
 		End If
 	End If
@@ -175,16 +175,16 @@ End Sub
 Function LookMessage(MessageID)
 
 	Dim TempN
-	Message_Code
+	Message_Code()
 %>
 	<div class="title"><%=htmlencode(SdM_Title)%></div>
 	<table border=0 cellpadding="0" class="table_in">
 	<%If SdM_toUser = "" Then%>
 	<tr> 
 		<td class="tdbox" colspan="2">
-			<div class=value2>·¢ ²¼ ÈË£º<%=htmlencode(SdM_fromUser)%>
-			<div class=value2>·¢²¼Ê±¼ä£º<%=htmlencode(RestoreTime(SdM_SendTime))%>
-			<div class=value2>¹«¸æÄÚÈİ</div>
+			<div class=value2>å‘ å¸ƒ äººï¼š<%=htmlencode(SdM_fromUser)%>
+			<div class=value2>å‘å¸ƒæ—¶é—´ï¼š<%=htmlencode(RestoreTime(SdM_SendTime))%>
+			<div class=value2>å…¬å‘Šå†…å®¹</div>
 			<hr class=splitline>
 			<%
 			Response.Write "<div id=Message" & SdM_ID & ">"
@@ -198,7 +198,7 @@ Function LookMessage(MessageID)
 		<td class=tdbox colspan=2>
 			<%
 			If Trim(SdM_Content) = "" Then
-				Response.Write "<font color=Gray class=grayfont>¶ÌÏûÏ¢ÄÚÈİÎª¿Õ¡£</font>"
+				Response.Write "<font color=Gray class=grayfont>çŸ­æ¶ˆæ¯å†…å®¹ä¸ºç©ºã€‚</font>"
 			Else
 				Response.Write "<div id=Message" & SdM_ID & " class=word-break-all>"
 			   	Response.Write PrintTrueText(SdM_Content)
@@ -206,53 +206,53 @@ Function LookMessage(MessageID)
 		   	End If
 		   	%>
 		   	<hr class=splitline>
-		   	<div class=value2><span class=grayfont>·¢ËÍÓÃ»§£º</span><%
+		   	<div class=value2><span class=grayfont>å‘é€ç”¨æˆ·ï¼š</span><%
 		   	If SdM_fromUser <> "[LeadBBS]" Then
 		   		Response.Write "<a href=../User/" & RW_User(0,"",SdM_fromUser,"") & ">" & htmlencode(SdM_fromUser) & "</a>"
 		   	Else
-		   		Response.Write "<span class=bluefont>ÏµÍ³</span>"
+		   		Response.Write "<span class=bluefont>ç³»ç»Ÿ</span>"
 		   	End If%>
 		   	</div>
 		   	<div class=value2>
-			<span class=grayfont>½ÓÊÕÓÃ»§£º</span><a href=../User/<%=RW_User(0,"",SdM_toUser,"")%>><%=SdM_toUser%></a>
+			<span class=grayfont>æ¥æ”¶ç”¨æˆ·ï¼š</span><a href=../User/<%=RW_User(0,"",SdM_toUser,"")%>><%=SdM_toUser%></a>
 			<%
 			If SdM_ReadFlag = 0 Then
-				Response.write "£¬ <b><span class=greenfont>ÄúÊ×´Îä¯ÀÀ´ËÏûÏ¢</span></b>"
+				Response.write "ï¼Œ <b><span class=greenfont>æ‚¨é¦–æ¬¡æµè§ˆæ­¤æ¶ˆæ¯</span></b>"
 			End If%>
 			</div>
-			<div class=value2><span class=grayfont>·¢³öÊ±¼ä£º</span><%=htmlencode(RestoreTime(SdM_SendTime))%>
+			<div class=value2><span class=grayfont>å‘å‡ºæ—¶é—´ï¼š</span><%=htmlencode(RestoreTime(SdM_SendTime))%>
 			</div>
 		</td>
 	</tr>
 	<%End If
-	If SdM_toUser = GBL_CHK_User or CheckSupervisorUserName = 1 Then%>
+	If SdM_toUser = GBL_CHK_User or CheckSupervisorUserName() = 1 Then%>
 	<tr> 
 		<td colspan=2 class=tdbox>
 			<script language=javascript>
 			function kill(id)
 			{
-				if (confirm('È·¶¨É¾³ı´ËÏûÏ¢Âğ?'))
+				if (confirm('ç¡®å®šåˆ é™¤æ­¤æ¶ˆæ¯å—?'))
 				getAJAX('DeleteMessage.asp','AjaxFlag=1&DeleteSureFlag=dk9@dl9s92lw_SWxl&MessageID=' + id,'alert(tmp);this.location="MyInfoBox.asp";',1);
 			}
 			</script>
 			<div class=j_page>
-			<a href='javascript:kill(<%=SdM_ID%>);'>É¾³ı¶ÌÏûÏ¢</a>
-			<a href=SendMessage.asp?ModifyMessageID=<%=SdM_ID%>>±à¼­¶ÌÏûÏ¢</a>
+			<a href='javascript:kill(<%=SdM_ID%>);'>åˆ é™¤çŸ­æ¶ˆæ¯</a>
+			<a href=SendMessage.asp?ModifyMessageID=<%=SdM_ID%>>ç¼–è¾‘çŸ­æ¶ˆæ¯</a>
 			<%If SdM_fromUser <> "[LeadBBS]" Then%>
-			<a href=SendMessage.asp?SdM_toUser=<%=urlencode(SdM_fromUser)%>&ReplyMessageID=<%=SdM_ID%>>»Ø¸´´ËÏûÏ¢</a><%
+			<a href=SendMessage.asp?SdM_toUser=<%=urlencode(SdM_fromUser)%>&ReplyMessageID=<%=SdM_ID%>>å›å¤æ­¤æ¶ˆæ¯</a><%
 			End If%>
 			<%If SdM_ID = MessageID and Request("go") = "pre" Then
 			Else%>
-			<a href=LookMessage.asp?MessageID=<%=SdM_ID%>&go=pre<%=AllPrintingString%>>ÉÏÒ»Ìõ</a><%
+			<a href=LookMessage.asp?MessageID=<%=SdM_ID%>&go=pre<%=AllPrintingString%>>ä¸Šä¸€æ¡</a><%
 			End If%>
 			<%If SdM_ID = MessageID and Request("go") = "next" Then
 			Else%>
-			<a href=LookMessage.asp?MessageID=<%=SdM_ID%>&go=next<%=AllPrintingString%>>ÏÂÒ»Ìõ</a><%
+			<a href=LookMessage.asp?MessageID=<%=SdM_ID%>&go=next<%=AllPrintingString%>>ä¸‹ä¸€æ¡</a><%
 			End If%>
 		</td>
 	</tr><%End If%>
 	</table>
-	<div class=title>×¢Òâ£º¶ÌÏûÏ¢ÔÚ²é¿´Íê³Éºó£¬×î¶à±£´æ<%=LMT_LookedMsgExpiresDay%>Ìì½«×÷×Ô¶¯É¾³ı</div>
+	<div class=title>æ³¨æ„ï¼šçŸ­æ¶ˆæ¯åœ¨æŸ¥çœ‹å®Œæˆåï¼Œæœ€å¤šä¿å­˜<%=LMT_LookedMsgExpiresDay%>å¤©å°†ä½œè‡ªåŠ¨åˆ é™¤</div>
 
 <%End Function
 
@@ -265,7 +265,7 @@ Function LookPubMessage
 	Set Rs = LDExeCute(SQL,0)
 
 	If Rs.Eof Then
-		GBL_CHK_TempStr = "´íÎó£¬ÕÒ²»µ½ÕâÌõÏûÏ¢Ïà¹Ø×ÊÁÏ£®"
+		GBL_CHK_TempStr = "é”™è¯¯ï¼Œæ‰¾ä¸åˆ°è¿™æ¡æ¶ˆæ¯ç›¸å…³èµ„æ–™ï¼"
 	Else
 		GetData = Rs.GetRows(-1)
 	End If
@@ -273,7 +273,7 @@ Function LookPubMessage
 	Set Rs = Nothing
 
 	Dim TempN,N,SuperFlag
-	SuperFlag = CheckSupervisorUserName
+	SuperFlag = CheckSupervisorUserName()
 
 	If GBL_CHK_TempStr <> "" Then
 		Response.Write "<div class=alert>" & GBL_CHK_TempStr & "</div>"
@@ -281,10 +281,10 @@ Function LookPubMessage
 	End If
 
 	If GBL_UserID < 1 Then SuperFlag = 0
-	Message_Code
+	Message_Code()
 	If SuperFlag = 1 Then
 	%>
-	<span class="grayfont">¹ÜÀíÔ±²Ù×÷£º</span><a href=SendMessage.asp?pub=1>·¢²¼ĞÂ¹«¸æ</a>
+	<span class="grayfont">ç®¡ç†å‘˜æ“ä½œï¼š</span><a href=SendMessage.asp?pub=1>å‘å¸ƒæ–°å…¬å‘Š</a>
 	<%
 	End If
 	For N = 0 to Ubound(GetData,2)
@@ -297,7 +297,7 @@ Function LookPubMessage
 	
 	<tr> 
 		<td class="tdbox">
-			¹«¸æÊ±¼ä£º <%=htmlencode(RestoreTime(GetData(6,N)))%>
+			å…¬å‘Šæ—¶é—´ï¼š <%=htmlencode(RestoreTime(GetData(6,N)))%>
 		</td>
 	</tr><%If GetData(4,N) <> "" Then%>
 	<tr> 
@@ -317,11 +317,11 @@ Function LookPubMessage
 			<script language=javascript>
 				function kill(id)
 				{
-					if (confirm('È·¶¨É¾³ı´Ë¹«¸æÂğ?'))
+					if (confirm('ç¡®å®šåˆ é™¤æ­¤å…¬å‘Šå—?'))
 					getAJAX('DeleteMessage.asp','AjaxFlag=1&DeleteSureFlag=dk9@dl9s92lw_SWxl&MessageID=' + id,'alert(tmp);document.location.reload();',1);
 				}
 			</script>
-			<br><span class="grayfont">¹ÜÀíÔ±ĞÅÏ¢£º</span><a href='javascript:kill(<%=GetData(0,N)%>);'>É¾³ı¹«¸æ</a>£¬<a href=SendMessage.asp?ModifyMessageID=<%=GetData(0,N)%>&pub=1>±à¼­¹«¸æ</a>£¬·¢²¼¹«¸æÈËIP£º<%=GetData(5,N)%>
+			<br><span class="grayfont">ç®¡ç†å‘˜ä¿¡æ¯ï¼š</span><a href='javascript:kill(<%=LngStr(GetData(0,N))%>);'>åˆ é™¤å…¬å‘Š</a>ï¼Œ<a href=SendMessage.asp?ModifyMessageID=<%=LngStr(GetData(0,N))%>&pub=1>ç¼–è¾‘å…¬å‘Š</a>ï¼Œå‘å¸ƒå…¬å‘ŠäººIPï¼š<%=GetData(5,N)%>
 		</td>
 	</tr><%End If%>
 	</table>

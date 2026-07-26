@@ -1,6 +1,6 @@
 	<select name="BoardID2">
-		<option value="0">Ñ¡Ôñ°æÃæ¡­</option>
-		<option value="0">£«ÂÛÌ³Ö÷Çø
-		<option value=100>¡¡²âÊÔ×¨Çø
-		<option value=444>¡¡»ØÊÕÕ¾
+		<option value="0">é€‰æ‹©ç‰ˆé¢â€¦</option>
+		<option value="0">ï¼‹è®ºå›ä¸»åŒº
+		<option value=100>ã€€æµ‹è¯•ä¸“åŒº
+		<option value=444>ã€€å›žæ”¶ç«™
 	</select>

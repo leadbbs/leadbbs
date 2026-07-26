@@ -72,12 +72,12 @@ function getcode()
 {
 	if($("#code").val().length>512)
 	{
-		alert("¹ı³¤£¬²»ÄÜ³¬¹ı512×Ö");
+		alert("è¿‡é•¿ï¼Œä¸èƒ½è¶…è¿‡512å­—");
 		return false;
 	}
 	var str = toUtf8($("#code").val());
 	var win = window.parent||window;
-				win.layer_view("¶şÎ¬ÂëÉú³É½á¹û",this,size+120,'','anc_delbody',"HTML:<table style='margin:16px 0;width:100%;text-align:left;'><tr><td align=center valign=middle><span id=ldshare_wenxin></span><br><br>´ò¿ªÎ¢ĞÅ£¬µã»÷µ×²¿µÄ·¢ÏÖ£¬Ê¹ÓÃ<br>É¨Ò»É¨¼´¿É½«ÄÚÈİ·ÖÏíÖÁÅóÓÑÈ¦¡£</td></tr></table>","",1,"",1,0,"setCenterDiv($('#anc_delbody'))");
+				win.layer_view("äºŒç»´ç ç”Ÿæˆç»“æœ",this,size+120,'','anc_delbody',"HTML:<table style='margin:16px 0;width:100%;text-align:left;'><tr><td align=center valign=middle><span id=ldshare_wenxin></span><br><br>æ‰“å¼€å¾®ä¿¡ï¼Œç‚¹å‡»åº•éƒ¨çš„å‘ç°ï¼Œä½¿ç”¨<br>æ‰«ä¸€æ‰«å³å¯å°†å†…å®¹åˆ†äº«è‡³æœ‹å‹åœˆã€‚</td></tr></table>","",1,"",1,0,"setCenterDiv($('#anc_delbody'))");
 				if(Browser.is_ie_lower||Browser.ie9)
 				$('#ldshare_wenxin', win.document).qrcode({
 					render: "table", 
@@ -104,15 +104,15 @@ function codesize(s,obj)
 </script>
 
 	<script languange="Javascript" src="Convert.js"></script>
-	<p>ÇëÊäÈëÒªÉú³É¶şÎ¬ÂëµÄÄÚÈİ£¨±ÈÈçÍøÖ·£¬»òÆäËüÄÚÈİ£©
+	<p>è¯·è¾“å…¥è¦ç”ŸæˆäºŒç»´ç çš„å†…å®¹ï¼ˆæ¯”å¦‚ç½‘å€ï¼Œæˆ–å…¶å®ƒå†…å®¹ï¼‰
 	</p>
 	<p>
 	<textarea type=input id=code name=code></textarea>
 	</p>
-	<a href=# onclick="codesize(200,this)" class="qrcode_size_sel">Éú³É´óĞ¡: 200</a>
+	<a href=# onclick="codesize(200,this)" class="qrcode_size_sel">ç”Ÿæˆå¤§å°: 200</a>
 	<a href=# onclick="codesize(400,this)" class="qrcode_size">400</a>
 	<a href=# onclick="codesize(800,this)" class="qrcode_size">800</a>
 	
-	<a href=# onclick="getcode()" id="getcode">Éú³É¶şÎ¬Âë</a>
+	<a href=# onclick="getcode()" id="getcode">ç”ŸæˆäºŒç»´ç </a>
 </body>
 </html>

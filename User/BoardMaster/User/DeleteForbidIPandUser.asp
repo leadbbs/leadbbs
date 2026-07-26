@@ -1,41 +1,41 @@
-<!-- #include file=../../../inc/BBSsetup.asp -->
-<!-- #include file=../../../inc/Board_popfun.asp -->
-<!-- #include file=../../../inc/Limit_Fun.asp -->
-<!-- #include file=../inc/BoardMaster_Fun.asp -->
+<!--#include file="../../../inc/BBSsetup.asp"-->
+<!--#include file="../../../inc/Board_popfun.asp"-->
+<!--#include file="../../../inc/Limit_Fun.asp"-->
+<!--#include file="../inc/BoardMaster_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../../"
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-CheckisBoardMasterFlag
+CheckisBoardMasterFlag()
 
-SiteHead(DEF_SiteNameString & " - " & DEF_PointsName(6) & "¹ÜÀí")
+SiteHead(DEF_SiteNameString & " - " & DEF_PointsName(6) & "ç®¡ç†")
 
 
-UserTopicTopInfo
-DisplayUserNavigate("É¾³ıÓÃ»§")
+UserTopicTopInfo()
+DisplayUserNavigate("åˆ é™¤ç”¨æˆ·")
             
 If GBL_CHK_Flag=1 and BDM_isBoardMasterFlag = 1 and BDM_SpecialPopedomFlag = 1 Then
 	If GBL_CHK_TempStr="" Then
 		If Request.Form("DeleteSure")="E72ksiOkw2" Then
-			If DeleteForbidIPandUser = 1 Then
-				Response.Write "<p><font color=008800 class=greenfont><b>ÒÑ¾­³É¹¦½â³ıËùÓĞµ½ÆÚµÄÌØÊâÓÃ»§¼°ÆÁ±ÎµÄ£É£ĞµØÖ·£¡</b></font></p>"
+			If DeleteForbidIPandUser() = 1 Then
+				Response.Write "<p><font color=008800 class=greenfont><b>å·²ç»æˆåŠŸè§£é™¤æ‰€æœ‰åˆ°æœŸçš„ç‰¹æ®Šç”¨æˆ·åŠå±è”½çš„ï¼©ï¼°åœ°å€ï¼</b></font></p>"
 			else
 				Response.Write "<p><font color=ff0000 class=redfont><b>" & GBL_CHK_TempStr & "</b></font></p>"
 			End If
 		Else
 			%>
 			<p><form action=DeleteForbidIPandUser.asp method=post>
-			<b><font color=ff0000 class=redfont>È·ÈÏĞÅÏ¢£º½ñÌìÊÇ<%=year(DEF_Now)%>Äê<%=month(DEF_Now)%>ÔÂ<%=day(DEF_Now)%>£¬´Ë¶¯×÷½«Çå³ı½ñÌìÇ°½«µ½ÆÚµÄÄÚÈİ£¬°üÀ¨ÈçÏÂ£º<br>
-			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1.½â³ı±»ÆÁ±ÎµÄIPµØÖ·<br>
-			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2.½â³ı±»ÆÁ±Î·¢ÑÔÄÚÈİµÄ»áÔ±<br>
-			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3.½â³ı±»½ûÑÔµÄ»áÔ±<br>
-			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 4.½â³ı±»½ûÖ¹ĞŞ¸ÄµÄ»áÔ±<br>
-			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 5.»Ö¸´µ½ÆÚÁËµÄ<%=DEF_PointsName(5)%>µ½ÆÕÍ¨»áÔ±×´Ì¬<br>
-			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 6.Çå³ıÔÚµ½ÆÚÊ±¼äÒÔÇ°ÈÔÈ»Î´¼¤»îµÄ×¢²á»áÔ±<br>
+			<b><font color=ff0000 class=redfont>ç¡®è®¤ä¿¡æ¯ï¼šä»Šå¤©æ˜¯<%=year(DEF_Now)%>å¹´<%=month(DEF_Now)%>æœˆ<%=day(DEF_Now)%>ï¼Œæ­¤åŠ¨ä½œå°†æ¸…é™¤ä»Šå¤©å‰å°†åˆ°æœŸçš„å†…å®¹ï¼ŒåŒ…æ‹¬å¦‚ä¸‹ï¼š<br>
+			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1.è§£é™¤è¢«å±è”½çš„IPåœ°å€<br>
+			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2.è§£é™¤è¢«å±è”½å‘è¨€å†…å®¹çš„ä¼šå‘˜<br>
+			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 3.è§£é™¤è¢«ç¦è¨€çš„ä¼šå‘˜<br>
+			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 4.è§£é™¤è¢«ç¦æ­¢ä¿®æ”¹çš„ä¼šå‘˜<br>
+			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 5.æ¢å¤åˆ°æœŸäº†çš„<%=DEF_PointsName(5)%>åˆ°æ™®é€šä¼šå‘˜çŠ¶æ€<br>
+			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 6.æ¸…é™¤åœ¨åˆ°æœŸæ—¶é—´ä»¥å‰ä»ç„¶æœªæ¿€æ´»çš„æ³¨å†Œä¼šå‘˜<br>
 			<br>
 			<input type=hidden name=DeleteSure value="E72ksiOkw2">
 			
-			<input type=submit value=µ±È»Çå³ı class=fmbtn>
+			<input type=submit value=å½“ç„¶æ¸…é™¤ class=fmbtn>
 			</form>
 		<%End If
 	Else%>
@@ -53,39 +53,39 @@ Else%>
 	<td>
 	<%
 	If Request("submitflag")="" Then
-		Response.Write "<br><b>ÇëÏÈµÇÂ¼</b>"
+		Response.Write "<br><b>è¯·å…ˆç™»å½•</b>"
 	Else
 		Response.Write "<br><p align=left><font color=ff0000 class=redfont><b>" & GBL_CHK_TempStr & "</b></font>"
 	End If
-	DisplayLoginForm
+	DisplayLoginForm()
 	Response.Write "</p>"%>
 	</td>
 	</tr>
 	</table>
 <%End If
-UserTopicBottomInfo
-closeDataBase
-SiteBottom
+UserTopicBottomInfo()
+closeDataBase()
+SiteBottom()
 If GBL_ShowBottomSure = 1 Then Response.Write GBL_SiteBottomString
 
-Rem ¼ì²âÄ³ÓÃ»§ÃûÊÇ·ñ´æÔÚ
+Rem æ£€æµ‹æŸç”¨æˆ·åæ˜¯å¦å­˜åœ¨
 Function DeleteForbidIPandUser
 
 	Server.ScriptTimeOut = 6000
 	'If UserName <> "" and inStr(UserName,",") = 0 and inStr(Lcase(DEF_SupervisorUserName),"," & Lcase(UserName) & ",") > 0 Then
-	'	GBL_CHK_TempStr = "´íÎó£¬ÓÃ»§Ãû" & htmlencode(UserName) & "²»´æÔÚ£¡"
+	'	GBL_CHK_TempStr = "é”™è¯¯ï¼Œç”¨æˆ·å" & htmlencode(UserName) & "ä¸å­˜åœ¨ï¼"
 	'	DeleteForbidIPandUser = 0
 	'	Exit Function
 	'End If
 	
-	Response.Write "<br><p>ÕıÔÚ¸üĞÂÖĞ£®£®£®<p>"
+	Response.Write "<br><p>æ­£åœ¨æ›´æ–°ä¸­ï¼ï¼ï¼<p>"
 	Dim ExpiresTime
 	ExpiresTime = GetTimeValue(year(DEF_Now) & "-" & Month(DEF_Now) & "-" & Day(DEF_Now))
 	Dim Rs
 	Set Rs = LDExeCute("Select T2.ID,T2.UserLimit,T2.UserName,T1.Assort from LeadBBS_SpecialUser as T1 Left join LeadBBS_User As T2 on T1.UserID=T2.ID where T1.ExpiresTime>0 and T1.ExpiresTime<" & ExpiresTime,0)
 	If Rs.Eof Then
 		DeleteForbidIPandUser = 1
-		Response.Write "<br>ÎŞÈÎºÎµ½ÆÚµÄÌØÊâÓÃ»§£¬²»ĞèÒª¸üĞÂ£®£®"
+		Response.Write "<br>æ— ä»»ä½•åˆ°æœŸçš„ç‰¹æ®Šç”¨æˆ·ï¼Œä¸éœ€è¦æ›´æ–°ï¼ï¼"
 	End If
 	Dim GBL_UserName_UserID,GBL_UserName_UserLimit,GBL_UserName,GBL_Assort
 	Do while Not Rs.Eof
@@ -94,39 +94,39 @@ Function DeleteForbidIPandUser
 		GBL_UserName = Rs(2)
 		GBL_Assort = cCur(Rs(3))
 		
-		',0-ÈÏÖ¤»áÔ±,1-°æÖ÷,2-×Ü°æÖ÷,3-ÆÁ±Î»áÔ±,4-½ûÑÔ»áÔ±,5-½ûĞŞ¸Ä»áÔ±,6-·ÇÕıÊ½»áÔ±
+		',0-è®¤è¯ä¼šå‘˜,1-ç‰ˆä¸»,2-æ€»ç‰ˆä¸»,3-å±è”½ä¼šå‘˜,4-ç¦è¨€ä¼šå‘˜,5-ç¦ä¿®æ”¹ä¼šå‘˜,6-éæ­£å¼ä¼šå‘˜
 		Select Case GBL_Assort
 			Case 0:
 					If GetBinarybit(GBL_UserName_UserLimit,2) = 1 Then
-						Response.Write "<br>ÓÃ»§" & htmlencode(GBL_UserName) & "ÒÑ¾­½â³ı" & DEF_PointsName(5) & "×´Ì¬£¡"
+						Response.Write "<br>ç”¨æˆ·" & htmlencode(GBL_UserName) & "å·²ç»è§£é™¤" & DEF_PointsName(5) & "çŠ¶æ€ï¼"
 						GBL_UserName_UserLimit = SetBinaryBit(GBL_UserName_UserLimit,2,0)
 						CALL LDExeCute("Update LeadBBS_User Set UserLimit=" & GBL_UserName_UserLimit & " where ID=" & GBL_UserName_UserID,1)
 						CALL LDExeCute("Delete from LeadBBS_SpecialUser Where Assort=" & GBL_Assort & " and UserID=" & GBL_UserName_UserID,1)
 					End If
 			Case 3:
 					If GetBinarybit(GBL_UserName_UserLimit,7) = 1 Then
-						Response.Write "<br>ÓÃ»§" & htmlencode(GBL_UserName) & "ÒÑ¾­½â³ıÆÁ±Î·¢ÑÔÄÚÈİ¼°Ç©Ãû£¡"
+						Response.Write "<br>ç”¨æˆ·" & htmlencode(GBL_UserName) & "å·²ç»è§£é™¤å±è”½å‘è¨€å†…å®¹åŠç­¾åï¼"
 						GBL_UserName_UserLimit = SetBinaryBit(GBL_UserName_UserLimit,7,0)
 						CALL LDExeCute("Update LeadBBS_User Set UserLimit=" & GBL_UserName_UserLimit & " where ID=" & GBL_UserName_UserID,1)
 						CALL LDExeCute("Delete from LeadBBS_SpecialUser Where Assort=" & GBL_Assort & " and UserID=" & GBL_UserName_UserID,1)
 					End If
 			Case 4:
 					If GetBinarybit(GBL_UserName_UserLimit,3) = 1 Then
-						Response.Write "<br>ÓÃ»§" & htmlencode(GBL_UserName) & "ÒÑ¾­½â³ı½ûÑÔ¼°·¢ËÍ¶ÌÏûÏ¢£¡"
+						Response.Write "<br>ç”¨æˆ·" & htmlencode(GBL_UserName) & "å·²ç»è§£é™¤ç¦è¨€åŠå‘é€çŸ­æ¶ˆæ¯ï¼"
 						GBL_UserName_UserLimit = SetBinaryBit(GBL_UserName_UserLimit,3,0)
 						CALL LDExeCute("Update LeadBBS_User Set UserLimit=" & GBL_UserName_UserLimit & " where ID=" & GBL_UserName_UserID,1)
 						CALL LDExeCute("Delete from LeadBBS_SpecialUser Where Assort=" & GBL_Assort & " and UserID=" & GBL_UserName_UserID,1)
 					End If
 			Case 5:
 					If GetBinarybit(GBL_UserName_UserLimit,4) = 1 Then
-						Response.Write "<br>ÓÃ»§" & htmlencode(GBL_UserName) & "ÒÑ¾­½â³ı½ûÖ¹ĞŞ¸ÄÌû×Ó¼°×ÔÎÒ×ÊÁÏ£¡"
+						Response.Write "<br>ç”¨æˆ·" & htmlencode(GBL_UserName) & "å·²ç»è§£é™¤ç¦æ­¢ä¿®æ”¹å¸–å­åŠè‡ªæˆ‘èµ„æ–™ï¼"
 						GBL_UserName_UserLimit = SetBinaryBit(GBL_UserName_UserLimit,4,0)
 						CALL LDExeCute("Update LeadBBS_User Set UserLimit=" & GBL_UserName_UserLimit & " where ID=" & GBL_UserName_UserID,1)
 						CALL LDExeCute("Delete from LeadBBS_SpecialUser Where Assort=" & GBL_Assort & " and UserID=" & GBL_UserName_UserID,1)
 					End If
 			Case 6:
 					If GetBinarybit(GBL_UserName_UserLimit,1) = 1 Then
-						Response.Write "<br>Î´¼¤»îÓÃ»§" & htmlencode(GBL_UserName) & "ÒÑ¾­±»³É¹¦É¾³ı£¡"
+						Response.Write "<br>æœªæ¿€æ´»ç”¨æˆ·" & htmlencode(GBL_UserName) & "å·²ç»è¢«æˆåŠŸåˆ é™¤ï¼"
 						GBL_UserName_UserLimit = SetBinaryBit(GBL_UserName_UserLimit,1,0)
 						CALL LDExeCute("delete from LeadBBS_User where ID=" & GBL_UserName_UserID,1)
 						CALL LDExeCute("Update LeadBBS_SiteInfo Set UserCount=UserCount-1",1)
@@ -139,9 +139,9 @@ Function DeleteForbidIPandUser
 	Loop
 	Rs.Close
 	Set Rs = Nothing
-	Response.Write "<br><font color=Green Class=greenfont>µ½ÆÚÌØÊâÓÃ»§¸üĞÂÍê³É£®</font>"
+	Response.Write "<br><font color=Green Class=greenfont>åˆ°æœŸç‰¹æ®Šç”¨æˆ·æ›´æ–°å®Œæˆï¼</font>"
 	Set Rs = LDExeCute("Delete From LeadBBS_ForbidIP where ExpiresTime>0 and ExpiresTime<" & ExpiresTime,0)
-	Response.Write "<br><font color=Green Class=greenfont>¿ªÆôµ½ÆÚµÄ±»ÆÁ±Î£É£ĞµØÖ·ÒÑ¾­³É¹¦Íê³É£®</font>"
+	Response.Write "<br><font color=Green Class=greenfont>å¼€å¯åˆ°æœŸçš„è¢«å±è”½ï¼©ï¼°åœ°å€å·²ç»æˆåŠŸå®Œæˆï¼</font>"
 	DeleteForbidIPandUser = 1
 
 End Function%>

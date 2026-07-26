@@ -1,0 +1,58 @@
+# AxonASP configuration for LeadBBS — the settings that matter for this application.
+#
+# AxonASP ships its own fully-commented axonasp.toml; this file is not a replacement for it.
+# Copy your installed one (Debian/Ubuntu: /etc/axonasp/axonasp.toml, or config/axonasp.toml
+# beside the binary), then apply the values below. Every one of them is load-bearing here —
+# the reason is given, so you can judge whether it still applies to your deployment.
+
+[global]
+# LeadBBS is a Chinese-language forum served as UTF-8.
+default_charset = "UTF-8"
+
+# Some pages (the CMS cache rebuild, the batch repair jobs, large attachment uploads) do real
+# work per request. 60s is enough for all of them on modest hardware.
+default_script_timeout = 60
+
+# AxonASP 2.3.5 leaks a VM-pool slot when a script times out (see docs/axonasp-divergences.md
+# §32): after `vm_pool_size` timeouts the server stops executing scripts entirely and does not
+# respond to SIGTERM. A generous pool plus a generous heap keeps you away from that edge; it
+# does not remove the underlying issue.
+vm_pool_size = 24
+
+# The forum retains several MB of live heap per distinct path it has served. 1024 was not
+# enough to crawl the whole site in one process; 3072 is comfortable. Raise it, do not lower
+# it, if you see "Invalid class string" from Server.CreateObject under load.
+golang_memory_limit_mb = 3072
+
+# LeadBBS stores dates as UTC-based integers and does its own timezone offsetting in
+# inc/BBSSetup.asp (DEF_TimeDifference). Leave the engine on UTC.
+default_timezone = "UTC"
+
+# Sessions hold the logged-in user; the forum's own timeout is DEF_UserOnlineTimeOut.
+session_flush_interval_seconds = 120
+
+# The bytecode cache does not notice edits to #included files (§31). Clearing on startup makes
+# "restart the server" a reliable way to pick up a change.
+clean_cache_on_startup = true
+clean_sessions_on_startup = true
+
+temp_dir = "./temp"
+
+[server]
+# Absolute path to the directory holding index.asp — i.e. this repository, or wherever you
+# unzipped the release. The trailing slash is required.
+web_root = "/srv/leadbbs/"
+
+server_port = 9596
+
+# LeadBBS's own entry point. AxonASP tries these in order for a bare directory request.
+default_pages = ["index.asp", "default.asp", "index.html", "default.htm"]
+
+# data/global.asa is the original Access database that ships with the upstream zip. It is
+# unused by this MySQL port, but it must never be downloadable.
+# NOTE on .sql: the admin panel writes database dumps into data/backup/, inside the web root,
+# and links them as ordinary static files — so anyone who guesses a filename can fetch one.
+# Adding ".sql" here blocks that, but it ALSO breaks the panel's own download button, which
+# fetches the dump over HTTP (the test suite catches this). Left unblocked so the feature
+# works; download and delete each dump instead. See the README's security notes.
+blocked_extensions = [".mdb", ".ldb", ".asa", ".config", ".resx"]

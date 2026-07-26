@@ -1,40 +1,40 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../../inc/Limit_fun.asp -->
-<!-- #include file=../../b/inc/cache_fun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../../inc/Limit_fun.asp"-->
+<!--#include file="../../b/inc/cache_fun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 server.scriptTimeOut = 9999
-initDatabase
-GBL_UserID = checkSupervisorPass
+initDatabase()
+GBL_UserID = checkSupervisorPass()
 GBL_CHK_TempStr = ""
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
 dim BoardName
 
 If GBL_CHK_Flag=1 and GBL_CHK_TempStr = "" Then
-	If CheckIsCanMoveSure = 1 Then
-		DisplayMoveAnnounce
+	If CheckIsCanMoveSure() = 1 Then
+		DisplayMoveAnnounce()
 	End If
 Else
 	Response.Write "<div class=alert>" & GBL_CHK_TempStr & "</div>"
 End If
 
-closeDataBase
-frame_BottomInfo
+closeDataBase()
+frame_BottomInfo()
 Manage_Sitebottom("none")
 
 Function CheckIsCanMoveSure
 
 	If GetBinarybit(GBL_CHK_UserLimit,9) = 1 Then
-		Response.Write "´íÎó,È¨ÏŞ²»×ã!<br>" & VbCrLf
+		Response.Write "é”™è¯¯,æƒé™ä¸è¶³!<br>" & VbCrLf
 		Exit Function
 	End if
 	Dim MoveFromBoardID
 	MoveFromBoardID = Left(Request("MoveFromBoardID"),14)
 	If isNumeric(MoveFromBoardID) = 0 or inStr(MoveFromBoardID,",") > 0 or MoveFromBoardID = "" Then
-		Response.Write "´íÎó,ÇëÌá¹©ÒªÈ«²¢µÄÔ­Ê¼µÄÂÛÌ³ID!<br>" & VbCrLf
+		Response.Write "é”™è¯¯,è¯·æä¾›è¦å…¨å¹¶çš„åŸå§‹çš„è®ºå›ID!<br>" & VbCrLf
 		Exit Function
 	End if
 
@@ -43,7 +43,7 @@ Function CheckIsCanMoveSure
 	SQL = sql_select("Select BoardID,BoardName from LeadBBS_Boards where BoardID=" & MoveFromBoardID,1)
 	Set Rs = LDExeCute(SQL,0)
 	If Rs.Eof Then
-		Response.Write "´íÎó,ÒªºÏ²¢µÄÔ­Ê¼µÄÂÛÌ³ID²»´æÔÚ!<br>" & VbCrLf
+		Response.Write "é”™è¯¯,è¦åˆå¹¶çš„åŸå§‹çš„è®ºå›IDä¸å­˜åœ¨!<br>" & VbCrLf
 		Rs.Close
 		Set Rs = Nothing
 		CheckIsCanMoveSure = 0
@@ -65,7 +65,7 @@ Function DisplayMoveAnnounce
 	Dim MoveFromBoardID
 	MoveFromBoardID = Left(Request("MoveFromBoardID"),14)
 	If isNumeric(MoveFromBoardID) = 0 or inStr(MoveFromBoardID,",") > 0 or MoveFromBoardID = "" Then
-		Response.Write "´íÎó,ÇëÌá¹©Òª×ªÒÆµÄÌû×ÓµÄID!<br>" & VbCrLf
+		Response.Write "é”™è¯¯,è¯·æä¾›è¦è½¬ç§»çš„å¸–å­çš„ID!<br>" & VbCrLf
 		Exit Function
 	End if
 
@@ -77,7 +77,7 @@ Function DisplayMoveAnnounce
 		SQL = sql_select("Select BoardID,BoardName,BoardAssort from LeadBBS_Boards where BoardID=" & MoveFromBoardID,1)
 		Set Rs = LDExeCute(SQL,0)
 		If Rs.Eof Then
-			Response.Write "´íÎó,Ô´°æÃæ²»´æÔÚ!<br>" & VbCrLf
+			Response.Write "é”™è¯¯,æºç‰ˆé¢ä¸å­˜åœ¨!<br>" & VbCrLf
 			Rs.Close
 			Set Rs = Nothing
 			Exit Function
@@ -95,13 +95,13 @@ Function DisplayMoveAnnounce
 		If isNumeric(BoardID2) = 0 or inStr(BoardID2,",") > 0 or BoardID2 = "" Then BoardID2 = 0
 		BoardID2 = cCur(BoardID2)
 		If BoardID2 < 1 Then
-			Response.Write "´íÎó,Ä¿±êÂÛÌ³²»´æÔÚ!!<br>" & VbCrLf
+			Response.Write "é”™è¯¯,ç›®æ ‡è®ºå›ä¸å­˜åœ¨!!<br>" & VbCrLf
 			Set Rs = Nothing
 			Exit Function
 		End if
 		
 		If BoardID2 = BoardID Then
-			Response.Write "Ä¿±êÂÛÌ³¾ÍÊÇÖ÷ÌâËùÔÚÂÛÌ³,ËùÒÔ²»ĞèÒª×ªÒÆ!!<br>" & VbCrLf
+			Response.Write "ç›®æ ‡è®ºå›å°±æ˜¯ä¸»é¢˜æ‰€åœ¨è®ºå›,æ‰€ä»¥ä¸éœ€è¦è½¬ç§»!!<br>" & VbCrLf
 			Set Rs = Nothing
 			Exit Function
 		End if
@@ -112,7 +112,7 @@ Function DisplayMoveAnnounce
 			BoardName2 = Rs("BoardName")
 			BoardAssort2 = cCur(Rs(1))
 		Else
-			Response.Write "´íÎó,Ä¿±êÂÛÌ³²»´æÔÚ!<br>" & VbCrLf
+			Response.Write "é”™è¯¯,ç›®æ ‡è®ºå›ä¸å­˜åœ¨!<br>" & VbCrLf
 			Rs.Close
 			Set Rs = Nothing
 			Exit Function
@@ -122,14 +122,14 @@ Function DisplayMoveAnnounce
 
 		Dim NowID,EndFlag,GetData,n
 		EndFlag = 0
-		Response.Write "ÕıÔÚ×ªÒÆ£¬ÇëµÈ´ı³öÏÖÍê³É£º¡õ"
+		Response.Write "æ­£åœ¨è½¬ç§»ï¼Œè¯·ç­‰å¾…å‡ºç°å®Œæˆï¼šâ–¡"
 		Response.Flush
 		Do while EndFlag = 0
 			select case DEF_UsedDataBase
 				case 0,2:
 					SQL = sql_select("Select ID,RootIDBak from LeadBBS_Announce where ParentID=0 and BoardID=" & MoveFromBoardID,100)
 				case Else
-					SQL = sql_select("Select ID,ID from LeadBBS_Topic where BoardID=" & MoveFromBoardID,100)
+					SQL = sql_select("Select ID,ID as id_dup2 from LeadBBS_Topic where BoardID=" & MoveFromBoardID,100)
 			End select
 			Set Rs = LDExeCute(SQL,0)
 			If Rs.Eof Then
@@ -148,7 +148,7 @@ Function DisplayMoveAnnounce
 					If DEF_UsedDataBase = 1 Then CALL LDExeCute("Update LeadBBS_Topic Set BoardID=" & BoardID2 & " where ID=" & NowID,1)
 					CALL MakeAnnounceTop(NowID,"")
 				Next
-				Response.Write "¡ö"
+				Response.Write "â– "
 				Response.Flush
 			End If
 		Loop
@@ -158,7 +158,7 @@ Function DisplayMoveAnnounce
 		ReloadTopAnnounceInfo(0)
 		ReloadTopAnnounceInfo(BoardAssort)
 		ReloadTopAnnounceInfo(BoardAssort2)
-		Response.Write "<font color=008800 class=greenfont>°æÃæ" & BoardName & "³É¹¦×ªÒÆµ½" & BoardName2 & "!!</font>" & VbCrLf
+		Response.Write "<font color=008800 class=greenfont>ç‰ˆé¢" & BoardName & "æˆåŠŸè½¬ç§»åˆ°" & BoardName2 & "!!</font>" & VbCrLf
 	Else
 		%>
 		<form name=DellClientForm action=BoardMoveAnnounce.asp method=post>
@@ -166,16 +166,16 @@ Function DisplayMoveAnnounce
 			<input type=hidden name=MoveFromBoardID value="<%=MoveFromBoardID%>">
 			<input type=hidden name=BoardID value="<%=GBL_Board_ID%>">
 			<div class=frameline>
-			<b>´Ë²Ù×÷²»¿ÉÄæ,È·ÈÏÒª×ªÒÆ°æÃæ<font color=ff0000 class=redfont><%=BoardName%></font>µÄÌû×ÓÂğ£¿</b>
-			<br>×ª»»Ê±¼äÊÓÌû×Ó×ÜÊı¶ø¶¨£¬Èç¹ûÌû×Ó¾Ş¶à£¬½¨ÒéÏÈÔİÍ£ÂÛÌ³ÔÙ×÷Ö´ĞĞ£®
+			<b>æ­¤æ“ä½œä¸å¯é€†,ç¡®è®¤è¦è½¬ç§»ç‰ˆé¢<font color=ff0000 class=redfont><%=BoardName%></font>çš„å¸–å­å—ï¼Ÿ</b>
+			<br>è½¬æ¢æ—¶é—´è§†å¸–å­æ€»æ•°è€Œå®šï¼Œå¦‚æœå¸–å­å·¨å¤šï¼Œå»ºè®®å…ˆæš‚åœè®ºå›å†ä½œæ‰§è¡Œï¼
 			</div>
 			<div class=frameline>
-<!-- #include file=../../inc/incHTM/BoardForMoveList.asp -->
+<!--#include file="../../inc/incHTM/BoardForMoveList.asp"-->
 			</div>
 			<br>
 			<div class=frameline>
-			<input type=submit value=È·¶¨ class=fmbtn>
-			<input type=button value=È¡Ïû´Ë²Ù×÷ onclick="javascript:window.close();" class=fmbtn>
+			<input type=submit value=ç¡®å®š class=fmbtn>
+			<input type=button value=å–æ¶ˆæ­¤æ“ä½œ onclick="javascript:window.close();" class=fmbtn>
 			</div>
 		</form>
 		<%
@@ -199,7 +199,7 @@ Function UpdateBoardValue(BoardID)
 	Rs.Close
 	Set Rs = Nothing
 
-	Set Rs = LDExeCute("select count(*) from LeadBBS_Announce where BoardID=" & BoardID & " and ndatetime>" & Left(GetTimeValue(DEF_Now),8) & "000000",0)
+	Set Rs = LDExeCute("select count(*) from LeadBBS_Announce where BoardID=" & BoardID & " and ndatetime>" & Left(LngStr(GetTimeValue(DEF_Now)),8) & "000000",0)
 	If Rs.Eof Then
 		TodayAnnounce = 0
 	Else

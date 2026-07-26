@@ -1,15 +1,15 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/Upload_Setup.asp -->
-<!-- #include file=../inc/Limit_Fun.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/Upload_Setup.asp"-->
+<!--#include file="../inc/Limit_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../"
 
-Main
+Main()
 
 Sub Main
 
-	InitDatabase
+	InitDatabase()
 	Dim AjaxFlag,FriendFlag,ViewStr
 	If Request.Form("AjaxFlag") = "1" Then
 		AjaxFlag = 1
@@ -21,16 +21,16 @@ Sub Main
 	Select Case FriendFlag
 	Case "1":
 		FriendFlag = 1
-		ViewStr = "¹Ø×¢"
+		ViewStr = "å…³æ³¨"
 	Case "2":
 		FriendFlag = 2
-		ViewStr = "ÊÕ²Ø"
+		ViewStr = "æ”¶è—"
 	Case "3":
 		FriendFlag = 3
-		ViewStr = "¸½¼ş"
+		ViewStr = "é™„ä»¶"
 	Case Else
 		FriendFlag = 0
-		ViewStr = "ÏûÏ¢"
+		ViewStr = "æ¶ˆæ¯"
 	End Select
 	
 	Dim MessageID
@@ -62,11 +62,11 @@ Sub Main
 	
 	GBL_CHK_TempStr=""
 	If GBL_UserID < 1 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "ÇëÏÈµÇÂ¼." & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "è¯·å…ˆç™»å½•." & VbCrLf
 	End If
 	
 	If AjaxFlag = 0 Then
-		siteHead("   É¾³ı" & ViewStr)%>
+		siteHead("   åˆ é™¤" & ViewStr)%>
 	<script language=javascript>
 		window.moveTo(window.screen.width/2-225,window.screen.height/2-18);
 	</script>
@@ -80,7 +80,7 @@ Sub Main
 		If GBL_CHK_TempStr = "" Then
 			ClearFlag = Request("ClearFlag")
 			If ClearFlag = "dkeJje5" or ClearFlag = "dkeJje6" Then
-				If GBL_UserID<1 or CheckSupervisorUserName = 0 or ClearFlag = "dkeJje5" Then
+				If GBL_UserID<1 or CheckSupervisorUserName() = 0 or ClearFlag = "dkeJje5" Then
 					Select Case FriendFlag
 					Case 1:
 						SQL = "delete from LeadBBS_FriendUser where UserID=" & GBL_UserID
@@ -101,12 +101,12 @@ Sub Main
 				End If
 						
 				If Request.Form("DeleteSureFlag")="dk9@dl9s92lw_SWxl" Then
-					%>³É¹¦É¾³ıËùÓĞ<%=ViewStr%>!<%
+					%>æˆåŠŸåˆ é™¤æ‰€æœ‰<%=ViewStr%>!<%
 					CALL LDExeCute(SQL,1)
 					Select case FriendFlag
 						Case 0:
 							CALL LDExeCute("Update LeadBBS_User Set MessageFlag=0 where ID=" & GBL_UserID,1)
-							If CheckSupervisorUserName = 1 Then ReloadPubMessageInfo
+							If CheckSupervisorUserName() = 1 Then ReloadPubMessageInfo
 					End Select
 				Else
 					%>
@@ -115,31 +115,31 @@ Sub Main
 						<input type=hidden name=FriendFlag value="<%=htmlencode(FriendFlag)%>">
 						<input type=hidden name=ClearFlag value="<%=htmlencode(ClearFlag)%>">
 						<input type=hidden name=MessageID value="<%=htmlencode(MessageID)%>">
-						<b>É¾³ı²Ù×÷²»¿ÉÄæ, È·ÈÏÉ¾³ıËùÓĞ<%=ViewStr%>Âğ£¿</b>
-						<p><input type=submit value=È·¶¨ class=fmbtn>
-						<input type=button value=²»É¾ onclick="javascript:window.close();" class=fmbtn>
+						<b>åˆ é™¤æ“ä½œä¸å¯é€†, ç¡®è®¤åˆ é™¤æ‰€æœ‰<%=ViewStr%>å—ï¼Ÿ</b>
+						<p><input type=submit value=ç¡®å®š class=fmbtn>
+						<input type=button value=ä¸åˆ  onclick="javascript:window.close();" class=fmbtn>
 					</form>
 					<%
 				End If
 			Else
 				If MessageID = 0 Then
-					Response.Write "²Ù×÷Ê§°Ü,´Ë" & ViewStr & "¿ÉÄÜÒÑÉ¾³ı." & VbCrLf
+					Response.Write "æ“ä½œå¤±è´¥,æ­¤" & ViewStr & "å¯èƒ½å·²åˆ é™¤." & VbCrLf
 				Else
 					If Request.Form("DeleteSureFlag")="dk9@dl9s92lw_SWxl" Then
-						If CheckSupervisorUserName = 0 Then
+						If CheckSupervisorUserName() = 0 Then
 							Select Case FriendFlag
 								Case 0:
-									Response.Write "É¾³ı³É¹¦!"
+									Response.Write "åˆ é™¤æˆåŠŸ!"
 									CALL LDExeCute("Delete from LeadBBS_InfoBox where ToUser='" & Replace(GBL_CHK_User,"'","''") & "' and id in(" & MessageID & ")",1)
 								Case 1:
-									Response.Write "ÒÑÈ¡Ïû¹Ø×¢!"
+									Response.Write "å·²å–æ¶ˆå…³æ³¨!"
 									CALL LDExeCute("Delete from LeadBBS_FriendUser where UserID=" & GBL_UserID & " and ID in(" & MessageID & ")",1)
 								Case 2:
-									Response.Write "É¾³ı³É¹¦!"
+									Response.Write "åˆ é™¤æˆåŠŸ!"
 									CALL LDExeCute("Delete from LeadBBS_CollectAnc where UserID=" & GBL_UserID & " and ID in(" & MessageID & ")",1)
 								Case 3:
-									Response.Write "É¾³ı³É¹¦!"
-									CheckisBoardMaster
+									Response.Write "åˆ é™¤æˆåŠŸ!"
+									CheckisBoardMaster()
 									If (GetBinarybit(GBL_CHK_UserLimit,11) = 1 and GBL_BoardMasterFlag >=4) Then
 										CALL Del_Upload("id in(" & MessageID & ")",0)
 									Else
@@ -147,11 +147,11 @@ Sub Main
 									End If
 							End Select
 						Else
-							Response.Write "É¾³ı³É¹¦!"
+							Response.Write "åˆ é™¤æˆåŠŸ!"
 							Select Case FriendFlag
 								Case 0:
 									CALL LDExeCute("Delete from LeadBBS_InfoBox where id in(" & MessageID & ")",1)
-									ReloadPubMessageInfo '¹ÜÀíÔ±Ë¢ĞÂ¹«¸æ
+									ReloadPubMessageInfo 'ç®¡ç†å‘˜åˆ·æ–°å…¬å‘Š
 								Case 1:
 									CALL LDExeCute("Delete from LeadBBS_FriendUser where ID in(" & MessageID & ")",1)
 								Case 2:
@@ -162,14 +162,14 @@ Sub Main
 						End If
 						
 						If ccur(FriendFlag) = 0 and (ccur(GBL_CHK_MessageFlag) = 1) Then
-							'ÌáÊ¾¸üĞÂ
+							'æç¤ºæ›´æ–°
 							SQL = sql_select("Select ID from LeadBBS_InfoBox where ReadFlag=0 and ToUser='" & Replace(GBL_CHK_User,"'","''") & "'",1)
 							Set Rs = LDExeCute(SQL,0)
 							If Rs.Eof Then
 								Rs.Close
 								Set Rs = Nothing
 								CALL LDExeCute("Update LeadBBS_User Set MessageFlag=0 where UserName='" & Replace(GBL_CHK_User,"'","''") & "'",1)
-								Free_UDT
+								Free_UDT()
 							Else
 								Rs.Close
 								Set Rs = Nothing
@@ -182,9 +182,9 @@ Sub Main
 							<input type=hidden name=ClearFlag value="<%=htmlencode(ClearFlag)%>">
 							<input type=hidden name=FriendFlag value="<%=htmlencode(FriendFlag)%>">
 							<input type=hidden name=MessageID value="<%=htmlencode(MessageID)%>">
-							<b>È·ÈÏÒªÉ¾³ı±àºÅÎª<font color=ff0000 class=redfont><%=MessageID%></font>µÄ<%=ViewStr%>Âğ£¿</b>
-							<br><br><input type=submit value=È·¶¨ class=fmbtn>
-							<input type=button value=·ÅÆú onclick="javascript:window.close();" class=fmbtn>
+							<b>ç¡®è®¤è¦åˆ é™¤ç¼–å·ä¸º<font color=ff0000 class=redfont><%=MessageID%></font>çš„<%=ViewStr%>å—ï¼Ÿ</b>
+							<br><br><input type=submit value=ç¡®å®š class=fmbtn>
+							<input type=button value=æ”¾å¼ƒ onclick="javascript:window.close();" class=fmbtn>
 						</form>
 						<%
 					End If
@@ -213,7 +213,7 @@ Sub Main
 	<%
 	End If
 	
-	closeDataBase
+	closeDataBase()
 	If AjaxFlag = 0 Then SiteBottom_Spend
 
 End Sub
@@ -238,7 +238,7 @@ Sub Del_Upload(str,UID)
 	Count = Ubound(GetData,2) + 1
 	
 	For N = 0 to Count - 1
-		UploadUserID = GetData(3,N)
+		UploadUserID = LngStr(GetData(3,N))
 		PhotoDir = GetData(1,N)
 		SPhotoDir = GetData(2,N)
 		
@@ -264,7 +264,7 @@ Function DeleteFiles(path)
 	Set fs = Server.CreateObject(DEF_FSOString)
 	If err <> 0 Then
 		Err.Clear
-		'Response.Write "¿Õ¼ä²»Ö§É¾³ı²Ù×÷(FSO)£®"
+		'Response.Write "ç©ºé—´ä¸æ”¯åˆ é™¤æ“ä½œ(FSO)ï¼"
 		Exit Function
 	End If
 	If fs.FileExists(path) Then

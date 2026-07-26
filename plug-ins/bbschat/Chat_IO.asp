@@ -1,6 +1,6 @@
-<!-- #include file=../../inc/BBSSetup.asp -->
-<!-- #include file=Chat_Fun.asp -->
-<!-- #include file=Inc/Chat_Setup.asp -->
+<!--#include file="../../inc/BBSSetup.asp"-->
+<!--#include file="Chat_Fun.asp"-->
+<!--#include file="Inc/Chat_Setup.asp"-->
 <%
 Sub Chat_GetWorldChat(User)
 
@@ -56,11 +56,11 @@ Sub Chat_GetInfo
 	User = Left(Request.Form("User"),20)
 	If isArray(Application(DEF_MasterCookies & "_Chat_S_Data_" & User)) = False Then
 		Response.Write "9 guest"
-		Exit Sub 'ÓÎ¿ÍÎÞ·¨ÇëÇó
+		Exit Sub 'æ¸¸å®¢æ— æ³•è¯·æ±‚
 	Else
 		If Application(DEF_MasterCookies & "_Chat_S_ID_" & User) <> cCur(Session.SessionID) Then
 			Response.Write "9 stop"
-			Exit Sub '·Çµ±Ç°´°¿ÚÎÞ·¨ÇëÇó
+			Exit Sub 'éžå½“å‰çª—å£æ— æ³•è¯·æ±‚
 		End If
 	End If
 	Dim tmp
@@ -78,5 +78,5 @@ Sub Chat_GetInfo
 
 End Sub
 
-Chat_GetInfo
+Chat_GetInfo()
 %>

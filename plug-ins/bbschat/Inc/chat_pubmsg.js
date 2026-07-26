@@ -12,7 +12,7 @@ function C_IO(ur,lb,id)
 			{
 				if(HR.responseText=="busy")
 				{
-					//addMessage("2","<b>×¢Òâ: </b>ÇëÇó¹ıÆµ£¬´Ë´°¿ÚÒÑÔİÍ£´¦Àí£¬Èô¿ªÆô¶à´°¿Ú£¬Çë¹Ø±ÕÆäËü´°¿ÚÔÙ<a href=# onclick=\"top.window.location.reload();\" >[Ë¢ĞÂ].</a>");
+					//addMessage("2","<b>æ³¨æ„: </b>è¯·æ±‚è¿‡é¢‘ï¼Œæ­¤çª—å£å·²æš‚åœå¤„ç†ï¼Œè‹¥å¼€å¯å¤šçª—å£ï¼Œè¯·å…³é—­å…¶å®ƒçª—å£å†<a href=# onclick=\"top.window.location.reload();\" >[åˆ·æ–°].</a>");
 					window.clearTimeout(C_IOfun);
 					return;
 				}
@@ -22,7 +22,7 @@ function C_IO(ur,lb,id)
 			{
 				window.clearTimeout(C_IOfun);
 				return;
-				//document.getElementById(lb).innerHTML="<p>ÍøÒ³´íÎó: " + HR.statusText +"<\/p>";
+				//document.getElementById(lb).innerHTML="<p>ç½‘é¡µé”™è¯¯: " + HR.statusText +"<\/p>";
 			}
 			delete HR ; 
 			HR=null;
@@ -36,7 +36,7 @@ try
 	var HR = getHttp();
 	HR.onreadystatechange = function() {processAJAX(lb);};
 	HR.open("POST", c_homeurl + "Chat_IO_pub.asp" , true);
-	HR.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=gb2312");
+	HR.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=utf-8");
 	HR.send("user=" + c_User);
 
 	window.clearTimeout(C_IOfun);
@@ -91,7 +91,7 @@ function addMessage(pos,mes)
 						break;
 				case "mess":
 						tp = "c_pub_mes";
-						$id(tp+"_txt").innerHTML = "ÄúÓĞĞÂµÄÏûÏ¢";
+						$id(tp+"_txt").innerHTML = "æ‚¨æœ‰æ–°çš„æ¶ˆæ¯";
 						$id(tp).href = c_home + "User/MyInfoBox.asp";
 						$id(tp).style.display = "";
 						c_infoflag = 1;
@@ -101,21 +101,21 @@ function addMessage(pos,mes)
 						tp = "c_pub_mes";
 						if(c_infoflag==1)
 						{
-							$id(tp+"_txt").innerHTML = "ÄúÓĞĞÂµÄÏûÏ¢";
+							$id(tp+"_txt").innerHTML = "æ‚¨æœ‰æ–°çš„æ¶ˆæ¯";
 							$id(tp).href = c_home + "User/MyInfoBox.asp";
 							$id(tp).style.display = "";
 						}
 						else
 						{
 							//$id(tp).style.display = "none";
-							$id(tp+"_txt").innerHTML = "ÊÕ¼şÏä";
+							$id(tp+"_txt").innerHTML = "æ”¶ä»¶ç®±";
 						}
 						tp = "";
 						break;
 				case "null":
 						tp = "c_pub_mes";
 						//$id(tp).style.display = "none";
-						$id(tp+"_txt").innerHTML = "ÊÕ¼şÏä";
+						$id(tp+"_txt").innerHTML = "æ”¶ä»¶ç®±";
 						c_infoflag = 0;
 						tp = "";
 						break;

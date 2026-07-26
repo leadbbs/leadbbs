@@ -1,5 +1,5 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
 <!--#include file="oauth.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
@@ -33,7 +33,7 @@ Sub Main
 			dim CheckLogin
 			CheckLogin=qc.CheckLogin()
 			If CheckLogin=False Then
-				Response.Write("µÇÂ¼Ê§°Ü1£¡")
+				Response.Write("ç™»å½•å¤±è´¥1ï¼")
 				Response.End()
 			Else
 				Session("Access_Token")=qc.GetAccess_Token()
@@ -53,11 +53,11 @@ Sub Main
 		Set qc = Nothing
 
 		'Response.Cookies(DEF_MasterCookies & "_AppInfo")="1," & Session("Access_Token") & "," & Session("Openid")
-		'	Response.Cookies(DEF_MasterCookies&"_AppInfo").Expires = DateAdd("d",DEF_Now,365)
+		'	Response.Cookies(DEF_MasterCookies&"_AppInfo").Expires = DateAdd("d",365,DEF_Now)
 		'	Response.Cookies(DEF_MasterCookies&"_AppInfo").Domain = DEF_AbsolutHome
 		Set qc = Nothing
 		Dim UserID
-		initdatabase
+		initdatabase()
 		UserID = ldqq.App_CheckAppid(cur_apptype_get,Session("Openid"),Session("Access_Token"),expires)
 
 		If UserID > 0 Then
@@ -65,14 +65,14 @@ Sub Main
 		Else
 			if ldqq.App_BindExist(nickname,icon,expires,sex) = 0 then
 				'Response.Cookies(DEF_MasterCookies)("User") = CodeCookie(LeftTrue("QQ_" & nickname,20))
-				'Response.Cookies(DEF_MasterCookies).Expires = DateAdd("d",DEF_Now,365)
+				'Response.Cookies(DEF_MasterCookies).Expires = DateAdd("d",365,DEF_Now)
 				'Response.Cookies(DEF_MasterCookies).Domain = DEF_AbsolutHome
 				'Response.Cookies(DEF_MasterCookies&"_apptype") = cur_apptype_get
-				'Response.Cookies(DEF_MasterCookies&"_apptype").Expires = DateAdd("d",DEF_Now,365)
+				'Response.Cookies(DEF_MasterCookies&"_apptype").Expires = DateAdd("d",365,DEF_Now)
 				'Response.Cookies(DEF_MasterCookies&"_apptype").Domain = DEF_AbsolutHome
 			end if
 		End If
-		CloseDatabase
+		CloseDatabase()
 		If request.queryString("u") <> "" then
 			Response.Redirect "http://" & callback & replace(replace(filterUrlstr(left(request.queryString("u"),50)),"%2E","/"),"%2e","/")
 		else
@@ -143,19 +143,19 @@ Class leadbbs_forQQ
 		dontRequestFormFlag = "AppLogin"
 		GBL_CheckPassDoneFlag = 0
 		GBL_CHK_Flag = 1
-		checkPass
+		Call checkPass()
 
 	End Sub
 	
 	Public function App_BindExist(nickname,icon,expires,sexx)
 
 		dim sex
-		if sexx = "ÄÐ" then
-			sex = "ÄÐ"
-		elseif sexx = "Å®" then
-			sex = "Å®"
+		if sexx = "ç”·" then
+			sex = "ç”·"
+		elseif sexx = "å¥³" then
+			sex = "å¥³"
 		else
-			sex = "ÃÜ"
+			sex = "å¯†"
 		end if
 		If GBL_UserID > 0 Then
 			App_BindExist = 1
@@ -172,7 +172,7 @@ Class leadbbs_forQQ
 					case else
 						userName = "LD#"
 				end select
-				userName = userName & Mid(GetTimeValue(DEF_Now),3,6) & (Fix(Rnd*99999)+1)
+				userName = userName & Mid(LngStr(GetTimeValue(DEF_Now)),3,6) & (Fix(Rnd*99999)+1)
 				If CheckUserNameExist(userName) = 0 then
 					ExistFlag = 0
 					exit for
@@ -204,8 +204,8 @@ Class leadbbs_forQQ
 				App_BindExist = 1
 				
 				CALL LDExeCute("Update LeadBBS_SiteInfo Set UserCount=UserCount+1",1)
-				UpdateStatisticDataInfo 1,1,1
-				UpdateStatisticDataInfo userName,12,0
+				Call UpdateStatisticDataInfo(1,1,1)
+				Call UpdateStatisticDataInfo(userName,12,0)
 				
 				dim UserID
 				UserID = App_CheckAppid(cur_apptype_get,Session("Openid"),Session("Access_Token"),expires)
@@ -269,5 +269,5 @@ Class leadbbs_forQQ
 
 End Class
 
-Main
+Main()
 %>

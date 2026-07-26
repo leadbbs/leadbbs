@@ -1,59 +1,110 @@
-<!-- #include file=../../inc/BBSSetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSSetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
-DisplayUserNavigate("²é¿´Êı¾İ¿â±í½á¹¹")
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
+DisplayUserNavigate("æŸ¥çœ‹æ•°æ®åº“è¡¨ç»“æ„")
 If GBL_CHK_Flag=1 Then
-	LoginAccuessFul
+	LoginAccuessFul()
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Sub LoginAccuessFul
 
-	If DEF_UsedDataBase <> 0 Then
-		GBL_CHK_TempStr = "<div class=alert>AccessÊı¾İ¿â²»Ö§³ÖÈ«ÎÄË÷Òı·şÎñ!</div>"
-		Exit Sub
-	End If
 	Dim TBName
 	TBName = Request("TB")
 
-	If TBName = "" or Len(TBName) > 255 Then
-		GBL_CHK_TempStr = "<div class=alert>´Ë±í²»´æÔÚ!</div>"
-		Exit Sub
+	' The page shipped MSSQL-only (SP_SpaceUsed / COL_NAME / OBJECT_ID) and, worse, computed
+	' its "unsupported" message into GBL_CHK_TempStr without ever printing it â€” so on this
+	' MariaDB deployment it rendered a completely BLANK page, table index and all. It now
+	' reads information_schema on MySQL/MariaDB, always shows the table index, and says
+	' something when it cannot answer.
+	If TBName <> "" and Len(TBName) <= 255 Then
+		If DEF_UsedDataBase = 0 Then
+			DisplayTableColInfo_MSSQL(TBName)
+		ElseIf DEF_UsedDataBase = 2 Then
+			DisplayTableColInfo_MySQL(TBName)
+		Else
+			Response.Write "<div class=alert>Accessæ•°æ®åº“ä¸æ”¯æŒæŸ¥çœ‹è¡¨ç»“æ„!</div>"
+		End If
+	ElseIf TBName <> "" Then
+		Response.Write "<div class=alert>æ­¤è¡¨ä¸å­˜åœ¨!</div>"
 	End If
-	DisplayTableColInfo(TBName)
+	DisplayTableList()
 
 End Sub
 
-Function DisplayTableColInfo(Name)
+' MySQL / MariaDB: information_schema answers both halves of what SP_SpaceUsed and
+' COL_NAME/COL_LENGTH answered on MSSQL.
+Function DisplayTableColInfo_MySQL(Name)
+
+	Dim Rs,SQL,GetData,N
+	Response.Write "<div class=frametitle>æ•°æ®åº“è¡¨" & htmlencode(Name) & "ç»“æ„</div>"
+	SQL = "select TABLE_NAME,TABLE_ROWS,DATA_LENGTH,INDEX_LENGTH,DATA_FREE,ENGINE" &_
+	      " from information_schema.tables where TABLE_SCHEMA=database() and TABLE_NAME='" &_
+	      Replace(LCase(Name),"'","''") & "'"
+	Set Rs = LDExeCute(SQL,0)
+	If Rs.Eof Then
+		Rs.Close
+		Set Rs = Nothing
+		Response.Write "<div class=alert>æ­¤è¡¨ä¸å­˜åœ¨!</div>"
+		Exit Function
+	End If
+	Response.Write "<div class=frameline>è¡¨åï¼š" & htmlencode(Rs(0) & "") & "<br>"
+	Response.Write "ç°æœ‰çš„è¡Œæ•°ï¼š" & Rs(1) & "<br>"
+	Response.Write "è¡¨ä¸­çš„æ•°æ®æ‰€ä½¿ç”¨çš„ç©ºé—´é‡ï¼š" & Rs(2) & " å­—èŠ‚<br>"
+	Response.Write "è¡¨ä¸­çš„ç´¢å¼•æ‰€ä½¿ç”¨çš„ç©ºé—´é‡ï¼š" & Rs(3) & " å­—èŠ‚<br>"
+	Response.Write "è¡¨ä¸­æœªç”¨çš„ç©ºé—´é‡ï¼š" & Rs(4) & " å­—èŠ‚<br>"
+	Response.Write "å­˜å‚¨å¼•æ“ï¼š" & htmlencode(Rs(5) & "") & "</div>"
+	Rs.Close
+	Set Rs = Nothing
+
+	SQL = "select COLUMN_NAME,COLUMN_TYPE,IFNULL(CHARACTER_MAXIMUM_LENGTH,0)" &_
+	      " from information_schema.columns where TABLE_SCHEMA=database() and TABLE_NAME='" &_
+	      Replace(LCase(Name),"'","''") & "' order by ORDINAL_POSITION"
+	Set Rs = LDExeCute(SQL,0)
+	If Not Rs.Eof Then GetData = Rs.GetRows(-1)
+	Rs.Close
+	Set Rs = Nothing
+	Response.Write "<table border=0 cellpadding=0 cellspacing=0 width=100% class=frame_table>"
+	If isArray(GetData) = True Then
+		For N = 0 to Ubound(GetData,2)
+			Response.Write "<tr><td class=tdbox width=200>" & htmlencode(GetData(0,N) & "") &_
+				"</td><td class=tdbox>" & htmlencode(GetData(1,N) & "") & "</td></tr>"
+		Next
+	End If
+	Response.Write "</table>"
+
+End Function
+
+Function DisplayTableColInfo_MSSQL(Name)
 
 	Dim Rs,SQL
 	Dim N,Tmp,Tmp2
-	Response.Write "<div class=frametitle>Êı¾İ¿â±í" & Name & "½á¹¹</div>"
+	Response.Write "<div class=frametitle>æ•°æ®åº“è¡¨" & Name & "ç»“æ„</div>"
 	SQL = "exec SP_SpaceUsed '" & Replace(Name,"'","''") & "'"
 	Set Rs = LDExeCute(SQL,0)
 	If Not Rs.Eof Then Tmp = Rs.GetRows(-1)
 	Rs.Close
 	Set Rs = Nothing
 	If isArray(Tmp) = True Then
-		Response.Write "<div class=frameline>±íÃû£º" & Tmp(0,0) & "<br>"
-		Response.Write "ÏÖÓĞµÄĞĞÊı£º" & Tmp(1,0) & "<br>"
-		Response.Write "±£ÁôµÄ¿Õ¼ä×ÜÁ¿£º" & Tmp(2,0) & "<br>"
-		Response.Write "±íÖĞµÄÊı¾İËùÊ¹ÓÃµÄ¿Õ¼äÁ¿£º" & Tmp(3,0) & "<br>"
-		Response.Write "±íÖĞµÄË÷ÒıËùÊ¹ÓÃµÄ¿Õ¼äÁ¿£º" & Tmp(4,0) & "<br>"
-		Response.Write "±íÖĞÎ´ÓÃµÄ¿Õ¼äÁ¿£º" & Tmp(5,0) & "</div>"
+		Response.Write "<div class=frameline>è¡¨åï¼š" & Tmp(0,0) & "<br>"
+		Response.Write "ç°æœ‰çš„è¡Œæ•°ï¼š" & Tmp(1,0) & "<br>"
+		Response.Write "ä¿ç•™çš„ç©ºé—´æ€»é‡ï¼š" & Tmp(2,0) & "<br>"
+		Response.Write "è¡¨ä¸­çš„æ•°æ®æ‰€ä½¿ç”¨çš„ç©ºé—´é‡ï¼š" & Tmp(3,0) & "<br>"
+		Response.Write "è¡¨ä¸­çš„ç´¢å¼•æ‰€ä½¿ç”¨çš„ç©ºé—´é‡ï¼š" & Tmp(4,0) & "<br>"
+		Response.Write "è¡¨ä¸­æœªç”¨çš„ç©ºé—´é‡ï¼š" & Tmp(5,0) & "</div>"
 	End If
 	Set Tmp = Nothing
 	Response.Write "<table border=0 cellpadding=0 cellspacing=0 width=100% class=frame_table>"
@@ -75,25 +126,30 @@ Function DisplayTableColInfo(Name)
 		Set Rs = Nothing
 	Loop
 	Response.Write "</table>"
-	Response.Write "<div class=frameline><a href=TableInfo.asp?tb=LeadBBS_Announce>µã»÷ÕâÀï²é¿´±íLeadBBS_AnnounceĞÅÏ¢</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Assort>µã»÷ÕâÀï²é¿´±íLeadBBS_Assort</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Boards>µã»÷ÕâÀï²é¿´±íLeadBBS_Boards</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_CollectAnc>µã»÷ÕâÀï²é¿´±íLeadBBS_CollectAnc</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_ForbidIP>µã»÷ÕâÀï²é¿´±íLeadBBS_ForbidIP</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_FriendUser>µã»÷ÕâÀï²é¿´±íLeadBBS_FriendUser</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_GoodAssort>µã»÷ÕâÀï²é¿´±íLeadBBS_GoodAssort</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_InfoBox>µã»÷ÕâÀï²é¿´±íLeadBBS_InfoBox</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_IPAddress>µã»÷ÕâÀï²é¿´±íLeadBBS_IPAddress</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Link>µã»÷ÕâÀï²é¿´±íLeadBBS_Link</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_onlineUser>µã»÷ÕâÀï²é¿´±íLeadBBS_onlineUser</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Setup>µã»÷ÕâÀï²é¿´±íLeadBBS_Setup</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_SiteInfo>µã»÷ÕâÀï²é¿´±íLeadBBS_SiteInfo</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_SpecialUser>µã»÷ÕâÀï²é¿´±íLeadBBS_SpecialUser</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_TopAnnounce>µã»÷ÕâÀï²é¿´±íLeadBBS_TopAnnounce</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Upload>µã»÷ÕâÀï²é¿´±íLeadBBS_Upload</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_User>µã»÷ÕâÀï²é¿´±íLeadBBS_User</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_UserFace>µã»÷ÕâÀï²é¿´±íLeadBBS_UserFace</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_VoteItem>µã»÷ÕâÀï²é¿´±íLeadBBS_VoteItem</a>"
-	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_VoteUser>µã»÷ÕâÀï²é¿´±íLeadBBS_VoteUser</a></div>"
+
+End Function
+
+Function DisplayTableList
+
+	Response.Write "<div class=frameline><a href=TableInfo.asp?tb=LeadBBS_Announce>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_Announceä¿¡æ¯</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Assort>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_Assort</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Boards>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_Boards</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_CollectAnc>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_CollectAnc</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_ForbidIP>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_ForbidIP</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_FriendUser>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_FriendUser</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_GoodAssort>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_GoodAssort</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_InfoBox>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_InfoBox</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_IPAddress>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_IPAddress</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Link>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_Link</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_onlineUser>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_onlineUser</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Setup>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_Setup</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_SiteInfo>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_SiteInfo</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_SpecialUser>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_SpecialUser</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_TopAnnounce>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_TopAnnounce</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_Upload>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_Upload</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_User>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_User</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_UserFace>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_UserFace</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_VoteItem>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_VoteItem</a>"
+	Response.Write "<br><a href=TableInfo.asp?tb=LeadBBS_VoteUser>ç‚¹å‡»è¿™é‡ŒæŸ¥çœ‹è¡¨LeadBBS_VoteUser</a></div>"
 
 End Function%>

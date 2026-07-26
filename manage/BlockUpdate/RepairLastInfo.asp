@@ -1,32 +1,32 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../../inc/Ubbcode.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../../inc/Ubbcode.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 Rem -------------------------------------------------------
-Rem ------------´Ë³ÌĞòÓÃÀ´ĞŞ¸´±íLeadBBS_Announce-----------
-Rem ------------ÖĞRootMaxIDºÍRootMinID×Ö¶Î-----------------
-Rem ------------¸üĞÂÊ±¼äÂş³¤£¬½¨ÒéÏÈµ½ºóÌ¨¹Ø±ÕÂÛÌ³---------
+Rem ------------æ­¤ç¨‹åºç”¨æ¥ä¿®å¤è¡¨LeadBBS_Announce-----------
+Rem ------------ä¸­RootMaxIDå’ŒRootMinIDå­—æ®µ-----------------
+Rem ------------æ›´æ–°æ—¶é—´æ¼«é•¿ï¼Œå»ºè®®å…ˆåˆ°åå°å…³é—­è®ºå›---------
 Rem -------------------------------------------------------
 
 DEF_BBS_HomeUrl = "../../"
 server.scripttimeout=99999
-initDatabase
-UpdateLastInfoColumn
-CloseDatabase
+initDatabase()
+UpdateLastInfoColumn()
+CloseDatabase()
 
 Function UpdateLastInfoColumn()
 	
-	If CheckSupervisorUserName = 0 or GBL_UserID = 0 Then Exit Function
+	If CheckSupervisorUserName() = 0 or GBL_UserID = 0 Then Exit Function
 
 	If Request.Form("SureFlag") <> "E72ksiOkw2" Then
 		%>
 			<p><form action=RepairLastInfo.asp method=post>
-			<b><font color=ff0000 class=RedFont>È·¶¨ĞŞ¸´LastInfo²Ù×÷Âğ?<br>
+			<b><font color=ff0000 class=RedFont>ç¡®å®šä¿®å¤LastInfoæ“ä½œå—?<br>
 			<br>
 			<input type=hidden name=SureFlag value="E72ksiOkw2">
 			
-			<input type=submit value=È·¶¨½øĞĞ class=fmbtn>
+			<input type=submit value=ç¡®å®šè¿›è¡Œ class=fmbtn>
 			</form>
 		<%
 	Else
@@ -54,7 +54,7 @@ Function UpdateLastInfoColumn()
 		If RecordCount < 1 Then RecordCount = 1
 		CountIndex = 0
 		%>
-		<p style="font-size:9pt">ÏÂÃæ¿ªÊ¼ĞŞ¸´ÂÛÌ³Ö÷ÌâĞÅÏ¢£¬¹²ÓĞ<%=RecordCount%>¸öÖ÷Ìâ´ı¸üĞÂ
+		<p style="font-size:9pt">ä¸‹é¢å¼€å§‹ä¿®å¤è®ºå›ä¸»é¢˜ä¿¡æ¯ï¼Œå…±æœ‰<%=RecordCount%>ä¸ªä¸»é¢˜å¾…æ›´æ–°
 	
 		<table width="400" border="0" cellspacing="1" cellpadding="1">
 			<tr> 
@@ -63,7 +63,7 @@ Function UpdateLastInfoColumn()
 			<tr> 
 				<td bgcolor=ffffff height=9><img src=../../images/vote.gif width=0 height=16 id=img1 name=img1 align=absmiddle></td></tr></table>
 		</td></tr></table> <span id=txt1 name=txt1 style="font-size:9pt">0</span><span style="font-size:9pt">%</span>
-		<span id=tm name=tm style="font-size:9pt">ÕıÔÚ¹ÀËãĞèÒªÊ±¼ä...</span>
+		<span id=tm name=tm style="font-size:9pt">æ­£åœ¨ä¼°ç®—éœ€è¦æ—¶é—´...</span>
 		<%
 		Response.Flush
 		StartTime = Now
@@ -95,7 +95,7 @@ Function UpdateLastInfoColumn()
 					If CountIndex > 300 Then
 						SpendTime = Datediff("s",StartTime,Now)
 						RemainTime = SpendTime/CountIndex * (RecordCount-CountIndex)
-						Response.Write "tm.innerHTML=""" & "µ±Ç°ÏûºÄ:" & GetTimeString(SpendTime) & " ¹À¼ÆÊ£Óà:" & GetTimeString(RemainTime) & """;" & VbCrLf
+						Response.Write "tm.innerHTML=""" & "å½“å‰æ¶ˆè€—:" & GetTimeString(SpendTime) & " ä¼°è®¡å‰©ä½™:" & GetTimeString(RemainTime) & """;" & VbCrLf
 					End If
 					Response.Write "img1.title=""(" & CountIndex & ")"";</script>" & VbCrLf
 					Response.Flush
@@ -104,7 +104,7 @@ Function UpdateLastInfoColumn()
 		Loop
 		%>
 		<script>img1.width=400;
-		txt1.innerHTML="100";</script>Íê³É
+		txt1.innerHTML="100";</script>å®Œæˆ
 		<%
 	End If
 
@@ -115,16 +115,16 @@ Function GetTimeString(Num)
 	Dim Str,Temp,Number
 	Number = Num
 	Temp = Number/(24*60*60)
-	If Fix(Temp) > 0 Then Str = Str & Fix(Temp) & "Ìì"
+	If Fix(Temp) > 0 Then Str = Str & Fix(Temp) & "å¤©"
 	Number = Number-Fix(Temp)*24*60*60
 	Temp = Number/(60*60)
-	If Fix(Temp) > 0 Then Str = Str & Fix(Temp) & "Ê±"
+	If Fix(Temp) > 0 Then Str = Str & Fix(Temp) & "æ—¶"
 	Number = Number-Fix(Temp)*60*60
 	Temp = Number/(60)
-	If Fix(Temp) > 0 Then Str = Str & Fix(Temp) & "·Ö"
+	If Fix(Temp) > 0 Then Str = Str & Fix(Temp) & "åˆ†"
 	Number = Number-Fix(Temp)*60
 	Temp = Fix(Number)
-	If Fix(Temp) > 0 Then Str = Str & Temp & "Ãë"
+	If Fix(Temp) > 0 Then Str = Str & Temp & "ç§’"
 	GetTimeString = Str
 
 End Function

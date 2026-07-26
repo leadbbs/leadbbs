@@ -1,48 +1,48 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../inc/UserTopic.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../inc/UserTopic.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 
-Main
+Main()
 
 Sub Main
 
-	BBS_SiteHead DEF_SiteNameString & " - ¹ÜÀíÍÅ¶Ó",0,"¹ÜÀíÍÅ¶Ó"
+	BBS_SiteHead DEF_SiteNameString & " - ç®¡ç†å›¢é˜Ÿ",0,"ç®¡ç†å›¢é˜Ÿ"
 	
 	UserTopicTopInfo("forum")
-	Main_Info
-	UserTopicBottomInfo
-	sitebottom
+	Main_Info()
+	UserTopicBottomInfo()
+	sitebottom()
 
 End Sub
 
 Function Main_Info%>
 
 <p>
-<!-- #include file=../inc/Contact_Info.asp -->
+<!--#include file="../inc/Contact_Info.asp"-->
 
 <%
-	InitDatabase
-	DisplayBoardManageInfo
-	Closedatabase
+	InitDatabase()
+	DisplayBoardManageInfo()
+	Closedatabase()
 
 End Function
 
 Function DisplayBoardManageInfo
 
 	GBL_CHK_PWdFlag = 0
-	UpdateOnlineUserAtInfo GBL_board_ID,"¹ÜÀíÍÅ¶Ó"
+	UpdateOnlineUserAtInfo GBL_board_ID,"ç®¡ç†å›¢é˜Ÿ"
 	
-	Response.Write "<div class=title>ÂÛÌ³¹ÜÀíÈËÔ±</div>"
+	Response.Write "<div class=title>è®ºå›ç®¡ç†äººå‘˜</div>"
 	Dim N,GetData,Rs
 	GetData = Split(DEF_SupervisorUserName,",")
 	Rs = Ubound(GetData,1)
-	'If Replace(DEF_SupervisorUserName,",","") <> "" Then Response.Write "<p><u>ÂÛÌ³¹ÜÀíÔ±</u>"
+	'If Replace(DEF_SupervisorUserName,",","") <> "" Then Response.Write "<p><u>è®ºå›ç®¡ç†å‘˜</u>"
 	'For N = 0 to Rs
 	'	If GetData(N) <> "" Then
 	'		Response.Write " <a href=""../" & RW_User(0,"",GetData(N),"") & """>" & htmlencode(GetData(N)) & "</a>"
-	'		If GBL_CHK_User <> "" Then Response.Write "<a href=""../SendMessage.asp?SdM_ToUser=" & urlencode(GetData(N)) & """ onclick=""return(sendprivatemsg(this,'" & DEF_BBS_HomeUrl & "'));"" title=·¢ËÍ¶ÌÏûÏ¢><img src=../../images/" & GBL_DefineImage & "message.GIF border=0 align=middle></a>"
+	'		If GBL_CHK_User <> "" Then Response.Write "<a href=""../SendMessage.asp?SdM_ToUser=" & urlencode(GetData(N)) & """ onclick=""return(sendprivatemsg(this,'" & DEF_BBS_HomeUrl & "'));"" title=å‘é€çŸ­æ¶ˆæ¯><img src=../../images/" & GBL_DefineImage & "message.GIF border=0 align=middle></a>"
 	'	End If
 	'Next
 
@@ -57,7 +57,7 @@ Function DisplayBoardManageInfo
 	<img src=<%=DEF_BBS_HomeUrl & "images/" & GBL_DefineImage%>splt.gif align=middle width=7 height=15>
 	<a href=about.asp?b><%=DEF_PointsName(8)%></a>
 	<img src=<%=DEF_BBS_HomeUrl & "images/" & GBL_DefineImage%>splt.gif align=middle width=7 height=15>
-	<a href=about.asp?z>µÇÂ¼¼à¶½</a>
+	<a href=about.asp?z>ç™»å½•ç›‘ç£</a>
 	<img src=<%=DEF_BBS_HomeUrl & "images/" & GBL_DefineImage%>splt.gif align=middle width=7 height=15>
 	<%
 	If RequestStr = "a" Then
@@ -65,7 +65,7 @@ Function DisplayBoardManageInfo
 		If Rs.Eof Then
 			Rs.Close
 			Set Rs = Nothing
-			Response.Write "<p><u>" & DEF_PointsName(6) & "</b></u></p>ÎŞ"
+			Response.Write "<p><u>" & DEF_PointsName(6) & "</b></u></p>æ— "
 		Else
 			GetData = Rs.GetRows(-1)
 			Rs.Close
@@ -74,13 +74,13 @@ Function DisplayBoardManageInfo
 			Response.Write "<p><u>" & DEF_PointsName(6) & "</b></u></p>"%>
 			<table border="0" cellspacing="0" cellpadding="0" class=table_in>
 			<tr class=tbinhead>
-				<td width=180><div class=value>ÓÃ»§Ãû</div></td>
-				<td><div class=value>¶ÌÏûÏ¢</div></td>
+				<td width=180><div class=value>ç”¨æˆ·å</div></td>
+				<td><div class=value>çŸ­æ¶ˆæ¯</div></td>
 			</tr>
 			<%
 			For N = 0 to Rs
 				Response.Write "<tr><td class=tdbox><a href=""../" & RW_User(0,"",GetData(0,n),"") & """>" & htmlencode(GetData(0,n)) & "</a>"
-				Response.write "<td class=tdbox><a href=""../SendMessage.asp?SdM_ToUser=" & urlencode(GetData(0,n)) & """ onclick=""return(sendprivatemsg(this,'" & DEF_BBS_HomeUrl & "'));"" title=·¢ËÍ¶ÌÏûÏ¢><img src=../../images/" & GBL_DefineImage & "message.GIF border=0 align=middle></a>"
+				Response.write "<td class=tdbox><a href=""../SendMessage.asp?SdM_ToUser=" & urlencode(GetData(0,n)) & """ onclick=""return(sendprivatemsg(this,'" & DEF_BBS_HomeUrl & "'));"" title=å‘é€çŸ­æ¶ˆæ¯><img src=../../images/" & GBL_DefineImage & "message.GIF border=0 align=middle></a>"
 			Next
 			%>
 				</td>
@@ -103,14 +103,14 @@ Function DisplayBoardManageInfo
 			%>
 		<table border="0" cellspacing="0" cellpadding="0" class=table_in>
 		<tr class=tbinhead>
-			<td width=180><div class=value>ÓÃ»§Ãû</div></td>
-			<td width=120><div class=value>¶ÌÏûÏ¢</div></td>
-			<td><div class=value>µ£ÈÎ°æÃæ</div></td>
+			<td width=180><div class=value>ç”¨æˆ·å</div></td>
+			<td width=120><div class=value>çŸ­æ¶ˆæ¯</div></td>
+			<td><div class=value>æ‹…ä»»ç‰ˆé¢</div></td>
 		</tr><%
 			For N = 0 to Rs
 				If Flag <> cCur(GetData(0,N)) Then
 					Response.Write "<tr><td class=tdbox><a href=""../" & RW_User(GetData(0,n),"","","") & """>" & htmlencode(GetData(1,n)) & "</a>"
-					Response.write "<td class=tdbox><a href=""../SendMessage.asp?SdM_ToUser=" & urlencode(GetData(1,n)) & """ onclick=""return(sendprivatemsg(this,'" & DEF_BBS_HomeUrl & "'));"" title=·¢ËÍ¶ÌÏûÏ¢><img src=../../images/" & GBL_DefineImage & "message.GIF border=0 align=middle></a>"
+					Response.write "<td class=tdbox><a href=""../SendMessage.asp?SdM_ToUser=" & urlencode(GetData(1,n)) & """ onclick=""return(sendprivatemsg(this,'" & DEF_BBS_HomeUrl & "'));"" title=å‘é€çŸ­æ¶ˆæ¯><img src=../../images/" & GBL_DefineImage & "message.GIF border=0 align=middle></a>"
 					Response.Write "<td class=tdbox><a href=../../b/" & RW_b(GetData(3,n),0,"") & ">" & GetData(2,n) & "</a>"
 					Flag = cCur(GetData(0,n))
 				Else
@@ -121,7 +121,7 @@ Function DisplayBoardManageInfo
 		Else
 			Rs.Close
 			Set Rs = Nothing
-			Response.Write "<p><u>" & DEF_PointsName(8) & "</b></u></p>ÎŞ"
+			Response.Write "<p><u>" & DEF_PointsName(8) & "</b></u></p>æ— "
 		End If
 	End If
 
@@ -137,14 +137,14 @@ Function DisplayBoardManageInfo
 			%>
 		<table border="0" cellspacing="0" cellpadding="0" class=table_in>
 		<tr class=tbinhead>
-			<td width=180><div class=value>ÓÃ»§Ãû</div></td>
-			<td width=120><div class=value>¶ÌÏûÏ¢</div></td>
-			<td><div class=value>µ£ÈÎ·ÖÇø</div></td>
+			<td width=180><div class=value>ç”¨æˆ·å</div></td>
+			<td width=120><div class=value>çŸ­æ¶ˆæ¯</div></td>
+			<td><div class=value>æ‹…ä»»åˆ†åŒº</div></td>
 		</tr><%
 			For N = 0 to Rs
 				If Flag <> cCur(GetData(0,N)) Then
 					Response.Write "<tr><td class=tdbox><a href=""../" & RW_User(GetData(0,n),"","","") & """>" & htmlencode(GetData(1,n)) & "</a>"
-					Response.write "<td class=tdbox><a href=""../SendMessage.asp?SdM_ToUser=" & urlencode(GetData(1,n)) & """ onclick=""return(sendprivatemsg(this,'" & DEF_BBS_HomeUrl & "'));"" title=·¢ËÍ¶ÌÏûÏ¢><img src=../../images/" & GBL_DefineImage & "message.GIF border=0 align=middle></a>"
+					Response.write "<td class=tdbox><a href=""../SendMessage.asp?SdM_ToUser=" & urlencode(GetData(1,n)) & """ onclick=""return(sendprivatemsg(this,'" & DEF_BBS_HomeUrl & "'));"" title=å‘é€çŸ­æ¶ˆæ¯><img src=../../images/" & GBL_DefineImage & "message.GIF border=0 align=middle></a>"
 					Response.Write "<td class=tdbox><a href=../../Boards.asp?Assort=" & GetData(3,n) & ">" & GetData(2,n) & "</a>"
 					Flag = cCur(GetData(0,n))
 				Else
@@ -155,17 +155,17 @@ Function DisplayBoardManageInfo
 		Else
 			Rs.Close
 			Set Rs = Nothing
-			Response.Write "<p><u>" & DEF_PointsName(7) & "</b></u></p>ÎŞ"
+			Response.Write "<p><u>" & DEF_PointsName(7) & "</b></u></p>æ— "
 		End If
 	End If
 	
-	If RequestStr = "z" Then DisplayBoardManageInfo2
+	If RequestStr = "z" Then DisplayBoardManageInfo2()
 
 End Function
 
 Function DisplayBoardManageInfo2
 
-	Response.Write "<p><br><b>" & DEF_SiteNameString & " - ÂÛÌ³¹ÜÀíÈËÔ±µÇÂ¼Çé¿ö</b></p>"
+	Response.Write "<p><br><b>" & DEF_SiteNameString & " - è®ºå›ç®¡ç†äººå‘˜ç™»å½•æƒ…å†µ</b></p>"
 	
 	CALL About_ViewLogin("T1.Assort=2",DEF_PointsName(6))
 	CALL About_ViewLogin("Assort=7 order by T1.UserID",DEF_PointsName(7))
@@ -189,33 +189,33 @@ Sub About_ViewLogin(SQL,title)
 		%>
 	<table border="0" cellspacing="0" cellpadding="0" class=table_in>
 	<tr class=tbinhead>
-		<td width=180><div class=value>ÓÃ»§Ãû</div></td>
-		<td width=120><div class=value>¶ÌÏûÏ¢</div></td>
-		<td><div class=value>µÇÂ¼Çé¿ö</div></td>
+		<td width=180><div class=value>ç”¨æˆ·å</div></td>
+		<td width=120><div class=value>çŸ­æ¶ˆæ¯</div></td>
+		<td><div class=value>ç™»å½•æƒ…å†µ</div></td>
 	</tr><%
 		For N = 0 to Rs
 			If Flag <> GetData(0,N) Then
 				Response.Write "<tr><td class=tdbox><a href=""../" & RW_User(0,"",GetData(0,n),"") & """>" & htmlencode(GetData(0,n)) & "</a>"
-				Response.write "<td class=tdbox><a href=""../SendMessage.asp?SdM_ToUser=" & urlencode(GetData(0,n)) & """ onclick=""return(sendprivatemsg(this,'" & DEF_BBS_HomeUrl & "'));"" title=·¢ËÍ¶ÌÏûÏ¢><img src=../../images/" & GBL_DefineImage & "message.GIF class=""absmiddle"" alt=""¶ÌÏûÏ¢"" /></a>"
+				Response.write "<td class=tdbox><a href=""../SendMessage.asp?SdM_ToUser=" & urlencode(GetData(0,n)) & """ onclick=""return(sendprivatemsg(this,'" & DEF_BBS_HomeUrl & "'));"" title=å‘é€çŸ­æ¶ˆæ¯><img src=../../images/" & GBL_DefineImage & "message.GIF class=""absmiddle"" alt=""çŸ­æ¶ˆæ¯"" /></a>"
 				Flag = GetData(0,n)					
 				Response.Write "<td class=tdbox>"
 				If Len(GetData(1,n)) = 14 Then
 					GetData(1,n) = RestoreTime(GetData(1,n))
 					GetData(1,n) = DateDiff("d",GetData(1,n),now)
 					If GetData(1,n) <=0 Then
-						Response.Write "<span class=bluefont>½ñÌì¸ÕÀ´¹ı</span>"
+						Response.Write "<span class=bluefont>ä»Šå¤©åˆšæ¥è¿‡</span>"
 					ElseIf GetData(1,n) <=1 Then
-						Response.Write "<span class=greenfont>×òÌìÔøÀ´¹ı</span>"
+						Response.Write "<span class=greenfont>æ˜¨å¤©æ›¾æ¥è¿‡</span>"
 					ElseIf GetData(1,n) <=2 Then
-						Response.Write "<span class=greenfont>Ç°ÌìÔøÀ´¹ı</span>"
+						Response.Write "<span class=greenfont>å‰å¤©æ›¾æ¥è¿‡</span>"
 					ElseIf GetData(1,n) <=3 Then
-						Response.Write "<span class=greenfont>ÀÛ¼ÆÈıÌìÎ´À´¹ı</span>"
+						Response.Write "<span class=greenfont>ç´¯è®¡ä¸‰å¤©æœªæ¥è¿‡</span>"
 					ElseIf GetData(1,n) <=9 Then
-						Response.Write "<span class=redfont>Ê§×Ù" & GetData(1,n) & "Ìì</span>"
+						Response.Write "<span class=redfont>å¤±è¸ª" & GetData(1,n) & "å¤©</span>"
 					ElseIf GetData(1,n) <=21 Then
-						Response.Write "<span class=redfont>Ê§×Ù" & GetData(1,n) & "Ìì</span>"
+						Response.Write "<span class=redfont>å¤±è¸ª" & GetData(1,n) & "å¤©</span>"
 					Else
-						Response.Write "<span class=grayfont>Ê§×Ù" & GetData(1,n) & "Ìì</span>"
+						Response.Write "<span class=grayfont>å¤±è¸ª" & GetData(1,n) & "å¤©</span>"
 					End If
 				End If
 				Response.Write "</td>"
@@ -225,7 +225,7 @@ Sub About_ViewLogin(SQL,title)
 	Else
 		Rs.Close
 		Set Rs = Nothing
-		Response.Write "<p><u>" & title & "</b></u></p>ÎŞ"
+		Response.Write "<p><u>" & title & "</b></u></p>æ— "
 	End If
 
 End Sub%>

@@ -1,23 +1,23 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
-Manage_sitehead DEF_SiteNameString & " - ����Ա",""
-frame_TopInfo
-DisplayUserNavigate("�������Σɣе�ַ")
+Manage_sitehead DEF_SiteNameString & " - 管理员",""
+frame_TopInfo()
+DisplayUserNavigate("添加屏蔽ＩＰ地址")
 If GBL_CHK_Flag=1 Then
-	LoginAccuessFul
+	LoginAccuessFul()
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Dim GBL_IPStart,GBL_IPEnd,GBL_WhyString,GBL_ExpiresTime,GBL_UserName,GBL_UserName_UserID
@@ -46,15 +46,15 @@ Function LoginAccuessFul
 	If GBL_ExpiresTime < 0 or GBL_ExpiresTime > 30 Then GBL_ExpiresTime = -1
 
 	If Request.Form("submitflag") <> "" Then
-		CheckNewIP
+		CheckNewIP()
 		If GBL_CHK_TempStr = "" Then
-			SaveNewIP
+			SaveNewIP()
 			Response.Write GBL_CHK_TempStr
 		Else
-			DisplayNewIPForm
+			DisplayNewIPForm()
 		End If
 	Else
-		DisplayNewIPForm
+		DisplayNewIPForm()
 	End If
 
 End Function
@@ -72,13 +72,13 @@ Function SaveNewIP
 		Set Rs = Nothing
 		SQL = "Insert Into LeadBBS_ForbidIP(IPStart,IPEnd,IPNumber,ExpiresTime,WhyString) Values(" & GBL_IPStart & "," & GBL_IPEnd & "," & Number & "," & GBL_ExpiresTime & ",'" & Replace(GBL_WhyString,"'","''") & "')"
 		CALL LDExeCute(SQL,1)
-		GBL_CHK_TempStr = "<font color=008800 class=greenfont>�ɹ����δ�IP��,����" & Number & "��!<br>" & VbCrLf
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "��ʼIP��ַ��" & GBL_IPStart & "<br>" & VbCrLf
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "��ֹIP��ַ��" & GBL_IPEnd & "</font><br>" & VbCrLf
+		GBL_CHK_TempStr = "<font color=008800 class=greenfont>成功屏蔽此IP段,共计" & Number & "个!<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "起始IP地址：" & GBL_IPStart & "<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "终止IP地址：" & GBL_IPEnd & "</font><br>" & VbCrLf
 	Else
 		Rs.Close
 		Set Rs = Nothing
-		GBL_CHK_TempStr = "<font color=ff0000 class=redfont>���󣺴�IP��ַ���Ѿ��������б���,�����ظ�����!</font><br>" & VbCrLf
+		GBL_CHK_TempStr = "<font color=ff0000 class=redfont>错误：此IP地址段已经在屏蔽列表中,不用重复添加!</font><br>" & VbCrLf
 	End If
 
 End Function
@@ -106,17 +106,17 @@ Function CheckNewIP
 	GBL_ExpiresTime = fix(cCur(GBL_ExpiresTime))
 	If GBL_ExpiresTime < 0 or GBL_ExpiresTime > 30 Then GBL_ExpiresTime = -1
 	If GBL_ExpiresTime = -1 Then
-		GBL_CHK_TempStr = "������������ѡ���������ȷѡ��"
+		GBL_CHK_TempStr = "错误：屏蔽期限选择错误，请正确选择！"
 		Exit function
 	End If
 
 	If Len(Tmp_IPStart) <> 15 Then
-		GBL_CHK_TempStr = "������ʼ�ɣе�ַ����"
+		GBL_CHK_TempStr = "错误：起始ＩＰ地址错误"
 		Exit function
 	End If
 
 	If Len(Tmp_IPStart) <> 15 Then
-		GBL_CHK_TempStr = "������ֹ�ɣе�ַ����"
+		GBL_CHK_TempStr = "错误：终止ＩＰ地址错误"
 		Exit function
 	End If
 	
@@ -124,28 +124,28 @@ Function CheckNewIP
 	NewGBL_IPStart = Left(Replace(Tmp_IPStart,".",""),14)
 	NewGBL_IPEnd = Left(Replace(Tmp_IPEnd,".",""),14)
 	If isNumeric(NewGBL_IPStart) = 0 Then
-		GBL_CHK_TempStr = "������ʼ�ɣе�ַ���󣬱���������"
+		GBL_CHK_TempStr = "错误：起始ＩＰ地址错误，必须是数字"
 		Exit function
 	End If
 	
 	If isNumeric(NewGBL_IPEnd) = 0 Then
-		GBL_CHK_TempStr = "������ֹ�ɣе�ַ���󣬱���������"
+		GBL_CHK_TempStr = "错误：终止ＩＰ地址错误，必须是数字"
 		Exit function
 	End If
 	
 	NewGBL_IPStart = cCur(NewGBL_IPStart)
 	NewGBL_IPEnd = cCur(NewGBL_IPEnd)
 	If NewGBL_IPStart > NewGBL_IPEnd Then
-		GBL_CHK_TempStr = "������ֹ�ɣе�ַ���ܱ���ʼ�ɣе�ַС"
+		GBL_CHK_TempStr = "错误：终止ＩＰ地址不能比起始ＩＰ地址小"
 		Exit function
 	End If
 	
 	If NewGBL_IPStart > 255255255255 Then
-		GBL_CHK_TempStr = "������ʼ�ɣе�ַ�������IP��ַΪ255.255.255.255"
+		GBL_CHK_TempStr = "错误：起始ＩＰ地址错误，最大IP地址为255.255.255.255"
 		Exit function
 	End If
 	If NewGBL_IPEnd > 255255255255 Then
-		GBL_CHK_TempStr = "������ֹ�ɣе�ַ�������IP��ַΪ255.255.255.255"
+		GBL_CHK_TempStr = "错误：终止ＩＰ地址错误，最大IP地址为255.255.255.255"
 		Exit function
 	End If
 
@@ -164,125 +164,125 @@ Function DisplayNewIPForm
 	Dim N
 	If GBL_CHK_TempStr <> "" Then Response.Write "<p><font color=ff0000 class=redfont><b>" & GBL_CHK_TempStr & "</b></font></p>"%>
 		<%If Request.Form("submitflag") = "LKOkxk1" or Request.Form("submitflag") = "" Then%>
-		  <b>���ݣɣе�ַ���Σ�ֱ��������Ҫ���εģɣе�ַ</b>
+		  <b>根据ＩＰ地址屏蔽：直接输入需要屏蔽的ＩＰ地址</b>
           <form action=NewForbidIP.asp method=post id=fobform1 name=fobform1>
-			��ʼ�ɣе�ַ��<input name=GBL_IPStart value="<%=htmlencode(GBL_IPStart)%>" class=fminpt><br>
+			起始ＩＰ地址：<input name=GBL_IPStart value="<%=htmlencode(GBL_IPStart)%>" class=fminpt><br>
 			<input name=submitflag type=hidden value="LKOkxk1">
-			��ֹ�ɣе�ַ��<input name=GBL_IPEnd value="<%=htmlencode(GBL_IPEnd)%>" class=fminpt><br>
-			����ʱ��ѡ��<select name=GBL_ExpiresTime>
+			终止ＩＰ地址：<input name=GBL_IPEnd value="<%=htmlencode(GBL_IPEnd)%>" class=fminpt><br>
+			屏蔽时间选择：<select name=GBL_ExpiresTime>
 							<%For N = 1 to 30
 								If N = GBL_ExpiresTime Then
-									Response.Write "<option value=" & N & " selected>����" & Right("0" & N,2) & "��</option>"
+									Response.Write "<option value=" & N & " selected>屏蔽" & Right("0" & N,2) & "天</option>"
 								Else
-									Response.Write "<option value=" & N & ">����" & Right("0" & N,2) & "��</option>"
+									Response.Write "<option value=" & N & ">屏蔽" & Right("0" & N,2) & "天</option>"
 								End If
 							Next%>
-							<option value=0<%If GBL_ExpiresTime = 0 Then Response.Write " Selected"%>>��������</option>
+							<option value=0<%If GBL_ExpiresTime = 0 Then Response.Write " Selected"%>>永久屏蔽</option>
 						</select>
 						<br>
-			����ԭ��ע����<input name=GBL_WhyString MaxLength=100 size=30 value="<%=htmlencode(GBL_WhyString)%>" class=fminpt>
+			屏蔽原因注明：<input name=GBL_WhyString MaxLength=100 size=30 value="<%=htmlencode(GBL_WhyString)%>" class=fminpt>
 			<select onchange="$id('fobform1').GBL_WhyString.value=this.value;">
-				<option value="">===һЩ����ԭ����ѡ��===</option>
-				<option value="����������ɫ������">����������ɫ������</option>
-				<option value="����̳���ж��⹥��(�ڿ���Ϊ)">����̳���ж��⹥��(�ڿ���Ϊ)</option>
-				<option value="��ͣ�Ķ����ˮ��ע�����û�">��ͣ�Ķ����ˮ��ע�����û�</option>
+				<option value="">===一些常见原因请选择===</option>
+				<option value="发表反动或色情内容">发表反动或色情内容</option>
+				<option value="对论坛进行恶意攻击(黑客行为)">对论坛进行恶意攻击(黑客行为)</option>
+				<option value="不停的恶意灌水或注册新用户">不停的恶意灌水或注册新用户</option>
 			</select>
 			<br><br>
-			<input type=submit value="�ύ" class=fmbtn> <input type=reset value="ȡ��" class=fmbtn></form>
+			<input type=submit value="提交" class=fmbtn> <input type=reset value="取消" class=fmbtn></form>
 			<br>
 			<br>
-			����˵����<font color=888888 class=grayfont>�������ε�ַ211.222.222.222������������������211.222.222.222<br>
-			��������������61.211.*.*��������ʼ�ɣе�ַ������61.211.0.0����ֹ�ɣе�ַ<br>
-			����������������61.211.255.255</font><br><%End If%>
+			举例说明：<font color=888888 class=grayfont>比如屏蔽地址211.222.222.222，请在两个框中输入211.222.222.222<br>
+			　　　　　屏蔽61.211.*.*，请在起始ＩＰ地址中输入61.211.0.0，终止ＩＰ地址<br>
+			　　　　　中输入61.211.255.255</font><br><%End If%>
 			<%If Request.Form("submitflag") = "LKOkxk2" or Request.Form("submitflag") = "" Then%>
 			<br>
-		  <b>���������û��������Σ�������Ҫ���Σɣе�ַ�������û�����</b>
+		  <b>根据在线用户名来屏蔽：输入需要屏蔽ＩＰ地址的在线用户名称</b>
           <form action=NewForbidIP.asp method=post id=fobform2 name=fobform2>
-			���ߵ��û�����<input name=GBL_UserName value="<%=htmlencode(GBL_UserName)%>" class=fminpt><br>
+			在线的用户名：<input name=GBL_UserName value="<%=htmlencode(GBL_UserName)%>" class=fminpt><br>
 			<input name=submitflag type=hidden value="LKOkxk2">
-			����ʱ��ѡ��<select name=GBL_ExpiresTime>
+			屏蔽时间选择：<select name=GBL_ExpiresTime>
 							<%For N = 1 to 30
 								If N = GBL_ExpiresTime Then
-									Response.Write "<option value=" & N & " selected>����" & Right("0" & N,2) & "��</option>"
+									Response.Write "<option value=" & N & " selected>屏蔽" & Right("0" & N,2) & "天</option>"
 								Else
-									Response.Write "<option value=" & N & ">����" & Right("0" & N,2) & "��</option>"
+									Response.Write "<option value=" & N & ">屏蔽" & Right("0" & N,2) & "天</option>"
 								End If
 							Next%>
-							<option value=0<%If GBL_ExpiresTime = 0 Then Response.Write " Selected"%>>��������</option>
+							<option value=0<%If GBL_ExpiresTime = 0 Then Response.Write " Selected"%>>永久屏蔽</option>
 						</select>
 						<br>
-			����ԭ��ע����<input name=GBL_WhyString MaxLength=100 size=30 value="<%=htmlencode(GBL_WhyString)%>" class=fminpt>
+			屏蔽原因注明：<input name=GBL_WhyString MaxLength=100 size=30 value="<%=htmlencode(GBL_WhyString)%>" class=fminpt>
 			<select onchange="$id('fobform2').GBL_WhyString.value=this.value;">
-				<option value="">===һЩ����ԭ����ѡ��===</option>
-				<option value="����������ɫ������">����������ɫ������</option>
-				<option value="����̳���ж��⹥��(�ڿ���Ϊ)">����̳���ж��⹥��(�ڿ���Ϊ)</option>
-				<option value="��ͣ�Ķ����ˮ��ע�����û�">��ͣ�Ķ����ˮ��ע�����û�</option>
+				<option value="">===一些常见原因请选择===</option>
+				<option value="发表反动或色情内容">发表反动或色情内容</option>
+				<option value="对论坛进行恶意攻击(黑客行为)">对论坛进行恶意攻击(黑客行为)</option>
+				<option value="不停的恶意灌水或注册新用户">不停的恶意灌水或注册新用户</option>
 			</select>
 			<br><br>
-			<input type=submit value="�ύ" class=fmbtn> <input type=reset value="ȡ��" class=fmbtn></form>
+			<input type=submit value="提交" class=fmbtn> <input type=reset value="取消" class=fmbtn></form>
 			<br><%
 		End If%>
 
 			<%If Request.Form("submitflag") = "LKOkxk3" or Request.Form("submitflag") = "" Then%>
 			<br>
-		 	<b>���ݷ������������Σ�����ĳ�û����������ӵı��</b>
+		 	<b>根据发表帖子来屏蔽：输入某用户所发表帖子的编号</b>
           	<form action=NewForbidIP.asp method=post id=fobform3 name=fobform3>
-			��̳���ӱ�ţ�<input name=GBL_AnnounceID value="<%=htmlencode(GBL_AnnounceID)%>" class=fminpt><br>
+			论坛帖子编号：<input name=GBL_AnnounceID value="<%=htmlencode(GBL_AnnounceID)%>" class=fminpt><br>
 			<input name=submitflag type=hidden value="LKOkxk3">
-			����ʱ��ѡ��<select name=GBL_ExpiresTime>
+			屏蔽时间选择：<select name=GBL_ExpiresTime>
 							<%For N = 1 to 30
 								If N = GBL_ExpiresTime Then
-									Response.Write "<option value=" & N & " selected>����" & Right("0" & N,2) & "��</option>"
+									Response.Write "<option value=" & N & " selected>屏蔽" & Right("0" & N,2) & "天</option>"
 								Else
-									Response.Write "<option value=" & N & ">����" & Right("0" & N,2) & "��</option>"
+									Response.Write "<option value=" & N & ">屏蔽" & Right("0" & N,2) & "天</option>"
 								End If
 							Next%>
-							<option value=0<%If GBL_ExpiresTime = 0 Then Response.Write " Selected"%>>��������</option>
+							<option value=0<%If GBL_ExpiresTime = 0 Then Response.Write " Selected"%>>永久屏蔽</option>
 						</select>
 						<br>
-			����ԭ��ע����<input name=GBL_WhyString MaxLength=100 size=30 value="<%=htmlencode(GBL_WhyString)%>" class=fminpt>
+			屏蔽原因注明：<input name=GBL_WhyString MaxLength=100 size=30 value="<%=htmlencode(GBL_WhyString)%>" class=fminpt>
 			<select onchange="$id('fobform3').GBL_WhyString.value=this.value;">
-				<option value="">===һЩ����ԭ����ѡ��===</option>
-				<option value="����������ɫ������">����������ɫ������</option>
-				<option value="����̳���ж��⹥��(�ڿ���Ϊ)">����̳���ж��⹥��(�ڿ���Ϊ)</option>
-				<option value="��ͣ�Ķ����ˮ��ע�����û�">��ͣ�Ķ����ˮ��ע�����û�</option>
+				<option value="">===一些常见原因请选择===</option>
+				<option value="发表反动或色情内容">发表反动或色情内容</option>
+				<option value="对论坛进行恶意攻击(黑客行为)">对论坛进行恶意攻击(黑客行为)</option>
+				<option value="不停的恶意灌水或注册新用户">不停的恶意灌水或注册新用户</option>
 			</select>
 			<br><br>
-			<input type=submit value="�ύ" class=fmbtn> <input type=reset value="ȡ��" class=fmbtn></form>
+			<input type=submit value="提交" class=fmbtn> <input type=reset value="取消" class=fmbtn></form>
 			<br>
-			<br>ʹ��˵����<font color=888888 class=grayfont>���ӵı�ţ��ڰ����б��У�����������ǰ���ͼ���Ͽ�����ʾ���������<br>
-			�����������ڲ鿴��������ʱ������������������ϣ�������ʾ��������ظ����ı��</font><br><br><%
+			<br>使用说明：<font color=888888 class=grayfont>帖子的编号，在版面列表中，将鼠标放在最前面的图标上可以显示主题帖编号<br>
+			　　　　　在查看帖子内容时，将鼠标放在心情符号上，可以显示主题帖或回复帖的编号</font><br><br><%
 		End If%>
 			
 
 			<%If Request.Form("submitflag") = "LKOkxk4" or Request.Form("submitflag") = "" Then%>
 			<br>
-			<b>���ݶ���Ϣ��������Σ�����ĳ�û������Ͷ���Ϣ�ı��</b>
+			<b>根据短消息编号来屏蔽：输入某用户所发送短消息的编号</b>
 			<form action=NewForbidIP.asp method=post id=fobform4 name=fobform4>
-			����Ϣ�ı�ţ�<input name=GBL_MessageID value="<%=htmlencode(GBL_MessageID)%>" class=fminpt><br>
+			短消息的编号：<input name=GBL_MessageID value="<%=htmlencode(GBL_MessageID)%>" class=fminpt><br>
 			<input name=submitflag type=hidden value="LKOkxk4">
-			����ʱ��ѡ��<select name=GBL_ExpiresTime>
+			屏蔽时间选择：<select name=GBL_ExpiresTime>
 							<%For N = 1 to 30
 								If N = GBL_ExpiresTime Then
-									Response.Write "<option value=" & N & " selected>����" & Right("0" & N,2) & "��</option>"
+									Response.Write "<option value=" & N & " selected>屏蔽" & Right("0" & N,2) & "天</option>"
 								Else
-									Response.Write "<option value=" & N & ">����" & Right("0" & N,2) & "��</option>"
+									Response.Write "<option value=" & N & ">屏蔽" & Right("0" & N,2) & "天</option>"
 								End If
 							Next%>
-							<option value=0<%If GBL_ExpiresTime = 0 Then Response.Write " Selected"%>>��������</option>
+							<option value=0<%If GBL_ExpiresTime = 0 Then Response.Write " Selected"%>>永久屏蔽</option>
 						</select>
 						<br>
-			����ԭ��˵����<input name=GBL_WhyString MaxLength=100 size=30 value="<%=htmlencode(GBL_WhyString)%>" class=fminpt>
+			屏蔽原因说明：<input name=GBL_WhyString MaxLength=100 size=30 value="<%=htmlencode(GBL_WhyString)%>" class=fminpt>
 			<select onchange="$id('fobform4').GBL_WhyString.value=this.value;">
-				<option value="">===һЩ����ԭ����ѡ��===</option>
-				<option value="����������ɫ������">����������ɫ������</option>
-				<option value="����̳���ж��⹥��(�ڿ���Ϊ)">����̳���ж��⹥��(�ڿ���Ϊ)</option>
-				<option value="��ͣ�Ķ����ˮ��ע�����û�">��ͣ�Ķ����ˮ��ע�����û�</option>
+				<option value="">===一些常见原因请选择===</option>
+				<option value="发表反动或色情内容">发表反动或色情内容</option>
+				<option value="对论坛进行恶意攻击(黑客行为)">对论坛进行恶意攻击(黑客行为)</option>
+				<option value="不停的恶意灌水或注册新用户">不停的恶意灌水或注册新用户</option>
 			</select>
 			<br><br>
-			<input type=submit value="�ύ" class=fmbtn> <input type=reset value="ȡ��" class=fmbtn></form>
+			<input type=submit value="提交" class=fmbtn> <input type=reset value="取消" class=fmbtn></form>
 			<br>
-			<br>ʹ��˵����<font color=888888 class=grayfont>����Ϣ��ſ����ڲ鿴�ռ����б�����ʾ</font><br><br><%
+			<br>使用说明：<font color=888888 class=grayfont>短消息编号可以在查看收件箱列表中显示</font><br><br><%
 	End If%>
 
 <%End Function
@@ -292,7 +292,7 @@ Function FormatIPaddress(KIP)
 
 	Dim IP
 	IP = KIP
-	Rem ��ȥ���׵Ŀյ㣬����ʽ����XXX.XXX.XXX.XXX
+	Rem 除去两首的空点，并格式化成XXX.XXX.XXX.XXX
 	Dim Temp1,Temp2,TempN,Temp
 	IP = Trim(IP & "")
 	If inStr(IP,".") = 0 or Len(IP) = "" Then
@@ -342,17 +342,17 @@ Function FormatIPaddress(KIP)
 		TempN = TempN + 1
 	Next
 	FormatIPaddress = IP
-	Rem ���ص�IP��ַ�պ���15λ���������15���ַ����Ǵ�����Ч��IP��ַ
+	Rem 返回的IP地址刚好是15位，如果不是15个字符则是错误无效的IP地址
 
 End Function
 
 
-Rem ���ĳ�û����Ƿ����
+Rem 检测某用户名是否存在
 Function CheckUserNameExist(UserName)
 
 	If UserName <> "" and inStr(UserName,",") = 0 and inStr(Lcase(DEF_SupervisorUserName),"," & Lcase(UserName) & ",") > 0 Then
-		'��������ͬ����ʾ��Ϊ���Է�����Ա���ֱ�й©��ʵ��Ӧ����ʾ����Ա���ܱ�����
-		GBL_CHK_TempStr = "�����û���" & htmlencode(UserName) & "�����ڣ�"
+		'作这样的同样提示是为了以防管理员名字被泄漏，实际应该提示管理员不能被屏蔽
+		GBL_CHK_TempStr = "错误，用户名" & htmlencode(UserName) & "不存在！"
 		CheckUserNameExist = 0
 		Exit Function
 	End If
@@ -363,7 +363,7 @@ Function CheckUserNameExist(UserName)
 		Rs.Close
 		Set Rs = Nothing
 		CheckUserNameExist = 0
-		GBL_CHK_TempStr = "�����û���" & htmlencode(UserName) & "�����ڣ�"
+		GBL_CHK_TempStr = "错误，用户名" & htmlencode(UserName) & "不存在！"
 		Exit Function
 	Else
 		GBL_UserName_UserID = cCur(Rs(0))
@@ -377,7 +377,7 @@ Function CheckUserNameExist(UserName)
 		Rs.Close
 		Set Rs = Nothing
 		CheckUserNameExist = 0
-		GBL_CHK_TempStr = "�����û���" & htmlencode(UserName) & "Ŀǰ�����ߣ��޷�������Σ���ʹ�������ķ�ʽ�����Σ�"
+		GBL_CHK_TempStr = "错误，用户名" & htmlencode(UserName) & "目前不在线，无法完成屏蔽，请使用其它的方式来屏蔽！"
 		Exit Function
 	Else
 		GBL_IPStart = Rs(0)
@@ -390,17 +390,17 @@ Function CheckUserNameExist(UserName)
 
 End Function
 
-Rem ���ĳ����
+Rem 检测某帖子
 Function CheckAnnounceID(AnnounceID)
 
 	If isNumeric(AnnounceID) = False Then
-		GBL_CHK_TempStr = "�������Ӳ������ڻ���Ȩ���Σ�"
+		GBL_CHK_TempStr = "错误，帖子并不存在或无权屏蔽！"
 		CheckAnnounceID = 0
 		Exit Function
 	End If
 	AnnounceID = Fix(cCur(AnnounceID))
 	If AnnounceID < 1 Then
-		GBL_CHK_TempStr = "���󣬱��" & htmlencode(AnnounceID) & "�����Ӳ������ڻ���Ȩ���Σ�"
+		GBL_CHK_TempStr = "错误，编号" & htmlencode(AnnounceID) & "的帖子并不存在或无权屏蔽！"
 		CheckAnnounceID = 0
 		Exit Function
 	End If
@@ -411,7 +411,7 @@ Function CheckAnnounceID(AnnounceID)
 		Rs.Close
 		Set Rs = Nothing
 		CheckAnnounceID = 0
-		GBL_CHK_TempStr = "���󣬱��" & htmlencode(AnnounceID) & "�����Ӳ������ڻ���Ȩ���Σ�"
+		GBL_CHK_TempStr = "错误，编号" & htmlencode(AnnounceID) & "的帖子并不存在或无权屏蔽！"
 		Exit Function
 	Else
 		GBL_IPStart = Rs(0)
@@ -422,8 +422,8 @@ Function CheckAnnounceID(AnnounceID)
 	Set Rs = Nothing
 
 	If GBL_UserName <> "" and inStr(GBL_UserName,",") = 0 and inStr(Lcase(DEF_SupervisorUserName),"," & Lcase(GBL_UserName) & ",") > 0 Then
-		'��������ͬ����ʾ��Ϊ���Է�����Ա���ֱ�й©��ʵ��Ӧ����ʾ����Ա���ܱ�����
-		GBL_CHK_TempStr = "���󣬱��" & htmlencode(AnnounceID) & "�����Ӳ������ڻ���Ȩ���Σ�"
+		'作这样的同样提示是为了以防管理员名字被泄漏，实际应该提示管理员不能被屏蔽
+		GBL_CHK_TempStr = "错误，编号" & htmlencode(AnnounceID) & "的帖子并不存在或无权屏蔽！"
 		CheckAnnounceID = 0
 		Exit Function
 	End If
@@ -432,17 +432,17 @@ Function CheckAnnounceID(AnnounceID)
 End Function
 
 
-Rem ���ĳ����
+Rem 检测某帖子
 Function CheckMessageID(MessageID)
 
 	If isNumeric(MessageID) = False Then
-		GBL_CHK_TempStr = "���󣬶���Ϣ�������ڻ���Ȩ���Σ�"
+		GBL_CHK_TempStr = "错误，短消息并不存在或无权屏蔽！"
 		CheckMessageID = 0
 		Exit Function
 	End If
 	MessageID = Fix(cCur(MessageID))
 	If MessageID < 1 Then
-		GBL_CHK_TempStr = "���󣬱��" & htmlencode(MessageID) & "�Ķ���Ϣ�������ڻ���Ȩ���Σ�"
+		GBL_CHK_TempStr = "错误，编号" & htmlencode(MessageID) & "的短消息并不存在或无权屏蔽！"
 		CheckMessageID = 0
 		Exit Function
 	End If
@@ -453,7 +453,7 @@ Function CheckMessageID(MessageID)
 		Rs.Close
 		Set Rs = Nothing
 		CheckMessageID = 0
-		GBL_CHK_TempStr = "���󣬱��" & htmlencode(MessageID) & "�Ķ���Ϣ�������ڻ���Ȩ���Σ�"
+		GBL_CHK_TempStr = "错误，编号" & htmlencode(MessageID) & "的短消息并不存在或无权屏蔽！"
 		Exit Function
 	Else
 		GBL_IPStart = Rs(0)
@@ -464,8 +464,8 @@ Function CheckMessageID(MessageID)
 	Set Rs = Nothing
 
 	If GBL_UserName <> "" and inStr(GBL_UserName,",") = 0 and inStr(Lcase(DEF_SupervisorUserName),"," & Lcase(GBL_UserName) & ",") > 0 Then
-		'��������ͬ����ʾ��Ϊ���Է�����Ա���ֱ�й©��ʵ��Ӧ����ʾ����Ա���ܱ�����
-		GBL_CHK_TempStr = "���󣬱��" & htmlencode(MessageID) & "�Ķ���Ϣ�������ڻ���Ȩ���Σ�"
+		'作这样的同样提示是为了以防管理员名字被泄漏，实际应该提示管理员不能被屏蔽
+		GBL_CHK_TempStr = "错误，编号" & htmlencode(MessageID) & "的短消息并不存在或无权屏蔽！"
 		CheckMessageID = 0
 		Exit Function
 	End If

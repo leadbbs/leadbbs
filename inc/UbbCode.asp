@@ -1,4 +1,4 @@
-<!-- #include file=../inc/Ubbcode_Setup.asp -->
+<!--#include file="../inc/Ubbcode_Setup.asp"-->
 <%
 Function clearUbbcode(str)
 
@@ -26,7 +26,7 @@ End Function
 
 Function UBB_FiltrateBadWords(tempStr)
 
-	If CheckSupervisorUserName = 1 Then '管理员无需过滤
+	If CheckSupervisorUserName() = 1 Then '绠＄悊鍛樻棤闇�杩囨护
 		UBB_FiltrateBadWords = tempStr
 		Exit Function
 	End If

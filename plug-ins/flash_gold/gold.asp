@@ -20,7 +20,7 @@ Function ADODB_LoadFile(ByVal File)
 	If FSFlag = 1 Then
 		Set WriteFile = fs.OpenTextFile(Server.MapPath(File),1,True)
 		If Err Then
-			GBL_CHK_TempStr = "<br>¶ÁÈ¡ÎÄ¼şÊ§°Ü£º" & err.description & "<br>ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞ¶ÁÈ¡È¨ÏŞ."
+			GBL_CHK_TempStr = "<br>è¯»å–æ–‡ä»¶å¤±è´¥ï¼š" & err.description & "<br>å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰è¯»å–æƒé™."
 			err.Clear
 			Set Fs = Nothing
 			Exit Function
@@ -28,7 +28,7 @@ Function ADODB_LoadFile(ByVal File)
 		If Not WriteFile.AtEndOfStream Then
 			ADODB_LoadFile = WriteFile.ReadAll
 			If Err Then
-				GBL_CHK_TempStr = "¶ÁÈ¡ÎÄ¼şÊ§°Ü£º<p>" & err.description & "</p> ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞ¶ÁÈ¡È¨ÏŞ."
+				GBL_CHK_TempStr = "è¯»å–æ–‡ä»¶å¤±è´¥ï¼š<p>" & err.description & "</p> å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰è¯»å–æƒé™."
 				err.Clear
 				Set Fs = Nothing
 				Exit Function
@@ -39,7 +39,7 @@ Function ADODB_LoadFile(ByVal File)
 	Else
 		Set objStream = Server.CreateObject("ADODB.Stream")
 		If Err.Number=-2147221005 Then 
-			GBL_CHK_TempStr = "ÄúµÄÖ÷»ú²»Ö§³ÖADODB.Stream£¬ÎŞ·¨Íê³É²Ù×÷£¬ÇëÊÖ¹¤½øĞĞ"
+			GBL_CHK_TempStr = "æ‚¨çš„ä¸»æœºä¸æ”¯æŒADODB.Streamï¼Œæ— æ³•å®Œæˆæ“ä½œï¼Œè¯·æ‰‹å·¥è¿›è¡Œ"
 			Err.Clear
 			Set objStream = Nothing
 			Exit Function
@@ -49,7 +49,7 @@ Function ADODB_LoadFile(ByVal File)
 			.Mode = 3
 			.Open
 			.LoadFromFile Server.MapPath(File)
-			.Charset = "gb2312"
+			.Charset = "utf-8"
 			.Position = 2
 			ADODB_LoadFile = .ReadText
 			.Close
@@ -57,7 +57,7 @@ Function ADODB_LoadFile(ByVal File)
 		Set objStream = Nothing
 	End If
 	If Err Then
-		GBL_CHK_TempStr = "´íÎóĞÅÏ¢£º<p>" & err.description & "</p>ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞ¶ÁÈ¡È¨ÏŞ."
+		GBL_CHK_TempStr = "é”™è¯¯ä¿¡æ¯ï¼š<p>" & err.description & "</p>å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰è¯»å–æƒé™."
 		err.Clear
 		Set Fs = Nothing
 		Exit Function
@@ -65,7 +65,7 @@ Function ADODB_LoadFile(ByVal File)
 
 End Function
 
-'´æ´¢ÄÚÈİµ½ÎÄ¼ş
+'å­˜å‚¨å†…å®¹åˆ°æ–‡ä»¶
 Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 
 	'On Error Resume Next
@@ -90,7 +90,7 @@ Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 	Else
 		Set objStream = Server.CreateObject("ADODB.Stream")
 		If Err.Number=-2147221005 Then 
-			GBL_CHK_TempStr = "ÄúµÄÖ÷»ú²»Ö§³ÖADODB.Stream£¬ÎŞ·¨Íê³É²Ù×÷£¬ÇëÊÖ¹¤½øĞĞ"
+			GBL_CHK_TempStr = "æ‚¨çš„ä¸»æœºä¸æ”¯æŒADODB.Streamï¼Œæ— æ³•å®Œæˆæ“ä½œï¼Œè¯·æ‰‹å·¥è¿›è¡Œ"
 			Err.Clear
 			Set objStream = Nothing
 			Exit Sub
@@ -98,7 +98,7 @@ Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 		With objStream
 			.Type = 2
 			.Open
-			.Charset = "gb2312"
+			.Charset = "utf-8"
 			.Position = objStream.Size
 			.WriteText = strBody
 			.SaveToFile Server.MapPath(File),2
@@ -107,7 +107,7 @@ Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 		Set objStream = Nothing
 	End If
 	If Err Then
-		GBL_CHK_TempStr = "´íÎóĞÅÏ¢£º<p>" & err.description & "</p>ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞĞ´ÈëÈ¨ÏŞ."
+		GBL_CHK_TempStr = "é”™è¯¯ä¿¡æ¯ï¼š<p>" & err.description & "</p>å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰å†™å…¥æƒé™."
 		err.Clear
 		Set Fs = Nothing
 		Exit Sub
@@ -122,6 +122,8 @@ str=str&x & ": " & request.Form (x) & VbCrLf
 next
 ADODB_SaveToFile str,"gold.txt"
 
-Sub 
+' Upstream shipped this file with a bare `Sub` keyword and no name here, so it has never
+' compiled -- on IIS either. It is a dead debug scaffold (nothing in the tree references
+' gold.asp; the SWF posts to default.asp), so the stray keyword is simply removed.
 %>
 ok

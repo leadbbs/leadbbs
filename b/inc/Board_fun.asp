@@ -1,10 +1,37 @@
-<!-- #include file=../../inc/Templet/HTML/Normal_1.asp -->
-<!-- #include file=cache_fun.asp -->
+<!--#include file="../../inc/Templet/HTML/Normal_1.asp"-->
+<!--#include file="cache_fun.asp"-->
 <%
 Dim LMT_UrlEndString
 Dim SpecialIDList : SpecialIDList = ","
 dim LMT_listtype : LMT_listtype = 1
 dim LMT_action : LMT_action = ""
+
+' --- AxonASP fix: renderer must be defined BEFORE the list functions that call it ---
+Sub DisplayAnnounceData_HTML(GetData,AllFlag,obj)
+
+	Dim N,Temp,Temp1,Vflag
+	dim Num
+	Num = ubound(GetData,2)
+	For N = 0 to Num
+		'If AllFlag = 0 or GBL_Board_ID <> cCur(GetData(13,N)) Then
+		'If AllFlag = 1 or GBL_Board_ID <> cCur(GetData(13,N)) Then
+		Vflag = 1
+		If AllFlag = 0 and ccur(GetData(9,n)) > DEF_BBS_TOPMinID then
+			If inStr(SpecialIDList,"," & GetData(0,n) & ",") then Vflag = 0
+		end if
+		if Vflag = 1 then
+			'GetData(2,n) = Replace(GetData(2,n),"&#60","&lt;")
+			If GetData(16,n) <> 1 Then GetData(2,n) = Replace(GetData(2,n) & "","<","&lt;")
+			If GetData(16,n) >=60 Then
+				GetData(2,n) = "<span class=""grayfont"">å¸–å­ç­‰å¾…å®¡æ ¸ä¸­...</span>"
+				GetData(16,n) = 1
+			End If
+			GetData(17,n) = Replace(Replace(Replace(GetData(17,N) & "","<","&lt;"),chr(13),""),chr(10),"")
+			CALL obj.leadbbs(AllFlag,GetData(0,N),GetData(1,N),GetData(2,N),GetData(3,N),GetData(4,N),GetData(5,N),GetData(6,N),Replace(GetData(7,N),"<","&lt;"),GetData(8,N),GetData(9,N),Replace(GetData(10,N),"<","&lt;"),GetData(11,n),GetData(12,N),GetData(13,N),GetData(14,N),GetData(15,N),GetData(16,N),GetData(17,n),GetData(18,N),GetData(19,N),GetData(20,N),GetData(21,N),GetData(22,N),GetData(23,N),GetData(24,N),GetData(25,N))
+		End If
+	Next
+
+End Sub
 
 Sub DisplayAnnouncesSplitPages
 
@@ -23,7 +50,7 @@ if LMT_Simple = 0 then 'start simple
 			$id((obj2)).src="../images/<%=GBL_DefineImage%>Expand.gif";
 			if($id(obj).innerHTML=="")
 			{
-				$id(obj).innerHTML="ÏÂÔØÖĞ...";getAJAX("b.asp?b=<%=GBL_Board_ID%>","ol=3&id=" + id,"Lead" + id);
+				$id(obj).innerHTML="ä¸‹è½½ä¸­...";getAJAX("b.asp?b=<%=GBL_Board_ID%>","ol=3&id=" + id,"Lead" + id);
 			}
 		}else{
 			$id(obj).style.display="none";
@@ -44,7 +71,7 @@ if LMT_Simple = 0 then 'start simple
 	function delbody_view(obj)
 	{
 		layer_create("anc_msgbody");
-		$id('anc_msgbody').innerHTML="<div class=ajaxbox>ÒÑÑ¡Ôñ <b id=layer_selectnum>" + p_getnum() + "</b> Ìõ¼ÇÂ¼£º<br>ÇëÑ¡Ôñ²Ù×÷£º<b><a href=\"javascript:;\" onclick=\"a_command('É¾³ıÌû×Ó',$id('" + obj.id + "'),'<%=Temp%>&ID='+p_getselected());\">ÅúÁ¿É¾³ı</a>, <a href=\"javascript:;\" onclick=\"a_command('×ªÒÆÌû×Ó',$id('" + obj.id + "'),'<%Response.Write "Move&b=" & GBL_Board_ID & ""%>&ID='+p_getselected());\">ÅúÁ¿×ªÒÆ</a></b><br><input class=\"fmchkbox\" type=\"checkbox\" name=\"selmsg\" id=\"selmsg\" value=\"1\" onclick=\"achoose();\" />Ñ¡ÔñÈ«²¿</div>";
+		$id('anc_msgbody').innerHTML="<div class=ajaxbox>å·²é€‰æ‹© <b id=layer_selectnum>" + p_getnum() + "</b> æ¡è®°å½•ï¼š<br>è¯·é€‰æ‹©æ“ä½œï¼š<b><a href=\"javascript:;\" onclick=\"a_command('åˆ é™¤å¸–å­',$id('" + obj.id + "'),'<%=Temp%>&ID='+p_getselected());\">æ‰¹é‡åˆ é™¤</a>, <a href=\"javascript:;\" onclick=\"a_command('è½¬ç§»å¸–å­',$id('" + obj.id + "'),'<%Response.Write "Move&b=" & GBL_Board_ID & ""%>&ID='+p_getselected());\">æ‰¹é‡è½¬ç§»</a></b><br><input class=\"fmchkbox\" type=\"checkbox\" name=\"selmsg\" id=\"selmsg\" value=\"1\" onclick=\"achoose();\" />é€‰æ‹©å…¨éƒ¨</div>";
 		layer_view('',obj,'','','anc_msgbody','','',0,'',0,20);
 	}
 	<%End If%>
@@ -52,7 +79,7 @@ if LMT_Simple = 0 then 'start simple
 	</script>
 <%
 end if 'end simple
-	DisplayAnnouncesSplitPages_List
+	DisplayAnnouncesSplitPages_List()
 
 End Sub
 
@@ -207,11 +234,11 @@ end if 'end LMT_action
 	class_sql = "select {~~~} from ((" & TB & " as T1 " & forindex & " left join LeadBBS_User as T2 on T2.Id=T1.Userid) left join leadbbs_extend as T3 on (T3.ClassType=200 and T1.ID=T3.extendID)) " & LMT_actionInner & sql_extend
 	class_sql = class_sql & "---split---select {~~~} from " & TB & " as T1 " & forindex & " " & sql_extend
 			
-	class_selcolumn = "T1.id,T1.ChildNum,T1.Title,T1.FaceIcon,T1.LastTime,T1.Hits,T1.Length,T1.UserName,T1.UserID,T1.RootID,T1.LastUser,T1.NotReplay,T1.GoodFlag,T1.BoardID,T1.TopicType,T1.PollNum,T1.TitleStyle,T1.LastInfo,T1.ndatetime,T1.GoodAssort,T1.NeedValue,T2.UserName,T2.ID,T2.TrueName,T3.extent_content,''" & LMT_actionColumn 'T1.content
+	class_selcolumn = "T1.id,T1.ChildNum,T1.Title,T1.FaceIcon,T1.LastTime,T1.Hits,T1.Length,T1.UserName,T1.UserID,T1.RootID,T1.LastUser,T1.NotReplay,T1.GoodFlag,T1.BoardID,T1.TopicType,T1.PollNum,T1.TitleStyle,T1.LastInfo,T1.ndatetime,T1.GoodAssort,T1.NeedValue,T2.UserName as username_dup2,T2.ID as id_dup2,T2.TrueName,T3.extent_content,''" & LMT_actionColumn 'T1.content
 
 	splitpage_listNum = DEF_MaxListNum
 
-	if LMT_Action <> "" then splitpage_MaxJumpPageNum = fix(DEF_MaxJumpPageNum/4) '²é¿´È«²¿·µ»ØÊıÁ¿¼õÉÙ4±¶
+	if LMT_Action <> "" then splitpage_MaxJumpPageNum = fix(DEF_MaxJumpPageNum/4) 'æŸ¥çœ‹å…¨éƒ¨è¿”å›æ•°é‡å‡å°‘4å€
 	CALL splitpage_returnData(class_sql,class_idname,class_page,class_selcolumn,ALL_Count)
 	
 	if LMT_Simple = 0 then 'start simple
@@ -226,7 +253,7 @@ end if 'end LMT_action
 	if LMT_action <> "" then LMT_UrlEndString = LMT_UrlEndString & "&c=" & ALL_Count
 	CALL B_DisplaySplitPageString("b_box_none",LMT_UrlEndString)
 
-	Global_TableHead
+	Global_TableHead()
 	
 	dim BoardListClass,AllTopNum,PartTopNum
 	Set BoardListClass = New BoardList_HTML_Class
@@ -269,8 +296,8 @@ if LMT_action = "" then 'start LMT_action
 		End If
 	End If
 	
-	If AllTopNum <> -1 Then DisplayAnnounceData_HTML GetDataTop,1,BoardListClass
-	If PartTopNum <> -1 Then DisplayAnnounceData_HTML GetDataPartTop,2,BoardListClass
+	If AllTopNum <> -1 Then Call DisplayAnnounceData_HTML(GetDataTop,1,BoardListClass)
+	If PartTopNum <> -1 Then Call DisplayAnnounceData_HTML(GetDataPartTop,2,BoardListClass)
 	for N = 0 to AllTopNum
 		SpecialIDList = SpecialIDList & GetDataTop(0,N) & ","
 	Next
@@ -282,8 +309,8 @@ end if 'end LMT_action
 	if isArray(splitpage_getdata) then
 		if LMT_Action <> "" then
 			for n = 0 to splitpage_num
-				If CheckSupervisorUserName = 0 and GBL_CheckLimitTitle(splitpage_getdata(26,n),splitpage_getdata(27,n),splitpage_getdata(28,n),splitpage_getdata(29,n)) = 1 Then
-					splitpage_getdata(2,n) = "<span calss=grayfont>´ËÌû×Ó±êÌâÒÑÉèÖÃÎªÒş²Ø</span>"
+				If CheckSupervisorUserName() = 0 and GBL_CheckLimitTitle(splitpage_getdata(26,n),splitpage_getdata(27,n),splitpage_getdata(28,n),splitpage_getdata(29,n)) = 1 Then
+					splitpage_getdata(2,n) = "<span calss=grayfont>æ­¤å¸–å­æ ‡é¢˜å·²è®¾ç½®ä¸ºéšè—</span>"
 					splitpage_getdata(16,n) = 1
 				else
 					if LMT_listtype = 0 then
@@ -294,7 +321,7 @@ end if 'end LMT_action
 				End If
 			next
 		end if
-		DisplayAnnounceData_HTML splitpage_getdata,0,BoardListClass
+		Call DisplayAnnounceData_HTML(splitpage_getdata,0,BoardListClass)
 	end if
 	Set BoardListClass = Nothing
 	%>
@@ -310,31 +337,6 @@ end if 'end LMT_action
 
 end function
 
-Sub DisplayAnnounceData_HTML(GetData,AllFlag,obj)
-
-	Dim N,Temp,Temp1,Vflag
-	dim Num
-	Num = ubound(GetData,2)
-	For N = 0 to Num
-		'If AllFlag = 0 or GBL_Board_ID <> cCur(GetData(13,N)) Then
-		'If AllFlag = 1 or GBL_Board_ID <> cCur(GetData(13,N)) Then
-		Vflag = 1
-		If AllFlag = 0 and ccur(GetData(9,n)) > DEF_BBS_TOPMinID then
-			If inStr(SpecialIDList,"," & GetData(0,n) & ",") then Vflag = 0
-		end if
-		if Vflag = 1 then
-			'GetData(2,n) = Replace(GetData(2,n),"&#60","&lt;")
-			If GetData(16,n) <> 1 Then GetData(2,n) = Replace(GetData(2,n) & "","<","&lt;")
-			If GetData(16,n) >=60 Then
-				GetData(2,n) = "<span class=""grayfont"">Ìû×ÓµÈ´ıÉóºËÖĞ...</span>"
-				GetData(16,n) = 1
-			End If
-			GetData(17,n) = Replace(Replace(Replace(GetData(17,N) & "","<","&lt;"),chr(13),""),chr(10),"")
-			CALL obj.leadbbs(AllFlag,GetData(0,N),GetData(1,N),GetData(2,N),GetData(3,N),GetData(4,N),GetData(5,N),GetData(6,N),Replace(GetData(7,N),"<","&lt;"),GetData(8,N),GetData(9,N),Replace(GetData(10,N),"<","&lt;"),GetData(11,n),GetData(12,N),GetData(13,N),GetData(14,N),GetData(15,N),GetData(16,N),GetData(17,n),GetData(18,N),GetData(19,N),GetData(20,N),GetData(21,N),GetData(22,N),GetData(23,N),GetData(24,N),GetData(25,N))
-		End If
-	Next
-
-End Sub
 
 Sub B_DisplaySplitPageString(css,more)
 
@@ -345,8 +347,8 @@ Sub B_DisplaySplitPageString(css,more)
 			<div class="layer_item">
 				<a href="../a/a2.asp?B=<%=GBL_board_ID%>" class="b_post_link"><img src="../images/blank.gif" class="b_post" /></a>
 				<div class="layer_iteminfo">
-					<ul class="menu_list"><li><a href="../a/a2.asp?B=<%=GBL_board_ID%>">·¢±íĞÂÖ÷Ìâ</a></li>
-					<li><a href="../a/a2.asp?B=<%=GBL_board_ID%>&amp;VoteFlag=yes">·¢ÆğÍ¶Æ±</a></li>
+					<ul class="menu_list"><li><a href="../a/a2.asp?B=<%=GBL_board_ID%>">å‘è¡¨æ–°ä¸»é¢˜</a></li>
+					<li><a href="../a/a2.asp?B=<%=GBL_board_ID%>&amp;VoteFlag=yes">å‘èµ·æŠ•ç¥¨</a></li>
 					</ul>
 				</div>
 			</div>
@@ -356,19 +358,19 @@ Sub B_DisplaySplitPageString(css,more)
 			<ul>
 			<li>
 			<%if LMT_listtype = 1 then
-				response.write "<b>Ö÷Ìâ</b>"
+				response.write "<b>ä¸»é¢˜</b>"
 			else
-				response.write "<a href=""" & RW_b(0,0,"action=list&type=1") & """>Ö÷Ìâ</a>"
+				response.write "<a href=""" & RW_b(0,0,"action=list&type=1") & """>ä¸»é¢˜</a>"
 			end if%></li>
 			<li><%if LMT_listtype = 0 then
-				response.write "<b>»Ø¸´</b>"
+				response.write "<b>å›å¤</b>"
 			else
-				response.write "<a href=""" & RW_b(0,0,"action=list&type=0") & """>»Ø¸´</a>"
+				response.write "<a href=""" & RW_b(0,0,"action=list&type=0") & """>å›å¤</a>"
 			end if%></li>
 			<li><%if LMT_listtype = 2 then
-				response.write "<b>¾«»ª</b>"
+				response.write "<b>ç²¾å</b>"
 			else
-				response.write "<a href=""" & RW_b(0,0,"action=list&type=2") & """>¾«»ª</a>"
+				response.write "<a href=""" & RW_b(0,0,"action=list&type=2") & """>ç²¾å</a>"
 			end if%></li>
 			</ul>
 		</div>
@@ -381,7 +383,7 @@ Sub B_DisplaySplitPageString(css,more)
 	else
 		url = RW_b(0,"{page}","action=list&type=" & LMT_listtype & more)
 	end if
-	'×îºóÒ»²ÎÊıÊ¹ÓÃÔòÆôÓÃajaxµ÷ÓÃ 'board_content||$(\'#board_content\').ScrollTo(600);
+	'æœ€åä¸€å‚æ•°ä½¿ç”¨åˆ™å¯ç”¨ajaxè°ƒç”¨ 'board_content||$(\'#board_content\').ScrollTo(600);
 	CALL splitpage_viewpagelist(url,splitpage_maxpage,splitpage_page,"")
 	'CALL splitpage_viewpagelist(url,splitpage_maxpage,splitpage_page,"board_content||$(\'.head_top_out\').ScrollTo(0);")
 	%>

@@ -13,13 +13,13 @@
 	Public Sub DisplayActive
 
 		If GetBinarybit(GBL_CHK_UserLimit,1) = 0 and GBL_CHK_UserLimit <> "" and GBL_CHK_TempStr = "" and GBL_UserID > 0 Then
-			Response.Write "<div class=alert>´ËÓÃ»§ÒÑ¾­¼¤»î£¬²»±ØÔÙ½øĞĞ¼¤»î²Ù×÷¡£</div>" & VbCrLf
+			Response.Write "<div class=alert>æ­¤ç”¨æˆ·å·²ç»æ¿€æ´»ï¼Œä¸å¿…å†è¿›è¡Œæ¿€æ´»æ“ä½œã€‚</div>" & VbCrLf
 			Exit Sub
 		End If
 		If Request.Form("act") = "active" and GBL_CHK_TempStr = "" Then
 			If GBL_CHK_Flag = 1 and GBL_UserID > 0 Then
 				If GetBinarybit(GBL_CHK_UserLimit,1) = 0 and GBL_CHK_UserLimit <> "" Then
-					Response.Write "<div class=alert>´ËÓÃ»§ÒÑ¾­¼¤»î£¬²»±ØÔÙ½øĞĞ¼¤»î²Ù×÷¡£</div>" & VbCrLf
+					Response.Write "<div class=alert>æ­¤ç”¨æˆ·å·²ç»æ¿€æ´»ï¼Œä¸å¿…å†è¿›è¡Œæ¿€æ´»æ“ä½œã€‚</div>" & VbCrLf
 				Else
 					Dim Rs,SQL,remark
 					SQL = "Select ts.BoardID,tu.remark from LeadBBS_SpecialUser as ts left join leadbbs_user as tu on ts.userid=tu.id where ts.UserID=" & GBL_UserID
@@ -27,7 +27,7 @@
 					If Rs.Eof Then
 						Rs.Close
 						Set Rs = Nothing
-						Response.Write "<div class=alert>´ËÓÃ»§ÎŞ·¨ÓÉÓÃ»§½øĞĞ¼¤»î£¬ÇëÁªÏµ¹ÜÀíÔ±.</div>" & VbCrLf
+						Response.Write "<div class=alert>æ­¤ç”¨æˆ·æ— æ³•ç”±ç”¨æˆ·è¿›è¡Œæ¿€æ´»ï¼Œè¯·è”ç³»ç®¡ç†å‘˜.</div>" & VbCrLf
 						Exit Sub
 					End If
 					SQL = cCur(Rs(0))
@@ -35,33 +35,33 @@
 					Rs.Close
 					Set Rs = Nothing
 					If SQL < 1 Then
-						Response.Write "<div class=alert>´ËÓÃ»§ÎŞ·¨ÓÉÓÃ»§×ÔĞĞ¼¤»î£¬ÇëÁªÏµ¹ÜÀíÔ±.</div>" & VbCrLf
+						Response.Write "<div class=alert>æ­¤ç”¨æˆ·æ— æ³•ç”±ç”¨æˆ·è‡ªè¡Œæ¿€æ´»ï¼Œè¯·è”ç³»ç®¡ç†å‘˜.</div>" & VbCrLf
 					Else
 						If AttestNumber = SQL Then
 							CALL LDExeCute("Delete from LeadBBS_SpecialUser where UserID=" & GBL_UserID,1)
 							CALL LDExeCute("Update LeadBBS_User Set UserLimit=" & SetBinarybit(GBL_CHK_UserLimit,1,0) & " where ID=" & GBL_UserID,1)
-							UpdateSessionValue 2,SetBinarybit(GBL_CHK_UserLimit,1,0),0
-							Response.Write "<div class='alert greenfont'>ÓÃ»§³É¹¦¼¤»î£¬<a href=Login.asp?User=" & urlencode(GBL_CHK_User) & "&Relogin=Yes>ÇëÖØĞÂµÇÂ¼·ÃÎÊÂÛÌ³</a>.</div>" & VbCrLf
+							Call UpdateSessionValue(2,SetBinarybit(GBL_CHK_UserLimit,1,0),0)
+							Response.Write "<div class='alert greenfont'>ç”¨æˆ·æˆåŠŸæ¿€æ´»ï¼Œ<a href=Login.asp?User=" & urlencode(GBL_CHK_User) & "&Relogin=Yes>è¯·é‡æ–°ç™»å½•è®¿é—®è®ºå›</a>.</div>" & VbCrLf
 						Else
 							Randomize
 							CALL LDExeCute("Update LeadBBS_User Set Prevtime=" & GetTimeValue(DEF_Now) & ",Login_IP='" & Replace(GBL_IPAddress,"'","''") & "',Login_lastpass='" & Fix(rnd*99999) & "',Login_falsenum=Login_falsenum+1 Where ID=" & GBL_UserID,1)
-							UpdateSessionValue 11,GetTimeValue(DEF_Now),0
-							UpdateSessionValue 7,Fix(rnd*99999),0
-							UpdateSessionValue 8,1,1
-							Response.Write "<div class=alert>¼¤»îÂë´íÎó£¬×¢²áÓÃ»§¼¤»îÊ§°Ü£¡</div>"
-							VierForm
+							Call UpdateSessionValue(11,GetTimeValue(DEF_Now),0)
+							Call UpdateSessionValue(7,Fix(rnd*99999),0)
+							Call UpdateSessionValue(8,1,1)
+							Response.Write "<div class=alert>æ¿€æ´»ç é”™è¯¯ï¼Œæ³¨å†Œç”¨æˆ·æ¿€æ´»å¤±è´¥ï¼</div>"
+							VierForm()
 						End If
 					End If
 				End If
 			Else
 				If GBL_CHK_TempStr = "" Then
-					If GBL_CHK_User = "" or GBL_CHK_Pass = "" Then GBL_CHK_TempStr = "ÓÃ»§Ãû»òÃÜÂë×ÊÁÏÌîĞ´´íÎó£¡"
+					If GBL_CHK_User = "" or GBL_CHK_Pass = "" Then GBL_CHK_TempStr = "ç”¨æˆ·åæˆ–å¯†ç èµ„æ–™å¡«å†™é”™è¯¯ï¼"
 				End If
 				'Response.Write "<div class=alert>" & GBL_CHK_TempStr & "</div>"
-				VierForm
+				VierForm()
 			End If
 		Else
-			VierForm
+			VierForm()
 		End If
 	
 	End Sub
@@ -69,34 +69,35 @@
 	Private Sub VierForm%>
 
 	<div class='alert redfont'><%=GBL_CHK_TempStr%></div>
-	<div class=title>ÇëÊäÈëÄúÒª¼¤»îµÄÕËºÅ£¬ÃÜÂë¼°¼¤»îÂë¡£</div>
+	<div class=title>è¯·è¾“å…¥æ‚¨è¦æ¿€æ´»çš„è´¦å·ï¼Œå¯†ç åŠæ¿€æ´»ç ã€‚</div>
 	<form action=<%=DEF_BBS_HomeUrl%>User/UserGetPass.asp method="post" onSubmit="submit_disable(this);">
-		<div class="value2">ÓÃ»§Ãû£º <input name=User type=text maxlength=255 size=22 value="<%
+		<div class="value2">ç”¨æˆ·åï¼š <input name=User type=text maxlength=255 size=22 value="<%
 		If GBL_CHK_user = "" or isNull(GBL_CHK_user) Then
 			Response.Write htmlencode(Request("user"))
 		Else
 			Response.Write htmlencode(GBL_CHK_user)
-		End If%>" class='fminpt input_2'>¡¡¿ÉÒÔÊÇÓÊÏäµØÖ·»òÊÖ»úºÅÂë</div>
+		End If%>" class='fminpt input_2'>ã€€å¯ä»¥æ˜¯é‚®ç®±åœ°å€æˆ–æ‰‹æœºå·ç </div>
 		<input name=act type=hidden value="active">
-		<div class="value2">ÃÜ¡¡Âë£º <input name=pass type=password maxlength=20 size=22 value="<%'=htmlencode(GBL_CHK_Pass)%>" class='fminpt input_2'>
+		<div class="value2">å¯†ã€€ç ï¼š <input name=pass type=password maxlength=20 size=22 value="<%'=htmlencode(GBL_CHK_Pass)
+%>" class='fminpt input_2'>
 		</div>
 		<div class="value2">
-		¼¤»îÂë£º <input name=AttestNumber type=text maxlength=10 size=22 value="<%If AttestNumber > 0 Then Response.Write AttestNumber%>" class="fminpt input_2">
+		æ¿€æ´»ç ï¼š <input name=AttestNumber type=text maxlength=10 size=22 value="<%If AttestNumber > 0 Then Response.Write AttestNumber%>" class="fminpt input_2">
 		</div>
-		<br /><input type=submit value="¼¤»îÓÃ»§" class="fmbtn btn_3"> <input type=reset value="È¡Ïû" class="fmbtn btn_2">
+		<br /><input type=submit value="æ¿€æ´»ç”¨æˆ·" class="fmbtn btn_3"> <input type=reset value="å–æ¶ˆ" class="fmbtn btn_2">
 	</form>
 	<br />
-	<div class=title>ËµÃ÷£º</div>
-	<ul><li>Èç¹ûÄúµÄÕËºÅĞèÒª¼¤»î£¬ÇëÌîÍêÕûÉÏÃæµÄÈıÏîÄÚÈİ£¬²¢µã»÷¼¤»îÕËºÅ°´Å¥¡£</li>
-	<li>¼¤»îÂëÔÚ×¢²áÊ±¾ÍÒÑ¾­·¢ËÍµ½ÄúµÄÓÊÏä£¬ÊäÈëÕıÈ·µÄ¼¤»îÂë²ÅÄÜ¼¤»îÄúµÄÕËºÅ¡£</li>
-	<li>Ä³Ğ©ÕËºÅÖ»ÄÜÓÉ¹ÜÀíÔ±²ÅÄÜ¼¤»î£¬ÀûÓÃ´Ë¹¦ÄÜ½«ÈÔÈ»ÎŞ·¨¼¤»î¡£</li>
+	<div class=title>è¯´æ˜ï¼š</div>
+	<ul><li>å¦‚æœæ‚¨çš„è´¦å·éœ€è¦æ¿€æ´»ï¼Œè¯·å¡«å®Œæ•´ä¸Šé¢çš„ä¸‰é¡¹å†…å®¹ï¼Œå¹¶ç‚¹å‡»æ¿€æ´»è´¦å·æŒ‰é’®ã€‚</li>
+	<li>æ¿€æ´»ç åœ¨æ³¨å†Œæ—¶å°±å·²ç»å‘é€åˆ°æ‚¨çš„é‚®ç®±ï¼Œè¾“å…¥æ­£ç¡®çš„æ¿€æ´»ç æ‰èƒ½æ¿€æ´»æ‚¨çš„è´¦å·ã€‚</li>
+	<li>æŸäº›è´¦å·åªèƒ½ç”±ç®¡ç†å‘˜æ‰èƒ½æ¿€æ´»ï¼Œåˆ©ç”¨æ­¤åŠŸèƒ½å°†ä»ç„¶æ— æ³•æ¿€æ´»ã€‚</li>
 	</ul>
 
 	<%
-	getpass_menu
+	Call getpass_menu()
 	
 		If DEF_User_GetPassMode = 2 Then
-			Response.Write "<br><a href=UserGetPass.asp><font color=red class=redfont><b>ÈôÄúµÄÓÊÏäÎ´ÊÕµ½¼¤»îÂëĞÅ¼ş£¬¿ÉÒÔÊ¹ÓÃÃÜÂëÕÒ»Ø¹¦ÄÜÒªÇóÔÙ´Î·¢ËÍ£¡</b></font></a>"
+			Response.Write "<br><a href=UserGetPass.asp><font color=red class=redfont><b>è‹¥æ‚¨çš„é‚®ç®±æœªæ”¶åˆ°æ¿€æ´»ç ä¿¡ä»¶ï¼Œå¯ä»¥ä½¿ç”¨å¯†ç æ‰¾å›åŠŸèƒ½è¦æ±‚å†æ¬¡å‘é€ï¼</b></font></a>"
 		End If
 	
 	End Sub

@@ -1,18 +1,18 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/User_Setup.asp -->
-<!-- #include file=../inc/Board_popfun.asp -->
-<!-- #include file=../inc/ubbcode.asp -->
-<!-- #include file=../inc/Limit_fun.asp -->
-<!-- #include file=inc/User_fun.asp -->
-<!-- #include file=inc/UserTopic.asp -->
-<!-- #include file=inc/Mail_fun.asp -->
-<!-- #include file=../inc/Constellation2.asp -->
-<!-- #include file=inc/Fun_SendMessage.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/User_Setup.asp"-->
+<!--#include file="../inc/Board_popfun.asp"-->
+<!--#include file="../inc/ubbcode.asp"-->
+<!--#include file="../inc/Limit_fun.asp"-->
+<!--#include file="inc/User_fun.asp"-->
+<!--#include file="inc/UserTopic.asp"-->
+<!--#include file="inc/Mail_fun.asp"-->
+<!--#include file="../inc/Constellation2.asp"-->
+<!--#include file="inc/Fun_SendMessage.asp"-->
 <%
-Const LMT_RegVerifyQuestion = "" '×¢²áÑéÖ¤ÌáÊ¾ĞÅÏ¢£¬¿ÉÒÔÊÇHTML¸ñÊ½£¬±ÈÈçÊ¹ÓÃÍ¼Æ¬£¬Èô²»ÌîĞ´±íÊ¾²»¿ªÆô×¢²áÑéÖ¤ĞÅÏ¢¡£
-Const LMT_RegVerifyAnswer = "" '×¢²áÑéÖ¤ĞèÒªÌîĞ´µÄ´ğ°¸¡£
-Const LMT_EnableInvitedRegCode = 1 'ÊÇ·ñÔÊĞíÑûÇëÂë×¢²á ÔÚ½ûÖ¹×¢²áµÄÇé¿öÏÂ£¬¿ªÆôÕâ¸ö±íÊ¾ ÈÔÈ»¿ÉÒÔÓÃÑûÇëÂë×¢²á
-Const enable_showRegCode = 0 'ÊÇ·ñÔÊĞíÏÔÊ¾ÒÑ¾­Éú³ÉµÄÑûÇëÂë¸ø×¢²áÈË 1¡£ÔÊĞí  0²»ÔÊĞí 
+Const LMT_RegVerifyQuestion = "" 'æ³¨å†ŒéªŒè¯æç¤ºä¿¡æ¯ï¼Œå¯ä»¥æ˜¯HTMLæ ¼å¼ï¼Œæ¯”å¦‚ä½¿ç”¨å›¾ç‰‡ï¼Œè‹¥ä¸å¡«å†™è¡¨ç¤ºä¸å¼€å¯æ³¨å†ŒéªŒè¯ä¿¡æ¯ã€‚
+Const LMT_RegVerifyAnswer = "" 'æ³¨å†ŒéªŒè¯éœ€è¦å¡«å†™çš„ç­”æ¡ˆã€‚
+Const LMT_EnableInvitedRegCode = 1 'æ˜¯å¦å…è®¸é‚€è¯·ç æ³¨å†Œ åœ¨ç¦æ­¢æ³¨å†Œçš„æƒ…å†µä¸‹ï¼Œå¼€å¯è¿™ä¸ªè¡¨ç¤º ä»ç„¶å¯ä»¥ç”¨é‚€è¯·ç æ³¨å†Œ
+Const enable_showRegCode = 0 'æ˜¯å¦å…è®¸æ˜¾ç¤ºå·²ç»ç”Ÿæˆçš„é‚€è¯·ç ç»™æ³¨å†Œäºº 1ã€‚å…è®¸  0ä¸å…è®¸ 
 DEF_BBS_HomeUrl = "../"
 
 dim def_sim_flag : def_sim_flag = ""
@@ -24,11 +24,11 @@ Form_FaceWidth = DEF_AllFaceMaxWidth
 Form_FaceHeight = DEF_AllFaceMaxWidth
 GBL_CHK_PWdFlag = 0
 CursorLocation = 3
-initDatabase
+initDatabase()
 
 If Request.Form("checkflag") = "1" Then
-	Reg_CheckInfo
-	CloseDatabase
+	Reg_CheckInfo()
+	CloseDatabase()
 	Response.End
 End If
 
@@ -54,7 +54,7 @@ Dim reg_action,reg_command
 reg_action = Left(Request("action"),30)
 reg_command = Left(Request("command"),30)
 
-'»¥Áª¹Ø±Õ×´Ì¬²»ÔÊĞí°ó¶¨»òÍêÉÆ×ÊÁÏ
+'äº’è”å…³é—­çŠ¶æ€ä¸å…è®¸ç»‘å®šæˆ–å®Œå–„èµ„æ–™
 If GetBinarybit(DEF_Sideparameter,10) = 0 Then
 	reg_action = ""
 	reg_command = ""
@@ -77,15 +77,15 @@ else
 end if
 
 If reg_action <> "bind" Then
-	if ajaxflag = 0 then BBS_SiteHead isSimFlagStr & DEF_SiteNameString & " - ×¢²áĞÂÓÃ»§",0,"×¢²áĞÂÓÃ»§"
-	UpdateOnlineUserAtInfo GBL_board_ID,"×¢²áĞÂÓÃ»§"
+	if ajaxflag = 0 then BBS_SiteHead isSimFlagStr & DEF_SiteNameString & " - æ³¨å†Œæ–°ç”¨æˆ·",0,"æ³¨å†Œæ–°ç”¨æˆ·"
+	UpdateOnlineUserAtInfo GBL_board_ID,"æ³¨å†Œæ–°ç”¨æˆ·"
 Else	
-	if ajaxflag = 0 then BBS_SiteHead isSimFlagStr & DEF_SiteNameString & " - ÍêÉÆ/°ó¶¨ÕÊºÅ",0,"ÍêÉÆ/°ó¶¨ÕÊºÅ"
-	UpdateOnlineUserAtInfo GBL_board_ID,"ÍêÉÆ/°ó¶¨ÕÊºÅ"
+	if ajaxflag = 0 then BBS_SiteHead isSimFlagStr & DEF_SiteNameString & " - å®Œå–„/ç»‘å®šå¸å·",0,"å®Œå–„/ç»‘å®šå¸å·"
+	UpdateOnlineUserAtInfo GBL_board_ID,"å®Œå–„/ç»‘å®šå¸å·"
 End If
 if ajaxflag = 0 then UserTopicTopInfo("")
 
-checkinvitedRegCode
+checkinvitedRegCode()
 
 If reg_action <> "bind" or (reg_action = "bind" and reg_command = "reg") Then
 	If Request("JoinFlag") <> "" Then
@@ -93,42 +93,42 @@ If reg_action <> "bind" or (reg_action = "bind" and reg_command = "reg") Then
 			If Request.Form("SubmitFlag")="29d98Sasphouseasp8asphnet" Then
 				GBL_CHK_TempStr = ""
 				ApplyFlag = 1
-				checkFormData
+				checkFormData()
 				
-				'ÑûÇëÂëÑéÖ¤
-				If LMT_EnableRegNewUsers = 0 and LMT_EnableInvitedRegCode = 1 Then '±íÊ¾Ö»ÔÊĞíÑûÇëÂë×¢²á
-					if invitedRegCode <= 0 then 'ÑûÇëÂëÊÇ·ñÓĞĞ§
-							GBL_CHK_TempStr = GBL_CHK_TempStr & "ÑûÇëÂëÎ´ÌîĞ´»òÎŞĞ§»òÒÑ¾­¹ıÆÚ<br>"
+				'é‚€è¯·ç éªŒè¯
+				If LMT_EnableRegNewUsers = 0 and LMT_EnableInvitedRegCode = 1 Then 'è¡¨ç¤ºåªå…è®¸é‚€è¯·ç æ³¨å†Œ
+					if invitedRegCode <= 0 then 'é‚€è¯·ç æ˜¯å¦æœ‰æ•ˆ
+							GBL_CHK_TempStr = GBL_CHK_TempStr & "é‚€è¯·ç æœªå¡«å†™æˆ–æ— æ•ˆæˆ–å·²ç»è¿‡æœŸ<br>"
 							GBL_CHK_Flag = 0
 					end if
 				end if
 				
 				If GBL_CHK_Flag = 0 Then
 					Response.WRite "<div class=alert>" & GBL_CHK_TempStr & "</div>" & VbCrLf
-					JoinForm
+					JoinForm()
 				Else
-					If saveFormData = 1 Then
-						displayAccessFull
+					If saveFormData() = 1 Then
+						displayAccessFull()
 					Else
 						Response.Write "<div class=alert>" & GBL_CHK_TempStr & "</div>" & VbCrLf
-						JoinForm
+						JoinForm()
 					End If
 				End If
 				If Form_UpFlag = 1 Then Set Form_UpClass = Nothing
 			Else
-				JoinForm
+				JoinForm()
 			End If
 		Else
-			Response.Write "<div class=alert>Í£Ö¹ĞÂÓÃ»§×¢²áÖĞ£¬ÇëÁªÏµQQ1834644216£®</div>"
+			Response.Write "<div class=alert>åœæ­¢æ–°ç”¨æˆ·æ³¨å†Œä¸­ï¼Œè¯·è”ç³»QQ1834644216ï¼</div>"
 		End If
 	Else
-		DisplayUserAgreement
+		DisplayUserAgreement()
 	End If
 Else
-	Reg_Bind
+	Reg_Bind()
 End If
 if ajaxflag = 0 then UserTopicBottomInfo
-closeDataBase
+closeDataBase()
 if ajaxflag = 0 then SiteBottom
 	
 sub checkinvitedRegCode
@@ -161,29 +161,29 @@ Sub Reg_CheckInfo
 	checkvalue = Left(Request("checkvalue"),30)
 	Select Case checkitem
 		Case "username":
-			if check_usernameFilter(checkvalue,"ÓÃ»§Ãû") = 0 then
+			if check_usernameFilter(checkvalue,"ç”¨æˆ·å") = 0 then
 				Response.Write "<span class=redfont>" & GBL_CHK_Tempstr & "</span>"
 			else
 				If CheckUserNameExist(checkvalue) = 1 Then
-					Response.Write "<span class=redfont>ÓÃ»§ÃûÒÑ±»ËûÈË×¢²á</span>"
+					Response.Write "<span class=redfont>ç”¨æˆ·åå·²è¢«ä»–äººæ³¨å†Œ</span>"
 				Else
-					Response.Write "<span class=greenfont>¹§Ï²£¬´ËÓÃ»§Î´±»×¢²á</span>"
+					Response.Write "<span class=greenfont>æ­å–œï¼Œæ­¤ç”¨æˆ·æœªè¢«æ³¨å†Œ</span>"
 				End If
 			end if
 		Case "email":
 			if DEF_UserNewRegAttestMode <> 4 then
 				If IsValidEmail(checkvalue) = false Then
-					Response.Write "<span class=redfont>ÎŞĞ§µÄÓÊÏäµØÖ·¡£</span>"
+					Response.Write "<span class=redfont>æ— æ•ˆçš„é‚®ç®±åœ°å€ã€‚</span>"
 				Else
 					If CheckMailExist(checkvalue) = 1 Then
-						Response.Write "<span class=redfont>´ËÓÊÏäÒÑ±»ÆäËüÓÃ»§Ê¹ÓÃ</span>"
+						Response.Write "<span class=redfont>æ­¤é‚®ç®±å·²è¢«å…¶å®ƒç”¨æˆ·ä½¿ç”¨</span>"
 					Else
-						Response.Write "<span class=greenfont>ÑéÖ¤Í¨¹ı</span>"
+						Response.Write "<span class=greenfont>éªŒè¯é€šè¿‡</span>"
 					End If
 				End If
 			else
 				If IsValidEmail(checkvalue) = false and CheckMobilePhone(checkvalue) = false Then
-					Response.Write "<span class=redfont>ÎŞĞ§µÄÊÖ»úºÅÂë»òÓÊÏäµØÖ·¡£</span>"
+					Response.Write "<span class=redfont>æ— æ•ˆçš„æ‰‹æœºå·ç æˆ–é‚®ç®±åœ°å€ã€‚</span>"
 				Else
 					dim ttt
 					if inStr(checkvalue,"@") > 0 then
@@ -192,9 +192,9 @@ Sub Reg_CheckInfo
 						ttt = checkMobileTelExist(toNum(checkvalue,0))
 					end if
 					If ttt = 1 Then
-						Response.Write "<span class=redfont>´ËÓÊÏä»òÊÖ»úºÅÂëÒÑ±»×¢²á£®</span>"
+						Response.Write "<span class=redfont>æ­¤é‚®ç®±æˆ–æ‰‹æœºå·ç å·²è¢«æ³¨å†Œï¼</span>"
 					Else
-						Response.Write "<span class=greenfont>ÑéÖ¤Í¨¹ı</span>"
+						Response.Write "<span class=greenfont>éªŒè¯é€šè¿‡</span>"
 					End If
 				End If
 			end if
@@ -212,16 +212,16 @@ Sub DisplayUserAgreement
 	If Request("u") <> "" Then
 		Response.Write htmlencode(Request("u"))
 	Else
-		Response.Write reg_getrefer
+		Response.Write reg_getrefer()
 	End If
 	%>" name=u>
-<!-- #include file=inc/User_Reg.asp -->
-<input type="submit" value="ÎÒÍ¬Òâ" class="fmbtn btn_3">
-<input type="button" value="²»Í¬Òâ" class="fmbtn btn_3" onclick="location.href='../Boards.asp';"></form>
+<!--#include file="inc/User_Reg.asp"-->
+<input type="submit" value="æˆ‘åŒæ„" class="fmbtn btn_3">
+<input type="button" value="ä¸åŒæ„" class="fmbtn btn_3" onclick="location.href='../Boards.asp';"></form>
 <br /><br />
 <div class=splitline></div>
-<div class=title>Èç¹ûÄúÓµÓĞÕÊºÅ£º</div>
-<div class=value2><a href="login.asp">ÓÃÂÛÌ³ÕÊºÅµÇÂ¼</a> <span class=grayfont style="margin:0 6px;">»ò</span> <%
+<div class=title>å¦‚æœæ‚¨æ‹¥æœ‰å¸å·ï¼š</div>
+<div class=value2><a href="login.asp">ç”¨è®ºå›å¸å·ç™»å½•</a> <span class=grayfont style="margin:0 6px;">æˆ–</span> <%
 
 	dim qc,Temp
 	SET qc = New QqConnet
@@ -229,7 +229,7 @@ Sub DisplayUserAgreement
 	If GetBinarybit(DEF_Sideparameter,10) = 1 Then
 		for Temp = 0 to ubound(connect_list)
 			if connect_allow(Temp) = 1 then%>
-<span class=grayfont></span><a href="<%=DEF_BBS_HomeUrl%>app/qqlogin/login.asp?apptype=<%=connect_apptype(Temp)%>"><img style="margin-right:6px;" src="<%=DEF_BBS_HomeUrl%>images/app/<%=Temp+1%>.png" border="0" class="absmiddle" title="Ê¹ÓÃ<%=connect_list(Temp)%>µÇÂ¼"/></span></a><%
+<span class=grayfont></span><a href="<%=DEF_BBS_HomeUrl%>app/qqlogin/login.asp?apptype=<%=connect_apptype(Temp)%>"><img style="margin-right:6px;" src="<%=DEF_BBS_HomeUrl%>images/app/<%=Temp+1%>.png" border="0" class="absmiddle" title="ä½¿ç”¨<%=connect_list(Temp)%>ç™»å½•"/></span></a><%
 			end if
 		next
 	end if
@@ -261,8 +261,8 @@ Function JoinForm
 	<input type=hidden value="<%Response.Write htmlencode(Request("u"))%>" name=u>
 	<input name="action" type="hidden" value="<%=htmlencode(reg_action)%>">
 	<input name="command" type="hidden" value="<%=htmlencode(reg_command)%>">
-	<div class=title><%If reg_action <> "bind" then %>ÓÃ»§×¢²á<%
-			Else%>ÍêÉÆ×ÊÁÏ<%
+	<div class=title><%If reg_action <> "bind" then %>ç”¨æˆ·æ³¨å†Œ<%
+			Else%>å®Œå–„èµ„æ–™<%
 			End If%></div>
 	<br>
 	
@@ -270,11 +270,11 @@ Function JoinForm
 	select case DEF_UserNewRegAttestMode
 		case 1:
 			%>
-			<span class=bluefont>×¢Òâ£ºĞÂ×¢²áµÄÓÃ»§ĞèÒªÖÁÓÊÏä»ñÈ¡ÈÏÖ¤Âë¼¤»î£¬Çë×Ğ<br>Ï¸ÌîĞ´ÄúµÄÓĞĞ§ÓÊÏäµØÖ·£¡</span>
+			<span class=bluefont>æ³¨æ„ï¼šæ–°æ³¨å†Œçš„ç”¨æˆ·éœ€è¦è‡³é‚®ç®±è·å–è®¤è¯ç æ¿€æ´»ï¼Œè¯·ä»”<br>ç»†å¡«å†™æ‚¨çš„æœ‰æ•ˆé‚®ç®±åœ°å€ï¼</span>
 			<table border=0  cellpadding="0" cellspacing="0" class="blanktable">
 			<tr>
 				<td>
-					µç×ÓÓÊ¼ş£º 
+					ç”µå­é‚®ä»¶ï¼š 
 				</td>
 				<td>
 					<input class='fminpt input_3' maxlength=60 name=Form_mail size=36 onchange="reg_checkinfo('email',this.value);" value="<% If Form_mail<>"" Then Response.Write Server.HtmlEncode(Form_mail)%>">
@@ -284,11 +284,11 @@ Function JoinForm
 			<%
 		case 3:
 			%>
-			<span class=bluefont>ÇëÌîĞ´ÊÖ»úºÅÂë£¬×¢²á³É¹¦ºó½«ÏòÄúµÄÊÖ»ú·¢ËÍ¼¤»îÂë£®</span>
+			<span class=bluefont>è¯·å¡«å†™æ‰‹æœºå·ç ï¼Œæ³¨å†ŒæˆåŠŸåå°†å‘æ‚¨çš„æ‰‹æœºå‘é€æ¿€æ´»ç ï¼</span>
 			<table border=0  cellpadding="0" cellspacing="0" class="blanktable">
 			<tr>
 				<td>
-					ÊÖ»ú£º
+					æ‰‹æœºï¼š
 				</td>
 				<td>
 					<input class=fminpt maxlength=15 name=Form_MobileTel size=14 value="<% If Form_MobileTel<>"" Then Response.Write Server.HtmlEncode(Form_MobileTel)%>">
@@ -297,12 +297,12 @@ Function JoinForm
 			<%
 		case 4:
 			%>
-			<span class=bluefont>ÇëÌîĞ´ÕıÈ·µÄÊÖ»úºÅÂë»òÓÊÏäµØÖ·£¬×¢²á³É¹¦ºó½«ÏòÄúµÄÊÖ»ú»òÓÊÏä·¢ËÍ¼¤»îÂë£®</span>
+			<span class=bluefont>è¯·å¡«å†™æ­£ç¡®çš„æ‰‹æœºå·ç æˆ–é‚®ç®±åœ°å€ï¼Œæ³¨å†ŒæˆåŠŸåå°†å‘æ‚¨çš„æ‰‹æœºæˆ–é‚®ç®±å‘é€æ¿€æ´»ç ï¼</span>
 			<table border=0  cellpadding="0" cellspacing="0" class="blanktable">
 			<!--
 			<tr>
 				<td>
-					ÊÖ»ú£º
+					æ‰‹æœºï¼š
 				</td>
 				<td>
 					<input class=fminpt maxlength=15 name=Form_MobileTel size=14 value="<% If Form_MobileTel<>"" Then Response.Write Server.HtmlEncode(Form_MobileTel)%>">
@@ -311,7 +311,7 @@ Function JoinForm
 			-->
 			<tr>
 				<td>
-					ÊÖ»ú»òÓÊÏä£º 
+					æ‰‹æœºæˆ–é‚®ç®±ï¼š 
 				</td>
 				<td>
 					<input class='fminpt input_3' maxlength=60 name=Form_mail size=36 onchange="reg_checkinfo('email',this.value);" value="<% If Form_mail<>"" Then Response.Write Server.HtmlEncode(Form_mail)%>">
@@ -329,7 +329,7 @@ Function JoinForm
 	%>
 			<tr>
 				<td>
-					ÓÃ »§ Ãû£º 
+					ç”¨ æˆ· åï¼š 
 				</td>
 				<td>
 					<input class='fminpt input_3' maxlength=14 name="Form_username" size="14" onchange="reg_checkinfo('username',this.value);" value="<% If Form_username<>"" Then Response.Write Server.HtmlEncode(Form_Username)%>">
@@ -339,7 +339,7 @@ Function JoinForm
 	
 			<tr>
 				<td>
-					µÇÂ¼ÃÜÂë£º 
+					ç™»å½•å¯†ç ï¼š 
 				</td>
 				<td>
 					<input class=fminpt name=SubmitFlag type=hidden value="29d98Sasphouseasp8asphnet">
@@ -349,22 +349,22 @@ Function JoinForm
 			</tr>
 			<tr>
 				<td>
-					È·ÈÏÃÜÂë£º 
+					ç¡®è®¤å¯†ç ï¼š 
 				</td>
 				<td>
 					<input class='fminpt input_3' maxlength=20 name="Form_password2" size=14 type=password value="<% If Form_password2<>"" Then Response.Write Server.HtmlEncode(Form_password2)%>">
 				</td>
 			</tr>
-			<%If LMT_EnableRegNewUsers = 0 and LMT_EnableInvitedRegCode = 1 Then '±íÊ¾Ö»ÔÊĞíÑûÇëÂë×¢²á
+			<%If LMT_EnableRegNewUsers = 0 and LMT_EnableInvitedRegCode = 1 Then 'è¡¨ç¤ºåªå…è®¸é‚€è¯·ç æ³¨å†Œ
 				dim tmpinvitedRegCode
 				tmpinvitedRegCode = request("invitedRegCode")
 				%><tr>
 				<td>
-				<b><span class="greenfont">ÑûÇëÂë£º </span></b>
+				<b><span class="greenfont">é‚€è¯·ç ï¼š </span></b>
 				</td>
 				<td>
 					<input class='fminpt input_3' maxlength=14 name="invitedRegCode" size="14" value="<% If tmpinvitedRegCode<>"" Then Response.Write htmlencode(tmpinvitedRegCode)%>">
-					<span class="greenfont">ĞèÒªÑûÇëÂë²ÅÄÜÍê³É×¢²á</span>
+					<span class="greenfont">éœ€è¦é‚€è¯·ç æ‰èƒ½å®Œæˆæ³¨å†Œ</span>
 				</td>
 			</tr>
 			
@@ -376,7 +376,7 @@ Function JoinForm
 					set rs = ldexecute(sql,0)
 					if not rs.eof then
 						regcode = rs("cardid")
-						response.write "ÇëÌîĞ´ÑûÇëÂë£º  <u>"&regcode&"</u>"
+						response.write "è¯·å¡«å†™é‚€è¯·ç ï¼š  <u>"&regcode&"</u>"
 					end if
 					rs.close
 					set rs = nothing
@@ -390,7 +390,7 @@ Function JoinForm
 			<table border=0  cellpadding="0" cellspacing="0" class="blanktable">
 			<tr>
 			<td>
-				<label><input class="fmchkbox" type="checkbox" name="moreinfo" value="1" onclick="if(this.checked){$id('reg_more_info').style.display='block';}else{$id('reg_more_info').style.display='none';}" />ÌîĞ´¸ü¶à×ÊÁÏ
+				<label><input class="fmchkbox" type="checkbox" name="moreinfo" value="1" onclick="if(this.checked){$id('reg_more_info').style.display='block';}else{$id('reg_more_info').style.display='none';}" />å¡«å†™æ›´å¤šèµ„æ–™
 				</label>
 			</td></tr></table>
 			<table border=0  cellpadding="0" cellspacing="0" class="blanktable" id="reg_more_info" style="display:none">
@@ -402,7 +402,7 @@ Function JoinForm
 			<!--
 			<tr>
 				<td>
-					ÓÃ »§ Ãû£º 
+					ç”¨ æˆ· åï¼š 
 				</td>
 				<td>
 					<input class='fminpt input_3' maxlength=14 name="Form_username" size="14" onchange="reg_checkinfo('username',this.value);" value="<% If Form_username<>"" Then Response.Write Server.HtmlEncode(Form_Username)%>">
@@ -415,7 +415,7 @@ Function JoinForm
 			
 			<tr>
 				<td>
-					ÎÊÌâÌáÊ¾£º 
+					é—®é¢˜æç¤ºï¼š 
 				</td>
 				<td>
 	<script type="text/javascript">
@@ -426,11 +426,11 @@ Function JoinForm
 	}
 	</script>
 					<select name="sel_question" onchange="if(this.value!=''&&this.value!='99')$id('Form_Question').value=this.value;if(this.value=='99'){this.style.display='none';$id('Form_Question').style.display='block';}else{$id('Form_Question').style.display='none';}">
-						<option value="" selected>--Ñ¡ÔñÎÊÌâ--</option>
-						<option value="ÎÒµÄ¼ÒÏçÊÇ£¿">ÎÒµÄ¼ÒÏçÊÇ£¿</option>
-						<option value="ÎÒÂèÂèµÄÃû×Ö£¿">ÎÒÂèÂèµÄÃû×Ö£¿</option>
-						<option value="×îÏ²»¶³ÔµÄÊ³Æ·£¿">×îÏ²»¶³ÔµÄÊ³Æ·£¿</option>
-						<option value="99">×Ô¶¨Òå...</option>
+						<option value="" selected>--é€‰æ‹©é—®é¢˜--</option>
+						<option value="æˆ‘çš„å®¶ä¹¡æ˜¯ï¼Ÿ">æˆ‘çš„å®¶ä¹¡æ˜¯ï¼Ÿ</option>
+						<option value="æˆ‘å¦ˆå¦ˆçš„åå­—ï¼Ÿ">æˆ‘å¦ˆå¦ˆçš„åå­—ï¼Ÿ</option>
+						<option value="æœ€å–œæ¬¢åƒçš„é£Ÿå“ï¼Ÿ">æœ€å–œæ¬¢åƒçš„é£Ÿå“ï¼Ÿ</option>
+						<option value="99">è‡ªå®šä¹‰...</option>
 					</select>
 					<div class=value2><input class='fminpt input_3' type="text" style="display:none;float:right;" maxlength=20 id=Form_Question name=Form_Question size=36 value="<% If Form_Question<>"" Then Response.Write Server.HtmlEncode(Form_Question)%>">
 					<div>
@@ -438,17 +438,17 @@ Function JoinForm
 			</tr>
 			<tr>
 				<td>
-					ÎÊÌâ´ğ°¸£º
+					é—®é¢˜ç­”æ¡ˆï¼š
 				</td>
 				<td>
 					<input class='fminpt input_3' maxlength=20 name=Form_Answer size=36 value="<% If Form_Answer<>"" Then Response.Write Server.HtmlEncode(Form_Answer)%>">
-					Íü¼ÇÃÜÂë¿ÉÆ¾´ËĞÅÏ¢ÕÒ»Ø
+					å¿˜è®°å¯†ç å¯å‡­æ­¤ä¿¡æ¯æ‰¾å›
 				</td>
 			</tr>
 			
 			<tr>
 				<td>
-					¸öÈËÖ÷Ò³£º
+					ä¸ªäººä¸»é¡µï¼š
 				</td>
 				<td>
 					<input class=fminpt maxlength=250 name=Form_homepage size=36 value="<% If Form_homepage<>"" Then Response.Write Server.HtmlEncode(Form_homepage)%>">
@@ -456,7 +456,7 @@ Function JoinForm
 			</tr>
 			<tr>
 				<td>
-					ÁªÏµµØÖ·£º
+					è”ç³»åœ°å€ï¼š
 				</td>
 				<td>
 					<input class=fminpt maxlength=150 name=Form_address size=36 value="<% If Form_address<>"" Then Response.Write Server.HtmlEncode(Form_address)%>">
@@ -464,7 +464,7 @@ Function JoinForm
 			</tr><!--
 			<tr>
 				<td>
-					ICQºÅÂë£º
+					ICQå·ç ï¼š
 				</td>
 				<td>
 					<input class=fminpt maxlength=12 name=Form_icq size=14 value="<% If Form_icq<>"" Then Response.Write Server.HtmlEncode(Form_icq)%>">
@@ -473,7 +473,7 @@ Function JoinForm
 			</tr>-->
 			<tr>
 				<td>
-					QQºÅÂë£º
+					QQå·ç ï¼š
 				</td>
 				<td>
 					<input class=fminpt maxlength=14 name=Form_oicq size=14 value="<% If Form_oicq<>"" Then Response.Write Server.HtmlEncode(Form_oicq)%>">
@@ -481,29 +481,29 @@ Function JoinForm
 			</tr>
 			<tr>
 				<td>
-					ĞÔ±ğ£º
+					æ€§åˆ«ï¼š
 				</td>
 				<td>
 					<label>
-						<input class=fmchkbox type=radio name=Form_sex value=ÄĞ <%If Form_sex = "ÄĞ" Then Response.Write " checked"%>>ÄĞ</label>
+						<input class=fmchkbox type=radio name=Form_sex value=ç”· <%If Form_sex = "ç”·" Then Response.Write " checked"%>>ç”·</label>
 					<label>
-						<input class=fmchkbox type=radio name=Form_sex value=Å® <%If Form_sex = "Å®" Then Response.Write " checked"%>>Å®</label>
+						<input class=fmchkbox type=radio name=Form_sex value=å¥³ <%If Form_sex = "å¥³" Then Response.Write " checked"%>>å¥³</label>
 					<label>
-						<input class=fmchkbox type=radio name=Form_sex value=ÃÜ <%If Form_sex = "ÃÜ" Then Response.Write " checked"%>>±£ÃÜ</label>
+						<input class=fmchkbox type=radio name=Form_sex value=å¯† <%If Form_sex = "å¯†" Then Response.Write " checked"%>>ä¿å¯†</label>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					ÓÃ»§Í·Ïñ£º
+					ç”¨æˆ·å¤´åƒï¼š
 				</td>
 				<td>
 					<input class=fminpt onchange="javascript:changeface();" maxlength=4 name=Form_userphoto size=4 value="<% If Form_userphoto<>"" Then Response.Write Server.HtmlEncode(string(4-len(cstr(Form_userphoto)),"0")&Form_userphoto)%>">
-					<a href="UserModify.asp?action=face" target=_blank onclick="return(pub_command('Ñ¡ÔñÍ·Ïñ',this,'anc_delbody',''));">Í·ÏñÒ»ÀÀ±í</a>
+					<a href="UserModify.asp?action=face" target=_blank onclick="return(pub_command('é€‰æ‹©å¤´åƒ',this,'anc_delbody',''));">å¤´åƒä¸€è§ˆè¡¨</a>
 				</td>
 			</tr><%If DEF_AllDefineFace <> 0 and DEF_AllDefineFace <> 2 Then%>
 			<tr>
 				<td>
-					×Ô¶¨Í·Ïñ£º
+					è‡ªå®šå¤´åƒï¼š
 				</td>
 				<td>
 					<input class=fminpt onchange="javascript:changeface2();" maxlength=250 name=Form_FaceUrl size=36 value="<%=HtmlEncode(Form_FaceUrl)%>">
@@ -511,16 +511,16 @@ Function JoinForm
 			</tr>
 			<tr>
 				<td>
-					Í·Ïñ´óĞ¡£º
+					å¤´åƒå¤§å°ï¼š
 				</td>
 				<td>
-					¿í: <input class=fminpt onchange="javascript:changeface2();" maxlength=<%=len(DEF_AllFaceMaxWidth)%> name=Form_FaceWidth size=3 value="<%=HtmlEncode(Form_FaceWidth)%>">(20-<%=DEF_AllFaceMaxWidth%>)
-					¸ß: <input class=fminpt onchange="javascript:changeface2();" maxlength=<%=len(DEF_AllFaceMaxWidth)%> name=Form_FaceHeight size=3 value="<%=HtmlEncode(Form_FaceHeight)%>">(20-<%=DEF_AllFaceMaxWidth%>)
+					å®½: <input class=fminpt onchange="javascript:changeface2();" maxlength=<%=len(DEF_AllFaceMaxWidth)%> name=Form_FaceWidth size=3 value="<%=HtmlEncode(Form_FaceWidth)%>">(20-<%=DEF_AllFaceMaxWidth%>)
+					é«˜: <input class=fminpt onchange="javascript:changeface2();" maxlength=<%=len(DEF_AllFaceMaxWidth)%> name=Form_FaceHeight size=3 value="<%=HtmlEncode(Form_FaceHeight)%>">(20-<%=DEF_AllFaceMaxWidth%>)
 				</td>
 			</tr><%End If%>
 			<tr>
 				<td>
-					ÉúÈÕ
+					ç”Ÿæ—¥
 				</td>
 				<td>
 					
@@ -528,14 +528,14 @@ Function JoinForm
 						Response.Write Server.HtmlEncode(Form_byear)
 					Else
 						Response.Write "19"
-					End If%>"> Äê 
+					End If%>"> å¹´ 
 					<input class=fminpt maxlength=2 name=Form_bmonth size=2 value="<% If Form_bmonth<>"" Then Response.Write Server.HtmlEncode(Form_bmonth)%>">
-					ÔÂ <input class=fminpt maxlength=2 name=Form_bday size=2 value="<% If Form_bday<>"" Then Response.Write Server.HtmlEncode(Form_bday)%>">
-					ÈÕ</td>
+					æœˆ <input class=fminpt maxlength=2 name=Form_bday size=2 value="<% If Form_bday<>"" Then Response.Write Server.HtmlEncode(Form_bday)%>">
+					æ—¥</td>
 			</tr>
 			<tr>
 				<td>
-					¸öÈËÇ©Ãû£º
+					ä¸ªäººç­¾åï¼š
 				</td>
 				<td>
 					<textarea class=fmtxtra name=Form_Underwrite rows=5 cols=34><%If Form_Underwrite <> "" Then Response.Write VbCrLf & htmlEncode(Form_Underwrite)%></textarea>
@@ -547,8 +547,8 @@ Function JoinForm
 			<%If LMT_RegVerifyQuestion <> "" Then%>
 			<tr>
 				<td>
-					×¢²áÑéÖ¤£º<br />
-					<span class="grayfont">°´ÌáÊ¾ÌîĞ´</span>
+					æ³¨å†ŒéªŒè¯ï¼š<br />
+					<span class="grayfont">æŒ‰æç¤ºå¡«å†™</span>
 				</td>
 				<td>
 						<p>
@@ -561,17 +561,17 @@ Function JoinForm
 			<%If ShowTestNumber > 2 Then%>
 			<tr>
 				<td>
-					Ñé Ö¤ Âë£º
+					éªŒ è¯ ç ï¼š
 				</td>
 				<td>
-						<%Response.Write displayVerifycode%>
+						<%Response.Write displayVerifycode()%>
 				</td>
 			</tr><%End If%>
 			<tr>
 				<td>&nbsp;</td>
 				<td>
-					<input name=submit type=submit value="ÉêÇë" class="fmbtn btn_2">
-					<input name=b1 type=reset value="ÖØĞ´" class="fmbtn btn_2">
+					<input name=submit type=submit value="ç”³è¯·" class="fmbtn btn_2">
+					<input name=b1 type=reset value="é‡å†™" class="fmbtn btn_2">
 				</td>
 			</tr>
 			</table>
@@ -581,7 +581,7 @@ Function JoinForm
 <hr class="splitline">
 <br />
 <b>
-<a href="usergetpass.asp?act=send&moreact=bind&gettype=unbind">ÈôÄãµÄÓÊÏä»òÊÖ»úÒÑ±»×¢²á£¬ĞèÒª½â³ı£¬ÇëµãÕâÀï£®</a>
+<a href="usergetpass.asp?act=send&moreact=bind&gettype=unbind">è‹¥ä½ çš„é‚®ç®±æˆ–æ‰‹æœºå·²è¢«æ³¨å†Œï¼Œéœ€è¦è§£é™¤ï¼Œè¯·ç‚¹è¿™é‡Œï¼</a>
 </b>
 <%end if%>
 <%
@@ -594,7 +594,7 @@ function get_temp_username
 			For N = 0 to 1000
 				Randomize
 				userName = "LD#"
-				userName = userName & Mid(GetTimeValue(DEF_Now),3,6) & (Fix(Rnd*99999)+1)
+				userName = userName & Mid(LngStr(GetTimeValue(DEF_Now)),3,6) & (Fix(Rnd*99999)+1)
 				If CheckUserNameExist(userName) = 0 then
 					ExistFlag = 0
 					exit for
@@ -607,13 +607,13 @@ end function
 Function saveFormData
 
 	If Form_UserName = "" Then
-		Form_UserName = get_temp_username
+		Form_UserName = get_temp_username()
 		'Randomize
 		'Form_Password1 = rnd*99999999999+Timer
 	End if
 	Dim Rs
 	Set Rs = Server.CreateObject("ADODB.RecordSet")
-	Rs.Open sql_select("Select * from LeadBBS_User",1),con,2,2
+	Rs.Open "Select * from LeadBBS_User Where 1=0",con,2,2
 	Rs.Addnew
 	Rs("UserName") = Form_UserName
 	Rs("Mail") = Trim(Form_Mail)
@@ -635,7 +635,7 @@ Function saveFormData
 		If temp > 1950 and temp < 2050 Then Rs("NongLiBirth") = GetNongLiTimeValue(ConvertToNongLi(RestoreTime(Form_birthday)))
 	End If
 
-	REM ÌØÊâÊı¾İ
+	REM ç‰¹æ®Šæ•°æ®
 	Rs("ApplyTime") = Form_ApplyTime
 	Rs("IP") = Form_IP
 	Rs("UserLevel") = Form_UserLevel
@@ -681,7 +681,7 @@ Function saveFormData
 	
 	Set Rs = LDExeCute(sql_select("Select ID from LeadBBS_User Where UserName='" & Replace(Form_UserName,"'","''") & "'",1),0)
 	If Not Rs.Eof Then
-		Form_ID = Rs(0)
+		Form_ID = LngStr(Rs(0))
 	Else
 		Form_ID = 0
 	End If
@@ -704,23 +704,23 @@ Function saveFormData
 		CALL LDExeCute("insert into LeadBBS_SpecialUser(UserID,UserName,BoardID,Assort,ndatetime,ExpiresTime) values(" & Form_ID & ",'" & Replace(Form_UserName,"'","''") & "'," & AttestNumber & ",6," & GetTimeValue(DEF_Now) & "," & Form_ExpiresTime & ")",1)
 	End If
 
-	BindRegUser
+	BindRegUser()
 
 	CALL LDExeCute("Update LeadBBS_SiteInfo Set UserCount=UserCount+1",1)
 	UpdateStatisticDataInfo 1,1,1
 	UpdateStatisticDataInfo Form_UserName,12,0
 
-	SendNewMessage "[LeadBBS]",Form_UserName,"»¶Ó­¹âÁÙÂÛÌ³£¡","ÄúÔÚÂÛÌ³ÒÑ¾­×¢²á³É¹¦£¬»¶Ó­³ÉÎªÎÒÃÇµÄÒ»Ô±£¡",GBL_IPAddress
+	SendNewMessage "[LeadBBS]",Form_UserName,"æ¬¢è¿å…‰ä¸´è®ºå›ï¼","æ‚¨åœ¨è®ºå›å·²ç»æ³¨å†ŒæˆåŠŸï¼Œæ¬¢è¿æˆä¸ºæˆ‘ä»¬çš„ä¸€å‘˜ï¼",GBL_IPAddress
 	select case DEF_UserNewRegAttestMode
 		case 1:
-			SendRegMail
+			SendRegMail()
 		case 3:
-			SendRegMobile
+			SendRegMobile()
 		case 4:
 			if Form_Mail <> "" then SendRegMail
 			if Form_MobileTel & "" <> "" then SendRegMobile
 		case else
-			SendRegMail
+			SendRegMail()
 	end select
 	
 	if session("invited") & "" <> "" then
@@ -742,8 +742,8 @@ Function saveFormData
 		session("invited") = ""
 	end if
 	
-	'×¢²á³É¹¦É¾³ıÑûÇëÂë
-	If LMT_EnableRegNewUsers = 0 and LMT_EnableInvitedRegCode = 1 Then '±íÊ¾Ö»ÔÊĞíÑûÇëÂë×¢²á
+	'æ³¨å†ŒæˆåŠŸåˆ é™¤é‚€è¯·ç 
+	If LMT_EnableRegNewUsers = 0 and LMT_EnableInvitedRegCode = 1 Then 'è¡¨ç¤ºåªå…è®¸é‚€è¯·ç æ³¨å†Œ
 		if invitedRegCode > 0 then
 			Con.ExeCute("Delete from LeadBBS_Plug_Card Where CardID=" & invitedRegCode)
 		end if
@@ -755,18 +755,18 @@ Sub SendRegMobile
 
 	dim tel,smsbody
 	tel = Form_MobileTel
-	smsbody = "×ğ¾´µÄÓÃ»§" & Form_UserName & "£¬ÄúµÄ¼¤»îÂëÎª" & AttestNumber & "£¬"
+	smsbody = "å°Šæ•¬çš„ç”¨æˆ·" & Form_UserName & "ï¼Œæ‚¨çš„æ¿€æ´»ç ä¸º" & AttestNumber & "ï¼Œ"
 	if DEF_UserActivationExpiresDay > 0 and DEF_UserActivationExpiresDay < 3650 then
-		smsbody = smsbody & DEF_UserActivationExpiresDay & "ÌìÄÚÓĞĞ§£¬"
+		smsbody = smsbody & DEF_UserActivationExpiresDay & "å¤©å†…æœ‰æ•ˆï¼Œ"
 	end if
-	smsbody = smsbody & "¸ĞĞ»ÄúµÄÊ¹ÓÃ£¡"
+	smsbody = smsbody & "æ„Ÿè°¢æ‚¨çš„ä½¿ç”¨ï¼"
 	
 	dim back
 	back = SendSMS_Message(tel,smsbody,AttestNumber,0)
 	if back < 0 then
-		Response.Write "<p>¶ÌĞÅ·¢ËÍÊ§°Ü£¬´íÎóºÅ£º" & back & "</p>"
+		Response.Write "<p>çŸ­ä¿¡å‘é€å¤±è´¥ï¼Œé”™è¯¯å·ï¼š" & back & "</p>"
 	else
-		Response.Write "<p><b><a href=UserGetPass.asp?act=active class=greenfont>¼¤»îÂëÒÑ·¢ËÍÖÁÄúµÄÊÖ»ú£¬µã´Ë¼¤»î£®</a></b></p>"
+		Response.Write "<p><b><a href=UserGetPass.asp?act=active class=greenfont>æ¿€æ´»ç å·²å‘é€è‡³æ‚¨çš„æ‰‹æœºï¼Œç‚¹æ­¤æ¿€æ´»ï¼</a></b></p>"
 	end if
 
 end Sub
@@ -777,54 +777,54 @@ Sub SendRegMail
 	HomeUrl = LD_GetUrl(1)
 
 	Dim MailBody,Topic,TextBody
-	Topic = "Äú³É¹¦×¢²á" & DEF_SiteNameString & "µÄÍ¨Öª"
+	Topic = "æ‚¨æˆåŠŸæ³¨å†Œ" & DEF_SiteNameString & "çš„é€šçŸ¥"
 	MailBody = "<html>"
 	TextBody = ""
-	MailBody = MailBody & "<title>×¢²áĞÅÏ¢</title>"
+	MailBody = MailBody & "<title>æ³¨å†Œä¿¡æ¯</title>"
 	MailBody = MailBody & "<BODY>"
 	MailBody = MailBody & "<table BORDER=0 WIDTH=95% ALIGN=CENTER><TBODY><tr>"
 	MailBody = MailBody & "<TD valign=MIDDLE ALIGN=TOP><HR WIDTH=100% SIZE=1>"
 	TextBody = TextBody & "------------------------------------------" & VbCrLf
-	MailBody = MailBody & VbCrLf & "<b>" & htmlencode(Form_UserName)&"£¬ÄúºÃ</b>£º<br><br>"
-	TextBody = TextBody & htmlencode(Form_UserName)&"£¬ÄúºÃ£º" & VbCrLf & VbCrLf
-	MailBody = MailBody & "Ğ»Ğ»Äú×¢²á±¾ÂÛÌ³£¬ÏÂÃæÊÇÄúµÄ×¢²áĞÅÏ¢£¡<br><br>"
-	TextBody = TextBody & "Ğ»Ğ»Äú×¢²á±¾ÂÛÌ³£¬ÏÂÃæÊÇÄúµÄ×¢²áĞÅÏ¢£¡" & VbCrLf & VbCrLf
-	MailBody = MailBody & "ÓÃ»§Ãû£º"&htmlencode(Form_UserName)&"<br>"
-	TextBody = TextBody & "ÓÃ»§Ãû£º"&htmlencode(Form_UserName) & VbCrLf
-	'MailBody = MailBody & "ÃÜ¡¡Âë£º" & left(Form_Password1,1) & "***" & right(Form_Password1,1) & "<br>"
-	'TextBody = TextBody & "ÃÜ¡¡Âë£º" & left(Form_Password1,1) & "***" & right(Form_Password1,1) & VbCrLf
+	MailBody = MailBody & VbCrLf & "<b>" & htmlencode(Form_UserName)&"ï¼Œæ‚¨å¥½</b>ï¼š<br><br>"
+	TextBody = TextBody & htmlencode(Form_UserName)&"ï¼Œæ‚¨å¥½ï¼š" & VbCrLf & VbCrLf
+	MailBody = MailBody & "è°¢è°¢æ‚¨æ³¨å†Œæœ¬è®ºå›ï¼Œä¸‹é¢æ˜¯æ‚¨çš„æ³¨å†Œä¿¡æ¯ï¼<br><br>"
+	TextBody = TextBody & "è°¢è°¢æ‚¨æ³¨å†Œæœ¬è®ºå›ï¼Œä¸‹é¢æ˜¯æ‚¨çš„æ³¨å†Œä¿¡æ¯ï¼" & VbCrLf & VbCrLf
+	MailBody = MailBody & "ç”¨æˆ·åï¼š"&htmlencode(Form_UserName)&"<br>"
+	TextBody = TextBody & "ç”¨æˆ·åï¼š"&htmlencode(Form_UserName) & VbCrLf
+	'MailBody = MailBody & "å¯†ã€€ç ï¼š" & left(Form_Password1,1) & "***" & right(Form_Password1,1) & "<br>"
+	'TextBody = TextBody & "å¯†ã€€ç ï¼š" & left(Form_Password1,1) & "***" & right(Form_Password1,1) & VbCrLf
 	If DEF_UserNewRegAttestMode = 1 or DEF_UserNewRegAttestMode = 4 or DEF_UserNewRegAttestMode = 3 Then
-		MailBody = MailBody & "¼¤»îÂë£º" & AttestNumber & "<br>"
-		TextBody = TextBody & "¼¤»îÂë£º" & AttestNumber & VbCrLf
-		MailBody = MailBody & "<p><b><a href=" & HomeUrl & "User/UserGetPass.asp?act=active&user=" & urlencode(Form_UserName) & ">Çëµã»÷ÕâÀï£¬ÊäÈëÄúµÄ×¢²áĞÅÏ¢£¬Á¢¼´¼¤»îÄúµÄÓÃ»§¡£</a></b><br>"
-		TextBody = TextBody & VbCrLf & VbCrLf & "ÇëÊäÈëÏÂÁĞÍøÖ·£¬²¢ÊäÈëÄúµÄ×¢²áĞÅÏ¢£¬Á¢¼´¼¤»îÄúµÄÓÃ»§£º" & VbCrLf & HomeUrl & "User/UserGetPass.asp?act=active&user=" & urlencode(Form_UserName) & VbCrLf & VbCrLf
+		MailBody = MailBody & "æ¿€æ´»ç ï¼š" & AttestNumber & "<br>"
+		TextBody = TextBody & "æ¿€æ´»ç ï¼š" & AttestNumber & VbCrLf
+		MailBody = MailBody & "<p><b><a href=" & HomeUrl & "User/UserGetPass.asp?act=active&user=" & urlencode(Form_UserName) & ">è¯·ç‚¹å‡»è¿™é‡Œï¼Œè¾“å…¥æ‚¨çš„æ³¨å†Œä¿¡æ¯ï¼Œç«‹å³æ¿€æ´»æ‚¨çš„ç”¨æˆ·ã€‚</a></b><br>"
+		TextBody = TextBody & VbCrLf & VbCrLf & "è¯·è¾“å…¥ä¸‹åˆ—ç½‘å€ï¼Œå¹¶è¾“å…¥æ‚¨çš„æ³¨å†Œä¿¡æ¯ï¼Œç«‹å³æ¿€æ´»æ‚¨çš„ç”¨æˆ·ï¼š" & VbCrLf & HomeUrl & "User/UserGetPass.asp?act=active&user=" & urlencode(Form_UserName) & VbCrLf & VbCrLf
 	Else
-		MailBody = MailBody & "<p>¸Õ×¢²áµÄÓÃ»§ĞèµÈ´ıÍøÕ¾¹ÜÀíÔ±½øĞĞÈÏÖ¤²ÅÄÜ³ÉÎªÕıÊ½ÓÃ»§£¬ÔÚÍ¨¹ıÖ®Ç°ÔÚ¹¦ÄÜÊ¹ÓÃÉÏ»áÓĞÒ»Ğ©ÏŞÖÆ¡£<br>"
-		TextBody = TextBody & VbCrLf & VbCrLf & "¸Õ×¢²áµÄÓÃ»§ĞèµÈ´ıÍøÕ¾¹ÜÀíÔ±½øĞĞÈÏÖ¤²ÅÄÜ³ÉÎªÕıÊ½ÓÃ»§£¬ÔÚÍ¨¹ıÑéÖ¤Ö®Ç°ÔÚ¹¦ÄÜÊ¹ÓÃÉÏ»áÓĞÒ»Ğ©ÏŞÖÆ¡£" & VbCrLf
+		MailBody = MailBody & "<p>åˆšæ³¨å†Œçš„ç”¨æˆ·éœ€ç­‰å¾…ç½‘ç«™ç®¡ç†å‘˜è¿›è¡Œè®¤è¯æ‰èƒ½æˆä¸ºæ­£å¼ç”¨æˆ·ï¼Œåœ¨é€šè¿‡ä¹‹å‰åœ¨åŠŸèƒ½ä½¿ç”¨ä¸Šä¼šæœ‰ä¸€äº›é™åˆ¶ã€‚<br>"
+		TextBody = TextBody & VbCrLf & VbCrLf & "åˆšæ³¨å†Œçš„ç”¨æˆ·éœ€ç­‰å¾…ç½‘ç«™ç®¡ç†å‘˜è¿›è¡Œè®¤è¯æ‰èƒ½æˆä¸ºæ­£å¼ç”¨æˆ·ï¼Œåœ¨é€šè¿‡éªŒè¯ä¹‹å‰åœ¨åŠŸèƒ½ä½¿ç”¨ä¸Šä¼šæœ‰ä¸€äº›é™åˆ¶ã€‚" & VbCrLf
 	End If
 	MailBody = MailBody & "<br><br>"
-	MailBody = MailBody & "<CENTER><font COLOR=RED><a href=""" & HomeUrl & """>»¶Ó­¾­³£¹âÁÙÂÛÌ³£¡</a></font>"
+	MailBody = MailBody & "<CENTER><font COLOR=RED><a href=""" & HomeUrl & """>æ¬¢è¿ç»å¸¸å…‰ä¸´è®ºå›ï¼</a></font>"
 	MailBody = MailBody & "</td></tr></table><br><HR WIDTH=95% SIZE=1>"
 	MailBody = MailBody & "<p ALIGN=CENTER>" & DEF_SiteNameString & " <a href=http://www.leadbbs.com target=_blank class=NavColor>" & DEF_Version & "</a></P>"
-	TextBody = TextBody & VbCrLf & "ÂÛÌ³ÍøÖ·£º" & HomeUrl & VbCrLf
+	TextBody = TextBody & VbCrLf & "è®ºå›ç½‘å€ï¼š" & HomeUrl & VbCrLf
 	TextBody = TextBody & "------------------------------------------" & VbCrLf
 	MailBody = MailBody & "</body>"
 	MailBody = MailBody & "</html>"
 	Select Case DEF_BBS_EmailMode
 		Case 1: If SendEasyMail(Form_Mail,Topic,MailBody,TextBody) = 1 Then
-					Response.Write "<br><br>×ÊÁÏ³É¹¦·¢ËÍµ½ÄúµÄ×¢²áÓÊÏä£¡"
+					Response.Write "<br><br>èµ„æ–™æˆåŠŸå‘é€åˆ°æ‚¨çš„æ³¨å†Œé‚®ç®±ï¼"
 				Else
-					Response.Write "<br><br>ÂÛÌ³Î´ÕıÈ·ÉèÖÃÓÊ¼ş·¢ËÍ£¬×ÊÁÏ·¢ËÍÊ§°Ü£¡"
+					Response.Write "<br><br>è®ºå›æœªæ­£ç¡®è®¾ç½®é‚®ä»¶å‘é€ï¼Œèµ„æ–™å‘é€å¤±è´¥ï¼"
 				End If
 		Case 2: If SendJmail(Form_Mail,Topic,MailBody) = 1 Then
-					Response.Write "<br><br>×ÊÁÏ³É¹¦·¢ËÍµ½ÄúµÄ×¢²áÓÊÏä£¡"
+					Response.Write "<br><br>èµ„æ–™æˆåŠŸå‘é€åˆ°æ‚¨çš„æ³¨å†Œé‚®ç®±ï¼"
 				Else
-					Response.Write "<br><br>ÂÛÌ³Î´ÕıÈ·ÉèÖÃÓÊ¼ş·¢ËÍ£¬×ÊÁÏ·¢ËÍÊ§°Ü£¡"
+					Response.Write "<br><br>è®ºå›æœªæ­£ç¡®è®¾ç½®é‚®ä»¶å‘é€ï¼Œèµ„æ–™å‘é€å¤±è´¥ï¼"
 				End If
 		Case 3: If SendCDOMail(Form_Mail,Topic,TextBody) = 1 Then
-					Response.Write "<br><br>×ÊÁÏ³É¹¦·¢ËÍµ½ÄúµÄ×¢²áÓÊÏä£¡"
+					Response.Write "<br><br>èµ„æ–™æˆåŠŸå‘é€åˆ°æ‚¨çš„æ³¨å†Œé‚®ç®±ï¼"
 				Else
-					Response.Write "<br><br>ÂÛÌ³Î´ÕıÈ·ÉèÖÃÓÊ¼ş·¢ËÍ£¬×ÊÁÏ·¢ËÍÊ§°Ü£¡"
+					Response.Write "<br><br>è®ºå›æœªæ­£ç¡®è®¾ç½®é‚®ä»¶å‘é€ï¼Œèµ„æ–™å‘é€å¤±è´¥ï¼"
 				End If
 		Case Else: 
 	End Select
@@ -836,8 +836,8 @@ Function displayAccessFull
 	Response.Cookies(DEF_MasterCookies)("user") = CodeCookie(Form_Username)
 	Response.Cookies(DEF_MasterCookies)("pass") = CodeCookie(MD5(Form_Username & md5(Form_password1)))
 	Response.Cookies(DEF_MasterCookies)("CDKEY") = MD5(Form_Username & CDKEY)
-	Response.Cookies(DEF_MasterCookies)("expires") = GetTimeValue(DateAdd("d",DEF_Now,31))
-	Response.Cookies(DEF_MasterCookies).Expires = DateAdd("d",DEF_Now,31)
+	Response.Cookies(DEF_MasterCookies)("expires") = LngStr(GetTimeValue(DateAdd("d",31,DEF_Now)))
+	Response.Cookies(DEF_MasterCookies).Expires = DateAdd("d",31,DEF_Now)
 	Response.Cookies(DEF_MasterCookies).Domain = DEF_AbsolutHome
 	
 	
@@ -848,11 +848,11 @@ Function displayAccessFull
 		nomod = 0
 	end if
 	CALL LDExeCute("Update LeadBBS_onlineUser set UserID=" & Form_ID & ",UserName='" & Replace(Form_Username,"'","''") & "',HiddenFlag=" & nomod & " where sessionID=" & session.sessionID,1)%>
-	<div class=title>ÄúÒÑ¾­³É¹¦<%If reg_action = "bind" Then%>ÍêÉÆÕÊºÅ×ÊÁÏ<%Else%>×¢²á³ÉÎªÂÛÌ³ÓÃ»§<%End If%>£¬15ÃëÖÓºóÒ³Ãæ½«×Ô¶¯·µ»ØÏàÓ¦Ò³Ãæ¡£</a></div>
+	<div class=title>æ‚¨å·²ç»æˆåŠŸ<%If reg_action = "bind" Then%>å®Œå–„å¸å·èµ„æ–™<%Else%>æ³¨å†Œæˆä¸ºè®ºå›ç”¨æˆ·<%End If%>ï¼Œ15ç§’é’Ÿåé¡µé¢å°†è‡ªåŠ¨è¿”å›ç›¸åº”é¡µé¢ã€‚</a></div>
 	<%If DEF_UserNewRegAttestMode = 1 or DEF_UserNewRegAttestMode = 3 or DEF_UserNewRegAttestMode = 4 Then
-		Response.Write "<div class='value2 greenfont'>×¢²áµÄÓÃ»§Ö»ÓĞä¯ÀÀÂÛÌ³µÄÈ¨ÏŞ£¬¼¤»îÓÃ»§µÄÑéÖ¤ÂëÒÑ¾­³É¹¦·¢ËÍµ½ÄúµÄ×¢²áÓÊÏä»òÊÖ»ú¡£</div>" & VbCrLf
+		Response.Write "<div class='value2 greenfont'>æ³¨å†Œçš„ç”¨æˆ·åªæœ‰æµè§ˆè®ºå›çš„æƒé™ï¼Œæ¿€æ´»ç”¨æˆ·çš„éªŒè¯ç å·²ç»æˆåŠŸå‘é€åˆ°æ‚¨çš„æ³¨å†Œé‚®ç®±æˆ–æ‰‹æœºã€‚</div>" & VbCrLf
 	ElseIf DEF_UserNewRegAttestMode = 2 Then
-		Response.Write "<div class='value2 greenfont'>×¢²áµÄÓÃ»§Ö»ÓĞä¯ÀÀÂÛÌ³µÄÈ¨ÏŞ£¬ÇëµÈ´ıÍøÕ¾³ÉÔ±¶ÔÄú×÷³öÑéÖ¤²ÅÄÜ³ÉÎªÕıÊ½ÓÃ»§¡£</div>" & VbCrLf
+		Response.Write "<div class='value2 greenfont'>æ³¨å†Œçš„ç”¨æˆ·åªæœ‰æµè§ˆè®ºå›çš„æƒé™ï¼Œè¯·ç­‰å¾…ç½‘ç«™æˆå‘˜å¯¹æ‚¨ä½œå‡ºéªŒè¯æ‰èƒ½æˆä¸ºæ­£å¼ç”¨æˆ·ã€‚</div>" & VbCrLf
 	End If
 	
 
@@ -880,12 +880,12 @@ Function displayAccessFull
 Sub Reg_Bind
 
 	If reg_command = "bind" Then
-		reg_BindExistUser
+		reg_BindExistUser()
 		Exit Sub
 	End If
 	
 	%>
-	<div class="title">ÇëÑ¡Ôñ: <a href="<%=DEF_RegisterFile%>?action=bind&command=bind&u=<%=Reg_GetRefer%>">°ó¶¨ÒÑÓĞÂÛÌ³ÕÊºÅ</a> / <a href="<%=DEF_RegisterFile%>?action=bind&command=reg&u=<%=Reg_GetRefer%>">ÍêÉÆÕÊºÅ×ÊÁÏ</div>
+	<div class="title">è¯·é€‰æ‹©: <a href="<%=DEF_RegisterFile%>?action=bind&command=bind&u=<%=Reg_GetRefer()%>">ç»‘å®šå·²æœ‰è®ºå›å¸å·</a> / <a href="<%=DEF_RegisterFile%>?action=bind&command=reg&u=<%=Reg_GetRefer()%>">å®Œå–„å¸å·èµ„æ–™</div>
 	<%
 
 End Sub
@@ -909,22 +909,22 @@ End Function
 Sub reg_BindExistUser
 
 	If request("SubmitFlag") = "" Then
-		DisplayLoginForm("ÇëÌîĞ´Òª°ó¶¨µÄÂÛÌ³ÓÃ»§ĞÅÏ¢:")
+		DisplayLoginForm("è¯·å¡«å†™è¦ç»‘å®šçš„è®ºå›ç”¨æˆ·ä¿¡æ¯:")
 	Else
 		If GBL_CHK_Flag = 1 and GBL_UserID > 0 Then
 			If reg_CheckAppidForUserID(GBL_AppType,GBL_UserID) = 1 Then
-				Response.Write "<div class=""redfont""><b><p>²Ù×÷Ê§°Ü: </p></b>´ËÕËºÅÒÑ±»°ó¶¨.</div>"
+				Response.Write "<div class=""redfont""><b><p>æ“ä½œå¤±è´¥: </p></b>æ­¤è´¦å·å·²è¢«ç»‘å®š.</div>"
 			Else
-				If reg_checkAppidBinded = 0 Then
+				If reg_checkAppidBinded() = 0 Then
 					Response.Write "<div class=""redfont""><b>" & GBL_CHK_TempStr & "</b></div>"
 				Else
-					Form_ID = GBL_UserID
-					BindRegUser
-					Response.Write "<div class=""greenfont""><b>ÕÊºÅÒÑ³É¹¦°ó¶¨!</b></div>"
+					Form_ID = LngStr(GBL_UserID)
+					BindRegUser()
+					Response.Write "<div class=""greenfont""><b>å¸å·å·²æˆåŠŸç»‘å®š!</b></div>"
 				End If
 			End If
 		Else
-			Response.Write "<div class=""redfont""><b><p>²Ù×÷Ê§°Ü: </p></b>ÄúµÄÕÊºÅĞÅÏ¢´íÎó.<br /> " & GBL_CHK_Tempstr & "</div>"
+			Response.Write "<div class=""redfont""><b><p>æ“ä½œå¤±è´¥: </p></b>æ‚¨çš„å¸å·ä¿¡æ¯é”™è¯¯.<br /> " & GBL_CHK_Tempstr & "</div>"
 		End If
 	%>
 	
@@ -956,17 +956,17 @@ Function reg_checkAppidBinded
 				End If
 			End If
 			If Len(Form_App_appid) < 16 or Form_App_GuestName = "" Then
-				GBL_CHK_TempStr = "²Ù×÷Ê§°Ü:QQ»¥ÁªĞÅÏ¢ÒÑ¾­Ê§Ğ§,ÇëÖØĞÂµÇÂ¼. <br>" & VbCrLf
+				GBL_CHK_TempStr = "æ“ä½œå¤±è´¥:QQäº’è”ä¿¡æ¯å·²ç»å¤±æ•ˆ,è¯·é‡æ–°ç™»å½•. <br>" & VbCrLf
 				reg_checkAppidBinded = 0
 				Exit Function
 			End If
 		Case else
-			GBL_CHK_TempStr = "²Ù×÷Ê§°Ü:Î´ÖªµÄ»¥ÁªÉÌ. <br>" & VbCrLf
+			GBL_CHK_TempStr = "æ“ä½œå¤±è´¥:æœªçŸ¥çš„äº’è”å•†. <br>" & VbCrLf
 			reg_checkAppidBinded = 0
 			Exit Function
 	End Select
 	If reg_CheckAppid(GBL_AppType,Form_App_appid) = 1 Then
-		GBL_CHK_TempStr = "²Ù×÷Ê§°Ü:´Ë»¥ÁªÕÊºÅÒÑ±»°ó¶¨»òÍêÉÆ. <br>" & VbCrLf
+		GBL_CHK_TempStr = "æ“ä½œå¤±è´¥:æ­¤äº’è”å¸å·å·²è¢«ç»‘å®šæˆ–å®Œå–„. <br>" & VbCrLf
 		reg_checkAppidBinded = 0
 		Exit Function
 	End If

@@ -1,12 +1,12 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Const MaxLinkNum = 200
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-checkSupervisorPass
+checkSupervisorPass()
 
 Dim ReqN,WriteN,SiteLink_Flag,SiteLink_Title,SiteLink_Name,SiteLink_WriteFile,SiteLink_Info
 SiteLink_Flag = 0
@@ -14,27 +14,27 @@ If Request.QueryString("SiteLink_Flag") = "10" Then SiteLink_Flag = 10
 
 Select Case SiteLink_Flag
 Case 10:
-	SiteLink_Title = "¹ã¸æ"  'À¸Ä¿±êÌâ
-	SiteLink_Name = "¹ã¸æ"   'ÏîÄ¿Ãû×Ö
-	SiteLink_WriteFile = "inc/AD_Data.asp"  'Ğ´ÈëÎÄ¼şµØÖ·(Ïà¶ÔÓÚÂÛÌ³¸ùÄ¿±ê)
-	SiteLink_Info = "Ìû¼ä¹ã¸æ£ºÔÚÖ÷ÌâÌûºÍ1Â¥ÌûÖĞËæ»úÏÔÊ¾ÄúËùÌí¼ÓµÄ¹ã¸æ"
+	SiteLink_Title = "å¹¿å‘Š"  'æ ç›®æ ‡é¢˜
+	SiteLink_Name = "å¹¿å‘Š"   'é¡¹ç›®åå­—
+	SiteLink_WriteFile = "inc/AD_Data.asp"  'å†™å…¥æ–‡ä»¶åœ°å€(ç›¸å¯¹äºè®ºå›æ ¹ç›®æ ‡)
+	SiteLink_Info = "å¸–é—´å¹¿å‘Šï¼šåœ¨ä¸»é¢˜å¸–å’Œ1æ¥¼å¸–ä¸­éšæœºæ˜¾ç¤ºæ‚¨æ‰€æ·»åŠ çš„å¹¿å‘Š"
 Case Else:
 	SiteLink_Flag = 0
-	SiteLink_Title = "ÓÑÇéÁ´½Ó"
-	SiteLink_Name = "ÍøÕ¾"
+	SiteLink_Title = "å‹æƒ…é“¾æ¥"
+	SiteLink_Name = "ç½‘ç«™"
 	SiteLink_WriteFile = "inc/IncHtm/BoardLink.asp"
 End Select
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
-DisplayUserNavigate("ĞŞ¸Ä" & SiteLink_Title)
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
+DisplayUserNavigate("ä¿®æ”¹" & SiteLink_Title)
 If GBL_CHK_Flag=1 Then
-	SiteLink
+	SiteLink()
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Sub SiteLink
@@ -46,7 +46,7 @@ WriteN = 0
 <input type="hidden" name="SubmitFlag" value=yes>
 <div class="frameline">
 	<b>
-		ĞŞ¸Ä<%=SiteLink_Title%></b><font color=8888888 class=grayfont>(ÏÂÃæÊÇÏàÓ¦ĞÅÏ¢£¬²»ÌîĞ´(»ò³ıÈ¥)Ãû³Æ±íÊ¾É¾³ı£¬ÒªÔö¼ÓÇëµãÏÂÃæµÄÔö¼Ó°´Å¥)</font>
+		ä¿®æ”¹<%=SiteLink_Title%></b><font color=8888888 class=grayfont>(ä¸‹é¢æ˜¯ç›¸åº”ä¿¡æ¯ï¼Œä¸å¡«å†™(æˆ–é™¤å»)åç§°è¡¨ç¤ºåˆ é™¤ï¼Œè¦å¢åŠ è¯·ç‚¹ä¸‹é¢çš„å¢åŠ æŒ‰é’®)</font>
 </div>
 <%If Request("SubmitFlag") <> "" Then
 	'CheckLinkValue
@@ -62,15 +62,15 @@ If Request.Form("SubmitFlag") <> "" Then
 		If Request.Form("SiteName1") = "" Then
 			WriteN = 1%>
 			<div class="frameline"><%=SiteLink_Name%>1</div>
-			<div class="frameline"><%=SiteLink_Name%>Ãû³Æ£º<input type="text" name="SiteName1" maxlength="255" size="50" class=fminpt>(ÔÊĞíHTML)</div>
-			<div class="frameline">Á´½ÓµØÖ·£º<input type="text" name="SiteUrl1" maxlength="255" size="50" class=fminpt></div>
-			<div class="frameline">LOGOµØÖ·£º<input type="text" name="LogoUrl1" maxlength="255" size="50" class=fminpt></div>
-			<div class="frameline">LOGO¿í¶È£º<input type="text" name="LogoWidth1" maxlength="5" size="5" value=88 class=fminpt></div>
-			<div class="frameline">LOGO¸ß¶È£º<input type="text" name="LogoHeight1" maxlength="5" size="5" value=31 class=fminpt></div>
+			<div class="frameline"><%=SiteLink_Name%>åç§°ï¼š<input type="text" name="SiteName1" maxlength="255" size="50" class=fminpt>(å…è®¸HTML)</div>
+			<div class="frameline">é“¾æ¥åœ°å€ï¼š<input type="text" name="SiteUrl1" maxlength="255" size="50" class=fminpt></div>
+			<div class="frameline">LOGOåœ°å€ï¼š<input type="text" name="LogoUrl1" maxlength="255" size="50" class=fminpt></div>
+			<div class="frameline">LOGOå®½åº¦ï¼š<input type="text" name="LogoWidth1" maxlength="5" size="5" value=88 class=fminpt></div>
+			<div class="frameline">LOGOé«˜åº¦ï¼š<input type="text" name="LogoHeight1" maxlength="5" size="5" value=31 class=fminpt></div>
 			<%If SiteLink_Flag = 0 Then%>
-			<div class="frameline">ÊÇ·ñ»»ĞĞ£º<input type="text" name="BreakFlag1" maxlength="5" size="5" class=fminpt>ÁíÆğÒ»ĞĞÅÅ°æ£¬1-»»ĞĞ£¬0-×Ô¶¯</div>
+			<div class="frameline">æ˜¯å¦æ¢è¡Œï¼š<input type="text" name="BreakFlag1" maxlength="5" size="5" class=fminpt>å¦èµ·ä¸€è¡Œæ’ç‰ˆï¼Œ1-æ¢è¡Œï¼Œ0-è‡ªåŠ¨</div>
 			<%End If%>
-			<div class="frameline">ÅÅÁĞË³Ğò£º<input type="text" name="OrderID1" maxlength="5" size="5" class=fminpt>Ô½Ğ¡Ô½Ç°Ãæ</div>
+			<div class="frameline">æ’åˆ—é¡ºåºï¼š<input type="text" name="OrderID1" maxlength="5" size="5" class=fminpt>è¶Šå°è¶Šå‰é¢</div>
 		<%Else
 			For ReqN = 1 to MaxLinkNum
 				If Request.Form("SiteName" & ReqN) <> "" Then
@@ -78,40 +78,40 @@ If Request.Form("SubmitFlag") <> "" Then
 			%>
 			<div class="frameline"><%=SiteLink_Name%><%=ReqN%></div>
 			<input type="hidden" name="SiteID<%=ReqN%>" maxlength="100" size="50" Value="<%=htmlencode(Request.Form("SiteID" & ReqN))%>">
-			<div class="frameline"><%=SiteLink_Name%>Ãû³Æ£º<input type="text" name="SiteName<%=ReqN%>" maxlength="255" size="50" Value="<%=htmlencode(Request.Form("SiteName" & ReqN))%>" class=fminpt>(ÔÊĞíHTML)</div>
-			<div class="frameline">Á´½ÓµØÖ·£º<input type="text" name="SiteUrl<%=ReqN%>" maxlength="255" size="50" Value="<%=htmlencode(Request.Form("SiteUrl" & ReqN))%>" class=fminpt></div>
-			<div class="frameline">LOGOµØÖ·£º<input type="text" name="LogoUrl<%=ReqN%>" maxlength="255" size="50" Value="<%=htmlencode(Request.Form("LogoUrl" & ReqN))%>" class=fminpt></div>
-			<div class="frameline">LOGO¿í¶È£º<input type="text" name="LogoWidth<%=ReqN%>" maxlength="5" size="5" Value="<%=htmlencode(Request.Form("LogoWidth" & ReqN))%>" class=fminpt></div>
-			<div class="frameline">LOGO¸ß¶È£º<input type="text" name="LogoHeight<%=ReqN%>" maxlength="5" size="5" Value="<%=htmlencode(Request.Form("LogoHeight" & ReqN))%>" class=fminpt></div>
+			<div class="frameline"><%=SiteLink_Name%>åç§°ï¼š<input type="text" name="SiteName<%=ReqN%>" maxlength="255" size="50" Value="<%=htmlencode(Request.Form("SiteName" & ReqN))%>" class=fminpt>(å…è®¸HTML)</div>
+			<div class="frameline">é“¾æ¥åœ°å€ï¼š<input type="text" name="SiteUrl<%=ReqN%>" maxlength="255" size="50" Value="<%=htmlencode(Request.Form("SiteUrl" & ReqN))%>" class=fminpt></div>
+			<div class="frameline">LOGOåœ°å€ï¼š<input type="text" name="LogoUrl<%=ReqN%>" maxlength="255" size="50" Value="<%=htmlencode(Request.Form("LogoUrl" & ReqN))%>" class=fminpt></div>
+			<div class="frameline">LOGOå®½åº¦ï¼š<input type="text" name="LogoWidth<%=ReqN%>" maxlength="5" size="5" Value="<%=htmlencode(Request.Form("LogoWidth" & ReqN))%>" class=fminpt></div>
+			<div class="frameline">LOGOé«˜åº¦ï¼š<input type="text" name="LogoHeight<%=ReqN%>" maxlength="5" size="5" Value="<%=htmlencode(Request.Form("LogoHeight" & ReqN))%>" class=fminpt></div>
 					<%If SiteLink_Flag = 0 Then%>
-			<div class="frameline">ÊÇ·ñ»»ĞĞ£º<input type="text" name="BreakFlag<%=ReqN%>" maxlength="5" size="5" Value="<%=htmlencode(Request.Form("BreakFlag" & ReqN))%>" class=fminpt>ÁíÆğÒ»ĞĞÅÅ°æ£¬1-»»ĞĞ£¬0-×Ô¶¯</div>
+			<div class="frameline">æ˜¯å¦æ¢è¡Œï¼š<input type="text" name="BreakFlag<%=ReqN%>" maxlength="5" size="5" Value="<%=htmlencode(Request.Form("BreakFlag" & ReqN))%>" class=fminpt>å¦èµ·ä¸€è¡Œæ’ç‰ˆï¼Œ1-æ¢è¡Œï¼Œ0-è‡ªåŠ¨</div>
 					<%End If%>
-			<div class="frameline">ÅÅÁĞË³Ğò£º<input type="text" name="OrderID<%=ReqN%>" maxlength="5" size="5" Value="<%=htmlencode(Request.Form("SiteUrl" & ReqN))%>" class=fminpt>Ô½Ğ¡Ô½Ç°Ãæ</div>
+			<div class="frameline">æ’åˆ—é¡ºåºï¼š<input type="text" name="OrderID<%=ReqN%>" maxlength="5" size="5" Value="<%=htmlencode(Request.Form("SiteUrl" & ReqN))%>" class=fminpt>è¶Šå°è¶Šå‰é¢</div>
 			<%
 				End If
 			Next
 		End if
 	Else
-		If SaveSiteLink = 1 Then
-			Response.Write "³É¹¦¸üĞÂÊı¾İ¿â£¡"
-			MakeDataBaseLinkFile
+		If SaveSiteLink() = 1 Then
+			Response.Write "æˆåŠŸæ›´æ–°æ•°æ®åº“ï¼"
+			MakeDataBaseLinkFile()
 			Exit Sub
 		Else
-			DisplayDatabaseLink
+			DisplayDatabaseLink()
 		End If
 	End If
 Else
-	DisplayDatabaseLink
+	DisplayDatabaseLink()
 End If
 %>
 
 </div>
 <div class="frameline">
-<input type=submit name=Ìá½» value=Ìá½» class=fmbtn>
-<input type=button name=add value=Ôö¼Ó<%=SiteLink_Title%> onclick="additem();" class=fmbtn>
+<input type=submit name=æäº¤ value=æäº¤ class=fmbtn>
+<input type=button name=add value=å¢åŠ <%=SiteLink_Title%> onclick="additem();" class=fmbtn>
 </div>
 </form>
-<div class="frameline">×¢Òâ£¬Èç¹ûÄãµÄ·şÎñÆ÷²»Ö§³ÖÎÄ¼şĞ´Èë£¬½«²»ÄÜ×Ô¶¯²úÉúĞèÒªµÄÎÄ¼şĞÅÏ¢£¬<br>ÇëÊÖ¶¯¸ü¸Ä <%=SiteLink_WriteFile%> µÄÎÄ¼şÄÚÈİ</div>
+<div class="frameline">æ³¨æ„ï¼Œå¦‚æœä½ çš„æœåŠ¡å™¨ä¸æ”¯æŒæ–‡ä»¶å†™å…¥ï¼Œå°†ä¸èƒ½è‡ªåŠ¨äº§ç”Ÿéœ€è¦çš„æ–‡ä»¶ä¿¡æ¯ï¼Œ<br>è¯·æ‰‹åŠ¨æ›´æ”¹ <%=SiteLink_WriteFile%> çš„æ–‡ä»¶å†…å®¹</div>
 <script language=javascript>
 var maxNumber=<%=MaxLinkNum%>;
 var Number=<%=WriteN%>;
@@ -125,20 +125,20 @@ function additem()
 	Number+=1;
 	if(Number>maxNumber)
 	{
-		alert("ÒÑ¾­´ïµ½×î´ó<%=SiteLink_Title%>ÏîÄ¿£¬²»ÄÜÔÙÔö¼Ó!");
+		alert("å·²ç»è¾¾åˆ°æœ€å¤§<%=SiteLink_Title%>é¡¹ç›®ï¼Œä¸èƒ½å†å¢åŠ !");
 	}
 	else
 	{
 		this.SiteString.innerHTML+="<div class=frameline><%=SiteLink_Name%>"+Number+"</div>";
-		this.SiteString.innerHTML+="<div class=frameline><%=SiteLink_Name%>Ãû³Æ£º<input type=text name=SiteName"+Number+" maxlength=255 size=50 class=fminpt></div>";
-		this.SiteString.innerHTML+="<div class=frameline>Á´½ÓµØÖ·£º<input type=text name=SiteUrl"+Number+" maxlength=255 size=50 class=fminpt></div>";
-		this.SiteString.innerHTML+="<div class=frameline>Í¼Æ¬µØÖ·£º<input type=text name=LogoUrl"+Number+" maxlength=255 size=50 class=fminpt></div>";
-		this.SiteString.innerHTML+="<div class=frameline>Í¼Æ¬¿í¶È£º<input type=text name=LogoWidth"+Number+" maxlength=5 size=5 value=88 class=fminpt></div>";
-		this.SiteString.innerHTML+="<div class=frameline>Í¼Æ¬¸ß¶È£º<input type=text name=LogoHeight"+Number+" maxlength=5 size=5 value=31 class=fminpt></div>";
+		this.SiteString.innerHTML+="<div class=frameline><%=SiteLink_Name%>åç§°ï¼š<input type=text name=SiteName"+Number+" maxlength=255 size=50 class=fminpt></div>";
+		this.SiteString.innerHTML+="<div class=frameline>é“¾æ¥åœ°å€ï¼š<input type=text name=SiteUrl"+Number+" maxlength=255 size=50 class=fminpt></div>";
+		this.SiteString.innerHTML+="<div class=frameline>å›¾ç‰‡åœ°å€ï¼š<input type=text name=LogoUrl"+Number+" maxlength=255 size=50 class=fminpt></div>";
+		this.SiteString.innerHTML+="<div class=frameline>å›¾ç‰‡å®½åº¦ï¼š<input type=text name=LogoWidth"+Number+" maxlength=5 size=5 value=88 class=fminpt></div>";
+		this.SiteString.innerHTML+="<div class=frameline>å›¾ç‰‡é«˜åº¦ï¼š<input type=text name=LogoHeight"+Number+" maxlength=5 size=5 value=31 class=fminpt></div>";
 		<%If SiteLink_Flag = 0 Then%>
-		this.SiteString.innerHTML+="<div class=frameline>ÊÇ·ñ»»ĞĞ£º<input type=text name=BreakFlag"+Number+" maxlength=5 size=5 value=0 class=fminpt></div>";
+		this.SiteString.innerHTML+="<div class=frameline>æ˜¯å¦æ¢è¡Œï¼š<input type=text name=BreakFlag"+Number+" maxlength=5 size=5 value=0 class=fminpt></div>";
 		<%End If%>
-		this.SiteString.innerHTML+="<div class=frameline>ÅÅÁĞË³Ğò£º<input type=text name=OrderID"+Number+" maxlength=5 size=5 class=fminpt></div>";
+		this.SiteString.innerHTML+="<div class=frameline>æ’åˆ—é¡ºåºï¼š<input type=text name=OrderID"+Number+" maxlength=5 size=5 class=fminpt></div>";
 		this.scroll(0, 65000);
 	}
 }
@@ -159,15 +159,15 @@ Sub DisplayDatabaseLink
 		WriteN = 1
 		%>
 		<div class="frameline"><%=SiteLink_Name%>1</div>
-		<div class=frameline><%=SiteLink_Name%>Ãû³Æ£º<input type="text" name="SiteName1" maxlength="255" size="50" class=fminpt>(ÔÊĞíHTML)</div>
-		<div class=frameline>Á´½ÓµØÖ·£º<input type="text" name="SiteUrl1" maxlength="255" size="50" class=fminpt></div>
-		<div class=frameline>Í¼Æ¬µØÖ·£º<input type="text" name="LogoUrl1" maxlength="255" size="50" class=fminpt></div>
-		<div class=frameline>Í¼Æ¬¿í¶È£º<input type="text" name="LogoWidth1" maxlength="5" size="5" value=88 class=fminpt></div>
-		<div class=frameline>Í¼Æ¬¸ß¶È£º<input type="text" name="LogoHeight1" maxlength="5" size="5" value=31 class=fminpt></div>
+		<div class=frameline><%=SiteLink_Name%>åç§°ï¼š<input type="text" name="SiteName1" maxlength="255" size="50" class=fminpt>(å…è®¸HTML)</div>
+		<div class=frameline>é“¾æ¥åœ°å€ï¼š<input type="text" name="SiteUrl1" maxlength="255" size="50" class=fminpt></div>
+		<div class=frameline>å›¾ç‰‡åœ°å€ï¼š<input type="text" name="LogoUrl1" maxlength="255" size="50" class=fminpt></div>
+		<div class=frameline>å›¾ç‰‡å®½åº¦ï¼š<input type="text" name="LogoWidth1" maxlength="5" size="5" value=88 class=fminpt></div>
+		<div class=frameline>å›¾ç‰‡é«˜åº¦ï¼š<input type="text" name="LogoHeight1" maxlength="5" size="5" value=31 class=fminpt></div>
 		<%If SiteLink_Flag = 0 Then%>
-		<div class=frameline>ÊÇ·ñ»»ĞĞ£º<input type="text" name="BreakFlag1" maxlength="5" size="5" class=fminpt>ÁíÆğÒ»ĞĞÅÅ°æ£¬1-»»ĞĞ£¬0-×Ô¶¯</div>
+		<div class=frameline>æ˜¯å¦æ¢è¡Œï¼š<input type="text" name="BreakFlag1" maxlength="5" size="5" class=fminpt>å¦èµ·ä¸€è¡Œæ’ç‰ˆï¼Œ1-æ¢è¡Œï¼Œ0-è‡ªåŠ¨</div>
 		<%End If%>
-		<div class=frameline>ÅÅÁĞË³Ğò£º<input type="text" name="OrderID1" maxlength="5" size="5" class=fminpt>Ô½Ğ¡Ô½Ç°Ãæ</div>
+		<div class=frameline>æ’åˆ—é¡ºåºï¼š<input type="text" name="OrderID1" maxlength="5" size="5" class=fminpt>è¶Šå°è¶Šå‰é¢</div>
 		<%
 		Exit Sub
 	Else
@@ -187,15 +187,15 @@ Sub DisplayDatabaseLink
 		%>
 		<div class="frameline"><%=SiteLink_Name%><%=ReqN%></div>
 		<input type="hidden" name="SiteID<%=ReqN%>" Value="<%=GetData(0,SQL)%>">
-		<div class=frameline><%=SiteLink_Name%>Ãû³Æ£º<input type="text" name="SiteName<%=ReqN%>" maxlength="255" size="50" Value="<%=htmlencode(GetData(1,SQL))%>" class=fminpt>(ÔÊĞíHTML)</div>
-		<div class=frameline>Á´½ÓµØÖ·£º<input type="text" name="SiteUrl<%=ReqN%>" maxlength="255" size="50" Value="<%=htmlencode(GetData(2,SQL))%>" class=fminpt></div>
-		<div class=frameline>Í¼Æ¬µØÖ·£º<input type="text" name="LogoUrl<%=ReqN%>" maxlength="255" size="50" Value="<%=htmlencode(GetData(3,SQL))%>" class=fminpt></div>
-		<div class=frameline>Í¼Æ¬¿í¶È£º<input type="text" name="LogoWidth<%=ReqN%>" maxlength="5" size="5" Value="<%=htmlencode(GetData(5,SQL))%>" class=fminpt></div>
-		<div class=frameline>Í¼Æ¬¸ß¶È£º<input type="text" name="LogoHeight<%=ReqN%>" maxlength="5" size="5" Value="<%=htmlencode(GetData(6,SQL))%>" class=fminpt></div>
+		<div class=frameline><%=SiteLink_Name%>åç§°ï¼š<input type="text" name="SiteName<%=ReqN%>" maxlength="255" size="50" Value="<%=htmlencode(GetData(1,SQL))%>" class=fminpt>(å…è®¸HTML)</div>
+		<div class=frameline>é“¾æ¥åœ°å€ï¼š<input type="text" name="SiteUrl<%=ReqN%>" maxlength="255" size="50" Value="<%=htmlencode(GetData(2,SQL))%>" class=fminpt></div>
+		<div class=frameline>å›¾ç‰‡åœ°å€ï¼š<input type="text" name="LogoUrl<%=ReqN%>" maxlength="255" size="50" Value="<%=htmlencode(GetData(3,SQL))%>" class=fminpt></div>
+		<div class=frameline>å›¾ç‰‡å®½åº¦ï¼š<input type="text" name="LogoWidth<%=ReqN%>" maxlength="5" size="5" Value="<%=htmlencode(GetData(5,SQL))%>" class=fminpt></div>
+		<div class=frameline>å›¾ç‰‡é«˜åº¦ï¼š<input type="text" name="LogoHeight<%=ReqN%>" maxlength="5" size="5" Value="<%=htmlencode(GetData(6,SQL))%>" class=fminpt></div>
 		<%If SiteLink_Flag = 0 Then%>
-		<div class=frameline>ÊÇ·ñ»»ĞĞ£º<input type="text" name="BreakFlag<%=ReqN%>" maxlength="5" size="5" Value="<%=htmlencode(GetData(7,SQL))%>" class=fminpt>ÁíÆğÒ»ĞĞÅÅ°æ£¬1-»»ĞĞ£¬0-×Ô¶¯</div>
+		<div class=frameline>æ˜¯å¦æ¢è¡Œï¼š<input type="text" name="BreakFlag<%=ReqN%>" maxlength="5" size="5" Value="<%=htmlencode(GetData(7,SQL))%>" class=fminpt>å¦èµ·ä¸€è¡Œæ’ç‰ˆï¼Œ1-æ¢è¡Œï¼Œ0-è‡ªåŠ¨</div>
 		<%End If%>
-		<div class=frameline>ÅÅÁĞË³Ğò£º<input type="text" name="OrderID<%=ReqN%>" maxlength="5" size="5" Value="<%=htmlencode(GetData(4,SQL))%>" class=fminpt>Ô½Ğ¡Ô½Ç°Ãæ</div>
+		<div class=frameline>æ’åˆ—é¡ºåºï¼š<input type="text" name="OrderID<%=ReqN%>" maxlength="5" size="5" Value="<%=htmlencode(GetData(4,SQL))%>" class=fminpt>è¶Šå°è¶Šå‰é¢</div>
 		<%
 	Next
 
@@ -215,7 +215,7 @@ Function CheckLinkValue
 		OrderID = Trim(Request.Form("OrderID" & N+1))
 		If SiteName <> "" Then
 			'If SiteUrl = "" Then
-			'	GBL_CHK_TempStr = "´íÎó£¬" & SiteLink_Name & N + 1 & "µÄÁ´½ÓÎ´ÌîĞ´£®<br>" & VbCrLf
+			'	GBL_CHK_TempStr = "é”™è¯¯ï¼Œ" & SiteLink_Name & N + 1 & "çš„é“¾æ¥æœªå¡«å†™ï¼<br>" & VbCrLf
 			'	Exit function
 			'End If
 			
@@ -257,24 +257,24 @@ Function SaveSiteLink
 		BreakFlag = Trim(Request.Form("BreakFlag" & N+1))
 
 		If inStr(LCase(SiteName),"<%") or inStr(LCase(SiteName),"include") or (inStr(LCase(SiteName),"server") and inStr(LCase(SiteName),"script")) Then
-			Response.Write "<p><br><font color=red class=redfont>µÚ" & N + 1 & SiteLink_Name & "Ãû³ÆÖĞº¬ÓĞ<%£¬include£¬ServerµÈ×Ö·û£¬Çë×ĞÏ¸¼ì²é£¡</font></p>" & VbCrLf
+			Response.Write "<p><br><font color=red class=redfont>ç¬¬" & N + 1 & SiteLink_Name & "åç§°ä¸­å«æœ‰<%ï¼Œincludeï¼ŒServerç­‰å­—ç¬¦ï¼Œè¯·ä»”ç»†æ£€æŸ¥ï¼</font></p>" & VbCrLf
 			SaveSiteLink = 0
 			Exit Function
 		End If
 		If inStr(LCase(SiteUrl),"<%") or inStr(LCase(SiteName),"SiteUrl") or (inStr(LCase(SiteUrl),"server") and inStr(LCase(SiteUrl),"script")) Then
-			Response.Write "<p><br><font color=red class=redfont>µÚ" & N + 1 & SiteLink_Name & "Á´½ÓÖĞº¬ÓĞ<%£¬include£¬ServerµÈ×Ö·û£¬Çë×ĞÏ¸¼ì²é£¡</font></p>" & VbCrLf
+			Response.Write "<p><br><font color=red class=redfont>ç¬¬" & N + 1 & SiteLink_Name & "é“¾æ¥ä¸­å«æœ‰<%ï¼Œincludeï¼ŒServerç­‰å­—ç¬¦ï¼Œè¯·ä»”ç»†æ£€æŸ¥ï¼</font></p>" & VbCrLf
 			SaveSiteLink = 0
 			Exit Function
 		End If
 		If inStr(LCase(LogoUrl),"<%") or inStr(LCase(LogoUrl),"SiteUrl") or (inStr(LCase(LogoUrl),"server") and inStr(LCase(LogoUrl),"script")) Then
-			Response.Write "<p><br><font color=red class=redfont>µÚ" & N + 1 & "LogoµØÖ·ÖĞº¬ÓĞ<%£¬include£¬ServerµÈ×Ö·û£¬Çë×ĞÏ¸¼ì²é£¡</font></p>" & VbCrLf
+			Response.Write "<p><br><font color=red class=redfont>ç¬¬" & N + 1 & "Logoåœ°å€ä¸­å«æœ‰<%ï¼Œincludeï¼ŒServerç­‰å­—ç¬¦ï¼Œè¯·ä»”ç»†æ£€æŸ¥ï¼</font></p>" & VbCrLf
 			SaveSiteLink = 0
 			Exit Function
 		End If
 
 		OrderID = Left(Trim(Request.Form("OrderID" & N+1)),14)
 			'If SiteUrl = "" Then
-			'	GBL_CHK_TempStr = "´íÎó£¬" & SiteLink_Name & N + 1 & "µÄÁ´½ÓÎ´ÌîĞ´£®<br>" & VbCrLf
+			'	GBL_CHK_TempStr = "é”™è¯¯ï¼Œ" & SiteLink_Name & N + 1 & "çš„é“¾æ¥æœªå¡«å†™ï¼<br>" & VbCrLf
 			'	Exit Function
 			'	SaveSiteLink = 0
 			'End If
@@ -401,9 +401,9 @@ Sub MakeDataBaseLinkFile
 	End If
 	
 	If GBL_CHK_TempStr = "" Then
-		Response.Write "<br><font color=Green class=greenfont>2.³É¹¦Íê³ÉÉèÖÃ£¡</font>"
+		Response.Write "<br><font color=Green class=greenfont>2.æˆåŠŸå®Œæˆè®¾ç½®ï¼</font>"
 	Else
-		%><%=GBL_CHK_TempStr%><br>·şÎñÆ÷²»Ö§³ÖÔÚÏßĞ´ÈëÎÄ¼ş¹¦ÄÜ£¬ÇëÊ¹ÓÃFTPµÈ¹¦ÄÜ£¬½«<font color=Red Class=redfont><%=SiteLink_WriteFile%></font>ÎÄ¼şÌæ»»³É¿òÖĞÄÚÈİ(×¢Òâ±¸·İ)<p>
+		%><%=GBL_CHK_TempStr%><br>æœåŠ¡å™¨ä¸æ”¯æŒåœ¨çº¿å†™å…¥æ–‡ä»¶åŠŸèƒ½ï¼Œè¯·ä½¿ç”¨FTPç­‰åŠŸèƒ½ï¼Œå°†<font color=Red Class=redfont><%=SiteLink_WriteFile%></font>æ–‡ä»¶æ›¿æ¢æˆæ¡†ä¸­å†…å®¹(æ³¨æ„å¤‡ä»½)<p>
 		<textarea name="fileContent" cols="80" rows="30" class=fmtxtra><%=Server.htmlencode(TempStr)%></textarea><%
 		GBL_CHK_TempStr = ""
 	End If

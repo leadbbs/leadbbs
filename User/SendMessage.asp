@@ -1,10 +1,10 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/Board_popfun.asp -->
-<!-- #include file=../inc/Limit_fun.asp -->
-<!-- #include file=inc/UserTopic.asp -->
-<!-- #include file=inc/Fun_SendMessage.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Board_popfun.asp"-->
+<!--#include file="../inc/Limit_fun.asp"-->
+<!--#include file="inc/UserTopic.asp"-->
+<!--#include file="inc/Fun_SendMessage.asp"-->
 <%
-Const DEF_User_MaxReceiveUser = 5 '¶¨ÒåÔÊĞíÍ¬Ê±·¢ËÍ¶ÌÏûÏ¢¸ø¶àÉÙ¸öÓÃ»§£¬Ä¬ÈÏÖµÎª5
+Const DEF_User_MaxReceiveUser = 5 'å®šä¹‰å…è®¸åŒæ—¶å‘é€çŸ­æ¶ˆæ¯ç»™å¤šå°‘ä¸ªç”¨æˆ·ï¼Œé»˜è®¤å€¼ä¸º5
 DEF_BBS_HomeUrl = "../"
 
 Dim Sdm_FromUser,Sdm_ToUser,Sdm_Title,Sdm_Content,Sdm_ToUserID
@@ -13,7 +13,7 @@ dim old_SDM_ToUser
 
 Dim AjaxFlag
 
-Main
+Main()
 
 Sub Main
 
@@ -23,23 +23,23 @@ Sub Main
 		AjaxFlag = 0
 	End If
 	If Request.QueryString("go") = "liling" Then
-		Main_SelectFriend
+		Main_SelectFriend()
 	Else
-		Main_SendMessage
+		Main_SendMessage()
 	End If
 
 End Sub
 
 Sub Main_SendMessage
 
-	initDatabase
-	CheckisBoardMaster
+	initDatabase()
+	CheckisBoardMaster()
 	GBL_CHK_TempStr = ""
 
 	Sdm_FromUser = GBL_CHK_User
 
 	If GBL_UserID < 0 Then GBL_UserID = 0
-	If GBL_UserID = 0 or Sdm_FromUser = "" Then GBL_CHK_TempStr = GBL_CHK_TempStr & "ÄúÎ´µÇÂ¼" & VbCrLf
+	If GBL_UserID = 0 or Sdm_FromUser = "" Then GBL_CHK_TempStr = GBL_CHK_TempStr & "æ‚¨æœªç™»å½•" & VbCrLf
 
 	ReplyMessageID = Left(Request("ReplyMessageID"),14)
 	If isNumeric(ReplyMessageID) = 0 or ReplyMessageID = "" or InStr(ReplyMessageID,",") Then ReplyMessageID = 0
@@ -61,8 +61,8 @@ Sub Main_SendMessage
 	End If
 
 	If AjaxFlag = 0 Then
-		BBS_SiteHead DEF_SiteNameString & " - Ğ´¶ÌÏûÏ¢",0,"Ğ´¶ÌÏûÏ¢"
-		UpdateOnlineUserAtInfo GBL_board_ID,"·¢ËÍ¶ÌÏûÏ¢"
+		BBS_SiteHead DEF_SiteNameString & " - å†™çŸ­æ¶ˆæ¯",0,"å†™çŸ­æ¶ˆæ¯"
+		UpdateOnlineUserAtInfo GBL_board_ID,"å‘é€çŸ­æ¶ˆæ¯"
 	
 		UserTopicTopInfo("user")
 	ElseIf submitFlag = 0 Then%>
@@ -72,24 +72,24 @@ Sub Main_SendMessage
 	End If
 
 	If GBL_CHK_Flag = 1 Then
-		CheckUserAnnounceLimit
-		If GBL_CHK_OnlineTime < DEF_NeedOnlineTime and DEF_NeedOnlineTime > 0 and CheckSupervisorUserName = 0 Then
-			GBL_CHK_TempStr = "<div class=alert>ÂÛÌ³ÏŞÖÆÔÚÏßÊ±¼ä(" & DEF_PointsName(4) & ")" & Fix(DEF_NeedOnlineTime/60) & "·ÖÒÔÉÏÓÃ»§²ÅÄÜÊ¹ÓÃ´Ë¹¦ÄÜ¡£</div>" & VbCrLf
+		CheckUserAnnounceLimit()
+		If GBL_CHK_OnlineTime < DEF_NeedOnlineTime and DEF_NeedOnlineTime > 0 and CheckSupervisorUserName() = 0 Then
+			GBL_CHK_TempStr = "<div class=alert>è®ºå›é™åˆ¶åœ¨çº¿æ—¶é—´(" & DEF_PointsName(4) & ")" & Fix(DEF_NeedOnlineTime/60) & "åˆ†ä»¥ä¸Šç”¨æˆ·æ‰èƒ½ä½¿ç”¨æ­¤åŠŸèƒ½ã€‚</div>" & VbCrLf
 		End If
 		If ModifyMessageID > 0 Then GetMessageValue(ModifyMessageID)
 		If GBL_CHK_TempStr = "" Then
 			If submitFlag <> 0 Then
-				CheckSubmitFormData
+				CheckSubmitFormData()
 				If GBL_CHK_TempStr = "" Then
-					WriteNewMessageToDatabase
+					WriteNewMessageToDatabase()
 				Else
 					SDM_ToUser = old_SDM_ToUser
 					Message_Done GBL_CHK_TempStr,"err"
-					If AjaxFlag = 0 Then NewMessageForm
+					If AjaxFlag = 0 Then NewMessageForm()
 				End If
 			Else
 				If ReplyMessageID > 0 and ModifyMessageID = 0 Then GetMessageValue(ReplyMessageID)
-				NewMessageForm
+				NewMessageForm()
 			End If
 		Else
 			Message_Done GBL_CHK_TempStr,"err"
@@ -97,18 +97,18 @@ Sub Main_SendMessage
 	Else
 		If AjaxFlag = 0 Then
 			If Request("submitflag")="" Then
-				Response.Write DisplayLoginForm("ÇëÏÈµÇÂ¼")
+				Response.Write DisplayLoginForm("è¯·å…ˆç™»å½•")
 			Else
 				DisplayLoginForm(GBL_CHK_TempStr)
 			End If
 		Else
-			Message_Done "ÕËºÅÑéÖ¤´íÎó.","err"
+			Message_Done "è´¦å·éªŒè¯é”™è¯¯.","err"
 		End If
 	End If
-	closeDataBase
+	closeDataBase()
 	If AjaxFlag = 0 Then
-		UserTopicBottomInfo
-		SiteBottom
+		UserTopicBottomInfo()
+		SiteBottom()
 	ElseIf submitFlag = 0 Then%>
 	</div>
 	<%
@@ -141,7 +141,7 @@ Function NewMessageForm
 
 	Dim TempN,Pub,SuperFlag
 	
-	SuperFlag = CheckSupervisorUserName
+	SuperFlag = CheckSupervisorUserName()
 	If Request("pub") <> "" Then
 		Pub = 1
 	Else
@@ -150,14 +150,14 @@ Function NewMessageForm
 
 	Response.Write "<div class=title>"
 	If ModifyMessageID > 0 Then
-		Response.Write "±à¼­"
+		Response.Write "ç¼–è¾‘"
 	Else
-		Response.Write "±àĞ´ĞÂµÄ"
+		Response.Write "ç¼–å†™æ–°çš„"
 	End If
 	If SdM_ToUser = "" and Pub = 1 Then
-		Response.Write "¹«¸æ"
+		Response.Write "å…¬å‘Š"
 	Else
-		Response.Write "¶ÌÏûÏ¢"
+		Response.Write "çŸ­æ¶ˆæ¯"
 	End If
 	
 	Dim Url
@@ -165,7 +165,7 @@ Function NewMessageForm
 	If Url = "" and Request("ajaxflag") = "" Then
 			Url = DEF_BBS_HomeUrl
 	elseIf Request("dir") = "" Then
-		If inStr(request.querystring,"dir=") then
+		If inStr(Request.ServerVariables("QUERY_STRING"),"dir=") then
 			Url = ""
 		Else
 			Url = DEF_BBS_HomeUrl
@@ -183,7 +183,7 @@ Function NewMessageForm
 	
 	<tr> 
 		<td width=150 class=tdbox>
-			·¢ËÍÈË</td>
+			å‘é€äºº</td>
 		<td valign=top class=tdbox>
 			<%=Sdm_FromUser%>
 			<input name=submitFlag value="<%=Second(time)&minute(time)%>" type=hidden>
@@ -193,19 +193,19 @@ Function NewMessageForm
 	</tr>
 	<%If DEF_EnableAttestNumber > 2 and (DEF_AttestNumberPoints = 0 or GBL_CHK_Points < DEF_AttestNumberPoints) Then%>
 	<tr> 
-		<td class=tdbox>ÑéÖ¤Âë</td>
+		<td class=tdbox>éªŒè¯ç </td>
 		<TD class=tdbox>
-			<%Response.Write displayVerifycode%>
+			<%Response.Write displayVerifycode()%>
 		</td>
 	</tr>
 				<%End If
 	If SuperFlag = 0 or Pub = 0 Then%>
 	<tr>
 		<td class=tdbox>
-			<%If SuperFlag = 0 Then%>*<%End If%>½ÓÊÕÈË</td>
+			<%If SuperFlag = 0 Then%>*<%End If%>æ¥æ”¶äºº</td>
 		<td valign=top class=tdbox><%If ModifyMessageID > 0 Then
 				Response.Write htmlencode(SdM_ToUser)
-				If SdM_ToUser = "" Then Response.Write "´ËÎª¹«¸æ£¬ÎŞ½ÓÊÕÈË"
+				If SdM_ToUser = "" Then Response.Write "æ­¤ä¸ºå…¬å‘Šï¼Œæ— æ¥æ”¶äºº"
 			Else%>
 			<input class='fminpt input_4' name=SdM_ToUser id=SdM_ToUser value="<%=htmlencode(SdM_ToUser)%>" size=41 maxlength=200> <%
 				If AjaxFlag = 0 Then DisplayFriendList
@@ -214,15 +214,15 @@ Function NewMessageForm
 	</tr>
 	<%End If%>
 	<tr>
-		<td class=tdbox>*±êÌâ</td>
+		<td class=tdbox>*æ ‡é¢˜</td>
 		<td class=tdbox>
 			<input class='fminpt input_4' name=SdM_Title id=SdM_Title value="<%=htmlencode(SdM_Title)%>" size=60 maxlength=100>
 		</td>
 	</tr>
 	<tr>
-		<td valign=top class=tdbox>ÄÚÈİ<%
+		<td valign=top class=tdbox>å†…å®¹<%
 		If AjaxFlag = 0 Then
-		%><div class=value2>Ö§³Ö[IMG]±êÇ©²åÈëÍ¼Æ¬</div><%
+		%><div class=value2>æ”¯æŒ[IMG]æ ‡ç­¾æ’å…¥å›¾ç‰‡</div><%
 		End If%></td>
 		<td valign=top class=tdbox>
 			<textarea cols=58 name="SdM_Content" id=SdM_Content rows="10"<%
@@ -235,7 +235,7 @@ If AjaxFlag = 0 Then
 	If DEF_UBBiconNumber > 0 Then%>
 		<tr>
 			<td width="<%=DEF_BBS_LeftTDWidth%>" valign=top class=tdbox>
-			²åÈë<a href=<%=DEF_BBS_HomeUrl%>User/Help/Ubb.asp?icon target=_blank>±íÇé</a>
+			æ’å…¥<a href=<%=DEF_BBS_HomeUrl%>User/Help/Ubb.asp?icon target=_blank>è¡¨æƒ…</a>
 			</td>
 			<td class=tdbox>
 				<table border="0" cellspacing="0" cellpadding="0"><tr><td>
@@ -249,8 +249,8 @@ End If%>
 	<tr>
 		<td class=tdbox>&nbsp;</td>
 		<td class=tdbox>
-			<input type="submit" name="Submit" value="Ìá½»" class="fmbtn btn_2"> &nbsp;
-			<input type="reset" name="reset" value="Çå³ı" class="fmbtn btn_2">
+			<input type="submit" name="Submit" value="æäº¤" class="fmbtn btn_2"> &nbsp;
+			<input type="reset" name="reset" value="æ¸…é™¤" class="fmbtn btn_2">
 		</td>
 	</tr>
 	</table>
@@ -265,7 +265,7 @@ End If%>
 		{
 			if(theform.ForumNumber.value=="")
 			{
-				alert("ÇëÊäÈëÑéÖ¤Âë!\n");
+				alert("è¯·è¾“å…¥éªŒè¯ç !\n");
 				ValidationPassed = false;
 				theform.ForumNumber.focus();
 				submitflag = 0;
@@ -347,14 +347,14 @@ function Msg_Focus()
 edt_disablesc();
 setTimeout("Msg_Focus()",500);
 $import("../a/edit/icon.asp?f=msg","js");
-window.onbeforeunload = function(){if($id("SdM_Content").value.length>0&&submitflag==0)return("ÄúµÄ¶ÌÏûÏ¢Î´·¢±í£¬È·¶¨È¡ÏûÂğ£¿");}
+window.onbeforeunload = function(){if($id("SdM_Content").value.length>0&&submitflag==0)return("æ‚¨çš„çŸ­æ¶ˆæ¯æœªå‘è¡¨ï¼Œç¡®å®šå–æ¶ˆå—ï¼Ÿ");}
 	</script>
 <%
-	If CheckSupervisorUserName = 1 Then%><div class=value2>- ÄúÊÇ¹ÜÀíÔ±£¬²»ÌîĞ´½ÓÊÕÈË±íÊ¾·¢²¼¹«¸æ</div><%
+	If CheckSupervisorUserName() = 1 Then%><div class=value2>- æ‚¨æ˜¯ç®¡ç†å‘˜ï¼Œä¸å¡«å†™æ¥æ”¶äººè¡¨ç¤ºå‘å¸ƒå…¬å‘Š</div><%
 	End If
 	If DEF_User_MaxReceiveUser >= 2 Then
-		%><div class=value2>- ×î¶àÔÊĞíÌîĞ´<%=DEF_User_MaxReceiveUser%>Ãû½ÓÊÕÈË£¬ÓÃ¶ººÅ·Ö¸ô</div>
-		<div class=value2>- ĞÂ·¢ËÍµÄ¶ÌÏûÏ¢×î¶à±£´æ<%=LMT_SendMsgExpiresDate%>Ìì£¬¹ıÊ±ÏµÍ³½«×Ô¶¯Çå³ı.</div><%
+		%><div class=value2>- æœ€å¤šå…è®¸å¡«å†™<%=DEF_User_MaxReceiveUser%>åæ¥æ”¶äººï¼Œç”¨é€—å·åˆ†éš”</div>
+		<div class=value2>- æ–°å‘é€çš„çŸ­æ¶ˆæ¯æœ€å¤šä¿å­˜<%=LMT_SendMsgExpiresDate%>å¤©ï¼Œè¿‡æ—¶ç³»ç»Ÿå°†è‡ªåŠ¨æ¸…é™¤.</div><%
 	End IF
 End If
 
@@ -370,7 +370,7 @@ Function CheckSdM_ToUserString
 	TmpArr = Split(SdM_ToUser,",")
 	
 	If Len(SdM_ToUser) - Len(Replace(SdM_ToUser,",","")) > DEF_User_MaxReceiveUser - 1 Then
-		GBL_CHK_TempStr = "´íÎó£¬½ÓÊÕÈË×î¶àÖ»ÄÜÌîĞ´" & DEF_User_MaxReceiveUser & "ÈË£¡"
+		GBL_CHK_TempStr = "é”™è¯¯ï¼Œæ¥æ”¶äººæœ€å¤šåªèƒ½å¡«å†™" & DEF_User_MaxReceiveUser & "äººï¼"
 		CheckSdM_ToUserString = 0
 		Exit Function
 	Else
@@ -379,7 +379,7 @@ Function CheckSdM_ToUserString
 		For N = 0 to Ubound(TmpArr,1)
 			For M = N + 1 to Ubound(TmpArr,1)
 				If LCase(TmpArr(N)) = LCase(TmpArr(M)) Then
-					GBL_CHK_TempStr = "´íÎó£¬½ÓÊÕÈË²»ÔÊĞíÖØ¸´ÌîĞ´(ÖØ¸´ÓÃ»§Ãû£º" & TmpArr(N) & ")"
+					GBL_CHK_TempStr = "é”™è¯¯ï¼Œæ¥æ”¶äººä¸å…è®¸é‡å¤å¡«å†™(é‡å¤ç”¨æˆ·åï¼š" & TmpArr(N) & ")"
 					CheckSdM_ToUserString = 0
 					Exit Function
 				End If
@@ -397,8 +397,8 @@ Function CheckSubmitFormData
 	SdM_ConTent = Request.Form("SdM_ConTent")
 	
 	If DEF_EnableAttestNumber > 2 and (DEF_AttestNumberPoints = 0 or GBL_CHK_Points < DEF_AttestNumberPoints) Then
-		If CheckRndNumber = 0 Then
-			GBL_CHK_TempStr = "ÑéÖ¤ÂëÌîĞ´´íÎó!"
+		If CheckRndNumber() = 0 Then
+			GBL_CHK_TempStr = "éªŒè¯ç å¡«å†™é”™è¯¯!"
 			GBL_CHK_Flag = 0
 			Exit Function
 		End If
@@ -408,47 +408,47 @@ Function CheckSubmitFormData
 
 	If SdM_ToUser <> "" Then
 		If ModifyMessageID = 0 Then
-			If CheckSdM_ToUserString = 0 Then Exit Function
-			If CheckUserNameExist = 0 Then
+			If CheckSdM_ToUserString() = 0 Then Exit Function
+			If CheckUserNameExist() = 0 Then
 				Exit Function
 			ElseIf CheckMessageOver(SdM_ToUser) = 1 Then
 				Exit Function
 			End If
 		End If
 	Else
-		If CheckSupervisorUserName = 0 Then
-			GBL_CHK_TempStr = "´íÎó£¬±ØĞëÌîĞ´½ÓÊÕÈË!" & VbCrLf
+		If CheckSupervisorUserName() = 0 Then
+			GBL_CHK_TempStr = "é”™è¯¯ï¼Œå¿…é¡»å¡«å†™æ¥æ”¶äºº!" & VbCrLf
 			Exit Function
 		Else
 			If SdM_Title = "" Then
-				GBL_CHK_TempStr = "ÄãÊÇ¹ÜÀíÔ±, ÏÖÔÚ·¢²¼µÄÊÇ¹«¸æĞÅÏ¢, ÇëÌîĞ´ĞÅÏ¢±êÌâ!" & VbCrLf
+				GBL_CHK_TempStr = "ä½ æ˜¯ç®¡ç†å‘˜, ç°åœ¨å‘å¸ƒçš„æ˜¯å…¬å‘Šä¿¡æ¯, è¯·å¡«å†™ä¿¡æ¯æ ‡é¢˜!" & VbCrLf
 				Exit Function
 			End If
 			If inStr(Lcase(SdM_Title),"<script") or inStr(Lcase(SdM_Title),"</script") Then
-				GBL_CHK_TempStr = "ÄãÊÇ¹ÜÀíÔ±, ·¢²¼µÄ¹«¸æ±êÌâ²»ÄÜÊ¹ÓÃJS´úÂë!" & VbCrLf
+				GBL_CHK_TempStr = "ä½ æ˜¯ç®¡ç†å‘˜, å‘å¸ƒçš„å…¬å‘Šæ ‡é¢˜ä¸èƒ½ä½¿ç”¨JSä»£ç !" & VbCrLf
 				Exit Function
 			End If
 		End If
 	End If
 
 	If StrLength(SdM_Title) > 100 Then
-		GBL_CHK_TempStr = "´íÎó£¬ĞÅÏ¢±êÌâÇë²»Òª³¬¹ı100¸ö×Ö·û. " & VbCrLf
+		GBL_CHK_TempStr = "é”™è¯¯ï¼Œä¿¡æ¯æ ‡é¢˜è¯·ä¸è¦è¶…è¿‡100ä¸ªå­—ç¬¦. " & VbCrLf
 		Exit Function
 	End if
 
 	If SdM_Title = "" Then
-		GBL_CHK_TempStr = "´íÎó£¬ĞÅÏ¢±êÌâ±ØĞëÌîĞ´. " & VbCrLf
+		GBL_CHK_TempStr = "é”™è¯¯ï¼Œä¿¡æ¯æ ‡é¢˜å¿…é¡»å¡«å†™. " & VbCrLf
 		Exit Function
 	End if
 
-	If CheckSupervisorUserName = 1 Then
+	If CheckSupervisorUserName() = 1 Then
 		If Len(SdM_Content) > DEF_MaxTextLength * 2 then
-			GBL_CHK_TempStr = "´íÎó£¬ÄÚÈİ²»ÄÜ³¬¹ı" & DEF_MaxTextLength * 2 & "¸ö×Ö!" & VbCrLf
+			GBL_CHK_TempStr = "é”™è¯¯ï¼Œå†…å®¹ä¸èƒ½è¶…è¿‡" & DEF_MaxTextLength * 2 & "ä¸ªå­—!" & VbCrLf
 			Exit Function
 		End If
 	Else
 		If Len(SdM_Content) > DEF_MaxTextLength / 2 then
-			GBL_CHK_TempStr = "´íÎó£¬ÄÚÈİ²»ÄÜ³¬¹ı" & DEF_MaxTextLength / 2 & "¸ö×Ö!" & VbCrLf
+			GBL_CHK_TempStr = "é”™è¯¯ï¼Œå†…å®¹ä¸èƒ½è¶…è¿‡" & DEF_MaxTextLength / 2 & "ä¸ªå­—!" & VbCrLf
 			Exit Function
 		End If
 	End If
@@ -457,19 +457,19 @@ Function CheckSubmitFormData
 		Dim Temp
 		Temp = CheckIsRestSpaceTime(SdM_Title,Left(SdM_Content & "",100))
 		Select Case Temp
-		Case 1: If CheckSupervisorUserName = 0 Then
-				GBL_CHK_TempStr = "²»ÄÜÁ¬Ğø·¢Ì«¶àµÄÏûÏ¢£¬ÇëĞİÏ¢" & DEF_RestSpaceTime & "ÃëÖÓºóÔÙ·¢¶ÌÏûÏ¢!"
+		Case 1: If CheckSupervisorUserName() = 0 Then
+				GBL_CHK_TempStr = "ä¸èƒ½è¿ç»­å‘å¤ªå¤šçš„æ¶ˆæ¯ï¼Œè¯·ä¼‘æ¯" & DEF_RestSpaceTime & "ç§’é’Ÿåå†å‘çŸ­æ¶ˆæ¯!"
 				GBL_CHK_Flag = 0
 				Exit Function
 			End If
-		Case 2: GBL_CHK_TempStr = "Çë²»Òª·¢ÖØ¸´µÄÏûÏ¢!"
+		Case 2: GBL_CHK_TempStr = "è¯·ä¸è¦å‘é‡å¤çš„æ¶ˆæ¯!"
 			GBL_CHK_Flag = 0
 			Exit Function
 		Case 3: Exit Function
 		End Select
 	Else
-		If CheckWriteEventSpace = 0 Then
-			GBL_CHK_TempStr = "ÄúÔÚĞŞ¸Ä×ÊÁÏµÄ¹ı³ÌÖĞÌá½»µÃÌ«Æµ£¬ÇëÉÔºòÔÙ×÷Ìá½»! " & VbCrLf
+		If CheckWriteEventSpace() = 0 Then
+			GBL_CHK_TempStr = "æ‚¨åœ¨ä¿®æ”¹èµ„æ–™çš„è¿‡ç¨‹ä¸­æäº¤å¾—å¤ªé¢‘ï¼Œè¯·ç¨å€™å†ä½œæäº¤! " & VbCrLf
 			GBL_CHK_Flag = 0
 			Exit Function
 		End If
@@ -486,9 +486,9 @@ Sub ModifyMessage(ToUser,Title,Content,ModifyID)
 
 	If ToUser = "" Then ReloadPubMessageInfo
 
-	GBL_CHK_TempStr = "<p align=left>&nbsp; &nbsp; <font color=008800 class=greenfont>³É¹¦±à¼­¶ÌÏûÏ¢"
+	GBL_CHK_TempStr = "<p align=left>&nbsp; &nbsp; <font color=008800 class=greenfont>æˆåŠŸç¼–è¾‘çŸ­æ¶ˆæ¯"
 
-	If CheckSupervisorUserName = 0 Then
+	If CheckSupervisorUserName() = 0 Then
 		CALL LDExeCute("Update LeadBBS_User Set LastWriteTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
 		UpdateSessionValue 13,GetTimeValue(DEF_Now),0
 	End If
@@ -522,7 +522,7 @@ Function CheckMessageOver(username)
 			If isNull(tmp) Then tmp = 0
 			tmp = cCur(tmp)
 			If tmp > LMT_MaxMessageNumber Then
-				GBL_CHK_TempStr = "´íÎó£¬½ÓÊÕÈË¡°<b>" & htmlencode(TmpArr(N)) & "</b>¡±ÊÕ¼şÏä¼ºÂú£¬·¢ËÍÊ§°Ü!<br>" & VbCrLf
+				GBL_CHK_TempStr = "é”™è¯¯ï¼Œæ¥æ”¶äººâ€œ<b>" & htmlencode(TmpArr(N)) & "</b>â€æ”¶ä»¶ç®±å·±æ»¡ï¼Œå‘é€å¤±è´¥!<br>" & VbCrLf
 				CheckMessageOver = 1
 				Exit Function
 			End If
@@ -547,7 +547,7 @@ Function GetTrueName_UserName(username,truename,toid,fullname)
 	
 	If Rs.Eof Then
 		GetTrueName_UserName = array(0,"","")
-		GBL_CHK_TempStr = "´íÎó£¬ÕÒ²»µ½½ÓÊÕÈË¡°<b>" & htmlencode(fullname) & "</b>¡±£¬ÇëÈ·ÈÏÊÇ·ñ´æÔÚ´ËÈË!<br>" & VbCrLf
+		GBL_CHK_TempStr = "é”™è¯¯ï¼Œæ‰¾ä¸åˆ°æ¥æ”¶äººâ€œ<b>" & htmlencode(fullname) & "</b>â€ï¼Œè¯·ç¡®è®¤æ˜¯å¦å­˜åœ¨æ­¤äºº!<br>" & VbCrLf
 	Else
 		ToUserID = Rs(0)
 		Uname = rs(1)
@@ -556,11 +556,11 @@ Function GetTrueName_UserName(username,truename,toid,fullname)
 	End if
 	Rs.Close
 	Set Rs = Nothing
-	If GetBinaryBit(UserLimit,13) = 1 and GBL_BoardMasterFlag < 4 Then '°æÖ÷»òÒÔÉÏÈ¨ÏŞÕß²»ÊÜ´ËÏŞÖÆ
+	If GetBinaryBit(UserLimit,13) = 1 and GBL_BoardMasterFlag < 4 Then 'ç‰ˆä¸»æˆ–ä»¥ä¸Šæƒé™è€…ä¸å—æ­¤é™åˆ¶
 		Set Rs = LDExeCute(sql_select("Select ID from LeadBBS_FriendUser where FriendUserID=" & GBL_UserID & " and UserID=" & ToUserID,1),0)
 		If Rs.Eof Then
 			GetTrueName_UserName = array(0,"","")
-			GBL_CHK_TempStr = htmlencode(fullname) & " ÒÑ¾­ÉèÖÃ³É½öÔÊĞí½ÓÊÕºÃÓÑµÄ¶ÌÏûÏ¢£¬ÇëÎğ´òÈÅ¡£<br>" & VbCrLf
+			GBL_CHK_TempStr = htmlencode(fullname) & " å·²ç»è®¾ç½®æˆä»…å…è®¸æ¥æ”¶å¥½å‹çš„çŸ­æ¶ˆæ¯ï¼Œè¯·å‹¿æ‰“æ‰°ã€‚<br>" & VbCrLf
 		End If
 		Rs.Close
 		Set Rs = Nothing
@@ -568,7 +568,7 @@ Function GetTrueName_UserName(username,truename,toid,fullname)
 
 End Function
 
-Rem ¼ì²âÄ³ÓÃ»§ÃûIDÊÇ·ñ´æÔÚ
+Rem æ£€æµ‹æŸç”¨æˆ·åIDæ˜¯å¦å­˜åœ¨
 Function CheckUserNameExist
 
 	Dim UserLimit,UName
@@ -626,30 +626,30 @@ Function GetMessageValue(MessageID)
 	SQL = sql_select("Select FromUser,SendTime,Title,Content,ToUser,ReadFlag from LeadBBS_InfoBox where ID=" & MessageID,1)
 	Set Rs = LDExeCute(SQL,0)
 	If Rs.Eof Then
-		GBL_CHK_TempStr = "´íÎó£¬ÎŞ·¨²é¿´´ËÏûÏ¢µÄÏà¹Ø×ÊÁÏ£®"
+		GBL_CHK_TempStr = "é”™è¯¯ï¼Œæ— æ³•æŸ¥çœ‹æ­¤æ¶ˆæ¯çš„ç›¸å…³èµ„æ–™ï¼"
 	Else
 		If SdM_FromUser <> Rs(0) and SdM_FromUser <> Rs(4) and Rs(4) <> "" Then
-			GBL_CHK_TempStr = "´íÎó£¬ÎŞ·¨²é¿´´ËÏûÏ¢µÄÏà¹Ø×ÊÁÏ£®"
+			GBL_CHK_TempStr = "é”™è¯¯ï¼Œæ— æ³•æŸ¥çœ‹æ­¤æ¶ˆæ¯çš„ç›¸å…³èµ„æ–™ï¼"
 			Rs.Close
 			Set Rs = Nothing
 			Exit Function
 		End If
-		If Rs(4) = "" and CheckSupervisorUserName = 0 Then
-			GBL_CHK_TempStr = "´íÎó£¬ÎŞ·¨²é¿´´ËÏûÏ¢µÄÏà¹Ø×ÊÁÏ£®"
+		If Rs(4) = "" and CheckSupervisorUserName() = 0 Then
+			GBL_CHK_TempStr = "é”™è¯¯ï¼Œæ— æ³•æŸ¥çœ‹æ­¤æ¶ˆæ¯çš„ç›¸å…³èµ„æ–™ï¼"
 			Rs.Close
 			Set Rs = Nothing
 			Exit Function
 		End If
 		SdM_Title = Rs(2)
 		If ModifyMessageID > 0 Then
-			If GBL_CHK_User <> Rs(0) and (CheckSupervisorUserName = 0 and Rs(4) = "") Then
-				GBL_CHK_TempStr = "´íÎó£¬ÎŞ·¨²é¿´´ËÏûÏ¢µÄÏà¹Ø×ÊÁÏ£®"
+			If GBL_CHK_User <> Rs(0) and (CheckSupervisorUserName() = 0 and Rs(4) = "") Then
+				GBL_CHK_TempStr = "é”™è¯¯ï¼Œæ— æ³•æŸ¥çœ‹æ­¤æ¶ˆæ¯çš„ç›¸å…³èµ„æ–™ï¼"
 				Rs.Close
 				Set Rs = Nothing
 				Exit Function
 			End If
 			If (ccur(Rs(5)) = 1) Then
-				GBL_CHK_TempStr = "´ËÌõ¶ÌÏûÏ¢¼ºÔÄ£¬ÎŞ·¨ÔÙ±à¼­£®"
+				GBL_CHK_TempStr = "æ­¤æ¡çŸ­æ¶ˆæ¯å·±é˜…ï¼Œæ— æ³•å†ç¼–è¾‘ï¼"
 				Rs.Close
 				Set Rs = Nothing
 				Exit Function
@@ -660,12 +660,12 @@ Function GetMessageValue(MessageID)
 		Else
 			'SdM_Content = Replace(Rs(3) & "",VbCrLf,VbCrLf & ">")
 			'If SdM_Content<>"" Then SdM_Content = ">" & SdM_Content
-			'SdM_Content = VbCrLf & VbCrLf & VbCrLf & "-----------------------------------------" & VbCrLf & ">[»Ø¸´" & htmlencode(Rs(0)) & " " & Mid(RestoreTime(Rs(1)),6,11) & "·¢ËÍµÄ¶ÌÏûÏ¢]" & VbCrLf & ">±êÌâ£º" & SdM_Title & VbCrLf & VbCrLf & SdM_Content & VbCrLf
+			'SdM_Content = VbCrLf & VbCrLf & VbCrLf & "-----------------------------------------" & VbCrLf & ">[å›å¤" & htmlencode(Rs(0)) & " " & Mid(RestoreTime(Rs(1)),6,11) & "å‘é€çš„çŸ­æ¶ˆæ¯]" & VbCrLf & ">æ ‡é¢˜ï¼š" & SdM_Title & VbCrLf & VbCrLf & SdM_Content & VbCrLf
 			SdM_Content = Rs(3)
 			SQL = inStr(SdM_Content,"[/quote]")
 			If inStr(SdM_Content,"[quote]") > 0 and SQL > 0 Then SdM_Content =  Mid(SdM_Content,SQL + 8)
-			If Replace(Trim(SdM_Content),VbCrLf,"") <> "" Then SdM_Content = "[b]Ô­ÄÚÈİ[/b][hr]" & VbCrLf & SdM_Content & VbCrLf
-			SdM_Content = "[quote][u]" & GBL_CHK_User & "[/u] »Ø¸´ [u]" & htmlencode(Rs(0)) & "[/u] ÔÚ " & Left(RestoreTime(Rs(1)),16) & " ·¢ËÍµÄ¶ÌÏûÏ¢" & VbCrLf & VbCrLf & "[b]Ô­±êÌâ£º[/b][url=LookMessage.asp?MessageID=" & ReplyMessageID & "]" & SdM_Title & "[/url]" & VbCrLf & VbCrLf & SdM_Content & "[/quote]" & VbCrLf
+			If Replace(Trim(SdM_Content),VbCrLf,"") <> "" Then SdM_Content = "[b]åŸå†…å®¹[/b][hr]" & VbCrLf & SdM_Content & VbCrLf
+			SdM_Content = "[quote][u]" & GBL_CHK_User & "[/u] å›å¤ [u]" & htmlencode(Rs(0)) & "[/u] åœ¨ " & Left(RestoreTime(Rs(1)),16) & " å‘é€çš„çŸ­æ¶ˆæ¯" & VbCrLf & VbCrLf & "[b]åŸæ ‡é¢˜ï¼š[/b][url=LookMessage.asp?MessageID=" & ReplyMessageID & "]" & SdM_Title & "[/url]" & VbCrLf & VbCrLf & SdM_Content & "[/quote]" & VbCrLf
 			If Left(SdM_Title,3) <> "Re:" Then SdM_Title = Left("Re:" & SdM_Title,250)
 		End If
 	End If
@@ -676,7 +676,7 @@ End Function
 
 Function CheckIsRestSpaceTime(Form_Title,Form_Content)
 
-	If CheckWriteEventSpace = 0 Then
+	If CheckWriteEventSpace() = 0 Then
 		CheckIsRestSpaceTime = 3
 		Exit Function
 	End If
@@ -722,7 +722,7 @@ Sub DisplayFriendList
 		var num = <%=DEF_User_MaxReceiveUser%>;
 		if(val=='')
 		{
-			layer_view('Ñ¡Ôñ½ÓÊÕÈË',$id('user_selfriend'),'','','anc_msgbody','SendMessage.asp?go=liling','',0,'AjaxFlag=1',0,0);
+			layer_view('é€‰æ‹©æ¥æ”¶äºº',$id('user_selfriend'),'','','anc_msgbody','SendMessage.asp?go=liling','',0,'AjaxFlag=1',0,0);
 		}
 		else
 		{
@@ -733,22 +733,22 @@ Sub DisplayFriendList
 				if($id('SdM_ToUser').value=='')
 				{
 					$id('SdM_ToUser').value=val;
-					layer_view('³É¹¦Ìí¼Ó¡£',obj,'','','user_selfriend_alert','','',0,'',0,-55);
+					layer_view('æˆåŠŸæ·»åŠ ã€‚',obj,'','','user_selfriend_alert','','',0,'',0,-55);
 				}
 				else
 				{
 					if((","+$id('SdM_ToUser').value+",").indexOf(","+val+",")!=-1)
 					{
-						layer_view('²Ù×÷ÖØ¸´£º´ËÓÃ»§ÒÑ±»Ìí¼Ó¡£',obj,'','','user_selfriend_alert','','',0,'',0,-55);
+						layer_view('æ“ä½œé‡å¤ï¼šæ­¤ç”¨æˆ·å·²è¢«æ·»åŠ ã€‚',obj,'','','user_selfriend_alert','','',0,'',0,-55);
 						return(false);
 					}
 					if(($id('SdM_ToUser').value.length-$replace($id('SdM_ToUser').value,",","").length) < num-1)
 					{
 					$id('SdM_ToUser').value += ',' + val;
-					layer_view('³É¹¦Ìí¼Ó¡£',obj,'','','user_selfriend_alert','','',0,'',0,-55);
+					layer_view('æˆåŠŸæ·»åŠ ã€‚',obj,'','','user_selfriend_alert','','',0,'',0,-55);
 					}
 					else
-					layer_view('Ìí¼ÓÊ§°Ü£º½ÓÊÕÈË×î¶àÔÊĞíÌîĞ´' + num + 'ÈË¡£',obj,'','','user_selfriend_alert','','',0,'',0,-55);
+					layer_view('æ·»åŠ å¤±è´¥ï¼šæ¥æ”¶äººæœ€å¤šå…è®¸å¡«å†™' + num + 'äººã€‚',obj,'','','user_selfriend_alert','','',0,'',0,-55);
 				}
 			}
 		}
@@ -756,21 +756,21 @@ Sub DisplayFriendList
 	}
 	
 	</script>
-	<a href="javascript:;" onclick="sendmsg_selfriend('',this);" class="layerico" id="user_selfriend">Ñ¡ÔñºÃÓÑ</a>
+	<a href="javascript:;" onclick="sendmsg_selfriend('',this);" class="layerico" id="user_selfriend">é€‰æ‹©å¥½å‹</a>
 	<%
 
 End Sub
 
 
-Rem -------ĞÂµ¯³ö´°¿Ú²¿·Ö´úÂë-----
+Rem -------æ–°å¼¹å‡ºçª—å£éƒ¨åˆ†ä»£ç -----
 
 Sub Main_SelectFriend
 
-	initDatabase
+	initDatabase()
 	Response.Write "<div class=ajaxbox>"
 	If GBL_UserID = 0 Then
 		GBL_CHK_TempStr = ""
-		If GBL_UserID = 0 Then GBL_CHK_TempStr = "ÕÒ²»µ½ÓÃ»§£¬Òª²é¿´×ÊÁÏÇëÏÈµÇÂ¼¡£<br>" & VbCrLf
+		If GBL_UserID = 0 Then GBL_CHK_TempStr = "æ‰¾ä¸åˆ°ç”¨æˆ·ï¼Œè¦æŸ¥çœ‹èµ„æ–™è¯·å…ˆç™»å½•ã€‚<br>" & VbCrLf
 	Else
 		GBL_CHK_TempStr = ""
 	End If
@@ -779,9 +779,9 @@ Sub Main_SelectFriend
 		Response.Write "<div class=alert>" & GBL_CHK_TempStr & "</div><hr class=splitline>"
 	Else
 		GBL_CHK_TempStr = ""
-		DisplayCenter
+		DisplayCenter()
 	End If
-	closeDataBase
+	closeDataBase()
 	Response.Write "</div>"
 
 End Sub
@@ -794,7 +794,7 @@ Sub DisplayCenter
 	SQL = sql_select("Select ID,UserName from LeadBBS_User where ID=" & GBL_UserID,1)
 	Set Rs = LDExeCute(SQL,0)
 	If Rs.Eof Then
-		Response.Write "<div class=alert>´íÎó£ºÓÃ»§ÑéÖ¤´íÎó£¡</div>"
+		Response.Write "<div class=alert>é”™è¯¯ï¼šç”¨æˆ·éªŒè¯é”™è¯¯ï¼</div>"
 		Rs.Close
 		Set Rs = Nothing
 		Exit Sub
@@ -815,7 +815,7 @@ Sub DisplayCenter
 	Set Rs = Nothing
 	dim n
 	if num >= 0 then
-		Response.Write "<div class=u_friendlist><div class=title>Çëµã»÷Ãû×ÖÑ¡ÔñºÃÓÑ</div><ul>"
+		Response.Write "<div class=u_friendlist><div class=title>è¯·ç‚¹å‡»åå­—é€‰æ‹©å¥½å‹</div><ul>"
 		for n = 0 to num
 			if GD(0,n) & "" <> "" then
 				Response.write "<li><a href=#1 class=layer_alertclick onclick="&chr(34)&"sendmsg_selfriend('"

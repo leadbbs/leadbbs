@@ -55,7 +55,7 @@ SafeCode = Code_RndNumber(1)
   objCanvas.Line PointX,PointY,PointX,PointY 
   
   next
- '±ß¿ò
+ 'è¾¹æ¡†
  objCanvas.ForegroundColourIndex = 1
  'objCanvas.Line 1,1,cc,1
  'objCanvas.Line 1,kk,1,1
@@ -65,11 +65,11 @@ SafeCode = Code_RndNumber(1)
  objCanvas.Line fix(rnd*cc/3)+1,fix(rnd*kk),fix(cc/2+(rnd*cc/2)+1),fix(rnd*kk)
 
  dim sc,sk
- 'ÎÄ×Ö
+ 'æ–‡å­—
  Randomize timer
  sc = cint(3*Rnd)
  sk = cint(5*Rnd)-cint(2*rnd)
- 'DrawTextWEº¯Êı×÷ÁËÓÅ»¯ºÍ¸Ä½ø ×îºóÒ»²ÎÊıÎª×Ö·û¼ä¸ôÏñËØ È¡Ïû¿Õ¸ñ
+ 'DrawTextWEå‡½æ•°ä½œäº†ä¼˜åŒ–å’Œæ”¹è¿› æœ€åä¸€å‚æ•°ä¸ºå­—ç¬¦é—´éš”åƒç´  å–æ¶ˆç©ºæ ¼
  objCanvas.DrawTextWE sc,sk,SafeCode,fix(rnd*4)+6
  'objCanvas.DrawTextNS sc,sk,SafeCode
  
@@ -94,7 +94,10 @@ Function DecHex (HStr)
   
  Next
  
- DecHex = Result
+ ' README Â§41: `16 ^ i` is a Double, so Result is a Double â€” and AxonASP's RGB() returns 0
+ ' when any argument is one, which made the captcha's background colour black instead of
+ ' white and hid the digits drawn on it. Hand back a Long.
+ DecHex = CLng(Result)
  
 End Function
 

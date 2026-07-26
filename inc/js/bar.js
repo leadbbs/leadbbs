@@ -9,24 +9,24 @@
 				Number = Num;
 				Temp = Number/(24*60*60);
 				if(parseInt(Temp) > 0)
-				Str = Str + parseInt(Temp) + "Ìì";
+				Str = Str + parseInt(Temp) + "å¤©";
 				
 				Number = Number-parseInt(Temp)*24*60*60;
 				Temp = Number/(60*60);
 				if(parseInt(Temp) > 0)
-				Str = Str + parseInt(Temp) + "Ê±";
+				Str = Str + parseInt(Temp) + "æ—¶";
 			
 				Number = Number-parseInt(Temp)*60*60;
 				Temp = Number/(60);
 				if(parseInt(Temp) > 0)
-				Str = Str + parseInt(Temp) + "·Ö";
+				Str = Str + parseInt(Temp) + "åˆ†";
 			
 				Number = Number-parseInt(Temp)*60
 				Temp = parseInt(Number)
 				if(parseInt(Temp) > 0)
-				Str = Str + Temp + "Ãë";
+				Str = Str + Temp + "ç§’";
 				if(Str == "")
-				Str = "¹ÀËãÖĞ...";
+				Str = "ä¼°ç®—ä¸­...";
 				return Str;
 			
 			}
@@ -58,7 +58,7 @@
 						{
 							$id('img'+Upl_id).width=tmp[0];
 							$id('txt'+Upl_id).innerHTML=tmp[1];
-							$id('tm'+Upl_id).innerHTML="ÒÑÓÃÊ±:" + GetTimeString(tmp[2]) + " ¹À¼ÆÊ£Óà:" + GetTimeString(tmp[3]);
+							$id('tm'+Upl_id).innerHTML="å·²ç”¨æ—¶:" + GetTimeString(tmp[2]) + " ä¼°è®¡å‰©ä½™:" + GetTimeString(tmp[3]);
 							$id('img'+Upl_id).title="(" + tmp[4] + ")";
 						}
 						if(tmp.length>=6)$id('bartitle'+Upl_id).innerHTML="" + tmp[5] + "";
@@ -68,12 +68,12 @@
 				{
 					if(Upl_Start)
 					{
-						$id('tm'+Upl_id).innerHTML = "µ±Ç°ÈÎÎñÍê³É£¬ÇëÉÔºò...";
+						$id('tm'+Upl_id).innerHTML = "å½“å‰ä»»åŠ¡å®Œæˆï¼Œè¯·ç¨å€™...";
 						Upl_Level=9999;window.clearTimeout(Upl_IOfun);
 					}
 					else
 					{
-						$id('tm'+Upl_id).innerHTML = "µ±Ç°ÈÎÎñ½øĞĞÖĞ£¬ÇëÉÔºò...";
+						$id('tm'+Upl_id).innerHTML = "å½“å‰ä»»åŠ¡è¿›è¡Œä¸­ï¼Œè¯·ç¨å€™...";
 					}
 				}
 			}
@@ -84,7 +84,7 @@
 				
 				$id('img'+Upl_id).width=400;
 				$id('txt'+Upl_id).innerHTML="100.00";
-				$id('tm'+Upl_id).innerHTML="²Ù×÷Íê³É.";
+				$id('tm'+Upl_id).innerHTML="æ“ä½œå®Œæˆ.";
 			}
 			Upl_Start = false;Upl_Level=0;
 			

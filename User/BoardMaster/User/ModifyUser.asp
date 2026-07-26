@@ -1,39 +1,39 @@
-<!-- #include file=../../../inc/BBSsetup.asp -->
-<!-- #include file=../../../inc/Upload_Setup.asp -->
-<!-- #include file=../../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/BoardMaster_Fun.asp -->
+<!--#include file="../../../inc/BBSsetup.asp"-->
+<!--#include file="../../../inc/Upload_Setup.asp"-->
+<!--#include file="../../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/BoardMaster_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../../"
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
 
-SiteHead(DEF_SiteNameString & " - " & DEF_PointsName(6) & "¹ÜÀí")
+SiteHead(DEF_SiteNameString & " - " & DEF_PointsName(6) & "ç®¡ç†")
 
-UserTopicTopInfo
-DisplayUserNavigate("Ç¿ÖÆĞŞ¸ÄÓÃ»§×ÊÁÏ")%>
+UserTopicTopInfo()
+DisplayUserNavigate("å¼ºåˆ¶ä¿®æ”¹ç”¨æˆ·èµ„æ–™")%>
 <br><br><%
 If GBL_CHK_Flag=1 and BDM_isBoardMasterFlag = 1 and BDM_SpecialPopedomFlag = 1 Then
-	LoginAccuessFul
+	LoginAccuessFul()
 Else%>
 <table width=96%>
 <tr>
 	<td>
 <%
 	If Request("submitflag")="" Then
-		Response.Write "<br><b>ÇëÏÈµÇÂ¼</b>"
+		Response.Write "<br><b>è¯·å…ˆç™»å½•</b>"
 	Else
 		Response.Write "<br><p align=left><font color=ff0000 class=redfont><b>" & GBL_CHK_TempStr & "</b></font>"
 	End If
-	DisplayLoginForm
+	DisplayLoginForm()
 	Response.Write "</p>"%>
 	</td>
 </tr>
 </table><%
 End If
 
-UserTopicBottomInfo
-closeDataBase
-SiteBottom
+UserTopicBottomInfo()
+closeDataBase()
+SiteBottom()
 If GBL_ShowBottomSure = 1 Then Response.Write GBL_SiteBottomString
 
 Dim GBL_ModifyMode,GBL_UserName,GBL_UserName_UserID,GBL_UserName_FaceUrl
@@ -43,54 +43,54 @@ GBL_ModifyMode = 0
 Function LoginAccuessFul
 
 	If Request.Form("submitflag") <> "" Then
-		CheckForm
+		CheckForm()
 		If GBL_CHK_TempStr = "" Then
-			ModifyUser
+			ModifyUser()
 			Response.Write GBL_CHK_TempStr
 			GBL_CHK_TempStr = ""
-			DisplayForm
+			DisplayForm()
 		Else
-			DisplayForm
+			DisplayForm()
 		End If
 	Else
-		DisplayForm
+		DisplayForm()
 	End If
 
 End Function
 
 Function ModifyUser
 
-	Response.Write "<p><b>¿ªÊ¼Çå³ıÓÃ»§<u>" & htmlencode(GBL_UserName) & "</u>µÄÏÂÁĞ×ÊÁÏ£º</b></p>" & VbCrLf
+	Response.Write "<p><b>å¼€å§‹æ¸…é™¤ç”¨æˆ·<u>" & htmlencode(GBL_UserName) & "</u>çš„ä¸‹åˆ—èµ„æ–™ï¼š</b></p>" & VbCrLf
 	If inStr(GBL_ModifyMode,",1,") Then
 		If GBL_UserName_FaceUrl & "" = "" Then
-			Response.Write "<p><font color=Red class=redfont>Çå³ıÁ´½ÓÍ·Ïñ£º ´ËÓÃ»§Í·ÏñÒÑ¾­ÊÇÄ¬ÈÏÍ·Ïñ£¬ÂÔ¹ı²Ù×÷¡£</font></p>"
+			Response.Write "<p><font color=Red class=redfont>æ¸…é™¤é“¾æ¥å¤´åƒï¼š æ­¤ç”¨æˆ·å¤´åƒå·²ç»æ˜¯é»˜è®¤å¤´åƒï¼Œç•¥è¿‡æ“ä½œã€‚</font></p>"
 			DeleteUploadFace(GBL_UserName_UserID)
 		Else
 			CALL LDExeCute("Update LeadBBS_User Set FaceUrl='' where ID=" & GBL_UserName_UserID,1)
-			Response.Write "<p><font color=Green class=greenfont>Çå³ıÁ´½ÓÍ·Ïñ£º ³É¹¦Çå³ı¡£</font></p>"
+			Response.Write "<p><font color=Green class=greenfont>æ¸…é™¤é“¾æ¥å¤´åƒï¼š æˆåŠŸæ¸…é™¤ã€‚</font></p>"
 			DeleteUploadFace(GBL_UserName_UserID)
 		End If
 	End If
 
 	If inStr(GBL_ModifyMode,",2,") Then
 		If GBL_UserName_UnderWrite & "" = "" Then
-			Response.Write "<p><font color=Red class=redfont>Çå³ıÓÃ»§Ç©Ãû£º ´ËÓÃ»§ÎŞÇ©ÃûÄÚÈİ£¬ÂÔ¹ı²Ù×÷¡£</font></p>"
+			Response.Write "<p><font color=Red class=redfont>æ¸…é™¤ç”¨æˆ·ç­¾åï¼š æ­¤ç”¨æˆ·æ— ç­¾åå†…å®¹ï¼Œç•¥è¿‡æ“ä½œã€‚</font></p>"
 		Else
 			CALL LDExeCute("Update LeadBBS_User Set UnderWrite='',PrintUnderWrite='' where ID=" & GBL_UserName_UserID,1)
-			Response.Write "<p><font color=Green class=greenfont>Çå³ıÓÃ»§Ç©Ãû£º ³É¹¦Çå³ı¡£</font></p>"
+			Response.Write "<p><font color=Green class=greenfont>æ¸…é™¤ç”¨æˆ·ç­¾åï¼š æˆåŠŸæ¸…é™¤ã€‚</font></p>"
 		End If
 	End If
 
 	If inStr(GBL_ModifyMode,",3,") Then
 		If GBL_UserName_UserTitle & "" = "" Then
-			Response.Write "<p><font color=Red class=redfont>Çå³ıÓÃ»§Í·ÏÎ£º ´ËÓÃ»§ÎŞÍ·ÏÎ£¬ÂÔ¹ı²Ù×÷¡£</font></p>"
+			Response.Write "<p><font color=Red class=redfont>æ¸…é™¤ç”¨æˆ·å¤´è¡”ï¼š æ­¤ç”¨æˆ·æ— å¤´è¡”ï¼Œç•¥è¿‡æ“ä½œã€‚</font></p>"
 		Else
 			CALL LDExeCute("Update LeadBBS_User Set UserTitle='' where ID=" & GBL_UserName_UserID,1)
-			Response.Write "<p><font color=Green class=greenfont>Çå³ıÓÃ»§Í·ÏÎ£º ³É¹¦Çå³ı¡£</font></p>"
+			Response.Write "<p><font color=Green class=greenfont>æ¸…é™¤ç”¨æˆ·å¤´è¡”ï¼š æˆåŠŸæ¸…é™¤ã€‚</font></p>"
 		End If
 	End If
 
-	If CheckSupervisorUserName = 0 Then
+	If CheckSupervisorUserName() = 0 Then
 		CALL LDExeCute("Update LeadBBS_User Set LastWriteTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
 	End If
 
@@ -98,25 +98,25 @@ End Function
 
 Function CheckForm
 
-	If CheckWriteEventSpace = 0 Then
-		Response.Write "<b><font color=Red Class=redfont>ÄúµÄ²Ù×÷¹ıÆµ£¬ÇëÉÔºòÔÙ×÷Ìá½»!</font></b> <br>" & VbCrLf
+	If CheckWriteEventSpace() = 0 Then
+		Response.Write "<b><font color=Red Class=redfont>æ‚¨çš„æ“ä½œè¿‡é¢‘ï¼Œè¯·ç¨å€™å†ä½œæäº¤!</font></b> <br>" & VbCrLf
 		Exit Function
 	End If
 	
 	GBL_ModifyMode = Replace("," & Left(Request.Form("GBL_ModifyMode"),10) & ","," ","")
 	GBL_UserName = Left(Request.Form("GBL_UserName"),20)
 	If isNumeric(Replace(GBL_ModifyMode,",","")) = 0 Then
-		GBL_CHK_TempStr = "´íÎó£¬²Ù×÷Ñ¡ÏîÑ¡Ôñ´íÎó£¡"
+		GBL_CHK_TempStr = "é”™è¯¯ï¼Œæ“ä½œé€‰é¡¹é€‰æ‹©é”™è¯¯ï¼"
 		Exit Function
 	End If
 
 	If GBL_UserName = "" Then
-		GBL_CHK_TempStr = "´íÎó£¬ÇëÊäÈëÓÃ»§Ãû£¡"
+		GBL_CHK_TempStr = "é”™è¯¯ï¼Œè¯·è¾“å…¥ç”¨æˆ·åï¼"
 		Exit Function
 	End If
 	
 	If CheckUserNameExist(GBL_UserName) = 0 Then
-		GBL_CHK_TempStr = "´íÎó£¬ÓÃ»§Ãû²»´æÔÚ£¡"
+		GBL_CHK_TempStr = "é”™è¯¯ï¼Œç”¨æˆ·åä¸å­˜åœ¨ï¼"
 		Exit Function
 	End If
 
@@ -128,32 +128,32 @@ Function DisplayForm
 
 			<%If Request.Form("submitflag") = "LKOkxk2" or Request.Form("submitflag") = "" Then%>
 			<p>
-		  <b>ÊäÈëÓÃ»§Ãû³Æ</b>
+		  <b>è¾“å…¥ç”¨æˆ·åç§°</b>
           <form action=ModifyUser.asp method=post id=fobform name=fobform>
-			ÓÃ »§ Ãû£º <input name=GBL_UserName value="<%=htmlencode(GBL_UserName)%>" class=fminpt><br>
+			ç”¨ æˆ· åï¼š <input name=GBL_UserName value="<%=htmlencode(GBL_UserName)%>" class=fminpt><br>
 			<input name=submitflag type=hidden value="LKOkxk2">
-			Ñ¡Ôñ²Ù×÷£º<input name=GBL_ModifyMode value=1<%If inStr(GBL_ModifyMode,",1,") Then Response.Write " checked"%> type=checkbox>Çå³ıÁ´½ÓÍ·Ïñ
-			<input name=GBL_ModifyMode value=2<%If inStr(GBL_ModifyMode,",2,") Then Response.Write " checked"%> type=checkbox>Çå³ıÓÃ»§Ç©Ãû
-			<input name=GBL_ModifyMode value=3<%If inStr(GBL_ModifyMode,",3,") Then Response.Write " checked"%> type=checkbox>Çå³ıÓÃ»§Í·ÏÎ
+			é€‰æ‹©æ“ä½œï¼š<input name=GBL_ModifyMode value=1<%If inStr(GBL_ModifyMode,",1,") Then Response.Write " checked"%> type=checkbox>æ¸…é™¤é“¾æ¥å¤´åƒ
+			<input name=GBL_ModifyMode value=2<%If inStr(GBL_ModifyMode,",2,") Then Response.Write " checked"%> type=checkbox>æ¸…é™¤ç”¨æˆ·ç­¾å
+			<input name=GBL_ModifyMode value=3<%If inStr(GBL_ModifyMode,",3,") Then Response.Write " checked"%> type=checkbox>æ¸…é™¤ç”¨æˆ·å¤´è¡”
 			<br><br>
-			<input type=submit value="Ìá½»" class=fmbtn> <input type=reset value="È¡Ïû" class=fmbtn></form>
+			<input type=submit value="æäº¤" class=fmbtn> <input type=reset value="å–æ¶ˆ" class=fmbtn></form>
 			<br>
-			<b>ËµÃ÷£º</b><br><br>
-			1.Çå³ıÓÃ»§Á´½ÓÍ·Ïñºó£¬´ËÓÃ»§Í·Ïñ»Ö¸´ÎªÂÛÌ³ÒÑÓĞµÄÍ·Ïñ£¬<br>
-			&nbsp; ÄĞĞÔ±àºÅÎª1£¬Å®ĞÔ±àºÅÎª2£¬ÎŞĞÔ±ğÎª0£®<br>
-			2.Çå³ıÓÃ»§Ç©Ãû½«»áÈÔÖ¸¶¨µÄÓÃ»§Ç©ÃûÄÚÈİÈ«²¿²Á³ı<br>
-			3.Çå³ıÓÃ»§Í·ÏÎ½«»áÈÔÖ¸¶¨µÄÓÃ»§Í·È¡Ïû<br>
-			4.Ä³Ğ©ÌØ¶¨ÓÃ»§×ÊÁÏ²»ÔÊĞíĞŞ¸Ä
+			<b>è¯´æ˜ï¼š</b><br><br>
+			1.æ¸…é™¤ç”¨æˆ·é“¾æ¥å¤´åƒåï¼Œæ­¤ç”¨æˆ·å¤´åƒæ¢å¤ä¸ºè®ºå›å·²æœ‰çš„å¤´åƒï¼Œ<br>
+			&nbsp; ç”·æ€§ç¼–å·ä¸º1ï¼Œå¥³æ€§ç¼–å·ä¸º2ï¼Œæ— æ€§åˆ«ä¸º0ï¼<br>
+			2.æ¸…é™¤ç”¨æˆ·ç­¾åå°†ä¼šä»æŒ‡å®šçš„ç”¨æˆ·ç­¾åå†…å®¹å…¨éƒ¨æ“¦é™¤<br>
+			3.æ¸…é™¤ç”¨æˆ·å¤´è¡”å°†ä¼šä»æŒ‡å®šçš„ç”¨æˆ·å¤´å–æ¶ˆ<br>
+			4.æŸäº›ç‰¹å®šç”¨æˆ·èµ„æ–™ä¸å…è®¸ä¿®æ”¹
 			<%End If%>
 
 <%End Function
 
-Rem ¼ì²âÄ³ÓÃ»§ÃûÊÇ·ñ´æÔÚ
+Rem æ£€æµ‹æŸç”¨æˆ·åæ˜¯å¦å­˜åœ¨
 Function CheckUserNameExist(UserName)
 
 	If UserName <> "" and inStr(UserName,",") = 0 and inStr(Lcase(DEF_SupervisorUserName),"," & Lcase(UserName) & ",") > 0 Then
-		'×÷ÕâÑùµÄÍ¬ÑùÌáÊ¾ÊÇÎªÁËÒÔ·À¹ÜÀíÔ±Ãû×Ö±»Ğ¹Â©£¬Êµ¼ÊÓ¦¸ÃÌáÊ¾¹ÜÀíÔ±²»ÄÜ±»ÆÁ±Î
-		GBL_CHK_TempStr = "´íÎó£¬ÓÃ»§Ãû" & htmlencode(UserName) & "²»´æÔÚ£¡"
+		'ä½œè¿™æ ·çš„åŒæ ·æç¤ºæ˜¯ä¸ºäº†ä»¥é˜²ç®¡ç†å‘˜åå­—è¢«æ³„æ¼ï¼Œå®é™…åº”è¯¥æç¤ºç®¡ç†å‘˜ä¸èƒ½è¢«å±è”½
+		GBL_CHK_TempStr = "é”™è¯¯ï¼Œç”¨æˆ·å" & htmlencode(UserName) & "ä¸å­˜åœ¨ï¼"
 		CheckUserNameExist = 0
 		Exit Function
 	End If
@@ -164,7 +164,7 @@ Function CheckUserNameExist(UserName)
 		Rs.Close
 		Set Rs = Nothing
 		CheckUserNameExist = 0
-		GBL_CHK_TempStr = "´íÎó£¬ÓÃ»§Ãû" & htmlencode(UserName) & "²»´æÔÚ£¡"
+		GBL_CHK_TempStr = "é”™è¯¯ï¼Œç”¨æˆ·å" & htmlencode(UserName) & "ä¸å­˜åœ¨ï¼"
 		Exit Function
 	Else
 		GBL_UserName_UserID = cCur(Rs(0))
@@ -184,7 +184,7 @@ End Function
 Function DeleteUploadFace(DelUserID)
 
 	If DEF_FSOString = "" Then
-		Response.Write "<p><font color=Red class=redfont>ÂÛÌ³²»Ö§³ÖÔÚÏßÉ¾³ıÎÄ¼ş£¬ÂÔ¹ıÉÏ´«Í·ÏñÉ¾³ı£®</font>"
+		Response.Write "<p><font color=Red class=redfont>è®ºå›ä¸æ”¯æŒåœ¨çº¿åˆ é™¤æ–‡ä»¶ï¼Œç•¥è¿‡ä¸Šä¼ å¤´åƒåˆ é™¤ï¼</font>"
 		Exit Function
 	End If
 	Dim SQL,Rs
@@ -193,14 +193,14 @@ Function DeleteUploadFace(DelUserID)
 	If Rs.Eof Then
 		Rs.Close
 		Set Rs = Nothing
-		Response.Write "<p><b><font color=Red class=redfont>ÓÃ»§ÎŞÉÏ´«Í·Ïñ£¬ÂÔ¹ıÉ¾³ı!</font></b>"
+		Response.Write "<p><b><font color=Red class=redfont>ç”¨æˆ·æ— ä¸Šä¼ å¤´åƒï¼Œç•¥è¿‡åˆ é™¤!</font></b>"
 	Else
 		If Rs("PhotoDir") <> "" Then DeleteFiles(Server.Mappath(DEF_BBS_HomeUrl & DEF_BBS_UploadPhotoUrl & "face/" & Rs("PhotoDir")))
 		If Rs("SPhotoDir") <> "" Then DeleteFiles(Server.Mappath(DEF_BBS_HomeUrl & DEF_BBS_UploadPhotoUrl & "face/" & Rs("SPhotoDir")))
 		Rs.Close
 		Set Rs = Nothing
 		CALL LDExeCute("Delete from LeadBBS_UserFace where UserID=" & DelUserID,1)
-		Response.Write "<p><b><font color=green class=greenfont>Íê³ÉÓÃ»§ÉÏ´«Í·ÏñµÄÉ¾³ı!</font></b>"
+		Response.Write "<p><b><font color=green class=greenfont>å®Œæˆç”¨æˆ·ä¸Šä¼ å¤´åƒçš„åˆ é™¤!</font></b>"
 	End If
 
 End Function

@@ -1,39 +1,39 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
-DisplayUserNavigate("ÌØÊâÓÃ»§¹ÜÀí")%>
-<div class=frameline>ÌáÊ¾£ºÔÚÕâÀï£¬ÄãÖ»ÄÜ²é¿´µ½Ä³Ò»ÀàµÄÌØÊâÓÃ»§£¬Èç¹ûÒª¸ü¸ÄËûÃÇµÄÈ¨ÏŞ»òÊôĞÔ£¬Çëµã»÷ĞŞ¸Ä½øÈë¸ü¸Ä£®
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
+DisplayUserNavigate("ç‰¹æ®Šç”¨æˆ·ç®¡ç†")%>
+<div class=frameline>æç¤ºï¼šåœ¨è¿™é‡Œï¼Œä½ åªèƒ½æŸ¥çœ‹åˆ°æŸä¸€ç±»çš„ç‰¹æ®Šç”¨æˆ·ï¼Œå¦‚æœè¦æ›´æ”¹ä»–ä»¬çš„æƒé™æˆ–å±æ€§ï¼Œè¯·ç‚¹å‡»ä¿®æ”¹è¿›å…¥æ›´æ”¹ï¼
 </div>
 		<%
 		If GBL_CHK_Flag=1 Then
 			%>
 			<div class=frameline>
 			<%
-			SpecialUserBrowser%>
+			SpecialUserBrowser()%>
 			</div>
 			<div class=frameline>
-			<a href=NewSpecialUser.asp?GBL_Assort=0>Ìí¼Ó<%=DEF_PointsName(5)%></a>
-			<a href=NewSpecialUser.asp?GBL_Assort=3>Ìí¼ÓÆÁ±Î·¢ÑÔÄÚÈİÓÃ»§</a>
-			<a href=NewSpecialUser.asp?GBL_Assort=4>Ìí¼Ó½ûÑÔÓÃ»§</a>
-			<a href=NewSpecialUser.asp?GBL_Assort=5>Ìí¼Ó½ûÖ¹ĞŞ¸ÄÓÃ»§</a>
-			<a href=NewSpecialUser.asp?GBL_Assort=6>Ç¿ÖÆÓÃ»§ÍË»ØÎ´¼¤»î×´Ì¬</a>
-			<a href=NewSpecialUser.asp?GBL_Assort=8>Ìí¼Ó<%=DEF_PointsName(10)%></a>
+			<a href=NewSpecialUser.asp?GBL_Assort=0>æ·»åŠ <%=DEF_PointsName(5)%></a>
+			<a href=NewSpecialUser.asp?GBL_Assort=3>æ·»åŠ å±è”½å‘è¨€å†…å®¹ç”¨æˆ·</a>
+			<a href=NewSpecialUser.asp?GBL_Assort=4>æ·»åŠ ç¦è¨€ç”¨æˆ·</a>
+			<a href=NewSpecialUser.asp?GBL_Assort=5>æ·»åŠ ç¦æ­¢ä¿®æ”¹ç”¨æˆ·</a>
+			<a href=NewSpecialUser.asp?GBL_Assort=6>å¼ºåˆ¶ç”¨æˆ·é€€å›æœªæ¿€æ´»çŠ¶æ€</a>
+			<a href=NewSpecialUser.asp?GBL_Assort=8>æ·»åŠ <%=DEF_PointsName(10)%></a>
 			</div>
 		<%
 		Else
-			DisplayLoginForm
+			DisplayLoginForm()
 		End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Function SpecialUserBrowser
@@ -165,9 +165,9 @@ Function SpecialUserBrowser
 	End If
 	
 	If Assort = 1 Then
-		Response.Write " [°æÖ÷]"
+		Response.Write " [ç‰ˆä¸»]"
 	Else
-		Response.Write " [<a href=UserSpecial.asp?assort=1>°æÖ÷</a>]"
+		Response.Write " [<a href=UserSpecial.asp?assort=1>ç‰ˆä¸»</a>]"
 	End If
 	
 	If Assort = 2 Then
@@ -177,27 +177,27 @@ Function SpecialUserBrowser
 	End If
 	
 	If Assort = 3 Then
-		Response.Write " [ÆÁ±Î·¢ÑÔ]"
+		Response.Write " [å±è”½å‘è¨€]"
 	Else
-		Response.Write " [<a href=UserSpecial.asp?assort=3>ÆÁ±Î·¢ÑÔ</a>]"
+		Response.Write " [<a href=UserSpecial.asp?assort=3>å±è”½å‘è¨€</a>]"
 	End If
 	
 	If Assort = 4 Then
-		Response.Write " [½ûÖ¹·¢ÑÔ]"
+		Response.Write " [ç¦æ­¢å‘è¨€]"
 	Else
-		Response.Write " [<a href=UserSpecial.asp?assort=4>½ûÖ¹·¢ÑÔ</a>]"
+		Response.Write " [<a href=UserSpecial.asp?assort=4>ç¦æ­¢å‘è¨€</a>]"
 	End If
 	
 	If Assort = 5 Then
-		Response.Write " [½ûÖ¹ĞŞ¸Ä]"
+		Response.Write " [ç¦æ­¢ä¿®æ”¹]"
 	Else
-		Response.Write " [<a href=UserSpecial.asp?assort=5>½ûÖ¹ĞŞ¸Ä</a>]"
+		Response.Write " [<a href=UserSpecial.asp?assort=5>ç¦æ­¢ä¿®æ”¹</a>]"
 	End If
 	
 	If Assort = 6 Then
-		Response.Write " [´ı¼¤»î»áÔ±]"
+		Response.Write " [å¾…æ¿€æ´»ä¼šå‘˜]"
 	Else
-		Response.Write " [<a href=UserSpecial.asp?assort=6>´ı¼¤»î»áÔ±</a>]"
+		Response.Write " [<a href=UserSpecial.asp?assort=6>å¾…æ¿€æ´»ä¼šå‘˜</a>]"
 	End If
 
 	If Assort = 7 Then
@@ -235,86 +235,86 @@ Function SpecialUserBrowser
 
 	PageSplictString = PageSplictString & "<table border=0 cellspacing=0 cellpadding=0><tr><td>&nbsp;"
 	if FirstID>MinRecordID and FirstID<>0 then
-		PageSplictString = PageSplictString & "<a href=UserSpecial.asp" & EndwriteQueryString & "&Start=0&SubmitFlag=3829EwoqIaNfoG>Ê×Ò³</a> " & VbCrLf
+		PageSplictString = PageSplictString & "<a href=UserSpecial.asp" & EndwriteQueryString & "&Start=0&SubmitFlag=3829EwoqIaNfoG>é¦–é¡µ</a> " & VbCrLf
 	else
-		PageSplictString = PageSplictString & "<span class=grayfont>Ê×Ò³</span> " & VbCrLf
+		PageSplictString = PageSplictString & "<span class=grayfont>é¦–é¡µ</span> " & VbCrLf
 	end if
 
 	if FirstID > MinRecordID and FirstID<>0 then
-		PageSplictString = PageSplictString & " <a href=UserSpecial.asp" & EndwriteQueryString & "&Start=" & FirstID & "&UpDownPageFlag=1&SubmitFlag=3829EwoqIaNfoG>ÉÏÒ³</a> " & VbCrLf
+		PageSplictString = PageSplictString & " <a href=UserSpecial.asp" & EndwriteQueryString & "&Start=" & LngStr(FirstID) & "&UpDownPageFlag=1&SubmitFlag=3829EwoqIaNfoG>ä¸Šé¡µ</a> " & VbCrLf
 	else
-		PageSplictString = PageSplictString & " <span class=grayfont>ÉÏÒ³</span> " & VbCrLf
+		PageSplictString = PageSplictString & " <span class=grayfont>ä¸Šé¡µ</span> " & VbCrLf
 	end if
 
 	if LastID<MaxRecordID and LastID<>0 then
-		PageSplictString = PageSplictString & " <a href=UserSpecial.asp" & EndwriteQueryString & "&Start=" & LastID & "&SubmitFlag=3829EwoqIaNfoG>ÏÂÒ³</a> " & VbCrLf
+		PageSplictString = PageSplictString & " <a href=UserSpecial.asp" & EndwriteQueryString & "&Start=" & LngStr(LastID) & "&SubmitFlag=3829EwoqIaNfoG>ä¸‹é¡µ</a> " & VbCrLf
 	else
-		PageSplictString = PageSplictString & " <span class=grayfont>ÏÂÒ³</span> " & VbCrLf
+		PageSplictString = PageSplictString & " <span class=grayfont>ä¸‹é¡µ</span> " & VbCrLf
 	end if
 
 	if LastID < MaxRecordID and LastID<>0 then
-		PageSplictString = PageSplictString & " <a href=UserSpecial.asp" & EndwriteQueryString & "&Start=" & MaxRecordID+1 & "&UpDownPageFlag=1&SubmitFlag=3829EwoqIaNfoG>Î²Ò³</a> " & VbCrLf
+		PageSplictString = PageSplictString & " <a href=UserSpecial.asp" & EndwriteQueryString & "&Start=" & LngStr(MaxRecordID+1) & "&UpDownPageFlag=1&SubmitFlag=3829EwoqIaNfoG>å°¾é¡µ</a> " & VbCrLf
 	else
-		PageSplictString = PageSplictString & " <span class=grayfont>Î²Ò³</span> " & VbCrLf
+		PageSplictString = PageSplictString & " <span class=grayfont>å°¾é¡µ</span> " & VbCrLf
 	end if
-	PageSplictString = PageSplictString & "¹²<b>" & RecordCount & "</b>ÌõĞÅÏ¢"
+	PageSplictString = PageSplictString & "å…±<b>" & RecordCount & "</b>æ¡ä¿¡æ¯"
 	If (RecordCount mod DEF_MaxListNum)=0 Then
-		PageSplictString = PageSplictString & " ¼Æ<b>" & clng(RecordCount/DEF_MaxListNum) & "</b>Ò³"
+		PageSplictString = PageSplictString & " è®¡<b>" & clng(RecordCount/DEF_MaxListNum) & "</b>é¡µ"
 	Else
 		If RecordCount>=DEF_MaxListNum Then
-			PageSplictString = PageSplictString & " ¼Æ<b>" & clng(RecordCount/DEF_MaxListNum)+1 & "</b>Ò³"
+			PageSplictString = PageSplictString & " è®¡<b>" & clng(RecordCount/DEF_MaxListNum)+1 & "</b>é¡µ"
 		Else
-			PageSplictString = PageSplictString & " ¼Æ<b>1</b>Ò³"
+			PageSplictString = PageSplictString & " è®¡<b>1</b>é¡µ"
 		End If
 	End If
-	PageSplictString = PageSplictString & " Ã¿Ò³<b>" & DEF_MaxListNum & "</b>Ìõ¼ÇÂ¼"
-	PageSplictString = PageSplictString & "</td><td><form action=UserSpecial.asp?assort=" & assort & " method=post><input size=6 name=key value=" & chr(34) & htmlencode(key) & """ class=fminpt><input type=submit name=submit value=ËÑ class=fmbtn></td></form></tr></table>"
+	PageSplictString = PageSplictString & " æ¯é¡µ<b>" & DEF_MaxListNum & "</b>æ¡è®°å½•"
+	PageSplictString = PageSplictString & "</td><td><form action=UserSpecial.asp?assort=" & assort & " method=post><input size=6 name=key value=" & chr(34) & htmlencode(key) & """ class=fminpt><input type=submit name=submit value=æœ class=fmbtn></td></form></tr></table>"
 	%>
 	<table border=0 cellpadding=0 cellspacing=0 width="100%" class=frame_table>
 	<tr class=frame_tbhead>
 		<td width=66><div class=value>ID</div></td>
-		<td><div class=value>Ãû³Æ</div></td>
-		<td width=120><div class=value>¸üĞÂÊ±¼ä</div></td>
-		<td width=66><div class=value>ÀàĞÍ</div></td><%If Assort = 1 Then%>
-		<td><div class=value>°æÃæ</div></td><%End If
+		<td><div class=value>åç§°</div></td>
+		<td width=120><div class=value>æ›´æ–°æ—¶é—´</div></td>
+		<td width=66><div class=value>ç±»å‹</div></td><%If Assort = 1 Then%>
+		<td><div class=value>ç‰ˆé¢</div></td><%End If
 		If Assort = 6 Then%>
-		<td><div class=value>¼¤»îÂë</div></td><%End If%>
-		<td><div class=value>ËµÃ÷¼°ÓĞĞ§Ê±¼ä</div></td>
+		<td><div class=value>æ¿€æ´»ç </div></td><%End If%>
+		<td><div class=value>è¯´æ˜åŠæœ‰æ•ˆæ—¶é—´</div></td>
 	</tr>
 	<%
 	for n= MinN to MaxN Step StepValue%>
 	<tr height="19" class=TBBG9>
-		<td class=tdbox><%=GetData(0,n)%></td>
+		<td class=tdbox><%=LngStr(GetData(0,n))%></td>
 		<td class=tdbox>
-			<a href=<%=DEF_BBS_HomeUrl%>User/LookUserInfo.asp?id=<%=GetData(1,n)%>><%=htmlencode(GetData(2,n))%></a>
-			<a href=UserModify.asp?Form_ID=<%=GetData(1,n)%>><font color=008800 class=greenfont>ĞŞ</font></a></td>
+			<a href=<%=DEF_BBS_HomeUrl%>User/LookUserInfo.asp?id=<%=LngStr(GetData(1,n))%>><%=htmlencode(GetData(2,n))%></a>
+			<a href=UserModify.asp?Form_ID=<%=LngStr(GetData(1,n))%>><font color=008800 class=greenfont>ä¿®</font></a></td>
 		<td class=tdbox><%=RestoreTime(Left(GetData(3,n),8))%></td>
 		<td class=tdbox><%
 			Select Case GetData(4,n)
 				Case 0: Response.Write DEF_PointsName(5)
-				Case 1: Response.Write "°æÖ÷"
+				Case 1: Response.Write "ç‰ˆä¸»"
 				Case 2: Response.Write DEF_PointsName(6)
-				Case 3: Response.Write "ÆÁ±Î·¢ÑÔ"
-				Case 4: Response.Write "½ûÖ¹·¢ÑÔ"
-				Case 5: Response.Write "½ûÖ¹ĞŞ¸Ä"
-				Case 6: Response.Write "µÈ´ıÈÏÖ¤"
+				Case 3: Response.Write "å±è”½å‘è¨€"
+				Case 4: Response.Write "ç¦æ­¢å‘è¨€"
+				Case 5: Response.Write "ç¦æ­¢ä¿®æ”¹"
+				Case 6: Response.Write "ç­‰å¾…è®¤è¯"
 				Case 7: Response.Write DEF_PointsName(7)
 				Case 8: Response.Write DEF_PointsName(10)
 			End Select%></td><%If Assort = 1 Then%>
-		<td class=tdbox><a href=../ForumBoard/ForumBoardModify.asp?GBL_ModifyID=<%=GetData(6,n)%>><%=GetData(5,n)%></a></td><%End If
+		<td class=tdbox><a href=../ForumBoard/ForumBoardModify.asp?GBL_ModifyID=<%=LngStr(GetData(6,n))%>><%=GetData(5,n)%></a></td><%End If
 			If Assort = 6 Then
 				If cCur(GetData(6,n)) = 0 Then
-					Response.Write "<td width=60>ÎŞ<br>(²»ÄÜ×ÔÆô)</td>"
+					Response.Write "<td width=60>æ— <br>(ä¸èƒ½è‡ªå¯)</td>"
 				Else%>
-		<td class=tdbox><a href=../../User/UserGetPass.asp?act=active&user=<%=htmlencode(GetData(2,n))%>><%=GetData(6,n)%></a></td><%
+		<td class=tdbox><a href=../../User/UserGetPass.asp?act=active&user=<%=htmlencode(GetData(2,n))%>><%=LngStr(GetData(6,n))%></a></td><%
 				End If
 			End If%>
 		<td class=tdbox><%
 			If GetData(7,n) <> "" Then Response.Write htmlencode(GetData(7,n)) & "<br>"
 			If cCur(GetData(8,n)) > 0 Then
-				Response.Write "<font color=gray class=grayfont>µ½ÆÚ£º" & RestoreTime(GetData(8,n))
+				Response.Write "<font color=gray class=grayfont>åˆ°æœŸï¼š" & RestoreTime(GetData(8,n))
 			Else
-				Response.Write "<font color=gray class=grayfont>ÓÀ¾ÃÓĞĞ§"
+				Response.Write "<font color=gray class=grayfont>æ°¸ä¹…æœ‰æ•ˆ"
 			End If%>
 		</td>
 		</tr><%
@@ -330,7 +330,7 @@ Function SpecialUserBrowser
 		</table>
 	<%
 	Else
-		Response.Write "<br>" & GBL_CHK_TempStr & "		<tr><td><br><p>Ã»ÓĞ·ûºÏÌõ¼şµÄ¼ÇÂ¼¡£</td></tr>" & VbCrLf
+		Response.Write "<br>" & GBL_CHK_TempStr & "		<tr><td><br><p>æ²¡æœ‰ç¬¦åˆæ¡ä»¶çš„è®°å½•ã€‚</td></tr>" & VbCrLf
 	End If%>
 	<%
 

@@ -1,4 +1,4 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
 <table border=0 cellspacing=0 unselectable=on style="cursor: move;padding:5px 0px 5px 0px;" onmousedown="LD.move.mousedown(this.parentNode,event);">
 <tr><td align=right unselectable=on>
 <div class="layer_close"><a href="javascript:;" onclick="LD.hide('editor_insttable');return false;" class="unsel" hidefocus="true" title="close" /></a></div>
@@ -6,15 +6,15 @@
 <tr>
 	<td>
 	<fieldset unselectable=on>
-	<legend unselectable=on>±í¸ñ´óÐ¡</legend>
+	<legend unselectable=on>è¡¨æ ¼å¤§å°</legend>
 	<table border=0 cellpadding=5 cellspacing=0 unselectable=on>
 	<tr>
 	<td noWrap unselectable=on>
-		ÐÐÊý
+		è¡Œæ•°
 		</td><td unselectable=on><input type=text id=d_row size=5 value="" onkeypress="event.returnValue=IsDigit(event);" maxlength=3 class="fminpt input_1">
-		</td><td noWrap unselectable=on>ÁÐÊý
+		</td><td noWrap unselectable=on>åˆ—æ•°
 		</td><td unselectable=on><input type=text id=d_col size=5 value="" onkeypress="event.returnValue=IsDigit(event);" maxlength=3 class="fminpt input_1">
-		</td><td noWrap unselectable=on>±³¾°
+		</td><td noWrap unselectable=on>èƒŒæ™¯
 		</td><td unselectable=on><input type=text id="d_bgurl" style="width:98px" size=13 value="" class="fminpt input_2">
 	</td>
 	</tr>
@@ -25,25 +25,25 @@
 <tr>
 	<td>
 	<fieldset>
-	<legend>±í¸ñ²¼¾Ö</legend>
+	<legend>è¡¨æ ¼å¸ƒå±€</legend>
 	<table border=0 cellpadding=5 cellspacing=0>
 	<tr>
 	<td>
-		¶ÔÆë·½Ê½:
+		å¯¹é½æ–¹å¼:
 		<select id="d_align">
-			<option value=''>Ä¬ÈÏ</option>
-			<option value='left'>×ó¶ÔÆë</option>
-			<option value='center'>¾ÓÖÐ</option>
-			<option value='right'>ÓÒ¶ÔÆë</option>
+			<option value=''>é»˜è®¤</option>
+			<option value='left'>å·¦å¯¹é½</option>
+			<option value='center'>å±…ä¸­</option>
+			<option value='right'>å³å¯¹é½</option>
 			</select>
-		±ß¿ò´ÖÏ¸:
+		è¾¹æ¡†ç²—ç»†:
 		<input type=text id=d_border size=10 value="" onkeypress="event.returnValue=IsDigit(event);" class="fminpt input_1">
 	</td>
 	</tr>
 	<tr>
-		<td>µ¥Ôª¼ä¾à:
+		<td>å•å…ƒé—´è·:
 		<input type=text id=d_cellspacing size=10 value="" onkeypress="event.returnValue=IsDigit(event);" maxlength=3 class="fminpt input_1">
-		µ¥Ôª±ß¾à:
+		å•å…ƒè¾¹è·:
 		<input type=text id=d_cellpadding size=10 value="" onkeypress="event.returnValue=IsDigit(event);" maxlength=3 class="fminpt input_1">
 	</td>
 	</tr>
@@ -54,13 +54,13 @@
 <tr>
 	<td>
 	<fieldset>
-	<legend>±í¸ñ¿í¶È</legend>
+	<legend>è¡¨æ ¼å®½åº¦</legend>
 	<table border=0 cellpadding=5 cellspacing=0 width='100%'>
 	<tr>
-		<td><input id="d_check" type="checkbox" onclick="d_widthvalue.disabled=(!this.checked);d_widthunit.disabled=(!this.checked);" value="1" class="fmchkbox">Ö¸¶¨±í¸ñµÄ¿í¶È
+		<td><input id="d_check" type="checkbox" onclick="d_widthvalue.disabled=(!this.checked);d_widthunit.disabled=(!this.checked);" value="1" class="fmchkbox">æŒ‡å®šè¡¨æ ¼çš„å®½åº¦
 			<input name="d_widthvalue" id="d_widthvalue" type="text" value="" size="5" onkeypress="event.returnValue=IsDigit(event);" maxlength="4" class="fminpt input_1">
 			<select name="d_widthunit" id="d_widthunit">
-			<option value='px'>ÏñËØ</option><option value='%'>°Ù·Ö±È</option>
+			<option value='px'>åƒç´ </option><option value='%'>ç™¾åˆ†æ¯”</option>
 			</select>
 		</td>
 	</tr>
@@ -71,14 +71,14 @@
 <tr>
 	<td>
 	<fieldset>
-	<legend>±í¸ñÑÕÉ«</legend>
+	<legend>è¡¨æ ¼é¢œè‰²</legend>
 	<table border=0 cellpadding=0 cellspacing=0 style="padding:5px;">
 	<tr>
-		<td>±ß¿òÑÕÉ«:
+		<td>è¾¹æ¡†é¢œè‰²:
 		<input type=text id=d_bordercolor size=7 value="" class="fminpt input_1">
 		<a href=#ic onclick="editor_sAction = 'bordercolor';editor_view(this,'editor_selcolor','','selcolor.js');" class=ico>
 		<img src="../images/blank.gif" class="a_pic" style="background-position:0px -198px;width:18px;height:17px;" style="cursor:pointer" align=absmiddle id=s_bordercolor></a>
-		±³¾°ÑÕÉ«:
+		èƒŒæ™¯é¢œè‰²:
 		<input type=text id=d_bgcolor size=7 value="" class="fminpt input_1">
 		<a href=#ic onclick="editor_sAction = 'bgcolor';editor_view(this,'editor_selcolor','','selcolor.js');" class=ico>
 		<img src="../images/blank.gif" class="a_pic" style="background-position:0px -198px;width:18px;height:17px;" align=absmiddle id=s_bgcolor></a>
@@ -88,5 +88,5 @@
 	</fieldset>
 	</td>
 </tr>
-<tr><td align=right><a href=#inserttable class="clicktext" onclick="if(editor_insttablesubmit()==true)LD.hide('editor_insttable');">²åÈë/¸üÐÂ±í¸ñ</a></td></tr>
+<tr><td align=right><a href=#inserttable class="clicktext" onclick="if(editor_insttablesubmit()==true)LD.hide('editor_insttable');">æ’å…¥/æ›´æ–°è¡¨æ ¼</a></td></tr>
 </table>

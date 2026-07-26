@@ -1,8 +1,8 @@
   
   String.prototype.trim = function()
 			{
-				// ÓÃÕıÔò±í´ïÊ½½«Ç°ºó¿Õ¸ñ
-				// ÓÃ¿Õ×Ö·û´®Ìæ´ú¡£
+				// ç”¨æ­£åˆ™è¡¨è¾¾å¼å°†å‰åç©ºæ ¼
+				// ç”¨ç©ºå­—ç¬¦ä¸²æ›¿ä»£ã€‚
 				return this.replace(/(^\s*)|(\s*$)/g, "");
 			}
 
@@ -15,8 +15,8 @@
 				var r, re;
 				var strQuote;
 				
-				re = / /i;            // ´´½¨ÕıÔò±í´ïÊ½Ä£Ê½¡£
-   				r = ls_Date.search(re);            // ²éÕÒ×Ö·û´®¡£
+				re = / /i;            // åˆ›å»ºæ­£åˆ™è¡¨è¾¾å¼æ¨¡å¼ã€‚
+   				r = ls_Date.search(re);            // æŸ¥æ‰¾å­—ç¬¦ä¸²ã€‚
 
 				if (r==-1) {
 					str_1=ls_Date;
@@ -261,7 +261,7 @@
 			}
 
 			function fDrawCal(iYear, iMonth, iCellHeight, sDateTextSize) {
-			var WeekDay = new Array("ÈÕ","Ò»","¶ş","Èı","ËÄ","Îå","Áù");
+			var WeekDay = new Array("æ—¥","ä¸€","äºŒ","ä¸‰","å››","äº”","å…­");
 			  
 			var styleWeekTD = " bgcolor='"+gcBG+"' borderwidth='0' bordercolor='"+gcBG+"'  valign='middle' align='center' height='"+iCellHeight+"' style='font-size:9pt; BORDER-BOTTOM: #000000 1px solid;BORDER-LEFT: #000000 0px solid;BORDER-RIGHT: #000000 0px solid;BORDER-TOP: #000000 0px solid; ";
 			var styleTD = " bgcolor='"+gcBG+"' borderwidth='0' bordercolor='"+gcBG+"'  valign='middle' align='center' height='"+iCellHeight+"' style='font-size:9pt; ";
@@ -477,16 +477,16 @@
 					
 				}
 
-				var gMonths = new Array("1ÔÂ","2ÔÂ","3ÔÂ","4ÔÂ","5ÔÂ","6ÔÂ","7ÔÂ","8ÔÂ","9ÔÂ","10ÔÂ","11ÔÂ","12ÔÂ");
+				var gMonths = new Array("1æœˆ","2æœˆ","3æœˆ","4æœˆ","5æœˆ","6æœˆ","7æœˆ","8æœˆ","9æœˆ","10æœˆ","11æœˆ","12æœˆ");
 
 				function drawcalendarpanel() {
 					var ls_htmlstr = "";
 				
 					
 					ls_htmlstr += ("<div width='100%' style='background-color:#D4D0C8 '>")
-					//----------ÑôÀú-------------
+					//----------é˜³å†-------------
 					ls_htmlstr += ("<FIELDSET width='100%'>")
-					ls_htmlstr += ("<legend width='100%'><span style='font-size:9pt;'>ÑôÀúÈÕÆÚ</span></legend>")
+					ls_htmlstr += ("<legend width='100%'><span style='font-size:9pt;'>é˜³å†æ—¥æœŸ</span></legend>")
 									
 					ls_htmlstr += ("<Div id='VicPopCal' align='center' style='OVERFLOW:display;VISIBILITY:hidden;border:0px ridge;width:100%;height:100%;z-index:100;overflow:hidden'>");
 					ls_htmlstr += ("<table width='150px' border='0' align='center' >");
@@ -496,7 +496,7 @@
 					ls_htmlstr += ("<td valign='middle' align='center'><input type='button' "+obj_style+" name='PrevMonth' value='<' style='height:20;width:12;' onclick='fPrevMonth()'>");
 					ls_htmlstr += ("&nbsp;<select name='tbSelYear' id='tbSelYear' style='width:70px;"+obj_stylestr+"' onChange='fUpdateCal(tbSelYear.value,tbSelMonth.value)' Victor='Won'>");
 					for(i=dlg_BeginYear+1;i<2011;i++)
-						ls_htmlstr += ("<option value='"+i+"'>"+i+"Äê</option>");
+						ls_htmlstr += ("<option value='"+i+"'>"+i+"å¹´</option>");
 					ls_htmlstr += ("</select>");
 					ls_htmlstr += ("<select name='tbSelMonth' id='tbSelMonth' style='width:50px;"+obj_stylestr+"' width='10' onChange='fUpdateCal(tbSelYear.value,tbSelMonth.value)' Victor='Won'>");
 					for (i=0; i<12; i++)
@@ -505,7 +505,7 @@
 					ls_htmlstr += ("&nbsp;<input type='button' "+obj_style+" name='PrevMonth' value='>' style='height:20;width:12;' onclick='fNextMonth()'>");
 					ls_htmlstr += ("</td>");
 					ls_htmlstr += ("</tr>");
-					ls_htmlstr += ("<tr><TD colspan='7'><nobr><span style='font-size:9pt;'>ºÍ½ñÌìÏà¾à<input id=txt_Day2Now  style='width:50px;"+obj_stylestr+"' type=text maxLength=6 size=3 name=txt_Day2Now>Ìì</span></nobr></td>");
+					ls_htmlstr += ("<tr><TD colspan='7'><nobr><span style='font-size:9pt;'>å’Œä»Šå¤©ç›¸è·<input id=txt_Day2Now  style='width:50px;"+obj_stylestr+"' type=text maxLength=6 size=3 name=txt_Day2Now>å¤©</span></nobr></td>");
 					ls_htmlstr += ("</tr>");
 					
 					ls_htmlstr += ("<tr><td colspan='7' height='2'></td></tr>");
@@ -514,7 +514,7 @@
 					ls_htmlstr += fDrawCal(giYear, giMonth, 8, '9');
 					ls_htmlstr += ("<tr><TD align='left' colspan='7'><nobr>");
 					ls_htmlstr += ("<b ID=\"CAL_B_BLANK\" style='color:#000000; visibility:visible; cursor:hand; font-size:9pt' onclick='fSetDate(0,0,0)' onMouseOver='this.style.color=&quot;red&quot;' onMouseOut='this.style.color=&quot;#000000&quot;'></b>");
-					ls_htmlstr += ("&nbsp;&nbsp;&nbsp;&nbsp;<b style='color:#000000;cursor:hand; font-size:9pt' onclick='NowDate(gNowYear,gNowMonth,gNowDay)' onMouseOver='this.style.color=&quot;red&quot;' onMouseOut='this.style.color=&quot;#000000&quot;'>½ñÌì: "+gNowYear+"-"+gNowMonth+"-"+gNowDay+"</b>");
+					ls_htmlstr += ("&nbsp;&nbsp;&nbsp;&nbsp;<b style='color:#000000;cursor:hand; font-size:9pt' onclick='NowDate(gNowYear,gNowMonth,gNowDay)' onMouseOver='this.style.color=&quot;red&quot;' onMouseOut='this.style.color=&quot;#000000&quot;'>ä»Šå¤©: "+gNowYear+"-"+gNowMonth+"-"+gNowDay+"</b>");
 					ls_htmlstr += ("</nobr></td></tr>");
 					ls_htmlstr += ("</table></div>");
 					ls_htmlstr += ("</td>");
@@ -522,15 +522,15 @@
 					ls_htmlstr += ("<tr><td colspan='7' height='8'></td></tr>");
 					ls_htmlstr += ("</table></Div>");
 					ls_htmlstr += ("</FIELDSET>")
-					//---------Å©Àú---------------
+					//---------å†œå†---------------
 					ls_htmlstr += ("<FIELDSET width='100%'>")
-					ls_htmlstr += ("<legend width='100%'><span style='font-size:9pt;'>Å©ÀúÈÕÆÚ</span></legend>")
-					ls_htmlstr += ("<span style='font-size:9pt;'><input id=txt_NYear style='width:40px;"+obj_stylestr+"'   type=text maxLength=4 size=4 name=txt_NYear>Äê")
-					ls_htmlstr += ("<input id=txt_NMonth  style='width:25px;"+obj_stylestr+"'  type=text maxLength=2 size=1 name=txt_NMonth  >ÔÂ")
-					ls_htmlstr += ("<input id=txt_NDay style='width:25px;"+obj_stylestr+"'   type=text maxLength=2 size=1 name=txt_NDay >ÈÕ</span>")
+					ls_htmlstr += ("<legend width='100%'><span style='font-size:9pt;'>å†œå†æ—¥æœŸ</span></legend>")
+					ls_htmlstr += ("<span style='font-size:9pt;'><input id=txt_NYear style='width:40px;"+obj_stylestr+"'   type=text maxLength=4 size=4 name=txt_NYear>å¹´")
+					ls_htmlstr += ("<input id=txt_NMonth  style='width:25px;"+obj_stylestr+"'  type=text maxLength=2 size=1 name=txt_NMonth  >æœˆ")
+					ls_htmlstr += ("<input id=txt_NDay style='width:25px;"+obj_stylestr+"'   type=text maxLength=2 size=1 name=txt_NDay >æ—¥</span>")
 					ls_htmlstr += ("<br><span id='span_N_String' style='font-size:9pt;'></span>")
 					ls_htmlstr += ("</FIELDSET>")
-					//write("<table  width='100%' height='30'><tr><td align='right' valign='bottom'><input id=btn_Close   type=button  name=btn_Close  value='¹Ø   ±Õ' style='BACKGROUND-image: url(&quot;../../_IMG/btn_PlainBg.gif&quot;);border-left: 0 solid ; border-right:  0 ; border-top:  0; border-bottom:  0; width:75;height:21;' onclick='window.close()'></td></tr></table>")
+					//write("<table  width='100%' height='30'><tr><td align='right' valign='bottom'><input id=btn_Close   type=button  name=btn_Close  value='å…³   é—­' style='BACKGROUND-image: url(&quot;../../_IMG/btn_PlainBg.gif&quot;);border-left: 0 solid ; border-right:  0 ; border-top:  0; border-bottom:  0; width:75;height:21;' onclick='window.close()'></td></tr></table>")
 					ls_htmlstr += ("</div>")
 				
 				
@@ -595,7 +595,7 @@
 					giMonth = DataArray[1];
 					giDay = DataArray[2];
 					
-					window.document.all("span_N_String").innerHTML=YearAnimal(niYear)+"("+YearName(niYear)+")Äê"+ ((niMonth<0)?"Èò":"") + c4[Math.abs(niMonth)-1] + "ÔÂ" + c5[niDay-1]
+					window.document.all("span_N_String").innerHTML=YearAnimal(niYear)+"("+YearName(niYear)+")å¹´"+ ((niMonth<0)?"é—°":"") + c4[Math.abs(niMonth)-1] + "æœˆ" + c5[niDay-1]
 					set_G(DataArray[0],DataArray[1],DataArray[2])
 				}
 			}
@@ -619,20 +619,20 @@
 				window.document.all("txt_NYear").value=niYear
 				window.document.all("txt_NMonth").value=Math.abs(niMonth)
 				window.document.all("txt_NDay").value=niDay
-				window.document.all("span_N_String").innerHTML=YearAnimal(niYear)+"("+YearName(niYear)+")Äê"+ ((niMonth<0)?"Èò":"") + c4[Math.abs(niMonth)-1] + "ÔÂ" + c5[niDay-1]
+				window.document.all("span_N_String").innerHTML=YearAnimal(niYear)+"("+YearName(niYear)+")å¹´"+ ((niMonth<0)?"é—°":"") + c4[Math.abs(niMonth)-1] + "æœˆ" + c5[niDay-1]
 			}
 			
 		
 		
 				
 		var SMDay = new  Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-		var c1 = Array('¼×', 'ÒÒ', '±û', '¶¡', 'Îì', '¼º', '¸ı', 'ĞÁ', 'ÈÉ', '¹ï');
-		var c2 = Array('×Ó', '³ó', 'Òú', 'Ã®', '³½', 'ËÈ', 'Îç', 'Î´', 'Éê', 'ÓÏ', 'Ğç', 'º¥');
-		var c3 = Array('Êó', 'Å£', '»¢', 'ÍÃ', 'Áú', 'Éß', 'Âí', 'Ñò', 'ºï', '¼¦', '¹·', 'Öí');
-		var c4 = Array('Õı', '¶ş', 'Èı', 'ËÄ', 'Îå', 'Áù', 'Æß', '°Ë', '¾Å', 'Ê®', 'Ê®Ò»', 'Ê®¶ş');
-		var c5 = Array('³õÒ»', '³õ¶ş', '³õÈı', '³õËÄ', '³õÎå', '³õÁù', '³õÆß', '³õ°Ë', '³õ¾Å', '³õÊ®',
-							'Ê®Ò»', 'Ê®¶ş','Ê®Èı', 'Ê®ËÄ', 'Ê®Îå', 'Ê®Áù', 'Ê®Æß', 'Ê®°Ë', 'Ê®¾Å', '¶şÊ®',
-							'Ø¥Ò»', 'Ø¥¶ş','Ø¥Èı', 'Ø¥ËÄ', 'Ø¥Îå', 'Ø¥Áù', 'Ø¥Æß', 'Ø¥°Ë', 'Ø¥¾Å', 'ÈıÊ®'
+		var c1 = Array('ç”²', 'ä¹™', 'ä¸™', 'ä¸', 'æˆŠ', 'å·±', 'åºš', 'è¾›', 'å£¬', 'ç™¸');
+		var c2 = Array('å­', 'ä¸‘', 'å¯…', 'å¯', 'è¾°', 'å·³', 'åˆ', 'æœª', 'ç”³', 'é…‰', 'æˆŒ', 'äº¥');
+		var c3 = Array('é¼ ', 'ç‰›', 'è™', 'å…”', 'é¾™', 'è›‡', 'é©¬', 'ç¾Š', 'çŒ´', 'é¸¡', 'ç‹—', 'çŒª');
+		var c4 = Array('æ­£', 'äºŒ', 'ä¸‰', 'å››', 'äº”', 'å…­', 'ä¸ƒ', 'å…«', 'ä¹', 'å', 'åä¸€', 'åäºŒ');
+		var c5 = Array('åˆä¸€', 'åˆäºŒ', 'åˆä¸‰', 'åˆå››', 'åˆäº”', 'åˆå…­', 'åˆä¸ƒ', 'åˆå…«', 'åˆä¹', 'åˆå',
+							'åä¸€', 'åäºŒ','åä¸‰', 'åå››', 'åäº”', 'åå…­', 'åä¸ƒ', 'åå…«', 'åä¹', 'äºŒå',
+							'å»¿ä¸€', 'å»¿äºŒ','å»¿ä¸‰', 'å»¿å››', 'å»¿äº”', 'å»¿å…­', 'å»¿ä¸ƒ', 'å»¿å…«', 'å»¿ä¹', 'ä¸‰å'
 						);
 		
 		var BeginYear=1900
@@ -669,7 +669,7 @@
 		}
 		
 		function YearName(LYear){
-			//1984¼××ÓÄê
+			//1984ç”²å­å¹´
 			var x, y, ya;
 			
 			ya = ((LYear-1984)%60<0) ? ((LYear-1984)%60 + 60) : (LYear-1984)%60  
@@ -680,7 +680,7 @@
 		}
 		
 		function YearAnimal(LYear){
-			//1984¼××ÓÄê
+			//1984ç”²å­å¹´
 			var y, ya;
 			ya = (LYear-1984)%60<0 ? (LYear-1984)%60+60 : (LYear-1984)%60 
 			y = (ya%12);
@@ -861,13 +861,13 @@
 		
 		
 		function DaysBetweenDateAndNow(yr, mo, dy){
-			var d, r, t1, t2, t3;            // ÉùÃ÷±äÁ¿¡£
-			var MinMilli = 1000 * 60         // ³õÊ¼»¯±äÁ¿¡£
+			var d, r, t1, t2, t3;            // å£°æ˜å˜é‡ã€‚
+			var MinMilli = 1000 * 60         // åˆå§‹åŒ–å˜é‡ã€‚
 			var HrMilli = MinMilli * 60
 			var DyMilli = HrMilli * 24
-			t1 = Date.UTC(yr, mo - 1, dy)    // »ñÈ¡´Ó 1/1/1970 ¿ªÊ¼µÄºÁÃëÊı¡£
-			d = new Date();                  // ´´½¨ Date ¶ÔÏó¡£
-			t2 = d.getTime();                // »ñÈ¡µ±Ç°Ê±¼ä¡£
+			t1 = Date.UTC(yr, mo - 1, dy)    // è·å–ä» 1/1/1970 å¼€å§‹çš„æ¯«ç§’æ•°ã€‚
+			d = new Date();                  // åˆ›å»º Date å¯¹è±¡ã€‚
+			t2 = d.getTime();                // è·å–å½“å‰æ—¶é—´ã€‚
 			if (t2 >= t1) 
 				t3 = t2 - t1;
 			else
@@ -876,7 +876,7 @@
 			
 			if (t2 < t1) r=-r;
 			
-			return(r);                       // ·µ»Ø²î¡£
+			return(r);                       // è¿”å›å·®ã€‚
 		}
 
 		

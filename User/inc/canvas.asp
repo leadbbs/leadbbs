@@ -61,23 +61,35 @@ Class Canvas
  end property
  
  ' Set a specific pixel colour, look at speeding this up somehow...
- public property let Pixel(ByVal lX,ByVal lY,lValue)
-  Dim sTemp
+ ' README Â§41: a multi-index `Property Let` does not reliably write the class field under
+ ' AxonASP â€” the assignment is discarded with no error, so EVERY pixel written to this canvas
+ ' was silently dropped and the captcha rendered as a blank rectangle. A plain Sub is well
+ ' behaved, so the drawing code calls SetPixel and the property is kept only for source
+ ' compatibility with anything outside this file.
+ public sub SetPixel(ByVal lX,ByVal lY,ByVal lValue)
+  Dim iX, iY, iV
   Dim lOffset
-  
-  lX = int(lX)
-  lY = int(lY)
-  lValue = int(lValue)
+  Dim tt
 
-  lOffset = lWidth * (lY - 1)
+  ' `Int(var)` is written `Int(var + 0)` on purpose â€” see README Â§41: AxonASP's Int/Abs/Sqr/
+  ' Exp/Log/Sin/Cos/Tan/Atn/Round hand the function a slot index instead of the variable's
+  ' value when the argument is a BARE VARIABLE, and evaluate correctly when it is an
+  ' expression. Every pixel written to this canvas was landing at coordinate (0,1) because of
+  ' it, which is why the captcha was a blank rectangle.
+  iX = CLng(Int(lX + 0))
+  iY = CLng(Int(lY + 0))
+  iV = CLng(Int(lValue + 0))
 
-  if lX <= lWidth and lY <= lHeight and lX > 0 and lY > 0 then ' Clipping
-   dim tt
-   tt = lOffset + (lX - 1)
-   'sImage = LeftB(sImage,lOffset + (lX - 1)) & ChrB(lValue) & RightB(sImage,LenB(sImage) - (lOffset + lX))
-   'midµÄÐÔÄÜÂÔÓÅ
-   sImage = MidB(sImage,1,tt) & ChrB(lValue) & MidB(sImage,tt+2)
-  end if  
+  lOffset = CLng(lWidth) * (iY - 1)
+
+  if iX <= lWidth and iY <= lHeight and iX > 0 and iY > 0 then ' Clipping
+   tt = lOffset + (iX - 1)
+   sImage = MidB(sImage,1,tt) & ChrB(iV) & MidB(sImage,tt+2)
+  end if
+ end sub
+
+ public property let Pixel(ByVal lX,ByVal lY,lValue)
+  SetPixel lX,lY,lValue
  end property
 
  ' Read only width and height, to change these, resize the image
@@ -96,7 +108,7 @@ Class Canvas
   for lTempy = 1 to lHeight
    for lTempX = 1 to lWidth
     if Pixel(lTempX,lTempY) = lOldColour then
-     Pixel(lTempX,lTempY) = lNewColour
+     SetPixel lTempX,lTempY,lNewColour
     end if
    next
   next
@@ -143,7 +155,7 @@ Class Canvas
   
   for iTemp2 = 1 to lHeight
    for iTemp1 = 1 to lWidth
-    Pixel(lX3 + iTemp1,lY3 + iTemp2) = AscB(MidB(sCopy,(iTemp2 - 1) * lWidth + iTemp1,1))
+    SetPixel lX3 + iTemp1,lY3 + iTemp2,AscB(MidB(sCopy,(iTemp2 - 1) * lWidth + iTemp1,1))
    next
   next
  end sub
@@ -165,7 +177,7 @@ Class Canvas
    
    if objPixel.X >= 1 and objPixel.X <= lWidth and objPixel.Y >= 1 and objPixel.Y <= lHeight then
     if Pixel(objPixel.X,objPixel.Y) <> ForegroundColourIndex and Pixel(objPixel.X,objPixel.Y) = lOldPixel then
-     Pixel(objPixel.X,objPixel.Y) = ForegroundColourIndex
+     SetPixel objPixel.X,objPixel.Y,ForegroundColourIndex
      
      aPixelStack.Push objPixel.X + 1,objPixel.Y
      aPixelStack.Push objPixel.X - 1,objPixel.Y
@@ -285,7 +297,7 @@ Class Canvas
      If sinStart < sinEnd And (dAngle > sinStart And dAngle < sinEnd) Then
          'This is the "corrected" angle
          'To change back, change the minus to a plus
-         Pixel(lX + ltX, lY + ltY) = ForegroundColourIndex
+         SetPixel lX + ltX, lY + ltY,ForegroundColourIndex
      End If
  End Sub
   
@@ -380,7 +392,7 @@ Class Canvas
    lP = lDPr - lDX
    
    while lDX >= 0
-    Pixel(lX1,lY1) = ForegroundColourIndex
+    SetPixel lX1,lY1,ForegroundColourIndex
     if lP > 0 then
      lX1 = lX1 + lXIncrement
      lY1 = lY1 + lYIncrement
@@ -397,7 +409,7 @@ Class Canvas
    lP = lDPR - lDY
    
    while lDY >= 0
-    Pixel(lX1,lY1) = ForegroundColourIndex
+    SetPixel lX1,lY1,ForegroundColourIndex
     if lP > 0 then
      lX1 = lX1 + lXIncrement
      lY1 = lY1 + lYIncrement
@@ -436,10 +448,10 @@ public sub Circle(ByVal lX,ByVal lY,ByVal lRadius)
   lTempY = lRadiusY
   S = lAlpha * (1 - 2 * lRadiusY) + 2 * lBeta
   T = lBeta - 2 * lAlpha * (2 * lRadiusY - 1)
-  Pixel(lX + lTempX,lY + lTempY) = ForegroundColourIndex
-  Pixel(lX - lTempX,lY + lTempY) = ForegroundColourIndex
-  Pixel(lX + lTempX,lY - lTempY) = ForegroundColourIndex
-  Pixel(lX - lTempX,lY - lTempY) = ForegroundColourIndex
+  SetPixel lX + lTempX,lY + lTempY,ForegroundColourIndex
+  SetPixel lX - lTempX,lY + lTempY,ForegroundColourIndex
+  SetPixel lX + lTempX,lY - lTempY,ForegroundColourIndex
+  SetPixel lX - lTempX,lY - lTempY,ForegroundColourIndex
   Do
    if S < 0 then
     S = S + 2 * lBeta * (2 * lTempX + 3)
@@ -455,10 +467,10 @@ public sub Circle(ByVal lX,ByVal lY,ByVal lRadius)
     T = T - 2 * lAlpha * (2 * lTempY - 3)
     lTempY = lTempY - 1
    end if
-   Pixel(lX + lTempX,lY + lTempY) = ForegroundColourIndex
-   Pixel(lX - lTempX,lY + lTempY) = ForegroundColourIndex
-   Pixel(lX + lTempX,lY - lTempY) = ForegroundColourIndex
-   Pixel(lX - lTempX,lY - lTempY) = ForegroundColourIndex
+   SetPixel lX + lTempX,lY + lTempY,ForegroundColourIndex
+   SetPixel lX - lTempX,lY + lTempY,ForegroundColourIndex
+   SetPixel lX + lTempX,lY - lTempY,ForegroundColourIndex
+   SetPixel lX - lTempX,lY - lTempY,ForegroundColourIndex
   loop while lTempY > 0
  end sub
 
@@ -534,6 +546,24 @@ public sub Circle(ByVal lX,ByVal lY,ByVal lRadius)
  end function
 
   ' Bitmap font support
+ ' README Â§42: each glyph is stored as its 31 rows joined with "|", because AxonASP's
+ ' Dictionary cannot round-trip an array (it keeps a reference) or an object here. Rows are
+ ' read back through this accessor, which caches the split for the character it was last
+ ' asked about â€” DrawText walks one character at a time.
+ private sFontRowChar
+ private aFontRows
+ private function FontRow(sChar, iRow)
+  if sChar <> sFontRowChar or IsEmpty(aFontRows) then
+   aFontRows = Split(Font(sChar) & "", "|")
+   sFontRowChar = sChar
+  end if
+  if iRow >= 0 and iRow <= UBound(aFontRows) then
+   FontRow = aFontRows(iRow)
+  else
+   FontRow = ""
+  end if
+ end function
+
 Public Sub DrawTextWE(ByVal lX,ByVal lY,sText,space)
   ' Render text at lX,lY
   ' There's a global dictionary object called Font and it should contain all the 
@@ -554,10 +584,13 @@ Public Sub DrawTextWE(ByVal lX,ByVal lY,sText,space)
 	For iTemp1 = 1 to t2
 		Randomize
 		RndData(iTemp1-1) = Fix(Rnd*t1)-Fix(t1/2)
-		If ABS(RndData(iTemp1-1)) < 3 Then RndData(iTemp1-1) = Fix(t1/2)
+		' `+ 0` deliberately (README Â§41): ABS() of a bare variable/array element gets a slot
+		' index instead of the value, so this guard never fired and the per-row shear divisor
+		' could be 1 or 2 â€” which smeared every glyph into a diagonal streak.
+		If ABS(RndData(iTemp1-1) + 0) < 3 Then RndData(iTemp1-1) = Fix(t1/2)
 		RndCol(Itemp1-1) = Fix(iTemp1 mod 2) + 1
 		
-		WData(iTemp1-1) = Len(Font(Mid(sText,iTemp1,1))(1))
+		WData(iTemp1-1) = Len(FontRow(Mid(sText,iTemp1,1),1))
 		if iTemp1 = 1 Then
 			widthData(Itemp1-1) = lX
 		Else
@@ -568,7 +601,7 @@ Public Sub DrawTextWE(ByVal lX,ByVal lY,sText,space)
 	For iTemp1 = 0 to t1
 		t6 = lY + iTemp1
 		For iTemp2 = 1 to t2
-			t7 = Font(Mid(sText,iTemp2,1))(iTemp1)
+			t7 = FontRow(Mid(sText,iTemp2,1),iTemp1)
 			If inStr(t7,"1") > 0 Then
 				t4=lX + ((iTemp2 - 1) * t5) + iTemp2*space
 				't3=Len(t7)
@@ -580,13 +613,11 @@ Public Sub DrawTextWE(ByVal lX,ByVal lY,sText,space)
 						'lXa = t4 + iTemp3 + fix(iTemp1/RndData(iTemp2-1))
 						lXa = widthData(iTemp2-1) + iTemp3 + fix(iTemp1/RndData(iTemp2-1))
 						lYa = t6
-						if lXa <= lWidth and lY <= lHeight and lXa > 0 and lYa > 0 then ' Clipping
-							'bChar = RndCol(iTemp2-1)
-							lValue = CLng(bChar)
-							lOffset = lWidth * (lYa - 1)
-							tt = lOffset + (lXa - 1)
-							sImage = MidB(sImage,1,tt) & ChrB(lValue) & MidB(sImage,tt+2)
-						end if
+						' Was an inline copy of the Pixel splice; it now goes through SetPixel,
+						' which is the one write path this file has that is known to work under
+						' AxonASP (README Â§41). The clipping is SetPixel's job too â€” note the
+						' original tested lY, the routine's parameter, where it meant lYa.
+						SetPixel lXa, lYa, CLng(bChar)
 					end if
 				next
 			End If
@@ -606,20 +637,43 @@ End Sub
 
   for iTemp1 = 1 to len(sText)
    for iTemp2 = 0 to UBound(Letter) - 1
-    for iTemp3 = 1 to len(Font(Mid(sText,iTemp1,1))(iTemp2))
-     bChar = Mid(Font(Mid(sText,iTemp1,1))(iTemp2),iTemp3,1)
+    for iTemp3 = 1 to len(FontRow(Mid(sText,iTemp1,1),iTemp2))
+     bChar = Mid(FontRow(Mid(sText,iTemp1,1),iTemp2),iTemp3,1)
      if bChar <> "0" then
-      Pixel(lX + iTemp3,lY + (iTemp1 * (UBound(Letter) + 1)) + iTemp2) = CLng(bChar)
+      SetPixel lX + iTemp3,lY + (iTemp1 * (UBound(Letter) + 1)) + iTemp2,CLng(bChar)
      end if
     next
    next
   next
  end sub
 
- ' Clear the image, because String sends out UNICODE characters, we double up the index as a WORD
+ ' Clear the image.
+ '
+ ' README Â§41. The original line was
+ '   sImage = String(lWidth * ((lHeight + 1) / 2), ChrB(bg) & ChrB(bg))
+ ' which relies on classic ASP strings being UTF-16: String() returns that many CHARACTERS,
+ ' LenB() reports twice as many BYTES, and doubling the character makes both bytes of each
+ ' one the background index. Two AxonASP divergences break it, and together they blanked
+ ' every captcha on the site â€” no human could register or post:
+ '
+ '   1. String(n, c) returns "" when n is a DOUBLE. lWidth * ((lHeight + 1) / 2) is a Double
+ '      (the division makes it one), so the pixel buffer came out EMPTY, with no error. The
+ '      GIF was then written with a valid header and colour table and NO raster data at all:
+ '      794 bytes that decode to a blank white 90x27 image.
+ '   2. AxonASP strings are BYTE strings â€” LenB() equals Len() â€” so even with an integer
+ '      count the halving would have allocated half the buffer.
+ '
+ ' Allocate by bytes, and detect which kind of host we are on so IIS is unaffected.
  public sub Clear()
-  ' Possibly quicker, but a little less accurate
-  sImage = String(lWidth * ((lHeight + 1) / 2),ChrB(BackgroundColourIndex) & ChrB(BackgroundColourIndex))
+  Dim lBytes
+  lBytes = CLng(lWidth) * CLng(lHeight)
+  if LenB(String(2,ChrB(0))) = 4 then
+   ' UTF-16 host (classic ASP): one character is two bytes
+   sImage = String(CLng((lBytes + 1) / 2),ChrB(BackgroundColourIndex) & ChrB(BackgroundColourIndex))
+  else
+   ' byte-string host (AxonASP): one character is one byte
+   sImage = String(lBytes,ChrB(BackgroundColourIndex))
+  end if
  end sub
  
  public sub Resize(ByVal lNewWidth,ByVal lNewHeight,bPreserve)
@@ -641,7 +695,7 @@ End Sub
   lWidth = lNewWidth
   lHeight = lNewHeight
 
-  Clear
+  Clear()
   
   if bPreserve then
    ' Now copy the old image into the new
@@ -665,7 +719,7 @@ End Sub
    ' on a pixel leve, there is room here to perform a MidB from one string to another
    for lY = 1 to lCopyHeight
     for lX = 1 to lCopyWidth
-     Pixel(lX,lY) = AscB(MidB(sOldImage,(lOldWidth * (lY - 1)) + lX,1))
+     SetPixel lX,lY,AscB(MidB(sOldImage,(lOldWidth * (lY - 1)) + lX,1))
     next
    next
   end if
@@ -784,8 +838,11 @@ End Sub
   Dim sTemp
   
   UncompressedData = ""
-  lClearCode = 2^iBits
-  lChunkMax = 2^iBits - 2
+  ' README Â§41 again: `^` yields a DOUBLE, and AxonASP's MidB() returns "" when its length
+  ' argument is one â€” silently, so the chunk loop emitted nothing but clear codes and the GIF
+  ' carried 33 bytes of raster for a 2430-pixel image. CLng them.
+  lClearCode = CLng(2^iBits)
+  lChunkMax = CLng(2^iBits) - 2
   lEndOfStream = lClearCode + 1
   
   sTempData = ""
@@ -908,7 +965,7 @@ End Sub
   objStream.Open
   objStream.LoadFromFile sFilename
 
-  sBMP = objStream.Read
+  sBMP = objStream.Read(-1)
   
   objStream.Close
   
@@ -1176,9 +1233,9 @@ End Sub
   
   iIndex = 0
   
-  For iTemp1 = &HFF0000& to 0 step - &H330000&
-   For iTemp2 = &HFF00& to 0 step - &H3300&
-    For iTemp3 = &HFF& to 0 step - &H33&
+  For iTemp1 = &HFF0000 to 0 step - &H330000
+   For iTemp2 = &HFF00 to 0 step - &H3300
+    For iTemp3 = &HFF to 0 step - &H33
      GlobalColourTable(iIndex) = iTemp1 or iTemp2 or iTemp3
      iIndex = iIndex + 1
     Next
@@ -1188,7 +1245,7 @@ End Sub
 
  private sub Class_Initialize()
  
- initfont
+ Call initfont()
   sImage = "" ' Raster data
 
   GIF89a = False ' Default to 87a data
@@ -1218,7 +1275,7 @@ End Sub
   lWidth = INIT_WIDTH
   lHeight = INIT_HEIGHT
   
-  Clear
+  Clear()
   
   bytePixelAspectRatio = 0
 

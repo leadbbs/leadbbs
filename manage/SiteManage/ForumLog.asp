@@ -1,51 +1,51 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 Const LMT_MaxListLogNum = 300
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
 
-frame_TopInfo
-DisplayUserNavigate("ÂÛÌ³ÈÕÖ¾")
+frame_TopInfo()
+DisplayUserNavigate("è®ºå›æ—¥å¿—")
 If GBL_CHK_Flag=1 Then
 	If Request("clear") = "yes" Then
-		ClearForumLog
+		ClearForumLog()
 	Else
-		DisplayForumLog
+		DisplayForumLog()
 	End If
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Function DisplayForumLog
 
-	'0-ÏµÍ³ÈÕÖ¾
-	'1-ÆäËüÈÕÖ¾
-	'51-¹ÜÀíÔ±µÇÂ¼ÈÕÖ¾
-	'52-×Ü°æÖ÷µÇÂ¼ÈÕÖ¾
-	'53-ÆÕÍ¨°æÖ÷µÇÂ¼ÈÕÖ¾
-	'54-ÆÕÍ¨»áÔ±µÇÂ¼ÈÕÖ¾
-	'101-°æÖ÷É¾³ıÌû×ÓÈÕÖ¾
-	'102-°æÖ÷¾«»ªÌû×ÓÈÕÖ¾
-	'103-°æÖ÷×ªÒÆÌû×ÓÈÕÖ¾
-	'104-°æÖ÷ĞŞ¸ÄÌû×ÓÈÕÖ¾
-	'105-°æÖ÷½±·£»áÔ±ÈÕÖ¾
-	'106-°æÖ÷¹Ì¶¥Ìû×ÓÈÕÖ¾
-	'151-×Ü°æÖ÷·â³ıÓÃ»§ÈÕÖ¾
-	'152-×Ü°æÖ÷·â³ıIPÈÕÖ¾
-	'152-×Ü°æÖ÷Ç¿ÖÆĞŞ¸ÄÓÃ»§×ÊÁÏÈÕÖ¾
-	'153-×Ü°æÖ÷Ç¿ÖÆĞŞ¸ÄÓÃ»§×ÊÁÏÈÕÖ¾
-	'154-×Ü°æÖ÷×Ü¹Ì¶¥Ìû×ÓÈÕÖ¾
-	'201-Çø°æÖ÷Çø¹Ì¶¥Ìû×ÓÈÕÖ¾
+	'0-ç³»ç»Ÿæ—¥å¿—
+	'1-å…¶å®ƒæ—¥å¿—
+	'51-ç®¡ç†å‘˜ç™»å½•æ—¥å¿—
+	'52-æ€»ç‰ˆä¸»ç™»å½•æ—¥å¿—
+	'53-æ™®é€šç‰ˆä¸»ç™»å½•æ—¥å¿—
+	'54-æ™®é€šä¼šå‘˜ç™»å½•æ—¥å¿—
+	'101-ç‰ˆä¸»åˆ é™¤å¸–å­æ—¥å¿—
+	'102-ç‰ˆä¸»ç²¾åå¸–å­æ—¥å¿—
+	'103-ç‰ˆä¸»è½¬ç§»å¸–å­æ—¥å¿—
+	'104-ç‰ˆä¸»ä¿®æ”¹å¸–å­æ—¥å¿—
+	'105-ç‰ˆä¸»å¥–ç½šä¼šå‘˜æ—¥å¿—
+	'106-ç‰ˆä¸»å›ºé¡¶å¸–å­æ—¥å¿—
+	'151-æ€»ç‰ˆä¸»å°é™¤ç”¨æˆ·æ—¥å¿—
+	'152-æ€»ç‰ˆä¸»å°é™¤IPæ—¥å¿—
+	'152-æ€»ç‰ˆä¸»å¼ºåˆ¶ä¿®æ”¹ç”¨æˆ·èµ„æ–™æ—¥å¿—
+	'153-æ€»ç‰ˆä¸»å¼ºåˆ¶ä¿®æ”¹ç”¨æˆ·èµ„æ–™æ—¥å¿—
+	'154-æ€»ç‰ˆä¸»æ€»å›ºé¡¶å¸–å­æ—¥å¿—
+	'201-åŒºç‰ˆä¸»åŒºå›ºé¡¶å¸–å­æ—¥å¿—
 	%>
 	<script language=javascript>
 	var lastID=0,Count=0;
@@ -53,41 +53,41 @@ Function DisplayForumLog
 	{
 		if(ID=="")return;
 		Count +=1;lastID=ID;
-		if(BoardID==0){BoardID="";}else{BoardID="°æÃæ:" + BoardID;}
+		if(BoardID==0){BoardID="";}else{BoardID="ç‰ˆé¢:" + BoardID;}
 		LogTime = LogTime.substr(0,4) + "-" + LogTime.substr(4,2) + "-" + LogTime.substr(6,2) + " " + LogTime.substr(8,2) + ":" + LogTime.substr(10,2) + ":" + LogTime.substr(12,2)
 		switch(parseInt(LogType))
 		{
-			case 0: LogType="<span class=greenfont>ÏµÍ³ÈÕÖ¾</span>";break;
-			case 1: LogType="ÆäËüÈÕÖ¾";break;
-			case 9: LogType="ÂÛÌ³¶¯Ì¬";break;
-			case 51: LogType="¹ÜÀíÔ±µÇÂ¼";break;
-			case 52: LogType="<%=DEF_PointsName(6)%>µÇÂ¼";break;
-			case 53: LogType="°æÖ÷µÇÂ¼";break;
-			case 54: LogType="ÆÕÍ¨»áÔ±µÇÂ¼";break;
-			case 101: LogType="°æÖ÷É¾³ıÌû×Ó";break;
-			case 102: LogType="°æÖ÷¾«»ªÌû×Ó";break;
-			case 103: LogType="°æÖ÷×ªÒÆÌû×Ó";break;
-			case 104: LogType="°æÖ÷ĞŞ¸ÄÌû×Ó";break;
-			case 105: LogType="°æÖ÷½±·£»áÔ±";break;
-			case 106: LogType="°æÖ÷¹Ì¶¥Ìû×Ó";break;
-			case 151: LogType="<%=DEF_PointsName(6)%>·â³ıÓÃ»§";break;
-			case 152: LogType="<%=DEF_PointsName(6)%>·â³ıIP";break;
-			case 153: LogType="<%=DEF_PointsName(6)%>Ç¿ÖÆĞŞ¸ÄÓÃ»§×ÊÁÏ";break;
-			case 154: LogType="<%=DEF_PointsName(6)%>×Ü¹Ì¶¥Ìû×Ó";break;
-			case 201: LogType="<%=DEF_PointsName(7)%>Çø¹Ì¶¥Ìû×Ó";break;
+			case 0: LogType="<span class=greenfont>ç³»ç»Ÿæ—¥å¿—</span>";break;
+			case 1: LogType="å…¶å®ƒæ—¥å¿—";break;
+			case 9: LogType="è®ºå›åŠ¨æ€";break;
+			case 51: LogType="ç®¡ç†å‘˜ç™»å½•";break;
+			case 52: LogType="<%=DEF_PointsName(6)%>ç™»å½•";break;
+			case 53: LogType="ç‰ˆä¸»ç™»å½•";break;
+			case 54: LogType="æ™®é€šä¼šå‘˜ç™»å½•";break;
+			case 101: LogType="ç‰ˆä¸»åˆ é™¤å¸–å­";break;
+			case 102: LogType="ç‰ˆä¸»ç²¾åå¸–å­";break;
+			case 103: LogType="ç‰ˆä¸»è½¬ç§»å¸–å­";break;
+			case 104: LogType="ç‰ˆä¸»ä¿®æ”¹å¸–å­";break;
+			case 105: LogType="ç‰ˆä¸»å¥–ç½šä¼šå‘˜";break;
+			case 106: LogType="ç‰ˆä¸»å›ºé¡¶å¸–å­";break;
+			case 151: LogType="<%=DEF_PointsName(6)%>å°é™¤ç”¨æˆ·";break;
+			case 152: LogType="<%=DEF_PointsName(6)%>å°é™¤IP";break;
+			case 153: LogType="<%=DEF_PointsName(6)%>å¼ºåˆ¶ä¿®æ”¹ç”¨æˆ·èµ„æ–™";break;
+			case 154: LogType="<%=DEF_PointsName(6)%>æ€»å›ºé¡¶å¸–å­";break;
+			case 201: LogType="<%=DEF_PointsName(7)%>åŒºå›ºé¡¶å¸–å­";break;
 		}
 		document.write("<tr><td class=tdbox>" + ID + "<br>" + BoardID + "</td><td class=tdbox>" + LogType + "<br><a href=\"<%=DEF_BBS_HomeUrl%>User/LookUserInfo.asp?name=" + escape(UserName) + "\" target=_blank>" + UserName + "</a></td><td class=tdbox>" + IP + "<br>" + LogTime+"</td><td class=tdbox>" + LogInfo + "</tr>");
 	}
 	</script>
 				<div class=frameline>
-				<b><span class=grayfont>×îĞÂÈÕÖ¾(<%=LMT_MaxListLogNum%>Ìõ)</span> <a HREF=ForumLog.asp?clear=yes>Çå³ı2ÌìÇ°µÄÂÛÌ³ÈÕÖ¾(ÖÁÉÙ±£Áô×î½üµÄ300ÌõÈÕÖ¾)</a></b></div>
+				<b><span class=grayfont>æœ€æ–°æ—¥å¿—(<%=LMT_MaxListLogNum%>æ¡)</span> <a HREF=ForumLog.asp?clear=yes>æ¸…é™¤2å¤©å‰çš„è®ºå›æ—¥å¿—(è‡³å°‘ä¿ç•™æœ€è¿‘çš„300æ¡æ—¥å¿—)</a></b></div>
 				<table border=0 cellpadding=0 cellspacing=0 width=100% class=frame_table>
 				<tbody>
 				<tr class=frame_tbhead>
-					<td width=74><div class=value>ĞòºÅ|°æÃæ</div></td>
-					<td width=90><div class=value>ÀàĞÍ/ÓÃ»§</div></td>
-					<td width=176><div class=value>IPµØÖ·/Ê±¼ä</div></td>
-					<td><div class=value>ÈÕÖ¾ĞÅÏ¢</div></td>
+					<td width=74><div class=value>åºå·|ç‰ˆé¢</div></td>
+					<td width=90><div class=value>ç±»å‹/ç”¨æˆ·</div></td>
+					<td width=176><div class=value>IPåœ°å€/æ—¶é—´</div></td>
+					<td><div class=value>æ—¥å¿—ä¿¡æ¯</div></td>
 				</tr>
 				<%
 	Dim FirstID
@@ -99,16 +99,16 @@ Function DisplayForumLog
 	If FirstID = 0 Then
 		SQL = sql_select("select ID,LogType,LogTime,LogInfo,UserName,IP,BoardID from LeadBBS_Log Order by id DESC",LMT_MaxListLogNum)
 	Else
-		SQL = sql_select("select ID,LogType,LogTime,LogInfo,UserName,IP,BoardID from LeadBBS_Log where ID<" & FirstID & " Order by id DESC",LMT_MaxListLogNum)
+		SQL = sql_select("select ID,LogType,LogTime,LogInfo,UserName,IP,BoardID from LeadBBS_Log where ID<" & LngStr(FirstID) & " Order by id DESC",LMT_MaxListLogNum)
 	End If
 
-	OpenDatabase
+	OpenDatabase()
 	Set Rs = LDExeCute(SQL,0)
 	Dim Num
 	Dim GetData
 	If Not rs.Eof Then
 		Response.Write "<script language=javascript>" & VbCrLf & "s("""
-		Response.Write Rs.GetString(,,""",""",""");" & VbCrLf & "s(""","")
+		Response.Write RsGetString(Rs,""",""",""");" & VbCrLf & "s(""","")
 		%>","","","");
 		</script>
 		<%
@@ -119,9 +119,9 @@ Function DisplayForumLog
 	Set Rs = Nothing
 	closeDataBase%>
 				</table>
-				<%If FirstID > 0 Then Response.Write "<a href=ForumLog.asp>·µ»ØÊ×Ò³</a> "%>
+				<%If FirstID > 0 Then Response.Write "<a href=ForumLog.asp>è¿”å›é¦–é¡µ</a> "%>
 		<script language=javascript>
-			if(Count>=<%=LMT_MaxListLogNum%>)document.write("<a href=ForumLog.asp?id=" + lastID + ">ÏÂÒ»Ò³</a>");
+			if(Count>=<%=LMT_MaxListLogNum%>)document.write("<a href=ForumLog.asp?id=" + lastID + ">ä¸‹ä¸€é¡µ</a>");
 		</script>
 	<%
 
@@ -144,23 +144,23 @@ Sub ClearForumLog
 			Rs.Close
 			Set Rs = Nothing
 		End If
-		Response.Write "<p>Çå³ı¹¤×÷½«Ö´ĞĞÒÔÏÂÓï¾ä...<p>"
+		Response.Write "<p>æ¸…é™¤å·¥ä½œå°†æ‰§è¡Œä»¥ä¸‹è¯­å¥...<p>"
 		SQL = "Delete from LeadBBS_Log where LogTime<" & FilterTime
 		Response.Write "<p>" & SQL
 		Con.CommandTimeout = 120
 		CALL LDExeCute(SQL,1)
-		Response.Write "<p>Ö´ĞĞÍê±Ï£¬³É¹¦Çå³ıÁ½ÌìÇ°µÄÂÛÌ³ÈÕÖ¾(ÖÁÉÙ±£Áô×î½üµÄ300ÌõÈÕÖ¾)£¡"
-		Response.Write "<p><a href=ForumLog.asp>µã»÷ÕâÀï·µ»Ø²é¿´ÈÕÖ¾£®</a>"
+		Response.Write "<p>æ‰§è¡Œå®Œæ¯•ï¼ŒæˆåŠŸæ¸…é™¤ä¸¤å¤©å‰çš„è®ºå›æ—¥å¿—(è‡³å°‘ä¿ç•™æœ€è¿‘çš„300æ¡æ—¥å¿—)ï¼"
+		Response.Write "<p><a href=ForumLog.asp>ç‚¹å‡»è¿™é‡Œè¿”å›æŸ¥çœ‹æ—¥å¿—ï¼</a>"
 	Else
 			%><p><br>
-				×¢Òâ£º´Ë¹¦ÄÜ½«Íê³ÉÒÔÏÂ¹¦ÄÜ£º<br><br>
-				&nbsp; &nbsp; &nbsp; 1.Çå³ıÂÛÌ³Á½ÌìÖ®Ç°µÄÂÛÌ³ÈÕÖ¾£¬Çå³ıºó½«²»ÄÜ»Ö¸´ÈÕÖ¾¡£<br>
+				æ³¨æ„ï¼šæ­¤åŠŸèƒ½å°†å®Œæˆä»¥ä¸‹åŠŸèƒ½ï¼š<br><br>
+				&nbsp; &nbsp; &nbsp; 1.æ¸…é™¤è®ºå›ä¸¤å¤©ä¹‹å‰çš„è®ºå›æ—¥å¿—ï¼Œæ¸…é™¤åå°†ä¸èƒ½æ¢å¤æ—¥å¿—ã€‚<br>
 				<br>
-				<b><font color=ff0000 class=redfont>È·ÈÏĞÅÏ¢£º ÕæµÄÒª¿ªÊ¼Çå³ı²Ù×÷Ã´£¿</font></b><br><br>
+				<b><font color=ff0000 class=redfont>ç¡®è®¤ä¿¡æ¯ï¼š çœŸçš„è¦å¼€å§‹æ¸…é™¤æ“ä½œä¹ˆï¼Ÿ</font></b><br><br>
 				<form action=ForumLog.asp method=post name=LeadBBSFm id=LeadBBSFm>
 				<input name=submitflag value=yes type=hidden>
 				<input name=clear value=yes type=hidden>
-				<input type=button value="µã»÷¿ªÊ¼Çå³ı" onclick="javascript:LeadBBSFm.submit();this.disabled=true;" class=fmbtn>
+				<input type=button value="ç‚¹å‡»å¼€å§‹æ¸…é™¤" onclick="javascript:LeadBBSFm.submit();this.disabled=true;" class=fmbtn>
 				</form>
 			<%
 	End If

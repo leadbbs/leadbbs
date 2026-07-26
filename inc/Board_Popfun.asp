@@ -1,6 +1,6 @@
-<!-- #include file=../plug-ins/bbschat/Inc/Chat_Setup.asp -->
-<!-- #include file=Str_Fun.asp -->
-<!-- #include file=MD5.asp -->
+<!--#include file="../plug-ins/bbschat/Inc/Chat_Setup.asp"-->
+<!--#include file="Str_Fun.asp"-->
+<!--#include file="MD5.asp"-->
 <%
 Const OPEN_DEBUG = 1
 Const DEBUG_User = ""
@@ -27,7 +27,8 @@ if GetBinarybit(DEF_Sideparameter,23) = 1 then 'https auto redirect
 		temp_url = "https://"&DEF_AbsolutHome
 		if Request.ServerVariables("SERVER_PORT") <> "80" then temp_url = temp_url &":"&Request.ServerVariables("SERVER_PORT")
 		temp_url = temp_url&Request.Servervariables("SCRIPT_NAME")
-		if Request.QueryString <> "" then temp_url = temp_url&"?" & Left(Request.QueryString,200)
+		' README Â§51: always True on a bare comparison, so this appended a "?" to every URL.
+		if (Request.QueryString & "") <> "" then temp_url = temp_url&"?" & Left(Request.ServerVariables("QUERY_STRING"),200)
 		response.redirect temp_url
 	end if
 end if
@@ -78,7 +79,7 @@ If isArray(Session(DEF_MasterCookies & "UDT")) Then
 		GBL_UDT = Session(DEF_MasterCookies & "UDT")
 	end if
 end if
-GetIPAddress
+GetIPAddress()
 
 Application.Lock
 Application(DEF_MasterCookies & "SitePageCount") = cCur("0" & Application(DEF_MasterCookies & "SitePageCount")) + 1
@@ -119,7 +120,7 @@ End Sub
 
 Sub Chat_Appand_pop(c,Str)
 
-	Chat_Application_OnStart
+	Chat_Application_OnStart()
 	Dim Temp,Index
 	Temp =  Application(DEF_MasterCookies & "_Chat_World")
 	Index = Application(DEF_MasterCookies & "_Chat_World_Index")
@@ -162,11 +163,11 @@ Sub Chat_SessionCreate(User)
 				LMT = 0
 			End If
 			Application.Lock
-			Application(DEF_MasterCookies & "_Chat_S_Data_" & User) = Temp 'ÓÃ»§ĞÅÏ¢»º´æ
-			Application(DEF_MasterCookies & "_Chat_S_Index_" & User) = 0 'µ±Ç°»º´æÓÎ±ê
-			Application(DEF_MasterCookies & "_Chat_S_ID_" & User) = cCur(Session.SessionID) 'µ±Ç°sessionID
-			Application(DEF_MasterCookies & "_Chat_S_LMT_" & User) = LMT 'ÓÃ»§È¨ÏŞ
-			Application(DEF_MasterCookies & "_Chat_S_Name_" & User) = User 'ÓÃ»§Ãû³Æ
+			Application(DEF_MasterCookies & "_Chat_S_Data_" & User) = Temp 'ç”¨æˆ·ä¿¡æ¯ç¼“å­˜
+			Application(DEF_MasterCookies & "_Chat_S_Index_" & User) = 0 'å½“å‰ç¼“å­˜æ¸¸æ ‡
+			Application(DEF_MasterCookies & "_Chat_S_ID_" & User) = cCur(Session.SessionID) 'å½“å‰sessionID
+			Application(DEF_MasterCookies & "_Chat_S_LMT_" & User) = LMT 'ç”¨æˆ·æƒé™
+			Application(DEF_MasterCookies & "_Chat_S_Name_" & User) = User 'ç”¨æˆ·åç§°
 			Application.UnLock
 			CALL Chat_Appand_pop(7,User)
 		Else
@@ -183,7 +184,7 @@ End Sub
 Sub Chat_SessionFree(User)
 
 	If isArray(Application(DEF_MasterCookies & "_Chat_S_Data_" & User)) Then
-		If Application(DEF_MasterCookies & "_Chat_S_ID_" & User) = cCur(Session.SessionID) Then 'Ö»ÓĞµ±Ç°ÕıÈ·ÓÃ»§²ÅÄÜÊÍ·Å
+		If Application(DEF_MasterCookies & "_Chat_S_ID_" & User) = cCur(Session.SessionID) Then 'åªæœ‰å½“å‰æ­£ç¡®ç”¨æˆ·æ‰èƒ½é‡Šæ”¾
 			Application.Contents.Remove(DEF_MasterCookies & "_Chat_S_Data_" & User)
 			Application.Contents.Remove(DEF_MasterCookies & "_Chat_S_Index_" & User)
 			Application.Contents.Remove(DEF_MasterCookies & "_Chat_S_ID_" & User)
@@ -209,9 +210,9 @@ Function GBL_CheckLimitTitle(Pass,lmt,otherlmt,HiddenFlag)
 		If isNull(lmt) Then lmt = 0
 		If isNull(otherlmt) Then otherlmt = 0
 		If cCur(lmt) > 0 or cCur(otherlmt) > 0 Then
-			'È«ÏŞÖÆ
+			'å…¨é™åˆ¶
 			'If (Pass <> "" or GetBinarybit(lmt,7) = 1 or GetBinarybit(lmt,2) = 1 or GetBinarybit(lmt,15) = 1 or cCur(otherlmt) > 0) Then
-			'ÈÏÖ¤ÃÜÂëÌØÊâÓÃ»§ÏŞÖÆ
+			'è®¤è¯å¯†ç ç‰¹æ®Šç”¨æˆ·é™åˆ¶
 			If (Pass <> "" or GetBinarybit(lmt,7) = 1 or GetBinarybit(lmt,2) = 1 or GetBinarybit(lmt,15) = 1) Then
 			'If Pass <> "" Then
 				GBL_CheckLimitTitle = 1
@@ -247,7 +248,7 @@ End Function
 dim sqlstring
 Function LDExeCute(sql,flag)
 
-	'flag 0 ¶Á,²¢ÇÒ·µ»Ø 1 Ğ´,²»·µ»Ø 2 ¶Á,²»·µ»Ø 3 Ğ´,·µ»Ø
+	'flag 0 è¯»,å¹¶ä¸”è¿”å› 1 å†™,ä¸è¿”å› 2 è¯»,ä¸è¿”å› 3 å†™,è¿”å›
 	If GBL_ConFlag = 0 Then Exit Function
 	on error resume next
 	'If Err Then Err.Clear
@@ -264,9 +265,9 @@ Function LDExeCute(sql,flag)
 		Con.ExeCute(SQL)
 	End If
 	If Err Then
-		Response.Write "<p>ÒÔÏÂSQLÓï¾äÖ´ĞĞ³ö´í£¬³ÌĞòÒâÍâÖĞÖ¹£¬ÇëÁªÏµ¹Ù·½½â¾ö£º</p><p><font color=gray>" & server.htmlencode(SQL) & "</font></P>"
-		Response.Write "<p>´íÎóÃèÊö: <font color=red>" & err.description & "</font></p>"
-		CloseDatabase
+		Response.Write "<p>ä»¥ä¸‹SQLè¯­å¥æ‰§è¡Œå‡ºé”™ï¼Œç¨‹åºæ„å¤–ä¸­æ­¢ï¼Œè¯·è”ç³»å®˜æ–¹è§£å†³ï¼š</p><p><font color=gray>" & server.htmlencode(SQL) & "</font></P>"
+		Response.Write "<p>é”™è¯¯æè¿°: <font color=red>" & err.description & "</font></p>"
+		CloseDatabase()
 		Response.End
 	End If
 	
@@ -278,13 +279,13 @@ Function LDExeCute(sql,flag)
 				If isArray(GBL_UDT) Then
 					GBL_CHK_LastWriteTime = DateDiff("s",RestoreTime(GBL_UDT(13)),DEF_Now)
 				Else
-					GBL_UserID = CheckPass
+					GBL_UserID = CheckPass()
 				End If
 			End If
 			'CheckWriteEventSpace
 		End If
 		GBL_DBWrite = GBL_DBWrite + 1
-		UpdateLastWriteTime
+		UpdateLastWriteTime()
 	End If
 
 End Function
@@ -293,7 +294,7 @@ Sub ReloadBoardInfo(ID)
 
 	If GBL_ConFlag = 0 Then Exit Sub
 	Dim Rs,GetData
-	Set Rs = LDExeCute(sql_select("Select T1.BoardName,T1.BoardAssort,T1.BoardIntro,T1.LastWriter,T1.LastWriteTime,T1.TopicNum,T1.AnnounceNum,T1.ForumPass,T1.HiddenFlag,T1.BoardLimit,T1.MasterList,T1.AllMaxRootID,T1.AllMinRootID,T1.GoodNum,T2.AssortName,T1.BoardStyle,T1.StartTime,T1.EndTime,T1.TodayAnnounce,T1.LastAnnounceID,T1.LastTopicName,T1.BoardImgUrl,T1.BoardImgWidth,T1.BoardImgHeight,T1.BoardHead,T1.BoardBottom,T1.ParentBoard,T1.LowerBoard,T1.ParentBoardStr,T1.TopicNum_All,T1.AnnounceNum_All,T1.TodayAnnounce_All,T1.GoodNum_All,0,0,T2.AssortMaster,T1.OtherLimit,T2.AssortLimit from LeadBBS_Boards as T1 left join LeadBBS_Assort as T2 on t1.BoardAssort=T2.AssortID where T1.BoardID=" & ID,1),0)
+	Set Rs = LDExeCute(sql_select("Select T1.BoardName,T1.BoardAssort,T1.BoardIntro,T1.LastWriter,T1.LastWriteTime,T1.TopicNum,T1.AnnounceNum,T1.ForumPass,T1.HiddenFlag,T1.BoardLimit,T1.MasterList,T1.AllMaxRootID,T1.AllMinRootID,T1.GoodNum,T2.AssortName,T1.BoardStyle,T1.StartTime,T1.EndTime,T1.TodayAnnounce,T1.LastAnnounceID,T1.LastTopicName,T1.BoardImgUrl,T1.BoardImgWidth,T1.BoardImgHeight,T1.BoardHead,T1.BoardBottom,T1.ParentBoard,T1.LowerBoard,T1.ParentBoardStr,T1.TopicNum_All,T1.AnnounceNum_All,T1.TodayAnnounce_All,T1.GoodNum_All,0,0 as c0_dup2,T2.AssortMaster,T1.OtherLimit,T2.AssortLimit from LeadBBS_Boards as T1 left join LeadBBS_Assort as T2 on t1.BoardAssort=T2.AssortID where T1.BoardID=" & ID,1),0)
 	If Rs.Eof Then
 		Rs.Close
 		Set Rs = Nothing
@@ -381,11 +382,11 @@ Sub UpdateOnlineUserAtInfo(BoardID,AtInfo)
 		If isArray(GBL_UDT) Then
 			GBL_CHK_LastWriteTime = DateDiff("s",RestoreTime(GBL_UDT(13)),DEF_Now)
 		Else
-			GBL_UserID = CheckPass
+			GBL_UserID = CheckPass()
 		End If
 	End If
 	If isArray(GBL_UDT) Then
-		If CheckWriteEventSpace = 0 Then Exit Sub
+		If CheckWriteEventSpace() = 0 Then Exit Sub
 	End If
 	Dim AtBoardIDCookie
 	AtBoardIDCookie = Left(Request.Cookies(DEF_MasterCookies & "AtBD"),14)
@@ -422,8 +423,8 @@ Sub UpdateOnlineUserAtInfo(BoardID,AtInfo)
 		End If
 		Rs.Close
 		Set Rs = Nothing
-		'ÎªÓÎ¿Í¼ÓÈëĞ´Èë¼ä¸ôÅĞ¶Ï
-		If CheckWriteEventSpace = 0 Then Exit Sub
+		'ä¸ºæ¸¸å®¢åŠ å…¥å†™å…¥é—´éš”åˆ¤æ–­
+		If CheckWriteEventSpace() = 0 Then Exit Sub
 		If cCur(OL2) > 0 Then
 			UpdateOnlineUserInfo("from LeadBBS_onlineUser where ID=" & OL2)
 			'Application.Lock
@@ -612,7 +613,7 @@ Sub navigate_sidecontrol
 				side = "_left"
 			End If
 			%>
-			<td valign="top"><div class="<%If SideBak = "_close" Then side ="_close"%>p_side<%=side%>" id="p_side_img"><a href="javascript:void(0)" oncontextmenu="swap_col('close');return false;" onclick="swap_col();" title="²àÀ¸ÇĞ»»/(ÓÒ»÷¹Ø±Õ)" class="unsel" hidefocus="true"></a></div>
+			<td valign="top"><div class="<%If SideBak = "_close" Then side ="_close"%>p_side<%=side%>" id="p_side_img"><a href="javascript:void(0)" oncontextmenu="swap_col('close');return false;" onclick="swap_col();" title="ä¾§æ åˆ‡æ¢/(å³å‡»å…³é—­)" class="unsel" hidefocus="true"></a></div>
 			</td></tr></table>
 		</div>
 		
@@ -684,10 +685,10 @@ If Chat_EnablePageRequest = 1 Then
 <%End If%>
 <a href="<%=DEF_BBS_HomeUrl%>User/MyInfobox.asp" id="c_pub_mes" class="head_privatemsg<%
 If (GBL_CHK_MessageFlag = 1) Then Response.Write "_new"
-%>" title="¶ÌĞÅÏ¢ÌáÊ¾"><span id="c_pub_mes_txt"><%
+%>" title="çŸ­ä¿¡æ¯æç¤º"><span id="c_pub_mes_txt"><%
 If GBL_CHK_MessageFlag <> 1 Then%>
-¶ÌÏûÏ¢<%
-Else%>ÄúÓĞĞÂµÄÏûÏ¢<%
+çŸ­æ¶ˆæ¯<%
+Else%>æ‚¨æœ‰æ–°çš„æ¶ˆæ¯<%
 End If%></span></a>
 <script type="text/javascript">
 <!--
@@ -704,12 +705,12 @@ var c_User="<%=urlencode(GBL_CHK_User)%>";
 </script>
 <script src="<%=DEF_BBS_HomeUrl%>plug-ins/bbschat/inc/chat_pubmsg.js<%=DEF_Jer%>" type="text/javascript"></script>
 <%
-Exit Sub 'ÁÄÌìĞÅÏ¢ÔòÍË³ö
+Exit Sub 'èŠå¤©ä¿¡æ¯åˆ™é€€å‡º
 End If
 REM *******Chat End*********
 	If GBL_CHK_MessageFlag <> 1 Then
 		If GBL_CHK_User <> "" Then%>
-					<a href="<%=DEF_BBS_HomeUrl%>User/MyInfobox.asp" class="head_privatemsg">¶ÌÏûÏ¢</a><%
+					<a href="<%=DEF_BBS_HomeUrl%>User/MyInfobox.asp" class="head_privatemsg">çŸ­æ¶ˆæ¯</a><%
 		End If
 	Else
 		%>
@@ -718,7 +719,7 @@ REM *******Chat End*********
 <script>$(document).ready(function() {bg_nofity("<%=DEF_BBS_HomeUrl%>images/notify.mp3");});</script><%End If%>
 					<a href="<%=DEF_BBS_HomeUrl%>User/MyInfobox.asp" class="head_privatemsg<%
 If (GBL_CHK_MessageFlag = 1) Then Response.Write "_new"
-%>">ÄúÓĞĞÂµÄÏûÏ¢</a>
+%>">æ‚¨æœ‰æ–°çš„æ¶ˆæ¯</a>
 		<%
 	End if
 
@@ -812,7 +813,7 @@ Sub OpenDatabase
 		Application(DEF_MasterCookies & "SitePageCount") = 0
 		Application.UnLock
 		Call LDExeCute("Update LeadBBS_SiteInfo Set PageCount=PageCount+99",1)
-		UpdateStatisticDataInfo 99,4,1
+		Call UpdateStatisticDataInfo(99,4,1)
 	End If
 	If IsArray(Application(DEF_MasterCookies & "BListAll")) = False Then ReloadBoardListData
 
@@ -820,8 +821,8 @@ End Sub
 
 Sub initDatabase
 
-	OpenDatabase
-	CheckUserOnline
+	OpenDatabase()
+	CheckUserOnline()
 
 End Sub
 
@@ -862,6 +863,14 @@ Sub GetIPAddress
 	end if
 	GBL_IPAddress = Left(Replace(GBL_IPAddress,"'",""),15)
 	If GBL_IPAddress = "" or instr(GBL_IPAddress,".") < 1 Then GBL_IPAddress = Left(Replace(Request.ServerVariables("REMOTE_ADDR"),"'",""),15)
+	' AxonASP/Linux fix: on Linux the server often reports the IPv6 loopback (::1)
+	' as REMOTE_ADDR. LeadBBS is IPv4-only: CheckUserOnline treats any non-IPv4
+	' address as illegal and rewrites it to the "1.1.1.1" sentinel, but does so
+	' inconsistently across requests, which trips the repeat-login check in
+	' CheckPass and silently drops the session. Normalize IPv6 loopback / IPv4-mapped
+	' IPv6 to the IPv4 loopback so every request sees a stable, valid address.
+	If GBL_IPAddress = "::1" Or GBL_IPAddress = "0:0:0:0:0:0:0:1" Then GBL_IPAddress = "127.0.0.1"
+	If InStr(GBL_IPAddress,"::ffff:") = 1 Then GBL_IPAddress = Mid(GBL_IPAddress,8)
 
 End Sub
 
@@ -870,7 +879,7 @@ Sub RepairOnlineUser
 	Dim GetData	
 	GetData = Application(DEF_MasterCookies & "BListAll")
 	If isArray(GetData) = False Then
-		ReloadBoardListData
+		ReloadBoardListData()
 		GetData = Application(DEF_MasterCookies & "BListAll")
 	End If
 	If isArray(GetData) = False Then Exit Sub
@@ -878,7 +887,7 @@ Sub RepairOnlineUser
 	Dim N,m,i,Rs
 	m = Ubound(GetData,2)
 	Server.ScriptTimeOut = 600
-	SetActiveUserCount
+	SetActiveUserCount()
 	For N = 0 to m
 		Set Rs = LDExeCute("Select count(*) from LeadBBS_OnlineUser Where AtBoardID=" & GetData(0,n),0)
 		If Rs.Eof Then
@@ -928,7 +937,7 @@ Sub CheckUserOnline
 
 	Dim I
 	If isNumeric(Replace(GBL_IPAddress,".","")) = 0 or (Replace(GBL_IPAddress,".","",1,3,0) = Replace(GBL_IPAddress,".","",1,2,0)) Then
-		'Response.Write "ÂÛÌ³½ûÖ¹·Ç·¨IPµØÖ·Õß·ÃÎÊ"
+		'Response.Write "è®ºå›ç¦æ­¢éæ³•IPåœ°å€è€…è®¿é—®"
 		'CloseDatabase
 		'Response.End
 		GBL_IPAddress = "1.1.1.1"
@@ -956,7 +965,7 @@ Sub CheckUserOnline
 		If Not Rs.Eof Then
 			Rs.Close
 			Set Rs = Nothing
-			CloseDatabase
+			CloseDatabase()
 			Response.Write "Forbid IP."
 			Response.End
 		End If
@@ -966,8 +975,8 @@ Sub CheckUserOnline
 	If GBL_Board_ID > 0 Then Borad_GetBoardIDValue(GBL_Board_ID)
 
 	If cCur(Session.SessionID) < 1 or isNull(Session.SessionID) or Session.SessionID = "" or isNumeric(Session.SessionID) = 0 Then
-		Response.Write "ä¯ÀÀÆ÷²»Ö§³ÖCookie"
-		CloseDatabase
+		Response.Write "æµè§ˆå™¨ä¸æ”¯æŒCookie"
+		CloseDatabase()
 		Response.End
 	End If
 
@@ -1012,39 +1021,39 @@ Sub CheckUserOnline
 			Dim TmpData
 			TmpData = Application(DEF_MasterCookies & "StatisticData")
 			If isArray(TmpData) = False Then
-				ReloadStatisticData
+				ReloadStatisticData()
 				TmpData = Application(DEF_MasterCookies & "StatisticData")
 			End If
 			If SQL > cCur(TmpData(6,0)) Then
-				Call LDExeCute("Update LeadBBS_SiteInfo Set MaxAnnounce=" & SQL & ",MaxAncTime=" & Left(GetTimeValue(DateAdd("d",-1,DEF_Now)),8) & "235959",1)
-				UpdateStatisticDataInfo SQL,6,0
-				UpdateStatisticDataInfo cCur(Left(GetTimeValue(DateAdd("d",-1,DEF_Now)),8) & "235959"),7,0
+				Call LDExeCute("Update LeadBBS_SiteInfo Set MaxAnnounce=" & SQL & ",MaxAncTime=" & Left(LngStr(GetTimeValue(DateAdd("d",-1,DEF_Now))),8) & "235959",1)
+				Call UpdateStatisticDataInfo(SQL,6,0)
+				UpdateStatisticDataInfo cCur(Left(LngStr(GetTimeValue(DateAdd("d",-1,DEF_Now))),8) & "235959"),7,0
 			End If
 			Call LDExeCute("Update LeadBBS_Boards Set TodayAnnounce=0,TodayAnnounce_All=0",1)
-			ReloadStatisticData
+			ReloadStatisticData()
 			If isArray(Application(DEF_MasterCookies & "BListAll")) = True Then
 				SQL = Ubound(Application(DEF_MasterCookies & "BListAll"),2)
 				For I = 0 To SQL
-					UpdateBoardApplicationInfo Application(DEF_MasterCookies & "BListAll")(0,I),0,18
-					UpdateBoardApplicationInfo Application(DEF_MasterCookies & "BListAll")(0,I),0,31
+					Call UpdateBoardApplicationInfo(Application(DEF_MasterCookies & "BListAll")(0,I),0,18)
+					Call UpdateBoardApplicationInfo(Application(DEF_MasterCookies & "BListAll")(0,I),0,31)
 				Next
 			End If
-			Call LDExeCute("insert into LeadBBS_Log(LogType,LogTime,LogInfo,UserName,IP,BoardID) Values(0," & GetTimeValue(DEF_Now) & ",'ÂÛÌ³½øÈëĞÂµÄÒ»Ìì£¬³É¹¦Íê³ÉÒ»ÏµÁĞ¸üĞÂ¡£','" & Replace(Replace(htmlencode(Left(GBL_CHK_User,14)),"\","\\"),"'","''") & "','" & Replace(GBL_IPAddress,"'","''") & "'," & GBL_Board_ID & ")",1)
+			Call LDExeCute("insert into LeadBBS_Log(LogType,LogTime,LogInfo,UserName,IP,BoardID) Values(0," & GetTimeValue(DEF_Now) & ",'è®ºå›è¿›å…¥æ–°çš„ä¸€å¤©ï¼ŒæˆåŠŸå®Œæˆä¸€ç³»åˆ—æ›´æ–°ã€‚','" & Replace(Replace(htmlencode(Left(GBL_CHK_User,14)),"\","\\"),"'","''") & "','" & Replace(GBL_IPAddress,"'","''") & "'," & GBL_Board_ID & ")",1)
 		End If
 	ElseIf DayFlag = 0 then
 		DayFlag = Day(DayFlag)
 		Application.Lock
 		Application(DEF_MasterCookies & "UserDateChangesoieiu") = DayFlag
 		Application.UnLock
-		RepairOnlineUser
-		Call LDExeCute("insert into LeadBBS_Log(LogType,LogTime,LogInfo,UserName,IP,BoardID) Values(0," & GetTimeValue(DEF_Now) & ",'ÏµÍ³ÔÚÏßÈËÊıÒÑ¾­³É¹¦ÖØĞÂÍ³¼Æ£¬¿ÉÄÜÔ­ÒòÊÇÂÛÌ³»òWEB·şÎñÆ÷ÖØÆô¡£','" & Replace(Replace(htmlencode(Left(GBL_CHK_User,14)),"\","\\"),"'","''") & "','" & Replace(GBL_IPAddress,"'","''") & "'," & GBL_Board_ID & ")",1)
+		RepairOnlineUser()
+		Call LDExeCute("insert into LeadBBS_Log(LogType,LogTime,LogInfo,UserName,IP,BoardID) Values(0," & GetTimeValue(DEF_Now) & ",'ç³»ç»Ÿåœ¨çº¿äººæ•°å·²ç»æˆåŠŸé‡æ–°ç»Ÿè®¡ï¼Œå¯èƒ½åŸå› æ˜¯è®ºå›æˆ–WEBæœåŠ¡å™¨é‡å¯ã€‚','" & Replace(Replace(htmlencode(Left(GBL_CHK_User,14)),"\","\\"),"'","''") & "','" & Replace(GBL_IPAddress,"'","''") & "'," & GBL_Board_ID & ")",1)
 	End If
 
-	If GBL_CHK_PWdFlag = 1 Then CheckPass
+	If GBL_CHK_PWdFlag = 1 Then CheckPass()
 	If isTrueDate(GBL_CookieTime) = 0 Then
 		Response.Cookies(DEF_MasterCookies & "Time") = DEF_Now
 		Response.Cookies(DEF_MasterCookies & "Time").Domain = DEF_AbsolutHome
-		'Exit sub '´Ë´¦¿ªÆôµÄ»°£¬Ôò¿ÉÒÔÆÁ±ÎÔÚÏßÊ±¼äÒ»·ÖÖÓÒÔÏÂµÄÓÃ»§³ÉÎªÔÚÏßÓÃ»§
+		'Exit sub 'æ­¤å¤„å¼€å¯çš„è¯ï¼Œåˆ™å¯ä»¥å±è”½åœ¨çº¿æ—¶é—´ä¸€åˆ†é’Ÿä»¥ä¸‹çš„ç”¨æˆ·æˆä¸ºåœ¨çº¿ç”¨æˆ·
 	Else
 		LastDoingTime = DateDiff("s",GBL_CookieTime, DEF_Now)
 		If LastDoingTime<0 or LastDoingTime > DEF_UserOnlineTimeOut Then
@@ -1053,7 +1062,7 @@ Sub CheckUserOnline
 			Response.Cookies(DEF_MasterCookies & "Time").Domain = DEF_AbsolutHome
 			Exit sub
 		End If
-		If LastDoingTime < 240 Then '240Ãë
+		If LastDoingTime < 240 Then '240ç§’
 			Exit sub
 		Else
 			Response.Cookies(DEF_MasterCookies & "Time") = DEF_Now
@@ -1061,7 +1070,7 @@ Sub CheckUserOnline
 		End If
 	End If
 
-	If GBL_CHK_PWdFlag = 0 Then CheckPass
+	If GBL_CHK_PWdFlag = 0 Then CheckPass()
 	SQL = cCur(Timer)
 	If SQL>(cCur("0" & Application(DEF_MasterCookies & "UserRefreshNum1oieiu"))+DEF_UserOnlineTimeOut) or SQL<cCur("0" & Application(DEF_MasterCookies & "UserRefreshNum1oieiu")) Then
 		Application.Lock
@@ -1071,10 +1080,10 @@ Sub CheckUserOnline
 		Con.CommandTimeout = 600
 		Server.ScriptTimeOut = 600
 		Call LDExeCute("delete from LeadBBS_onlineUser where LastDoingTime<" & GetTimeValue(DateAdd("s", 0-DEF_UserOnlineTimeOut, DEF_Now)),1)
-		RepairOnlineUser
-		Call LDExeCute("insert into LeadBBS_Log(LogType,LogTime,LogInfo,UserName,IP,BoardID) Values(0," & GetTimeValue(DEF_Now) & ",'ÏµÍ³ÔÚÏßÈËÊı¸ôÊ±¸üĞÂ³É¹¦,Çå³ıÇ°ÔÚÏß" & SQL & "ÈË,ºó" & Application(DEF_MasterCookies & "ActiveUsers") & "ÈË¡£','" & Replace(Replace(htmlencode(Left(GBL_CHK_User,14)),"\","\\"),"'","''") & "','" & Replace(GBL_IPAddress,"'","''") & "'," & GBL_Board_ID & ")",1)
-		Rem ÔİÊ±²»É¾³ıÈÎºÎ¶ÌÏûÏ¢
-		'Call LDExeCute("delete from LeadBBS_InfoBox where ExpiresDate<" & CLng(Left(GetTimeValue(Now),8)) & " and ExpiresDate>0",1)
+		RepairOnlineUser()
+		Call LDExeCute("insert into LeadBBS_Log(LogType,LogTime,LogInfo,UserName,IP,BoardID) Values(0," & GetTimeValue(DEF_Now) & ",'ç³»ç»Ÿåœ¨çº¿äººæ•°éš”æ—¶æ›´æ–°æˆåŠŸ,æ¸…é™¤å‰åœ¨çº¿" & SQL & "äºº,å" & Application(DEF_MasterCookies & "ActiveUsers") & "äººã€‚','" & Replace(Replace(htmlencode(Left(GBL_CHK_User,14)),"\","\\"),"'","''") & "','" & Replace(GBL_IPAddress,"'","''") & "'," & GBL_Board_ID & ")",1)
+		Rem æš‚æ—¶ä¸åˆ é™¤ä»»ä½•çŸ­æ¶ˆæ¯
+		'Call LDExeCute("delete from LeadBBS_InfoBox where ExpiresDate<" & CLng(Left(LngStr(GetTimeValue(Now)),8)) & " and ExpiresDate>0",1)
 	End If
 
 	'If GBL_IPAddress = "61.154.122.50" Then Exit Sub
@@ -1086,7 +1095,7 @@ Sub CheckUserOnline
 	Set Rs = LDExeCute(SQL,0)
 
 	If GBL_CHK_ShowFlag = 1 and DEF_EnableUserHidden = 1 Then
-		i = "ÒşÉíÓÃ»§"
+		i = "éšèº«ç”¨æˆ·"
 		tmp = 0
 	Else
 		If GBL_UserID > 0 Then
@@ -1114,18 +1123,18 @@ Sub CheckUserOnline
 		End If
 		Rs.Close
 		Set Rs = Nothing
-		If LastDoingTime > 240 Then '240Ãë±£´æÒ»´Î¾­Ñé
+		If LastDoingTime > 240 Then '240ç§’ä¿å­˜ä¸€æ¬¡ç»éªŒ
 			Call LDExeCute("Update LeadBBS_onlineUser set LastDoingTime=" & GetTimeValue(DEF_Now) & ",IP='" & GBL_IPAddress & "',SessionID=" & cCur(Session.SessionID) & " where ID=" & NIP,1)
-			UpdateSessionValue 17,GBL_IPAddress,0
-			UpdateSessionValue 18,GetTimeValue(DEF_Now),0
+			Call UpdateSessionValue(17,GBL_IPAddress,0)
+			Call UpdateSessionValue(18,GetTimeValue(DEF_Now),0)
 
 			If GBL_UserID > 0 and SQL > 0 Then
 				Call LDExeCute("Update LeadBBS_User set OnlineTime=OnlineTime+" & LastDoingTime & ",LastDoingTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
 				'add_tips("<span class=""greenfont"">" & DEF_PointsName(4) & "+" & fix(LastDoingTime/60) & "</span>")
-				UpdateSessionValue 5,LastDoingTime,1
+				Call UpdateSessionValue(5,LastDoingTime,1)
 REM *******Chat Start*******
 If GBL_UserID > 0 Then
-	CALL Chat_Appand_pop(3,"<span onclick=c_sc(this.innerHTML) style=cursor: pointer class=c_name>" & GBL_CHK_User & "</span>µÄ" & DEF_PointsName(4) & "Ôö¼Ó" & Fix(LastDoingTime/60) & "µã!")
+	CALL Chat_Appand_pop(3,"<span onclick=c_sc(this.innerHTML) style=cursor: pointer class=c_name>" & GBL_CHK_User & "</span>çš„" & DEF_PointsName(4) & "å¢åŠ " & Fix(LastDoingTime/60) & "ç‚¹!")
 End If
 REM *******Chat End*********
 			End If
@@ -1134,13 +1143,13 @@ REM *******Chat End*********
 			If isNumeric(Application(DEF_MasterCookies & "SiteOlTime")) = False Then Application(DEF_MasterCookies & "SiteOlTime") = 0
 			Application(DEF_MasterCookies & "SiteOlTime") = Application(DEF_MasterCookies & "SiteOlTime") + LastDoingTime
 			Application.UnLock
-			If Application(DEF_MasterCookies & "SiteOlTime") > 53873 Then '1Ğ¡Ê±¶à±£´æÒ»´Î
+			If Application(DEF_MasterCookies & "SiteOlTime") > 53873 Then '1å°æ—¶å¤šä¿å­˜ä¸€æ¬¡
 				Application.Lock
 				NewIP = Application(DEF_MasterCookies & "SiteOlTime")
 				Application(DEF_MasterCookies & "SiteOlTime") = 0
 				Application.UnLock
 				Call LDExeCute("Update LeadBBS_SiteInfo Set OnlineTime=OnlineTime+" & NewIP,1)
-				UpdateStatisticDataInfo NewIP,0,1
+				Call UpdateStatisticDataInfo(NewIP,0,1)
 			End If
 		End If
 		If Count > 1 Then
@@ -1151,22 +1160,22 @@ REM *******Chat End*********
 		Else
 			If SQL <> GBL_UserID Then
 				Call LDExeCute("Update LeadBBS_onlineUser set UserID=" & GBL_UserID & ",HiddenFlag=" & tmp & ",UserName='" & Replace(i,"'","''") & "',LastDoingTime=" & GetTimeValue(DEF_Now) & ",IP='" & GBL_IPAddress & "' where ID=" & NIP,1)
-				UpdateSessionValue 17,GBL_IPAddress,0
-				UpdateSessionValue 18,GetTimeValue(DEF_Now),0
+				Call UpdateSessionValue(17,GBL_IPAddress,0)
+				Call UpdateSessionValue(18,GetTimeValue(DEF_Now),0)
 			ElseIf cCur(Session.SessionID) <> cCur(TmpSessionID) And GBL_UserID> 0 Then
 				Call LDExeCute("Update LeadBBS_onlineUser set SessionID=" & cCur(Session.SessionID) & ",HiddenFlag=" & tmp & ",LastDoingTime=" & GetTimeValue(DEF_Now) & ",IP='" & GBL_IPAddress & "' where ID=" & NIP,1)
-				UpdateSessionValue 17,GBL_IPAddress,0
-				UpdateSessionValue 18,GetTimeValue(DEF_Now),0
+				Call UpdateSessionValue(17,GBL_IPAddress,0)
+				Call UpdateSessionValue(18,GetTimeValue(DEF_Now),0)
 			End If
 		End If
 	Else
 		Rs.Close
 		Set Rs = Nothing
 		UpdateOnlineUserInfo("from LeadBBS_onlineUser where SessionID=" & cCur(Session.SessionID))
-		Call LDExeCute("insert into LeadBBS_onlineUser(SessionID,UserID,LastDoingTime,IP,StartTime,AtBoardID,AtUrl,AtInfo,Browser,System,UserName,HiddenFlag,LastRndNumber) values(" & cCur(Session.SessionID) & "," & cCur(GBL_UserID) & "," & GetTimeValue(DEF_Now) & ",'" & GBL_IPAddress & "'," & GetTimeValue(DEF_Now) & "," & GBL_Board_ID & ",'" & Replace(Left(Request.Servervariables("SCRIPT_NAME") & "?" & Request.QueryString,255),"'","''") & "','ÆäËüÒ³Ãæ','" & Left(Replace(GetSBInfo(1),"'","''"),30) & "','" & Left(Replace(GetSBInfo(2),"'","''"),30) & "','" & Replace(i,"'","''") & "'," & cCur(tmp) & "," & (Fix(Timer*1000) mod 9999) & ")",1)
+		Call LDExeCute("insert into LeadBBS_onlineUser(SessionID,UserID,LastDoingTime,IP,StartTime,AtBoardID,AtUrl,AtInfo,Browser,System,UserName,HiddenFlag,LastRndNumber) values(" & cCur(Session.SessionID) & "," & cCur(GBL_UserID) & "," & GetTimeValue(DEF_Now) & ",'" & GBL_IPAddress & "'," & GetTimeValue(DEF_Now) & "," & GBL_Board_ID & ",'" & Replace(Left(Request.Servervariables("SCRIPT_NAME") & "?" & Request.QueryString,255),"'","''") & "','å…¶å®ƒé¡µé¢','" & Left(Replace(GetSBInfo(1),"'","''"),30) & "','" & Left(Replace(GetSBInfo(2),"'","''"),30) & "','" & Replace(i,"'","''") & "'," & cCur(tmp) & "," & (Fix(Timer*1000) mod 9999) & ")",1)
 
-		If GBL_CHK_User <> "" and GBL_UserID > 0 and CheckSupervisorUserName = 1 Then
-			Call LDExeCute("insert into LeadBBS_Log(LogType,LogTime,LogInfo,UserName,IP,BoardID) Values(0," & GetTimeValue(DEF_Now) & ",'¹ÜÀíÔ±µÇÂ¼ÂÛÌ³.','" & Replace(Replace(htmlencode(Left(GBL_CHK_User,14)),"\","\\"),"'","''") & "','" & Replace(GBL_IPAddress,"'","''") & "'," & GBL_Board_ID & ")",1)
+		If GBL_CHK_User <> "" and GBL_UserID > 0 and CheckSupervisorUserName() = 1 Then
+			Call LDExeCute("insert into LeadBBS_Log(LogType,LogTime,LogInfo,UserName,IP,BoardID) Values(0," & GetTimeValue(DEF_Now) & ",'ç®¡ç†å‘˜ç™»å½•è®ºå›.','" & Replace(Replace(htmlencode(Left(GBL_CHK_User,14)),"\","\\"),"'","''") & "','" & Replace(GBL_IPAddress,"'","''") & "'," & GBL_Board_ID & ")",1)
 		End If
 
 		Application.Lock
@@ -1181,7 +1190,7 @@ Sub GetStyleInfo
 
 	Dim Temp
 	If GBL_SiteHeadString = "" and GBL_SiteBottomString = "" Then
-		'Õë¶Ô¶à¸ö°æÃæ²»Í¬·ç¸ñĞèÇó Temp = Left(Request.Cookies(DEF_MasterCookies & "style")("border" & GBL_Board_ID),14)
+		'é’ˆå¯¹å¤šä¸ªç‰ˆé¢ä¸åŒé£æ ¼éœ€æ±‚ Temp = Left(Request.Cookies(DEF_MasterCookies & "style")("border" & GBL_Board_ID),14)
 		Temp = Left(Request.Cookies(DEF_MasterCookies & "style")("border"),14)
 		If isNumeric(Temp) = 0 or Temp="" Then Temp = -1
 		Temp = cCur(Temp)
@@ -1222,7 +1231,7 @@ End Sub
 Sub SiteHead(headString)
 
 	Dim Temp
-	GetStyleInfo
+	GetStyleInfo()
 	%>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"  xml:lang="zh-CN" lang="zh-CN">
@@ -1268,30 +1277,30 @@ Global_SiteHead%>
 <div>
 <%If GBL_CHK_User = "" Then%>
 		<ul class="list_line">
-		<li><a href="<%=DEF_BBS_HomeUrl%>User/<%=DEF_RegisterFile%>">×¢²á</a></li>
-		<li><a href="<%=DEF_BBS_HomeUrl%>User/Login.asp?dir=<%=DEF_BBS_HomeUrl%>" onclick="return(pub_command('µÇÂ¼',this,'anc_delbody','&dir=<%=DEF_BBS_HomeUrl%>'<%
+		<li><a href="<%=DEF_BBS_HomeUrl%>User/<%=DEF_RegisterFile%>">æ³¨å†Œ</a></li>
+		<li><a href="<%=DEF_BBS_HomeUrl%>User/Login.asp?dir=<%=DEF_BBS_HomeUrl%>" onclick="return(pub_command('ç™»å½•',this,'anc_delbody','&dir=<%=DEF_BBS_HomeUrl%>'<%
 		If GetBinarybit(DEF_Sideparameter,10) = 1 Then
 			response.write ",'',560,''"
 		end if
-		%>));">µÇÂ¼</a></li>
+		%>));">ç™»å½•</a></li>
 		</ul><%
 Else
 	If GBL_CHK_User <> "" Then
 		dim h : h = ""
 		Select Case Hour(DEF_Now)
-		Case 0,1:h = "ÎçÒ¹"
-		Case 2,3,4:h = "ÉîÒ¹"
-		Case 5,6,7:h = "ÔçÉÏ"
-		Case 8,9,10:h = "ÉÏÎç"
-		Case 11,12:h = "ÖĞÎç"
-		Case 13,14,15,16,17,18:h = "ÏÂÎç"
-		Case 19,20:h = "»Æ»è"
-		Case 21,22,23:h = "ÍíÉÏ"
+		Case 0,1:h = "åˆå¤œ"
+		Case 2,3,4:h = "æ·±å¤œ"
+		Case 5,6,7:h = "æ—©ä¸Š"
+		Case 8,9,10:h = "ä¸Šåˆ"
+		Case 11,12:h = "ä¸­åˆ"
+		Case 13,14,15,16,17,18:h = "ä¸‹åˆ"
+		Case 19,20:h = "é»„æ˜"
+		Case 21,22,23:h = "æ™šä¸Š"
 		End Select
-		h = "<span class=""head_hellowords"">" & h & "ºÃ£¬</span>"
+		h = "<span class=""head_hellowords"">" & h & "å¥½ï¼Œ</span>"
 	%>
 	<%	If GBL_CHK_Pass = "" Then%>
-			<%=htmlEncode(GetTrueName(GBL_CHK_User,GBL_CHK_TrueName))%> <a href="<%=DEF_BBS_HomeUrl%>User/<%=DEF_RegisterFile%>?action=bind" style="position:relative;" title="ÄúĞèÒª°ó¶¨»òÍêÉÆÕÊºÅĞÅÏ¢."><img src="<%=DEF_BBS_HomeUrl%>images/app/<%=GBL_AppType%>.gif" border="0" style="position:absolute;" /><span style="padding-left:18px;">ÍêÉÆ/°ó¶¨ÕÊºÅ</span></a>
+			<%=htmlEncode(GetTrueName(GBL_CHK_User,GBL_CHK_TrueName))%> <a href="<%=DEF_BBS_HomeUrl%>User/<%=DEF_RegisterFile%>?action=bind" style="position:relative;" title="æ‚¨éœ€è¦ç»‘å®šæˆ–å®Œå–„å¸å·ä¿¡æ¯."><img src="<%=DEF_BBS_HomeUrl%>images/app/<%=GBL_AppType%>.gif" border="0" style="position:absolute;" /><span style="padding-left:18px;">å®Œå–„/ç»‘å®šå¸å·</span></a>
 	<%	Else
 	%>
 		
@@ -1299,29 +1308,29 @@ Else
 				<%=h%><a href="<%=DEF_BBS_HomeUrl%>user/<%=RW_User(0,"","","")%>"><span class="head_hellouser"><%=htmlEncode(GetTrueName(GBL_CHK_User,GBL_CHK_TrueName))%></span></a>
 				<div class="layer_iteminfo">
 				<ul class="menu_list">
-				<li><a href="<%=DEF_BBS_HomeUrl%>User/<%=RW_User(0,"","","")%>">¸öÈËĞÅÏ¢</a></li>
-				<li><a href="<%=DEF_BBS_HomeUrl%>User/<%=RW_User(0,"g","","")%>">ÎÒµÄÌû×Ó</a></li>
-				<li><a href="<%=DEF_BBS_HomeUrl%>User/UserModify.asp">ÕÊºÅÉèÖÃ</a>
+				<li><a href="<%=DEF_BBS_HomeUrl%>User/<%=RW_User(0,"","","")%>">ä¸ªäººä¿¡æ¯</a></li>
+				<li><a href="<%=DEF_BBS_HomeUrl%>User/<%=RW_User(0,"g","","")%>">æˆ‘çš„å¸–å­</a></li>
+				<li><a href="<%=DEF_BBS_HomeUrl%>User/UserModify.asp">å¸å·è®¾ç½®</a>
 				<%
 			If DEF_EnableUserHidden = 1 Then
 				%><span class="layerico"><a href="<%=DEF_BBS_HomeUrl%>User/Login.asp?action=hidden" onclick="return(pub_msg(this,'layer_ajaxmsg','&sure=1','setTimeout(\'document.location.reload();\',2000);'));" class="head_hidden"><%
 				If GBL_CHK_ShowFlag = 0 Then
-					%>ÒşÉí<%
+					%>éšèº«<%
 				Else
-					%>ÉÏÏß<%
+					%>ä¸Šçº¿<%
 				End If
 				%></a></span><%
 			End If
 			If GBL_CHK_Flag = 1 or (GBL_CHK_User <> "" and GBL_AppType <> "") Then
-				%><a href="<%=DEF_BBS_HomeUrl%>User/login.asp?action=logout" onclick="return(pub_msg(this,'layer_ajaxmsg','&sure=1','setTimeout(\'document.location.reload();\',1000);'));" class="head_logout">ÍË³ö</a><%
+				%><a href="<%=DEF_BBS_HomeUrl%>User/login.asp?action=logout" onclick="return(pub_msg(this,'layer_ajaxmsg','&sure=1','setTimeout(\'document.location.reload();\',1000);'));" class="head_logout">é€€å‡º</a><%
 			End If%>
 				</li>
 				</ul>
 				</div>
 			</div>
-			<a href="<%=DEF_BBS_HomeUrl%>User/Login.asp?R=Yes&dir=<%=DEF_BBS_HomeUrl%>" onclick="return(pub_command('ÖØĞÂµÇÂ¼',this,'anc_delbody','&R=Yes'));" class="head_relogin">ÖØµÇÂ¼</a>
+			<a href="<%=DEF_BBS_HomeUrl%>User/Login.asp?R=Yes&dir=<%=DEF_BBS_HomeUrl%>" onclick="return(pub_command('é‡æ–°ç™»å½•',this,'anc_delbody','&R=Yes'));" class="head_relogin">é‡ç™»å½•</a>
 			<%
-			DisplayInfoBoxNavigate
+			DisplayInfoBoxNavigate()
 		End If
 	End If
 End If%></div>
@@ -1339,21 +1348,22 @@ else
 -->
 </script>
 	<ul class="list_line">
-		<li><a href="<%=DEF_SiteHomeUrl%>" target="_top">ÍøÕ¾Ê×Ò³</a></li>
-		<li><a href="#33" onclick="fAddFavorite('<%=DEF_SiteNameString%>','<%=htmlencode(LD_GetUrl(2)) & "?" & htmlencode(Replace(Request.QueryString,"&","&amp;"))%>')">¼ÓÈëÊÕ²Ø</a></li>
-		<li><a href="<%=DEF_BBS_HomeUrl%>User/help/help.asp">Ê¹ÓÃ°ïÖú</a></li>
-		<li><a href="<%=DEF_BBS_HomeUrl%>User/help/about.asp">ÁªÏµÎÒÃÇ</a></li>
+		<li><a href="<%=DEF_SiteHomeUrl%>" target="_top">ç½‘ç«™é¦–é¡µ</a></li>
+		<li><a href="#33" onclick="fAddFavorite('<%=DEF_SiteNameString%>','<%=htmlencode(LD_GetUrl(2)) & "?" & htmlencode(Replace(Request.ServerVariables("QUERY_STRING"),"&","&amp;"))%>')">åŠ å…¥æ”¶è—</a></li>
+		<li><a href="<%=DEF_BBS_HomeUrl%>User/help/help.asp">ä½¿ç”¨å¸®åŠ©</a></li>
+		<li><a href="<%=DEF_BBS_HomeUrl%>User/help/about.asp">è”ç³»æˆ‘ä»¬</a></li>
 	</ul>
 	</div>
 </div>
 <%If GBL_SiteHeadString = "" Then%>
 <div class="head_banner">
-<span class="head_banner_logo"><a href="<%=DEF_BBS_HomeUrl%>"><img src="<%=DEF_BBS_HomeUrl%>images/blank.GIF" alt="·µ»ØÂÛÌ³Ê×Ò³" /></a></span>
+<span class="head_banner_logo"><a href="<%=DEF_BBS_HomeUrl%>"><img src="<%=DEF_BBS_HomeUrl%>images/blank.GIF" alt="è¿”å›è®ºå›é¦–é¡µ" /></a></span>
 <span class="head_banner_ad"><%=DEF_TopAdString%></span>
 </div>
 <%End If%>
 <div class="head_sty">
-<%'Global_SmallTableHead%>
+<%'Global_SmallTableHead
+%>
 <%
 If DEF_BoardStyleStringNum > 0 Then%>
 <script type="text/JavaScript">
@@ -1372,7 +1382,7 @@ function selsty(n,ty)
 		Response.Write DEF_BBS_HomeUrl & "Frame.asp?u=" & urlencode(LD_GetUrl(0))
 		If Request.ServerVariables("SERVER_PORT") <> "80" Then Response.Write Server.UrlEncode(":" & Request.ServerVariables("SERVER_PORT"))
 		Randomize
-		Response.Write Server.UrlEncode(Request.Servervariables("SCRIPT_NAME") & "?" & Left(Request.QueryString,200))%>&rnd=<%=Fix(Rnd*1314)
+		Response.Write Server.UrlEncode(Request.Servervariables("SCRIPT_NAME") & "?" & Left(Request.ServerVariables("QUERY_STRING"),200))%>&rnd=<%=Fix(Rnd*1314)
 		%>\";";
 		getAJAX(url,'SureFlag=E72ksiOkw2',u,1);
 	}
@@ -1390,32 +1400,32 @@ If GBL_SiteHeadString = "" Then Response.Write ""
 %>
 <div class="menu_nav">
 	<div class="layer_item2">
-		<div class="title"><a href="<%=DEF_BBS_HomeUrl%>User/UserTop.asp"><span class="layer_item_title">ÂÛÌ³</span></a></div>
+		<div class="title"><a href="<%=DEF_BBS_HomeUrl%>User/UserTop.asp"><span class="layer_item_title">è®ºå›</span></a></div>
 		<div class="layer_iteminfo2">
 			<ul class="menu_list">
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/UserTop.asp?S">ÅÅĞĞ°ñ</a></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>b/<%=RW_b(0,0,"action=list&type=1")%>">×îĞÂÌû×Ó</a></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/Help/About.asp">¹ÜÀíÍÅ¶Ó</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/UserTop.asp?S">æ’è¡Œæ¦œ</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>b/<%=RW_b(0,0,"action=list&type=1")%>">æœ€æ–°å¸–å­</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/Help/About.asp">ç®¡ç†å›¢é˜Ÿ</a></li>
 			</ul>
 		</div>
 	</div>
 </div>
 
 <div class="layer_item3">
-			<a href="<%=DEF_BBS_HomeUrl%>app/default.asp"><span class="head_item_title">Ó¦ÓÃ</span></a>
+			<a href="<%=DEF_BBS_HomeUrl%>app/default.asp"><span class="head_item_title">åº”ç”¨</span></a>
 	<%
 if DEF_mustDefaultStyle < 0 Then
 %>
-				<a href="<%=DEF_BBS_HomeUrl%>User/BoardStyle.asp?b=<%=GBL_Board_ID%>&dir=<%=DEF_BBS_HomeUrl%>" onclick="return(pub_command('Ñ¡Ôñ·ç¸ñ',this,'anc_delbody',''));"><span class="head_item_title">·ç¸ñ</span></a>
+				<a href="<%=DEF_BBS_HomeUrl%>User/BoardStyle.asp?b=<%=GBL_Board_ID%>&dir=<%=DEF_BBS_HomeUrl%>" onclick="return(pub_command('é€‰æ‹©é£æ ¼',this,'anc_delbody',''));"><span class="head_item_title">é£æ ¼</span></a>
 <%
 end if
-				If CheckSupervisorUserName = 1 Then
-					Response.Write "<a href=""" & DEF_BBS_HomeUrl & DEF_ManageDir & "/default.asp"" class=""head_manage""><span class=""head_item_title"">¹ÜÀí</span></a>"
+				If CheckSupervisorUserName() = 1 Then
+					Response.Write "<a href=""" & DEF_BBS_HomeUrl & DEF_ManageDir & "/default.asp"" class=""head_manage""><span class=""head_item_title"">ç®¡ç†</span></a>"
 				ElseIf GetBinarybit(GBL_CHK_UserLimit,10) = 1 Then
-					Response.Write "<a href=""" & DEF_BBS_HomeUrl & "User/BoardMaster/default.asp"" class=""head_manage""><span class=""head_item_title"">¹ÜÀí</span></a>"
+					Response.Write "<a href=""" & DEF_BBS_HomeUrl & "User/BoardMaster/default.asp"" class=""head_manage""><span class=""head_item_title"">ç®¡ç†</span></a>"
 				End If
 
-				Response.Write "<a href=""" & DEF_BBS_HomeUrl & "Search/Search.asp"" class=""head_search""><span class=""head_item_title"">ËÑË÷</span></a>"%>
+				Response.Write "<a href=""" & DEF_BBS_HomeUrl & "Search/Search.asp"" class=""head_search""><span class=""head_item_title"">æœç´¢</span></a>"%>
 			</div>
 				<%
 				If GBL_TableHeadString = "" Then Response.Write ""
@@ -1458,10 +1468,12 @@ Function Get_MobileUrl(ur,Ptype,b,id,page)
 				Get_MobileUrl = ur & "mini/default.asp?action=h"
 			elseif id <= 1 then
 				if page = -5 then page = toNum(request.querystring("q"),0) - 1
-				Get_MobileUrl = ur & "mini/default.asp?action=b&b=" & b & "&page=" & page
+				Get_MobileUrl = ur & "mini/default.asp?action=b&b=" & b & "&page=" & LngStr(page)
 			else
 				if page = -5 then page = toNum(request.querystring("aq"),0) - 1
-				Get_MobileUrl = ur & "mini/default.asp?action=a&b=" & b & "&id=" & id & "&page=" & page
+				' README Â§46: toNum() hands back a Double, and AxonASP renders that as
+				' 2.26151e+06 once it passes a million -- which is not a post id.
+				Get_MobileUrl = ur & "mini/default.asp?action=a&b=" & b & "&id=" & LngStr(id) & "&page=" & LngStr(page)
 			end if
 		Case else:
 	end select
@@ -1479,8 +1491,8 @@ Sub SiteBottom
 				<div class="area">
 				<div class="copyright">
 					Copyright <span style="font:11px Tahoma,Arial,sans-serif;">&copy;</span>2003-<%=year(DEF_Now)%>&nbsp;<%=DEF_SiteNameString%>
-					- <a href="javascript:;" onclick="LD.Cookie.Clear();">Çå¿ÕCOOKIE</a>
-					- <a href="<%=Get_MobileUrl(DEF_BBS_HomeUrl,1,GBL_Board_ID,request.QueryString("id"),-5)%>">ÊÖ»ú°æ</a>
+					- <a href="javascript:;" onclick="LD.Cookie.Clear();">æ¸…ç©ºCOOKIE</a>
+					- <a href="<%=Get_MobileUrl(DEF_BBS_HomeUrl,1,GBL_Board_ID,request.QueryString("id"),-5)%>">æ‰‹æœºç‰ˆ</a>
 					- <a href="<%=DEF_BBS_HomeUrl%>Other/RSS.asp">RSS</a>
 					<%=DEF_BottomInfo%>
 				</div>
@@ -1506,7 +1518,7 @@ Sub SiteBottom
 	<div class="area">
 	<div id="bottom_ad">
 	<%Response.Write "<!--"%>
-	<!-- #include file=incHtm/Bottom_AD.asp -->
+	<!--#include file="incHtm/Bottom_AD.asp"-->
 	<%Response.Write "-->"%>
 	</div>
 	</div>
@@ -1517,7 +1529,7 @@ Sub SiteBottom
 	<script src="<%=DEF_BBS_HomeUrl%>inc/js/ad.js<%=DEF_Jer%>" type="text/javascript">
 	</script>
 	<%
-	tips_out
+	tips_out()
 	If GBL_Board_BoardStyle < 1000 Then
 	Else
 	%><script src="<%=DEF_BBS_HomeUrl%>inc/css/<%
@@ -1529,8 +1541,8 @@ Sub SiteBottom
 
 	<div class="return_top_layout" id="return_top" style="display:none;">
 	<a href="javascript:;" class="return_top_btn" id="return_top_btn">
-	<i title="·µ»Ø¶¥²¿" id="renturn_top_img"></i>
-	<span class="return_top_text" style="display:none;">¶¥²¿</span>
+	<i title="è¿”å›é¡¶éƒ¨" id="renturn_top_img"></i>
+	<span class="return_top_text" style="display:none;">é¡¶éƒ¨</span>
 	</a>
 	</div>
 	<script>
@@ -1609,12 +1621,12 @@ Sub Global_ErrMsg(Str)
 	Else
 	%>
 <div class="alertbox">
-		<b>ÌáÊ¾ĞÅÏ¢</b>£º<br /><br />
+		<b>æç¤ºä¿¡æ¯</b>ï¼š<br /><br />
 		<span class="redfont">
 			<%=Str%>
 		</span>
 		<br />
-		[<a href="javascript:history.back()"><b>·µ»ØÉÏ´ÎÒ³Ãæ</b></a>]
+		[<a href="javascript:history.back()"><b>è¿”å›ä¸Šæ¬¡é¡µé¢</b></a>]
 </div>
 	<%
 	End If
@@ -1623,12 +1635,12 @@ End Sub
 
 Sub ErrorJump(str)
 
-	CloseDatabase
+	CloseDatabase()
 	Response.Redirect DEF_BBS_HomeUrl & "User/Login.asp?action=err&err=" & urlencode(left(str,500))
 
 End Sub
 
-GetUserNamePassword
+GetUserNamePassword()
 
 Sub GetUserNamePassword
 
@@ -1681,7 +1693,7 @@ Sub Free_UDT
 	Set GBL_UDT = Nothing
 	Set Session(DEF_MasterCookies & "UDT") = Nothing
 	GBL_CheckPassDoneFlag = 0
-	CheckPass
+	CheckPass()
 
 End Sub
 
@@ -1704,7 +1716,7 @@ Function CheckPass
 
 	IPADDRESS = GBL_IPAddress
 	If GBL_IPAddress = "1.1.1.1" Then
-		'GBL_CHK_TempStr = "·Ç·¨IPµØÖ·£¬ÎŞ·¨°²È«Ìá½»ÈÎºÎÊı¾İ¡£" & VbCrLf
+		'GBL_CHK_TempStr = "éæ³•IPåœ°å€ï¼Œæ— æ³•å®‰å…¨æäº¤ä»»ä½•æ•°æ®ã€‚" & VbCrLf
 		'GBL_CHK_Flag = 0
 		'CheckPass = 0
 		'Exit Function
@@ -1752,9 +1764,9 @@ REM *******Chat End*********
 			end if
 		end if
 		If DEF_RepeatLoginTimeOut > 0 and DEF_RepeatLoginTimeOut < DEF_UserOnlineTimeOut Then
-			SQL = sql_select("Select T.ID,T.UserName,T.UserLimit,T.ShowFlag,T.Points,T.OnlineTime,T.MessageFlag,T.Login_lastpass,T.Login_falsenum,T.Pass,T.Login_RightIP,T.Prevtime,T.LockIP,T.LastWriteTime,T.LastAnnounceID,T.CharmPoint,T.CachetValue,S.IP,S.LastDoingTime,','+T.Officer+',',T.TrueName from LeadBBS_User as T left join LeadBBS_OnlineUser as S on T.ID=S.UserID Where " & c,1)
+			SQL = sql_select("Select T.ID,T.UserName,T.UserLimit,T.ShowFlag,T.Points,T.OnlineTime,T.MessageFlag,T.Login_lastpass,T.Login_falsenum,T.Pass,T.Login_RightIP,T.Prevtime,T.LockIP,T.LastWriteTime,T.LastAnnounceID,T.CharmPoint,T.CachetValue,S.IP,S.LastDoingTime,','+T.Officer+',' as __dup2,T.TrueName from LeadBBS_User as T left join LeadBBS_OnlineUser as S on T.ID=S.UserID Where " & c,1)
 		Else
-			SQL = sql_select("Select ID,UserName,UserLimit,ShowFlag,Points,OnlineTime,MessageFlag,Login_lastpass,Login_falsenum,Pass,Login_RightIP,Prevtime,LockIP,LastWriteTime,LastAnnounceID,CharmPoint,CachetValue,'',0,','+Officer+',',TrueName from LeadBBS_User Where " & c1,1)
+			SQL = sql_select("Select ID,UserName,UserLimit,ShowFlag,Points,OnlineTime,MessageFlag,Login_lastpass,Login_falsenum,Pass,Login_RightIP,Prevtime,LockIP,LastWriteTime,LastAnnounceID,CharmPoint,CachetValue,'',0,','+Officer+',' as __dup2,TrueName from LeadBBS_User Where " & c1,1)
 		End If
 		Set Rs = LDExeCute(SQL,0)
 		If ((Rs.Eof) or (Rs.Bof)) Then
@@ -1763,7 +1775,7 @@ REM *******Chat End*********
 REM *******Chat Start*******
 Chat_SessionFree(GBL_CHK_User)
 REM *******Chat End*********
-			'GBL_CHK_TempStr = "ÄúËùÌîµÄÓÃ»§²»´æÔÚ£¬ µÇÂ¼Ê§°Ü!" & VbCrLf
+			'GBL_CHK_TempStr = "æ‚¨æ‰€å¡«çš„ç”¨æˆ·ä¸å­˜åœ¨ï¼Œ ç™»å½•å¤±è´¥!" & VbCrLf
 			If GBL_CHK_User <> "" Then Pub_ClearCookie
 			If GBL_AppType = "" Then GBL_CHK_User = ""
 			GBL_CHK_Flag = 0
@@ -1778,37 +1790,41 @@ REM *******Chat Start*******
 			Old_Name = ""
 			If isArray(GBL_UDT) Then Old_Name = GBL_UDT(1)
 REM *******Chat End*********
-			ReDim GBL_UDT(20)
-			GBL_UDT(0) = Rs(0)
-			GBL_UDT(1) = Rs(1)
-			GBL_UDT(2) = Rs(2)
-			GBL_UDT(3) = Rs(3)
-			GBL_UDT(4) = Rs(4)
-			GBL_UDT(5) = Rs(5)
-			GBL_UDT(6) = Rs(6)
-			GBL_UDT(7) = Rs(7)
+			' AxonASP fix: build into a local temp array, never ReDim the global GBL_UDT
+			' (a ReDim of a session-sourced global inside a conditional block clobbers it
+			'  to non-array even when the branch is skipped). See README.
+			Dim UDT_tmp(20)
+			UDT_tmp(0) = Rs(0)
+			UDT_tmp(1) = Rs(1)
+			UDT_tmp(2) = Rs(2)
+			UDT_tmp(3) = Rs(3)
+			UDT_tmp(4) = Rs(4)
+			UDT_tmp(5) = Rs(5)
+			UDT_tmp(6) = Rs(6)
+			UDT_tmp(7) = Rs(7)
 
-			GBL_UDT(8) = Rs(8)
-			GBL_UDT(9) = Rs(9)
-			GBL_UDT(10) = Rs(10)
-			GBL_UDT(11) = Rs(11)
-			GBL_UDT(12) = Rs(12)
-			GBL_UDT(13) = Rs(13)
-			GBL_UDT(14) = Rs(14)
-			GBL_UDT(15) = Rs(15)
-			GBL_UDT(16) = Rs(16)
+			UDT_tmp(8) = Rs(8)
+			UDT_tmp(9) = Rs(9)
+			UDT_tmp(10) = Rs(10)
+			UDT_tmp(11) = Rs(11)
+			UDT_tmp(12) = Rs(12)
+			UDT_tmp(13) = Rs(13)
+			UDT_tmp(14) = Rs(14)
+			UDT_tmp(15) = Rs(15)
+			UDT_tmp(16) = Rs(16)
 			If DEF_RepeatLoginTimeOut > 0 and DEF_RepeatLoginTimeOut < DEF_UserOnlineTimeOut Then
-				GBL_UDT(17) = Rs(17)
-				GBL_UDT(18) = Rs(18)
+				UDT_tmp(17) = Rs(17)
+				UDT_tmp(18) = Rs(18)
 			End If
-			GBL_UDT(19) = Rs(19)
-			GBL_UDT(20) = Rs(20)
+			UDT_tmp(19) = Rs(19)
+			UDT_tmp(20) = Rs(20)
 			Rs.Close
 			Set Rs = Nothing
+			GBL_UDT = UDT_tmp   ' AxonASP fix: single plain assignment, no ReDim of global
 			Session(DEF_MasterCookies & "UDT") = GBL_UDT
 REM *******Chat Start*******
 If Old_Name <> "" and Old_Name <> GBL_UDT(1) Then
-	Chat_SessionFree(Old_Name) 'ÖØĞÂµÇÂ¼ÔòÌáÇ°ÊÍ·Å¾ÉÓÃ»§
+	Chat_SessionFree(Old_Name) 'é‡æ–°ç™»å½•åˆ™æå‰é‡Šæ”¾æ—§ç”¨æˆ·
 End If
 Chat_CreateFlag = 1
 REM *******Chat End*********
@@ -1820,7 +1836,7 @@ REM *******Chat End*********
 REM *******Chat Start*******
 Chat_SessionFree(GBL_CHK_User)
 REM *******Chat End*********
-			If SubmitFlag <> "" Then GBL_CHK_TempStr = "´ËÓÃ»§ÒÑ¾­ÔÚÏß£¬ÏµÍ³ÒÑ¾­ÉèÖÃ³É" & Fix(DEF_RepeatLoginTimeOut/60) & "·ÖÖÓºó²ÅÔÊĞíÔÙ´ÎµÇÂ¼!" & VbCrLf
+			If SubmitFlag <> "" Then GBL_CHK_TempStr = "æ­¤ç”¨æˆ·å·²ç»åœ¨çº¿ï¼Œç³»ç»Ÿå·²ç»è®¾ç½®æˆ" & Fix(DEF_RepeatLoginTimeOut/60) & "åˆ†é’Ÿåæ‰å…è®¸å†æ¬¡ç™»å½•!" & VbCrLf
 			If GBL_CHK_User <> "" Then Pub_ClearCookie
 			If GBL_AppType = "" Then GBL_CHK_User = ""
 			GBL_CHK_Flag = 0
@@ -1835,7 +1851,7 @@ REM *******Chat End*********
 REM *******Chat Start*******
 Chat_SessionFree(GBL_CHK_User)
 REM *******Chat End*********
-		If SubmitFlag <> "" Then GBL_CHK_TempStr = "´ËÓÃ»§ÒÑ±»ÆÁ±Î£¬ÄúÎŞÈ¨Ê¹ÓÃ´ËÓÃ»§!" & VbCrLf
+		If SubmitFlag <> "" Then GBL_CHK_TempStr = "æ­¤ç”¨æˆ·å·²è¢«å±è”½ï¼Œæ‚¨æ— æƒä½¿ç”¨æ­¤ç”¨æˆ·!" & VbCrLf
 		If GBL_CHK_User <> "" Then Pub_ClearCookie
 		If GBL_AppType = "" Then GBL_CHK_User = ""
 		GBL_CHK_Flag = 0
@@ -1895,15 +1911,15 @@ REM *******Chat End*********
 		If (Pass = MD5Pass or Mid(MD5Pass,9,16) = Pass) Then PassCorrect = 1
 	End If
 
-	'ÃÜÂëÕıÈ·µ«ÒÑ¾­ÆÁ±ÎµÇÂ¼Ò»Ñù²»×÷ÑéÖ¤
+	'å¯†ç æ­£ç¡®ä½†å·²ç»å±è”½ç™»å½•ä¸€æ ·ä¸ä½œéªŒè¯
 	If PassCorrect=1 and Login_falsenum >= DEF_MaxLoginTimes and IPADDRESS <> Login_RightIP and (Prevtime < DEF_LoginSpaceTime and Prevtime >= 0) Then
-		If SubmitFlag <> "" Then GBL_CHK_TempStr = "ÕË»§ÒòµÇÂ¼´íÎó´ÎÊı³¬¹ı" & DEF_MaxLoginTimes & "´Î,ÒÑÔİÊ±Ëø¶¨,ÔÊĞíÔÙ´ÎµÇÂ¼»¹ÓĞ" & (DEF_LoginSpaceTime-Prevtime) & "Ãë." & VbCrLf
+		If SubmitFlag <> "" Then GBL_CHK_TempStr = "è´¦æˆ·å› ç™»å½•é”™è¯¯æ¬¡æ•°è¶…è¿‡" & DEF_MaxLoginTimes & "æ¬¡,å·²æš‚æ—¶é”å®š,å…è®¸å†æ¬¡ç™»å½•è¿˜æœ‰" & (DEF_LoginSpaceTime-Prevtime) & "ç§’." & VbCrLf
 		UpdateString = ",Prevtime=" & GetTimeValue(DEF_Now)
-		UpdateSessionValue 11,GetTimeValue(DEF_Now),0
+		Call UpdateSessionValue(11,GetTimeValue(DEF_Now),0)
 		If GBL_CHK_LastWriteTime < DEF_WriteEventSpace Then
 			Call LDExeCute("Update LeadBBS_User Set " & Mid(UpdateString,2) & ",LastWriteTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
 			GBL_CHK_LastWriteTime = 240
-			UpdateSessionValue 13,GetTimeValue(DEF_Now),0
+			Call UpdateSessionValue(13,GetTimeValue(DEF_Now),0)
 		End If
 REM *******Chat Start*******
 Chat_SessionFree(GBL_CHK_User)
@@ -1942,24 +1958,24 @@ REM *******Chat End*********
 		If (Login_lastpass = MD5Pass) Then LastPassCorrect = 1
 	End If
 
-	If LastPassCorrect = 0 Then  'ÅĞ¶Ï×îºóÒ»´ÎÃÜÂë 
+	If LastPassCorrect = 0 Then  'åˆ¤æ–­æœ€åä¸€æ¬¡å¯†ç  
 		If(Login_falsenum<DEF_MaxLoginTimes) Then
 			UpdateString = ",Prevtime=" & GetTimeValue(DEF_Now) & ",Login_IP='" & Replace(IPADDRESS,"'","''") & "',Login_falsenum=Login_falsenum+1,Login_lastpass='" & Replace(MD5Pass,"'","''") & "'"
-			UpdateSessionValue 11,GetTimeValue(DEF_Now),0
-			UpdateSessionValue 8,1,1
-			UpdateSessionValue 7,MD5Pass,0
-			If SubmitFlag <> "" Then GBL_CHK_TempStr = "µÇÂ¼´íÎó´ÎÊı" & Login_falsenum+1 & "´Î,Äú»¹ÓĞ" & (DEF_MaxLoginTimes-Login_falsenum-1) & "´ÎµÇÂ¼¿ÉÒÔ³¢ÊÔ." & VbCrLf
+			Call UpdateSessionValue(11,GetTimeValue(DEF_Now),0)
+			Call UpdateSessionValue(8,1,1)
+			Call UpdateSessionValue(7,MD5Pass,0)
+			If SubmitFlag <> "" Then GBL_CHK_TempStr = "ç™»å½•é”™è¯¯æ¬¡æ•°" & Login_falsenum+1 & "æ¬¡,æ‚¨è¿˜æœ‰" & (DEF_MaxLoginTimes-Login_falsenum-1) & "æ¬¡ç™»å½•å¯ä»¥å°è¯•." & VbCrLf
 		Else
 			If (Prevtime < DEF_LoginSpaceTime and Prevtime >= 0) Then
 				If IPADDRESS = Login_RightIP Then
 				Else
-					If SubmitFlag <> "" Then GBL_CHK_TempStr = "ÕË»§ÒòµÇÂ¼´íÎó´ÎÊı³¬¹ı" & DEF_MaxLoginTimes & "´Î,ÒÑÔİÊ±Ëø¶¨,ÔÊĞíÔÙ´ÎµÇÂ¼»¹ÓĞ" & (DEF_LoginSpaceTime-Prevtime) & "Ãë." & VbCrLf
+					If SubmitFlag <> "" Then GBL_CHK_TempStr = "è´¦æˆ·å› ç™»å½•é”™è¯¯æ¬¡æ•°è¶…è¿‡" & DEF_MaxLoginTimes & "æ¬¡,å·²æš‚æ—¶é”å®š,å…è®¸å†æ¬¡ç™»å½•è¿˜æœ‰" & (DEF_LoginSpaceTime-Prevtime) & "ç§’." & VbCrLf
 					UpdateString = ",Prevtime=" & GetTimeValue(DEF_Now)
-					UpdateSessionValue 11,GetTimeValue(DEF_Now),0
+					Call UpdateSessionValue(11,GetTimeValue(DEF_Now),0)
 					If GBL_CHK_LastWriteTime < DEF_WriteEventSpace Then
 						Call LDExeCute("Update LeadBBS_User Set " & Mid(UpdateString,2) & ",LastWriteTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
 						GBL_CHK_LastWriteTime = 240
-						UpdateSessionValue 13,GetTimeValue(DEF_Now),0
+						Call UpdateSessionValue(13,GetTimeValue(DEF_Now),0)
 					End If
 REM *******Chat Start*******
 Chat_SessionFree(GBL_CHK_User)
@@ -1981,17 +1997,17 @@ REM *******Chat End*********
 				End If
 			Else
 				UpdateString = UpdateString & ",Prevtime=" & GetTimeValue(DEF_Now) & ",Login_IP='" & Replace(IPADDRESS,"'","''") & "',Login_falsenum=1,Login_lastpass='" & Replace(MD5Pass,"'","''") & "'"
-				UpdateSessionValue 11,GetTimeValue(DEF_Now),0
-				UpdateSessionValue 13,GetTimeValue(DEF_Now),0
-				UpdateSessionValue 7,MD5Pass,0
-				UpdateSessionValue 8,1,1
+				Call UpdateSessionValue(11,GetTimeValue(DEF_Now),0)
+				Call UpdateSessionValue(13,GetTimeValue(DEF_Now),0)
+				Call UpdateSessionValue(7,MD5Pass,0)
+				Call UpdateSessionValue(8,1,1)
 			End If
 		End If
 	Else
 		If PrevTime >= 240 Then
 			If GBL_CHK_LastWriteTime > DEF_WriteEventSpace Then
 				UpdateString = UpdateString & ",Prevtime=" & GetTimeValue(DEF_Now) & ",Login_IP='" & Replace(IPADDRESS,"'","''") & "'"
-				UpdateSessionValue 11,GetTimeValue(DEF_Now),0
+				Call UpdateSessionValue(11,GetTimeValue(DEF_Now),0)
 			End If
 		End If
 	End If
@@ -2003,10 +2019,10 @@ REM *******Chat End*********
 		End If
 		If inStr(UpdateString,"Prevtime") = 0 then
 			UpdateString = UpdateString & ",Prevtime=" & GetTimeValue(DEF_Now)
-			UpdateSessionValue 11,GetTimeValue(DEF_Now),0
+			Call UpdateSessionValue(11,GetTimeValue(DEF_Now),0)
 		End If
 		Call LDExeCute("Update LeadBBS_User Set " & Mid(UpdateString,2) & " where ID=" & GBL_UserID,1)
-		If GBL_CHK_TempStr = "" Then GBL_CHK_TempStr = "ÄúµÄÃÜÂë´íÎó, µÇÂ¼Ê§°Ü! " & VbCrLf
+		If GBL_CHK_TempStr = "" Then GBL_CHK_TempStr = "æ‚¨çš„å¯†ç é”™è¯¯, ç™»å½•å¤±è´¥! " & VbCrLf
 REM *******Chat Start*******
 Chat_SessionFree(GBL_CHK_User)
 REM *******Chat End*********
@@ -2027,15 +2043,15 @@ REM *******Chat End*********
 	Else
 		If Trim(SubmitFlag) <> "" Then
 			If GBL_CHK_LastWriteTime > DEF_WriteEventSpace Then
-				'ÃÜÂëÕıÈ·Ôò²»¼ÇÂ¼ÉÏ´Î²Ù×÷Ê±¼ä(ÈçĞè¼ÇÂ¼,ÆôÓÃ×¢ÊÍµôÒ»ĞĞ)
+				'å¯†ç æ­£ç¡®åˆ™ä¸è®°å½•ä¸Šæ¬¡æ“ä½œæ—¶é—´(å¦‚éœ€è®°å½•,å¯ç”¨æ³¨é‡Šæ‰ä¸€è¡Œ)
 				'UpdateString = ",Prevtime=" & GetTimeValue(DEF_Now) & ",Login_IP='" & Replace(IPADDRESS,"'","''") & "',Login_RightIP='" & Replace(IPADDRESS,"'","''") & "',Login_falsenum=0,Login_oknum=Login_oknum+1"
 				UpdateString = ",Login_IP='" & Replace(IPADDRESS,"'","''") & "',Login_RightIP='" & Replace(IPADDRESS,"'","''") & "',Login_falsenum=0,Login_oknum=Login_oknum+1"
-				UpdateSessionValue 11,GetTimeValue(DEF_Now),0
-				UpdateSessionValue 10,IPADDRESS,0
-				UpdateSessionValue 8,0,0
+				Call UpdateSessionValue(11,GetTimeValue(DEF_Now),0)
+				Call UpdateSessionValue(10,IPADDRESS,0)
+				Call UpdateSessionValue(8,0,0)
 			End If
 		End If
-		Rem µÇÂ¼³É¹¦
+		Rem ç™»å½•æˆåŠŸ
 		If dontRequestFormFlag="" Then
 			IPADDRESS = Request.Form("CkiExp")
 			If IPADDRESS = "" Then IPADDRESS = Request.QueryString("CkiExp")
@@ -2047,7 +2063,7 @@ REM *******Chat End*********
 			End If
 		End If
 		If IPADDRESS <> "" Then
-			If Len(GBL_CHK_Pass) > 32 Then GBL_CHK_TempStr = "<font color=red class=redfont>µÇÂ¼Ê§°Ü£¬ÇëÊäÈëÄãµÄÃÜÂë!</font>" & VbCrLf
+			If Len(GBL_CHK_Pass) > 32 Then GBL_CHK_TempStr = "<font color=red class=redfont>ç™»å½•å¤±è´¥ï¼Œè¯·è¾“å…¥ä½ çš„å¯†ç !</font>" & VbCrLf
 			Select Case IPADDRESS
 				Case "-1": IPADDRESS = 0
 				Case "365": IPADDRESS = 365
@@ -2059,15 +2075,15 @@ REM *******Chat End*********
 				Case else: IPADDRESS = -99
 			End Select
 			If IPADDRESS <> -99 Then
-				If IPADDRESS > 0 Then Response.Cookies(DEF_MasterCookies).Expires = DateAdd("d",DEF_Now,IPADDRESS)
+				If IPADDRESS > 0 Then Response.Cookies(DEF_MasterCookies).Expires = DateAdd("d",IPADDRESS,DEF_Now)
 				Response.Cookies(DEF_MasterCookies)("user") = CodeCookie(GBL_CHK_User)
 				Response.Cookies(DEF_MasterCookies)("pass") = CodeCookie(MD5(GBL_CHK_User & Pass))
 				'Response.Cookies(DEF_MasterCookies)("pass") = CodeCookie(GBL_CHK_Pass)
-				Response.Cookies(DEF_MasterCookies)("expires") = GetTimeValue(DateAdd("d",DEF_Now,IPADDRESS))
+				Response.Cookies(DEF_MasterCookies)("expires") = LngStr(GetTimeValue(DateAdd("d",IPADDRESS,DEF_Now)))
 				Response.Cookies(DEF_MasterCookies).Domain = DEF_AbsolutHome
 			End If
 			If GBL_CHK_ShowFlag = 1 and DEF_EnableUserHidden = 1 Then
-				IPADDRESS = "ÒşÉíÓÃ»§"
+				IPADDRESS = "éšèº«ç”¨æˆ·"
 				SQL = 0
 			Else
 				IPADDRESS = GBL_CHK_User
@@ -2081,7 +2097,7 @@ REM *******Chat End*********
 		End If
 	End If
 	If UpdateString <> "" Then
-		'ÈôĞèÖØÖÃ×îºóĞ´ÈëÊ±¼ä,ÏÂĞĞ¼ÓÈë´úÂë ,LastWriteTime=" & GetTimeValue(DEF_Now) & " 
+		'è‹¥éœ€é‡ç½®æœ€åå†™å…¥æ—¶é—´,ä¸‹è¡ŒåŠ å…¥ä»£ç  ,LastWriteTime=" & GetTimeValue(DEF_Now) & " 
 		Call LDExeCute("Update LeadBBS_User Set " & Mid(UpdateString,2) & ",LastDoingTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
 		GBL_CHK_LastWriteTime = 240
 		'UpdateSessionValue 13,GetTimeValue(DEF_Now),0
@@ -2122,13 +2138,13 @@ Function CheckWriteEventSpace
 		If isArray(GBL_UDT) Then
 			GBL_CHK_LastWriteTime = DateDiff("s",RestoreTime(GBL_UDT(13)),DEF_Now)
 		Else
-			GBL_UserID = CheckPass
+			GBL_UserID = CheckPass()
 		End If
 	End If
 	If GBL_CHK_LastWriteTime < DEF_WriteEventSpace and GBL_UserID <=0 Then
 		BusyTimes = BusyTimes + 1
 		If BusyTimes > 1 Then
-			'GBL_CHK_TempStr = "ÄúµÄ²Ù×÷¹ıÆµ£¬ÇëÉÔºòÔÙÊÔ£¡"
+			'GBL_CHK_TempStr = "æ‚¨çš„æ“ä½œè¿‡é¢‘ï¼Œè¯·ç¨å€™å†è¯•ï¼"
 			CheckWriteEventSpace = 0
 		Else
 			CheckWriteEventSpace = 1
@@ -2144,7 +2160,7 @@ End Function
 Sub UpdateLastWriteTime
 
 	'LDExeCute("Update LeadBBS_User Set Prevtime=" & GetTimeValue(DEF_Now) & ",LastWriteTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
-	UpdateSessionValue 13,GetTimeValue(DEF_Now),0
+	Call UpdateSessionValue(13,GetTimeValue(DEF_Now),0)
 
 End Sub
 
@@ -2201,7 +2217,7 @@ End Function
 Function DisplayAnnounceTitle(str,Sty)
 
 	If Sty >= 60 Then
-		DisplayAnnounceTitle = "<span class=""grayfont"">Ìû×ÓµÈ´ıÉóºËÖĞ...</span>"
+		DisplayAnnounceTitle = "<span class=""grayfont"">å¸–å­ç­‰å¾…å®¡æ ¸ä¸­...</span>"
 		Exit Function
 	End If
 	Dim s
@@ -2273,7 +2289,7 @@ Sub ReloadBoardStyleInfo(ID)
 
 	If GBL_ConFlag = 0 Then Exit Sub
 	Dim Rs,Temp
-	Set Rs = LDExeCute(sql_select("Select T1.StyleID,T1.ScreenWidth,T1.DisplayTopicLength,T1.DefineImage,T1.SiteHeadString,T1.SiteBottomString,T1.TableHeadString,T1.TableBottomString,T1.ShowBottomSure,T1.TempletID,T2.TempletFlag from LeadBBS_Skin as T1 Left Join LeadBBS_Templet as T2 on T1.TempletID=T2.ID Where T1.StyleID=" & ID,1),0)
+	Set Rs = LDExeCute(sql_select("Select T1.StyleID,T1.ScreenWidth,T1.DisplayTopicLength,T1.DefineImage,T1.SiteHeadString,T1.SiteBottomString,T1.TableHeadString,T1.TableBottomString,T1.ShowBottomSure,T1.TempletID,IFNULL(T2.TempletFlag,0) from LeadBBS_Skin as T1 Left Join LeadBBS_Templet as T2 on T1.TempletID=T2.ID Where T1.StyleID=" & ID,1),0)
 	If Rs.Eof Then
 		Rs.Close
 		Set Rs = Nothing
@@ -2418,7 +2434,7 @@ Function Update_LeadBBS_extendRIDExist(onlyOne,ClassType,extendID)
 
 End Function
 
-rem onlyone -1 É¾³ı -2ÎŞÌõ¼şµÄÌí¼ÓĞÂ¼ÇÂ¼²»¹ÜÊÇ·ñÖØ¸´ 0 Õı³£Çé¿öÌí¼Ó ÈôÖØ¸´Ö»¸üĞÂ >0 ±íÊ¾´ËÎªÒª¸üĞÂµÄ¼ÇÂ¼ID(_extend±í)
+rem onlyone -1 åˆ é™¤ -2æ— æ¡ä»¶çš„æ·»åŠ æ–°è®°å½•ä¸ç®¡æ˜¯å¦é‡å¤ 0 æ­£å¸¸æƒ…å†µæ·»åŠ  è‹¥é‡å¤åªæ›´æ–° >0 è¡¨ç¤ºæ­¤ä¸ºè¦æ›´æ–°çš„è®°å½•ID(_extendè¡¨)
 Sub insert_LeadBBS_extend(onlyOne,ClassType,extendID,extent_title,extent_content,extent_num,extent_num2,extent_level)
 
 	'only -1: delete -2: only insert
@@ -2486,4 +2502,26 @@ sub tips_out
 	end if
 
 end sub
+
+' ---------------------------------------------------------------------------
+' Relocated from manage/inc/bbsmanage_fun.asp, which was its ONLY definition.
+' Seven non-manage pages call it -- User/UserCollect.asp, User/UserDelete.asp,
+' User/Help/Cal.asp and the four User/BoardMaster/User/ pages -- and none of
+' them includes that file, so they silently lost their heading here (README
+' #28) and would fail outright on IIS. Every caller, manage and non-manage
+' alike, already includes THIS file, and it has been removed from
+' bbsmanage_fun.asp so there is exactly one definition.
+' ---------------------------------------------------------------------------
+
+Function DisplayUserNavigate(str)
+
+	Dim NewUrl
+	NewUrl = DEF_BBS_HomeUrl
+	If Left(NewUrl,3) = "../" or Left(NewUrl,3) = "..\" Then NewUrl = Mid(NewUrl,4)
+	If DEF_SiteHomeUrl = "" Then DEF_SiteHomeUrl = DEF_BBS_HomeUrl & "Boards.asp"
+	Response.Write "<div class=frame_navtitle>"
+	Response.Write "<a href=""" & NewUrl & "Default.asp"" target=_top>è®ºå›ç®¡ç†ç³»ç»Ÿ</a> &gt;&gt; " & Str
+	Response.Write "</div>"
+
+End Function
 %>

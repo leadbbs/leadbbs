@@ -1,16 +1,16 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
-<!-- #include file=inc/admanage_Fun.asp -->
-<!-- #include file=inc/sitemap_fun.asp -->
-<!-- #include file=inc/superuploadfile_fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
+<!--#include file="inc/admanage_Fun.asp"-->
+<!--#include file="inc/sitemap_fun.asp"-->
+<!--#include file="inc/superuploadfile_fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Const MaxLinkNum = 200
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
 
 Dim GBL_FSOString
@@ -28,49 +28,49 @@ End If
 Dim MoreSV_LineStr
 
 If GBL_CHK_Flag=1 Then	
-	Main
+	Main()
 Else
-	Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-	frame_TopInfo
-	DisplayUserNavigate("ÇëµÇÂ¼")
-	DisplayLoginForm
+	Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+	frame_TopInfo()
+	DisplayUserNavigate("è¯·ç™»å½•")
+	DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Sub Main
 
-	Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-	frame_TopInfo
+	Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+	frame_TopInfo()
 	Dim Action
 	Action = Left(Request.QueryString("action"),10)
 	Select Case Action
 		Case "MoreSV":
-			DisplayUserNavigate("ÂÛÌ³À©Õ¹·şÎñ")
-			MoreSV_Main
+			DisplayUserNavigate("è®ºå›æ‰©å±•æœåŠ¡")
+			MoreSV_Main()
 		Case "Side":
-			DisplayUserNavigate("²àÀ¸ÉèÖÃ")
-			Side_Main
+			DisplayUserNavigate("ä¾§æ è®¾ç½®")
+			Side_Main()
 		Case "admanage":
-			DisplayUserNavigate("×ÛºÏ¹ã¸æÀ¸¹ÜÀí")
-			admanage_Main
+			DisplayUserNavigate("ç»¼åˆå¹¿å‘Šæ ç®¡ç†")
+			admanage_Main()
 		Case "SiteMap":
 			DisplayUserNavigate("SiteMap")
 			dim sitemapmain
 			set sitemapmain = new sitemap_main
 			set sitemapmain = nothing
 		Case "upload":
-			DisplayUserNavigate("ÉÏ´«ÎÄ¼ş")
+			DisplayUserNavigate("ä¸Šä¼ æ–‡ä»¶")
 			dim superuploadfile
 			set superuploadfile = new super_uploadfile
 			set superuploadfile = nothing
 		Case Else:
-			SiteInfo
+			SiteInfo()
 			%>
 			<ol class=listli>
-			<li><a href=RepairSite.asp>ÖØĞÂÍ³¼ÆÉÏ´«ÎÄ¼ş¼°ÓÃ»§ÊıÁ¿£¬ÂÛÌ³ÔÚÏßÈËÊı</a><br>
-			<li><a href=DeleteAllTopAnnounce.asp>È¡ÏûÒ»ÇĞ×Ü¹Ì¶¥Ìû×Ó</a> <span class=grayfont>×Ü¹Ì¶¥Ìû¿ÉÄÜ»á²úÉúÀ¬»øÊı¾İ(ÒâÍâ²úÉú)£¬¿ÉÓÃ´ËÏîÇå³ı</span>
+			<li><a href=RepairSite.asp>é‡æ–°ç»Ÿè®¡ä¸Šä¼ æ–‡ä»¶åŠç”¨æˆ·æ•°é‡ï¼Œè®ºå›åœ¨çº¿äººæ•°</a><br>
+			<li><a href=DeleteAllTopAnnounce.asp>å–æ¶ˆä¸€åˆ‡æ€»å›ºé¡¶å¸–å­</a> <span class=grayfont>æ€»å›ºé¡¶å¸–å¯èƒ½ä¼šäº§ç”Ÿåƒåœ¾æ•°æ®(æ„å¤–äº§ç”Ÿ)ï¼Œå¯ç”¨æ­¤é¡¹æ¸…é™¤</span>
 			</ol>
 			<%
 	End Select
@@ -102,7 +102,7 @@ Sub SiteInfo
 	Set Rs = Nothing
 
 	Dim Rs,Temp
-	Response.Write "<ol class=listli><li>Ê¼ÔËÊ±¼ä: " & month(application("SiteStartTimeszoieiu")) & "ÔÂ" & day(application("SiteStartTimeszoieiu")) & "ÈÕ" & hour(application("SiteStartTimeszoieiu")) & ":" & minute(application("SiteStartTimeszoieiu")) & "</li>" & VbCrLf
+	Response.Write "<ol class=listli><li>å§‹è¿æ—¶é—´: " & month(application("SiteStartTimeszoieiu")) & "æœˆ" & day(application("SiteStartTimeszoieiu")) & "æ—¥" & hour(application("SiteStartTimeszoieiu")) & ":" & minute(application("SiteStartTimeszoieiu")) & "</li>" & VbCrLf
 
 	Set Rs = LDExeCute("select count(*) from LeadBBS_User",0)
 	If Rs.Eof Then
@@ -112,29 +112,29 @@ Sub SiteInfo
 		if isNull(Temp) or Temp="" Then Temp=0
 		Temp = cCur(Temp)
 	End If
-	Response.Write "<li>ÍøÕ¾ÓÃ»§: " & Temp & "ÈË</li>" & VbCrLf
+	Response.Write "<li>ç½‘ç«™ç”¨æˆ·: " & Temp & "äºº</li>" & VbCrLf
 	Rs.Close
 	Set Rs = Nothing
-	Response.Write "<li>ÔÚÏßÈËÊı: " & GetActiveUserNumber & "ÈË<span class=grayfont>(×ÔĞĞÍ³¼Æ)</span>" & VbCrLf
-	Response.Write "<li>ÔÚÏßÈËÊı: " & Application("ActiveUserszoieiu") & "ÈË<span class=grayfont>(Global.ASA)</span></li>" & VbCrLf
+	Response.Write "<li>åœ¨çº¿äººæ•°: " & GetActiveUserNumber() & "äºº<span class=grayfont>(è‡ªè¡Œç»Ÿè®¡)</span>" & VbCrLf
+	Response.Write "<li>åœ¨çº¿äººæ•°: " & Application("ActiveUserszoieiu") & "äºº<span class=grayfont>(Global.ASA)</span></li>" & VbCrLf
 	
-	Response.Write "<li>ÔÚÏßÊ±¼ä: "
+	Response.Write "<li>åœ¨çº¿æ—¶é—´: "
 	OnlineTime = OnlineTime + application(DEF_MasterCookies & "SiteOlTime")
 	Temp = OnlineTime/(24*60*60)
-	Response.Write Fix(Temp) & "Ìì"
+	Response.Write Fix(Temp) & "å¤©"
 	OnlineTime=OnlineTime-Fix(Temp)*24*60*60
 	Temp = OnlineTime/(60*60)
-	Response.Write Fix(Temp) & "Ê±"
+	Response.Write Fix(Temp) & "æ—¶"
 	OnlineTime=OnlineTime-Fix(Temp)*60*60
 	Temp = OnlineTime/(60)
-	Response.Write Fix(Temp) & "·Ö</li>"
-	Response.Write "<li>·ÃÎÊ×ÜÁ¿: " & PageCount+application(DEF_MasterCookies & "SitePageCount") & "" & "</li>" & VbCrLf
-	Response.Write "<li>×òÈÕ·¢Ìû: " & YesterdayAnc & "</b>Ìõ&nbsp;" & "</li>" & VbCrLf
-	Response.Write "<li>×î¸ßÔÚÏß: " & MaxOnline & "</b>ÈË&nbsp;·¢ÉúÓÚ" & RestoreTime(MaxolTime) & "</li>" & VbCrLf
-	Response.Write "<li>×î¸ß·¢Ìû: " & MaxAnnounce & "</b>Ìõ&nbsp;·¢ÉúÓÚ" & RestoreTime(MaxAncTime) & "</li>" & VbCrLf
-	Response.Write "<li>Êı¾İ¿â×ÜĞ´Èë´ÎÊı: " & DBWrite & "</b>´Î</li>" & VbCrLf
-	Response.Write "<li>Êı¾İ¿â×ÜÇëÇó´ÎÊı: " & DBNum & "</b>´Î</li>" & VbCrLf
-	Response.Write "<li>Í³¼Æ½ØÖ¹: " & year(DEF_Now) & "Äê" & month(DEF_Now) & "ÔÂ" & day(DEF_Now) & "</li></ol>" & VbCrLf
+	Response.Write Fix(Temp) & "åˆ†</li>"
+	Response.Write "<li>è®¿é—®æ€»é‡: " & PageCount+application(DEF_MasterCookies & "SitePageCount") & "" & "</li>" & VbCrLf
+	Response.Write "<li>æ˜¨æ—¥å‘å¸–: " & YesterdayAnc & "</b>æ¡&nbsp;" & "</li>" & VbCrLf
+	Response.Write "<li>æœ€é«˜åœ¨çº¿: " & MaxOnline & "</b>äºº&nbsp;å‘ç”Ÿäº" & RestoreTime(MaxolTime) & "</li>" & VbCrLf
+	Response.Write "<li>æœ€é«˜å‘å¸–: " & MaxAnnounce & "</b>æ¡&nbsp;å‘ç”Ÿäº" & RestoreTime(MaxAncTime) & "</li>" & VbCrLf
+	Response.Write "<li>æ•°æ®åº“æ€»å†™å…¥æ¬¡æ•°: " & DBWrite & "</b>æ¬¡</li>" & VbCrLf
+	Response.Write "<li>æ•°æ®åº“æ€»è¯·æ±‚æ¬¡æ•°: " & DBNum & "</b>æ¬¡</li>" & VbCrLf
+	Response.Write "<li>ç»Ÿè®¡æˆªæ­¢: " & year(DEF_Now) & "å¹´" & month(DEF_Now) & "æœˆ" & day(DEF_Now) & "</li></ol>" & VbCrLf
 
 End Sub
 
@@ -155,14 +155,14 @@ End Function
 Sub MoreSV_Main
 
 	%>
-	<div class=frametitle>ÂÛÌ³À©Õ¹·şÎñ</div>
+	<div class=frametitle>è®ºå›æ‰©å±•æœåŠ¡</div>
 	<%
 	Dim SV
 	SV = Left(Request.QueryString("SV"),10)
 	
 	Select Case SV
 		Case Else:
-			MoreSV_BoardCount
+			MoreSV_BoardCount()
 	End Select
 
 End Sub
@@ -171,9 +171,9 @@ Sub MoreSV_BoardCount
 
 	%>
 	<div class=frameline>
-	<span class=grayfont><b>1.CNZZÍøÕ¾Í³¼ÆÆ÷(ÉÌÒµÃ½ÌåÊı¾İ·ÖÎö×¨¼Ò-WSSÁ÷Á¿Í³¼Æ)</b></span>
+	<span class=grayfont><b>1.CNZZç½‘ç«™ç»Ÿè®¡å™¨(å•†ä¸šåª’ä½“æ•°æ®åˆ†æä¸“å®¶-WSSæµé‡ç»Ÿè®¡)</b></span>
 	</div>
-	<div class=frameline>´ËÏµÍ³ÓÉ: <u><a href=http://www.cnzz.com target=_blank>WSSÍ³¼ÆÏµÍ³</a></u> ÓÑÇéÌá¹©Ö§³Ö
+	<div class=frameline>æ­¤ç³»ç»Ÿç”±: <u><a href=http://www.cnzz.com target=_blank>WSSç»Ÿè®¡ç³»ç»Ÿ</a></u> å‹æƒ…æä¾›æ”¯æŒ
 	</div>
 	<%
 	Dim User,Pass,Domain,Tmp
@@ -202,7 +202,7 @@ Sub MoreSV_BoardCount
 	Dim ID,NewStr
 	ID = MoreSV_CheckFileInStr(DEF_BBS_HomeUrl & "inc/incHtm/Bottom_AD.asp","<center><script src=""http://w.cnzz.com/c.php?id=")
 	
-	NewStr = "<center><script src=""http://w.cnzz.com/c.php?id=" & User & "&amp;l=2"" type=""text/javascript"" charset=""gb2312""></script></center>" & VbCrLf
+	NewStr = "<center><script src=""http://w.cnzz.com/c.php?id=" & User & "&amp;l=2"" type=""text/javascript"" charset=""utf-8""></script></center>" & VbCrLf
 	If User > 0 and User <> ID Then
 		If Request("SV") = "open" Then
 			If MoreSV_LineStr <> "" Then
@@ -212,7 +212,7 @@ Sub MoreSV_BoardCount
 			End If
 			ID = User
 			%>
-			<div class="alert">ÒÑ³É¹¦ÔÚÍøÒ³ÖĞ¼ÓÈëÍ³¼ÆÆ÷.</div>
+			<div class="alert">å·²æˆåŠŸåœ¨ç½‘é¡µä¸­åŠ å…¥ç»Ÿè®¡å™¨.</div>
 			<%
 		End If
 	End If
@@ -225,38 +225,38 @@ Sub MoreSV_BoardCount
 				CALL MoreSV_ReplaceFileStr(DEF_BBS_HomeUrl & "inc/incHtm/Bottom_AD.asp",NewStr,"")
 			End If
 			%>
-			<div class="alert">ÒÑ³É¹¦ÒÆ³ıÔÚÍøÒ³ÖĞµÄÍ³¼ÆÆ÷.</div>
+			<div class="alert">å·²æˆåŠŸç§»é™¤åœ¨ç½‘é¡µä¸­çš„ç»Ÿè®¡å™¨.</div>
 			<%
 			ID = 0
 		End If
 	End If
 
 	If Request.QueryString("SV") = "counter" and User = 0 Then
-		MoreSV_ApplyCounter
+		MoreSV_ApplyCounter()
 	Else
 		%>
-		<div class=frameline><span class=bluefont>×´Ì¬: 
+		<div class=frameline><span class=bluefont>çŠ¶æ€: 
 		<%
 		If (ID = 0 and User = "") or User = 0 Then
-			Response.Write "<span class=redfont>Î´¿ªÍ¨</span></span> "
-			Response.Write "<a href=SiteInfo.asp?action=MoreSV&SV=counter>Á¢¼´ÉêÇë¿ªÍ¨WSSÍ³¼ÆÆ÷</a>"
+			Response.Write "<span class=redfont>æœªå¼€é€š</span></span> "
+			Response.Write "<a href=SiteInfo.asp?action=MoreSV&SV=counter>ç«‹å³ç”³è¯·å¼€é€šWSSç»Ÿè®¡å™¨</a>"
 		Else
-			Response.Write "<span class=greenfont>ÒÑ¿ªÍ¨</span></span> "
+			Response.Write "<span class=greenfont>å·²å¼€é€š</span></span> "
 			
-			Response.Write "<p>ÕËºÅĞÅÏ¢</p><p>ÕËºÅ: p" & User & "@" & Domain
-			Response.Write "<br>ÃÜÂë: " & Pass & "</p>"
+			Response.Write "<p>è´¦å·ä¿¡æ¯</p><p>è´¦å·: p" & User & "@" & Domain
+			Response.Write "<br>å¯†ç : " & Pass & "</p>"
 			
 			If User > 0 and User <> ID Then
 				%>
-				<div class="alert"><a href="SiteInfo.asp?action=MoreSV&SV=open">ÄúÒÑ¾­ÉêÇëÁËÍ³¼ÆÆ÷, µ«Î´ÔÚÍøÒ³ÖĞ¼ÓÈëÍ³¼Æ´úÂë, ÈôÒª¼ÓÈëÍ³¼Æ´úÂë¿ªÊ¼Í³¼ÆÇëµã»÷.</a></div>
+				<div class="alert"><a href="SiteInfo.asp?action=MoreSV&SV=open">æ‚¨å·²ç»ç”³è¯·äº†ç»Ÿè®¡å™¨, ä½†æœªåœ¨ç½‘é¡µä¸­åŠ å…¥ç»Ÿè®¡ä»£ç , è‹¥è¦åŠ å…¥ç»Ÿè®¡ä»£ç å¼€å§‹ç»Ÿè®¡è¯·ç‚¹å‡».</a></div>
 				<%
 			Else
 				%>
-				<div class="alert"><a href="SiteInfo.asp?action=MoreSV&SV=close">ÄúÒÑ¾­¿ªÍ¨ÁËÍ³¼ÆÆ÷²¢ÇÒ¼ÓÈëÍøÒ³, ÈôÒªÉ¾³ıÍøÒ³Í³¼Æ´úÂëÇëµã»÷.</a></div>
+				<div class="alert"><a href="SiteInfo.asp?action=MoreSV&SV=close">æ‚¨å·²ç»å¼€é€šäº†ç»Ÿè®¡å™¨å¹¶ä¸”åŠ å…¥ç½‘é¡µ, è‹¥è¦åˆ é™¤ç½‘é¡µç»Ÿè®¡ä»£ç è¯·ç‚¹å‡».</a></div>
 				<%
 			End If
 
-			Response.Write "<br><b>²é¿´Í³¼Æ</b> <a href=http://wss.cnzz.com/user/companion/leadbbs_login.php?site_id=" & User & "&password=" & Pass & " target=_blank><u>×Ô¶¯µÇÂ¼Í³¼ÆÏµÍ³</u></a>"
+			Response.Write "<br><b>æŸ¥çœ‹ç»Ÿè®¡</b> <a href=http://wss.cnzz.com/user/companion/leadbbs_login.php?site_id=" & User & "&password=" & Pass & " target=_blank><u>è‡ªåŠ¨ç™»å½•ç»Ÿè®¡ç³»ç»Ÿ</u></a>"
 		End If
 		%>
 		</div>
@@ -282,12 +282,12 @@ Function MoreSV_ApplyCounter
 	If inStr(ResponseTxt,"@") Then
 		MoreSV_ApplyCounter = ResponseTxt
 		Dim Rs,ID,Pass
-		ID = Left(MoreSV_ApplyCounter,inStr(ResponseTxt,"@")-1)
-		Pass = Mid(MoreSV_ApplyCounter,inStr(ResponseTxt,"@")+1)
-		Response.Write "<div class=frameline><b>Í³¼ÆÏµÍ³ÉêÇëÍê³É:</b></div>"
-		Response.Write "<div class=frameline> ÕËºÅ: p" & ID & "@" & Domain
-		Response.Write "</div><div class=frameline>ÃÜÂë: " & Pass
-		Response.Write "</div><div class=frameline><a href=http://wss.cnzz.com/user/companion/leadbbs_login.php?site_id=" & ID & "&password=" & Pass & " target=_blank><u>×Ô¶¯µÇÂ¼Í³¼ÆÏµÍ³</u></a>"
+		ID = Left(MoreSV_ApplyCounter(),inStr(ResponseTxt,"@")-1)
+		Pass = Mid(MoreSV_ApplyCounter(),inStr(ResponseTxt,"@")+1)
+		Response.Write "<div class=frameline><b>ç»Ÿè®¡ç³»ç»Ÿç”³è¯·å®Œæˆ:</b></div>"
+		Response.Write "<div class=frameline> è´¦å·: p" & ID & "@" & Domain
+		Response.Write "</div><div class=frameline>å¯†ç : " & Pass
+		Response.Write "</div><div class=frameline><a href=http://wss.cnzz.com/user/companion/leadbbs_login.php?site_id=" & ID & "&password=" & Pass & " target=_blank><u>è‡ªåŠ¨ç™»å½•ç»Ÿè®¡ç³»ç»Ÿ</u></a>"
 		Response.Write "</div>"
 		Set Rs = LDExeCute(sql_select("Select ID,RID,ValueStr from LeadBBS_Setup where RID=10050",1),0)
 		If Rs.Eof Then
@@ -301,7 +301,7 @@ Function MoreSV_ApplyCounter
 		End If
 	Else
 		MoreSV_ApplyCounter = ""
-		Response.Write "<div class=alert>½Ó¿Ú´íÎó,Ê§°Ü´úÂë: " & ResponseTxt & "</div>"
+		Response.Write "<div class=alert>æ¥å£é”™è¯¯,å¤±è´¥ä»£ç : " & ResponseTxt & "</div>"
 	End If
 
 End Function
@@ -368,7 +368,7 @@ Function MoreSV_CheckFileInStr(FileName,Str)
 	MoreSV_LineStr = Mid(fileContent,Tmp,3000)
 	
 	Dim BottomStr
-	BottomStr = "&amp;l=2"" type=""text/javascript"" charset=""gb2312""></script></center>"
+	BottomStr = "&amp;l=2"" type=""text/javascript"" charset=""utf-8""></script></center>"
 	MoreSV_LineStr = Left(MoreSV_LineStr,inStr(MoreSV_LineStr,BottomStr) + Len(MoreSV_LineStr))
 	If isNumeric(ID) = 0 Then
 		ID = 0
@@ -381,12 +381,12 @@ End Function
 Sub Side_Main
 
 	If Request.Form("subside") = "1" Then
-		Side_UpdateFormData
+		Side_UpdateFormData()
 		Exit Sub
 	End If
 
 	Dim Side_Select
-	Side_Select = Array("×îĞÂÖ÷Ìâ","×îĞÂ¾«»ª","µ÷ÓÃ×¨Çø","×îĞÂÍ¼Æ¬","°æ¿éÅÅĞĞ")
+	Side_Select = Array("æœ€æ–°ä¸»é¢˜","æœ€æ–°ç²¾å","è°ƒç”¨ä¸“åŒº","æœ€æ–°å›¾ç‰‡","ç‰ˆå—æ’è¡Œ")
 	
 	Dim Side_Data,Dn
 	Dim Rs
@@ -407,7 +407,7 @@ Sub Side_Main
 	<div id="testinfo"></div>
 	<div id=test_html style="display:none;"></div>
 	<h2>
-	Ê×Ò³±ßÀ¸µ÷ÓÃÉèÖÃ(¿ÉÍÏ¶¯±êÌâÅÅĞò)</h2>
+	é¦–é¡µè¾¹æ è°ƒç”¨è®¾ç½®(å¯æ‹–åŠ¨æ ‡é¢˜æ’åº)</h2>
 	<form action="SiteInfo.asp?action=Side" method="post" name="LeadBBSFm" onSubmit="return checksubmit(this);"">
 	<input type="hidden" value="1" name="subside">
 	<div id="home_side_form">
@@ -415,7 +415,7 @@ Sub Side_Main
 	For Sn = 0 To Ubound(Side_Select,1)
 		CheckFlag = 0
 		RecordCount = 10
-		If Sn = 3 Then RecordCount = 4 '×îĞÂÍ¼Æ¬Ä¬¼ÇÂ¼ÌõÊı
+		If Sn = 3 Then RecordCount = 4 'æœ€æ–°å›¾ç‰‡é»˜è®°å½•æ¡æ•°
 		Title = Side_Select(Sn)
 		OtherInfo = ""
 		Sort = 0
@@ -440,32 +440,32 @@ Sub Side_Main
 				Response.Write ">"
 			End If%><span class="moveitem"><%=Side_Select(Sn)%></span>
 		
-		±êÌâ <input class='fminpt input_3' maxlength=50 name=Title<%=Sn%> value="<%=htmlencode(Title)%>">
+		æ ‡é¢˜ <input class='fminpt input_3' maxlength=50 name=Title<%=Sn%> value="<%=htmlencode(Title)%>">
 		
-		µ÷ÓÃÊıÁ¿ <input name=RecordCount<%=Sn%> value="<%=RecordCount%>" maxLength="2" class="fminpt input_1">
+		è°ƒç”¨æ•°é‡ <input name=RecordCount<%=Sn%> value="<%=RecordCount%>" maxLength="2" class="fminpt input_1">
 		
-		Ë³Ğò <input name=Sort<%=Sn%> onchange="$(this).next().html(this.value);sort_start();" value="<%=Sort%>" maxLength="2" class="sortinput fminpt input_1">
+		é¡ºåº <input name=Sort<%=Sn%> onchange="$(this).next().html(this.value);sort_start();" value="<%=Sort%>" maxLength="2" class="sortinput fminpt input_1">
 		<span style="display:none;" class="sorttxt"><%=Sort%></span>
 		
 		
 		<%If Sn = 2 Then%>
 		<br />
-		×¨Çø±àºÅ <input name=OtherInfo<%=Sn%> value="<%=OtherInfo%>" maxLength="12" class="fminpt input_2">
-		<a href="../ForumBoard/ForumBoardAssort.asp">ÏêÏ¸±àºÅÖÁ°æÃæ×¨Çø¹ÜÀí²é¿´</a>
+		ä¸“åŒºç¼–å· <input name=OtherInfo<%=Sn%> value="<%=OtherInfo%>" maxLength="12" class="fminpt input_2">
+		<a href="../ForumBoard/ForumBoardAssort.asp">è¯¦ç»†ç¼–å·è‡³ç‰ˆé¢ä¸“åŒºç®¡ç†æŸ¥çœ‹</a>
 		
 		<%End If%>
 		</div>
 	<%
 	Next
 	
-	'Êä³öÊ×Ò³²àÀ¸×Ô¶¨Òå´úÂë 999¿ªÍ·Îª×Ô¶¨ÒåÀà
+	'è¾“å‡ºé¦–é¡µä¾§æ è‡ªå®šä¹‰ä»£ç  999å¼€å¤´ä¸ºè‡ªå®šä¹‰ç±»
 	Sn = Ubound(Side_Select,1)
 	Dim MaxSort : MaxSort = 0
 	For m = 0 To dn
 		CheckFlag = 0
 		RecordCount = 10
-		If Sn = 3 Then RecordCount = 4 '×îĞÂÍ¼Æ¬Ä¬¼ÇÂ¼ÌõÊı
-		Title = "Ê×Ò³²àÀ¸×Ô¶¨Òå´úÂë"
+		If Sn = 3 Then RecordCount = 4 'æœ€æ–°å›¾ç‰‡é»˜è®°å½•æ¡æ•°
+		Title = "é¦–é¡µä¾§æ è‡ªå®šä¹‰ä»£ç "
 		OtherInfo = ""
 		Sort = 0
 		If inStr("|" & Side_Data(2,m),"|999|") Then
@@ -487,16 +487,16 @@ Sub Side_Main
 					Response.Write " checked>"
 				Else
 					Response.Write ">"
-				End If%><span class="moveitem">×Ô¶¨Òå´úÂë<%=Sn%></span>
+				End If%><span class="moveitem">è‡ªå®šä¹‰ä»£ç <%=Sn%></span>
 			
-			±êÌâ <input class='fminpt input_3' maxlength=50 name=Title<%=Sn%> value="<%=htmlencode(Title)%>">
+			æ ‡é¢˜ <input class='fminpt input_3' maxlength=50 name=Title<%=Sn%> value="<%=htmlencode(Title)%>">
 			
-			<span style="display:none;">µ÷ÓÃÊıÁ¿ <input name=RecordCount<%=Sn%> value="<%=RecordCount%>" maxLength="2" class="fminpt input_1"></span>
+			<span style="display:none;">è°ƒç”¨æ•°é‡ <input name=RecordCount<%=Sn%> value="<%=RecordCount%>" maxLength="2" class="fminpt input_1"></span>
 			
-			Ë³Ğò <input name=Sort<%=Sn%> value="<%=Sort%>" onchange="$(this).next().html(this.value);sort_start();" maxLength="2" class="sortinput fminpt input_1">
+			é¡ºåº <input name=Sort<%=Sn%> value="<%=Sort%>" onchange="$(this).next().html(this.value);sort_start();" maxLength="2" class="sortinput fminpt input_1">
 			<span style="display:none;" class="sorttxt"><%=Sort%></span>
 			<br />
-			ÇëÊäÈë´úÂë£¬ÔÊĞíÊ¹ÓÃHTMLºÍJavaScript 
+			è¯·è¾“å…¥ä»£ç ï¼Œå…è®¸ä½¿ç”¨HTMLå’ŒJavaScript 
 			<textarea cols="80" name="SaveData<%=Sn%>" rows="6" tabindex="51" class="fmtxtra"><%If SaveData <> "" Then Response.Write VbCrLf & htmlEncode(SaveData)%></textarea>
 			</div>
 		<%
@@ -614,7 +614,7 @@ sort_start();
 				$("#test_html").html($('textarea').eq(n).val());
 				$('textarea').eq(n).val($("#test_html").html());
 				if($('textarea').eq(n).val().length>10240)
-				{alert("´íÎó£º×Ô¶¨Òå´úÂë"+(n+5)+" ³¤¶È³¬¹ıÁË10240.");return false;}
+				{alert("é”™è¯¯ï¼šè‡ªå®šä¹‰ä»£ç "+(n+5)+" é•¿åº¦è¶…è¿‡äº†10240.");return false;}
 			}
 		}
 		return true;
@@ -630,26 +630,26 @@ function additem()
 	Number+=1;
 	if(Number>maxNumber)
 	{
-		alert("ÒÑ¾­´ïµ½×î´óÊıÄ¿£¬²»ÄÜÔÙÔö¼Ó!");
+		alert("å·²ç»è¾¾åˆ°æœ€å¤§æ•°ç›®ï¼Œä¸èƒ½å†å¢åŠ !");
 	}
 	else
 	{
 		
 		//var tmp="<table border=0 cellpadding=0 class=blanktable><tr><td><input type=hidden name=trueID" + Number + " value=999999>";
-		//tmp+="<input type=checkbox class=fmchkbox name=Side_Select" + Number + " value=1 checked><span class='moveitem'>×Ô¶¨Òå´úÂë" + Number + "</span></td><td>";
-		//tmp+="±êÌâ <input class='fminpt input_3' maxlength=50 name=Title" + Number + " value=''></td><td>";
-		//tmp+="<span style='display:none;'>µ÷ÓÃÊıÁ¿ <input name=RecordCount" + Number + " value='' maxLength=2 class='fminpt input_1'></span></td><td>";
-		//tmp+="Ë³Ğò <input name=Sort" + Number + " onchange='$(this).next().html(this.value);sort_start();' value='"+(MaxSort)+"' maxLength=2 class='sortinput fminpt input_1'><span style='display:none;' class='sorttxt'>"+(MaxSort)+"</span></td></tr><tr><td> </td><td colspan=3>";
-		//tmp+="ÇëÊäÈë´úÂë£¬ÔÊĞíÊ¹ÓÃHTMLºÍJavaScript <textarea cols=80 name=SaveData" + Number + " rows=6 tabindex=51 class=fmtxtra></textarea></td></tr></table>";
+		//tmp+="<input type=checkbox class=fmchkbox name=Side_Select" + Number + " value=1 checked><span class='moveitem'>è‡ªå®šä¹‰ä»£ç " + Number + "</span></td><td>";
+		//tmp+="æ ‡é¢˜ <input class='fminpt input_3' maxlength=50 name=Title" + Number + " value=''></td><td>";
+		//tmp+="<span style='display:none;'>è°ƒç”¨æ•°é‡ <input name=RecordCount" + Number + " value='' maxLength=2 class='fminpt input_1'></span></td><td>";
+		//tmp+="é¡ºåº <input name=Sort" + Number + " onchange='$(this).next().html(this.value);sort_start();' value='"+(MaxSort)+"' maxLength=2 class='sortinput fminpt input_1'><span style='display:none;' class='sorttxt'>"+(MaxSort)+"</span></td></tr><tr><td> </td><td colspan=3>";
+		//tmp+="è¯·è¾“å…¥ä»£ç ï¼Œå…è®¸ä½¿ç”¨HTMLå’ŒJavaScript <textarea cols=80 name=SaveData" + Number + " rows=6 tabindex=51 class=fmtxtra></textarea></td></tr></table>";
 		
 		var tmp='<div class="sortitems">';
 		tmp+='<input type="hidden" name="trueID' + Number + '" value="999999">';
-		tmp+='<input type="checkbox" class=fmchkbox name="Side_Select' + Number + '" value="1" checked><span class="moveitem">×Ô¶¨Òå´úÂë' + Number + '</span>';
-		tmp+='±êÌâ <input class="fminpt input_3" maxlength=50 name=Title' + Number + ' value="">';
-		tmp+='<span style="display:none;">µ÷ÓÃÊıÁ¿ <input name=RecordCount' + Number + ' value="" maxLength="2" class="fminpt input_1"></span>';
-		tmp+='Ë³Ğò <input name=Sort' + Number + ' value="'+(MaxSort)+'" onchange="$(this).next().html(this.value);sort_start();" maxLength="2" class="sortinput fminpt input_1">';
+		tmp+='<input type="checkbox" class=fmchkbox name="Side_Select' + Number + '" value="1" checked><span class="moveitem">è‡ªå®šä¹‰ä»£ç ' + Number + '</span>';
+		tmp+='æ ‡é¢˜ <input class="fminpt input_3" maxlength=50 name=Title' + Number + ' value="">';
+		tmp+='<span style="display:none;">è°ƒç”¨æ•°é‡ <input name=RecordCount' + Number + ' value="" maxLength="2" class="fminpt input_1"></span>';
+		tmp+='é¡ºåº <input name=Sort' + Number + ' value="'+(MaxSort)+'" onchange="$(this).next().html(this.value);sort_start();" maxLength="2" class="sortinput fminpt input_1">';
 		tmp+='<span style="display:none;" class="sorttxt">'+(MaxSort)+'</span>';
-		tmp+='<br />ÇëÊäÈë´úÂë£¬ÔÊĞíÊ¹ÓÃHTMLºÍJavaScript ';
+		tmp+='<br />è¯·è¾“å…¥ä»£ç ï¼Œå…è®¸ä½¿ç”¨HTMLå’ŒJavaScript ';
 		tmp+='<textarea cols="80" name="SaveData' + Number + '" rows="6" tabindex="51" class="fmtxtra"></textarea></div>';
 		$id('home_side_form').innerHTML+=tmp;
 		//this.scroll(0, 65000);
@@ -659,11 +659,11 @@ function additem()
 </script>
 
 
-<a href=javascript:; onclick="additem();" class=manage_submit>µã»÷Ìí¼Ó×Ô¶¨Òå´úÂë(¿ÉÒÔ²åÈë¹ã¸æ»òÊÇÈÎÒâHTML´úÂë)</a>
+<a href=javascript:; onclick="additem();" class=manage_submit>ç‚¹å‡»æ·»åŠ è‡ªå®šä¹‰ä»£ç (å¯ä»¥æ’å…¥å¹¿å‘Šæˆ–æ˜¯ä»»æ„HTMLä»£ç )</a>
 	<%
 	
 
-	Side_Select = Array("×Ó°æ¿é","°æ¿éÈÈÌû","°æ¿é¾«»ª")
+	Side_Select = Array("å­ç‰ˆå—","ç‰ˆå—çƒ­å¸–","ç‰ˆå—ç²¾å")
 	
 	Set Rs = LDExeCute("Select * from LeadBBS_Setup where RID=01003 order by ClassNum",0)
 	If Not Rs.Eof Then
@@ -680,13 +680,13 @@ function additem()
 	<hr class=splitline>
 	<br />
 	<p>
-	<b>°æÃæ±ßÀ¸µ÷ÓÃÉèÖÃ</b>
+	<b>ç‰ˆé¢è¾¹æ è°ƒç”¨è®¾ç½®</b>
 	</p>
 	<%
 	For Sn = 0 To Ubound(Side_Select,1)
 		CheckFlag = 0
 		RecordCount = 10
-		If Sn = 4 Then RecordCount = 5 '×îĞÂÍ¼Æ¬Ä¬¼ÇÂ¼ÌõÊı
+		If Sn = 4 Then RecordCount = 5 'æœ€æ–°å›¾ç‰‡é»˜è®°å½•æ¡æ•°
 		Title = Side_Select(Sn)
 		OtherInfo = ""
 		Sort = 0
@@ -713,21 +713,21 @@ function additem()
 				Response.Write ">"
 			End If%><%=Side_Select(Sn)%>
 		</td><td>
-		±êÌâ <input class='fminpt input_3' maxlength=50 name=board_Title<%=Sn%> value="<%=htmlencode(Title)%>">
+		æ ‡é¢˜ <input class='fminpt input_3' maxlength=50 name=board_Title<%=Sn%> value="<%=htmlencode(Title)%>">
 		</td><td>
 		<%If Sn = 0 Then%>
 		<input name=board_RecordCount<%=Sn%> value="0" maxLength="2" class="fminpt input_1" type="hidden">
 		<%Else%>
-		µ÷ÓÃÊıÁ¿ <input name=board_RecordCount<%=Sn%> value="<%=RecordCount%>" maxLength="2" class="fminpt input_1">
+		è°ƒç”¨æ•°é‡ <input name=board_RecordCount<%=Sn%> value="<%=RecordCount%>" maxLength="2" class="fminpt input_1">
 		<%End If%>
 		</td><td>
-		Ë³Ğò <input name=board_Sort<%=Sn%> value="<%=Sort%>" maxLength="2" class="fminpt input_1">
+		é¡ºåº <input name=board_Sort<%=Sn%> value="<%=Sort%>" maxLength="2" class="fminpt input_1">
 		</td></tr>
 		
 		<%If Sn = 3 Then%>
 		<tr><td> </td><td colspan="3">
-		×¨Çø±àºÅ <input name=board_OtherInfo<%=Sn%> value="<%=OtherInfo%>" maxLength="12" class="fminpt input_2">
-		<a href="../ForumBoard/ForumBoardAssort.asp">ÏêÏ¸±àºÅÖÁ°æÃæ×¨Çø¹ÜÀí²é¿´</a>
+		ä¸“åŒºç¼–å· <input name=board_OtherInfo<%=Sn%> value="<%=OtherInfo%>" maxLength="12" class="fminpt input_2">
+		<a href="../ForumBoard/ForumBoardAssort.asp">è¯¦ç»†ç¼–å·è‡³ç‰ˆé¢ä¸“åŒºç®¡ç†æŸ¥çœ‹</a>
 		</td></tr>
 		<%End If%>
 		</table>
@@ -736,17 +736,17 @@ function additem()
 	%>
 	
 	<p>
-	<input name=submit type=submit value="Íê³ÉÉèÖÃ" class="fmbtn">
+	<input name=submit type=submit value="å®Œæˆè®¾ç½®" class="fmbtn">
 	</p>
 	</form>
-		<div class=frametitle>×¢ÊÍ:</div>
+		<div class=frametitle>æ³¨é‡Š:</div>
 		<ol class=listli>
-		<li>ÈôÒªÔÚÊ×Ò³ÏÔÊ¾ÏàÓ¦ĞÅÏ¢Çë¹´Ñ¡Ç°Ãæ¸´Ñ¡¿ò</li>
-		<li>±êÌâ: Ö¸µÄÊÇµ÷ÓÃÀ¸Ä¿µÄTITLE</li>
-		<li>µ÷ÓÃÊıÁ¿: µ÷ÓÃÏÔÊ¾ÏàÓ¦ÄÚÈİµÄ¼ÇÂ¼ÌõÊı</li>
-		<li>Ë³Ğò: ÔÚ²àÀ¸µÄÏÔÊ¾Ë³Ğò, ´ÓÉÏÖÁÏÂ. Êı×ÖÔ½Ğ¡´ú±íÏÔÊ¾ÔÚÔ½ÉÏÃæµÄÎ»ÖÃ</li>
-		<li>×¨Çø±àºÅ: Èç¹ûĞèÒªµ÷ÓÃ×¨Çø,Ôò»¹ĞèÒªÌîĞ´ÏàÓ¦µÄ°æÃæ×¨Çø±àºÅ,¿ÉÒÔÊÇ×Ü×¨Ìâ±àºÅ(¼´ÎŞËùÊô°æÃæ)</li>
-		<li>×Ó°æ¿é: ÈôÉèÖÃ²àÀ¸ÏÔÊ¾×Ó°æ¿é,Ôò²»»áÔÙÖØ¸´ÔÚÆäËüÇøÓòÏÔÊ¾.</li>
+		<li>è‹¥è¦åœ¨é¦–é¡µæ˜¾ç¤ºç›¸åº”ä¿¡æ¯è¯·å‹¾é€‰å‰é¢å¤é€‰æ¡†</li>
+		<li>æ ‡é¢˜: æŒ‡çš„æ˜¯è°ƒç”¨æ ç›®çš„TITLE</li>
+		<li>è°ƒç”¨æ•°é‡: è°ƒç”¨æ˜¾ç¤ºç›¸åº”å†…å®¹çš„è®°å½•æ¡æ•°</li>
+		<li>é¡ºåº: åœ¨ä¾§æ çš„æ˜¾ç¤ºé¡ºåº, ä»ä¸Šè‡³ä¸‹. æ•°å­—è¶Šå°ä»£è¡¨æ˜¾ç¤ºåœ¨è¶Šä¸Šé¢çš„ä½ç½®</li>
+		<li>ä¸“åŒºç¼–å·: å¦‚æœéœ€è¦è°ƒç”¨ä¸“åŒº,åˆ™è¿˜éœ€è¦å¡«å†™ç›¸åº”çš„ç‰ˆé¢ä¸“åŒºç¼–å·,å¯ä»¥æ˜¯æ€»ä¸“é¢˜ç¼–å·(å³æ— æ‰€å±ç‰ˆé¢)</li>
+		<li>å­ç‰ˆå—: è‹¥è®¾ç½®ä¾§æ æ˜¾ç¤ºå­ç‰ˆå—,åˆ™ä¸ä¼šå†é‡å¤åœ¨å…¶å®ƒåŒºåŸŸæ˜¾ç¤º.</li>
 		</ol>
 	<%
 
@@ -767,7 +767,7 @@ Sub Side_UpdateFormData
 		If CheckFlag = "1" Then
 			Title = Left(Replace(Title,"|",""),50)
 			SaveData = Replace(Replace(Left(Replace(SaveData,"|",""),10240),"<" & "%","&lt;%"),"%" & ">","%&gt;")
-			If Title = "" Then Title = "ÎŞ±êÌâ"
+			If Title = "" Then Title = "æ— æ ‡é¢˜"
 			If isNumeric(RecordCount) = 0 Then RecordCount = 10
 			RecordCount = cCur(Fix(RecordCount))
 			If RecordCount < 1 or RecordCount > 99 Then RecordCount = 10
@@ -812,7 +812,7 @@ Sub Side_UpdateFormData
 			End If
 		End If
 	Next
-	Side_UpdateFileData
+	Side_UpdateFileData()
 	
 	
 	For Sn = 0 to 4
@@ -823,7 +823,7 @@ Sub Side_UpdateFormData
 		OtherInfo = Request.Form("board_OtherInfo" & Sn)
 		If CheckFlag = "1" Then
 			Title = Left(Replace(Title,"|",""),50)
-			If Title = "" Then Title = "ÎŞ±êÌâ"
+			If Title = "" Then Title = "æ— æ ‡é¢˜"
 			If isNumeric(RecordCount) = 0 Then RecordCount = 10
 			RecordCount = cCur(Fix(RecordCount))
 			If RecordCount < 1 or RecordCount > 99 Then RecordCount = 10
@@ -852,7 +852,7 @@ Sub Side_UpdateFormData
 		End If
 	Next
 	
-	Board_Side_UpdateFileData
+	Board_Side_UpdateFileData()
 
 End Sub
 
@@ -919,7 +919,7 @@ Sub Side_UpdateFileData
 	Next
 	Str = Str & "%" & ">"
 	CALL ADODB_SaveToFile(Str,DEF_BBS_HomeUrl & "inc/IncHtm/Boards_Side_Setup.asp")
-	Response.Write "<p>Ê×Ò³²àÀ¸ÒÑÍê³ÉÉèÖÃ. Ïà¹ØÉèÖÃ²¢²»Ò»¶¨Á¢¼´ÉúĞ§,ÏÂ´Î¸ôÊ±Ë¢ĞÂ½«»á×Ô¶¯Íê³É¸üĞÂ.</p><p><a href=""SiteInfo.asp?action=Side"">µã´Ë·µ»ØÉèÖÃ</a></p>"
+	Response.Write "<p>é¦–é¡µä¾§æ å·²å®Œæˆè®¾ç½®. ç›¸å…³è®¾ç½®å¹¶ä¸ä¸€å®šç«‹å³ç”Ÿæ•ˆ,ä¸‹æ¬¡éš”æ—¶åˆ·æ–°å°†ä¼šè‡ªåŠ¨å®Œæˆæ›´æ–°.</p><p><a href=""SiteInfo.asp?action=Side"">ç‚¹æ­¤è¿”å›è®¾ç½®</a></p>"
 
 End Sub
 
@@ -985,7 +985,7 @@ Sub Board_Side_UpdateFileData
 	Str = Str & "Const GBL_B_SubBoard_Flag = " & SubBoard_Flag & VbCrLf
 	Str = Str & "%" & ">"
 	CALL ADODB_SaveToFile(Str,DEF_BBS_HomeUrl & "inc/IncHtm/Boards_Side_Setup2.asp")
-	Response.Write "<p>°æÃæ²àÀ¸ÒÑÍê³ÉÉèÖÃ. </p><p><a href=""SiteInfo.asp?action=Side"">µã´Ë·µ»ØÉèÖÃ</a></p>"
+	Response.Write "<p>ç‰ˆé¢ä¾§æ å·²å®Œæˆè®¾ç½®. </p><p><a href=""SiteInfo.asp?action=Side"">ç‚¹æ­¤è¿”å›è®¾ç½®</a></p>"
 
 End Sub
 %>

@@ -1,6 +1,6 @@
-<!-- #include file=MakeAnnounceTop.asp -->
+<!--#include file="MakeAnnounceTop.asp"-->
 <%
-Const LMT_PollNeedPoints = 100 'ÓÃ»§Í¶Æ±Ìû×ÓĞèÒª´ïµ½µÄ»ı·Ö£¬¿ÉÒÔÎª¸º¡£
+Const LMT_PollNeedPoints = 100 'ç”¨æˆ·æŠ•ç¥¨å¸–å­éœ€è¦è¾¾åˆ°çš„ç§¯åˆ†ï¼Œå¯ä»¥ä¸ºè´Ÿã€‚
 
 Dim PollTitleID,SelectItemID
 
@@ -29,31 +29,31 @@ Function DisplayVoteForm(AnnounceID,VoteFlag)
 			If Not Rs.Eof Then
 				Rs.Close
 				Set Rs = Nothing
-				DisplayPollResult 120,AnnounceID,"ÄãÒÑÍ¶¹ıÆ±£¬Í¶Æ±½á¹ûÈçÏÂ",GetData
+				DisplayPollResult 120,AnnounceID,"ä½ å·²æŠ•è¿‡ç¥¨ï¼ŒæŠ•ç¥¨ç»“æœå¦‚ä¸‹",GetData
 			Else
 				Rs.Close
 				Set Rs = Nothing
 				If VoteFlag = 1 Then
 					If GetData(4,0) Then
-						If PollOneTicketCheckbox(GetData) = 1 Then DisplayPollResult 120,AnnounceID,"ÄãÒÑÍ¶¹ıÆ±£¬Í¶Æ±½á¹ûÈçÏÂ",GetData
+						If PollOneTicketCheckbox(GetData) = 1 Then DisplayPollResult 120,AnnounceID,"ä½ å·²æŠ•è¿‡ç¥¨ï¼ŒæŠ•ç¥¨ç»“æœå¦‚ä¸‹",GetData
 					Else
-						If PollOneTicketRadio(GetData) = 1 Then DisplayPollResult 120,AnnounceID,"ÄãÒÑÍ¶¹ıÆ±£¬Í¶Æ±½á¹ûÈçÏÂ",GetData
+						If PollOneTicketRadio(GetData) = 1 Then DisplayPollResult 120,AnnounceID,"ä½ å·²æŠ•è¿‡ç¥¨ï¼ŒæŠ•ç¥¨ç»“æœå¦‚ä¸‹",GetData
 					End If
 				Else
-					DisplayPollForm 550,400,GetData
-					If CheckSupervisorUserName = 1 and GBL_UserID > 0 Then DisplayPollResult 120,AnnounceID,"ÄúÊÇ¹ÜÀíÔ±£¬Í¶Æ±½á¹ûÈçÏÂ",GetData
+					Call DisplayPollForm(550,400,GetData)
+					If CheckSupervisorUserName() = 1 and GBL_UserID > 0 Then DisplayPollResult 120,AnnounceID,"æ‚¨æ˜¯ç®¡ç†å‘˜ï¼ŒæŠ•ç¥¨ç»“æœå¦‚ä¸‹",GetData
 				End If
 			End If
 		Else
-			DisplayPollResult 120,AnnounceID,"Í¶Æ±ÒÑ¹ıÆÚ£¬Í¶Æ±½á¹ûÈçÏÂ",GetData
+			DisplayPollResult 120,AnnounceID,"æŠ•ç¥¨å·²è¿‡æœŸï¼ŒæŠ•ç¥¨ç»“æœå¦‚ä¸‹",GetData
 		End If
 	Else
-		DisplayPollResult 120,AnnounceID,"Ìû×ÓÒÑËø¶¨£¬Í¶Æ±½á¹ûÈçÏÂ",GetData
+		DisplayPollResult 120,AnnounceID,"å¸–å­å·²é”å®šï¼ŒæŠ•ç¥¨ç»“æœå¦‚ä¸‹",GetData
 	End If
 
 End Function
 
-Rem ÏÔÊ¾Ä³Í¶Æ±Ö÷Ìâµ±Ç°Í¶Æ±½á¹û
+Rem æ˜¾ç¤ºæŸæŠ•ç¥¨ä¸»é¢˜å½“å‰æŠ•ç¥¨ç»“æœ
 Function DisplayPollResult(IMGWidth,AnnounceID,TmpStr,GetData)
 
 	Dim ItemNum
@@ -75,7 +75,7 @@ Function DisplayPollResult(IMGWidth,AnnounceID,TmpStr,GetData)
 		<tr class="tbinhead">
 			<td>
 			<div class="value"><%=TmpStr%>
-			[<a href="#no" onclick="if($id('PollUser').style.display=='none'){$id('PollUser').style.display='block';getAJAX('a.asp','ol=2&amp;B=<%=GBL_board_ID%>&amp;ID=<%=GetData(1,0)%>','PollUser');}">Í¶Æ±ÈË</a>]
+			[<a href="#no" onclick="if($id('PollUser').style.display=='none'){$id('PollUser').style.display='block';getAJAX('a.asp','ol=2&amp;B=<%=GBL_board_ID%>&amp;ID=<%=GetData(1,0)%>','PollUser');}">æŠ•ç¥¨äºº</a>]
 			</div>
 			</td>
 			<td>
@@ -97,7 +97,7 @@ Function DisplayPollResult(IMGWidth,AnnounceID,TmpStr,GetData)
                         	Temp2 = 1
                         End If
                         Response.Write "		<td class=""tdbox"">"
-                        Response.Write "<img height=""9"" src=""" & DEF_BBS_HomeUrl & "images/" & GBL_DefineImage & "vote.gif"" width=""" & Temp2 & """ border=""0"" class=""absmiddle"" alt=""Í¶Æ±½á¹û"" /> "
+                        Response.Write "<img height=""9"" src=""" & DEF_BBS_HomeUrl & "images/" & GBL_DefineImage & "vote.gif"" width=""" & Temp2 & """ border=""0"" class=""absmiddle"" alt=""æŠ•ç¥¨ç»“æœ"" /> "
 			If Temp1<0.01 Then
                         	If inStr(Temp1,"0.")<1 Then
                         		If temp2 <= 0 then
@@ -119,8 +119,8 @@ Function DisplayPollResult(IMGWidth,AnnounceID,TmpStr,GetData)
 
 End Function
 
-Rem ÏÔÊ¾Ä³Í¶Æ±Ö÷ÌâÍ¶Æ±½çÃæ
-Rem OpenWidth Í¶Æ±½á¹û´°¿Ú¿í,OpenHeight Í¶Æ±½á¹û´°¿Ú¸ß
+Rem æ˜¾ç¤ºæŸæŠ•ç¥¨ä¸»é¢˜æŠ•ç¥¨ç•Œé¢
+Rem OpenWidth æŠ•ç¥¨ç»“æœçª—å£å®½,OpenHeight æŠ•ç¥¨ç»“æœçª—å£é«˜
 Function DisplayPollForm(OpenWidth,OpenHeight,GetData)
 
 	Dim TypeStr
@@ -147,7 +147,7 @@ Function DisplayPollForm(OpenWidth,OpenHeight,GetData)
 			}
 			if (selitemstr=="")
 			{
-				alert("Í¶Æ±ÇëÏÈÑ¡ÔñÏîÄ¿!");
+				alert("æŠ•ç¥¨è¯·å…ˆé€‰æ‹©é¡¹ç›®!");
 				return false;
 			}
 			getAJAX("a.asp","ol=1&B=<%=GBL_board_ID%>&ID=<%=GetData(1,0)%>&SelectItemID=" + selitemstr,"PollResult");
@@ -157,7 +157,7 @@ Function DisplayPollForm(OpenWidth,OpenHeight,GetData)
 	</script>
 			<form name="PollForm<%=GetData(1,0)%>" action="" id="PollForm<%=GetData(1,0)%>" onsubmit="return CheckPollFromZwle<%=GetData(1,0)%>(this)" method="post">
 			<input type="hidden" name="PollTitleID" value="<%=GetData(1,0)%>" />
-			<table cellpadding="0" cellspacing="0" class="blanktable"><tr class="tbinhead"><td><div class="value">ÏÈÍ¶Æ±²ÅÄÜ²é¿´½á¹û</div></td></tr>
+			<table cellpadding="0" cellspacing="0" class="blanktable"><tr class="tbinhead"><td><div class="value">å…ˆæŠ•ç¥¨æ‰èƒ½æŸ¥çœ‹ç»“æœ</div></td></tr>
 		<%For TempN = 0 To ItemNum
 			Response.Write "	<tr><td><input type=""" & TypeStr & """ name=""radios"" value=""" & GetData(0,TempN) & """ onclick=""PollForm" & GetData(1,0) & "Value = " & GetData(0,TempN) & ";"" class=""fmchkbox"" />"
 			Response.Write HtmlEncode(GetData(2,TempN)) & "</td></tr>" & VbCrLf
@@ -165,32 +165,32 @@ Function DisplayPollForm(OpenWidth,OpenHeight,GetData)
 		%>
 		</table>
 		</form>
-		<div id="pollbtn"><input type="button" onclick="if(CheckPollFromZwle<%=GetData(1,0)%>(this)){$id('pollbtn').style.display='none';$id('PollResult').style.display='block';CheckPollFromZwle<%=GetData(1,0)%>(this);}" value="Í¶Æ±" id="poll" name="poll" class="fmbtn btn_2" /></div>
-		<div id="PollResult" style="display:none;">Ìá½»ÖĞ...</div>
+		<div id="pollbtn"><input type="button" onclick="if(CheckPollFromZwle<%=GetData(1,0)%>(this)){$id('pollbtn').style.display='none';$id('PollResult').style.display='block';CheckPollFromZwle<%=GetData(1,0)%>(this);}" value="æŠ•ç¥¨" id="poll" name="poll" class="fmbtn btn_2" /></div>
+		<div id="PollResult" style="display:none;">æäº¤ä¸­...</div>
 		<%
 	End If
 
 End Function
 
-Rem Í¶Ò»Æ±
+Rem æŠ•ä¸€ç¥¨
 Function PollOneTicketRadio(GetData)
 
 	If GBL_CHK_User = "" Then
-		GBL_CHK_TempStr = "ÏÈµÇÂ¼²ÅÄÜÍ¶Æ±"
+		GBL_CHK_TempStr = "å…ˆç™»å½•æ‰èƒ½æŠ•ç¥¨"
 		Exit Function
 	End If
 
 	If GBL_CHK_OnlineTime < DEF_NeedOnlineTime Then
-		GBL_CHK_TempStr = "ÄãµÄ" & DEF_PointsName(4) & "(ÔÚÏßÊ±¼ä)²»×ã,ĞèÒª" & Fix(DEF_NeedOnlineTime/60) & "²ÅÄÜÍ¶Æ±!"
+		GBL_CHK_TempStr = "ä½ çš„" & DEF_PointsName(4) & "(åœ¨çº¿æ—¶é—´)ä¸è¶³,éœ€è¦" & Fix(DEF_NeedOnlineTime/60) & "æ‰èƒ½æŠ•ç¥¨!"
 		Exit Function
 	End If
 
 	If GBL_CHK_Points < LMT_PollNeedPoints Then
-		GBL_CHK_TempStr = "ÄãµÄ" & DEF_PointsName(0) & "²»×ã,ĞèÒª" & LMT_PollNeedPoints & "²ÅÄÜÍ¶Æ±!"
+		GBL_CHK_TempStr = "ä½ çš„" & DEF_PointsName(0) & "ä¸è¶³,éœ€è¦" & LMT_PollNeedPoints & "æ‰èƒ½æŠ•ç¥¨!"
 		Exit Function
 	End If
 
-	If CheckUserAnnounceLimit = 0 Then Exit Function
+	If CheckUserAnnounceLimit() = 0 Then Exit Function
 	PollTitleID = Left(Request.Form("ID"),14)
 	SelectItemID = Left(Request.Form("SelectItemID"),14)
 	SelectItemID = Replace(SelectItemID,",","")
@@ -231,25 +231,25 @@ Function PollOneTicketRadio(GetData)
 
 End Function
 
-Rem Í¶¶àÆ±
+Rem æŠ•å¤šç¥¨
 Function PollOneTicketCheckbox(GetData)
 
 	If GBL_CHK_User = "" Then
-		GBL_CHK_TempStr = "ÏÈµÇÂ¼²ÅÄÜÍ¶Æ±"
+		GBL_CHK_TempStr = "å…ˆç™»å½•æ‰èƒ½æŠ•ç¥¨"
 		Exit Function
 	End If
 
 	If GBL_CHK_OnlineTime < DEF_NeedOnlineTime Then
-		GBL_CHK_TempStr = "ÄãµÄ" & DEF_PointsName(4) & "(ÔÚÏßÊ±¼ä)²»×ã,ĞèÒª" & Fix(DEF_NeedOnlineTime/60) & "²ÅÄÜÍ¶Æ±!"
+		GBL_CHK_TempStr = "ä½ çš„" & DEF_PointsName(4) & "(åœ¨çº¿æ—¶é—´)ä¸è¶³,éœ€è¦" & Fix(DEF_NeedOnlineTime/60) & "æ‰èƒ½æŠ•ç¥¨!"
 		Exit Function
 	End If
 
 	If GBL_CHK_Points < LMT_PollNeedPoints Then
-		GBL_CHK_TempStr = "ÄãµÄ" & DEF_PointsName(0) & "²»×ã,ĞèÒª" & LMT_PollNeedPoints & "²ÅÄÜÍ¶Æ±!"
+		GBL_CHK_TempStr = "ä½ çš„" & DEF_PointsName(0) & "ä¸è¶³,éœ€è¦" & LMT_PollNeedPoints & "æ‰èƒ½æŠ•ç¥¨!"
 		Exit Function
 	End If
 	
-	If CheckUserAnnounceLimit = 0 Then Exit Function
+	If CheckUserAnnounceLimit() = 0 Then Exit Function
 	PollTitleID = Left(Request.Form("ID"),14)
 	SelectItemID = Request.Form("SelectItemID")
 	If Left(SelectItemID,1) = "," Then SelectItemID = Mid(SelectItemID,2)
@@ -305,7 +305,7 @@ End Function
 
 Sub CheckPollTitleID
 
-	CheckPass
+	CheckPass()
 	Dim PollTitleID,SelectItemID
 	A_NotReplay = 0 
 	PollTitleID = Left(Request.Form("ID"),14)
@@ -313,18 +313,18 @@ Sub CheckPollTitleID
 	If isNumeric(PollTitleID) = 0 Then PollTitleID = 0
 	PollTitleID = Fix(cCur(PollTitleID))
 	
-	CheckAccessLimit
+	CheckAccessLimit()
 
 	Dim Rs,SQL
 	SQL = sql_select("Select BoardID,NotReplay,TitleStyle from LeadBBS_Announce Where ID=" & PollTitleID,1)
 	Set Rs = LDExeCute(SQL,0)
 	If Rs.Eof Then
-		GBL_CHK_TempStr = "´íÎó£¬²»´æÔÚ´ËÍ¶Æ±¡£"
+		GBL_CHK_TempStr = "é”™è¯¯ï¼Œä¸å­˜åœ¨æ­¤æŠ•ç¥¨ã€‚"
 		Rs.Close
 		Set Rs = Nothing
 	Else
 		If cCur(Rs(0)) <> GBL_Board_ID Then
-			GBL_CHK_TempStr = "´íÎó£¬²»´æÔÚ´ËÍ¶Æ±¡£"
+			GBL_CHK_TempStr = "é”™è¯¯ï¼Œä¸å­˜åœ¨æ­¤æŠ•ç¥¨ã€‚"
 		Else
 			If A_NotReplay = 0 and Rs(1) = 1 Then A_NotReplay = 1
 			A_TitleStyle = cCur(Rs(2))
@@ -402,19 +402,19 @@ Sub PollUserList
 			RecordCount=0
 			Rs.Close
 			Set Rs = Nothing
-			Response.Write "Í¶Æ±²»´æÔÚ¡£"
+			Response.Write "æŠ•ç¥¨ä¸å­˜åœ¨ã€‚"
 			Exit Sub
 		Else
 			If cCur(Rs(1)) <> GBL_Board_ID Then
 				Rs.Close
 				Set Rs = Nothing
-				Response.Write "Í¶Æ±²»´æÔÚ¡£"
+				Response.Write "æŠ•ç¥¨ä¸å­˜åœ¨ã€‚"
 				Exit Sub
 			End If
 			If Rs(2) >= 60 Then
 				Rs.Close
 				Set Rs = Nothing
-				Response.Write "Ìû×ÓÒÑ¹Ø±Õ¡£"
+				Response.Write "å¸–å­å·²å…³é—­ã€‚"
 				Exit Sub
 			End If
 			RecordCount = Rs(0)
@@ -486,7 +486,7 @@ Sub PollUserList
 			If Rs.Eof Then
 				Rs.Close
 				Set Rs = Nothing
-				Response.Write "ÎŞÏà¹ØÄÚÈİ¡£"
+				Response.Write "æ— ç›¸å…³å†…å®¹ã€‚"
 				Exit Sub
 			Else
 				if Rs(0) then
@@ -562,34 +562,34 @@ Sub PollUserList
 		
 			PageStr = PageStr & "<tr><td colspan=""2"" class=""tdbox""><div class=""j_page"">"
 			If FirstID >= MaxRecordID Then
-				'PageStr = PageStr & "Ê×Ò³" & VbCrLf
-				'PageStr = PageStr & " ÉÏÒ³" & VbCrLf
+				'PageStr = PageStr & "é¦–é¡µ" & VbCrLf
+				'PageStr = PageStr & " ä¸Šé¡µ" & VbCrLf
 			Else
-				PageStr = PageStr & "<a href=""#no"" onclick=""getAJAX('a.asp','" & UrlStr & "&amp;Start=0','" & ObjName & "');"">Ê×Ò³</a> " & VbCrLf
-				PageStr = PageStr & " <a href=""#no"" onclick=""getAJAX('a.asp','" & UrlStr & "&amp;Start=" & FirstID & "&amp;UF=1','" & ObjName & "');"">ÉÏÒ³</a> " & VbCrLf
+				PageStr = PageStr & "<a href=""#no"" onclick=""getAJAX('a.asp','" & UrlStr & "&amp;Start=0','" & ObjName & "');"">é¦–é¡µ</a> " & VbCrLf
+				PageStr = PageStr & " <a href=""#no"" onclick=""getAJAX('a.asp','" & UrlStr & "&amp;Start=" & LngStr(FirstID) & "&amp;UF=1','" & ObjName & "');"">ä¸Šé¡µ</a> " & VbCrLf
 			End if
 		
 			If LastID <= MinRecordID Then
-				'PageStr = PageStr & " ÏÂÒ³" & VbCrLf
-				'PageStr = PageStr & " Î²Ò³" & VbCrLf
+				'PageStr = PageStr & " ä¸‹é¡µ" & VbCrLf
+				'PageStr = PageStr & " å°¾é¡µ" & VbCrLf
 			Else
-				PageStr = PageStr & " <a href=#no onclick=""getAJAX('a.asp','" & UrlStr & "&amp;Start=" & LastID & "','" & ObjName & "');"">ÏÂÒ³</a> " & VbCrLf
-				PageStr = PageStr & " <a href=#no onclick=""getAJAX('a.asp','" & UrlStr & "&amp;Start=1&amp;UF=1','" & ObjName & "');"">Î²Ò³</a> " & VbCrLf
+				PageStr = PageStr & " <a href=#no onclick=""getAJAX('a.asp','" & UrlStr & "&amp;Start=" & LngStr(LastID) & "','" & ObjName & "');"">ä¸‹é¡µ</a> " & VbCrLf
+				PageStr = PageStr & " <a href=#no onclick=""getAJAX('a.asp','" & UrlStr & "&amp;Start=1&amp;UF=1','" & ObjName & "');"">å°¾é¡µ</a> " & VbCrLf
 			End if
 			
-			PageStr = PageStr & "<b>¹²" & RecordCount & "ÈË</b>"
+			PageStr = PageStr & "<b>å…±" & RecordCount & "äºº</b>"
 			'If (RecordCount mod DEF_MaxListNum)=0 Then
-			'	PageStr = PageStr & " ¼Æ<b>" & clng(RecordCount/DEF_MaxListNum) & "</b>Ò³"
+			'	PageStr = PageStr & " è®¡<b>" & clng(RecordCount/DEF_MaxListNum) & "</b>é¡µ"
 			'Else
 			'	If RecordCount>=DEF_MaxListNum Then
 			'		SQL = fix(RecordCount/DEF_MaxListNum)
 			'		If (RecordCount mod DEF_MaxListNum) <> 0 Then SQL = SQL + 1
-			'		PageStr = PageStr & " ¼Æ<b>" & SQL & "</b>Ò³"
+			'		PageStr = PageStr & " è®¡<b>" & SQL & "</b>é¡µ"
 			'	Else
-			'		PageStr = PageStr & " ¼Æ<b>1</b>Ò³"
+			'		PageStr = PageStr & " è®¡<b>1</b>é¡µ"
 			'	End If
 			'End If
-			'PageStr = PageStr & " Ã¿Ò³<b>" & DEF_MaxListNum & "</b>ÈË"
+			'PageStr = PageStr & " æ¯é¡µ<b>" & DEF_MaxListNum & "</b>äºº"
 			PageStr = PageStr & "</div></td></tr>"
 		End If
 	End If
@@ -599,9 +599,9 @@ Sub PollUserList
 			<div class="value">
 	  <%
 	If VoteType = 2 Then
-		Response.Write "<b>¹²<span class=""redfont"">" & RecordCount & "</span>¸öÈË¹ºÂòÁË´ËÌû</b>"
+		Response.Write "<b>å…±<span class=""redfont"">" & RecordCount & "</span>ä¸ªäººè´­ä¹°äº†æ­¤å¸–</b>"
 	Else
-		Response.Write "<b>¹²<span class=""redfont"">" & RecordCount & "</span>¸öÈË²ÎÓëÍ¶Æ±</b>"
+		Response.Write "<b>å…±<span class=""redfont"">" & RecordCount & "</span>ä¸ªäººå‚ä¸æŠ•ç¥¨</b>"
 	End If
 	%>
 			</div>
@@ -610,22 +610,22 @@ Sub PollUserList
 		<tr class="tbinhead">
 		<td><div class="value"><%
 		If VoteType = 2 Then
-			Response.Write "¹ºÂòÈË"
+			Response.Write "è´­ä¹°äºº"
 		Else
-			Response.Write "Í¶Æ±ÈË"
+			Response.Write "æŠ•ç¥¨äºº"
 		End If
 	    %></div></td>
 	    <td><div class="value"><%
 		If VoteType = 2 Then
-			Response.Write "»¨·Ñ"
+			Response.Write "èŠ±è´¹"
 		Else
-			Response.Write "Ñ¡Ïî"
+			Response.Write "é€‰é¡¹"
 		End If
 	    %></div></td>
 	  </tr>
 	<%
 	If Num = -1 Then
-		Response.Write "<tr><td colspan=""2"">ÔİÊ±ÎŞÈËÍ¶Æ±!</td></tr>"
+		Response.Write "<tr><td colspan=""2"">æš‚æ—¶æ— äººæŠ•ç¥¨!</td></tr>"
 	End if
 	
 	Dim TempN,m
@@ -679,16 +679,16 @@ End Sub
 
 Sub DisplayBuyAnnounce
 
-	CheckPass
+	CheckPass()
 	If GBL_CHK_Flag <> 1 Then
-		Response.Write "<div class=""alert"">" & "ÇëÏÈµÇÂ¼ÂÛÌ³½øĞĞ¹ºÂò¡£</div>"
+		Response.Write "<div class=""alert"">" & "è¯·å…ˆç™»å½•è®ºå›è¿›è¡Œè´­ä¹°ã€‚</div>"
 		Exit Sub
 	End If
 	Dim AnnounceID,NeedValue,SellUserID
 
 	AnnounceID = Left(Request.Form("AnnounceID"),14)
 	If isNumeric(AnnounceID) = 0 or inStr(AnnounceID,",") > 0 or AnnounceID = "" Then
-		Response.Write "<div class=""alert"">" & "´íÎó,ÇëÌá¹©Òª¹ºÂòµÄÌû×ÓĞÅÏ¢!</div>" & VbCrLf
+		Response.Write "<div class=""alert"">" & "é”™è¯¯,è¯·æä¾›è¦è´­ä¹°çš„å¸–å­ä¿¡æ¯!</div>" & VbCrLf
 		Exit Sub
 	End if
 
@@ -697,7 +697,7 @@ Sub DisplayBuyAnnounce
 	SQL = sql_select("Select BoardID,TopicType,NeedValue,UserID from LeadBBS_Announce where id=" & AnnounceID,1)
 	Set Rs = LDExeCute(SQL,0)
 	If Rs.Eof Then
-		Response.Write "<div class=""alert"">" & "´íÎó,Òª¹ºÂòµÄÌû×Ó²»´æÔÚ!</div>" & VbCrLf
+		Response.Write "<div class=""alert"">" & "é”™è¯¯,è¦è´­ä¹°çš„å¸–å­ä¸å­˜åœ¨!</div>" & VbCrLf
 		Rs.Close
 		Set Rs = Nothing
 		Exit Sub
@@ -711,7 +711,7 @@ Sub DisplayBuyAnnounce
 	Rs.Close
 	Set Rs = Nothing
 	If (TopicType <> 54 and TopicType <> 114 and TopicType <> 49 and TopicType <> 109) or NeedValue < 1 Then
-		Response.Write "<div class=""alert"">" & "´ËÌû×ÓÊôÓÚÃâ·ÑÌû×Ó£¬²»±Ø¹ºÂò!</div>" & VbCrLf
+		Response.Write "<div class=""alert"">" & "æ­¤å¸–å­å±äºå…è´¹å¸–å­ï¼Œä¸å¿…è´­ä¹°!</div>" & VbCrLf
 		Exit Sub
 	End If
 	
@@ -729,24 +729,24 @@ Sub DisplayBuyAnnounce
 	End If
 
 	If TypeValue < NeedValue Then
-		Response.Write "<div class=""alert"">" & "ÄãµÄ" & TypeStr & "²»×ã£¬Ä¿Ç°ÓµÓĞÁ¿Îª" & TypeValue & "£¬¹ºÂò´ËÌûĞèÒª" & TypeStr & "" & NeedValue & ".</div>" & VbCrLf
+		Response.Write "<div class=""alert"">" & "ä½ çš„" & TypeStr & "ä¸è¶³ï¼Œç›®å‰æ‹¥æœ‰é‡ä¸º" & TypeValue & "ï¼Œè´­ä¹°æ­¤å¸–éœ€è¦" & TypeStr & "" & NeedValue & ".</div>" & VbCrLf
 		Exit Sub
 	End If
 
 	If GBL_UserID = SellUserID Then
-		Response.Write "<div class=""alert"">" & "×Ô¼ºµÄÌû×ÓÎŞĞè¹ºÂò.</div>" & VbCrLf
+		Response.Write "<div class=""alert"">" & "è‡ªå·±çš„å¸–å­æ— éœ€è´­ä¹°.</div>" & VbCrLf
 		Exit Sub
 	End If
 
 	Set Rs = LDExeCute(sql_select("Select ID from LeadBBS_VoteUser where AnnounceID=" & AnnounceID & " and UserName='" & Replace(GBL_CHK_User,"'","''") & "'",1),0)
 	If Not Rs.Eof Then
-		Response.Write "<div class=""alert"">" & "ÄãÒÑ¹ºÂò¹ı´ËÌû×Ó.</div>" & VbCrLf
+		Response.Write "<div class=""alert"">" & "ä½ å·²è´­ä¹°è¿‡æ­¤å¸–å­.</div>" & VbCrLf
 		Rs.Close
 		Exit Sub
 	End If
 	Rs.Close
 	Set Rs = Nothing
-	CheckAccessLimit
+	CheckAccessLimit()
 	If GBL_CHK_TempStr <> "" Then
 		Response.Write "<div class=""alert"">" & GBL_CHK_TempStr & "</div>"
 		Exit Sub
@@ -758,11 +758,11 @@ Sub DisplayBuyAnnounce
 		CALL LDExeCute("Update LeadBBS_User Set " & TypeCol & "=" & TypeCol & "+" & NeedValue & " where ID=" & SellUserID,1)
 		CALL LDExeCute("Update LeadBBS_User Set " & TypeCol & "=" & TypeCol & "-" & NeedValue & " where ID=" & GBL_UserID,1)
 		UpdateSessionValue TypeSn,0-NeedValue,1
-		Response.Write "<span class=""greenfont""><b>³É¹¦¹ºÂòÂÛÌ³Ìû×Ó£¬ÇëË¢ĞÂÒ³ÃæÀ´²é¿´Ìû×ÓÄÚÈİ£®</b></span>"
+		Response.Write "<span class=""greenfont""><b>æˆåŠŸè´­ä¹°è®ºå›å¸–å­ï¼Œè¯·åˆ·æ–°é¡µé¢æ¥æŸ¥çœ‹å¸–å­å†…å®¹ï¼</b></span>"
 	Else
 		%>
-		¹ºÂò´ËÌûĞèÒª»¨·Ñ<span class="redfont"><%=NeedValue%></span><%=TypeStr%>£¬ÈôÒª¹ºÂòÇë°´È·¶¨.
-		<br /><input type="button" id="buyButton" value="È·¶¨¹ºÂò" class="fmbtn btn_3" onclick="$id('buyButton').style.display='none';$id('BuyResult').style.display='block';getAJAX('a.asp','ol=3&amp;B=<%=BoardID%>&amp;AnnounceID=<%=AnnounceID%>&amp;buysure=1','BuyResult');" /><%
+		è´­ä¹°æ­¤å¸–éœ€è¦èŠ±è´¹<span class="redfont"><%=NeedValue%></span><%=TypeStr%>ï¼Œè‹¥è¦è´­ä¹°è¯·æŒ‰ç¡®å®š.
+		<br /><input type="button" id="buyButton" value="ç¡®å®šè´­ä¹°" class="fmbtn btn_3" onclick="$id('buyButton').style.display='none';$id('BuyResult').style.display='block';getAJAX('a.asp','ol=3&amp;B=<%=BoardID%>&amp;AnnounceID=<%=AnnounceID%>&amp;buysure=1','BuyResult');" /><%
 	End If
 
 End Sub
@@ -805,7 +805,7 @@ Sub OpinionUserList
 	Set Rs = Nothing
 	Num = Ubound(GetData,2)
 	Dim N,Tmp,SuperFlag
-	SuperFlag = CheckSupervisorUserName
+	SuperFlag = CheckSupervisorUserName()
 	%>
 	<div class="opinion_list">
 	<ol start="<%=Index+1%>">
@@ -829,13 +829,13 @@ Sub OpinionUserList
 			If GetData(2,N) <> 0 Then Response.Write GetData(2,N)%></span>
 			<%
 		Else
-			Response.Write "<span class=""grayfont"">ÎŞÆÀ·Ö</span>"
+			Response.Write "<span class=""grayfont"">æ— è¯„åˆ†</span>"
 		End If
 		If SuperFlag = 1 Then%>
 			<span><%=GetData(5,N)%></span>
 		<%End If
 		If GetData(1,N) = "[LeadBBS]" Then
-			Response.Write "<span class=""uname"">ÏµÍ³ÆÀ¼Û</span>"
+			Response.Write "<span class=""uname"">ç³»ç»Ÿè¯„ä»·</span>"
 		Else%>
 		<span><a href="<%=DEF_BBS_HomeUrl%>User/<%=RW_User(0,"",GetData(1,N),"")%>" target="_blank" class="uname"><%=htmlencode(GetData(1,N))%></a></span>
 		<%
@@ -854,12 +854,12 @@ Sub OpinionUserList
 	If Index < Count Then
 		%>
 		<div class="split">
-		<a href="javascript:;" onclick="getAJAX('a.asp','ol=5&B=<%=GBL_board_ID%>&ID=<%=AnnounceID%>&num=<%=Count%>&PreID=<%=PreID%>&Index=<%=Index%>','opinion<%=AnnounceID%>');">¸ü¶àÆÀ¼Û...</a>
+		<a href="javascript:;" onclick="getAJAX('a.asp','ol=5&B=<%=GBL_board_ID%>&ID=<%=AnnounceID%>&num=<%=Count%>&PreID=<%=PreID%>&Index=<%=Index%>','opinion<%=AnnounceID%>');">æ›´å¤šè¯„ä»·...</a>
 		</div>
 		<%
 	ElseIf OldPreID > 0 Then%>
 		<div class="split">
-		<a href="javascript:;" onclick="getAJAX('a.asp','ol=5&B=<%=GBL_board_ID%>&ID=<%=AnnounceID%>&num=<%=Count%>','opinion<%=AnnounceID%>');">·µ»Ø...</a>
+		<a href="javascript:;" onclick="getAJAX('a.asp','ol=5&B=<%=GBL_board_ID%>&ID=<%=AnnounceID%>&num=<%=Count%>','opinion<%=AnnounceID%>');">è¿”å›...</a>
 		</div>
 		<%
 	End If

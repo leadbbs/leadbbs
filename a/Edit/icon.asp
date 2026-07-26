@@ -1,7 +1,7 @@
-<% @codepage=936 EnableSessionState=False%>
+<% @codepage=65001 EnableSessionState=False%>
 <%Option Explicit
 %>
-<!-- #include file=../../inc/UBBCode_Setup.asp -->
+<!--#include file="../../inc/UBBCode_Setup.asp"-->
 var iconp = -1;
 var iconCookie = 1;
 <%
@@ -80,7 +80,7 @@ function IconPageLst()
 	if(iconmp>0)
 	for(var n=0;n<=iconmp;n++)
 	s+="<a href=#icon onclick=\"IconPage(" + n + ");\" class=j_page>" + (n + 1) + "</a>";
-	if(iconmp>0)s+="<a href=#icon onclick=\"IconPage();\">¡­</a>";
+	if(iconmp>0)s+="<a href=#icon onclick=\"IconPage();\">â€¦</a>";
 	$id('j_page_icon').innerHTML=s;
 	$id('j_page_icon').style.display=iconmp>0?'':'none';
 	
@@ -119,7 +119,7 @@ For N = 1 to DEF_UbbIconGNum
 %>
 wstr+='</select></div>';
 <%Else%>
-	wstr+='²åÈë<a href=<%=DEF_BBS_HomeUrl%>User/Help/Ubb.asp?icon target=_blank>±íÇé</a>';
+	wstr+='æ’å…¥<a href=<%=DEF_BBS_HomeUrl%>User/Help/Ubb.asp?icon target=_blank>è¡¨æƒ…</a>';
 <%End If%>
 <%If reqflag <> 1 Then
 %>wstr+='<div class="layer_close"><a href="javascript:;" onclick="LD.hide(\'editor_icon\');return false;" class="unsel" hidefocus="true" title="close" /></a></div>';<%

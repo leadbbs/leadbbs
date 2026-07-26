@@ -1,9 +1,9 @@
-<!-- #include file=../../inc/Constellation2.asp -->
+<!--#include file="../../inc/Constellation2.asp"-->
 <%
 	
 Sub BlockUpdate
 	
-	If CheckSupervisorPass = 0 or GBL_UserID = 0 Then Exit Sub
+	If CheckSupervisorPass() = 0 or GBL_UserID = 0 Then Exit Sub
 	
 	Dim BlockType
 	BlockType = Left(Request("BlockType"),1)
@@ -11,14 +11,14 @@ Sub BlockUpdate
 	Dim titlestr
 	Select Case BlockType
 		Case "2":
-			titlestr = "°æÃæÖ÷ÌâÖØĞÂÅÅĞò"
+			titlestr = "ç‰ˆé¢ä¸»é¢˜é‡æ–°æ’åº"
 		Case "3":
-			titlestr = "ÖØĞÂÉú³ÉËùÓĞÓÃ»§µÄÅ©ÀúÉúÈÕ"
+			titlestr = "é‡æ–°ç”Ÿæˆæ‰€æœ‰ç”¨æˆ·çš„å†œå†ç”Ÿæ—¥"
 		Case "4":
-			titlestr = "Éú³ÉSiteMap"
+			titlestr = "ç”ŸæˆSiteMap"
 		Case Else
 			BlockType = "1"
-			titlestr = "ĞŞ¸´ËùÓĞÖ÷ÌâÌû×Ó"
+			titlestr = "ä¿®å¤æ‰€æœ‰ä¸»é¢˜å¸–å­"
 	End Select
 	
 	Dim ID
@@ -29,14 +29,14 @@ Sub BlockUpdate
 	If Request("SureFlag") <> "E72ksiOkw2" Then
 		%>
 			<p><form action=UpdateUnderWritePrintColumn.asp method=post>
-			<b><span class=redfont>´Ë²Ù×÷½«<u><%=titlestr%></u>£¬È·¶¨´Ë²Ù×÷Âğ?</span></b><br>
+			<b><span class=redfont>æ­¤æ“ä½œå°†<u><%=titlestr%></u>ï¼Œç¡®å®šæ­¤æ“ä½œå—?</span></b><br>
 			<br>
 			<input type=hidden name=SureFlag value="E72ksiOkw2">
 			<input type=hidden name=BlockType value="<%=BlockType%>">
 			<input type=hidden name=ID value="<%=htmlencode(ID)%>">
 			<input type=hidden name=flag value="<%=htmlencode(GBL_MANAGE_Flag)%>">
 			<br>
-			<input type=submit value=È·¶¨½øĞĞ class=fmbtn><br />
+			<input type=submit value=ç¡®å®šè¿›è¡Œ class=fmbtn><br />
 			</form>
 			</p>
 			
@@ -44,13 +44,13 @@ Sub BlockUpdate
 	Else
 		If Request("executepage") = "" Then
 		%>
-		<p style="font-size:9pt">ÏÂÃæ¿ªÊ¼´¦ÀíÊı¾İ(<u><%=titlestr%></u>)¡£¡£¡£
+		<p style="font-size:9pt">ä¸‹é¢å¼€å§‹å¤„ç†æ•°æ®(<u><%=titlestr%></u>)ã€‚ã€‚ã€‚
 	
 		<table width="400" cellspacing="0" cellpadding="0" style="border:#006600 1px solid;margin:2px 1px 6px 1px;">
 			<tr> 
 				<td><img src=../pic/progressbar.gif width=0 height=16 id=img1 name=img1 align=middle>
 		</td></tr></table> <span id=txt1 name=txt1 style="font-size:9pt">0</span><span style="font-size:9pt">%</span>
-		<span id=tm1 name=tm1 style="font-size:9pt">ÕıÔÚ¹ÀËãĞèÒªÊ±¼ä...</span>
+		<span id=tm1 name=tm1 style="font-size:9pt">æ­£åœ¨ä¼°ç®—éœ€è¦æ—¶é—´...</span>
 		<script src="<%=DEF_BBS_HomeUrl%>inc/js/bar.js?ver=<%=DEF_Jer%>" type="text/javascript"></script>
 		<script>
 			Upl_url = "Io_Info.asp?id=<%=Urlencode(GBL_CHK_User)%>";
@@ -66,13 +66,13 @@ Sub BlockUpdate
 		End If
 		Select Case BlockType
 			Case "2":
-				UpdateBoardData
+				UpdateBoardData()
 			Case "3":
-				UpdateNongLi
+				UpdateNongLi()
 			Case "4":
-				UpdateSiteMap
+				UpdateSiteMap()
 			Case Else
-				UpdateRootMaxMinAnnounceID
+				UpdateRootMaxMinAnnounceID()
 		End Select
 	End If
 
@@ -120,7 +120,7 @@ Sub UpdateRootMaxMinAnnounceID
 		case 0,2:
 			SQL = sql_select("Select ID,RootIDBak,BoardID,ChildNum,TopicType from LeadBBS_Announce where ParentID=0 and RootIDBak>" & NowID & " order by ID ASC",100)
 		case Else
-			SQL = sql_select("Select ID,ID,BoardID,ChildNum,TopicType from LeadBBS_Topic where ID>" & NowID & " order by ID ASC",100)
+			SQL = sql_select("Select ID,ID as id_dup2,BoardID,ChildNum,TopicType from LeadBBS_Topic where ID>" & NowID & " order by ID ASC",100)
 		End select
 		Set Rs = LDExeCute(SQL,0)
 		If Rs.Eof Then
@@ -134,7 +134,7 @@ Sub UpdateRootMaxMinAnnounceID
 			Set Rs = Nothing
 		End If
 		For N = 0 to Ubound(GetData,2)
-			If GetData(4,n) <> 39 Then '¾µÏñÎŞĞèĞŞ¸´
+			If GetData(4,n) <> 39 Then 'é•œåƒæ— éœ€ä¿®å¤
 			'If cCur(GetData(3,n)) > 0 Then
 				RootIDBak = cCur(GetData(1,n))
 				select case DEF_UsedDataBase
@@ -261,7 +261,7 @@ Sub UpdateRootMaxMinAnnounceID
 		End If
 	Loop
 	%>
-	Íê³É
+	å®Œæˆ
 	<%
 	Application.Contents.Remove("Io_" & GBL_CHK_User)
 	application.contents.removeall
@@ -318,7 +318,13 @@ Sub UpdateSiteMap
 	dim MaxFileLen : MaxFileLen = 1024*1024*9
 	
 	Dim InstallDir
+	' LD_GetUrl(1) already ends with DEF_InstallDir, which is "/" when the forum is served from
+	' the web root (Â§14) â€” and every use below appends another "/", so every <loc> came out as
+	' http://host//a/a.aspâ€¦ Trim the trailing slash so the generated sitemap holds real URLs.
 	InstallDir = LD_GetUrl(1)
+	Do While Right(InstallDir,1) = "/"
+		InstallDir = Left(InstallDir,Len(InstallDir)-1)
+	Loop
 
 	dim mapHead	
 	mapHead = "<?xml version=""1.0"" encoding=""UTF-8""?>" & VbCrLf
@@ -343,7 +349,7 @@ Sub UpdateSiteMap
 	FSO.close
 	set fs=nothing
 	if err then
-		Response.Write "<br>Éú³ÉSiteMapÖĞÍ¾Óöµ½ÁË´íÎó£º" & err.description & "</b>"
+		Response.Write "<br>ç”ŸæˆSiteMapä¸­é€”é‡åˆ°äº†é”™è¯¯ï¼š" & err.description & "</b>"
 		err.clear
 		EndFlag = 1
 		Exit Sub
@@ -379,7 +385,7 @@ Sub UpdateSiteMap
 			OtherLimit = ccur(GetData(6,N))
 			HiddenFlag = ccur(GetData(7,N))
 			BoardID = ccur(GetData(1,N))
-			A_ID = ccur(GetData(0,N))
+			A_ID = LngStr(GetData(0,N))
 			If GBL_CheckLimitTitle(ForumPass,BoardLimit,OtherLimit,HiddenFlag) = 1 Then
 			else
 				MaxPage = Fix(childNum / DEF_TopicContentMaxListNum)
@@ -430,7 +436,7 @@ Sub UpdateSiteMap
 						FSO.close
 						set fs=nothing
 						if err then
-							Response.Write "<br>Éú³ÉSiteMapÖĞÍ¾Óöµ½ÁË´íÎó£º" & err.description & "</b>"
+							Response.Write "<br>ç”ŸæˆSiteMapä¸­é€”é‡åˆ°äº†é”™è¯¯ï¼š" & err.description & "</b>"
 							err.clear
 							Exit do
 						End If
@@ -473,7 +479,9 @@ Sub UpdateSiteMap
 	for N = 1 to fileIndex
 		MD = MD & " <sitemap>" & VbCrLf
       MD = MD & "  <loc>" & InstallDir & "/sitemap_" & N & ".xml</loc>" & VbCrLf
-		MD = MD & "  <lastmod>" & DEF_Now & "</lastmod>"
+		' sitemaps.org requires a W3C date; DEF_Now renders as "7/25/2026 2:54:39 PM", which
+		' makes the whole sitemap index invalid for a crawler.
+		MD = MD & "  <lastmod>" & Year(DEF_Now) & "-" & Right("0" & Month(DEF_Now),2) & "-" & Right("0" & Day(DEF_Now),2) & "</lastmod>"
 		MD = MD & " </sitemap>" & VbCrLf
 	Next
 	MD = MD & "</sitemapindex>" & VbCrLf
@@ -485,7 +493,7 @@ Sub UpdateSiteMap
 	set fs=nothing
 
 	%>
-	Íê³É
+	å®Œæˆ
 	<%
 	Application.Contents.Remove("Io_" & GBL_CHK_User)
 	application.contents.removeall
@@ -581,7 +589,7 @@ Sub UpdateBoardData
 		End If
 	Loop
 	%>
-	Íê³É
+	å®Œæˆ
 	<%
 	Application.Contents.Remove("Io_" & GBL_CHK_User)
 
@@ -654,7 +662,7 @@ Sub UpdateNongLi
 		End If
 	Loop
 	%>
-	Íê³É3
+	å®Œæˆ3
 	<%
 	Application.Contents.Remove("Io_" & GBL_CHK_User)
 		

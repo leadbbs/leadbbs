@@ -1,12 +1,12 @@
 <%
 Dim LimitBoardStringData,LimitBoardStringDataNum
-Rem 1.ËùÓĞÈË,2.Ö»Õë¶Ô·Ç°æÖ÷,3.Ö»Õë¶Ô·Ç°æÖ÷,4.Ö»Õë¶Ô·Ç°æÖ÷,5.Ö»Õë¶Ô·Ç°æÖ÷,6,ËùÓĞÈË,7.ËùÓĞÈË,8.½ö¶Ô°æÖ÷,9.¿ª·ÅÂÛÌ³-Õë¶ÔÎ´µÇÂ¼ÓÃ»§,10£®ËùÓĞÈË,11.ËùÓĞÈË,12.·ÖÀà°æÃæ,13.´Ë°æÃæÌû×Ó·¢³öĞèÒªÈÏÖ¤,14.ÌØÊâÌû×Ó°üÀ¨»Ø¸´ÌûÓë¹ºÂòÌû,15.Ö»¶Ô×¨ÒµÓÃ»§¿ª·Å,16.Ä¬ÈÏ±à¼­Ä£Ê½: 0ÎªÄ¬ÈÏÉè¶¨Öµ(»ù±¾²ÎÊıÖĞÖ¸¶¨). 1ÎªÓëÄ¬ÈÏÉè¶¨Öµ(»ù±¾²ÎÊıÖĞÖ¸¶¨)²»Í¬µÄ±à¼­Ä£Ê½ 17.ÊÇ·ñ»Ø¸´ÌáÌû 18.Ö±½ÓÏÔÊ¾×¨Ìâ,19.×Ó°æÃæ¼òÔ¼ÏÔÊ¾.20.×Ó°æÃæÏÔÊ¾ÔÚµÍ²¿,21.¹éµµÊÇ·ñ½ûÖ¹(1.½ûÖ¹),22.ÌáÊ¾ÉóºËÈËÔ±ÉóºË(µ«Ç°Ì¨Õı³£ÏÔÊ¾),23.ÊÇ·ñ±ØĞëÑ¡Ôñ×¨Ìâ
-LimitBoardStringData = Array("Ö»ÓĞµÇÂ¼ÓÃ»§²ÅÄÜ·ÃÎÊ","Ö»¶Ô" & DEF_PointsName(5) & "¿ª·Å","½ûÖ¹·¢±íĞÂÖ÷Ìâ","²»ÔÊĞíĞŞ¸ÄÂÛÌ³Ìû×Ó","²»ÔÊĞíÉ¾³ıÂÛÌ³Ìû×Ó","½ûÖ¹»Ø¸´Ìû×Ó","Ö»¶Ô" & DEF_PointsName(8) & "ÒÔÉÏ¿ª·Å","²»ÔÊĞí×ªÒÆÌû×Ó","¿ª·ÅÂÛÌ³","½öÔÊĞí±¾°æ" & DEF_PointsName(8) & "·¢±íÖ÷Ìâ","½öÔÊĞí±¾°æ" & DEF_PointsName(8) & "»Ø¸´Ìû×Ó","×÷Îª·ÖÀàÂÛÌ³","·¢ÌûĞèÒªÉóºË²ÅÄÜÏÔÊ¾","ÔÊĞí·¢±íÌØÊâÌû×Ó","Ö»¶Ô" & DEF_PointsName(10) & "¿ª·Å","±à¼­Ä£Ê½(¹´Ñ¡±íÊ¾ÓëÂÛÌ³²ÎÊıÉèÖÃÖĞÖ¸¶¨µÄÄ¬ÈÏ±à¼­·½Ê½²»Í¬)","»Ø¸´ÌáÌû(¹´Ñ¡±íÊ¾ÓëÂÛÌ³²ÎÊıÉèÖÃÖĞÖ¸¶¨µÄÄ¬ÈÏÉèÖÃÏà·´)","Ö±½ÓÏÔÊ¾×¨ÌâÇø","×Ó°æÃæ¼òÔ¼ÏÔÊ¾","×Ó°æÃæÖÃµÍ²¿ÏÔÊ¾","½ûÖ¹¹éµµ","ÌáÊ¾ÉóºËµ«Ö±½ÓÏÔÊ¾","·¢Ìû±ØĞëÑ¡Ôñ×¨Ìâ","ÓĞ°æ¹æ","ÓĞ°æ¿éLOGO")
+Rem 1.æ‰€æœ‰äºº,2.åªé’ˆå¯¹éç‰ˆä¸»,3.åªé’ˆå¯¹éç‰ˆä¸»,4.åªé’ˆå¯¹éç‰ˆä¸»,5.åªé’ˆå¯¹éç‰ˆä¸»,6,æ‰€æœ‰äºº,7.æ‰€æœ‰äºº,8.ä»…å¯¹ç‰ˆä¸»,9.å¼€æ”¾è®ºå›-é’ˆå¯¹æœªç™»å½•ç”¨æˆ·,10ï¼æ‰€æœ‰äºº,11.æ‰€æœ‰äºº,12.åˆ†ç±»ç‰ˆé¢,13.æ­¤ç‰ˆé¢å¸–å­å‘å‡ºéœ€è¦è®¤è¯,14.ç‰¹æ®Šå¸–å­åŒ…æ‹¬å›å¤å¸–ä¸è´­ä¹°å¸–,15.åªå¯¹ä¸“ä¸šç”¨æˆ·å¼€æ”¾,16.é»˜è®¤ç¼–è¾‘æ¨¡å¼: 0ä¸ºé»˜è®¤è®¾å®šå€¼(åŸºæœ¬å‚æ•°ä¸­æŒ‡å®š). 1ä¸ºä¸é»˜è®¤è®¾å®šå€¼(åŸºæœ¬å‚æ•°ä¸­æŒ‡å®š)ä¸åŒçš„ç¼–è¾‘æ¨¡å¼ 17.æ˜¯å¦å›å¤æå¸– 18.ç›´æ¥æ˜¾ç¤ºä¸“é¢˜,19.å­ç‰ˆé¢ç®€çº¦æ˜¾ç¤º.20.å­ç‰ˆé¢æ˜¾ç¤ºåœ¨ä½éƒ¨,21.å½’æ¡£æ˜¯å¦ç¦æ­¢(1.ç¦æ­¢),22.æç¤ºå®¡æ ¸äººå‘˜å®¡æ ¸(ä½†å‰å°æ­£å¸¸æ˜¾ç¤º),23.æ˜¯å¦å¿…é¡»é€‰æ‹©ä¸“é¢˜
+LimitBoardStringData = Array("åªæœ‰ç™»å½•ç”¨æˆ·æ‰èƒ½è®¿é—®","åªå¯¹" & DEF_PointsName(5) & "å¼€æ”¾","ç¦æ­¢å‘è¡¨æ–°ä¸»é¢˜","ä¸å…è®¸ä¿®æ”¹è®ºå›å¸–å­","ä¸å…è®¸åˆ é™¤è®ºå›å¸–å­","ç¦æ­¢å›å¤å¸–å­","åªå¯¹" & DEF_PointsName(8) & "ä»¥ä¸Šå¼€æ”¾","ä¸å…è®¸è½¬ç§»å¸–å­","å¼€æ”¾è®ºå›","ä»…å…è®¸æœ¬ç‰ˆ" & DEF_PointsName(8) & "å‘è¡¨ä¸»é¢˜","ä»…å…è®¸æœ¬ç‰ˆ" & DEF_PointsName(8) & "å›å¤å¸–å­","ä½œä¸ºåˆ†ç±»è®ºå›","å‘å¸–éœ€è¦å®¡æ ¸æ‰èƒ½æ˜¾ç¤º","å…è®¸å‘è¡¨ç‰¹æ®Šå¸–å­","åªå¯¹" & DEF_PointsName(10) & "å¼€æ”¾","ç¼–è¾‘æ¨¡å¼(å‹¾é€‰è¡¨ç¤ºä¸è®ºå›å‚æ•°è®¾ç½®ä¸­æŒ‡å®šçš„é»˜è®¤ç¼–è¾‘æ–¹å¼ä¸åŒ)","å›å¤æå¸–(å‹¾é€‰è¡¨ç¤ºä¸è®ºå›å‚æ•°è®¾ç½®ä¸­æŒ‡å®šçš„é»˜è®¤è®¾ç½®ç›¸å)","ç›´æ¥æ˜¾ç¤ºä¸“é¢˜åŒº","å­ç‰ˆé¢ç®€çº¦æ˜¾ç¤º","å­ç‰ˆé¢ç½®ä½éƒ¨æ˜¾ç¤º","ç¦æ­¢å½’æ¡£","æç¤ºå®¡æ ¸ä½†ç›´æ¥æ˜¾ç¤º","å‘å¸–å¿…é¡»é€‰æ‹©ä¸“é¢˜","æœ‰ç‰ˆè§„","æœ‰ç‰ˆå—LOGO")
 LimitBoardStringDataNum = Ubound(LimitBoardStringData,1)
 
 Dim LimitUserStringData,LimitUserStringDataNum
-Rem 1.ËùÓĞÈË,2.ËùÓĞÈË,3.ËùÓĞÈË,4.ËùÓĞÈË,°æÖ÷Í¬Ê±ÏŞÖÆĞŞ¸Ä×Ô¼º°æÃæ,5.½ö¶Ô°æÖ÷,6.Ö»Õë¶Ô°æÖ÷ÓĞĞ§,7.ËùÓĞÈË,8.ÊÇ·ñÊÇÂÛÌ³°æÖ÷,9.ÊÇ·ñÔÊĞí°æÖ÷×ªÒÆÌû×Óµ½ÆäËüÂÛÌ³,10.ÊÇ·ñÊÇ×Ü°æÖ÷,11.½öÎª°æÖ÷×Ü°æÖ÷,12.½öÕë¶Ô×Ü°æÖ÷,13ËùÓĞÈË,14.ÊÇ·ñÇø°æÖ÷,15.×¨ÒµÓÃ»§,16.ÔÊĞíHTML.ÈÎºÎÓÃ»§¶¼ÓĞĞ§ 17.½ûÓïÒô,ÈÎºÎÓÃ»§ÓĞĞ§ 18£®ÉóºËÌû×Ó£¨×Ü°æÖ÷ÒÔÉÏ),19.Ä¬ÈÏ²»Í¬²½ÖÁ°ó¶¨ÍøÕ¾
-LimitUserStringData = Array("Î´¼¤»îÓÃ»§",DEF_PointsName(5),"½ûÖ¹·¢ÑÔºÍ·¢ËÍ¶ÌÏûÏ¢","½ûÖ¹ĞŞ¸Ä¸öÈË×ÊÁÏºÍÌû×ÓÄÚÈİ","½ûÖ¹É¾³ıÌû×Ó","½ûÖ¹¾«»ªÌû×Ó","ËùÓĞ·¢ÑÔÆÁ±Î",DEF_PointsName(8),"½ûÖ¹×ªÒÆÌû×Ó",DEF_PointsName(6),"É¾³ıÉÏ´«¸½¼ş","ÌØÊâÈ¨ÏŞ","½ö½ÓÊÕºÃÓÑ¶ÌÏûÏ¢",DEF_PointsName(7),"ÊÇ·ñ" & DEF_PointsName(10),"ÔÊĞíHTML¼°Ö±½Ó²¥·ÅÃ½Ìå","½ûÖ¹ÓïÒôÌáÊ¾ĞÂÏûÏ¢","×¨Ö°ÉóºËÔ±/°æÖ÷ÈÎÃü","·¢ÌûÄ¬ÈÏ²»Í¬²½ÖÁ°ó¶¨ÍøÕ¾")
+Rem 1.æ‰€æœ‰äºº,2.æ‰€æœ‰äºº,3.æ‰€æœ‰äºº,4.æ‰€æœ‰äºº,ç‰ˆä¸»åŒæ—¶é™åˆ¶ä¿®æ”¹è‡ªå·±ç‰ˆé¢,5.ä»…å¯¹ç‰ˆä¸»,6.åªé’ˆå¯¹ç‰ˆä¸»æœ‰æ•ˆ,7.æ‰€æœ‰äºº,8.æ˜¯å¦æ˜¯è®ºå›ç‰ˆä¸»,9.æ˜¯å¦å…è®¸ç‰ˆä¸»è½¬ç§»å¸–å­åˆ°å…¶å®ƒè®ºå›,10.æ˜¯å¦æ˜¯æ€»ç‰ˆä¸»,11.ä»…ä¸ºç‰ˆä¸»æ€»ç‰ˆä¸»,12.ä»…é’ˆå¯¹æ€»ç‰ˆä¸»,13æ‰€æœ‰äºº,14.æ˜¯å¦åŒºç‰ˆä¸»,15.ä¸“ä¸šç”¨æˆ·,16.å…è®¸HTML.ä»»ä½•ç”¨æˆ·éƒ½æœ‰æ•ˆ 17.ç¦è¯­éŸ³,ä»»ä½•ç”¨æˆ·æœ‰æ•ˆ 18ï¼å®¡æ ¸å¸–å­ï¼ˆæ€»ç‰ˆä¸»ä»¥ä¸Š),19.é»˜è®¤ä¸åŒæ­¥è‡³ç»‘å®šç½‘ç«™
+LimitUserStringData = Array("æœªæ¿€æ´»ç”¨æˆ·",DEF_PointsName(5),"ç¦æ­¢å‘è¨€å’Œå‘é€çŸ­æ¶ˆæ¯","ç¦æ­¢ä¿®æ”¹ä¸ªäººèµ„æ–™å’Œå¸–å­å†…å®¹","ç¦æ­¢åˆ é™¤å¸–å­","ç¦æ­¢ç²¾åå¸–å­","æ‰€æœ‰å‘è¨€å±è”½",DEF_PointsName(8),"ç¦æ­¢è½¬ç§»å¸–å­",DEF_PointsName(6),"åˆ é™¤ä¸Šä¼ é™„ä»¶","ç‰¹æ®Šæƒé™","ä»…æ¥æ”¶å¥½å‹çŸ­æ¶ˆæ¯",DEF_PointsName(7),"æ˜¯å¦" & DEF_PointsName(10),"å…è®¸HTMLåŠç›´æ¥æ’­æ”¾åª’ä½“","ç¦æ­¢è¯­éŸ³æç¤ºæ–°æ¶ˆæ¯","ä¸“èŒå®¡æ ¸å‘˜/ç‰ˆä¸»ä»»å‘½","å‘å¸–é»˜è®¤ä¸åŒæ­¥è‡³ç»‘å®šç½‘ç«™")
 LimitUserStringDataNum = Ubound(LimitUserStringData,1)
 Dim GBL_BoardMasterFlag
 GBL_BoardMasterFlag = 0
@@ -14,36 +14,36 @@ GBL_BoardMasterFlag = 0
 Sub CheckisBoardMaster
 
 	'If GBL_CheckPassDoneFlag = 0 Then CheckPass
-	'6-·ÖÀà°æÖ÷
-	If CheckSupervisorNameOnly = 1 and GBL_UserID > 0 Then
-		GBL_BoardMasterFlag = 9 '¹ÜÀíÔ±
+	'6-åˆ†ç±»ç‰ˆä¸»
+	If CheckSupervisorNameOnly() = 1 and GBL_UserID > 0 Then
+		GBL_BoardMasterFlag = 9 'ç®¡ç†å‘˜
 		Exit Sub
 	End If
 	If GetBinarybit(GBL_CHK_UserLimit,10) = 1 Then
-		GBL_BoardMasterFlag = 7 '×Ü°æÖ÷
+		GBL_BoardMasterFlag = 7 'æ€»ç‰ˆä¸»
 		Exit Sub
 	End If
 	If GetBinarybit(GBL_CHK_UserLimit,14) = 1 Then
 		If GBL_Board_MasterList = "?LeadBBS?" or inStr("," & GBL_Board_AssortMaster & ",","," & GBL_CHK_User & ",") > 0 Then
-			GBL_BoardMasterFlag = 6 '±¾Çø°æÖ÷
+			GBL_BoardMasterFlag = 6 'æœ¬åŒºç‰ˆä¸»
 			Exit Sub
 		Else
-			GBL_BoardMasterFlag = 4 'Çø°æÖ÷,µ«·Ç±¾Çø
+			GBL_BoardMasterFlag = 4 'åŒºç‰ˆä¸»,ä½†éæœ¬åŒº
 		End If
 	End If
 	If GetBinarybit(GBL_CHK_UserLimit,8) = 1 Then
 		If GBL_Board_MasterList = "?LeadBBS?" or inStr("," & GBL_Board_MasterList & ",","," & GBL_CHK_User & ",") > 0 Then
-			GBL_BoardMasterFlag = 5 '±¾°æ°æÖ÷
+			GBL_BoardMasterFlag = 5 'æœ¬ç‰ˆç‰ˆä¸»
 			Exit Sub
 		Else
-			GBL_BoardMasterFlag = 4 '°æÖ÷
+			GBL_BoardMasterFlag = 4 'ç‰ˆä¸»
 		End If
 	End If
 	If GBL_BoardMasterFlag >= 4 Then Exit Sub
 	If GetBinarybit(GBL_CHK_UserLimit,2) = 1 Then
-		GBL_BoardMasterFlag = 2 'ÈÏÖ¤ÓÃ»§
+		GBL_BoardMasterFlag = 2 'è®¤è¯ç”¨æˆ·
 	Else
-		GBL_BoardMasterFlag = 0 '·Ç°æÖ÷
+		GBL_BoardMasterFlag = 0 'éç‰ˆä¸»
 	End If
 
 End Sub
@@ -52,16 +52,16 @@ Function CheckBoardReAnnounceLimit
 
 	if GBL_CHK_OnlineTime >= DEF_NeedOnlineTime or DEF_NeedOnlineTime = 0 then
 	else
-		GBL_CHK_TempStr = "ÂÛÌ³ÏŞÖÆÔÚÏßÊ±¼ä(" & DEF_PointsName(4) & ")" & Fix(DEF_NeedOnlineTime/60) & "·ÖÖÓÒÔÉÏÓÃ»§²ÅÄÜ·¢ÑÔ¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = "è®ºå›é™åˆ¶åœ¨çº¿æ—¶é—´(" & DEF_PointsName(4) & ")" & Fix(DEF_NeedOnlineTime/60) & "åˆ†é’Ÿä»¥ä¸Šç”¨æˆ·æ‰èƒ½å‘è¨€ã€‚<br>" & VbCrLf
 	end if
 	If GetBinarybit(GBL_Board_BoardLimit,12) = 1 Then
-		GBL_CHK_TempStr = "´Ë°æÃæÊôÓÚ·ÖÀàÂÛÌ³£¬²»ÔÊĞí´Ë²Ù×÷¡£" & VbCrLf
+		GBL_CHK_TempStr = "æ­¤ç‰ˆé¢å±äºåˆ†ç±»è®ºå›ï¼Œä¸å…è®¸æ­¤æ“ä½œã€‚" & VbCrLf
 		CheckBoardReAnnounceLimit = 0
 	ElseIf GetBinarybit(GBL_Board_BoardLimit,6) = 1 Then
-		GBL_CHK_TempStr = "´Ë°æÃæ" & LimitBoardStringData(5) & "¡£" & VbCrLf
+		GBL_CHK_TempStr = "æ­¤ç‰ˆé¢" & LimitBoardStringData(5) & "ã€‚" & VbCrLf
 		CheckBoardReAnnounceLimit = 0
 	ElseIf GetBinarybit(GBL_Board_BoardLimit,11) = 1 and GBL_BoardMasterFlag < 5 Then
-		GBL_CHK_TempStr = "´Ë°æÃæ" & LimitBoardStringData(10) & "¡£" & VbCrLf
+		GBL_CHK_TempStr = "æ­¤ç‰ˆé¢" & LimitBoardStringData(10) & "ã€‚" & VbCrLf
 		CheckBoardReAnnounceLimit = 0
 	End If
 	CheckBoardReAnnounceLimit = 1
@@ -72,16 +72,16 @@ Function CheckBoardAnnounceLimit
 
 	if GBL_CHK_OnlineTime >= DEF_NeedOnlineTime or DEF_NeedOnlineTime = 0 then
 	else
-		GBL_CHK_TempStr = "ÂÛÌ³ÏŞÖÆÔÚÏßÊ±¼ä(" & DEF_PointsName(4) & ")" & Fix(DEF_NeedOnlineTime/60) & "·ÖÖÓÒÔÉÏÓÃ»§²ÅÄÜ·¢ÑÔ¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = "è®ºå›é™åˆ¶åœ¨çº¿æ—¶é—´(" & DEF_PointsName(4) & ")" & Fix(DEF_NeedOnlineTime/60) & "åˆ†é’Ÿä»¥ä¸Šç”¨æˆ·æ‰èƒ½å‘è¨€ã€‚<br>" & VbCrLf
 	end if
 	If GetBinarybit(GBL_Board_BoardLimit,12) = 1 Then
-		GBL_CHK_TempStr = "´Ë°æÃæÊôÓÚ·ÖÀàÂÛÌ³£¬²»ÔÊĞí´Ë²Ù×÷¡£" & VbCrLf
+		GBL_CHK_TempStr = "æ­¤ç‰ˆé¢å±äºåˆ†ç±»è®ºå›ï¼Œä¸å…è®¸æ­¤æ“ä½œã€‚" & VbCrLf
 		CheckBoardAnnounceLimit = 0
 	ElseIf GetBinarybit(GBL_Board_BoardLimit,3) = 1 Then
-		GBL_CHK_TempStr = "´Ë°æÃæ" & LimitBoardStringData(2) & "¡£" & VbCrLf
+		GBL_CHK_TempStr = "æ­¤ç‰ˆé¢" & LimitBoardStringData(2) & "ã€‚" & VbCrLf
 		CheckBoardAnnounceLimit = 0
 	ElseIf GetBinarybit(GBL_Board_BoardLimit,10) = 1 and GBL_BoardMasterFlag < 5 Then
-		GBL_CHK_TempStr = "´Ë°æÃæ" & LimitBoardStringData(9) & "¡£" & VbCrLf
+		GBL_CHK_TempStr = "æ­¤ç‰ˆé¢" & LimitBoardStringData(9) & "ã€‚" & VbCrLf
 		CheckBoardAnnounceLimit = 0
 	End If
 	CheckBoardAnnounceLimit = 1
@@ -92,20 +92,20 @@ Function CheckUserAnnounceLimit
 
 	if GBL_CHK_OnlineTime >= DEF_NeedOnlineTime or DEF_NeedOnlineTime = 0 then
 	else
-		GBL_CHK_TempStr = "ÂÛÌ³ÏŞÖÆÔÚÏßÊ±¼ä(" & DEF_PointsName(4) & ")" & Fix(DEF_NeedOnlineTime/60) & "·ÖÖÓÒÔÉÏÓÃ»§²ÅÄÜ·¢ÑÔ¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = "è®ºå›é™åˆ¶åœ¨çº¿æ—¶é—´(" & DEF_PointsName(4) & ")" & Fix(DEF_NeedOnlineTime/60) & "åˆ†é’Ÿä»¥ä¸Šç”¨æˆ·æ‰èƒ½å‘è¨€ã€‚<br>" & VbCrLf
 	end if
 	If GetBinarybit(GBL_CHK_UserLimit,7) = 1 Then
-		GBL_CHK_TempStr = "Äú´¦ÓÚ" & LimitUserStringData(2) & "ÖĞ£¬²»±Ø³¢ÊÔÕâĞ©²Ù×÷¡£" & VbCrLf
+		GBL_CHK_TempStr = "æ‚¨å¤„äº" & LimitUserStringData(2) & "ä¸­ï¼Œä¸å¿…å°è¯•è¿™äº›æ“ä½œã€‚" & VbCrLf
 		CheckUserAnnounceLimit = 0
 		Exit Function
 	End If
 	If GetBinarybit(GBL_CHK_UserLimit,1) = 1 Then
-		GBL_CHK_TempStr = "ÄúÄ¿Ç°´¦ÓÚ" & LimitUserStringData(0) & "×´Ì¬£¬ÇëÏÈ<a href=""" & DEF_BBS_HomeUrl & "User/UserGetPass.asp?act=active"">¼¤»î</a>»òµÈ´ı¹ÜÀíÈËÔ±ÉóºË¡£" & VbCrLf
+		GBL_CHK_TempStr = "æ‚¨ç›®å‰å¤„äº" & LimitUserStringData(0) & "çŠ¶æ€ï¼Œè¯·å…ˆ<a href=""" & DEF_BBS_HomeUrl & "User/UserGetPass.asp?act=active"">æ¿€æ´»</a>æˆ–ç­‰å¾…ç®¡ç†äººå‘˜å®¡æ ¸ã€‚" & VbCrLf
 		CheckUserAnnounceLimit = 0
 		Exit Function
 	End If
 	If GetBinarybit(GBL_CHK_UserLimit,3) = 1 Then
-		GBL_CHK_TempStr = "ÄúÒÑ¾­±»" & LimitUserStringData(2) & "£¬Í¶Æ±µÈ²Ù×÷¡£" & VbCrLf
+		GBL_CHK_TempStr = "æ‚¨å·²ç»è¢«" & LimitUserStringData(2) & "ï¼ŒæŠ•ç¥¨ç­‰æ“ä½œã€‚" & VbCrLf
 		CheckUserAnnounceLimit = 0
 		Exit Function
 	End If
@@ -116,7 +116,7 @@ End Function
 Function CheckBoardModifyLimit
 
 	If GetBinarybit(GBL_Board_BoardLimit,4) = 1 Then
-		GBL_CHK_TempStr = "´Ë°æÃæ" & LimitBoardStringData(3) & "¡£" & VbCrLf
+		GBL_CHK_TempStr = "æ­¤ç‰ˆé¢" & LimitBoardStringData(3) & "ã€‚" & VbCrLf
 		CheckBoardModifyLimit = 0
 		Exit Function
 	End If
@@ -127,7 +127,7 @@ End Function
 Function CheckUserModifyLimit
 
 	If GetBinarybit(GBL_CHK_UserLimit,4) = 1 Then
-		GBL_CHK_TempStr = "ÄúÒÑ¾­±»" & LimitUserStringData(3) & "¡£" & VbCrLf
+		GBL_CHK_TempStr = "æ‚¨å·²ç»è¢«" & LimitUserStringData(3) & "ã€‚" & VbCrLf
 		CheckUserModifyLimit = 0
 		Exit Function
 	End If
@@ -146,12 +146,12 @@ Sub CheckAccessLimit_TimeLimit
 			t3 = hour(DEF_Now)
 			If t2 >= t1 Then
 				if t3 >= t1 and t3 <=t2 Then
-					GBL_CHK_TempStr = "´Ë°æÃæÃ¿Ìì " & t1 & ":00 µ½ " & t2 & ":59  ÏŞÊ±¹Ø±Õ,ÏÖÔÚÊ±¼ä" & DEF_Now & "¡£" & VbCrLf
+					GBL_CHK_TempStr = "æ­¤ç‰ˆé¢æ¯å¤© " & t1 & ":00 åˆ° " & t2 & ":59  é™æ—¶å…³é—­,ç°åœ¨æ—¶é—´" & DEF_Now & "ã€‚" & VbCrLf
 					Exit Sub
 				End If
 			Else
 				If (t3 >= t1 and t3 <=23) or (t3 >=0 and t3 <=t2) Then
-					GBL_CHK_TempStr = "´Ë°æÃæÃ¿Ìì " & t1 & ":00 µ½ ´ÎÈÕ" & t2 & ":59  ÏŞÊ±¹Ø±Õ,ÏÖÔÚÊ±¼ä" & DEF_Now & "¡£" & VbCrLf
+					GBL_CHK_TempStr = "æ­¤ç‰ˆé¢æ¯å¤© " & t1 & ":00 åˆ° æ¬¡æ—¥" & t2 & ":59  é™æ—¶å…³é—­,ç°åœ¨æ—¶é—´" & DEF_Now & "ã€‚" & VbCrLf
 					Exit Sub
 				End If
 			End If
@@ -162,12 +162,12 @@ Sub CheckAccessLimit_TimeLimit
 			t3 = weekday(DEF_Now,2)
 			If t2 >= t1 Then
 				if t3 >= t1 and t3 <=t2 Then
-					GBL_CHK_TempStr = "´Ë°æÃæÃ¿ÖÜ " & t1 & " - " & t2 & " ¹Ø±ÕÖĞ,½ñÌìÊÇĞÇÆÚ" & t3  & "¡£" & VbCrLf
+					GBL_CHK_TempStr = "æ­¤ç‰ˆé¢æ¯å‘¨ " & t1 & " - " & t2 & " å…³é—­ä¸­,ä»Šå¤©æ˜¯æ˜ŸæœŸ" & t3  & "ã€‚" & VbCrLf
 					Exit Sub
 				End If
 			Else
 				If (t3 >= t1 and t3 <=7) or (t3 >=1 and t3 <=t2) Then
-					GBL_CHK_TempStr = "´Ë°æÃæÃ¿ÖÜ" & t1 & "µ½ÖÜÈÕ£¬ÖÜÒ»µ½ÖÜ" & t2 & " ¹Ø±ÕÖĞ,½ñÌìÊÇĞÇÆÚ" & t3  & "¡£" & VbCrLf
+					GBL_CHK_TempStr = "æ­¤ç‰ˆé¢æ¯å‘¨" & t1 & "åˆ°å‘¨æ—¥ï¼Œå‘¨ä¸€åˆ°å‘¨" & t2 & " å…³é—­ä¸­,ä»Šå¤©æ˜¯æ˜ŸæœŸ" & t3  & "ã€‚" & VbCrLf
 					Exit Sub
 				End If
 			End If
@@ -178,12 +178,12 @@ Sub CheckAccessLimit_TimeLimit
 			t3 = day(DEF_Now)
 			If t2 >= t1 Then
 				if t3 >= t1 and t3 <=t2 Then
-					GBL_CHK_TempStr = "´Ë°æÃæÃ¿ÔÂ " & t1 & "ºÅ - " & t2 & "ºÅ ¹Ø±ÕÖĞ,½ñÌìÊÇ" & t3  & "ºÅ¡£" & VbCrLf
+					GBL_CHK_TempStr = "æ­¤ç‰ˆé¢æ¯æœˆ " & t1 & "å· - " & t2 & "å· å…³é—­ä¸­,ä»Šå¤©æ˜¯" & t3  & "å·ã€‚" & VbCrLf
 					Exit Sub
 				End If
 			Else
 				If (t3 >= t1 and t3 <=31) or (t3 >=1 and t3 <=t2) Then
-					GBL_CHK_TempStr = "´Ë°æÃæÃ¿ÔÂ " & t1 & "ºÅµ½ÔÂµ×£¬Ò»ºÅµ½" & t2 & "ºÅ ¹Ø±ÕÖĞ,½ñÌìÊÇ" & t3  & "ºÅ¡£" & VbCrLf
+					GBL_CHK_TempStr = "æ­¤ç‰ˆé¢æ¯æœˆ " & t1 & "å·åˆ°æœˆåº•ï¼Œä¸€å·åˆ°" & t2 & "å· å…³é—­ä¸­,ä»Šå¤©æ˜¯" & t3  & "å·ã€‚" & VbCrLf
 					Exit Sub
 				End If
 			End If
@@ -196,9 +196,9 @@ function CheckAccessLimit
 
 	Dim Temp
 	If GBL_Board_ID < 1 Then Exit function
-	CheckAccessLimit_TimeLimit
+	CheckAccessLimit_TimeLimit()
 	If GBL_CHK_TempStr <> "" Then Exit function
-	If GBL_UserID > 0 and CheckSupervisorUserName = 1 Then Exit function
+	If GBL_UserID > 0 and CheckSupervisorUserName() = 1 Then Exit function
 	
 	If GBL_Board_OtherLimit > 0 Then
 		If GBL_Board_OtherLimit < 100 Then
@@ -207,16 +207,16 @@ function CheckAccessLimit
 			Temp = cCur(Left(GBL_Board_OtherLimit,Len(GBL_Board_OtherLimit)-2))
 		End If
 		Select Case CCur(Right(GBL_Board_OtherLimit,2))
-			Case 1: If GBL_CHK_Points < Temp Then GBL_CHK_TempStr = "ÄãµÄ" & DEF_PointsName(0) & "Öµ²»×ã£¬·ÃÎÊ´Ë°æÃæĞèÒª" & Temp & DEF_PointsName(0) & "¡£" & VbCrLf
-			Case 2: If (GBL_CHK_OnlineTime/60) < Temp Then GBL_CHK_TempStr = "ÄãµÄ" & DEF_PointsName(4) & "Öµ²»×ã£¬·ÃÎÊ´Ë°æÃæĞèÒª" & Temp & DEF_PointsName(4) & "Öµ¡£" & VbCrLf
-			Case 3: If GBL_CHK_CharmPoint < Temp Then GBL_CHK_TempStr = "ÄãµÄ" & DEF_PointsName(1) & "Öµ²»×ã£¬·ÃÎÊ´Ë°æÃæĞèÒª" & Temp & DEF_PointsName(1) & "Öµ¡£" & VbCrLf
-			Case 4: If GBL_CHK_CachetValue < Temp Then GBL_CHK_TempStr = "ÄãµÄ" & DEF_PointsName(2) & "Öµ²»×ã£¬·ÃÎÊ´Ë°æÃæĞèÒª" & Temp & DEF_PointsName(2) & "Öµ¡£" & VbCrLf
+			Case 1: If GBL_CHK_Points < Temp Then GBL_CHK_TempStr = "ä½ çš„" & DEF_PointsName(0) & "å€¼ä¸è¶³ï¼Œè®¿é—®æ­¤ç‰ˆé¢éœ€è¦" & Temp & DEF_PointsName(0) & "ã€‚" & VbCrLf
+			Case 2: If (GBL_CHK_OnlineTime/60) < Temp Then GBL_CHK_TempStr = "ä½ çš„" & DEF_PointsName(4) & "å€¼ä¸è¶³ï¼Œè®¿é—®æ­¤ç‰ˆé¢éœ€è¦" & Temp & DEF_PointsName(4) & "å€¼ã€‚" & VbCrLf
+			Case 3: If GBL_CHK_CharmPoint < Temp Then GBL_CHK_TempStr = "ä½ çš„" & DEF_PointsName(1) & "å€¼ä¸è¶³ï¼Œè®¿é—®æ­¤ç‰ˆé¢éœ€è¦" & Temp & DEF_PointsName(1) & "å€¼ã€‚" & VbCrLf
+			Case 4: If GBL_CHK_CachetValue < Temp Then GBL_CHK_TempStr = "ä½ çš„" & DEF_PointsName(2) & "å€¼ä¸è¶³ï¼Œè®¿é—®æ­¤ç‰ˆé¢éœ€è¦" & Temp & DEF_PointsName(2) & "å€¼ã€‚" & VbCrLf
 			Case 5: If isArray(GBL_UDT) Then
 					If inStr(GBL_UDT(19),"," & Cstr(Temp) & ",") = 0 Then
-						GBL_CHK_TempStr = "´Ë°æÃæÖ»ÔÊĞíÌØ¶¨" & DEF_PointsName(9) & "[±àºÅ" & Temp & "]·ÃÎÊ¡£" & VbCrLf
+						GBL_CHK_TempStr = "æ­¤ç‰ˆé¢åªå…è®¸ç‰¹å®š" & DEF_PointsName(9) & "[ç¼–å·" & Temp & "]è®¿é—®ã€‚" & VbCrLf
 					End If
 				Else
-					 GBL_CHK_TempStr = "·ÃÎÊ´Ë°æÃæÓĞ" & DEF_PointsName(9) & "ÏŞÖÆ¡£" & VbCrLf
+					 GBL_CHK_TempStr = "è®¿é—®æ­¤ç‰ˆé¢æœ‰" & DEF_PointsName(9) & "é™åˆ¶ã€‚" & VbCrLf
 				End If
 		End Select
 		If GBL_CHK_TempStr <> "" Then Exit function
@@ -224,45 +224,45 @@ function CheckAccessLimit
 
 	If GetBinarybit(GBL_Board_BoardLimit,7) = 1 Then
 		If GBL_BoardMasterFlag < 4 or GBL_UserID < 1 Then
-			GBL_CHK_TempStr = "´Ë°æÃæ" & LimitBoardStringData(6) & "¡£" & VbCrLf
+			GBL_CHK_TempStr = "æ­¤ç‰ˆé¢" & LimitBoardStringData(6) & "ã€‚" & VbCrLf
 			Exit function
 		End If
 	End If
 
 	If GBL_CHK_GuestFlag = 1 and GetBinarybit(GBL_Board_BoardLimit,1) = 1 and GBL_CHK_Flag = 0 Then
-		GBL_CHK_TempStr = "´Ë°æÃæ" & LimitBoardStringData(0) & "£¬ÇëÏÈ<a href=""" & DEF_BBS_HomeUrl & "User/Login.asp?u=" & urlencode(Request.Servervariables("SCRIPT_NAME") & "?" & Request.QueryString) & """>µÇÂ¼</a>»ò<a href=""" & DEF_BBS_HomeUrl & "User/" & DEF_RegisterFile & """>×¢²á</a>ĞÂÓÃ»§¡£" & VbCrLf
+		GBL_CHK_TempStr = "æ­¤ç‰ˆé¢" & LimitBoardStringData(0) & "ï¼Œè¯·å…ˆ<a href=""" & DEF_BBS_HomeUrl & "User/Login.asp?u=" & urlencode(Request.Servervariables("SCRIPT_NAME") & "?" & Request.QueryString) & """>ç™»å½•</a>æˆ–<a href=""" & DEF_BBS_HomeUrl & "User/" & DEF_RegisterFile & """>æ³¨å†Œ</a>æ–°ç”¨æˆ·ã€‚" & VbCrLf
 		Exit function
 	End If
 
 	If GetBinarybit(GBL_Board_BoardLimit,2) = 1 Then
 		If GetBinarybit(GBL_CHK_UserLimit,2) = 0 or GBL_UserID < 1 Then
-			GBL_CHK_TempStr = "´Ë°æÃæ" & LimitBoardStringData(1) & "¡£" & VbCrLf
+			GBL_CHK_TempStr = "æ­¤ç‰ˆé¢" & LimitBoardStringData(1) & "ã€‚" & VbCrLf
 			Exit function
 		End If
 	End If
 
 	If GetBinarybit(GBL_Board_BoardLimit,15) = 1 Then
 		If GetBinarybit(GBL_CHK_UserLimit,15) = 0 or GBL_UserID < 1 Then
-			GBL_CHK_TempStr = "´Ë°æÃæ" & LimitBoardStringData(14) & "¡£" & VbCrLf
+			GBL_CHK_TempStr = "æ­¤ç‰ˆé¢" & LimitBoardStringData(14) & "ã€‚" & VbCrLf
 			Exit function
 		End If
 	End If
 
 	If GBL_CHK_TempStr <> "" Then Exit function
 	If GBL_Board_HiddenFlag = 2 Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "´Ë°æÃæÒÑ¾­¹Ø±Õ,½ûÖ¹ä¯ÀÀ¡£" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "æ­¤ç‰ˆé¢å·²ç»å…³é—­,ç¦æ­¢æµè§ˆã€‚" & VbCrLf
 		Exit function
 	End If
 
 	dim str : str = ""
 	If GBL_Board_ForumPass <> "" Then
 		If GBL_UserID < 1 Then
-			GBL_CHK_TempStr = GBL_CHK_TempStr & "ÇëÏÈÒÔÓÃ»§Éí·İµÇÂ¼!" & VbCrLf
+			GBL_CHK_TempStr = GBL_CHK_TempStr & "è¯·å…ˆä»¥ç”¨æˆ·èº«ä»½ç™»å½•!" & VbCrLf
 			Exit function
 		End If
 
-		If CheckWriteEventSpace = 0 Then
-			GBL_CHK_TempStr = "ÄúµÄ²Ù×÷¹ıÆµ£¬ÇëÉÔºòÔÙÊÔ!" & VbCrLf
+		If CheckWriteEventSpace() = 0 Then
+			GBL_CHK_TempStr = "æ‚¨çš„æ“ä½œè¿‡é¢‘ï¼Œè¯·ç¨å€™å†è¯•!" & VbCrLf
 			Exit function
 		End If
 		If GBL_Board_ForumPass <> DecodeCookie(Left(Request.Cookies(DEF_MasterCookies & "_" & GBL_UserID)("Board_" & GBL_board_ID),255)) Then
@@ -272,25 +272,25 @@ function CheckAccessLimit
 				If Request("submitflag") <> "" Then
 					ForumPass = Request.form("ForumPass")
 					Dim NumCheck
-					NumCheck = CheckRndNumber
+					NumCheck = CheckRndNumber()
 					If ForumPass = GBL_Board_ForumPass and NumCheck = 1 Then
 						Response.Cookies(DEF_MasterCookies & "_" & GBL_UserID)("Board_" & GBL_board_ID) = CodeCookie(ForumPass)
 						Response.Cookies(DEF_MasterCookies & "_" & GBL_UserID).Expires = DEF_Now + 365
 						Response.Cookies(DEF_MasterCookies & "_" & GBL_UserID).Domain = DEF_AbsolutHome
-						str = str & "<span class=""title greenfont"">µÇÂ¼³É¹¦</span>"
-						str = str & "<br /><br />-- ·µ»Ø <a href=""http://" & Request.ServerVariables("SERVER_NAME")&Request.ServerVariables("URL") & "?" & Request.QueryString & """>" & htmlencode(Request.ServerVariables("SERVER_NAME")&Request.ServerVariables("URL")) & "</a>" & VbCrLf
+						str = str & "<span class=""title greenfont"">ç™»å½•æˆåŠŸ</span>"
+						str = str & "<br /><br />-- è¿”å› <a href=""http://" & Request.ServerVariables("SERVER_NAME")&Request.ServerVariables("URL") & "?" & Request.QueryString & """>" & htmlencode(Request.ServerVariables("SERVER_NAME")&Request.ServerVariables("URL")) & "</a>" & VbCrLf
 					Else
 						If NumCheck = 0 Then
-							str = str & "	<span class=""alert redfont"">ÑéÖ¤ÂëÌîĞ´´íÎó!</span>" & VbCrLf
+							str = str & "	<span class=""alert redfont"">éªŒè¯ç å¡«å†™é”™è¯¯!</span>" & VbCrLf
 						Else
-							str = str & "<span class=""alert redfont"">ÄúµÄÃÜÂë´íÎó!</span>" & VbCrLf
+							str = str & "<span class=""alert redfont"">æ‚¨çš„å¯†ç é”™è¯¯!</span>" & VbCrLf
 						End If
 						Call LDExeCute("Update LeadBBS_User Set LastWriteTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
-						str = str & DisplayPassWordLoginForm
+						str = str & DisplayPassWordLoginForm()
 					End If
 				Else
-					str = str & "<span class=""title"">´ËÂÛÌ³Îª¼ÓÃÜÂÛÌ³£¬ÇëÊäÈëÕıÈ·µÄÑéÖ¤ĞÅÏ¢£º</span>" & VbCrLf
-					str = str & DisplayPassWordLoginForm
+					str = str & "<span class=""title"">æ­¤è®ºå›ä¸ºåŠ å¯†è®ºå›ï¼Œè¯·è¾“å…¥æ­£ç¡®çš„éªŒè¯ä¿¡æ¯ï¼š</span>" & VbCrLf
+					str = str & DisplayPassWordLoginForm()
 				End If
 				CheckAccessLimit = str
 				Exit function
@@ -338,16 +338,16 @@ function DisplayPassWordLoginForm
 	if Instr(Temp,"/") > 0 Then Temp = Left(Temp,Instr(Temp,"/")-1)
 	Temp = StrReverse(Temp)
 	str = "<form action=""" & Temp & "?" & Request.QueryString & """ method=""post"">" & VbCrLf
-	str = str & "	<div class=value2>ÃÜ¡¡Âë£º <input name=""ForumPass"" type=""password"" maxlength=""20"" size=""20"" value=""" & htmlencode(Request("ForumPass")) & """ class=""fminpt input_2"" />" & VbCrLf
+	str = str & "	<div class=value2>å¯†ã€€ç ï¼š <input name=""ForumPass"" type=""password"" maxlength=""20"" size=""20"" value=""" & htmlencode(Request("ForumPass")) & """ class=""fminpt input_2"" />" & VbCrLf
 	str = str & "	</div>"
 	If DEF_EnableAttestNumber > 0 Then
-		str = str & "	<div class=value2>ÑéÖ¤Âë£º " & VbCrLf
-		str = str & displayVerifycode
+		str = str & "	<div class=value2>éªŒè¯ç ï¼š " & VbCrLf
+		str = str & displayVerifycode()
 	End If
 	str = str & "	</div>" & VbCrLf
 	str = str & "	<input name=""submitflag"" type=""hidden"" value=""ddddls-+++"" />" & VbCrLf
 	str = str & "	<div class=value2>" & VbCrLf
-	str = str & "	<input type=""submit"" value=""µÇÂ¼"" class=""fmbtn btn_2"">" & VbCrLf
+	str = str & "	<input type=""submit"" value=""ç™»å½•"" class=""fmbtn btn_2"">" & VbCrLf
 	str = str & "	</div></form>" & VbCrLf
 	DisplayPassWordLoginForm = str
 
@@ -359,7 +359,7 @@ function displayVerifycode
 	Dim Str : Str = ""
 	str = str & "<input name=""ForumNumber"" id=""ForumNumber"" style=""display:inline-block;"" maxlength=""4"" value=""" & htmlencode(Session(DEF_MasterCookies & "RndNum_par") & "") & """ onfocus=""verify_load(0,'" & DEF_InstallDir & "');"" class=""fminpt input_1"" />" & VbCrLf
 	str = str & "	<img src=""" & DEF_InstallDir & "images/blank.gif"" id=""verifycode"" align=""middle"" onclick=""verify_load(1,'" & DEF_Installdir & "');"" />" & VbCrLf
-	str = str & "	<a href=""javascript:;"" id=verify_click onclick=""this.style.display='none';verify_load(1,'" & DEF_InstallDir & "');return false;"">µã´ËÏÔÊ¾ÑéÖ¤Âë</a>" & VbCrLf
+	str = str & "	<a href=""javascript:;"" id=verify_click onclick=""this.style.display='none';verify_load(1,'" & DEF_InstallDir & "');return false;"">ç‚¹æ­¤æ˜¾ç¤ºéªŒè¯ç </a>" & VbCrLf
 	str = str & "	<noscript>" & VbCrLf
 	str = str & "	<div class=""verifycode""><img src=""" & DEF_InstallDir & "User/number.asp?r=1"" id=""verifycode"" class=""verifycode"" align=""middle"" onclick=""verify_load(1,'" & DEF_Installdir & "');"" /></div>" & VbCrLf
 	str = str & "	</noscript>" & VbCRLf

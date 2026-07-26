@@ -301,7 +301,7 @@ float: none;border-bottom:#bcddec 1px dotted;padding:2px 9px 1px 5px;cursor:poin
 }
 
 
-.layer_item a,layer_itemactive a{outline: none;font-family:"΢���ź�";font-weight:500;font-size:14px;}
+.layer_item a,layer_itemactive a{outline: none;font-family:"微软雅黑";font-weight:500;font-size:14px;}
 
 .layer_item2 .title a{float:left;margin-top:0px;height:29px;display: block; width: 136px;padding:0px;
 background: url(../../wzyoyo/file/menu_bg1.png) no-repeat 100% 50%;
@@ -327,7 +327,7 @@ border: #d3e6d4 0px solid; display: none;
 .layer_onclickitem {float:left;border:1px #d3e6d4 solid;padding:10px;position: absolute;z-index:991;background:#f3faf6;display:none;}
 .layer_onclickitem a{color:##111111;}
 .layer_onclickitem a:hover{color:#827c31;}
-.layer_item2 a,.layer_item3 a{outline: none;font-family:"΢���ź�";font-weight:500;font-size:14px;}
+.layer_item2 a,.layer_item3 a{outline: none;font-family:"微软雅黑";font-weight:500;font-size:14px;}
 
 .layer_item3 a{float:left;height:29px;margin-right:0px;
 background: url(../../wzyoyo/file/menu_bg1.png) no-repeat 100% 50%;
@@ -940,12 +940,12 @@ text-overflow: ellipsis;-moz-binding: url('../images/pub/ellipsis.xml#ellipsis')
 .cell_article_content{margin:10px 10px 0px 10px;}
 
 #content_side_box27{border:0px !important;background:#cadb2a !important;color:#157a38 !important;}
-#content_side_box27 a{color:#157a38 !important;font-family:"Verdana","΢���ź�"}
+#content_side_box27 a{color:#157a38 !important;font-family:"Verdana","微软雅黑"}
 #content_side_box27 .title{border:0px !important;}
 
 
 .cell{border:0px !important;box-shadow:0px 0px 0px !important;}
-.cell a{color:#1e8b3a;font-size:14px;font-family:"΢���ź�";}
+.cell a{color:#1e8b3a;font-size:14px;font-family:"微软雅黑";}
 .cell li.normal{padding-bottom:3px;line-height:31px;height:31px;border-bottom:1px #1e8b3a dashed;
 background: url(../images/iconv.png) no-repeat -124px -74px !important; 
 }
@@ -962,11 +962,11 @@ background: url(../images/iconv.png) no-repeat -124px -74px !important;
 #content_side_box81{border:0px !important;background:#fff !important;color:#157a38 !important;
 margin-bottom:6px !important;
 }
-#content_side_box81 a{color:#157a38 !important;font-family:"Verdana","΢���ź�"}
+#content_side_box81 a{color:#157a38 !important;font-family:"Verdana","微软雅黑"}
 #content_side_box81 .title{border:0px !important;}
 
 #content_side_box82{border:0px !important;background:#fff !important;color:#fff !important;}
-#content_side_box82 a{color:#whtie !important;font-family:"Verdana","΢���ź�";color:#fff !important;}
+#content_side_box82 a{color:#whtie !important;font-family:"Verdana","微软雅黑";color:#fff !important;}
 #content_side_box82 .title{border:0px !important;}
 
 #home_cell3 {width:693px !important;_width:653px !important;}
@@ -974,7 +974,7 @@ margin-bottom:6px !important;
 .bottominfo {padding-bottom:26px !important;background: #f68920 url('/wzyoyo/file/bottom.png') no-repeat top center!important;border:0px !important;}
 
 #content_side_box83{border:0px !important;background:#fff !important;color:#fff !important;}
-#content_side_box83 a{color:#whtie !important;font-family:"Verdana","΢���ź�";color:#fff !important;}
+#content_side_box83 a{color:#whtie !important;font-family:"Verdana","微软雅黑";color:#fff !important;}
 #content_side_box83 .title{border:0px !important;}
 
 .inside_link{width:280px;height:40px;color:#fff;margin:1px 0px;
@@ -994,8 +994,8 @@ border-bottom:1px #1e8b3a dashed;
 }
 .cms_listnews .topic {display: inline-block;*display: inline;zoom:1;text-overflow: ellipsis;width:80%;overflow:hidden;white-space: nowrap;word-wrap:normal;}
 .cms_listnews .time{margin-left:22px;float:right;display: inline-block;*display: inline;}
-.cms_listnews a{color:#1e8b3a;font-family:"Verdana","΢���ź�";}
-.cms_listnews a:hover{color:#8b3a1e;font-family:"Verdana","΢���ź�";}
+.cms_listnews a{color:#1e8b3a;font-family:"Verdana","微软雅黑";}
+.cms_listnews a:hover{color:#8b3a1e;font-family:"Verdana","微软雅黑";}
 
 .cms_listnews li.piclist{margin-right:15px;}
 .cms_listnews li.piclist{float:left;}
@@ -1011,6 +1011,6 @@ ul.childclass{ margin:10px 10px 10px 0px;list-style:none ;}
 ul.childclass li{padding:4px;float:left;background:#d7ffc7;margin:3px;display:block;
 border-radius:4px;}
 
-ul.childclass a{color:#1e8b3a;font-family:"Verdana","΢���ź�";}
+ul.childclass a{color:#1e8b3a;font-family:"Verdana","微软雅黑";}
 
 #return{padding: 5px 0px 30px 20px;}

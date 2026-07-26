@@ -13,9 +13,9 @@
 	-->
 	</script>
 	<select name="jumpto" onchange="surfto1(this)" style="width:100px;">
-		<option value="boards.asp">ÇÐ»»°æÃæ¡­</option>
-		<option value="boards.asp">ÂÛÌ³Ê×Ò³</option>
-		<option value="boards.asp?assort=1">£«ÂÛÌ³Ö÷Çø</option>
-		<option value="b/b.asp?b=100&page=1">¡¡²âÊÔ×¨Çø</option>
-		<option value="b/b.asp?b=444&page=1">¡¡»ØÊÕÕ¾</option>
+		<option value="boards.asp">åˆ‡æ¢ç‰ˆé¢â€¦</option>
+		<option value="boards.asp">è®ºå›é¦–é¡µ</option>
+		<option value="boards.asp?assort=1">ï¼‹è®ºå›ä¸»åŒº</option>
+		<option value="b/b.asp?b=100&page=1">ã€€æµ‹è¯•ä¸“åŒº</option>
+		<option value="b/b.asp?b=444&page=1">ã€€å›žæ”¶ç«™</option>
 	</select>

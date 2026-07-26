@@ -46,7 +46,7 @@ Function DecodeCookie(Str)
 	StrArr = Split(Str,"a")
 	For i = UBound(StrArr) - LBound(StrArr) to 0 Step -1
 		If isNumeric(StrArr(i)) = True Then
-			StrRtn = StrRtn & Chrw(StrArr(i))
+			StrRtn = StrRtn & Chrw(CLng(StrArr(i)))   ' AxonASP: ChrW does not coerce a numeric STRING; force a number
 		Else
 			StrRtn = Str
 			Exit Function
@@ -56,10 +56,47 @@ Function DecodeCookie(Str)
 
 End Function
 
-Function RestoreTime(DateString)
+' README Â§36: LeadBBS parses its own on-disk data files with Split(content, VbCrLf),
+' which silently returns a SINGLE element for an LF-only file â€” every record collapses
+' into one and the trailing field swallows the rest of the file. The port normalised the
+' whole tree's line endings to LF, and any Linux editor writing one of these files does
+' the same, so the split must not care. Splits on any of CRLF / CR / LF.
+Function SplitLines(ByVal S)
+
+	S = Replace(S, VbCrLf, VbLf)
+	S = Replace(S, VbCr, VbLf)
+	SplitLines = Split(S, VbLf)
+
+End Function
+
+' AxonASP renders a large numeric Double (e.g. a BIGINT id from a GetRows array)
+' in scientific notation ("2.26097e+06") when concatenated to a string, which
+' corrupts ids embedded in links/URLs. Format such values as a plain integer string.
+Function LngStr(v)
+	If IsNull(v) Then
+		LngStr = ""
+	ElseIf IsNumeric(v) Then
+		' AxonASP (#26): FormatNumber does NOT coerce a numeric STRING (returns "0"),
+		' so convert explicitly first.
+		LngStr = Replace(FormatNumber(CDbl(v), 0), ",", "")
+	Else
+		LngStr = CStr(v)
+	End If
+End Function
+
+Function RestoreTime(ByVal DateString)
 
 	If isNull(DateString) Then Exit Function
-	DateString = cstr(DateString)
+	' AxonASP returns MySQL BIGINT columns as Doubles, so CStr() yields scientific
+	' notation (2.026e+13) that breaks the 14-digit YYYYMMDDHHMMSS parse below.
+	' Check IsNumeric on the ORIGINAL value (a Double is numeric; its CStr string
+	' with e+13 is NOT recognized by IsNumeric) and format it as a plain integer.
+	If IsNumeric(DateString) Then
+		' AxonASP (#26): FormatNumber returns "0" for a numeric STRING -> CDbl first.
+		DateString = Replace(FormatNumber(CDbl(DateString), 0), ",", "")
+	Else
+		DateString = cstr(DateString)
+	End If
 	If len(DateString)<8 then
 		RestoreTime=DateString
 	Else
@@ -78,7 +115,7 @@ Function StrLength(str)
 		StrLength = 0
 		Exit function
 	End If
-	If len("Àı×Ó") = 2 then
+	If len("ä¾‹å­") = 2 then
 		Dim l,t,c,i
 		l=len(str)
 		t=l
@@ -155,7 +192,7 @@ End Function
 
 
 
-rem ÏÔÊ¾×ó±ßµÄn¸ö×Ö·û(×Ô¶¯Ê¶±ğºº×Ö)
+rem æ˜¾ç¤ºå·¦è¾¹çš„nä¸ªå­—ç¬¦(è‡ªåŠ¨è¯†åˆ«æ±‰å­—)
 Function LeftTrue(str,n)
 
 	If len(str) <= n/2 Then
@@ -186,7 +223,7 @@ Function isTrueDate(TStr)
 	Dim T
 	T = TStr
 	If isNull(T) Then T = ""
-	T = Replace(Replace(Replace(Replace(Replace(Replace(Replace(T,"Äê","-"),"ÔÂ","-"),"ÈÕ"," "),"ÉÏÎç"," "),"ÏÂÎç"," "),"  "," "),"  "," ")
+	T = Replace(Replace(Replace(Replace(Replace(Replace(Replace(T,"å¹´","-"),"æœˆ","-"),"æ—¥"," "),"ä¸Šåˆ"," "),"ä¸‹åˆ"," "),"  "," "),"  "," ")
 	
 	Dim N1,N2
 	N1 = inStr(T,"-")
@@ -305,7 +342,7 @@ Function ADODB_LoadFile(ByVal File)
 	If FSFlag = 1 Then
 		Set WriteFile = fs.OpenTextFile(Server.MapPath(File),1,True)
 		If Err Then
-			GBL_CHK_TempStr = "<br>¶ÁÈ¡ÎÄ¼şÊ§°Ü£º" & err.description & "<br>ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞ¶ÁÈ¡È¨ÏŞ."
+			GBL_CHK_TempStr = "<br>è¯»å–æ–‡ä»¶å¤±è´¥ï¼š" & err.description & "<br>å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰è¯»å–æƒé™."
 			err.Clear
 			Set Fs = Nothing
 			Exit Function
@@ -313,7 +350,7 @@ Function ADODB_LoadFile(ByVal File)
 		If Not WriteFile.AtEndOfStream Then
 			ADODB_LoadFile = WriteFile.ReadAll
 			If Err Then
-				GBL_CHK_TempStr = "¶ÁÈ¡ÎÄ¼şÊ§°Ü£º<p>" & err.description & "</p> ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞ¶ÁÈ¡È¨ÏŞ."
+				GBL_CHK_TempStr = "è¯»å–æ–‡ä»¶å¤±è´¥ï¼š<p>" & err.description & "</p> å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰è¯»å–æƒé™."
 				err.Clear
 				Set Fs = Nothing
 				Exit Function
@@ -324,7 +361,7 @@ Function ADODB_LoadFile(ByVal File)
 	Else
 		Set objStream = Server.CreateObject("ADODB.Stream")
 		If Err.Number=-2147221005 Then 
-			GBL_CHK_TempStr = "ÄúµÄÖ÷»ú²»Ö§³ÖADODB.Stream£¬ÎŞ·¨Íê³É²Ù×÷£¬ÇëÊÖ¹¤½øĞĞ"
+			GBL_CHK_TempStr = "æ‚¨çš„ä¸»æœºä¸æ”¯æŒADODB.Streamï¼Œæ— æ³•å®Œæˆæ“ä½œï¼Œè¯·æ‰‹å·¥è¿›è¡Œ"
 			Err.Clear
 			Set objStream = Nothing
 			Exit Function
@@ -334,7 +371,7 @@ Function ADODB_LoadFile(ByVal File)
 			.Mode = 3
 			.Open
 			.LoadFromFile Server.MapPath(File)
-			.Charset = "gb2312"
+			.Charset = "utf-8"
 			.Position = 2
 			ADODB_LoadFile = .ReadText
 			.Close
@@ -342,7 +379,7 @@ Function ADODB_LoadFile(ByVal File)
 		Set objStream = Nothing
 	End If
 	If Err Then
-		GBL_CHK_TempStr = "´íÎóĞÅÏ¢£º<p>" & err.description & "</p>ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞ¶ÁÈ¡È¨ÏŞ."
+		GBL_CHK_TempStr = "é”™è¯¯ä¿¡æ¯ï¼š<p>" & err.description & "</p>å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰è¯»å–æƒé™."
 		err.Clear
 		Set Fs = Nothing
 		Exit Function
@@ -350,7 +387,7 @@ Function ADODB_LoadFile(ByVal File)
 
 End Function
 
-'´æ´¢ÄÚÈİµ½ÎÄ¼ş
+'å­˜å‚¨å†…å®¹åˆ°æ–‡ä»¶
 Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 
 	On Error Resume Next
@@ -374,7 +411,7 @@ Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 	Else
 		Set objStream = Server.CreateObject("ADODB.Stream")
 		If Err.Number=-2147221005 Then 
-			GBL_CHK_TempStr = "ÄúµÄÖ÷»ú²»Ö§³ÖADODB.Stream£¬ÎŞ·¨Íê³É²Ù×÷£¬ÇëÊÖ¹¤½øĞĞ"
+			GBL_CHK_TempStr = "æ‚¨çš„ä¸»æœºä¸æ”¯æŒADODB.Streamï¼Œæ— æ³•å®Œæˆæ“ä½œï¼Œè¯·æ‰‹å·¥è¿›è¡Œ"
 			Err.Clear
 			Set objStream = Nothing
 			Exit Sub
@@ -382,7 +419,7 @@ Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 		With objStream
 			.Type = 2
 			.Open
-			.Charset = "gb2312"
+			.Charset = "utf-8"
 			.Position = objStream.Size
 			.WriteText = strBody
 			.SaveToFile Server.MapPath(File),2
@@ -391,7 +428,7 @@ Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 		Set objStream = Nothing
 	End If
 	If Err Then
-		GBL_CHK_TempStr = "´íÎóĞÅÏ¢£º<p>" & err.description & "</p>ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞĞ´ÈëÈ¨ÏŞ."
+		GBL_CHK_TempStr = "é”™è¯¯ä¿¡æ¯ï¼š<p>" & err.description & "</p>å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰å†™å…¥æƒé™."
 		err.Clear
 		Set Fs = Nothing
 		Exit Sub
@@ -533,24 +570,24 @@ Function ConvertTimeString(t)
 	If M > 2880 Then
 	ElseIf M > 720 Then
 		Select Case Datediff("d",t,DEF_Now)
-			Case 0: Tmp = "½ñÌì " & Mid(t,12,5)
-			Case 1: Tmp = "×òÌì " & Mid(t,12,5)
-			Case 2: Tmp = "Ç°Ìì " & Mid(t,12,5)
+			Case 0: Tmp = "ä»Šå¤© " & Mid(t,12,5)
+			Case 1: Tmp = "æ˜¨å¤© " & Mid(t,12,5)
+			Case 2: Tmp = "å‰å¤© " & Mid(t,12,5)
 			Case Else: Tmp = t
 		End Select
 	ElseIf M >= 60 Then
 		Dim M1
 		M1 = M mod 60
 		If M1 = 0 Then
-			Tmp = Fix(M/60) & "Ê±Ç°"
+			Tmp = Fix(M/60) & "æ—¶å‰"
 		Else
-			Tmp = Fix(M/60) & "Ê±" & M1 & "·ÖÇ°"
+			Tmp = Fix(M/60) & "æ—¶" & M1 & "åˆ†å‰"
 		End If
 	ElseIf M >= 1 Then
-		Tmp = M & "·ÖÇ°"
+		Tmp = M & "åˆ†å‰"
 	Else
 		M = Datediff("s",t,DEF_Now)
-		If M >= 0 Then Tmp = M & "ÃëÇ°"
+		If M >= 0 Then Tmp = M & "ç§’å‰"
 	End If
 
 	If Tmp = "" Then Tmp = t		
@@ -571,24 +608,24 @@ Function ConvertSimTimeString(t)
 		End if
 	ElseIf M > 720 Then
 		Select Case Datediff("d",t,DEF_Now)
-			Case 0: Tmp = "½ñÌì " & Mid(t,12,5)
-			Case 1: Tmp = "×òÌì " & Mid(t,12,5)
-			Case 2: Tmp = "Ç°Ìì " & Mid(t,12,5)
+			Case 0: Tmp = "ä»Šå¤© " & Mid(t,12,5)
+			Case 1: Tmp = "æ˜¨å¤© " & Mid(t,12,5)
+			Case 2: Tmp = "å‰å¤© " & Mid(t,12,5)
 			Case Else: Tmp = t
 		End Select
 	ElseIf M >= 60 Then
 		Dim M1
 		M1 = M mod 60
 		If M1 = 0 Then
-			Tmp = Fix(M/60) & "Ê±Ç°"
+			Tmp = Fix(M/60) & "æ—¶å‰"
 		Else
-			Tmp = Fix(M/60) & "Ê±" & M1 & "·ÖÇ°"
+			Tmp = Fix(M/60) & "æ—¶" & M1 & "åˆ†å‰"
 		End If
 	ElseIf M >= 1 Then
-		Tmp = M & "·ÖÇ°"
+		Tmp = M & "åˆ†å‰"
 	Else
 		M = Datediff("s",t,DEF_Now)
-		If M >= 0 Then Tmp = M & "ÃëÇ°"
+		If M >= 0 Then Tmp = M & "ç§’å‰"
 	End If
 
 	If Tmp = "" Then Tmp = t		
@@ -635,7 +672,7 @@ Function CheckSystem
 	If Request.QueryString("homesel") = "1" Then
 		CheckSystem = 0
 		Response.Cookies(DEF_MasterCookies & "homesel") = "1"
-		Response.Cookies(DEF_MasterCookies & "homesel").Expires = DateAdd("d",DEF_Now,30)
+		Response.Cookies(DEF_MasterCookies & "homesel").Expires = DateAdd("d",30,DEF_Now)
 		Response.Cookies(DEF_MasterCookies & "homesel").Domain = DEF_AbsolutHome
 		Exit Function
 	End If
@@ -709,7 +746,7 @@ function uniDecode(enStr)
 		end if
 	next
 	if s <> "" then
-		uniDecode = server.htmlencode(s) 'ÌØÊâ×ªÒå×Ö·û×ªÒå
+		uniDecode = server.htmlencode(s) 'ç‰¹æ®Šè½¬ä¹‰å­—ç¬¦è½¬ä¹‰
 	else
 		uniDecode = ""
 	end if
@@ -772,7 +809,7 @@ function toJSstrinig(str)
 
 end function
 
-rem js±àÂë×ª»»
+rem jsç¼–ç è½¬æ¢
 function unJsString(str)
 
 	unJsString = replace(unescape(replace(str,"\u","%u")),"\","")
@@ -800,9 +837,9 @@ function LD_GetUrl(dir)
 	dim port : port = Request.ServerVariables("SERVER_PORT")
 	if port <> "80" Then d = d & ":" & Server.UrlEncode(port)
 	
-	if dir = 1 then '·µ»ØÂÛÌ³°²×°Ä¿Â¼
+	if dir = 1 then 'è¿”å›è®ºå›å®‰è£…ç›®å½•
 		d = d & DEF_Installdir
-	elseif dir = 2 then '·µ»Øµ±Ç°ÎÄ¼şurl
+	elseif dir = 2 then 'è¿”å›å½“å‰æ–‡ä»¶url
 		dim i : i = Request.ServerVariables("PATH_INFO")
 		if i <> "" then
 			d = d & i
@@ -820,11 +857,18 @@ function LD_GetUrl(dir)
 		pl = left(LCase(pl), t - 1)
 	end if
 
-	dim s
-	if Request.ServerVariables("HTTPS") <> "on" then
-		s = ""
-	else
+	' README Â§52: behind a TLS-terminating reverse proxy (nginx, BunkerWeb, Caddy, a load
+	' balancer) AxonASP sees a plain HTTP request -- ServerVariables("HTTPS") is "off" and
+	' SERVER_PROTOCOL is HTTP/1.0 -- so every absolute URL the forum handed out came back as
+	' http:// on an https:// site: @-mention private messages, RSS, "copy this post's address".
+	' The proxy states the real scheme in X-Forwarded-Proto; honour it when it is present, and
+	' fall back to the original behaviour when it is not.
+	dim s, xfp
+	xfp = LCase(Request.ServerVariables("HTTP_X_FORWARDED_PROTO") & "")
+	if Request.ServerVariables("HTTPS") = "on" or xfp = "https" then
 		s = "s"
+	else
+		s = ""
 	end if
 	LD_GetUrl = pl & s & "://" & d
 
@@ -873,10 +917,11 @@ function RW_b(b,p,more)
 
 end function
 
-function RW_a(b,id,page,bpage,more)
+function RW_a(b,ByVal id,page,bpage,more)
 
 	dim s
 	dim m
+	id = LngStr(id)   ' AxonASP: a BIGINT id from a GetRows array renders in scientific notation; force plain integer (ByVal so we don't mutate the caller)
 	m = more
 	if left(m,1) = "&" or left(m,1) = "?" then m = mid(m,2)
 	if LMT_EnableRewrite = 1 then
@@ -957,7 +1002,7 @@ function RW_User(uid,act,username,more)
 end function
 
 
-'¹úÄÚÊÖ»úºÅÂëÑéÖ¤
+'å›½å†…æ‰‹æœºå·ç éªŒè¯
 Function CheckMobilePhone(sPhone)
 
 	Dim regEx
@@ -968,5 +1013,28 @@ Function CheckMobilePhone(sPhone)
 	CheckMobilePhone = regEx.Test(sPhone)
 	Set regEx = Nothing
 
+End Function
+
+' ---------------------------------------------------------------------------
+' AxonASP (#30): Recordset.GetString IGNORES its ColumnDelimiter / RowDelimiter /
+' NullExpr arguments and always emits TAB between columns and a newline between rows.
+' LeadBBS uses those delimiters to build JavaScript row callbacks, so the affected
+' lists rendered nothing at all. Build the string ourselves, matching ADO: the row
+' delimiter is appended after EVERY row, including the last.
+Function RsGetString(Rs, ColDelim, RowDelim, NullExpr)
+	Dim s, i, v, n
+	s = ""
+	n = Rs.Fields.Count - 1
+	Do While Not Rs.Eof
+		For i = 0 To n
+			v = Rs(i)
+			If IsNull(v) Then v = NullExpr
+			s = s & CStr(v)
+			If i < n Then s = s & ColDelim
+		Next
+		s = s & RowDelim
+		Rs.MoveNext
+	Loop
+	RsGetString = s
 End Function
 %>

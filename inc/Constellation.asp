@@ -10,75 +10,75 @@ Function Constellation(Births)
 	Select Case BirthMonth
 	case 1
 		if BirthDay>=21 then
-			Constellation = Constellation & "11.gif"" title=""Ë®Æ¿×ù"" align=middle />"
+			Constellation = Constellation & "11.gif"" title=""æ°´ç“¶åº§"" align=middle />"
 		else
-			Constellation = Constellation & "10.gif"" title=""Ä§ôÉ×ù"" align=middle />"
+			Constellation = Constellation & "10.gif"" title=""é­”ç¾¯åº§"" align=middle />"
 		end if
 	case 2
 		if BirthDay>=20 then
-			Constellation = Constellation & "12.gif"" title=""Ë«Óã×ù"" align=middle />"
+			Constellation = Constellation & "12.gif"" title=""åŒé±¼åº§"" align=middle />"
 		else
-			Constellation = Constellation & "11.gif"" title=""Ë®Æ¿×ù"" align=middle />"
+			Constellation = Constellation & "11.gif"" title=""æ°´ç“¶åº§"" align=middle />"
 		end if
 	case 3
 		if BirthDay>=21 then
-			Constellation = Constellation & "1.gif"" title=""°×Ñò×ù"" align=middle />"
+			Constellation = Constellation & "1.gif"" title=""ç™½ç¾Šåº§"" align=middle />"
 		else
-			Constellation = Constellation & "12.gif"" title=""Ë«Óã×ù"" align=middle />"
+			Constellation = Constellation & "12.gif"" title=""åŒé±¼åº§"" align=middle />"
 		end if
 	case 4
 		if BirthDay>=21 then
-			Constellation = Constellation & "2.gif"" title=""½ðÅ£×ù"" align=middle />"
+			Constellation = Constellation & "2.gif"" title=""é‡‘ç‰›åº§"" align=middle />"
 		else
-			Constellation = Constellation & "1.gif"" title=""°×Ñò×ù"" align=middle />"
+			Constellation = Constellation & "1.gif"" title=""ç™½ç¾Šåº§"" align=middle />"
 		end if
 	case 5
 		if BirthDay>=22 then
-			Constellation = Constellation & "3.gif"" title=""Ë«×Ó×ù"" align=middle />"
+			Constellation = Constellation & "3.gif"" title=""åŒå­åº§"" align=middle />"
 		else
-			Constellation = Constellation & "2.gif"" title=""½ðÅ£×ù"" align=middle />"
+			Constellation = Constellation & "2.gif"" title=""é‡‘ç‰›åº§"" align=middle />"
 		end if
 	case 6
 		if BirthDay>=22 then
-			Constellation = Constellation & "4.gif"" title=""¾ÞÐ·×ù"" align=middle />"
+			Constellation = Constellation & "4.gif"" title=""å·¨èŸ¹åº§"" align=middle />"
 		else
-			Constellation = Constellation & "3.gif"" title=""Ë«×Ó×ù"" align=middle />"
+			Constellation = Constellation & "3.gif"" title=""åŒå­åº§"" align=middle />"
 		end if
 	case 7
 		if BirthDay>=23 then
-			Constellation = Constellation & "5.gif"" title=""Ê¨×Ó×ù"" align=middle />"
+			Constellation = Constellation & "5.gif"" title=""ç‹®å­åº§"" align=middle />"
 		else
-			Constellation = Constellation & "4.gif"" title=""¾ÞÐ·×ù"" align=middle />"
+			Constellation = Constellation & "4.gif"" title=""å·¨èŸ¹åº§"" align=middle />"
 		end if
 	case 8
 		if BirthDay>=24 then
-			Constellation = Constellation & "6.gif"" title=""´¦Å®×ù"" align=middle />"
+			Constellation = Constellation & "6.gif"" title=""å¤„å¥³åº§"" align=middle />"
 		else
-			Constellation = Constellation & "5.gif"" title=""Ê¨×Ó×ù"" align=middle />"
+			Constellation = Constellation & "5.gif"" title=""ç‹®å­åº§"" align=middle />"
 		end if
 	case 9
 		if BirthDay>=24 then
-			Constellation = Constellation & "7.gif"" title=""Ìì³Ó×ù"" align=middle />"
+			Constellation = Constellation & "7.gif"" title=""å¤©ç§¤åº§"" align=middle />"
 		else
-			Constellation = Constellation & "6.gif"" title=""´¦Å®×ù"" align=middle />"
+			Constellation = Constellation & "6.gif"" title=""å¤„å¥³åº§"" align=middle />"
 		end if
 	case 10
 		if BirthDay>=24 then
-			Constellation = Constellation & "8.gif"" title=""ÌìÐ«×ù"" align=middle />"
+			Constellation = Constellation & "8.gif"" title=""å¤©èŽåº§"" align=middle />"
 		else
-			Constellation = Constellation & "7.gif"" title=""Ìì³Ó×ù"" align=middle />"
+			Constellation = Constellation & "7.gif"" title=""å¤©ç§¤åº§"" align=middle />"
 		end if
 	case 11
 		if BirthDay>=23 then
-			Constellation = Constellation & "9.gif"" title=""ÉäÊÖ×ù"" align=middle />"
+			Constellation = Constellation & "9.gif"" title=""å°„æ‰‹åº§"" align=middle />"
 		else
-			Constellation = Constellation & "8.gif"" title=""ÌìÐ«×ù"" align=middle />"
+			Constellation = Constellation & "8.gif"" title=""å¤©èŽåº§"" align=middle />"
 		end if
 	case 12
 		if BirthDay>=22 then
-			Constellation = Constellation & "10.gif"" title=""Ä§ôÉ×ù"" align=middle />"
+			Constellation = Constellation & "10.gif"" title=""é­”ç¾¯åº§"" align=middle />"
 		else
-			Constellation = Constellation & "9.gif"" title=""ÉäÊÖ×ù"" align=middle />"
+			Constellation = Constellation & "9.gif"" title=""å°„æ‰‹åº§"" align=middle />"
 		end if
 	case else
 		Constellation=""
@@ -92,18 +92,18 @@ Function DisplayBirthAnimal(BirthYear)
 	Temp = BirthYear mod 12
 	tmp = "<img src=""" & DEF_BBS_HomeUrl & "images/" & GBL_DefineImage & "snxa/sx"
 	Select Case Temp
-		Case 0: tmp=tmp & "9s.gif"" align=middle title=""Éêºï"" />"
-		Case 1: tmp=tmp & "10s.gif"" align=middle title=""ÓÏ¼¦"" />"
-		Case 2: tmp=tmp & "11s.gif"" align=middle title=""Ðç¹·"" />"
-		Case 3: tmp=tmp & "12s.gif"" align=middle title=""º¥Öí"" />"
-		Case 4: tmp=tmp & "1s.gif"" align=middle title=""×ÓÊó"" />"
-		Case 5: tmp=tmp & "2s.gif"" align=middle title=""³óÅ£"" />"
-		Case 6: tmp=tmp & "3s.gif"" align=middle title=""Òú»¢"" />"
-		Case 7: tmp=tmp & "4s.gif"" align=middle title=""Ã®ÍÃ"" />"
-		Case 8: tmp=tmp & "5s.gif"" align=middle title=""³½Áú"" />"
-		Case 9: tmp=tmp & "6s.gif"" align=middle title=""ËÈÉß"" />"
-		Case 10: tmp=tmp & "7s.gif"" align=middle title=""ÎçÂí"" />"
-		Case 11: tmp=tmp & "8s.gif"" align=middle title=""Î´Ñò"" />"
+		Case 0: tmp=tmp & "9s.gif"" align=middle title=""ç”³çŒ´"" />"
+		Case 1: tmp=tmp & "10s.gif"" align=middle title=""é…‰é¸¡"" />"
+		Case 2: tmp=tmp & "11s.gif"" align=middle title=""æˆŒç‹—"" />"
+		Case 3: tmp=tmp & "12s.gif"" align=middle title=""äº¥çŒª"" />"
+		Case 4: tmp=tmp & "1s.gif"" align=middle title=""å­é¼ "" />"
+		Case 5: tmp=tmp & "2s.gif"" align=middle title=""ä¸‘ç‰›"" />"
+		Case 6: tmp=tmp & "3s.gif"" align=middle title=""å¯…è™Ž"" />"
+		Case 7: tmp=tmp & "4s.gif"" align=middle title=""å¯å…”"" />"
+		Case 8: tmp=tmp & "5s.gif"" align=middle title=""è¾°é¾™"" />"
+		Case 9: tmp=tmp & "6s.gif"" align=middle title=""å·³è›‡"" />"
+		Case 10: tmp=tmp & "7s.gif"" align=middle title=""åˆé©¬"" />"
+		Case 11: tmp=tmp & "8s.gif"" align=middle title=""æœªç¾Š"" />"
 		Case else: tmp = ""
 	End Select
 	

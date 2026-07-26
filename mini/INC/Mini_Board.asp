@@ -1,4 +1,4 @@
-<!-- #include file=../../b/inc/cache_fun.asp -->
+<!--#include file="../../b/inc/cache_fun.asp"-->
 <%
 Class Mini_Board
 
@@ -7,8 +7,8 @@ Class Mini_Board
 	
 	Public Sub List(flag)
 	
-		CheckisBoardMaster
-		Response.Write CheckAccessLimit
+		Call CheckisBoardMaster()
+		Response.Write CheckAccessLimit()
 		If GBL_CHK_TempStr <> "" Then
 			MiniPageDefine.Error(GBL_CHK_TempStr)
 			Exit Sub
@@ -59,13 +59,13 @@ Class Mini_Board
 			if GBL_board_ID>0 then paraextend = "&b=" & GBL_board_ID
 		end if
 		
-		B_Now = Left(GetTimeValue(DEF_Now),8)
+		B_Now = Left(LngStr(GetTimeValue(DEF_Now)),8)
 		%>
 		<div id="bbsContent">
         <ul data-role="listview">
 		<%
 		if flag = 0 then
-			displayTopAnnoune
+			displayTopAnnoune()
 		end if
 		DisplayAnnounceData 0,splitpage_num,1,splitpage_getdata
 		%>
@@ -92,7 +92,7 @@ Class Mini_Board
 			GetDataTop = application(DEF_MasterCookies & "TopAnc")
 			If isArray(GetDataTop) = False Then
 				If GetDataTop & "" <> "yes" Then
-					ReloadTopAnnounceInfo(0)
+					Call ReloadTopAnnounceInfo(0)
 					GetDataTop = application(DEF_MasterCookies & "TopAnc")
 				End If
 			End If
@@ -108,7 +108,7 @@ Class Mini_Board
 			GetDataPartTop = application(DEF_MasterCookies & "TopAnc" & GBL_Board_BoardAssort)
 			If isArray(GetDataPartTop) = False Then
 				If GetDataPartTop & "" <> "yes" Then
-					ReloadTopAnnounceInfo(GBL_Board_BoardAssort)
+					Call ReloadTopAnnounceInfo(GBL_Board_BoardAssort)
 					GetDataPartTop = application(DEF_MasterCookies & "TopAnc" & GBL_Board_BoardAssort)
 				End If
 			End If
@@ -144,7 +144,7 @@ Class Mini_Board
 			end if
 			if Vflag = 1 then
 				'If GBL_CheckLimitTitle(GetData(6,n),GetData(7,n),GetData(8,n),GetData(9,n)) = 1 Then
-				'	GetData(2,n) = "´ËÌû×Ó±êÌâÒÑÉèÖÃÎªÒş²Ø"
+				'	GetData(2,n) = "æ­¤å¸–å­æ ‡é¢˜å·²è®¾ç½®ä¸ºéšè—"
 				'	GetData(3,N) = ""
 				'Else
 					GetData(3,N) = GetData(3,N)
@@ -155,7 +155,7 @@ Class Mini_Board
 					End If
 				'End If
 				If GetData(4,n) >=60 Then
-					GetData(2,n) = "<span class=verifyfont>Ìû×ÓµÈ´ıÉóºËÖĞ...</span>"
+					GetData(2,n) = "<span class=verifyfont>å¸–å­ç­‰å¾…å®¡æ ¸ä¸­...</span>"
 					GetData(4,n) = 1
 				End If
 				if GetData(14,N) = 39 then
@@ -163,13 +163,13 @@ Class Mini_Board
 				else
 					Response.Write "<li><a href=Default.asp?" & M_Par.GetPar(GetData(16,N),GetData(0,N),M_Par.Page,0,"a") & ">"
 				end if
-				If ccur(GetData(5,n)) > DEF_BBS_TOPMinID Then Response.Write "[ÖÃ¶¥]"
+				If ccur(GetData(5,n)) > DEF_BBS_TOPMinID Then Response.Write "[ç½®é¡¶]"
 				Response.Write GetData(2,n)
 				Response.Write "<span class=""info"">"
 				If Left(GetData(10,n),8) = B_Now Then Response.Write "<span class=redfont>"
 				Response.Write ConvertSimTimeString(restoretime(GetData(10,n)))
 				If Left(GetData(10,n),8) = B_Now Then Response.Write "</span>"
-				rem Response.Write "<em class=child>" & HtmlEncode(GetTrueName(GetData(3,N),GetData(11,n))) & ", " & GetData(1,N) & "»Ø¸´</em>
+				rem Response.Write "<em class=child>" & HtmlEncode(GetTrueName(GetData(3,N),GetData(11,n))) & ", " & GetData(1,N) & "å›å¤</em>
 				Response.Write "</span></a></li>" & VbCrLf
 			End If
 		Next
@@ -188,16 +188,16 @@ Class Mini_Board
 				GetData(2,n) = HtmlEncode(GetData(2,n))
 			End If
 			If GetData(16,n) >=60 Then
-				GetData(2,n) = "<span class=verifyfont>Ìû×ÓµÈ´ıÉóºËÖĞ...</span>"
+				GetData(2,n) = "<span class=verifyfont>å¸–å­ç­‰å¾…å®¡æ ¸ä¸­...</span>"
 				GetData(16,n) = 1
 			End If
-			Response.Write "<li><a href=Default.asp?" & M_Par.GetPar(GetData(13,N),GetData(0,N),M_Par.Page,0,"a") & ">[ÖÃ¶¥]"
+			Response.Write "<li><a href=Default.asp?" & M_Par.GetPar(GetData(13,N),GetData(0,N),M_Par.Page,0,"a") & ">[ç½®é¡¶]"
 			Response.Write GetData(2,n)
 			Response.Write "<span class=""info"">"
 			If Left(GetData(4,n),8) = B_Now Then Response.Write "<span class=redfont>"
 			Response.Write ConvertSimTimeString(restoretime(GetData(4,n)))
 			If Left(GetData(4,n),8) = B_Now Then Response.Write "</span>"
-			'Response.Write "<em class=child>" & HtmlEncode(GetTrueName(GetData(7,N),GetData(23,N))) & ", " & GetData(1,N) & "»Ø¸´</em>
+			'Response.Write "<em class=child>" & HtmlEncode(GetTrueName(GetData(7,N),GetData(23,N))) & ", " & GetData(1,N) & "å›å¤</em>
 			Response.WRite "</span></a></li>" & VbCrLf
 		Next
 	

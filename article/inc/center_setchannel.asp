@@ -11,23 +11,28 @@ End sub
 class center_setchannelClass_Class
 
 	Private form_content,form_fileid,FileName,form_classname
-	Private form_type(16),form_title(16),form_listnum(16),form_id(16),form_extendflag(16),form_style(16)	
-	Private StyleItem 
+	' README Â§35: a dimensioned array declared as a Class member is mis-sized by AxonASP
+	' (`Private x(16)` yields UBound 0), so these six were one-element arrays and the
+	' channel editor raised "Subscript out of range". ReDim'd in Class_Initialize instead.
+	Private form_type(),form_title(),form_listnum(),form_id(),form_extendflag(),form_style()
+	Private StyleItem
 	
-	rem type: 0.ÁĞ³ö×îĞÂÖ÷Ìâ 1.ÁĞ³ö×îĞÂ¾«»ª 2.ÁĞ³öÄ³(°æÃæ)×¨ÌâÌû×Ó 3.ÁĞ³öÄ³°æÃæÌû×Ó 4.°æÃæÅÅĞĞ
-	rem form_title: ÆµµÀÃû³Æ
-	rem form_listnum: ÁĞ³öµÄ¼ÇÂ¼ÊıÁ¿
-	rem form_id: ×¨Ìâ±àºÅ»òÊÇ°æÃæµÄ±àºÅ
-	rem form_extendflag: Èç¹ûÊÇÁĞ³ö°æÃæÌû×Ó(tppeÎª3)´Ë²ÎÊı²ÅÓĞĞ§£¬0: ÁĞ³ö°æÃæµÄ¾«»ª 1: ÁĞ³ö°æÃæµÄ×îĞÂÖ÷Ìâ
-	rem form_style: ÏÔÊ¾ÑùÊ½,±ÈÈçÊÇ·ñÕ¹Ê¾ÄÚÈİ»òÊÇÍ¼Æ¬
+	rem type: 0.åˆ—å‡ºæœ€æ–°ä¸»é¢˜ 1.åˆ—å‡ºæœ€æ–°ç²¾å 2.åˆ—å‡ºæŸ(ç‰ˆé¢)ä¸“é¢˜å¸–å­ 3.åˆ—å‡ºæŸç‰ˆé¢å¸–å­ 4.ç‰ˆé¢æ’è¡Œ
+	rem form_title: é¢‘é“åç§°
+	rem form_listnum: åˆ—å‡ºçš„è®°å½•æ•°é‡
+	rem form_id: ä¸“é¢˜ç¼–å·æˆ–æ˜¯ç‰ˆé¢çš„ç¼–å·
+	rem form_extendflag: å¦‚æœæ˜¯åˆ—å‡ºç‰ˆé¢å¸–å­(tppeä¸º3)æ­¤å‚æ•°æ‰æœ‰æ•ˆï¼Œ0: åˆ—å‡ºç‰ˆé¢çš„ç²¾å 1: åˆ—å‡ºç‰ˆé¢çš„æœ€æ–°ä¸»é¢˜
+	rem form_style: æ˜¾ç¤ºæ ·å¼,æ¯”å¦‚æ˜¯å¦å±•ç¤ºå†…å®¹æˆ–æ˜¯å›¾ç‰‡
 
 	Private Sub Class_Initialize
 
-		StyleItem = Array("1|±êÌâ¼Ó´ó","2|Õ¹Ê¾ÄÚÈİÌáÒª","3|Õ¹Ê¾Ïà¹ØÍ¼Æ¬","4|ÓĞÍ¼Æ¬Ê±Òş²Ø±êÌâ","5|½öÊ×Ìõ¼ÇÂ¼±êÌâ¼Ó´ó¼°Õ¹Ê¾Í¼Æ¬","6|Ïà¹ØÍ¼Æ¬ÏÔÊ¾Îª´óÍ¼Æ¬","7|¼ÇÂ¼Ë³Ğò¶ÁÈ¡(¾ÉµÄ¼ÇÂ¼ÓÅÏÈ)")
+		ReDim form_type(16) : ReDim form_title(16) : ReDim form_listnum(16)
+		ReDim form_id(16) : ReDim form_extendflag(16) : ReDim form_style(16)
+		StyleItem = Array("1|æ ‡é¢˜åŠ å¤§","2|å±•ç¤ºå†…å®¹æè¦","3|å±•ç¤ºç›¸å…³å›¾ç‰‡","4|æœ‰å›¾ç‰‡æ—¶éšè—æ ‡é¢˜","5|ä»…é¦–æ¡è®°å½•æ ‡é¢˜åŠ å¤§åŠå±•ç¤ºå›¾ç‰‡","6|ç›¸å…³å›¾ç‰‡æ˜¾ç¤ºä¸ºå¤§å›¾ç‰‡","7|è®°å½•é¡ºåºè¯»å–(æ—§çš„è®°å½•ä¼˜å…ˆ)")
 		form_fileid = GetFormData("form_fileid")
 		form_fileid = toNum(FormClass_CheckFormValue(form_fileid,"","int",0,"",0),0)
 		form_content = ""
-		private_getinfo
+		private_getinfo()
 		
 		select case form_fileid
 			'case 0:
@@ -39,10 +44,10 @@ class center_setchannelClass_Class
 		dim submitflag
 		submitflag = GetFormData("submitflag")
 		if submitflag = "" then
-			private_getClassinfo
-			center_Class_Form
+			private_getClassinfo()
+			center_Class_Form()
 		else
-			private_getformdata
+			private_getformdata()
 		end if
 	
 	End Sub
@@ -53,11 +58,11 @@ class center_setchannelClass_Class
 	
 	rem Private form_type,form_title,form_listnum,form_id,form_extendflag,form_style
 	
-	rem type: 999.ÎŞÀàĞÍ£¬¹Ø±Õ×´Ì¬ 0.ÁĞ³ö×îĞÂÖ÷Ìâ 1.ÁĞ³ö×îĞÂ¾«»ª 2.ÁĞ³öÄ³(°æÃæ)×¨ÌâÌû×Ó 3.ÁĞ³öÄ³°æÃæÌû×Ó 
-	rem form_title: ÆµµÀÃû³Æ
-	rem form_listnum: ÁĞ³öµÄ¼ÇÂ¼ÊıÁ¿
-	rem form_id: ×¨Ìâ±àºÅ»òÊÇ°æÃæµÄ±àºÅ
-	rem form_extendflag: Èç¹ûÊÇÁĞ³ö°æÃæÌû×Ó(tppeÎª3)´Ë²ÎÊı²ÅÓĞĞ§£¬0: ÁĞ³ö°æÃæµÄ¾«»ª 1: ÁĞ³ö°æÃæµÄ×îĞÂÖ÷Ìâ
+	rem type: 999.æ— ç±»å‹ï¼Œå…³é—­çŠ¶æ€ 0.åˆ—å‡ºæœ€æ–°ä¸»é¢˜ 1.åˆ—å‡ºæœ€æ–°ç²¾å 2.åˆ—å‡ºæŸ(ç‰ˆé¢)ä¸“é¢˜å¸–å­ 3.åˆ—å‡ºæŸç‰ˆé¢å¸–å­ 
+	rem form_title: é¢‘é“åç§°
+	rem form_listnum: åˆ—å‡ºçš„è®°å½•æ•°é‡
+	rem form_id: ä¸“é¢˜ç¼–å·æˆ–æ˜¯ç‰ˆé¢çš„ç¼–å·
+	rem form_extendflag: å¦‚æœæ˜¯åˆ—å‡ºç‰ˆé¢å¸–å­(tppeä¸º3)æ­¤å‚æ•°æ‰æœ‰æ•ˆï¼Œ0: åˆ—å‡ºç‰ˆé¢çš„ç²¾å 1: åˆ—å‡ºç‰ˆé¢çš„æœ€æ–°ä¸»é¢˜
 		dim indexn
 		form_content = ""
 		Dim Temp2,TempN,N
@@ -114,15 +119,15 @@ class center_setchannelClass_Class
 			form_content = form_content & form_type(indexn) & "#~#^#" & form_title(indexn) & "#~#^#" & form_listnum(indexn) & "#~#^#" & form_id(indexn) & "#~#^#" & form_extendflag(indexn) & "#~#^#" & form_style(indexn)
 		next
 
-		private_Saveformdata
+		private_Saveformdata()
 		CALL Update_InsertSetupRID(1051,"article/" & FileName,8,form_content," and ClassNum=" & 8)
 
 	End Sub
 
 	private sub private_Saveformdata
 
-		ADODB_SaveToFile form_content,FileName
-		Response.Write "<span class=cms_ok>³É¹¦±à¼­Ê×Ò³À¸Ä¿ĞÅÏ¢.</span>"
+		Call ADODB_SaveToFile(form_content,FileName)
+		Response.Write "<span class=cms_ok>æˆåŠŸç¼–è¾‘é¦–é¡µæ ç›®ä¿¡æ¯.</span>"
 
 	End Sub
 	
@@ -145,7 +150,7 @@ class center_setchannelClass_Class
 			end if
 			rs.close
 			set rs = nothing
-			if form_classname = "" then form_classname = "Ê×Ò³"
+			if form_classname = "" then form_classname = "é¦–é¡µ"
 		end if
 
 	end sub
@@ -154,7 +159,7 @@ class center_setchannelClass_Class
 
 		if form_content = "" then form_content = ADODB_LoadFile(FileName)
 		dim tmp,n,tmp2
-		tmp = split(form_content,VbCrLf)
+		tmp = SplitLines(form_content)   ' Â§36: the data file is LF-only, Split(...,VbCrLf) collapses it
 		for n = 0 to ubound(tmp)
 			tmp2 = split(tmp(n),"#~#^#")
 			form_style(n) = 0
@@ -199,19 +204,19 @@ class center_setchannelClass_Class
 			{
 				case "999":
 					$(sel).next(".itemline").hide().next(".itemline").hide().next(".itemline").hide().next(".itemline").hide().next(".itemline").hide();
-					$(numitem).html("Ïà¹Ø±àºÅ");
+					$(numitem).html("ç›¸å…³ç¼–å·");
 					break;
 				case "0":
 					$(sel).next(".itemline").show().next(".itemline").show().next(".itemline").hide().next(".itemline").hide().next(".itemline").show();
-					$(numitem).html("Ïà¹Ø±àºÅ");
+					$(numitem).html("ç›¸å…³ç¼–å·");
 					break;
 				case "1":
 					$(sel).next(".itemline").show().next(".itemline").show().next(".itemline").hide().next(".itemline").hide().next(".itemline").show();
-					$(numitem).html("Ïà¹Ø±àºÅ");
+					$(numitem).html("ç›¸å…³ç¼–å·");
 					break;
 				case "2":
 					$(sel).next(".itemline").show().next(".itemline").show().next(".itemline").show().next(".itemline").hide().next(".itemline").show();
-					$(numitem).html("×¨Ìâ±àºÅ");
+					$(numitem).html("ä¸“é¢˜ç¼–å·");
 					if(clickflag!=-1)
 					{
 					var index = $(obj).attr("comboname").replace(/form_type/,"");
@@ -220,7 +225,7 @@ class center_setchannelClass_Class
 					break;
 				case "3":
 					$(sel).next(".itemline").show().next(".itemline").show().next(".itemline").show().next(".itemline").show().next(".itemline").show();
-					$(numitem).html("°æ¿é±àºÅ");
+					$(numitem).html("ç‰ˆå—ç¼–å·");
 					if(clickflag!=-1)
 					{
 					var index = $(obj).attr("comboname").replace(/form_type/,"");
@@ -229,7 +234,7 @@ class center_setchannelClass_Class
 					break;
 				case "4":
 					$(sel).next(".itemline").show().next(".itemline").show().next(".itemline").show().next(".itemline").hide().next(".itemline").show();
-					$(numitem).html("ÎÄÕÂ·ÖÀà±àºÅ");
+					$(numitem).html("æ–‡ç« åˆ†ç±»ç¼–å·");
 					if(clickflag!=-1)
 					{
 					var index = $(obj).attr("comboname").replace(/form_type/,"");
@@ -238,7 +243,7 @@ class center_setchannelClass_Class
 					break;
 				case "5":					
 					$(sel).next(".itemline").show().next(".itemline").hide().next(".itemline").show().next(".itemline").hide().next(".itemline").hide();
-					$(numitem).html("ÎÄÕÂID");
+					$(numitem).html("æ–‡ç« ID");
 					if(clickflag!=-1)
 					{
 					var index = $(obj).attr("comboname").replace(/form_type/,"");
@@ -265,10 +270,10 @@ class center_setchannelClass_Class
 			return(row.text);
 		}
 		</script>
-		<b>ËµÃ÷: </b>
+		<b>è¯´æ˜: </b>
 		<ol>
-		<li>×¨Ìâ»ò°æÃæ±àºÅ£ºÈôÀ¸Ä¿ÀàĞÍÎª×¨Ìâ£¬Ôò´ËÏîÇëÌîĞ´×¨Ìâ±àºÅ£¬Èç¹ûÎª°æÃæ£¬ÇëÌîĞ´°æÃæ±àºÅ£¬ÈôÎªÎÄÕÂ£¬ÇëÌîĞ´ÏàÓ¦µÄÎÄÕÂ·ÖÀà±àºÅ¡£·ñÔò¿ÉÒÔºöÂÔ</li>
-		<li>¸ü¶àÑ¡Ïî£º´ËÏîÖ»ÓĞµ±À¸Ä¿ÀàĞÍÎª°æÃæÊ±²ÅÓĞĞ§</li>
+		<li>ä¸“é¢˜æˆ–ç‰ˆé¢ç¼–å·ï¼šè‹¥æ ç›®ç±»å‹ä¸ºä¸“é¢˜ï¼Œåˆ™æ­¤é¡¹è¯·å¡«å†™ä¸“é¢˜ç¼–å·ï¼Œå¦‚æœä¸ºç‰ˆé¢ï¼Œè¯·å¡«å†™ç‰ˆé¢ç¼–å·ï¼Œè‹¥ä¸ºæ–‡ç« ï¼Œè¯·å¡«å†™ç›¸åº”çš„æ–‡ç« åˆ†ç±»ç¼–å·ã€‚å¦åˆ™å¯ä»¥å¿½ç•¥</li>
+		<li>æ›´å¤šé€‰é¡¹ï¼šæ­¤é¡¹åªæœ‰å½“æ ç›®ç±»å‹ä¸ºç‰ˆé¢æ—¶æ‰æœ‰æ•ˆ</li>
 		</ol>
 		<hr class=splitline>
 		<div class="definehome">
@@ -280,12 +285,12 @@ class center_setchannelClass_Class
 		
 		dim str,datafile,arr
 		for n = 0 to 15
-			response.Write "<div class='itemline'><span class='iteminfo'><b>À¸Ä¿" & n+1 & "</b></span></div>"
-			CALL FormClass_ItemPring("ÀàĞÍ","select","form_type" & n,form_type(n),"","","","999~~~ÎŞ-¹Ø±Õ´ËÀ¸|0~~~ÁĞ³öÂÛÌ³×îĞÂÖ÷Ìâ|1~~~ÁĞ³öÂÛÌ³×îĞÂ¾«»ª|2~~~ÁĞ³öÄ³(°æÃæ)×¨ÌâÌû×Ó|3~~~ÁĞ³öÄ³Ò»¸ö°æÃæµÄÌû×Ó|4~~~ÁĞ³öÄ³ÎÄÕÂ·ÖÀàÏÂµÄÎÄÕÂ|5~~~Õ¹Ê¾µ¥¸öÎÄÕÂÄÚÈİ(ĞëHTML¸ñÊ½ÄÚÈİ)"," class=""easyui-combobox itemtype""")
+			response.Write "<div class='itemline'><span class='iteminfo'><b>æ ç›®" & n+1 & "</b></span></div>"
+			CALL FormClass_ItemPring("ç±»å‹","select","form_type" & n,form_type(n),"","","","999~~~æ— -å…³é—­æ­¤æ |0~~~åˆ—å‡ºè®ºå›æœ€æ–°ä¸»é¢˜|1~~~åˆ—å‡ºè®ºå›æœ€æ–°ç²¾å|2~~~åˆ—å‡ºæŸ(ç‰ˆé¢)ä¸“é¢˜å¸–å­|3~~~åˆ—å‡ºæŸä¸€ä¸ªç‰ˆé¢çš„å¸–å­|4~~~åˆ—å‡ºæŸæ–‡ç« åˆ†ç±»ä¸‹çš„æ–‡ç« |5~~~å±•ç¤ºå•ä¸ªæ–‡ç« å†…å®¹(é¡»HTMLæ ¼å¼å†…å®¹)"," class=""easyui-combobox itemtype""")
 			if form_title(n) = "null" then form_title(n) = ""
-			CALL FormClass_ItemPring("Ãû³Æ","input","form_title" & n,form_title(n),4,255,"Îª´ËÏîÀ¸Ä¿ÁĞ±íÆğ¸ö±êÌâ,¿ÉÒÔÎª¿Õ","","")
-			CALL FormClass_ItemPring("ÏÔÊ¾ÊıÁ¿","input","form_listnum" & n,form_listnum(n),2,2,"´ËÀ¸Ä¿ÏÔÊ¾µÄ×î´ó¼ÇÂ¼ÌõÊı","","")
-			'CALL FormClass_ItemPring("Ïà¹Ø±àºÅ","input","form_id" & n,form_id(n),2,12,"","","")
+			CALL FormClass_ItemPring("åç§°","input","form_title" & n,form_title(n),4,255,"ä¸ºæ­¤é¡¹æ ç›®åˆ—è¡¨èµ·ä¸ªæ ‡é¢˜,å¯ä»¥ä¸ºç©º","","")
+			CALL FormClass_ItemPring("æ˜¾ç¤ºæ•°é‡","input","form_listnum" & n,form_listnum(n),2,2,"æ­¤æ ç›®æ˜¾ç¤ºçš„æœ€å¤§è®°å½•æ¡æ•°","","")
+			'CALL FormClass_ItemPring("ç›¸å…³ç¼–å·","input","form_id" & n,form_id(n),2,12,"","","")
 			
 			select case form_type(n)
 				case 2:
@@ -304,12 +309,12 @@ class center_setchannelClass_Class
 					"	formatter: formatItem" & VbCrLf &_
 					""">" & VbCrLf
 			'str = "<input class=""easyui-combobox"" id=""form_id" & n & """ name=""form_id" & n & """ data-options=""valueField:'id',textField:'text'"">"
-			CALL FormClass_ItemPring("Ïà¹Ø±àºÅ","other",str,form_id(n),2,12,"","","")
-			CALL FormClass_ItemPring("¸ü¶àÑ¡Ïî","select","form_extendflag" & n,form_extendflag(n),"","","","0~~~°æ¿é×îĞÂÖ÷ÌâÌû|1~~~°æ¿é×îĞÂ¾«»ªÌû"," class=""easyui-combobox""")
-			CALL FormClass_ItemPring("¶¨ÖÆ½çÃæ","splitchecked","form_style" & n,form_style(n),"","","",StyleItem,"")
+			CALL FormClass_ItemPring("ç›¸å…³ç¼–å·","other",str,form_id(n),2,12,"","","")
+			CALL FormClass_ItemPring("æ›´å¤šé€‰é¡¹","select","form_extendflag" & n,form_extendflag(n),"","","","0~~~ç‰ˆå—æœ€æ–°ä¸»é¢˜å¸–|1~~~ç‰ˆå—æœ€æ–°ç²¾åå¸–"," class=""easyui-combobox""")
+			CALL FormClass_ItemPring("å®šåˆ¶ç•Œé¢","splitchecked","form_style" & n,form_style(n),"","","",StyleItem,"")
 			response.Write "<div class='itemline'><span class='iteminfo'><hr class=""splitline"" /></span></div>"
 		next
-		FormClass_End
+		Call FormClass_End()
 		%>
 		</div>
 		<br /><br />

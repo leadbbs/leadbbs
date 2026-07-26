@@ -1,23 +1,23 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
-DisplayUserNavigate("ÓÃ»§¹ÜÀí")
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
+DisplayUserNavigate("ç”¨æˆ·ç®¡ç†")
 If GBL_CHK_Flag=1 Then
-	UserBrowser
+	UserBrowser()
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Function UserBrowser
@@ -43,7 +43,7 @@ Function UserBrowser
 	SQLendString=""
 	whereFlag = 0
 
-	Rem ÏÂÃæµÄ´úÂëÊ¹Ä¿Ç°Ôİ²»Ìá¹©³ÇÊĞ·ÖÀàË«ÖØ²éÑ¯
+	Rem ä¸‹é¢çš„ä»£ç ä½¿ç›®å‰æš‚ä¸æä¾›åŸå¸‚åˆ†ç±»åŒé‡æŸ¥è¯¢
 
 	If key<>"" Then
 		If whereFlag = 1 Then
@@ -162,40 +162,40 @@ Function UserBrowser
 
 	PageSplictString = PageSplictString & "<table border=0 cellspacing=0 cellpadding=0><tr><td>&nbsp;"
 	if FirstID>MinRecordID and FirstID<>0 then
-		PageSplictString = PageSplictString & "<a href=UserManage.asp" & EndwriteQueryString & "&Start=0&SubmitFlag=3829EwoqIaNfoG>Ê×Ò³</a> " & VbCrLf
+		PageSplictString = PageSplictString & "<a href=UserManage.asp" & EndwriteQueryString & "&Start=0&SubmitFlag=3829EwoqIaNfoG>é¦–é¡µ</a> " & VbCrLf
 	else
-		PageSplictString = PageSplictString & "<span class=grayfont>Ê×Ò³</span> " & VbCrLf
+		PageSplictString = PageSplictString & "<span class=grayfont>é¦–é¡µ</span> " & VbCrLf
 	end if
 
 	if FirstID > MinRecordID and FirstID<>0 then
-		PageSplictString = PageSplictString & " <a href=UserManage.asp" & EndwriteQueryString & "&Start=" & FirstID & "&UpDownPageFlag=1&SubmitFlag=3829EwoqIaNfoG>ÉÏÒ³</a> " & VbCrLf
+		PageSplictString = PageSplictString & " <a href=UserManage.asp" & EndwriteQueryString & "&Start=" & LngStr(FirstID) & "&UpDownPageFlag=1&SubmitFlag=3829EwoqIaNfoG>ä¸Šé¡µ</a> " & VbCrLf
 	else
-		PageSplictString = PageSplictString & " <span class=grayfont>ÉÏÒ³</span> " & VbCrLf
+		PageSplictString = PageSplictString & " <span class=grayfont>ä¸Šé¡µ</span> " & VbCrLf
 	end if
 
 	if LastID<MaxRecordID and LastID<>0 then
-		PageSplictString = PageSplictString & " <a href=UserManage.asp" & EndwriteQueryString & "&Start=" & LastID & "&SubmitFlag=3829EwoqIaNfoG>ÏÂÒ³</a> " & VbCrLf
+		PageSplictString = PageSplictString & " <a href=UserManage.asp" & EndwriteQueryString & "&Start=" & LngStr(LastID) & "&SubmitFlag=3829EwoqIaNfoG>ä¸‹é¡µ</a> " & VbCrLf
 	else
-		PageSplictString = PageSplictString & " <span class=grayfont>ÏÂÒ³</span> " & VbCrLf
+		PageSplictString = PageSplictString & " <span class=grayfont>ä¸‹é¡µ</span> " & VbCrLf
 	end if
 
 	if LastID < MaxRecordID and LastID<>0 then
-		PageSplictString = PageSplictString & " <a href=UserManage.asp" & EndwriteQueryString & "&Start=" & MaxRecordID+1 & "&UpDownPageFlag=1&SubmitFlag=3829EwoqIaNfoG>Î²Ò³</a> " & VbCrLf
+		PageSplictString = PageSplictString & " <a href=UserManage.asp" & EndwriteQueryString & "&Start=" & LngStr(MaxRecordID+1) & "&UpDownPageFlag=1&SubmitFlag=3829EwoqIaNfoG>å°¾é¡µ</a> " & VbCrLf
 	else
-		PageSplictString = PageSplictString & " <span class=grayfont>Î²Ò³</span> " & VbCrLf
+		PageSplictString = PageSplictString & " <span class=grayfont>å°¾é¡µ</span> " & VbCrLf
 	end if
-	PageSplictString = PageSplictString & "¹²<b>" & recordCount & "</b>ÌõĞÅÏ¢"
+	PageSplictString = PageSplictString & "å…±<b>" & recordCount & "</b>æ¡ä¿¡æ¯"
 	If (recordCount mod DEF_MaxListNum)=0 Then
-		PageSplictString = PageSplictString & " ¼Æ<b>" & clng(recordCount/DEF_MaxListNum) & "</b>Ò³"
+		PageSplictString = PageSplictString & " è®¡<b>" & clng(recordCount/DEF_MaxListNum) & "</b>é¡µ"
 	Else
 		If recordCount>=DEF_MaxListNum Then
-			PageSplictString = PageSplictString & " ¼Æ<b>" & clng(recordCount/DEF_MaxListNum)+1 & "</b>Ò³"
+			PageSplictString = PageSplictString & " è®¡<b>" & clng(recordCount/DEF_MaxListNum)+1 & "</b>é¡µ"
 		Else
-			PageSplictString = PageSplictString & " ¼Æ<b>1</b>Ò³"
+			PageSplictString = PageSplictString & " è®¡<b>1</b>é¡µ"
 		End If
 	End If
-	PageSplictString = PageSplictString & " Ã¿Ò³<b>" & DEF_MaxListNum & "</b>Ìõ"
-	PageSplictString = PageSplictString & "</td><td><form action=UserManage.asp><input size=6 name=key value=" & chr(34) & htmlencode(key) & """ class=fminpt><input type=submit name=submit value=ËÑ class=fmbtn>[ÇëÊäÈ«Ãû]</td></form></tr></table>"
+	PageSplictString = PageSplictString & " æ¯é¡µ<b>" & DEF_MaxListNum & "</b>æ¡"
+	PageSplictString = PageSplictString & "</td><td><form action=UserManage.asp><input size=6 name=key value=" & chr(34) & htmlencode(key) & """ class=fminpt><input type=submit name=submit value=æœ class=fmbtn>[è¯·è¾“å…¨å]</td></form></tr></table>"
 	%>
 	<script language=javascript>
 	function opw(f,r,id)
@@ -206,23 +206,23 @@ Function UserBrowser
 	<table border=0 cellpadding=0 cellspacing=0 width="100%" class=frame_table>
 	<tr class=frame_tbhead>
 		<td wdith=66><div class=value>ID</div></td>
-		<td width=50%><div class=value>Ãû³Æ</div></td>
+		<td width=50%><div class=value>åç§°</div></td>
 		<td wdith=66><div class=value><%=DEF_PointsName(0)%></div></td>
-		<td wdith=120><div class=value>×¢²áÊ±¼ä</div></td>
-		<td wdith=120><div class=value>×îºóµÇÂ¼</div></td>
+		<td wdith=120><div class=value>æ³¨å†Œæ—¶é—´</div></td>
+		<td wdith=120><div class=value>æœ€åç™»å½•</div></td>
 	</tr>
 <%
 		For N = MinN to MaxN Step StepValue
 			%>
 	<tr class=TBBG9>
-		<td class=tdbox><%=GetData(0,n)%></td>
+		<td class=tdbox><%=LngStr(GetData(0,n))%></td>
 		<td class=tdbox>
-  			<a href=<%=DEF_BBS_HomeUrl%>User/LookUserInfo.asp?id=<%=GetData(0,n)%>><%=htmlencode(GetData(1,n))%></a>
-  			<a href=UserModify.asp?Form_ID=<%=GetData(0,n)%> title=ĞŞ¸ÄÓÃ»§×ÊÁÏ¼°È¨ÏŞ><span class=greenfont>ĞŞ¸Ä</span></a>
-  			<a href=UserDelete.asp?GBL_CTG_DELETEID=<%=GetData(0,n)%>><span class=redfont title=½öµ¥´¿µÄÉ¾³ıÓÃ»§×ÊÁÏ>É¾</span></a>
-  			<a href='javascript:opw("UpdateUserAnnounce2.asp?B=<%=GBL_board_ID%>","ID",<%=GetData(0,n)%>);' title=ĞŞ¸´ÓÃ»§·¢ÌûÁ¿¼°<%=DEF_PointsName(3)%>Êı¾İºÍ¶ÌÏûÏ¢×´Ì¬>ĞŞ¸´</a>
-  			<a href='javascript:opw("DelUserAllAnnounce.asp?B=<%=GBL_board_ID%>","DelUserID",<%=GetData(0,n)%>);' title=É¾³ı´ËÓÃ»§µÄºÃÓÑ×ÊÁÏ£¬Ìû×ÓÊÕ²Ø£¬·¢±íÌû×Ó£¬ÉÏ´«¸½¼şµÈ×ÊÁÏ£¬²»¼õ<%=DEF_PointsName(0)%>>É¾×ÊÁÏ</a>
-  			<a href='javascript:opw("DelUserAllAnnounce.asp?B=<%=GBL_board_ID%>&dflag=onlyupload","DelUserID",<%=GetData(0,n)%>);' title=´ËÏîÍ¬É¾³ı×ÊÁÏµÄÇø±ğÔÚÓÚÖ»É¾³ıÓÃ»§µÄÉÏ´«¸½¼ş>É¾¸½¼ş</a></td>
+  			<a href=<%=DEF_BBS_HomeUrl%>User/LookUserInfo.asp?id=<%=LngStr(GetData(0,n))%>><%=htmlencode(GetData(1,n))%></a>
+  			<a href=UserModify.asp?Form_ID=<%=LngStr(GetData(0,n))%> title=ä¿®æ”¹ç”¨æˆ·èµ„æ–™åŠæƒé™><span class=greenfont>ä¿®æ”¹</span></a>
+  			<a href=UserDelete.asp?GBL_CTG_DELETEID=<%=LngStr(GetData(0,n))%>><span class=redfont title=ä»…å•çº¯çš„åˆ é™¤ç”¨æˆ·èµ„æ–™>åˆ </span></a>
+  			<a href='javascript:opw("UpdateUserAnnounce2.asp?B=<%=GBL_board_ID%>","ID",<%=LngStr(GetData(0,n))%>);' title=ä¿®å¤ç”¨æˆ·å‘å¸–é‡åŠ<%=DEF_PointsName(3)%>æ•°æ®å’ŒçŸ­æ¶ˆæ¯çŠ¶æ€>ä¿®å¤</a>
+  			<a href='javascript:opw("DelUserAllAnnounce.asp?B=<%=GBL_board_ID%>","DelUserID",<%=LngStr(GetData(0,n))%>);' title=åˆ é™¤æ­¤ç”¨æˆ·çš„å¥½å‹èµ„æ–™ï¼Œå¸–å­æ”¶è—ï¼Œå‘è¡¨å¸–å­ï¼Œä¸Šä¼ é™„ä»¶ç­‰èµ„æ–™ï¼Œä¸å‡<%=DEF_PointsName(0)%>>åˆ èµ„æ–™</a>
+  			<a href='javascript:opw("DelUserAllAnnounce.asp?B=<%=GBL_board_ID%>&dflag=onlyupload","DelUserID",<%=LngStr(GetData(0,n))%>);' title=æ­¤é¡¹åŒåˆ é™¤èµ„æ–™çš„åŒºåˆ«åœ¨äºåªåˆ é™¤ç”¨æˆ·çš„ä¸Šä¼ é™„ä»¶>åˆ é™„ä»¶</a></td>
 		<td class=tdbox><%=GetData(2,n)%></td>
 		<td class=tdbox><%=RestoreTime(Left(GetData(3,n),8))%></td>
 		<td class=tdbox><%=RestoreTime(Left(GetData(4,n),8))%></td>
@@ -249,7 +249,7 @@ Function UserBrowser
 	</table>
 	<%
 	Else
-		Response.Write "<div class=alert>Ã»ÓĞ·ûºÏÌõ¼şµÄ¼ÇÂ¼¡£</div>" & VbCrLf
+		Response.Write "<div class=alert>æ²¡æœ‰ç¬¦åˆæ¡ä»¶çš„è®°å½•ã€‚</div>" & VbCrLf
 	End If
 
 End Function

@@ -1,11 +1,11 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/User_Setup.asp -->
-<!-- #include file=../inc/Board_Popfun.asp -->
-<!-- #include file=inc/UserTopic.asp -->
-<!-- #include file=../inc/Limit_Fun.asp -->
-<!-- #include file=inc/Mail_fun.asp -->
-<!-- #include file=inc/UserGetPass_Fun.asp -->
-<!-- #include file=inc/UserActive_Fun.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/User_Setup.asp"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
+<!--#include file="inc/UserTopic.asp"-->
+<!--#include file="../inc/Limit_Fun.asp"-->
+<!--#include file="inc/Mail_fun.asp"-->
+<!--#include file="inc/UserGetPass_Fun.asp"-->
+<!--#include file="inc/UserActive_Fun.asp"-->
 <%
 Response.Expires = 0 
 Response.ExpiresAbsolute = DEF_Now - 1
@@ -15,28 +15,28 @@ Response.CacheControl = "no-cache"
 
 DEF_BBS_HomeUrl = "../"
 
-Main
+Main()
 
 Sub Main
 
-	initDatabase
+	initDatabase()
 	GBL_CHK_TempStr = ""
 	
-	BBS_SiteHead DEF_SiteNameString & " - ÕÊºÅ°²È«",0,"ÕÊºÅ°²È«"
+	BBS_SiteHead DEF_SiteNameString & " - å¸å·å®‰å…¨",0,"å¸å·å®‰å…¨"
 
 	Boards_Body_Head("")
 
 	%>
 	<div class="alertbox user_secret">
 	<%
-	Main_GetPass
+	Main_GetPass()
 	%>
 	</div>
 	<%
 	
-	Boards_Body_Bottom
-	closeDataBase
-	SiteBottom
+	Boards_Body_Bottom()
+	closeDataBase()
+	SiteBottom()
 
 End Sub
 
@@ -47,32 +47,32 @@ sub getpass_menu
 <br>
 	<div class="title">
 <!--
-	¼¤»îÏà¹Ø£º
-	<a href=UserGetPass.asp?act=send&gettype=1 class=bluefont>ÖØ·¢¼¤»îÂë</a>
-	 - <a href=UserGetPass.asp?act=active class=bluefont>ÓÃ»§¼¤»î</a>
-	 <br>ÕÒ»ØÃÜÂë°ì·¨£º
-	 <a href=UserGetPass.asp class=bluefont>Ê¹ÓÃÃÜ±£ÕÒ»Ø</a>
+	æ¿€æ´»ç›¸å…³ï¼š
+	<a href=UserGetPass.asp?act=send&gettype=1 class=bluefont>é‡å‘æ¿€æ´»ç </a>
+	 - <a href=UserGetPass.asp?act=active class=bluefont>ç”¨æˆ·æ¿€æ´»</a>
+	 <br>æ‰¾å›žå¯†ç åŠžæ³•ï¼š
+	 <a href=UserGetPass.asp class=bluefont>ä½¿ç”¨å¯†ä¿æ‰¾å›ž</a>
 	<%
-	if DEF_User_GetPassMode = 3 then response.write " - <a href=UserGetPass.asp?act=send class=bluefont>Ê¹ÓÃÓÊÏäÕÒ»Ø</a>"
-	if DEF_User_GetPassMode = 4 then response.write " - <a href=UserGetPass.asp?act=send class=bluefont>Ê¹ÓÃÓÊÏä»òÊÖ»úºÅÂëÕÒ»Ø</a>"
+	if DEF_User_GetPassMode = 3 then response.write " - <a href=UserGetPass.asp?act=send class=bluefont>ä½¿ç”¨é‚®ç®±æ‰¾å›ž</a>"
+	if DEF_User_GetPassMode = 4 then response.write " - <a href=UserGetPass.asp?act=send class=bluefont>ä½¿ç”¨é‚®ç®±æˆ–æ‰‹æœºå·ç æ‰¾å›ž</a>"
 	%>
 	<%if DEF_User_GetPassMode > 0 then%>
 	 <%
 	end if%>
-	<br>ÈôÒÑÊÕµ½ÖØÖÃÈÏÖ¤Âë£º
-	 <a href=UserGetPass.asp?act=reset class=bluefont>ÖØÖÃÃÜÂë</a>
+	<br>è‹¥å·²æ”¶åˆ°é‡ç½®è®¤è¯ç ï¼š
+	 <a href=UserGetPass.asp?act=reset class=bluefont>é‡ç½®å¯†ç </a>
 	 <br>
 <hr class=splitline>
 <br>
 -->
-	 ¼¤»îÕÊºÅÁ÷³Ì£º<a href=<%=DEF_RegisterFile%>>×¢²á</a>
-	  > ÊÕµ½ÓÊÏä»òÊÖ»úµÄ¼¤»îÂë > 
-	  <a href=UserGetPass.asp?act=active>¼¤»îÕÊ»§</a>£¬<a href=UserGetPass.asp?act=send&gettype=1 class=bluefont>µã´ËÖØ·¢¼¤»îÂë</a><br>
-	 ÕÒ»ØÕÊºÅÁ÷³Ì£º
-	 <a href=UserGetPass.asp?act=send>Ê¹ÓÃÓÊÏä»òÊÖ»úÕÒ»Ø</a>
-	  > ÓÊÏä»òÊÖ»úÊÕµ½ÖØÖÃÂë > 
-	  <a href=UserGetPass.asp?act=reset>ÊäÈëÖØÖÃÂë²¢¸ü¸ÄÃÜÂë</a><br>
-	 <br><a href=UserGetPass.asp>ÄãÒ²¿ÉÒÔÊ¹ÓÃÃÜ±£À´¸ü¸ÄÃÜÂë</a>
+	 æ¿€æ´»å¸å·æµç¨‹ï¼š<a href=<%=DEF_RegisterFile%>>æ³¨å†Œ</a>
+	  > æ”¶åˆ°é‚®ç®±æˆ–æ‰‹æœºçš„æ¿€æ´»ç  > 
+	  <a href=UserGetPass.asp?act=active>æ¿€æ´»å¸æˆ·</a>ï¼Œ<a href=UserGetPass.asp?act=send&gettype=1 class=bluefont>ç‚¹æ­¤é‡å‘æ¿€æ´»ç </a><br>
+	 æ‰¾å›žå¸å·æµç¨‹ï¼š
+	 <a href=UserGetPass.asp?act=send>ä½¿ç”¨é‚®ç®±æˆ–æ‰‹æœºæ‰¾å›ž</a>
+	  > é‚®ç®±æˆ–æ‰‹æœºæ”¶åˆ°é‡ç½®ç  > 
+	  <a href=UserGetPass.asp?act=reset>è¾“å…¥é‡ç½®ç å¹¶æ›´æ”¹å¯†ç </a><br>
+	 <br><a href=UserGetPass.asp>ä½ ä¹Ÿå¯ä»¥ä½¿ç”¨å¯†ä¿æ¥æ›´æ”¹å¯†ç </a>
 	</div>
 <%
 end sub
@@ -90,7 +90,7 @@ Sub Main_GetPass
 			Set UserGetPass = New User_GetPass
 			UserGetPass.GetPass
 			Set UserGetPass = Nothing
-			getpass_menu
+			getpass_menu()
 	End Select
 
 End Sub%>

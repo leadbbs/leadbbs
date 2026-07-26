@@ -1,4 +1,4 @@
-<!-- #include file=../../inc/Upload_Fun.asp -->
+<!--#include file="../../inc/Upload_Fun.asp"-->
 <%
 Function Topic_AnnounceList(BoardID,ListNum,GoodAssort,NewWindow,PithFlag,newanc,img)
 
@@ -111,7 +111,7 @@ End If
 			GetData(1,SQL) = Replace(htmlencode(GetData(1,SQL)),"\","\\")
 			'GetData(1,SQL) = DisplayAnnounceTitle(GetData(1,SQL),GetData(2,SQL))
 			If GBL_CheckLimitTitle(GetData(4,SQL),GetData(5,SQL),GetData(6,SQL),GetData(7,SQL)) = 1 Then
-					GetData(1,SQL) = "´ËÌû×Ó±êÌâÒÑÉèÖÃÎªÒþ²Ø"
+					GetData(1,SQL) = "æ­¤å¸–å­æ ‡é¢˜å·²è®¾ç½®ä¸ºéšè—"
 					GetData(2,SQL) = 1
 			End If
 

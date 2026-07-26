@@ -1,4 +1,4 @@
-<!-- #include file=../inc/Upload_Setup.ASP -->
+<!--#include file="../inc/Upload_Setup.ASP"-->
 <%
 Dim PhotoDirectory,UploadPhotoUrl
 PhotoDirectory = DEF_BBS_HomeUrl & DEF_BBS_UploadPhotoUrl
@@ -20,6 +20,17 @@ function GetPicInfo(LoadFile,typeflag)
 	End If
 	Dim MyObj
 	Set MyObj = Server.CreateObject("Persits.Jpeg")
+	' The `if err` below is dead code without this: opening an image that cannot be decoded
+	' raises, and upstream shipped the enclosing On Error Resume Next commented out. Under
+	' AxonASP the emulated Persits.Jpeg raises 800A0033 (G3IMAGE ... zlib: invalid checksum)
+	' and takes the whole request with it -- for uploads that means the post is created and
+	' the poster gets a server error page. See README Â§44.
+	' Enabled for the rest of the function, and deliberately never turned off again: that is
+	' what the commented-out upstream line meant, and VBScript restores the caller's error
+	' state on return anyway. An explicit On Error Goto 0 here would strip the handler a
+	' CALLER had enabled -- which made article/center.asp?action=updatecache fatal on a
+	' pre-existing Save-after-Close further down this file.
+	On Error Resume Next
 	MyObj.Open(LoadFile)
 	if err Then
 		GetPicInfo = 0
@@ -55,6 +66,9 @@ Function SaveSmallPic(LoadFile,SaveFile,SaveW,SaveH,drawFlag)
 	Set MyObj = Server.CreateObject("Persits.Jpeg")
 	'MyObj.EnableLZW = True
 	MyObj.Interpolation = 2
+	' See GetPicInfo above and README Â§44: without this the `if err` guard cannot run and a
+	' truncated or unsupported image aborts the whole upload request.
+	On Error Resume Next
 	MyObj.Open(LoadFile)
 	if err Then
 		GBL_FileType = 2
@@ -79,7 +93,7 @@ Function SaveSmallPic(LoadFile,SaveFile,SaveW,SaveH,drawFlag)
 	'and (right(SaveFile,4) <> ".gif" or (right(SaveFile,4) = ".gif" and (inStr(PhotoDirectory,"/face/") or inStr(PhotoDirectory,"\face\"))))
 	If (Img_Height > MaxHeight Or Img_Width > MaxWidth) and MaxHeight <> -1 and MaxWidth <> -1 Then
 		Dim t1,t2
-		If 0 = 1 Then '0-ËõĞ¡µ½Ô¤¶¨¿í»ò¸ß,1,Èç¹û´óÓÚÔ¤¶¨¿í»ò¸ßÔò³É±¶ËõĞ¡
+		If 0 = 1 Then '0-ç¼©å°åˆ°é¢„å®šå®½æˆ–é«˜,1,å¦‚æœå¤§äºé¢„å®šå®½æˆ–é«˜åˆ™æˆå€ç¼©å°
 			If Img_Height > MaxHeight Then
 				per = (Img_Height - MaxHeight)/Img_Height
 			End If
@@ -92,7 +106,7 @@ Function SaveSmallPic(LoadFile,SaveFile,SaveW,SaveH,drawFlag)
 			Img_Width = Img_Width - Img_Width * per
 			GBL_Width = Fix(Img_Width)
 			GBL_Height = Fix(Img_Height)
-		Else 'ËõĞ¡²¢½ØÈ¡
+		Else 'ç¼©å°å¹¶æˆªå–
 			t1 = Img_Height / MaxHeight
 			t2 = Img_Width / MaxWidth
 			'If t1 > Fix(t1) Then T1 = Fix(t1) + 1
@@ -151,7 +165,7 @@ Function SaveSmallPic(LoadFile,SaveFile,SaveW,SaveH,drawFlag)
 				saveflag=1
 			end if
 		Else
-			SaveSmallPic = 2 'Ô­ÎÄ¼ş²»¶¯
+			SaveSmallPic = 2 'åŸæ–‡ä»¶ä¸åŠ¨
 			GBL_FileType = 0
 			if drawFlag = -1 then
 				if ResizeFlag = 1 then SaveFile = Replace(Replace(SaveFile,".gif",".jpg"),".png",".jpg")
@@ -178,7 +192,7 @@ Function SaveSmallPic(LoadFile,SaveFile,SaveW,SaveH,drawFlag)
 	TA = Array("-0---000-000-00--00--00--000-","010-0111011101100110011001110","010-0100010101010101010101000","010-0111011101010111011101110","01000100010101010101010100010","01110111010101100111011101110","-000-000-0-0-00--0000000-000-")
 	If 2=2 Then
 		'MyObj.SaveFormat = 1
-		Rem Ğ¡µÄÍ¼Æ¬×ÜÊÇ×îÓÅ»¯´æ´¢
+		Rem å°çš„å›¾ç‰‡æ€»æ˜¯æœ€ä¼˜åŒ–å­˜å‚¨
 		If GBL_Width < 120 and GBL_Height < 120 Then
 			MyObj.Quality = 100
 		End If
@@ -209,7 +223,7 @@ Function SaveSmallPic(LoadFile,SaveFile,SaveW,SaveH,drawFlag)
 			SaveFile = Replace(Replace(SaveFile,".gif",".jpg"),".png",".jpg")
 			MyObj.Save(SaveFile)
 		end if
-		SaveSmallPic = 1 'Õı³£×ª»»,ÎÄ¼şÃû²»¸Ä±ä
+		SaveSmallPic = 1 'æ­£å¸¸è½¬æ¢,æ–‡ä»¶åä¸æ”¹å˜
 	End If
 	MyObj.Close
 	Set MyObj = Nothing
@@ -224,7 +238,7 @@ Sub img_printText(LoadFile,SaveFile)
 			'MyObjClone.EnableLZW = True
 			MyObjClone.Interpolation = 2
 			MyObjClone.Open(LoadFile)
-			MyObjClone.Canvas.Font.Family = "ËÎÌå"
+			MyObjClone.Canvas.Font.Family = "å®‹ä½“"
 			MyObjClone.Canvas.Font.Size = 12
 			MyObjClone.Canvas.Font.Color = &HFFFFFFFF
 			MyObjClone.Canvas.Font.Align = 1
@@ -243,6 +257,22 @@ Sub img_printText(LoadFile,SaveFile)
 
 End Sub
 
+' Reduce a physical avatar path to what LeadBBS_UserFace.PhotoDir actually stores: the part
+' after images/upload/face/, in the backslash form the rest of the application expects (the
+' display code maps "\" back to "/"). The UPDATE branch of CheckUploadDatabase always did this
+' inline; the INSERT branch did not, and stored Server.MapPath's absolute path instead. See
+' README Â§49.
+Function TrimFacePath(ByVal f)
+	Dim marker, at
+	TrimFacePath = ""
+	If f = "" Then Exit Function
+	f = Replace(f, "/", "\")
+	marker = Replace(LCase(DEF_BBS_UploadPhotoUrl), "/", "\") & "face\"
+	at = inStr(LCase(f), marker)
+	If at > 0 Then f = Mid(f, at + Len(marker))
+	TrimFacePath = f
+End Function
+
 Sub CheckUploadDatabase(BigFile,SmallFile)
 
 	If BigFile = "" and SmallFile = "" Then Exit Sub
@@ -260,7 +290,7 @@ Sub CheckUploadDatabase(BigFile,SmallFile)
 	UserID = Left(Request.QueryString("UserID"),14)
 	If isNumeric(UserID) = 0 Then UserID = 0
 	UserID = cCur(UserID)
-	If GBL_UserID>0 and CheckSupervisorUserName = 1 and UserID > 0 Then
+	If GBL_UserID>0 and CheckSupervisorUserName() = 1 and UserID > 0 Then
 		SQL = sql_select("Select ID,PhotoDir,NdateTime from LeadBBS_UserFace Where UserID=" & UserID,1)
 	Else
 		UserID = GBL_UserID
@@ -273,6 +303,13 @@ Sub CheckUploadDatabase(BigFile,SmallFile)
 	If Rs.Eof Then
 		Rs.Close
 		Set Rs = Nothing
+		' Â§49: PhotoDir is varchar(100) and this used to receive the ABSOLUTE filesystem path,
+		' so on any web root deeper than ~40 characters MySQL rejected the row with
+		' "Data too long for column 'PhotoDir'". LDExeCute swallowed it and the page still
+		' reported success -- so no user could ever set their FIRST avatar. Store what the
+		' UPDATE branch below stores.
+		NBigFile = TrimFacePath(NBigFile)
+		NSmallFile = TrimFacePath(NSmallFile)
 		SQL = "insert into LeadBBS_UserFace(UserID,PhotoDir,SPhotoDir,ndatetime,FileType) Values(" & UserID & ",'" & Replace(NBigFile,"'","''") & "','" & Replace(NSmallFile,"'","''") & "'," & GetTimeValue(DEF_Now) & "," & GBL_FileType & ")"
 		CALL LDExeCute(SQL,1)
 	Else
@@ -302,7 +339,7 @@ Function checkFiles(path)
 	Set fs = Server.CreateObject(DEF_FSOString)
 	If err <> 0 Then
 		Err.Clear
-		Response.Write "<p>·şÎñÆ÷²»Ö§³ÖFSO£¬Ó²ÅÌÎÄ¼şÎ´É¾³ı£®</p>"
+		Response.Write "<p>æœåŠ¡å™¨ä¸æ”¯æŒFSOï¼Œç¡¬ç›˜æ–‡ä»¶æœªåˆ é™¤ï¼</p>"
 		Exit Function
 	End If
 	If fs.FileExists(path) Then
@@ -322,7 +359,7 @@ Function DeleteFiles(path)
 	Set fs = Server.CreateObject(DEF_FSOString)
 	If err <> 0 Then
 		Err.Clear
-		Response.Write "<p>·şÎñÆ÷²»Ö§³ÖFSO£¬Ó²ÅÌÎÄ¼şÎ´É¾³ı£®</p>"
+		Response.Write "<p>æœåŠ¡å™¨ä¸æ”¯æŒFSOï¼Œç¡¬ç›˜æ–‡ä»¶æœªåˆ é™¤ï¼</p>"
 		Exit Function
 	End If
 	If fs.FileExists(path) Then
@@ -344,7 +381,7 @@ Function MoveFiles(path,path2)
 	Set fs = Server.CreateObject(DEF_FSOString)
 	If err <> 0 Then
 		Err.Clear
-		Response.Write "<p>·şÎñÆ÷²»Ö§³ÖFSO£¬Ó²ÅÌÎÄ¼şÎ´É¾³ı£®</p>"
+		Response.Write "<p>æœåŠ¡å™¨ä¸æ”¯æŒFSOï¼Œç¡¬ç›˜æ–‡ä»¶æœªåˆ é™¤ï¼</p>"
 		Exit Function
 	End If
 	If fs.FileExists(path) Then

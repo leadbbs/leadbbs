@@ -1,29 +1,29 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../inc/UserTopic.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../inc/UserTopic.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 
-Main
+Main()
 
 Sub Main
 
-	Select Case Left(Request.QueryString,4)
+	Select Case Left(Request.ServerVariables("QUERY_STRING"),4)
 		Case "icon"
-			BBS_SiteHead DEF_SiteNameString & " - ÂÛÌ³±íÇé",0,"ÂÛÌ³±íÇé"
+			BBS_SiteHead DEF_SiteNameString & " - è®ºå›è¡¨æƒ…",0,"è®ºå›è¡¨æƒ…"
 			UserTopicTopInfo("help")
-			Help_UbbIcon
+			Help_UbbIcon()
 		Case "colo"
-			BBS_SiteHead DEF_SiteNameString & " - ÑÕÉ«±í",0,"ÑÕÉ«±í"
+			BBS_SiteHead DEF_SiteNameString & " - é¢œè‰²è¡¨",0,"é¢œè‰²è¡¨"
 			UserTopicTopInfo("help")
-			Help_UbbColor
+			Help_UbbColor()
 		Case else
-			BBS_SiteHead DEF_SiteNameString & " - UBB´úÂëÊÍÒÉ",0,"UBB´úÂëÊÍÒÉ"
+			BBS_SiteHead DEF_SiteNameString & " - UBBä»£ç é‡Šç–‘",0,"UBBä»£ç é‡Šç–‘"
 			UserTopicTopInfo("help")
-			Help_UbbCode
+			Help_UbbCode()
 	End Select
-	UserTopicBottomInfo
-	sitebottom
+	UserTopicBottomInfo()
+	sitebottom()
 
 End Sub
 
@@ -37,134 +37,134 @@ Sub Help_UbbCode
 
 	%>
 
-<div class=title>Ê²Ã´ÊÇUBB´úÂë£¿ </div>
-<p>UBB´úÂëÊÇHTMLµÄÒ»¸ö±äÖÖ£¬ÊÇUltimate Bulletin Board(¹úÍâµÄÒ»¸öBBS³ÌÐò)²ÉÓÃµÄÒ»ÖÖÌØÊâµÄTAG¡£ÄúÒ²ÐíÒÑ¾­¶ÔËüºÜÊìÏ¤ÁË¡£UBB´úÂëºÜ¼òµ¥£¬¹¦ÄÜºÜÉÙ£¬µ«ÊÇÓÉÓÚÆäTagÓï·¨¼ì²éÊµÏÖ·Ç³£ÈÝÒ×£¬ËùÒÔÎÒÃÇµÄÍøÕ¾ÒýÈëÁËÕâÖÖ´úÂë£¬ÒÔ·½±ãÍøÓÑÊ¹ÓÃÏÔÊ¾Í¼Æ¬/Áª½Ó/¼Ó´Ö×ÖÌåµÈ³£¼û¹¦ÄÜ¡£ 
+<div class=title>ä»€ä¹ˆæ˜¯UBBä»£ç ï¼Ÿ </div>
+<p>UBBä»£ç æ˜¯HTMLçš„ä¸€ä¸ªå˜ç§ï¼Œæ˜¯Ultimate Bulletin Board(å›½å¤–çš„ä¸€ä¸ªBBSç¨‹åº)é‡‡ç”¨çš„ä¸€ç§ç‰¹æ®Šçš„TAGã€‚æ‚¨ä¹Ÿè®¸å·²ç»å¯¹å®ƒå¾ˆç†Ÿæ‚‰äº†ã€‚UBBä»£ç å¾ˆç®€å•ï¼ŒåŠŸèƒ½å¾ˆå°‘ï¼Œä½†æ˜¯ç”±äºŽå…¶Tagè¯­æ³•æ£€æŸ¥å®žçŽ°éžå¸¸å®¹æ˜“ï¼Œæ‰€ä»¥æˆ‘ä»¬çš„ç½‘ç«™å¼•å…¥äº†è¿™ç§ä»£ç ï¼Œä»¥æ–¹ä¾¿ç½‘å‹ä½¿ç”¨æ˜¾ç¤ºå›¾ç‰‡/è”æŽ¥/åŠ ç²—å­—ä½“ç­‰å¸¸è§åŠŸèƒ½ã€‚ 
 
-<div class=title>UBB´úÂë¿ÉÒÔÊµÏÖÄÄÐ©HTMLµÄ¹¦ÄÜ£¬¼°ËüµÄÊ¹ÓÃÀý×ÓºÍ¼¼ÇÉ£¿</div>
+<div class=title>UBBä»£ç å¯ä»¥å®žçŽ°å“ªäº›HTMLçš„åŠŸèƒ½ï¼ŒåŠå®ƒçš„ä½¿ç”¨ä¾‹å­å’ŒæŠ€å·§ï¼Ÿ</div>
 <OL class=helpOL>
-<li>ÓÐÁ½ÖÖ·½·¨¿ÉÒÔ¼ÓÈë³¬¼¶Á¬½Ó£¬¿ÉÒÔÁ¬½Ó¾ßÌåµØÖ·»òÕßÎÄ×ÖÁ¬½Ó
+<li>æœ‰ä¸¤ç§æ–¹æ³•å¯ä»¥åŠ å…¥è¶…çº§è¿žæŽ¥ï¼Œå¯ä»¥è¿žæŽ¥å…·ä½“åœ°å€æˆ–è€…æ–‡å­—è¿žæŽ¥
 <div class=value2><span class=redfont>[URL]</span><a href=http://www.%4c%65%61%64%42%42%53.%63%6f%6d/>http://www.asph.net/</a><span class=redfont>[/URL] 
   </span>
 </div>
 <div class=value2>[URL=</span><a href=http://%4c%65%61%64%42%42%53.%63%6f%6d/>http://www.asph.net/</a><span class=redfont>]</span>LeadBBS<span class=redfont>[/URL]</span>
 </div>
-<li>ÏÔÊ¾Îª´ÖÌåÐ§¹û
-<div class=value2><span class=redfont>[B]</span>ÎÄ×Ö<span class=redfont>[/B]</span></div>
-<li>ÏÔÊ¾ÎªÐ±ÌåÐ§¹û
-<div class=value2><span class=redfont>[I]</span>ÎÄ×Ö<span class=redfont>[/I]</span></div>
-<li>ÏÔÊ¾ÎªÏÂ»®ÏßÐ§¹û
-<div class=value2><span class=redfont>[U]</span>ÎÄ×Ö<span class=redfont>[/U]</span></div>
-<li>ÎÄ×ÖÎ»ÖÃ¿ØÖÆ
-<p>ÔÚÎÄ×ÖµÄÎ»ÖÃ¿ÉÒÔÈÎÒâ¼ÓÈëÄúÐèÒªµÄ×Ö·û£¬<span class=bluefont>center</span>Î»ÖÃ<span class=redfont>center</span>±íÊ¾¾ÓÖÐ£¬<span class=redfont>left</span>±íÊ¾¾Ó×ó£¬<span class=redfont>right</span>±íÊ¾¾ÓÓÒ£¬<span class=redfont>justify</span>±íÊ¾Á½¶Ë¶ÔÆë
+<li>æ˜¾ç¤ºä¸ºç²—ä½“æ•ˆæžœ
+<div class=value2><span class=redfont>[B]</span>æ–‡å­—<span class=redfont>[/B]</span></div>
+<li>æ˜¾ç¤ºä¸ºæ–œä½“æ•ˆæžœ
+<div class=value2><span class=redfont>[I]</span>æ–‡å­—<span class=redfont>[/I]</span></div>
+<li>æ˜¾ç¤ºä¸ºä¸‹åˆ’çº¿æ•ˆæžœ
+<div class=value2><span class=redfont>[U]</span>æ–‡å­—<span class=redfont>[/U]</span></div>
+<li>æ–‡å­—ä½ç½®æŽ§åˆ¶
+<p>åœ¨æ–‡å­—çš„ä½ç½®å¯ä»¥ä»»æ„åŠ å…¥æ‚¨éœ€è¦çš„å­—ç¬¦ï¼Œ<span class=bluefont>center</span>ä½ç½®<span class=redfont>center</span>è¡¨ç¤ºå±…ä¸­ï¼Œ<span class=redfont>left</span>è¡¨ç¤ºå±…å·¦ï¼Œ<span class=redfont>right</span>è¡¨ç¤ºå±…å³ï¼Œ<span class=redfont>justify</span>è¡¨ç¤ºä¸¤ç«¯å¯¹é½
 <div class=value2><span class=redfont>[ALIGN=<span class=bluefont>center</span>]</span><br>
-  ÎÄ×Ö¶ÎÂä<br>
+  æ–‡å­—æ®µè½<br>
   <span class=redfont>[/ALIGN]</span></div>
-<li>×Ö¼ä¾à(ÐÐ¸ß)¿ØÖÆ
-<p>ÐÐ¸ßÖµ¿ÉÒÔÊÇ<span class=bluefont>normal</span>£¬»òÊÇ¾ßÌåµÄÐÐ¸ßÊýÖµ£¬±ÈÈç<span class=bluefont>150%</span>£¬<span class=bluefont>1.5</span>£¬<span class=bluefont>24pt</span>
+<li>å­—é—´è·(è¡Œé«˜)æŽ§åˆ¶
+<p>è¡Œé«˜å€¼å¯ä»¥æ˜¯<span class=bluefont>normal</span>ï¼Œæˆ–æ˜¯å…·ä½“çš„è¡Œé«˜æ•°å€¼ï¼Œæ¯”å¦‚<span class=bluefont>150%</span>ï¼Œ<span class=bluefont>1.5</span>ï¼Œ<span class=bluefont>24pt</span>
 <div class=value2><span class=redfont>[LINE-HEIGHT=<span class=bluefont>150%</span>]</span>
-  ÎÄ×Ö¶ÎÂä
+  æ–‡å­—æ®µè½
   <span class=redfont>[/LINE-HEIGHT]</span></div>
-<li>¼ÓÈëÓÊ¼þÁ¬½ÓÓÐÁ½ÖÖ·½·¨¿ÉÒÔ£¬¿ÉÒÔÁ¬½Ó¾ßÌåµØÖ·»òÕßÎÄ×ÖÁ¬½Ó<br>
+<li>åŠ å…¥é‚®ä»¶è¿žæŽ¥æœ‰ä¸¤ç§æ–¹æ³•å¯ä»¥ï¼Œå¯ä»¥è¿žæŽ¥å…·ä½“åœ°å€æˆ–è€…æ–‡å­—è¿žæŽ¥<br>
 
 <div class=value2><span class=redfont>[EMAIL]</span>webmaster@LeadBBS.com<span class=redfont>[/EMAIL] 
   </span></div>
 <div class=value2><span class=redfont>[EMAIL=</span>webmaster@LeadBBS.com<span class=redfont>]</span>LeadBBS<span class=redfont>[/EMAIL]</span></div>
-<li>²åÈëÍ¼Æ¬
+<li>æ’å…¥å›¾ç‰‡
 <div class=value2><span class=redfont>[IMG]</span>http://www.LeadBBS.com/images/flag.gif<span class=redfont>[/IMG]</span><br>
 
-<br>²åÈëÍ¼Æ¬£¬Ö¸¶¨¶ÔÆë·½Ê½¼°±ß¿ò´óÐ¡£¬¶ÔÆë·½Ê½ÓÐ <span class=bluefont>absmiddle left right top middle<br> bottom absbottom baseline texttop</span><p>
+<br>æ’å…¥å›¾ç‰‡ï¼ŒæŒ‡å®šå¯¹é½æ–¹å¼åŠè¾¹æ¡†å¤§å°ï¼Œå¯¹é½æ–¹å¼æœ‰ <span class=bluefont>absmiddle left right top middle<br> bottom absbottom baseline texttop</span><p>
 <span class=redfont>[IMG=<span class=bluefont>2</span>,<span class=bluefont>center</span>]</span>http://www.LeadBBS.com/images/flag.gif<span class=redfont>[/IMG]</span><br>
-<span class=redfont>[IMG=<span class=bluefont>2,¶ÔÆë·½Ê½,¸ß¶È,¿í¶È</span>]</span>http://www.LeadBBS.com/images/flag.gif<span class=redfont>[/IMG]</span><br>
+<span class=redfont>[IMG=<span class=bluefont>2,å¯¹é½æ–¹å¼,é«˜åº¦,å®½åº¦</span>]</span>http://www.LeadBBS.com/images/flag.gif<span class=redfont>[/IMG]</span><br>
 
-<li>²åÈëMicroMediaµÄFlash
+<li>æ’å…¥MicroMediaçš„Flash
 <div class=value2><span class=redfont>[Flash]</span>http://www.test.com/flag.swf<span class=redfont>[/Flash]</span></div>
-<div class=value2><span class=redfont>[Flash=<span class=bluefont>¿í¶È,¸ß¶È</span>]</span>http://www.test.com/flag.swf<span class=redfont>[/Flash]</span></div>
-<li>ÊµÏÖ´úÂë¹¦ÄÜ£¬ÄÜÊ¹UBB±àÂë·½Ê½ÏÂÒ²¿ÉÒÔÏÔÊ¾UBB´úÂë
+<div class=value2><span class=redfont>[Flash=<span class=bluefont>å®½åº¦,é«˜åº¦</span>]</span>http://www.test.com/flag.swf<span class=redfont>[/Flash]</span></div>
+<li>å®žçŽ°ä»£ç åŠŸèƒ½ï¼Œèƒ½ä½¿UBBç¼–ç æ–¹å¼ä¸‹ä¹Ÿå¯ä»¥æ˜¾ç¤ºUBBä»£ç 
 <div class=value2><span class=redfont>[CODE]<br>
-  </span>ÎÄ×Ö¶ÎÂä<br>
+  </span>æ–‡å­—æ®µè½<br>
   <span class=redfont>[/CODE]</span></div>
-<li>ÒýÓÃÐ§¹û£¬ÓÃ±í¸ñ¿òÉÏ
+<li>å¼•ç”¨æ•ˆæžœï¼Œç”¨è¡¨æ ¼æ¡†ä¸Š
 <div class=value2><span class=redfont>[QUOTE]</span><br>
-  ÒýÓÃ¶ÎÂä<br>
+  å¼•ç”¨æ®µè½<br>
   <span class=redfont>[/QUOTE]</span></div>
-<li>ÊµÏÖHTMLÄ¿Â¼Ð§¹û
-<div class=value2><span class=redfont>[UL]</span>ÎÄ×Ö<span class=redfont>[/UL]</span> - 
-  Ïàµ±ÓÚhtmlÖÐµÄ&lt;UL&gt;¹¦ÄÜ£¬Ëõ½øÅÅ°æ<br>
-  <span class=redfont>[OL]</span>ÎÄ×Ö<span class=redfont>[/OL]</span> 
-  - Ïàµ±ÓÚhtmlÖÐµÄ&lt;OL&gt;£¬²úÉúÓÃÊý×Ö±àºÅµÄÐ§¹û<br>
-  <span class=redfont>[LI]</span>ÎÄ×Ö<span class=redfont>[/LI]</span> 
-  - Ïàµ±ÓÚhtmlÖÐµÄ&lt;li&gt;£¬ÓëÒÔÉÏ±êÇ©ÁªºÏÊ¹ÓÃ
-<li>ÊµÏÖÎÄ×Ö·ÉÏèÐ§¹û(ÅÜÂíµÆ)£¬Ïàµ±ÓÚhtmlÖÐµÄ&lt;marquee&gt;
-<div class=value2><span class=redfont>[FLY]</span>ÎÄ×Ö<span class=redfont>[/FLY]</span></div>
-<li>²åÈëµ¥ÔªÏß
+<li>å®žçŽ°HTMLç›®å½•æ•ˆæžœ
+<div class=value2><span class=redfont>[UL]</span>æ–‡å­—<span class=redfont>[/UL]</span> - 
+  ç›¸å½“äºŽhtmlä¸­çš„&lt;UL&gt;åŠŸèƒ½ï¼Œç¼©è¿›æŽ’ç‰ˆ<br>
+  <span class=redfont>[OL]</span>æ–‡å­—<span class=redfont>[/OL]</span> 
+  - ç›¸å½“äºŽhtmlä¸­çš„&lt;OL&gt;ï¼Œäº§ç”Ÿç”¨æ•°å­—ç¼–å·çš„æ•ˆæžœ<br>
+  <span class=redfont>[LI]</span>æ–‡å­—<span class=redfont>[/LI]</span> 
+  - ç›¸å½“äºŽhtmlä¸­çš„&lt;li&gt;ï¼Œä¸Žä»¥ä¸Šæ ‡ç­¾è”åˆä½¿ç”¨
+<li>å®žçŽ°æ–‡å­—é£žç¿”æ•ˆæžœ(è·‘é©¬ç¯)ï¼Œç›¸å½“äºŽhtmlä¸­çš„&lt;marquee&gt;
+<div class=value2><span class=redfont>[FLY]</span>æ–‡å­—<span class=redfont>[/FLY]</span></div>
+<li>æ’å…¥å•å…ƒçº¿
 <div class=value2><span class=redfont>[HR]</span>
-<li>ÊµÏÖÎÄ×Ö·¢¹âÌØÐ§£¬GLOWÄÚÊôÐÔÒÀ´ÎÎª¾àÀë¡¢ÑÕÉ«ºÍ±ß½ç´óÐ¡
-<div class=value2><span class=redfont>[GLOW=</span><span class=bluefont>1,RED,2</span><span class=redfont>]</span>ÎÄ×Ö<span class=redfont>[/GLOW]</span></div>
-<li>ÊµÏÖÎÄ×ÖÒõÓ°ÌØÐ§£¬SHADOWÄÚÊôÐÔÒÀ´ÎÎª¾àÀë¡¢ÑÕÉ«ºÍ±ß½ç´óÐ¡
-<div class=value2><span class=redfont>[SHADOW=</span><span class=bluefont>1,RED,2</span><span class=redfont>]</span>ÎÄ×Ö<span class=redfont>[/SHADOW]</span></div>
-<li>ÊµÏÖÎÄ×ÖÑÕÉ«¸Ä±ä
-<div class=value2><span class=redfont>[COLOR=</span><span class=bluefont>ÑÕÉ«</span><span class=redfont>]</span>ÎÄ×Ö<span class=redfont>[/COLOR]</span></div>
-<li>ÊµÏÖÎÄ×Ö´óÐ¡¸Ä±ä
-<div class=value2><span class=redfont>[SIZE=</span><span class=bluefont>Êý×Ö1-9»òCSS×ÖÌåµÄ³ß´ç¶¨Òå´®</span><span class=redfont>]</span>ÎÄ×Ö<span class=redfont>[/SIZE]</span></div>
-<li>ÊµÏÖÎÄ×Ö×ÖÌå×ª»»
-<div class=value2><span class=redfont>[FACE=</span><span class=bluefont>×ÖÌå</span><span class=redfont>]</span>ÎÄ×Ö<span class=redfont>[/FACE]</span></div>
+<li>å®žçŽ°æ–‡å­—å‘å…‰ç‰¹æ•ˆï¼ŒGLOWå†…å±žæ€§ä¾æ¬¡ä¸ºè·ç¦»ã€é¢œè‰²å’Œè¾¹ç•Œå¤§å°
+<div class=value2><span class=redfont>[GLOW=</span><span class=bluefont>1,RED,2</span><span class=redfont>]</span>æ–‡å­—<span class=redfont>[/GLOW]</span></div>
+<li>å®žçŽ°æ–‡å­—é˜´å½±ç‰¹æ•ˆï¼ŒSHADOWå†…å±žæ€§ä¾æ¬¡ä¸ºè·ç¦»ã€é¢œè‰²å’Œè¾¹ç•Œå¤§å°
+<div class=value2><span class=redfont>[SHADOW=</span><span class=bluefont>1,RED,2</span><span class=redfont>]</span>æ–‡å­—<span class=redfont>[/SHADOW]</span></div>
+<li>å®žçŽ°æ–‡å­—é¢œè‰²æ”¹å˜
+<div class=value2><span class=redfont>[COLOR=</span><span class=bluefont>é¢œè‰²</span><span class=redfont>]</span>æ–‡å­—<span class=redfont>[/COLOR]</span></div>
+<li>å®žçŽ°æ–‡å­—å¤§å°æ”¹å˜
+<div class=value2><span class=redfont>[SIZE=</span><span class=bluefont>æ•°å­—1-9æˆ–CSSå­—ä½“çš„å°ºå¯¸å®šä¹‰ä¸²</span><span class=redfont>]</span>æ–‡å­—<span class=redfont>[/SIZE]</span></div>
+<li>å®žçŽ°æ–‡å­—å­—ä½“è½¬æ¢
+<div class=value2><span class=redfont>[FACE=</span><span class=bluefont>å­—ä½“</span><span class=redfont>]</span>æ–‡å­—<span class=redfont>[/FACE]</span></div>
 
-<li>²åÈëÖÐ»®Ïß
-<div class=value2><span class=redfont>[STRIKE]</span>ÎÄ×Ö<span class=redfont>[/STRIKE]</span></div>
+<li>æ’å…¥ä¸­åˆ’çº¿
+<div class=value2><span class=redfont>[STRIKE]</span>æ–‡å­—<span class=redfont>[/STRIKE]</span></div>
 
-<li>²åÈëRealPlayer¸ñÊ½µÄrmÎÄ¼þ£¬ÖÐ¼äµÄÊý×ÖÎª¿í¶ÈºÍ³¤¶È
-<div class=value2><span class=redfont>[RM=<span class=bluefont>¿í¶È</span>,<span class=bluefont>¸ß¶È</span>]</span>http://....<span class=redfont>[/RM]</span></div>
+<li>æ’å…¥RealPlayeræ ¼å¼çš„rmæ–‡ä»¶ï¼Œä¸­é—´çš„æ•°å­—ä¸ºå®½åº¦å’Œé•¿åº¦
+<div class=value2><span class=redfont>[RM=<span class=bluefont>å®½åº¦</span>,<span class=bluefont>é«˜åº¦</span>]</span>http://....<span class=redfont>[/RM]</span></div>
 
-<li>²åÈëÎªMidia Player¸ñÊ½µÄÎÄ¼þ£¬ÖÐ¼äµÄÊý×ÖÎª¿í¶ÈºÍ³¤¶È
-<div class=value2><span class=redfont>[MP=<span class=bluefont>¿í¶È</span>,<span class=bluefont>¸ß¶È</span>]</span>http://....<span class=redfont>[/MP]</span></div>
+<li>æ’å…¥ä¸ºMidia Playeræ ¼å¼çš„æ–‡ä»¶ï¼Œä¸­é—´çš„æ•°å­—ä¸ºå®½åº¦å’Œé•¿åº¦
+<div class=value2><span class=redfont>[MP=<span class=bluefont>å®½åº¦</span>,<span class=bluefont>é«˜åº¦</span>]</span>http://....<span class=redfont>[/MP]</span></div>
 
-<li>ÉÏ±êÎÄ×Ö
-<div class=value2><span class=redfont>[sup]</span>ÎÄ×Ö<span class=redfont>[/sup]</span>£¬Ð§¹û£ºLeadBBS<sup>2</sup>
+<li>ä¸Šæ ‡æ–‡å­—
+<div class=value2><span class=redfont>[sup]</span>æ–‡å­—<span class=redfont>[/sup]</span>ï¼Œæ•ˆæžœï¼šLeadBBS<sup>2</sup>
 
-<li>ÏÂ±êÎÄ×Ö
-<div class=value2><span class=redfont>[sub]</span>ÎÄ×Ö<span class=redfont>[/sub]</span>£¬Ð§¹û£ºLeadBBS<sub>2</sub>
+<li>ä¸‹æ ‡æ–‡å­—
+<div class=value2><span class=redfont>[sub]</span>æ–‡å­—<span class=redfont>[/sub]</span>ï¼Œæ•ˆæžœï¼šLeadBBS<sub>2</sub>
 
-<li>Ö¸¶¨ÎÄ×ÖÑÕÉ«¼°±³¾°ÑÕÉ«
-<div class=value2><span class=redfont>[BGCOLOR=<span class=bluefont>±³¾°ÑÕÉ«</span>]</span>ÎÄ×Ö<span class=redfont>[/BGCOLOR]</span><br>
-<span class=redfont>[BGCOLOR=<span class=bluefont>±³¾°ÑÕÉ«</span>,<span class=bluefont>ÎÄ×ÖÑÕÉ«</span>]</span>ÎÄ×Ö<span class=redfont>[/BGCOLOR]</span></div>
+<li>æŒ‡å®šæ–‡å­—é¢œè‰²åŠèƒŒæ™¯é¢œè‰²
+<div class=value2><span class=redfont>[BGCOLOR=<span class=bluefont>èƒŒæ™¯é¢œè‰²</span>]</span>æ–‡å­—<span class=redfont>[/BGCOLOR]</span><br>
+<span class=redfont>[BGCOLOR=<span class=bluefont>èƒŒæ™¯é¢œè‰²</span>,<span class=bluefont>æ–‡å­—é¢œè‰²</span>]</span>æ–‡å­—<span class=redfont>[/BGCOLOR]</span></div>
 
-<li>²åÈë±³¾°ÒôÀÖ
-<div class=value2><span class=redfont>[SOUND]</span>±³¾°ÒôÀÖÎÄ¼þµØÖ·<span class=redfont>[/SOUND]</span></div>
+<li>æ’å…¥èƒŒæ™¯éŸ³ä¹
+<div class=value2><span class=redfont>[SOUND]</span>èƒŒæ™¯éŸ³ä¹æ–‡ä»¶åœ°å€<span class=redfont>[/SOUND]</span></div>
 
-<li>²åÈëÀ¸Ä¿¿ò
-<div class=value2><span class=redfont>[FIELDSET=<span class=bluefont>±êÌâ</span>]</span>ÄÚÈÝ<span class=redfont>[/FIELDSET]</span></div>
+<li>æ’å…¥æ ç›®æ¡†
+<div class=value2><span class=redfont>[FIELDSET=<span class=bluefont>æ ‡é¢˜</span>]</span>å†…å®¹<span class=redfont>[/FIELDSET]</span></div>
 
-<li>Öð×ÖÉÁË¸Ð§¹û
-<div class=value2><span class=redfont>[LIGHT]</span>ÉÁË¸ÎÄ×Ö<span class=redfont>[/LIGHT]</span></div>
+<li>é€å­—é—ªçƒæ•ˆæžœ
+<div class=value2><span class=redfont>[LIGHT]</span>é—ªçƒæ–‡å­—<span class=redfont>[/LIGHT]</span></div>
 
-<li>²åÈë±í¸ñ
-<div class=value2><span class=redfont>[TABLE][TR][TD]</span>ÄÚÈÝ<span class=redfont>[/TD][/TR][/TABLE]</span></div>
+<li>æ’å…¥è¡¨æ ¼
+<div class=value2><span class=redfont>[TABLE][TR][TD]</span>å†…å®¹<span class=redfont>[/TD][/TR][/TABLE]</span></div>
 
-<div class=value2>²åÈë¸´ÔÓµÄ±í¸ñ£¬8¸ö²ÎÊý±ØÐëÖ¸¶¨ÍêÈ«</div>
-<div class=value2><span class=redfont>[TABLE=<span class=bluefont>±ß¿òÉ«</span>,<span class=bluefont>µ¥Ôª¼ä¾à</span>,<span class=bluefont>µ¥Ôª±ß¾à</span>,<span class=bluefont>±í¸ñ¿í</span>,<span class=bluefont>¶ÔÆë·½Ê½</span>,<span class=bluefont>±³¾°É«</span>,<span class=bluefont>±ß¿ò´ÖÏ¸</span>,<span class=bluefont>±³¾°Í¼Æ¬</span>][TR][TD]</span>ÄÚÈÝ<span class=redfont>[/TD][/TR][/TABLE]</span></div>
-<div class=value2>TD±êÇ©ÔÊÐí¸ü¶àµÄ¶¨Òå£º[TD=ÁÐ,ÐÐ,±³¾°É«]£¬±³¾°É«¿ÉÖ¸¶¨£¬Ò²¿É²»Ö¸¶¨</div>
+<div class=value2>æ’å…¥å¤æ‚çš„è¡¨æ ¼ï¼Œ8ä¸ªå‚æ•°å¿…é¡»æŒ‡å®šå®Œå…¨</div>
+<div class=value2><span class=redfont>[TABLE=<span class=bluefont>è¾¹æ¡†è‰²</span>,<span class=bluefont>å•å…ƒé—´è·</span>,<span class=bluefont>å•å…ƒè¾¹è·</span>,<span class=bluefont>è¡¨æ ¼å®½</span>,<span class=bluefont>å¯¹é½æ–¹å¼</span>,<span class=bluefont>èƒŒæ™¯è‰²</span>,<span class=bluefont>è¾¹æ¡†ç²—ç»†</span>,<span class=bluefont>èƒŒæ™¯å›¾ç‰‡</span>][TR][TD]</span>å†…å®¹<span class=redfont>[/TD][/TR][/TABLE]</span></div>
+<div class=value2>TDæ ‡ç­¾å…è®¸æ›´å¤šçš„å®šä¹‰ï¼š[TD=åˆ—,è¡Œ,èƒŒæ™¯è‰²]ï¼ŒèƒŒæ™¯è‰²å¯æŒ‡å®šï¼Œä¹Ÿå¯ä¸æŒ‡å®š</div>
 
-<li>ÒÑ±àÅÅ¸ñÊ½£¬µÈÍ¬ÓÚHTMLÖÐµÄ&lt;PRE&gt;±êÇ©
-<div class=value2><span class=redfont>[PRE]</span>ÎÄ×Ö<span class=redfont>[/PRE]</span></div>
+<li>å·²ç¼–æŽ’æ ¼å¼ï¼Œç­‰åŒäºŽHTMLä¸­çš„&lt;PRE&gt;æ ‡ç­¾
+<div class=value2><span class=redfont>[PRE]</span>æ–‡å­—<span class=redfont>[/PRE]</span></div>
 
-<li>²åÈë´øLRC¸è´ÊµÄ¸èÇú
-<div class=value2><span class=redfont>[LRC=<span class=bluefont>²¥·ÅÎÄ¼þµØÖ·</span>]</span><span class=bluefont>LRCÎÄ¼þµØÖ·»òLRCÎÄ¼þÄÚÈÝ</span><span class=redfont>[/LRC]</span></div>
+<li>æ’å…¥å¸¦LRCæ­Œè¯çš„æ­Œæ›²
+<div class=value2><span class=redfont>[LRC=<span class=bluefont>æ’­æ”¾æ–‡ä»¶åœ°å€</span>]</span><span class=bluefont>LRCæ–‡ä»¶åœ°å€æˆ–LRCæ–‡ä»¶å†…å®¹</span><span class=redfont>[/LRC]</span></div>
 
-<li>²åÈëÕÛµþµÄÄÚÈÝ
-<div class=value2><span class=redfont>[collapse<span class=bluefont>=ÕÛµþÌáÊ¾ÐÅÏ¢(´ËÏî¿ÉÑ¡)</span>]</span><span class=bluefont>¾ßÌåµÄÕÛµþÄÚÈÝ</span><span class=redfont>[/collapse]</span></div>
+<li>æ’å…¥æŠ˜å çš„å†…å®¹
+<div class=value2><span class=redfont>[collapse<span class=bluefont>=æŠ˜å æç¤ºä¿¡æ¯(æ­¤é¡¹å¯é€‰)</span>]</span><span class=bluefont>å…·ä½“çš„æŠ˜å å†…å®¹</span><span class=redfont>[/collapse]</span></div>
 
 <%End Sub
 
 Sub Help_UbbIcon
 
 	Dim N
-	%><div class=title>ÂÛÌ³±íÇé</div>
+	%><div class=title>è®ºå›è¡¨æƒ…</div>
 	<br>
 	<table border=0 cellpadding=0 cellspacing=0 class=blanktable>
 	<tr>
-		<td>±àºÅ</td>
-		<td>±íÇé</td>
-		<td>´úÂë</td>
+		<td>ç¼–å·</td>
+		<td>è¡¨æƒ…</td>
+		<td>ä»£ç </td>
 	</tr><%
 	For n = 0 to DEF_UBBiconNumber - 1
 		%>

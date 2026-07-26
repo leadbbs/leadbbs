@@ -1,6 +1,12 @@
-<!-- #include file=Editor.asp -->
+<!--#include file="Editor.asp"-->
 <%
-Const Edt_MiniMode = 1 '·¢Ìû½çÃæ£º0-´«Í³¼òÔ¼Ä£Ê½ 1.¶à¹¦ÄÜÄ£Ê½
+Const Edt_MiniMode = 1 'å‘å¸–ç•Œé¢ï¼š0-ä¼ ç»Ÿç®€çº¦æ¨¡å¼ 1.å¤šåŠŸèƒ½æ¨¡å¼
+' Images are capped separately from other attachments, and much lower. This used to be a
+' bare 2097152 buried in Upload_File while the form advertised DEF_FileMaxBytes (8024K), so
+' an ordinary 2.2MB photo was rejected by a limit no one was told about. It lives here, not
+' in inc/Upload_Setup.asp, because manage/SiteManage/UploadSetup.asp REGENERATES that file
+' from a fixed template and would silently drop it on the next save.
+Const DEF_ImageMaxBytes = 2097152
 Dim UploadListData,UploadListNum,EditFlag,UploadTable
 UploadListNum = 0
 EditFlag = 0
@@ -12,7 +18,7 @@ Dim upload_NoteLength
 upload_NoteLength = 30
 
 Dim LMT_MaxTextLength
-If CheckSupervisorUserName = 0 Then
+If CheckSupervisorUserName() = 0 Then
 	LMT_MaxTextLength = DEF_MaxTextLength
 Else
 	LMT_MaxTextLength = DEF_MaxTextLength * 4
@@ -31,7 +37,7 @@ Dim LMT_Upload_ExtendID : LMT_Upload_ExtendID = 0
 Sub ReloadTopicAssort(BoardID)
 
 	Dim Rs
-	Set Rs = LDExeCute("select ID,AssortName,0,0,0 from LeadBBS_GoodAssort where BoardID=" & BoardID & " Order by BoardID,OrderID",0)
+	Set Rs = LDExeCute("select ID,AssortName,0,0 as c0_dup2,0 as c0_dup3 from LeadBBS_GoodAssort where BoardID=" & BoardID & " Order by BoardID,OrderID",0)
 	If Not Rs.Eof Then
 		Application.Lock
 		Application(DEF_MasterCookies & "BoardInfo" & BoardID & "_TI") = Rs.GetRows(-1)
@@ -51,26 +57,26 @@ Function DisplayLeadBBSEditor1(Form_HTMLFlag,Form_Content,refer,hidemoreinfo)
 
 	If Edt_MiniMode = 0 and refer = 0 Then%>
 	<tr>
-		<td width="<%=DEF_BBS_LeftTDWidth%>" class=tdleft>²åÈëUBB±êÇ©</td>
+		<td width="<%=DEF_BBS_LeftTDWidth%>" class=tdleft>æ’å…¥UBBæ ‡ç­¾</td>
 		<td class=tdright>
-			<img src="../images/ubb/bold.GIF" style="cursor: pointer" onclick="addcontent(0,'B','/B');" title=´ÖÌå width=20 height=20 align=middle border=0>
-			<img src="../images/ubb/italicize.GIF" style="cursor: pointer" onclick="addcontent(0,'I','/I');" title=Ğ±Ìå width=20 height=20 align=middle border=0>
-			<img src="../images/ubb/underline.GIF" style="cursor: pointer" onclick="addcontent(0,'U','/U');" title=ÏÂ»®Ïß width=20 height=20 align=middle border=0>
-			<img src="../images/ubb/center.GIF" style="cursor: pointer" onclick="addcontent(0,'ALIGN','/ALIGN','CENTER');" title=¾ÓÖĞ width=20 height=20 align=middle border=0>
-			<img src="../images/ubb/url1.GIF" style="cursor: pointer" onclick="addcontent(0,'URL','/URL');" title=Á´½Ó width=20 height=20 align=middle border=0>
-			<img src="../images/ubb/email1.GIF" style="cursor: pointer" onclick="addcontent(0,'EMAIL','/EMAIL');" title=ÓÊ¼ş width=20 height=20 align=middle border=0>
-			<%If DEF_EnableImagesUBB = 1 Then%><img src="../images/ubb/image.GIF" style="cursor: pointer" onclick="addcontent(0,'IMG','/IMG');" title=Í¼Æ¬ width=20 height=20 align=middle border=0><%end If%>
+			<img src="../images/ubb/bold.GIF" style="cursor: pointer" onclick="addcontent(0,'B','/B');" title=ç²—ä½“ width=20 height=20 align=middle border=0>
+			<img src="../images/ubb/italicize.GIF" style="cursor: pointer" onclick="addcontent(0,'I','/I');" title=æ–œä½“ width=20 height=20 align=middle border=0>
+			<img src="../images/ubb/underline.GIF" style="cursor: pointer" onclick="addcontent(0,'U','/U');" title=ä¸‹åˆ’çº¿ width=20 height=20 align=middle border=0>
+			<img src="../images/ubb/center.GIF" style="cursor: pointer" onclick="addcontent(0,'ALIGN','/ALIGN','CENTER');" title=å±…ä¸­ width=20 height=20 align=middle border=0>
+			<img src="../images/ubb/url1.GIF" style="cursor: pointer" onclick="addcontent(0,'URL','/URL');" title=é“¾æ¥ width=20 height=20 align=middle border=0>
+			<img src="../images/ubb/email1.GIF" style="cursor: pointer" onclick="addcontent(0,'EMAIL','/EMAIL');" title=é‚®ä»¶ width=20 height=20 align=middle border=0>
+			<%If DEF_EnableImagesUBB = 1 Then%><img src="../images/ubb/image.GIF" style="cursor: pointer" onclick="addcontent(0,'IMG','/IMG');" title=å›¾ç‰‡ width=20 height=20 align=middle border=0><%end If%>
 			<img src="../images/ubb/swf.GIF" style="cursor: pointer" onclick="addcontent(0,'FLASH','/FLASH');" title=Flash width=20 height=20 align=middle border=0>
-			<img src="../images/ubb/code.GIF" style="cursor: pointer" onclick="addcontent(0,'CODE','/CODE');" title=´úÂë width=20 height=20 align=middle border=0>
-			<img src="../images/ubb/quote1.GIF" style="cursor: pointer" onclick="addcontent(0,'QUOTE','/QUOTE');" title=ÒıÓÃ width=20 height=20 align=middle border=0>
-			<img src="../images/ubb/fly.GIF" style="cursor: pointer" onclick="addcontent(0,'FLY','/FLY');" title=·ÉĞĞ width=20 height=20 align=middle border=0>
-			<img src="../images/ubb/light.GIF" style="cursor: pointer" onclick="addcontent(0,'LIGHT','/LIGHT');" title=ÉÁË¸ÎÄ×Ö width=20 height=20 align=middle border=0>
-			<img src="../images/ubb/glow.GIF" style="cursor: pointer" onclick="addcontent(0,'GLOW=255,RED,2','/GLOW');" title=·¢¹â width=20 height=20 align=middle border=0>
-			<img src="../images/ubb/shadow.GIF" style="cursor: pointer" onclick="addcontent(0,'SHADOW=255,RED,2','/SHADOW');" title=ÒõÓ° width=20 height=20 align=middle border=0>
-			<img src="../images/ubb/size3.GIF" style="cursor: pointer" onclick="addcontent(0,'SIZE','/SIZE','3');" title=3ºÅ×Ö width=20 height=20 align=middle border=0>
-			<img src="../images/ubb/blue.gif" style="cursor: pointer" onclick="addcontent(0,'COLOR','/COLOR','blue');" title=À¶É«×Ö width=20 height=20 align=middle border=0>
-			<img src="../images/ubb/red.GIF" style="cursor: pointer" onclick="addcontent(0,'COLOR','/COLOR','red');" title=ºìÉ«×Ö width=20 height=20 align=middle border=0>
-			<%If DEF_EnableFlashUBB = 1 then%><img src="../images/ubb/media.gif" style="cursor: pointer" onclick="addcontent(0,'MP=320,309','/MP');" title=²åÈëMediaÎÄ¼ş width=20 height=20 align=middle border=0>
+			<img src="../images/ubb/code.GIF" style="cursor: pointer" onclick="addcontent(0,'CODE','/CODE');" title=ä»£ç  width=20 height=20 align=middle border=0>
+			<img src="../images/ubb/quote1.GIF" style="cursor: pointer" onclick="addcontent(0,'QUOTE','/QUOTE');" title=å¼•ç”¨ width=20 height=20 align=middle border=0>
+			<img src="../images/ubb/fly.GIF" style="cursor: pointer" onclick="addcontent(0,'FLY','/FLY');" title=é£è¡Œ width=20 height=20 align=middle border=0>
+			<img src="../images/ubb/light.GIF" style="cursor: pointer" onclick="addcontent(0,'LIGHT','/LIGHT');" title=é—ªçƒæ–‡å­— width=20 height=20 align=middle border=0>
+			<img src="../images/ubb/glow.GIF" style="cursor: pointer" onclick="addcontent(0,'GLOW=255,RED,2','/GLOW');" title=å‘å…‰ width=20 height=20 align=middle border=0>
+			<img src="../images/ubb/shadow.GIF" style="cursor: pointer" onclick="addcontent(0,'SHADOW=255,RED,2','/SHADOW');" title=é˜´å½± width=20 height=20 align=middle border=0>
+			<img src="../images/ubb/size3.GIF" style="cursor: pointer" onclick="addcontent(0,'SIZE','/SIZE','3');" title=3å·å­— width=20 height=20 align=middle border=0>
+			<img src="../images/ubb/blue.gif" style="cursor: pointer" onclick="addcontent(0,'COLOR','/COLOR','blue');" title=è“è‰²å­— width=20 height=20 align=middle border=0>
+			<img src="../images/ubb/red.GIF" style="cursor: pointer" onclick="addcontent(0,'COLOR','/COLOR','red');" title=çº¢è‰²å­— width=20 height=20 align=middle border=0>
+			<%If DEF_EnableFlashUBB = 1 then%><img src="../images/ubb/media.gif" style="cursor: pointer" onclick="addcontent(0,'MP=320,309','/MP');" title=æ’å…¥Mediaæ–‡ä»¶ width=20 height=20 align=middle border=0>
 			<%End If%>
 		</td>
 	</tr><%End If
@@ -79,19 +85,19 @@ Function DisplayLeadBBSEditor1(Form_HTMLFlag,Form_Content,refer,hidemoreinfo)
 		<td valign="top" width="<%=DEF_BBS_LeftTDWidth%>" class=tdleft>
 	<%End If
 		If hidemoreinfo = 1 or 1=1 then%>
-					ÄÚÈİ ( ×î¶à<%=Fix(LMT_MaxTextLength/1024)%>K )
+					å†…å®¹ ( æœ€å¤š<%=Fix(LMT_MaxTextLength/1024)%>K )
 						<br>
-						<%If ((GetBinarybit(GBL_CHK_UserLimit,16) = 1 and GBL_BoardMasterFlag >= 2) or (CheckSupervisorNameOnly = 1 and gbl_Userid > 0)) or refer > 0 Then%>
+						<%If ((GetBinarybit(GBL_CHK_UserLimit,16) = 1 and GBL_BoardMasterFlag >= 2) or (CheckSupervisorNameOnly() = 1 and gbl_Userid > 0)) or refer > 0 Then%>
 						
 						<%if refer = 0 Then%><br><%end if%>
 							<label>
-							<input class=fmchkbox type="radio" name="Form_HTMLFlag" value="0"<%If Form_HTMLFlag=0 Then Response.Write " checked"%>>ÎÄ±¾</label>
+							<input class=fmchkbox type="radio" name="Form_HTMLFlag" value="0"<%If Form_HTMLFlag=0 Then Response.Write " checked"%>>æ–‡æœ¬</label>
 							<label>
 							<input class=fmchkbox type="radio" name="Form_HTMLFlag" value="1"<%If Form_HTMLFlag=1 Then Response.Write " checked"%>>HTML</label>
 							<label>
 							<input class=fmchkbox type="radio" name="Form_HTMLFlag" value="2"<%If Form_HTMLFlag=2 Then Response.Write " checked"%>>UBB</label>
 							<%Else%>
-							<br><label>½âÎöUBB´úÂë
+							<br><label>è§£æUBBä»£ç 
 							<input class=fmchkbox type="checkbox" name="Form_HTMLFlag" value="2"<%If Form_HTMLFlag=2 Then Response.Write " checked"%>>
 							</label>
 							<%End If%>
@@ -101,16 +107,16 @@ Function DisplayLeadBBSEditor1(Form_HTMLFlag,Form_Content,refer,hidemoreinfo)
 					else
 						response.write " - "
 					end if%>
-					<a href=#icon onclick="alert('·¢±íµÄÄÚÈİÎª'+edt_getdoclen()+'ÎÄ×Ö£¬×î³¤ÔÊĞí<%=DEF_MaxTextLength%>×Ö');">²é¿´ÄÚÈİ×ÖÊı</a>
+					<a href=#icon onclick="alert('å‘è¡¨çš„å†…å®¹ä¸º'+edt_getdoclen()+'æ–‡å­—ï¼Œæœ€é•¿å…è®¸<%=DEF_MaxTextLength%>å­—');">æŸ¥çœ‹å†…å®¹å­—æ•°</a>
 					<%if refer = 0 Then
 						response.write " - "
 					else
 						response.write " - "
-					end if%><span class=layerico><a href=#icon onclick="edt_mode?copyClipboard('text',edt_txtobj.value,'³É¹¦¸´ÖÆ','<%=DEF_BBS_HomeUrl%>',this):copyClipboard('text',edt_doc.body.innerHTML,'³É¹¦¸´ÖÆ','<%=DEF_BBS_HomeUrl%>',this);">¸´ÖÆÄÚÈİ</a></span>
+					end if%><span class=layerico><a href=#icon onclick="edt_mode?copyClipboard('text',edt_txtobj.value,'æˆåŠŸå¤åˆ¶','<%=DEF_BBS_HomeUrl%>',this):copyClipboard('text',edt_doc.body.innerHTML,'æˆåŠŸå¤åˆ¶','<%=DEF_BBS_HomeUrl%>',this);">å¤åˆ¶å†…å®¹</a></span>
 					<br><br>
-					<a href=#icon id="get_storage" onclick="edit_getStorage();">»Ö¸´ÉÏ´Î·¢±í</a> <span id="presavetime"></span>
+					<a href=#icon id="get_storage" onclick="edit_getStorage();">æ¢å¤ä¸Šæ¬¡å‘è¡¨</a> <span id="presavetime"></span>
 					<br><br>
-					<span id="now_storage" style="display:none;">µ±Ç°±£´æ <span id="savetime">(ÎŞ)</span></span>
+					<span id="now_storage" style="display:none;">å½“å‰ä¿å­˜ <span id="savetime">(æ— )</span></span>
 					<%if refer = 0 Then
 						response.write "<br>"
 					else
@@ -133,7 +139,7 @@ edt_setmode(0);edt_setmode(<%
 	Else
 		Response.Write "1"
 	End If%>);edt_initdone=1;
-if(typeof submitflag != 'undefined')window.onbeforeunload = function(){if(edt_getdoclen()>0&&submitflag==0)return("ÄúµÄÌû×ÓÎ´·¢±í£¬È·¶¨È¡ÏûÂğ£¿");}</script>
+if(typeof submitflag != 'undefined')window.onbeforeunload = function(){if(edt_getdoclen()>0&&submitflag==0)return("æ‚¨çš„å¸–å­æœªå‘è¡¨ï¼Œç¡®å®šå–æ¶ˆå—ï¼Ÿ");}</script>
 <%if refer = 0 Then%>
 			</td>
 		</tr><%
@@ -159,8 +165,8 @@ Global_TableHead%>
 	<table border=0 cellpadding=0 cellspacing=0 width="100%" class=tablebox>
 		<tr class=tbhead>
 			<td><div class=value>
-			<b>Ìû×ÓÔ¤ÀÀ</b>
-			[<a href=#icon onclick="edt_preview(1);">¹Ø±ÕÏÔÊ¾</a>]
+			<b>å¸–å­é¢„è§ˆ</b>
+			[<a href=#icon onclick="edt_preview(1);">å…³é—­æ˜¾ç¤º</a>]
 			</div>
 		</td>
 	</tr>
@@ -185,7 +191,7 @@ Global_TableHead%>
 	</table>
 </div>
 <%
-	Global_TableBottom
+	Global_TableBottom()
 %>
 <img src=../images/null.gif height=4 width=2><br></span>
 <%
@@ -198,19 +204,19 @@ if refer = 0 Then
 %>
 <tr>
 <td width="<%=DEF_BBS_LeftTDWidth%>" valign=top class=tdleft>
-<span id="uptext" name="uptext">ÉÏ´«¸½¼ş</span>
+<span id="uptext" name="uptext">ä¸Šä¼ é™„ä»¶</span>
 			<%
 			If DEF_Upd_SpendFlag = 1 or GBL_BoardMasterFlag < 4 Then
 				If DEF_UploadSpendPoints > 0 Then
-					Response.Write " <font color=blue class=bluefont>»¨·Ñ" & DEF_UploadSpendPoints & "" & DEF_PointsName(0) & "</font>"
+					Response.Write " <font color=blue class=bluefont>èŠ±è´¹" & DEF_UploadSpendPoints & "" & DEF_PointsName(0) & "</font>"
 				ElseIf DEF_UploadSpendPoints < 0 Then
-					Response.Write " <font color=green class=greenfont>»ñµÃ" & 0-DEF_UploadSpendPoints & "" & DEF_PointsName(0) & "</font>"
+					Response.Write " <font color=green class=greenfont>è·å¾—" & 0-DEF_UploadSpendPoints & "" & DEF_PointsName(0) & "</font>"
 				End If%>
-				<br>É¾³ı¸½¼ş<%
+				<br>åˆ é™¤é™„ä»¶<%
 				If DEF_UploadDeletePoints > 0 Then
-					Response.Write " <font color=blue class=bluefont>»¨·Ñ" & DEF_UploadDeletePoints & "" & DEF_PointsName(0) & "</font>"
+					Response.Write " <font color=blue class=bluefont>èŠ±è´¹" & DEF_UploadDeletePoints & "" & DEF_PointsName(0) & "</font>"
 				ElseIf DEF_UploadDeletePoints < 0 Then
-					Response.Write " <font color=green class=greenfont title=±ØĞë×Ô¼ºÉ¾³ı²ÅÓĞÏàÓ¦µÄ±ä»¯>»ñµÃ" & 0-DEF_UploadDeletePoints & "" & DEF_PointsName(0) & "</font>"
+					Response.Write " <font color=green class=greenfont title=å¿…é¡»è‡ªå·±åˆ é™¤æ‰æœ‰ç›¸åº”çš„å˜åŒ–>è·å¾—" & 0-DEF_UploadDeletePoints & "" & DEF_PointsName(0) & "</font>"
 				End If
 			End If
 %>
@@ -222,31 +228,32 @@ Else
 End If
 
 If EditFlag = 1 Then
-	DisplayUploadEdit
+	DisplayUploadEdit()
 End If
 If DEF_UploadOnceNum-UploadListNum > 0 Then
 %>
 <div id="kkkk"></div>
-<div><b>ÉÏ´«ĞÂ¸½¼ş</b></div>
+<div><b>ä¸Šä¼ æ–°é™„ä»¶</b></div>
 <div id=upload_node style="display:none;margin-top:5px;">
-ÎÄ¼ş <span><span><input name="file_number" type="file" multiple="multiple" onchange="upl_onchange(this.name)" id=file_number size="20" class="fminpt"></span></span> ×¢ÊÍ <input name="text_number" type="text" maxlength=<%=upload_NoteLength%> size="20" class='fminpt input_2 note'>
+æ–‡ä»¶ <span><span><input name="file_number" type="file" multiple="multiple" onchange="upl_onchange(this.name)" id=file_number size="20" class="fminpt"></span></span> æ³¨é‡Š <input name="text_number" type="text" maxlength=<%=upload_NoteLength%> size="20" class='fminpt input_2 note'>
 </div>
 <div id=new_upload>
 <div id=upload0 style="margin-top:5px;">
-ÎÄ¼ş <span><span><input name="file0" type="file" multiple="multiple" id=file0 size="20" class="fminpt uninit_upload" onchange=upl_onchange(0)></span></span>
-×¢ÊÍ <input name="text0" type="text" maxlength=<%=upload_NoteLength%> size="20" class="fminpt input_2 note">
-<span id=upload_del0 style=display:none><a href=#none onclick="upl_remove(this.parentNode.parentNode);">É¾³ı</a>
-<a href=#none onclick="addcontent(1,'[upload=0]');">²åÈë</a></span>
+æ–‡ä»¶ <span><span><input name="file0" type="file" multiple="multiple" id=file0 size="20" class="fminpt uninit_upload" onchange=upl_onchange(0)></span></span>
+æ³¨é‡Š <input name="text0" type="text" maxlength=<%=upload_NoteLength%> size="20" class="fminpt input_2 note">
+<span id=upload_del0 style=display:none><a href=#none onclick="upl_remove(this.parentNode.parentNode);">åˆ é™¤</a>
+<a href=#none onclick="addcontent(1,'[upload=0]');">æ’å…¥</a></span>
 </div>
 </div><%End If
 %><br>
 <div id=upload_doc> </div>
-<p>×¢£º¸½¼ş´óĞ¡ÏŞÖÆÎª <%=int(DEF_FileMaxBytes/1024)%>K<%
-If UploadOneDayMaxNum > 0 Then Response.Write " Ã¿Ìì×î¶àÉÏ´«" & UploadOneDayMaxNum & "¸ö"
+<p>æ³¨ï¼šé™„ä»¶å¤§å°é™åˆ¶ä¸º <%=int(DEF_FileMaxBytes/1024)%>Kï¼Œå…¶ä¸­å›¾ç‰‡æœ€å¤§ <%=int(DEF_ImageMaxBytes/1024)%>K<%
+If UploadOneDayMaxNum > 0 Then Response.Write " æ¯å¤©æœ€å¤šä¸Šä¼ " & UploadOneDayMaxNum & "ä¸ª"
 %>
 <script type="text/javascript">
 init_uploadform();
 var DEF_UploadFileType="<%=DEF_UploadFileType%>";
+var DEF_FileMaxBytes = <%=DEF_FileMaxBytes%>, DEF_ImageMaxBytes = <%=DEF_ImageMaxBytes%>;
 var DEF_UploadOnceNum = <%=DEF_UploadOnceNum-UploadListNum%>,DEF_UploadOneDayMaxNum=<%=UploadOneDayMaxNum%>;
 if(DEF_UploadOneDayMaxNum<DEF_UploadOnceNum && DEF_UploadOneDayMaxNum > 0)DEF_UploadOnceNum = DEF_UploadOneDayMaxNum;
 
@@ -308,7 +315,7 @@ function upl_add(id,oldid)
 		}
 	}
 	Node.innerHTML = Node.innerHTML.replace("_number", id).replace("_number", id);
-	Node.innerHTML+="<span id=upload_del" + id + " style=display:none><a href=#none onclick=\"upl_remove(this.parentNode.parentNode);\">É¾³ı</a> <a href=#none onclick=\"addcontent(1,'[upload=" + id + "]');\">²åÈë</a></span>";
+	Node.innerHTML+="<span id=upload_del" + id + " style=display:none><a href=#none onclick=\"upl_remove(this.parentNode.parentNode);\">åˆ é™¤</a> <a href=#none onclick=\"addcontent(1,'[upload=" + id + "]');\">æ’å…¥</a></span>";
 	$id('new_upload').appendChild(Node);
 	init_uploadform();
 	Upl_selnum++;
@@ -327,10 +334,27 @@ function upl_onchange(id)
 	var ext = file.lastIndexOf('.') == -1 ? '' : file.substr(file.lastIndexOf('.')+1, file.length).toLowerCase();
 	if(DEF_UploadFileType.indexOf(':.'+ext+':') == -1 || ext == '')
 	{
-		alert('²»Ö§³ÖÉÏ´«´ËÀàĞÍ¸½¼ş!');
+		alert('ä¸æ”¯æŒä¸Šä¼ æ­¤ç±»å‹é™„ä»¶!');
 		upl_remove($id('upload' + id));
 		upl_add(upl_newid(),-1);
 		return;
+	}
+	
+	// Size is checked here as well as on the server. Without this the file is uploaded, the
+	// server rejects it, and the message is thrown away by a2.asp's redirect -- the post is
+	// created with the attachment silently missing.
+	var f = $id('file' + id).files;
+	if(f && f.length && f[0].size)
+	{
+		var img = ':jpg:jpeg:jpe:gif:png:'.indexOf(':'+ext+':') != -1;
+		var cap = img ? DEF_ImageMaxBytes : DEF_FileMaxBytes;
+		if(f[0].size > cap)
+		{
+			alert((img ? '\u56fe\u7247' : '\u9644\u4ef6') + '\u5927\u5c0f\u4e0d\u80fd\u8d85\u8fc7 ' + Math.floor(cap/1024) + 'K\uff0c\u5f53\u524d ' + Math.floor(f[0].size/1024) + 'K!');
+			upl_remove($id('upload' + id));
+			upl_add(upl_newid(),-1);
+			return;
+		}
 	}
 	
 	if (document.all||document.getElementById)
@@ -343,7 +367,7 @@ function upl_onchange(id)
 			{
 				if(tempobj.value == $id('file' + id).value)
 				{
-					alert('´ËÎÄ¼şÒÑÔÚÉÏ´«ÁĞ±íÖĞ.');
+					alert('æ­¤æ–‡ä»¶å·²åœ¨ä¸Šä¼ åˆ—è¡¨ä¸­.');
 					upl_remove($id('upload' + id));
 					upl_add(upl_newid(),-1);
 					return;
@@ -376,7 +400,7 @@ function Upl_IO_processor(str)
 		tmp = str.split(" ");
 		if(tmp.length>=3)
 		{
-			str = "ÉÏ´«°Ù·Ö±È: " + parseInt(tmp[0]/tmp[1]*100) + "% " + " ÒÑÉÏ´« " + parseInt(tmp[0]/1024) + "K ÏûºÄÊ±¼ä " + parseInt(tmp[2]) + " Ãë"
+			str = "ä¸Šä¼ ç™¾åˆ†æ¯”: " + parseInt(tmp[0]/tmp[1]*100) + "% " + " å·²ä¸Šä¼  " + parseInt(tmp[0]/1024) + "K æ¶ˆè€—æ—¶é—´ " + parseInt(tmp[2]) + " ç§’"
 		}
 		$id(tp).innerHTML = str + " ";
 	}
@@ -384,12 +408,12 @@ function Upl_IO_processor(str)
 	{
 		if(Upl_Start)
 		{
-			$id(tp).innerHTML = "¸½¼şÉÏ´«Íê³É£¬ÇëÉÔºò...";
+			$id(tp).innerHTML = "é™„ä»¶ä¸Šä¼ å®Œæˆï¼Œè¯·ç¨å€™...";
 			Upl_Level=9999;window.clearTimeout(Upl_IOfun);
 		}
 		else
 		{
-			$id(tp).innerHTML = "ÕıÔÚÉÏ´«¸½¼ş£¬ÇëÉÔºò...";
+			$id(tp).innerHTML = "æ­£åœ¨ä¸Šä¼ é™„ä»¶ï¼Œè¯·ç¨å€™...";
 		}
 	}
 }
@@ -440,13 +464,13 @@ Sub DisplayUploadEdit
 
 	Dim N
 	If UploadListNum < 1 Then Exit Sub
-	Response.Write "<div><b>ÒÑÓĞ¸½¼ş</b></div>"
+	Response.Write "<div><b>å·²æœ‰é™„ä»¶</b></div>"
 	For N = 0 to UploadListNum - 1
 		Response.Write "<div style=""margin-top:5px;"">"
-		Response.WRite "±£Áô<input class=fmchkbox type=checkbox name=filedel" & UploadListData(0,N) & " value=1 checked>"
-		'Response.Write "<a href=#no onclick=""$id('fileedit_" & UploadListData(0,N) & "').style.display='';this.style.display='none';"">ĞŞ¸Ä</a> <span id=fileedit_" & UploadListData(0,N) & " style=display:none><span><input name=fileedit" & UploadListData(0,N) & " type=file multiple=""multiple"" id=fileedit" & UploadListData(0,N) & " size=15 class=""fminpt uninit_upload""></span></span>"
+		Response.WRite "ä¿ç•™<input class=fmchkbox type=checkbox name=filedel" & UploadListData(0,N) & " value=1 checked>"
+		'Response.Write "<a href=#no onclick=""$id('fileedit_" & UploadListData(0,N) & "').style.display='';this.style.display='none';"">ä¿®æ”¹</a> <span id=fileedit_" & UploadListData(0,N) & " style=display:none><span><input name=fileedit" & UploadListData(0,N) & " type=file multiple=""multiple"" id=fileedit" & UploadListData(0,N) & " size=15 class=""fminpt uninit_upload""></span></span>"
 		Response.Write "<span id=fileedit_" & UploadListData(0,N) & " style=display:none><span><input name=fileedit" & UploadListData(0,N) & " type=file multiple=""multiple"" id=fileedit" & UploadListData(0,N) & " size=15 class=""fminpt uninit_upload""></span></span>"
-		Response.Write " ×¢ÊÍ <input name=textedit" & UploadListData(0,N) & " type=text value=""" & htmlencode(UploadListData(8,N)) & """ maxlength=" & upload_NoteLength & " size=20 class='fminpt input_2 note'> " & htmlencode(UploadListData(6,N)) & "</div>"
+		Response.Write " æ³¨é‡Š <input name=textedit" & UploadListData(0,N) & " type=text value=""" & htmlencode(UploadListData(8,N)) & """ maxlength=" & upload_NoteLength & " size=20 class='fminpt input_2 note'> " & htmlencode(UploadListData(6,N)) & "</div>"
 	Next
 	Response.Write "<br>"
 
@@ -475,7 +499,7 @@ Public Upd_ErrInfo,Upd_FileInfo
 
 Private Sub Class_Initialize
 
-	Upload_ViewType = 1 'ÉÏ´«ÏÔÊ¾·½Ê½: 1.µ÷ÓÃfile.asp 0.Ö±½ÓÏÔÊ¾Í¼Æ¬µØÖ·
+	Upload_ViewType = 1 'ä¸Šä¼ æ˜¾ç¤ºæ–¹å¼: 1.è°ƒç”¨file.asp 0.ç›´æ¥æ˜¾ç¤ºå›¾ç‰‡åœ°å€
 	Upd_ErrInfo = ""
 	Upd_FileInfo = 0
 	EnableUpload = 1
@@ -487,7 +511,7 @@ Private Sub Class_Initialize
 	N = 1
 	Select Case DEF_EnableUpload
 		Case 0: N = 0
-		case 2: If CheckSupervisorUserName = 0 Then N = 0
+		case 2: If CheckSupervisorUserName() = 0 Then N = 0
 		Case 3: If GBL_BoardMasterFlag < 4 Then N = 0
 		Case 4: If GetBinarybit(GBL_CHK_UserLimit,2) = 0 Then N = 0
 		Case 5: If GBL_BoardMasterFlag < 4 and GetBinarybit(GBL_CHK_UserLimit,2) = 0 Then N = 0
@@ -505,12 +529,12 @@ Private Sub Class_Initialize
 	End If
 
 	If Upd_SpendFlag = 1 and DEF_UploadSpendPoints > 0 and DEF_UploadSpendPoints > GBL_CHK_Points and UploadTable = "leadbbs_upload" and LMT_Upload_ExtendID >= 0 Then
-		Upd_ErrInfo = Upd_ErrInfo & DEF_PointsName(0) & "²»×ã(ĞèÒª" & DEF_PointsName(0) & DEF_UploadSpendPoints & ")!');"
+		Upd_ErrInfo = Upd_ErrInfo & DEF_PointsName(0) & "ä¸è¶³(éœ€è¦" & DEF_PointsName(0) & DEF_UploadSpendPoints & ")!');"
 		EnableUpload = 0
 		Exit Sub
 	End If
 
-	If UploadOneDayMaxNum > 0 and CheckSupervisorUserName = 0 Then
+	If UploadOneDayMaxNum > 0 and CheckSupervisorUserName() = 0 Then
 		Dim Rs,Num
 		Num = 0
 		Set Rs = LDExeCute(sql_select("Select NdateTime from " & UploadTable & " where UserID=" & GBL_UserID & " order by id DESC",UploadOneDayMaxNum),0)
@@ -525,7 +549,7 @@ Private Sub Class_Initialize
 				Rs.MoveNext
 			Loop
 			If TodayNum > UploadOneDayMaxNum Then
-				Upd_ErrInfo = Upd_ErrInfo & "ÎŞ·¨ÔÙÉÏ´«¸½¼ş£¬Ã¿Ìì×î¶à¿É´«" & UploadOneDayMaxNum & "¸ö¸½¼ş!"
+				Upd_ErrInfo = Upd_ErrInfo & "æ— æ³•å†ä¸Šä¼ é™„ä»¶ï¼Œæ¯å¤©æœ€å¤šå¯ä¼ " & UploadOneDayMaxNum & "ä¸ªé™„ä»¶!"
 				EnableUpload = 0
 			End If
 		End If
@@ -548,7 +572,7 @@ private Function GetSaveFileName(fname)
 	If inStr(DEF_UploadFileType,":" & Upd_Extend & ":") < 1 Then Upd_Extend = ".LeadBBS"
 	If inStr(":.htw:.ida:.asp:.asa:.idq:.cer:.cdx:.htr:.idc:.shtm:.shtml:.stm:.printer:.asax:.ascx:.ashx:.asmx:.aspx:.axd:.vsdisco:.rem:.soap:.config:.cs:.csproj:.vb:.vbproj:.webinfo:.licx:.resx:.resources:.php:.cgi:",":" & Upd_Extend & ":") Then Upd_Extend = ".LeadBBS"
 
-	TempNum = Right("0" & day(DEF_Now),2) & "_" & Right(GetTimeValue(DEF_Now),6)
+	TempNum = Right("0" & day(DEF_Now),2) & "_" & Right(LngStr(GetTimeValue(DEF_Now)),6)
 
 	GetSaveFileName = TempNum & Upd_Extend
 	Upd_SaveName_Small = TempNum & "s" & Upd_Extend
@@ -570,33 +594,38 @@ private Function GetSaveFileName(fname)
 
 	If FSFlag = 0 Then
 		Err.Clear
-		GetSaveFileName = Left(GetTimeValue(DEF_Now),8) & GetSaveFileName
-		Upd_SaveName_Small = Left(GetTimeValue(DEF_Now),8) & Upd_SaveName_Small
-		PhotoDir = Server.MapPath(PhotoDirectory) & "\"
+		GetSaveFileName = Left(LngStr(GetTimeValue(DEF_Now)),8) & GetSaveFileName
+		Upd_SaveName_Small = Left(LngStr(GetTimeValue(DEF_Now)),8) & Upd_SaveName_Small
+		PhotoDir = Server.MapPath(PhotoDirectory) & "/"
 		Set Fs = Nothing
 		Exit Function
 	End If
 
 	Dim TDir,FS
-	TDir = Server.MapPath(PhotoDirectory) & "\"
+	TDir = Server.MapPath(PhotoDirectory) & "/"
+	' README Â§47: images/upload/face/ is not in the upstream zip (a zip cannot carry an empty
+	' directory), so on a fresh deployment the first avatar upload took the error branch and
+	' still wrote a row pointing at a file that was never created. CreateFolder makes exactly
+	' one level, hence the helper. Â§6: it is defined below, so the call needs parentheses.
+	If Not FS.FolderExists(TDir) then Call EnsureFolder(TDir)
 	If Not FS.FolderExists(TDir) then
 		GetSaveFileName = 0
-		Upd_ErrInfo = Upd_ErrInfo & "<br>¸½¼ş´æ·ÅÄ¿Â¼´íÎó£¬ÇëÁªÏµÕ¾³¤!"
+		Upd_ErrInfo = Upd_ErrInfo & "<br>é™„ä»¶å­˜æ”¾ç›®å½•é”™è¯¯ï¼Œè¯·è”ç³»ç«™é•¿!"
 	End If
 	
-	TDir = TDir & year(DEF_Now) & "\"
+	TDir = TDir & year(DEF_Now) & "/"
 	UploadPhotoUrl = UploadPhotoUrl & year(DEF_Now) & "/"
 	If Not FS.FolderExists(TDir) then
 		FS.CreateFolder(TDir)
 	End If
 
-	TDir = TDir & Right("0" & month(DEF_Now),2) & "\"
+	TDir = TDir & Right("0" & month(DEF_Now),2) & "/"
 	UploadPhotoUrl = UploadPhotoUrl & Right("0" & month(DEF_Now),2) & "/"
 	If Not FS.FolderExists(TDir) then
 		FS.CreateFolder(TDir)
 	End If
 	
-	'TDir = TDir & Right("0" & day(DEF_Now),2) & "\"
+	'TDir = TDir & Right("0" & day(DEF_Now),2) & "/"
 	'UploadPhotoUrl = UploadPhotoUrl & Right("0" & day(DEF_Now),2) & "/"
 	'If Not FS.FolderExists(TDir) then
 	'	FS.CreateFolder(TDir)
@@ -640,7 +669,7 @@ End Function
 
 Private Sub initUploadArr
 
-	'7 ÊÇ·ñÎª±à¼­(0 ĞÂÉÏ´« 1±à¼­) 8.fileµÄIDºÅ 9.±à¼­µÄÊÇ·ñÉ¾³ı
+	'7 æ˜¯å¦ä¸ºç¼–è¾‘(0 æ–°ä¸Šä¼  1ç¼–è¾‘) 8.fileçš„IDå· 9.ç¼–è¾‘çš„æ˜¯å¦åˆ é™¤
 	Dim N,start
 	dim maxV
 	If EditFlag = 0 or UploadListNum = 0 Then
@@ -693,13 +722,39 @@ Private Sub initUploadArr
 
 End Sub
 
+' Create every missing level of a physical path. FileSystemObject.CreateFolder makes exactly
+' ONE level and raises if the parent is absent, so a two-deep miss (images/upload/face) needs
+' this. Idempotent, and safe to call when the folder already exists.
+Sub EnsureFolder(ByVal p)
+	Dim fso2, parts, i, cur
+	Set fso2 = Server.CreateObject(DEF_FSOString)
+	p = Replace(p, "\\", "/")
+	Do While Len(p) > 1 and Right(p,1) = "/"
+		p = Left(p, Len(p)-1)
+	Loop
+	parts = Split(p, "/")
+	cur = ""
+	For i = 0 To UBound(parts)
+		If parts(i) <> "" Then
+			If cur = "" Then
+				cur = parts(i)
+				If InStr(cur, ":") = 0 Then cur = "/" & cur
+			Else
+				cur = cur & "/" & parts(i)
+			End If
+			If Not fso2.FolderExists(cur) Then fso2.CreateFolder(cur)
+		End If
+	Next
+	Set fso2 = Nothing
+End Sub
+
 Public Sub Upload_File
 	
 	If EnableUpload = 0 Then Exit Sub
 	Dim FileType,File,FileName,N,FileSize,Tmp,Info
 	Dim TmpPoints
 	TmpPoints = GBL_CHK_Points
-	initUploadArr
+	initUploadArr()
 
 	dim infoLen
 	If lcase(UploadTable) = "leadbbs_upload" then
@@ -741,7 +796,7 @@ Public Sub Upload_File
 		SQLArr(5,N) = 0
 		SQLArr(6,N) = ""
 
-		'±à¼­É¾³ı»ò¿ÕÎÄ¼ş²»×÷ÖØĞÂ±£´æ
+		'ç¼–è¾‘åˆ é™¤æˆ–ç©ºæ–‡ä»¶ä¸ä½œé‡æ–°ä¿å­˜
 		If SQLArr(7,N) = 1 Then
 			Info = LeftTrue(Form_UpClass.form("textedit" & SQLArr(8,N)),infoLen)
 		Else
@@ -794,26 +849,26 @@ Public Sub Upload_File
 			UploadPhotoUrl_Small = UploadPhotoUrl & Upd_SaveName_Small
 			UploadPhotoUrl = UploadPhotoUrl & Upd_SaveName
 
-			If Save_Type = 0 and FileSize > 2097152 Then 'Í¼Æ¬×î¶àÖ»ÔÊĞí2M
-				Upd_ErrInfo = Upd_ErrInfo & "<br>¸½¼ş(Í¼Æ¬) " & HtmlEncode(Upd_SaveName) & " ³¬¹ı´óĞ¡£¬ÉÏ´«Ê§°Ü!"
+			If Save_Type = 0 and FileSize > DEF_ImageMaxBytes Then 'å›¾ç‰‡å•ç‹¬é™åˆ¶ï¼Œè§ DEF_ImageMaxBytes
+				Upd_ErrInfo = Upd_ErrInfo & "<br>é™„ä»¶(å›¾ç‰‡) " & HtmlEncode(Upd_SaveName) & " è¶…è¿‡å¤§å°ï¼Œä¸Šä¼ å¤±è´¥!"
 			ElseIf FileSize > DEF_FileMaxBytes Then
-				Upd_ErrInfo = Upd_ErrInfo & "<br>¸½¼ş " & HtmlEncode(Upd_SaveName) & " ³¬¹ı´óĞ¡£¬ÉÏ´«Ê§°Ü!"
+				Upd_ErrInfo = Upd_ErrInfo & "<br>é™„ä»¶ " & HtmlEncode(Upd_SaveName) & " è¶…è¿‡å¤§å°ï¼Œä¸Šä¼ å¤±è´¥!"
 			ElseIf FileSize < 1 Then
-				Upd_ErrInfo = Upd_ErrInfo & "<br>¸½¼ş " & HtmlEncode(Upd_SaveName) & " Îª¿Õ£¬ÉÏ´«Ê§°Ü!"
+				Upd_ErrInfo = Upd_ErrInfo & "<br>é™„ä»¶ " & HtmlEncode(Upd_SaveName) & " ä¸ºç©ºï¼Œä¸Šä¼ å¤±è´¥!"
 			ElseIf inStr(DEF_UploadFileType,":" & Upd_Extend & ":") < 1 Then
-				Upd_ErrInfo = Upd_ErrInfo & "<br>¸½¼ş " & HtmlEncode(Upd_SaveName) & " ÀàĞÍ´íÎó£¬ÉÏ´«Ê§°Ü!"
+				Upd_ErrInfo = Upd_ErrInfo & "<br>é™„ä»¶ " & HtmlEncode(Upd_SaveName) & " ç±»å‹é”™è¯¯ï¼Œä¸Šä¼ å¤±è´¥!"
 			Else
 				If Upd_SpendFlag = 1 and DEF_UploadSpendPoints > 0 and DEF_UploadSpendPoints > TmpPoints and UploadTable = "leadbbs_upload" and LMT_Upload_ExtendID >= 0 Then
-					Upd_ErrInfo = Upd_ErrInfo & "<br>¸½¼ş " & HtmlEncode(Upd_SaveName) & " ÉÏ´«Ê§°Ü(" & DEF_PointsName(0) & "²»×ã)!"
+					Upd_ErrInfo = Upd_ErrInfo & "<br>é™„ä»¶ " & HtmlEncode(Upd_SaveName) & " ä¸Šä¼ å¤±è´¥(" & DEF_PointsName(0) & "ä¸è¶³)!"
 				ElseIf UploadOneDayMaxNum > 0 and TodayNum >= UploadOneDayMaxNum and UploadTable = "leadbbs_upload" and LMT_Upload_ExtendID >= 0 Then
-					Upd_ErrInfo = Upd_ErrInfo & "<br>¸½¼ş " & HtmlEncode(Upd_SaveName) & " ÉÏ´«Ê§°Ü(³¬¹ıÈÕÉÏ´«¸½¼şÊıÁ¿)!"
+					Upd_ErrInfo = Upd_ErrInfo & "<br>é™„ä»¶ " & HtmlEncode(Upd_SaveName) & " ä¸Šä¼ å¤±è´¥(è¶…è¿‡æ—¥ä¸Šä¼ é™„ä»¶æ•°é‡)!"
 				Else
 					TmpPoints = TmpPoints - DEF_UploadSpendPoints
 					TodayNum = TodayNum + 1
 
 					file.saveas PhotoDir & Upd_SaveName
 					If Save_Type = 0 Then
-						ProcessFile
+						ProcessFile()
 					Else
 						UploadPhotoUrl_Small = ""
 					End If
@@ -832,7 +887,7 @@ Public Sub Upload_File
 		Set file = Nothing
 	end if
 	Next
-	Saved
+	Saved()
 	
 	If Upd_FileInfo = 0 Then
 		For N = 0 to Ubound(SQLArr,2)
@@ -925,13 +980,13 @@ Private Sub Saved
 	
 	extent_content = ""
 	For N = 0 to UploadProcessNum
-		If SQLArr(7,N) = 1 Then '±à¼­¸½¼ş
-			If SQLArr(9,N) = 1 Then 'É¾³ı²»±£ÁôµÄ±à¼­¸½¼ş
+		If SQLArr(7,N) = 1 Then 'ç¼–è¾‘é™„ä»¶
+			If SQLArr(9,N) = 1 Then 'åˆ é™¤ä¸ä¿ç•™çš„ç¼–è¾‘é™„ä»¶
 				CALL ChangeUploadNum(UploadListData(1,EditN),-1,0)
 				DelContentStr = "[upload=" & UploadListData(0,EditN) & "," & UploadListData(5,EditN) & "]" & UploadListData(6,EditN) & "[/upload]"
 				DeleteUpload(UploadListData(0,EditN))
-				If UploadListData(2,EditN) <> "" Then DeleteFiles(Server.MapPath(Replace(PhotoDirectory & UploadListData(2,EditN),"/","\")))
-				If UploadListData(3,EditN) <> "" Then DeleteFiles(Server.MapPath(Replace(PhotoDirectory & UploadListData(3,EditN),"/","\")))
+				If UploadListData(2,EditN) <> "" Then Call DeleteFiles(Server.MapPath(Replace(PhotoDirectory & UploadListData(2,EditN),"/","\")))
+				If UploadListData(3,EditN) <> "" Then Call DeleteFiles(Server.MapPath(Replace(PhotoDirectory & UploadListData(3,EditN),"/","\")))
 				Form_Content = Replace(Form_Content,VbCrLf & DelContentStr,"")
 				Form_Content = Replace(Form_Content,DelContentStr,"")
 				If Upload_ViewType <> 1 Then
@@ -943,7 +998,7 @@ Private Sub Saved
 					Set re = Nothing
 				End If
 				UploadListData(0,EditN) = 0
-			Else 'ĞŞ¸Ä¸½¼şĞÅÏ¢
+			Else 'ä¿®æ”¹é™„ä»¶ä¿¡æ¯
 				extent_havefile = 1
 				If SQLArr(4,N) <> "" Then
 					SQL = "Update " & UploadTable & " Set " &_
@@ -958,8 +1013,8 @@ Private Sub Saved
 					CALL LDExeCute(SQL,1)
 					
 
-					If UploadListData(2,EditN) <> "" Then DeleteFiles(Server.MapPath(Replace(PhotoDirectory & UploadListData(2,EditN),"/","\")))
-					If UploadListData(3,EditN) <> "" Then DeleteFiles(Server.MapPath(Replace(PhotoDirectory & UploadListData(3,EditN),"/","\")))
+					If UploadListData(2,EditN) <> "" Then Call DeleteFiles(Server.MapPath(Replace(PhotoDirectory & UploadListData(2,EditN),"/","\")))
+					If UploadListData(3,EditN) <> "" Then Call DeleteFiles(Server.MapPath(Replace(PhotoDirectory & UploadListData(3,EditN),"/","\")))
 					DelContentStr = "[upload=" & UploadListData(0,EditN) & "," & UploadListData(5,EditN) & "]" & UploadListData(6,EditN) & "[/upload]"
 					Form_Content = Replace(Form_Content,DelContentStr,"[upload=" & UploadListData(0,EditN) & "," & SQLArr(3,N) & "]" & SQLArr(4,N) & "[/upload]")
 
@@ -1005,7 +1060,7 @@ Private Sub Saved
 				end if
 			End If
 			EditN = EditN + 1
-		Else 'ĞÂÌí³ı¼ş
+		Else 'æ–°æ·»é™¤ä»¶
 			If SQLArr(4,N) <> "" Then
 				Num = Num + 1
 				UserID = SQLArr(0,N)
@@ -1086,14 +1141,14 @@ Private Sub ChangeUploadNum(UserID,Num,Flag)
 			Else
 				SQL = "Update LeadBBS_User Set UploadNum=UploadNum+" & Num & ",Points=Points+" & (0-DEF_UploadSpendPoints*Num) & " Where ID=" & UserID
 			End If
-			If UserID = GBL_UserID Then UpdateSessionValue 4,DEF_UploadSpendPoints*Num,1
+			If UserID = GBL_UserID Then Call UpdateSessionValue(4,DEF_UploadSpendPoints*Num,1)
 		Else
 			SQL = "Update LeadBBS_User Set UploadNum=UploadNum+" & Num & " Where ID=" & UserID
 		End If
 		CALL LDExeCute(SQL,1)
 		SQL = "Update LeadBBS_SiteInfo Set UploadNum=UploadNum+" & Num
 		CALL LDExeCute(SQL,1)
-		UpdateStatisticDataInfo Num,5,1
+		Call UpdateStatisticDataInfo(Num,5,1)
 	End If
 
 End Sub

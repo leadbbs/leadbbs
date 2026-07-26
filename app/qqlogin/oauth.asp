@@ -1,37 +1,44 @@
 <%
-Const apiKey = "" 'APP ID,ÄúĞèÒª´ÓÌÚÑ¶Æ½Ì¨ÉêÇë»ñÈ¡×ÊÁÏ£º(<a href=http://connect.qq.com/ target=_blank>µã´ËÉêÇë</a>)
-Const secretKey = "" 'APP KEY,ÄúĞèÒª´ÓÌÚÑ¶Æ½Ì¨ÉêÇë»ñÈ¡
-Const callback = "" 'CALL BACK,»Øµ÷µØÖ·£¬×¢ÒâÖ»ĞèÒªÌîĞ´ÓòÃû£¬²»°üÀ¨http¼°Ä¿Â¼¡£
+Const apiKey = "" 'APP ID,æ‚¨éœ€è¦ä»è…¾è®¯å¹³å°ç”³è¯·è·å–èµ„æ–™ï¼š(<a href=http://connect.qq.com/ target=_blank>ç‚¹æ­¤ç”³è¯·</a>)
+Const secretKey = "" 'APP KEY,æ‚¨éœ€è¦ä»è…¾è®¯å¹³å°ç”³è¯·è·å–
+Const callback = "" 'CALL BACK,å›è°ƒåœ°å€ï¼Œæ³¨æ„åªéœ€è¦å¡«å†™åŸŸåï¼Œä¸åŒ…æ‹¬httpåŠç›®å½•ã€‚
 
-const tqq_apikey = "" 'ÌÚÑ¶Î¢²© API Key <a href=http://open.t.qq.com/apps_welcome.php target=_blank>http://open.t.qq.com/apps_welcome.php</a> ÉêÇë
-const tqq_secretKey = "" 'ÌÚÑ¶Î¢²© secretKey
+const tqq_apikey = "" 'è…¾è®¯å¾®åš API Key <a href=http://open.t.qq.com/apps_welcome.php target=_blank>http://open.t.qq.com/apps_welcome.php</a> ç”³è¯·
+const tqq_secretKey = "" 'è…¾è®¯å¾®åš secretKey
 
-const weibo_apikey = "" 'ĞÂÀËÎ¢²© API Key <a href=http://open.weibo.com target=_blank>http://open.weibo.com</a> ÉêÇë
-const weibo_secretKey = "" 'ĞÂÀËÎ¢²© secretKey
+const weibo_apikey = "" 'æ–°æµªå¾®åš API Key <a href=http://open.weibo.com target=_blank>http://open.weibo.com</a> ç”³è¯·
+const weibo_secretKey = "" 'æ–°æµªå¾®åš secretKey
 
-const baidu_apikey = "" '°Ù¶È API Key <a href=http://developer.baidu.com/ target=_blank>http://developer.baidu.com/</a> ÉêÇë
-const baidu_secretKey = "" '°Ù¶È secretKey ×¢ÒâÔÚ°Ù¶ÈÉèÖÃºÃÕıÈ·µÄ»Øµ÷Ò³(²Î¿¼ http://developer.baidu.com/wiki/index.php?title=docs/oauth/redirect)£¬±ÈÈçĞèÒªÌîĞ´ÍêÕû: http://www.leadbbs.com/app/qqlogin/login.asp
+const baidu_apikey = "" 'ç™¾åº¦ API Key <a href=http://developer.baidu.com/ target=_blank>http://developer.baidu.com/</a> ç”³è¯·
+const baidu_secretKey = "" 'ç™¾åº¦ secretKey æ³¨æ„åœ¨ç™¾åº¦è®¾ç½®å¥½æ­£ç¡®çš„å›è°ƒé¡µ(å‚è€ƒ http://developer.baidu.com/wiki/index.php?title=docs/oauth/redirect)ï¼Œæ¯”å¦‚éœ€è¦å¡«å†™å®Œæ•´: http://www.leadbbs.com/app/qqlogin/login.asp
 
-const renren_apikey = "" 'ÈËÈËÍø API Key <a href=http://app.renren.com/developers/newapp target=_blank>http://app.renren.com/developers/newapp</a> ÉêÇë
-const renren_secretKey = "" 'ÈËÈËÍø secretKey
+const renren_apikey = "" 'äººäººç½‘ API Key <a href=http://app.renren.com/developers/newapp target=_blank>http://app.renren.com/developers/newapp</a> ç”³è¯·
+const renren_secretKey = "" 'äººäººç½‘ secretKey
 
-const kaixin_apikey = "" '¿ªĞÄÍø API Key <a href=http://open.kaixin001.com/ target=_blank>http://open.kaixin001.com/</a> ÉêÇë
-const kaixin_secretKey = "" '¿ªĞÄÍø secretKey
+const kaixin_apikey = "" 'å¼€å¿ƒç½‘ API Key <a href=http://open.kaixin001.com/ target=_blank>http://open.kaixin001.com/</a> ç”³è¯·
+const kaixin_secretKey = "" 'å¼€å¿ƒç½‘ secretKey
 
-const tianyi_apikey = "" 'ÌìÒí API Key <a href=http://open.189.cn/ target=_blank>http://open.189.cn/</a> ÉêÇë
-const tianyi_secretKey = "" 'ÌìÒí secretKey
+const tianyi_apikey = "" 'å¤©ç¿¼ API Key <a href=http://open.189.cn/ target=_blank>http://open.189.cn/</a> ç”³è¯·
+const tianyi_secretKey = "" 'å¤©ç¿¼ secretKey
 
-const youku_apikey = "" 'ÓÅ¿á API Key <a href=http://open.youku.com/ target=_blank>http://open.youku.com/</a> ÉêÇë
-const youku_secretKey = "" 'ÓÅ¿á secretKey
+const youku_apikey = "" 'ä¼˜é…· API Key <a href=http://open.youku.com/ target=_blank>http://open.youku.com/</a> ç”³è¯·
+const youku_secretKey = "" 'ä¼˜é…· secretKey
 
-const tudou_apikey = "" 'ÍÁ¶¹ API Key <a href=http://open.tudou.com/ target=_blank>http://open.tudou.com/</a> ÉêÇë
-const tudou_secretKey = "" 'ÍÁ¶¹ secretKey
+const tudou_apikey = "" 'åœŸè±† API Key <a href=http://open.tudou.com/ target=_blank>http://open.tudou.com/</a> ç”³è¯·
+const tudou_secretKey = "" 'åœŸè±† secretKey
 
-dim connect_list:connect_list = array("QQÕÊºÅ","ÌÚÑ¶Î¢²©ÕÊºÅ","Î¢²©ÕÊºÅ","°Ù¶ÈÕÊºÅ","Ö§¸¶±¦ÕÊºÅ","ÈËÈËÍøÕÊºÅ","¿ªĞÄÍøÕÊºÅ","µçĞÅÌìÒíÕÊºÅ","ÓÅ¿áÕÊºÅ","ÍÁ¶¹ÕÊºÅ")
+dim connect_list:connect_list = array("QQå¸å·","è…¾è®¯å¾®åšå¸å·","å¾®åšå¸å·","ç™¾åº¦å¸å·","æ”¯ä»˜å®å¸å·","äººäººç½‘å¸å·","å¼€å¿ƒç½‘å¸å·","ç”µä¿¡å¤©ç¿¼å¸å·","ä¼˜é…·å¸å·","åœŸè±†å¸å·")
 dim connect_allow:connect_allow = array(1,1,1,1,0,0,0,0,0,0)
 dim connect_apptype:connect_apptype = array(1,2,3,4,5,6,7,8,9,10)
 
 Dim return_QueryString : return_QueryString = ""
+
+' AxonASP compat: assigning to a module-level array element from inside a
+' Class fails ("Object doesn't support this property or method"). Route the
+' writes through this module-level Sub, called via Call, which works.
+Sub SetConnectAllow(idx, val)
+	connect_allow(idx) = val
+End Sub
 
 Class QqConnet
 
@@ -46,65 +53,65 @@ Class QqConnet
 	Private Sub Class_Initialize
     
     	if apiKey = "" then
-    		connect_allow(0) = 0
+    		Call SetConnectAllow(0, 0)
     	else
-    		connect_allow(0) = 1
+    		Call SetConnectAllow(0, 1)
     	end if
     	
     	if tqq_apikey = "" then
-    		connect_allow(1) = 0
+    		Call SetConnectAllow(1, 0)
     	else
-    		connect_allow(1) = 1
+    		Call SetConnectAllow(1, 1)
     	end if
     	
     	if weibo_apikey = "" then
-    		connect_allow(2) = 0
+    		Call SetConnectAllow(2, 0)
     	else
-    		connect_allow(2) = 1
+    		Call SetConnectAllow(2, 1)
     	end if
     	
     	if baidu_apikey = "" then
-    		connect_allow(3) = 0
+    		Call SetConnectAllow(3, 0)
     	else
-    		connect_allow(3) = 1
+    		Call SetConnectAllow(3, 1)
     	end if
     	
     	if renren_apikey = "" then
-    		connect_allow(5) = 0
+    		Call SetConnectAllow(5, 0)
     	else
-    		connect_allow(5) = 1
+    		Call SetConnectAllow(5, 1)
     	end if
     	
     	if kaixin_apikey = "" then
-    		connect_allow(6) = 0
+    		Call SetConnectAllow(6, 0)
     	else
-    		connect_allow(6) = 1
+    		Call SetConnectAllow(6, 1)
     	end if
     	
     	if tianyi_apikey = "" then
-    		connect_allow(7) = 0
+    		Call SetConnectAllow(7, 0)
     	else
-    		connect_allow(7) = 1
+    		Call SetConnectAllow(7, 1)
     	end if
     	
     	if youku_apikey = "" then
-    		connect_allow(8) = 0
+    		Call SetConnectAllow(8, 0)
     	else
-    		connect_allow(8) = 1
+    		Call SetConnectAllow(8, 1)
     	end if
     	
     	if tudou_apikey = "" then
-    		connect_allow(9) = 0
+    		Call SetConnectAllow(9, 0)
     	else
-    		connect_allow(9) = 1
+    		Call SetConnectAllow(9, 1)
     	end if
 
 		cur_apptype = toNum(request.querystring("apptype"),0)
 		class_getCur_appKey(cur_apptype)
 		QQ_CALLBACK_URL = connect_getback(cur_apptype)
-		'ÊÚÈ¨Ïî ÀıÈç£ºcur_SCOPE=get_user_info,list_album,upload_pic,do_like,add_t 
-                                                '²»´«ÔòÄ¬ÈÏÇëÇó¶Ô½Ó¿Úget_user_info½øĞĞÊÚÈ¨¡£
-                                                '½¨Òé¿ØÖÆÊÚÈ¨ÏîµÄÊıÁ¿£¬Ö»´«Èë±ØÒªµÄ½Ó¿ÚÃû³Æ£¬ÒòÎªÊÚÈ¨ÏîÔ½¶à£¬ÓÃ»§Ô½¿ÉÄÜ¾Ü¾ø½øĞĞÈÎºÎÊÚÈ¨¡£
+		'æˆæƒé¡¹ ä¾‹å¦‚ï¼šcur_SCOPE=get_user_info,list_album,upload_pic,do_like,add_t 
+                                                'ä¸ä¼ åˆ™é»˜è®¤è¯·æ±‚å¯¹æ¥å£get_user_infoè¿›è¡Œæˆæƒã€‚
+                                                'å»ºè®®æ§åˆ¶æˆæƒé¡¹çš„æ•°é‡ï¼Œåªä¼ å…¥å¿…è¦çš„æ¥å£åç§°ï¼Œå› ä¸ºæˆæƒé¡¹è¶Šå¤šï¼Œç”¨æˆ·è¶Šå¯èƒ½æ‹’ç»è¿›è¡Œä»»ä½•æˆæƒã€‚
 	End Sub
 
 	private function class_getCur_appKey(ctype)
@@ -154,10 +161,10 @@ Class QqConnet
         APP_ID = cur_apiKey    
     End Property
 
-	'Éú³ÉSession("State")Êı¾İ.
+	'ç”ŸæˆSession("State")æ•°æ®.
 	Public Function MakeRandNum()
 		Randomize
-		Dim width : width = 6 'Ëæ»úÊı³¤¶È,Ä¬ÈÏ6Î»
+		Dim width : width = 6 'éšæœºæ•°é•¿åº¦,é»˜è®¤6ä½
 		width = 10 ^ (width - 1)
 		MakeRandNum = Int((width*10 - width) * Rnd() + width)
 	End Function
@@ -205,7 +212,7 @@ Class QqConnet
 		.Write body 
 		.Position = 0
 		.Type = 2
-		.Charset = "GB2312"
+		.Charset = "utf-8"
 		
 		if request.querystring("utf8") = "1" then
 			Response.Charset="UTF-8"
@@ -219,7 +226,7 @@ Class QqConnet
 	
 	End Function
 	
-	'Get·½·¨ÇëÇóurl,»ñÈ¡ÇëÇóÄÚÈİ
+	'Getæ–¹æ³•è¯·æ±‚url,è·å–è¯·æ±‚å†…å®¹
 	Private Function RequestUrl(url)
 		dim XmlObj
 		'Set XmlObj = Server.CreateObject(CheckXml())
@@ -239,7 +246,7 @@ Class QqConnet
 		Set XmlObj = nothing
 	End Function
 	
-	'Post·½·¨ÇëÇóurl,»ñÈ¡ÇëÇóÄÚÈİ
+	'Postæ–¹æ³•è¯·æ±‚url,è·å–è¯·æ±‚å†…å®¹
 	Private Function RequestUrl_post(url,data)
 		dim XmlObj
 		'Set XmlObj = Server.CreateObject(CheckXml())
@@ -272,7 +279,7 @@ Class QqConnet
 	
 
 	
-	'Éú³ÉµÇÂ¼µØÖ·
+	'ç”Ÿæˆç™»å½•åœ°å€
 	Public Function GetAuthorization_Code()
 		Dim url, params
 			
@@ -330,9 +337,9 @@ Class QqConnet
 	End Function
 	
 	
-	'»ñÈ¡ access_token
-	'»ñÈ¡µ½µÄaccess token¾ßÓĞ3¸öÔÂÓĞĞ§ÆÚ£¬ÓÃ»§ÔÙ´ÎµÇÂ¼Ê±×Ô¶¯Ë¢ĞÂ¡£
-	'µÚÈı·½ÍøÕ¾¿É´æ´¢access tokenĞÅÏ¢£¬ÒÔ±ãºóĞøµ÷ÓÃOpenAPI·ÃÎÊºÍĞŞ¸ÄÓÃ»§ĞÅÏ¢Ê±Ê¹ÓÃ¡£
+	'è·å– access_token
+	'è·å–åˆ°çš„access tokenå…·æœ‰3ä¸ªæœˆæœ‰æ•ˆæœŸï¼Œç”¨æˆ·å†æ¬¡ç™»å½•æ—¶è‡ªåŠ¨åˆ·æ–°ã€‚
+	'ç¬¬ä¸‰æ–¹ç½‘ç«™å¯å­˜å‚¨access tokenä¿¡æ¯ï¼Œä»¥ä¾¿åç»­è°ƒç”¨OpenAPIè®¿é—®å’Œä¿®æ”¹ç”¨æˆ·ä¿¡æ¯æ—¶ä½¿ç”¨ã€‚
 	Public Function GetAccess_Token()
 		Dim url, params,Temp,dd
 		select case cur_apptype
@@ -446,11 +453,11 @@ Class QqConnet
 				GetAccess_Token = CutStr(token_string, "access_token"":""","""")
 		end select
 		If GetAccess_Token = "" Then
-			ErrorJump("»ñÈ¡ access_token Ê±·¢Éú´íÎó£¬´íÎó´úÂë£º"&Temp)
+			Call ErrorJump("è·å– access_token æ—¶å‘ç”Ÿé”™è¯¯ï¼Œé”™è¯¯ä»£ç ï¼š"&Temp)
 		End If
 	End Function
 	
-	'¼ì²âÊÇ·ñºÏ·¨µÇÂ¼£¡
+	'æ£€æµ‹æ˜¯å¦åˆæ³•ç™»å½•ï¼
 	Public Function CheckLogin()
 		Dim Code,mState
 		select case cur_apptype
@@ -478,7 +485,7 @@ Class QqConnet
 		end select
 	End Function
 	
-	'»ñÈ¡openid
+	'è·å–openid
 	Public Function Getopenid()
 		Dim url, params,Temp
 		select case cur_apptype
@@ -490,7 +497,7 @@ Class QqConnet
 			If Instr(Temp,"openid")>0 Then
 			   Getopenid=CutStr(Temp,"openid"":""","""}")
 			Else
-			   ErrorJump("»ñÈ¡ Openid Ê±·¢Éú´íÎó£¬´íÎó´úÂë£º"&CutStr(Temp,"{""error"":",",")) 
+			   Call ErrorJump("è·å– Openid æ—¶å‘ç”Ÿé”™è¯¯ï¼Œé”™è¯¯ä»£ç ï¼š"&CutStr(Temp,"{""error"":",",")) 
 			End If
 		case 2:
 			Getopenid = left(trim(request.querystring("openid")),32)
@@ -504,14 +511,14 @@ Class QqConnet
 			Temp = RequestUrl(url)
 			apenid_string = Temp
 			If CheckData(apenid_string,"userid") = False Then
-				  ErrorJump("»ñÈ¡ÓÃ»§ĞÅÏ¢Ê±·¢Éú´íÎó£¬´íÎó´úÂë£º"&GetUserInfo) 
+				  Call ErrorJump("è·å–ç”¨æˆ·ä¿¡æ¯æ—¶å‘ç”Ÿé”™è¯¯ï¼Œé”™è¯¯ä»£ç ï¼š"&GetUserInfo) 
 			End If
 			
 			Getopenid = CutStr(apenid_string, "userid"":""","""")
 			if Getopenid = "" then
 				Getopenid = CutStr(apenid_string, "userid"": ""","""")
 			end if
-			'°Ù¶ÈµÄopenidÒÔuidÀ´×÷ÎªÎ¨Ò»Ê¶±ğ
+			'ç™¾åº¦çš„openidä»¥uidæ¥ä½œä¸ºå”¯ä¸€è¯†åˆ«
 		case 6:
 			Getopenid = CutStr(token_string, "id"":""","""")
 			if Getopenid = "" then Getopenid = CutStr(token_string, "id"": ""","""")
@@ -538,12 +545,12 @@ Class QqConnet
 			if Getopenid = "" then Getopenid = CutStr(token_string, "uid"":",",")
 		end select
 		If Getopenid = "" Then
-			  ErrorJump("»ñÈ¡openidÊ±·¢Éú´íÎó.") 
+			  Call ErrorJump("è·å–openidæ—¶å‘ç”Ÿé”™è¯¯.") 
 		End If
 
 	End Function
 	
-	'·¢ËÍÒ»ÌõÎ¢²©
+	'å‘é€ä¸€æ¡å¾®åš
 	Public Function Post_Webo(content,Access_Token,Access_Openid)
 		Dim url, params, Tk,Oid
 		Tk = Access_Token
@@ -565,7 +572,7 @@ Class QqConnet
 	
 	end function
 	
-	'·ÖÏíÄÚÈİµ½QQ¿Õ¼ä
+	'åˆ†äº«å†…å®¹åˆ°QQç©ºé—´
 	Public Function Post_Share(apptype,title,turl,comment,summary,images,nswb,Access_Token,Access_Openid,video,ExpiresTime)
 	
 		dim this_apiKey
@@ -634,7 +641,7 @@ Class QqConnet
 
 	End Function
 	
-	'»ñÈ¡ÓÃ»§ĞÅÏ¢,µÃµ½Ò»¸öjson¸ñÊ½µÄ×Ö·û´®
+	'è·å–ç”¨æˆ·ä¿¡æ¯,å¾—åˆ°ä¸€ä¸ªjsonæ ¼å¼çš„å­—ç¬¦ä¸²
 	Public Function GetUserInfo()
 		Dim url, params, result
 		select case cur_apptype
@@ -646,7 +653,7 @@ Class QqConnet
 				url = url & "?" & params
 				GetUserInfo = RequestUrl(url)
 				If CheckData(GetUserInfo,"nickname") = False Then
-				   ErrorJump("»ñÈ¡ÓÃ»§ĞÅÏ¢Ê±·¢Éú´íÎó£¬´íÎó´úÂë£º"&CutStr(GetUserInfo,"{""ret"":",",")) 
+				   Call ErrorJump("è·å–ç”¨æˆ·ä¿¡æ¯æ—¶å‘ç”Ÿé”™è¯¯ï¼Œé”™è¯¯ä»£ç ï¼š"&CutStr(GetUserInfo,"{""ret"":",",")) 
 				End If
 			case 2:
 				GetUserInfo = token_string
@@ -656,7 +663,7 @@ Class QqConnet
 				"&uid=" & Session("Openid")
 				GetUserInfo = RequestUrl(url)
 				If CheckData(GetUserInfo,"screen_name") = False Then
-				   ErrorJump("»ñÈ¡ÓÃ»§ĞÅÏ¢Ê±·¢Éú´íÎó£¬´íÎó´úÂë£º"&CutStr(GetUserInfo,"{""error"":","""")) 
+				   Call ErrorJump("è·å–ç”¨æˆ·ä¿¡æ¯æ—¶å‘ç”Ÿé”™è¯¯ï¼Œé”™è¯¯ä»£ç ï¼š"&CutStr(GetUserInfo,"{""error"":","""")) 
 				End If
 			case 4:
 				GetUserInfo = apenid_string
@@ -665,7 +672,7 @@ Class QqConnet
 			case 7:
 				GetUserInfo = apenid_string
 			case 8:
-				'ĞèÒª189ÓĞÓÃ»§ÊôĞÔÀà£¬ÎªÁË±£»¤ÒşË½£¬ÆäÖĞÂÛÌ³Ö»»ñÈ¡ÏàÓ¦µÄĞÔ±ğ£¬ÆäËü×ÊÁÏ²¢²»»ñÈ¡
+				'éœ€è¦189æœ‰ç”¨æˆ·å±æ€§ç±»ï¼Œä¸ºäº†ä¿æŠ¤éšç§ï¼Œå…¶ä¸­è®ºå›åªè·å–ç›¸åº”çš„æ€§åˆ«ï¼Œå…¶å®ƒèµ„æ–™å¹¶ä¸è·å–
 			case 9:
 				GetUserInfo = apenid_string
 			case 10:
@@ -682,7 +689,7 @@ Class QqConnet
 	
 	end function
 	
-	'»ñÈ¡ÌÚÑ¶Î¢²©µÇÂ¼ÓÃ»§µÄÓÃ»§×ÊÁÏ,µÃµ½Ò»¸öjson¸ñÊ½µÄ×Ö·û´®
+	'è·å–è…¾è®¯å¾®åšç™»å½•ç”¨æˆ·çš„ç”¨æˆ·èµ„æ–™,å¾—åˆ°ä¸€ä¸ªjsonæ ¼å¼çš„å­—ç¬¦ä¸²
 	Public Function Get_Info()
 		Dim url, params, result
 		url = "https://graph.qq.com/user/get_info"
@@ -695,7 +702,7 @@ Class QqConnet
 	End Function
 
 	
-	'»ñÈ¡ÓÃ»§Ãû×Ö,ĞÔ±ğ,´Ójson×Ö·û´®Àï½ØÈ¡Ïà¹Ø×Ö·û
+	'è·å–ç”¨æˆ·åå­—,æ€§åˆ«,ä»jsonå­—ç¬¦ä¸²é‡Œæˆªå–ç›¸å…³å­—ç¬¦
 	Public Function GetUserName(json)
 		Dim nickname,sex,icon,ExpiresTime,MobileTel
 		ExpiresTime = 0
@@ -751,11 +758,11 @@ Class QqConnet
 					sex = CutStr(json, "gender"": """,""",")
 				end if
 				if sex = "m" then
-					sex = "ÄĞ"
+					sex = "ç”·"
 				elseif sex = "f" then
-					sex = "Å®"
+					sex = "å¥³"
 				else
-					sex = "ÃÜ"
+					sex = "å¯†"
 				end if
 				icon=CutStr(json, "profile_image_url"":""","""")
 				if icon = "" then
@@ -782,11 +789,11 @@ Class QqConnet
 					sex = CutStr(json, "sex"": """,""",")
 				end if
 				if sex = "1" then
-					sex = "ÄĞ"
+					sex = "ç”·"
 				elseif sex = "0" then
-					sex = "Å®"
+					sex = "å¥³"
 				else
-					sex = "ÃÜ"
+					sex = "å¯†"
 				end if
 					
 				icon = CutStr(apenid_string, "portrait"":""","""")
@@ -806,18 +813,18 @@ Class QqConnet
 				nickname = CutStr(token_string, """name"":""","""")
 				icon = CutStr(token_string, """type"":""main"",""url"":""","""")
 				if icon = "" then icon = CutStr(token_string, """type"":""tiny"",""url"":""","""")
-				sex = "ÃÜ"
+				sex = "å¯†"
 				ExpiresTime=CutStr(token_string, "expires_in"":",",")
 				if ExpiresTime = "" then ExpiresTime=CutStr(token_string, "expires_in"":""","""")
 			case 7:
 				nickname = unJsString(CutStr(apenid_string, """name"":""",""""))
 				sex = unJsString(CutStr(apenid_string, """gender"":""",""""))
 				if sex = "0" then
-					sex = "ÄĞ"
+					sex = "ç”·"
 				elseif sex = "1" then
-					sex = "Å®"
+					sex = "å¥³"
 				else
-					sex = "ÃÜ"
+					sex = "å¯†"
 				end if
 				icon = CutStr(apenid_string, """logo120"":""","""")
 				if icon = "" then icon = CutStr(apenid_string, """logo50"":""","""")
@@ -832,15 +839,15 @@ Class QqConnet
 
 				sex = unJsString(CutStr(tmp, """real_gender"":""",""""))
 				
-				if sex = "ÄĞ" then
-					sex = "ÄĞ"
-				elseif sex = "Å®" then
-					sex = "Å®"
+				if sex = "ç”·" then
+					sex = "ç”·"
+				elseif sex = "å¥³" then
+					sex = "å¥³"
 				else
-					sex = "ÃÜ"
+					sex = "å¯†"
 				end if
 
-				'189.cn»¹ĞèÒªĞéÄâĞÎÏóÀàÀ´»ñµÃêÇ³Æ,Í·ÏñÔİ²»»ñÈ¡£¬Ö»Ê¹ÓÃÄ¬ÈÏ
+				'189.cnè¿˜éœ€è¦è™šæ‹Ÿå½¢è±¡ç±»æ¥è·å¾—æ˜µç§°,å¤´åƒæš‚ä¸è·å–ï¼Œåªä½¿ç”¨é»˜è®¤
 				url = "http://api.189.cn/upc/vitual_identity/user_network_info?app_id=" & cur_apiKey &_
 				"&access_token=" & Session("Access_Token")&_
 				"&type=json"
@@ -848,7 +855,7 @@ Class QqConnet
 				response.write "<br>tmp:"& tmp	
 				nickname = unJsString(CutStr(tmp, """user_nickname"":""",""""))
 				
-				'ÁªÏµºÅÂë£¬Ä¬ÈÏ²»»ñÈ¡£¬¿ÉÄÜÊÇµç»°£¬²»Ò»¶¨ÊÇÊÖ»ú
+				'è”ç³»å·ç ï¼Œé»˜è®¤ä¸è·å–ï¼Œå¯èƒ½æ˜¯ç”µè¯ï¼Œä¸ä¸€å®šæ˜¯æ‰‹æœº
 				'url = "http://api.189.cn/upc/real/cellphone_and_province?app_id=" & cur_apiKey &_
 				'"&access_token=" & Session("Access_Token")&_
 				'"&type=json"
@@ -863,11 +870,11 @@ Class QqConnet
 				icon = unJsString(CutStr(apenid_string, """avatar_large"":""",""""))
 				sex=unJsString(CutStr(apenid_string, "gender"":""",""""))
 				if sex = "m" then
-					sex = "ÄĞ"
+					sex = "ç”·"
 				elseif sex = "f" then
-					sex = "Å®"
+					sex = "å¥³"
 				else
-					sex = "ÃÜ"
+					sex = "å¯†"
 				end if
 				ExpiresTime=CutStr(token_string, "expires_in"":",",")
 				if ExpiresTime = "" then ExpiresTime=CutStr(token_string, "expires_in"":""","""")
@@ -877,11 +884,11 @@ Class QqConnet
 				icon = CutStr(json, """userPicUrl"":""","""")
 				sex=lcase(CutStr(json, "gender"":""",""""))
 				if sex = "m" then
-					sex = "ÄĞ"
+					sex = "ç”·"
 				elseif sex = "f" then
-					sex = "Å®"
+					sex = "å¥³"
 				else
-					sex = "ÃÜ"
+					sex = "å¯†"
 				end if
 				ExpiresTime=CutStr(token_string, "expires_in"":",",")
 				if ExpiresTime = "" then ExpiresTime=CutStr(token_string, "expires_in"":""","""")

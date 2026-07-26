@@ -1,5 +1,5 @@
-<!-- #include file=../../../a/inc/upload1_fun.asp -->
-<!-- #include file=../../../inc/limit_fun.asp -->
+<!--#include file="../../../a/inc/upload1_fun.asp"-->
+<!--#include file="../../../inc/limit_fun.asp"-->
 <%
 Class super_uploadfile
 
@@ -19,7 +19,7 @@ Class super_uploadfile
 			Form_UpClass.ProgressID = Request.QueryString("Upload_ID")
 			Form_UpClass.GetUpFile
 		end if
-		class_main
+		class_main()
 		If Form_UpFlag = 1 Then Set Form_UpClass = Nothing
 	
 	End Sub
@@ -32,15 +32,15 @@ Class super_uploadfile
 		if p_boardid > 0 then
 			p_boardname = class_getboardinfo(p_boardid)
 			if p_boardid <= 0 then
-				Global_ErrMsg("°æÃæ²ÎÊı´íÎó.")
+				Call Global_ErrMsg("ç‰ˆé¢å‚æ•°é”™è¯¯.")
 				exit sub
 			end if
 			if p_logo = "1" then
-				p_fileinfo = "ĞŞ¸Ä°æÃæ<u>" & p_boardname & "</u>(±àºÅ" & p_boardid & ")LOGOÍ¼Æ¬£¬±ØĞëÊÇpngÍ¼Æ¬"
+				p_fileinfo = "ä¿®æ”¹ç‰ˆé¢<u>" & p_boardname & "</u>(ç¼–å·" & p_boardid & ")LOGOå›¾ç‰‡ï¼Œå¿…é¡»æ˜¯pngå›¾ç‰‡"
 				p_filepath = "images/board/"
 				p_filename = "b_" & p_boardid & ".png"
 			else
-				p_fileinfo = "ĞŞ¸Ä°æÃæ<u>" & p_boardname & "</u>(±àºÅ" & p_boardid & ")±êÖ¾Í¼Æ¬£¬±ØĞëÊÇpngÍ¼Æ¬"
+				p_fileinfo = "ä¿®æ”¹ç‰ˆé¢<u>" & p_boardname & "</u>(ç¼–å·" & p_boardid & ")æ ‡å¿—å›¾ç‰‡ï¼Œå¿…é¡»æ˜¯pngå›¾ç‰‡"
 				p_filepath = "images/board/"
 				p_filename = "s_" & p_boardid & ".png"
 			end if
@@ -48,9 +48,9 @@ Class super_uploadfile
 			p_fileinfo = htmlencode(GetFormData("p_fileinfo"))
 			p_filepath = replace(class_filter(GetFormData("p_filepath")),".","")
 			if left(p_filepath,1) = "/" then p_filepath = mid(p_filepath,2)
-			'±ØĞëÍ¼Æ¬Ä¿Â¼ÏÂÉÏ´«
+			'å¿…é¡»å›¾ç‰‡ç›®å½•ä¸‹ä¸Šä¼ 
 			if lcase(left(p_filepath,7)) <> "images/" and lcase(left(p_filepath,len("article/images/"))) <> "article/images/" then
-				Global_ErrMsg("²ÎÊı´íÎó2.")
+				Call Global_ErrMsg("å‚æ•°é”™è¯¯2.")
 				exit sub
 			end if
 
@@ -58,17 +58,17 @@ Class super_uploadfile
 			Set fs = Server.CreateObject(DEF_FSOString)
 			TDir = Server.MapPath(DEF_BBS_HomeUrl & p_filepath)
 			If Not FS.FolderExists(TDir) then
-				Global_ErrMsg("ÎÄ¼ş´æ·ÅÄ¿Â¼´íÎó.")
+				Call Global_ErrMsg("æ–‡ä»¶å­˜æ”¾ç›®å½•é”™è¯¯.")
 				exit sub
 			End If
 			
 			p_filename = replace(class_filter(GetFormData("p_filename")),"/","")
 			if Reg_Replace(p_filename,"([a-z0-9\.\_])","") <> "" then
-				Global_ErrMsg("²ÎÊı´íÎó3.")
+				Call Global_ErrMsg("å‚æ•°é”™è¯¯3.")
 				exit sub
 			end if
 			if len(p_filename) - len(Replace(p_filename,".","")) <> 1 then
-				Global_ErrMsg("²ÎÊı´íÎó4.")
+				Call Global_ErrMsg("å‚æ•°é”™è¯¯4.")
 				exit sub
 			end if
 			dim ext,tmp,fm
@@ -76,7 +76,7 @@ Class super_uploadfile
 			fm = tmp(0)
 			ext = lcase(tmp(1))
 			if ext <> "jpg" and ext <> "png" and ext <> "gif" then
-				Global_ErrMsg("²ÎÊı´íÎó5.")
+				Call Global_ErrMsg("å‚æ•°é”™è¯¯5.")
 				exit sub
 			end if
 			p_filename = fm & "." & ext
@@ -84,20 +84,20 @@ Class super_uploadfile
 			Set fs = Server.CreateObject(DEF_FSOString)
 			TDir = Server.MapPath(DEF_BBS_HomeUrl & p_filepath & p_filename)
 			If Not FS.FileExists(TDir) then
-				Global_ErrMsg("Ä¿±êÎÄ¼ş²»´æÔÚ,½ûÖ¹ĞŞ¸Ä.")
+				Call Global_ErrMsg("ç›®æ ‡æ–‡ä»¶ä¸å­˜åœ¨,ç¦æ­¢ä¿®æ”¹.")
 				exit sub
 			End If
 		end if
 		
 		if len(p_filename) - len(replace(p_filename,".","")) > 1 or p_filename = "" or p_filepath = "" then
-			Global_ErrMsg("²ÎÊı´íÎó.")
+			Call Global_ErrMsg("å‚æ•°é”™è¯¯.")
 			exit sub
 		end if
 		
 		if GetFormData("submitflag") <> "yes" then
-			class_form
+			class_form()
 		else
-			class_save
+			class_save()
 		end if
 	
 	end sub
@@ -105,7 +105,7 @@ Class super_uploadfile
 	private sub class_form
 	%>
 	<p class="title"><b><%=p_fileinfo%></b></p>
-	<p>ÉÏ´«Ìæ»»ÎÄ¼ş£º<%=htmlencode(p_filepath&p_filename)%>
+	<p>ä¸Šä¼ æ›¿æ¢æ–‡ä»¶ï¼š<%=htmlencode(p_filepath&p_filename)%>
 	</p>
 	<form action="siteinfo.asp?dontRequestFormFlag=1&amp;action=upload" method="post" name="LeadBBSFm" id="LeadBBSFm" enctype="multipart/form-data" onsubmit="submit_disable(this);">
 		<input name="submitflag" type="hidden" value="yes">
@@ -117,25 +117,25 @@ Class super_uploadfile
 		</div>
 		<div class="clear"></div>
 		<br>
-		<input name="submit" id="submit" type="submit" value="¿ªÊ¼ÉÏ´«" class="fmbtn btn_3">
+		<input name="submit" id="submit" type="submit" value="å¼€å§‹ä¸Šä¼ " class="fmbtn btn_3">
 	</form>
 	<%if p_boardid > 0 and p_logo = "1" then%>
 	<br>
 	<p>
-	<a href="siteinfo.asp?action=upload&submitflag=yes&p_boardid=<%=p_boardid%>&p_logo=1&p_del=1"><b>µã´ËÉ¾³ı´ËLOGOÎÄ¼ş</b></a>
+	<a href="siteinfo.asp?action=upload&submitflag=yes&p_boardid=<%=p_boardid%>&p_logo=1&p_del=1"><b>ç‚¹æ­¤åˆ é™¤æ­¤LOGOæ–‡ä»¶</b></a>
 	</p>
 	<%end if%>
 	<script>init_uploadform();</script>
 	<hr class="splitline">
-	<b>ÎÄ¼şÒªÇó£º</b>
+	<b>æ–‡ä»¶è¦æ±‚ï¼š</b>
 	<ul>
-	<li>±ØĞëÊÇÍ¼Æ¬ÎÄ¼ş</li>
-	<li>±ØĞëĞ¡ÓÚ512K</li>
-	<li>ÎÄ¼şÀ©Õ¹ÃûºÍ¸ñÊ½Îñ±ØÍ¬Ô­ÎÄ¼şÏàÍ¬</li>
+	<li>å¿…é¡»æ˜¯å›¾ç‰‡æ–‡ä»¶</li>
+	<li>å¿…é¡»å°äº512K</li>
+	<li>æ–‡ä»¶æ‰©å±•åå’Œæ ¼å¼åŠ¡å¿…åŒåŸæ–‡ä»¶ç›¸åŒ</li>
 	</ul>
 	<hr class="splitline">
 	<p>
-	<b>Ä¿Ç°Í¼Æ¬£º</b>
+	<b>ç›®å‰å›¾ç‰‡ï¼š</b>
 	</p>
 	<hr class="splitline">
 	<p><%Randomize%>
@@ -152,7 +152,7 @@ Class super_uploadfile
 			if p_boardid > 0 and p_logo = "1" then
 				DeleteFiles(Server.MapPath(DEF_BBS_HomeUrl & p_filepath & p_filename))
 				val = 0
-				Response.Write "<b>³É¹¦É¾³ıÎÄ¼ş¡£</b>"
+				Response.Write "<b>æˆåŠŸåˆ é™¤æ–‡ä»¶ã€‚</b>"
 			end if
 		end if
 
@@ -171,16 +171,16 @@ Class super_uploadfile
 			End If
 			If Tmp = "image" and (inStr(FileType,"pjpeg") or inStr(FileType,"png") or inStr(FileType,"jpeg") or inStr(FileType,"gif")) Then
 			Else
-				Global_ErrMsg("±ØĞëÊÇjpg,gif»òpngÍ¼Æ¬¡£")
+				Call Global_ErrMsg("å¿…é¡»æ˜¯jpg,gifæˆ–pngå›¾ç‰‡ã€‚")
 				set file = nothing
 				exit sub
 			End If
 			If FileSize > 524288 Then
-				Global_ErrMsg("Í¼Æ¬¹ı´ó£¬±ØĞëĞ¡ÓÚ512K¡£")
+				Call Global_ErrMsg("å›¾ç‰‡è¿‡å¤§ï¼Œå¿…é¡»å°äº512Kã€‚")
 			end if
 			file.saveas Server.MapPath(DEF_BBS_HomeUrl & p_filepath & p_filename)
 			Set file = Nothing
-			Response.Write "<b>³É¹¦Íê³ÉÉÏ´«¡£</b>"
+			Response.Write "<b>æˆåŠŸå®Œæˆä¸Šä¼ ã€‚</b>"
 		end if
 
 		dim old_p_BoardLimit
@@ -191,7 +191,7 @@ Class super_uploadfile
 		elseif p_boardid > 0 and p_logo = "1" and p_BoardLimit <> old_p_BoardLimit then
 			call ldexecute("update leadbbs_boards set BoardLimit=" & p_BoardLimit & " where boardid=" & p_boardid,1)
 		end if
-		ReloadBoardInfo(p_boardid)
+		Call ReloadBoardInfo(p_boardid)
 
 	end sub
 	
@@ -240,7 +240,7 @@ Class super_uploadfile
 		Set fs = Server.CreateObject(DEF_FSOString)
 		If err <> 0 Then
 			Err.Clear
-			Response.Write "<p>·şÎñÆ÷²»Ö§³ÖFSO£¬Ó²ÅÌÎÄ¼şÎ´É¾³ı£®</p>"
+			Response.Write "<p>æœåŠ¡å™¨ä¸æ”¯æŒFSOï¼Œç¡¬ç›˜æ–‡ä»¶æœªåˆ é™¤ï¼</p>"
 			Exit Function
 		End If
 		If fs.FileExists(path) Then

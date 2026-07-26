@@ -1,10 +1,10 @@
 
-// Ö»ÔÊÐíÊäÈëÊý×Ö
+// åªå…è®¸è¾“å…¥æ•°å­—
 function IsDigit(evt){
 	//var evt = window.event?window.event:evt,target=evt.srcElement||evt.target;
   return ((evt.keyCode >= 48) && (evt.keyCode <= 57));
 }
-// È¥¿Õ¸ñ£¬left,right,all¿ÉÑ¡
+// åŽ»ç©ºæ ¼ï¼Œleft,right,allå¯é€‰
 function BaseTrim(str){
 	  lIdx=0;rIdx=str.length;
 	  if (BaseTrim.arguments.length==2)
@@ -25,7 +25,7 @@ function BaseTrim(str){
       return str
 }
 
-// ×ªÎªÊý×ÖÐÍ£¬²¢ÎÞÇ°µ¼0£¬²»ÄÜ×ªÔò·µ»Ø""
+// è½¬ä¸ºæ•°å­—åž‹ï¼Œå¹¶æ— å‰å¯¼0ï¼Œä¸èƒ½è½¬åˆ™è¿”å›ž""
 function ToInt(str){
 	str=BaseTrim(str);
 	if (str!=""){
@@ -46,9 +46,9 @@ function editor_Initmedia()
 	$id("media_d_height").value = "";
 }
 
-// µãÈ·¶¨Ê±Ö´ÐÐ
+// ç‚¹ç¡®å®šæ—¶æ‰§è¡Œ
 function editor_mediasubmit(){
-	// Êý×ÖÐÍÊäÈëµÄÓÐÐ§ÐÔ
+	// æ•°å­—åž‹è¾“å…¥çš„æœ‰æ•ˆæ€§
 	$id("media_d_width").value=ToInt($id("media_d_width").value);
 	$id("media_d_height").value=ToInt($id("media_d_height").value);
 	
@@ -61,7 +61,7 @@ function editor_mediasubmit(){
 
 	if((sType=="FLV" || sType=="MP") && (sWidth=="" || sHeight==""))
 	{
-		alert("²¥·ÅFLV»òMediaÎÄ¼þ±ØÐëÖ¸¶¨³¤ºÍ¿í");
+		alert("æ’­æ”¾FLVæˆ–Mediaæ–‡ä»¶å¿…é¡»æŒ‡å®šé•¿å’Œå®½");
 		return false;
 	}
 
@@ -103,5 +103,5 @@ function editor_mediasubmit(){
 		return true;
 	}
 	else
-		{alert("ÇëÊäÈëÃ½ÌåµØÖ·");return false;}
+		{alert("è¯·è¾“å…¥åª’ä½“åœ°å€");return false;}
 }

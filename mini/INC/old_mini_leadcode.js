@@ -139,7 +139,7 @@ function convertcode(str)
 	str = str.replace(/\[\/(line\-height)\]/gim,"</span>");
 	str = str.replace(/\[(glow|SHADOW)=([0-9]{1,2})[0-9]?,([#a-z0-9]{1,12}|rgb\([0-9\,\ ]{1,20}\)),([0-9]{1,3})\](.*?)\[\/(glow|SHADOW)\]/gim,"<div style=\"vertical-align:middle;display: inline-block;*display: inline;zoom:1;filter:glow(color=$3, strength=$4);text-shadow: $2px $2px $4px $3;\" style=\"\">$5</div>");
 	str = str.replace(/\[fly\](.*?)\[\/fly\]/gi,"<MARQUEE>$1</MARQUEE>");
-	//str = str.replace(/\[light\](.*?)\[\/light\]/gi,"<span style=\"behavior:url(../inc/font.htc)\">$1</span>"); //Í¬lrc³åÍ»
+	//str = str.replace(/\[light\](.*?)\[\/light\]/gi,"<span style=\"behavior:url(../inc/font.htc)\">$1</span>"); //åŒlrcå†²çª
 	str = str.replace(/\[email[\=]?(.*?)\](.*?)\[\/email\]/gim,function($0,$1,$2){if($1=="")$1=$2;if($2=="")$2=$1;return("<a href=\"mailto:" + url_filter($1) + "\" data-ajax=false>" + $2 + "</a>")});
 	//str = str.replace(/\[email\=?(.+?)*\](.*?)\[\/email\]/gim,function($0,$1,$2){if($2=="")$2=$1;return("<a href=\"mailto:" + url_filter($1) + "\" data-ajax=false>" + $2 + "</a>")});
 	//str = str.replace(/\[email\](.*?)\[\/email\]/gi,function($0,$1,$2){return("<a href=\"mailto:" + url_filter($1) + "\" data-ajax=false>" + $1 + "</a>")});
@@ -200,7 +200,7 @@ function convertcode(str)
 		}
 		
 		st += '<div id="lrcwordv'+lrcnum+'" style="clear: both; width: 100%;display: none;">';
-		st += '<div style="overflow:hidden;BACKGROUND: #eceded;padding-left:15px;padding-top:2px;BORDER-RIGHT: #b4c2e2 1px solid; BORDER-TOP: #b4c2e2 1px solid; BORDER-LEFT: #b4c2e2 1px solid; height:20px; TEXT-ALIGN: left;FONT-SIZE:9pt;"><div style="float:left">¸è´Ê</div> <div style="float:right;margin-right:5px;color:gray;font:11px Arial;font-family:Tahoma;"> LeadBBS lyric 1.01</div></div>';
+		st += '<div style="overflow:hidden;BACKGROUND: #eceded;padding-left:15px;padding-top:2px;BORDER-RIGHT: #b4c2e2 1px solid; BORDER-TOP: #b4c2e2 1px solid; BORDER-LEFT: #b4c2e2 1px solid; height:20px; TEXT-ALIGN: left;FONT-SIZE:9pt;"><div style="float:left">æ­Œè¯</div> <div style="float:right;margin-right:5px;color:gray;font:11px Arial;font-family:Tahoma;"> LeadBBS lyric 1.01</div></div>';
 		st += '<div style="overflow:hidden;height:260px;BORDER-RIGHT: #b4c2e2 1px solid; BORDER-LEFT: #b4c2e2 1px solid;  BORDER-BOTTOM: #b4c2e2 1px solid; TEXT-ALIGN: left;font-family:Tahoma;position:relative;">';
 		st += '<div id="lrcoll'+lrcnum+'" style="left:15px;top:-20px;color:#0080C0; cursor: default;position:absolute;z-index:1;">';
 		st += '<table border="0" cellspacing="0" cellpadding="0" width="100%">';
@@ -233,7 +233,7 @@ function convertcode(str)
 	
 	str = str.replace(/\[collapse(=[^\]]{1,50})?\]\s*(?:<br\s*\/?>)*\s*(.+?)\s*(?:<br\s*\/?>)*\s*\[\/collapse\]/gi,function($0,$1,$2){
 		if ($1)$1='<b class="grayfont">'+$1.substr(1)+' ...</b>'
-		else $1 = '<b class="grayfont">µã»÷ÏÔÊ¾Òş²ØµÄÄÚÈİ ...</b>'
+		else $1 = '<b class="grayfont">ç‚¹å‡»æ˜¾ç¤ºéšè—çš„å†…å®¹ ...</b>'
 		return "<div style='border-top:1px solid #fff;border-bottom:1px solid #fff'><span style='cursor:pointer;font-size:12px;line-height:normal;display:inline-block;padding:2px 5px 0px 5px;margin-right:5px;' onclick='this.parentNode.style.display=\"none\";this.parentNode.nextSibling.style.display=\"block\";'><b>+</b>"+$1+"</span></div><div style='border-top:1px solid #fff;border-bottom:1px solid #fff;display:none'>"+$2+"</div>"
 		});
 	str = str.replace(/\[@(.{2,20}?)\]/gi,function($0,$1){ return" <a href='"+HU+"user/lookuserinfo.asp?name="+encodeURIComponent($1)+"' data-ajax=false class='username'>@"+$1+"</a> " } );//[@]
@@ -395,7 +395,7 @@ function lrc_getfiledata(url)
 		}
 	}
 	C.open("GET", HU + "a/proxy.asp?u=" + encodeURIComponent(url), false,"","");
-	C.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=gb2312");
+	C.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=utf-8");
 	C.send("");
 	return(a);
 };

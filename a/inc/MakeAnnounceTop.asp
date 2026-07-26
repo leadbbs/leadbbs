@@ -1,4 +1,4 @@
-<!-- #include file=../../b/inc/cache_fun.asp -->
+<!--#include file="../../b/inc/cache_fun.asp"-->
 <%
 Function MakeAnnounceTop(AnnounceID,morestr)
 

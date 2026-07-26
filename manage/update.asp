@@ -1,5 +1,5 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/MD5.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/MD5.asp"-->
 <%
 Server.ScriptTimeOut = 999999
 Response.Buffer = False
@@ -12,7 +12,7 @@ Const NativeDir = "Download/"
 Const SplitString = "---NdetVeL---"
 Const CheckEndString = "LeadBBS_^93857855287569"
 
-UpdateDatabase
+UpdateDatabase()
 
 Sub OpenDatabase
 
@@ -33,8 +33,8 @@ Sub OpenDatabase
 	Con.CommandTimeout = 3600
 	If err Then
 		%>
-		Êı¾İ¿âÁ¬½Ó´íÎó£¬ÇëÈ·¶¨Êı¾İ¿âÁ¬½Ó´®ÊÇ·ñÕıÈ·£¡<br><br><font color=red><%=err.description%></font>
-		<br><br><a href=Update.asp><b>&lt;&lt;·µ»ØÉı¼¶½çÃæ</b></a>
+		æ•°æ®åº“è¿æ¥é”™è¯¯ï¼Œè¯·ç¡®å®šæ•°æ®åº“è¿æ¥ä¸²æ˜¯å¦æ­£ç¡®ï¼<br><br><font color=red><%=err.description%></font>
+		<br><br><a href=Update.asp><b>&lt;&lt;è¿”å›å‡çº§ç•Œé¢</b></a>
 		<%Err.clear
 		Response.End
 	End If
@@ -59,8 +59,8 @@ Function LDExeCute(sql,flag)
 	End If
 	
 	If Err Then
-		Response.Write "<p>ÒÔÏÂSQLÓï¾äÖ´ĞĞ³ö´í£º</p><p><font color=gray>" & server.htmlencode(SQL) & "</font></P>"
-		Response.Write "<p>´íÎóÃèÊö: <font color=red>" & err.description & "</font></p>"
+		Response.Write "<p>ä»¥ä¸‹SQLè¯­å¥æ‰§è¡Œå‡ºé”™ï¼š</p><p><font color=gray>" & server.htmlencode(SQL) & "</font></P>"
+		Response.Write "<p>é”™è¯¯æè¿°: <font color=red>" & err.description & "</font></p>"
 		Err.Clear
 	End If
 
@@ -80,7 +80,7 @@ Sub Closebbs
 
 	Application.Lock
 	application(DEF_MasterCookies & "SiteEnableFlagzoieiu") = 0
-	application(DEF_MasterCookies & "SiteDisbleWhyszoieiu") = "ÂÛÌ³¸üĞÂÖĞ£¬ÇëÉÔºòÀ´·Ã."
+	application(DEF_MasterCookies & "SiteDisbleWhyszoieiu") = "è®ºå›æ›´æ–°ä¸­ï¼Œè¯·ç¨å€™æ¥è®¿."
 	Application.UnLock
 
 End Sub
@@ -100,7 +100,7 @@ End Sub
 
 sub pageend
 
-	restartbbs
+	restartbbs()
 	response.end
 
 end sub
@@ -145,21 +145,21 @@ Sub Update_InstallDir(f,fStr)
 		fileContent = ADODB_LoadFile(DEF_BBS_HomeUrl & filename)
 		call Update_InsertSetupRID(1051,"inc/BBSSetup.asp",0,fileContent," and ClassNum=0")
 	end if
-	call Update_ECHO("°²×°Ä¿Â¼Íê³É¼ì²â£¬Î»ÖÃÎª: <u>" & InstallDir & "</u>¡£",0)
+	call Update_ECHO("å®‰è£…ç›®å½•å®Œæˆæ£€æµ‹ï¼Œä½ç½®ä¸º: <u>" & InstallDir & "</u>ã€‚",0)
 
 End Sub
 
 Sub UpdateDatabase
 
-	If CheckSupervisorUserName = 0 Then
+	If CheckSupervisorUserName() = 0 Then
 		Response.Write "Time out."
 		Response.End
 	End If
 	%>
 	<html>
 	<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-	<title>LeadBBS 6.0/6.1 Éı¼¶³ÌĞò</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>LeadBBS 6.0/6.1 å‡çº§ç¨‹åº</title>
 	<style>
 	html {height:100%; } 
 body{color:black;font: 12px "helvetica neue", "lucida grande", helvetica, arial, sans-serif; background-color:#ffffff;
@@ -210,30 +210,30 @@ a:hover{text-decoration:none;color:#0055aa;}
 	<body>
 		<div class="frame_body">
 		<br><br>
-		<p><b style="font-size:14px;">¡¡ÊÊÓÃÓÚLeadBBS 6.0/6.1¼°ÒÔÉÏ°æ±¾µÄÉı¼¶(¼°ÅäÖÃÀ©Õ¹²ÎÊı)¹¤¾ß</b></p>
-		<div class="frameline">1. µ¼³öÀ©Õ¹²ÎÊı£ºÈôÂÛÌ³µÄÎÄ¼ş±»ÊÖ¶¯Ìæ»»£¬´Ë¹¦ÄÜ½«»Ö¸´ÂÛÌ³µÄÔ­ÏÈËù´æ´¢µÄÅäÖÃ¡£</div>
-		<div class="frameline">2. ÅäÖÃÀ©Õ¹²ÎÊı£º¸ü¶àÂÛÌ³µÄ²ÎÊıÉèÖÃÑ¡Ïî¿ÉÒÔÔÚ´ËÕÒµ½¡£</div>
-		<div class="frameline">3. ¼ì²âÊÇ·ñÓĞ°æ±¾¸üĞÂ£º½«ÄúµÄÂÛÌ³Óë¹Ù·½Á¬½Ó±È½Ï£¬¼ì²âÊÇ·ñÓĞĞÂµÄ¸üĞÂ¡£</div>
-		<div class="frameline">4. Á¢¼´¸üĞÂ²¹¶¡£º½«ÄúµÄÂÛÌ³Óë¹Ù·½Á¬½Ó±È½Ï£¬²¢Éı¼¶µ½×îĞÂ°æ±¾¡£</div>
+		<p><b style="font-size:14px;">ã€€é€‚ç”¨äºLeadBBS 6.0/6.1åŠä»¥ä¸Šç‰ˆæœ¬çš„å‡çº§(åŠé…ç½®æ‰©å±•å‚æ•°)å·¥å…·</b></p>
+		<div class="frameline">1. å¯¼å‡ºæ‰©å±•å‚æ•°ï¼šè‹¥è®ºå›çš„æ–‡ä»¶è¢«æ‰‹åŠ¨æ›¿æ¢ï¼Œæ­¤åŠŸèƒ½å°†æ¢å¤è®ºå›çš„åŸå…ˆæ‰€å­˜å‚¨çš„é…ç½®ã€‚</div>
+		<div class="frameline">2. é…ç½®æ‰©å±•å‚æ•°ï¼šæ›´å¤šè®ºå›çš„å‚æ•°è®¾ç½®é€‰é¡¹å¯ä»¥åœ¨æ­¤æ‰¾åˆ°ã€‚</div>
+		<div class="frameline">3. æ£€æµ‹æ˜¯å¦æœ‰ç‰ˆæœ¬æ›´æ–°ï¼šå°†æ‚¨çš„è®ºå›ä¸å®˜æ–¹è¿æ¥æ¯”è¾ƒï¼Œæ£€æµ‹æ˜¯å¦æœ‰æ–°çš„æ›´æ–°ã€‚</div>
+		<div class="frameline">4. ç«‹å³æ›´æ–°è¡¥ä¸ï¼šå°†æ‚¨çš„è®ºå›ä¸å®˜æ–¹è¿æ¥æ¯”è¾ƒï¼Œå¹¶å‡çº§åˆ°æœ€æ–°ç‰ˆæœ¬ã€‚</div>
 		<div style="width:90%;margin-bottom:216px;BORDER: #EEE0CB 5px solid; BACKGROUND: #F9F5F0; text-align:left;padding:22px;line-height:2.0">
 
 		
 	<%
-	OpenDatabase
+	OpenDatabase()
 	call Update_InstallDir("inc/bbssetup.asp","Const DEF_InstallDir = ")
-	CloseDatabase
+	CloseDatabase()
 	If Request("sure") = "1" Then
 		dim startflag:startflag=request("startflag")
 		if startflag <> "1" then%>
 		<p><form action=update.asp method=post>
-			<br><b><span color=ff0000 class=redfont>×¢Òâ£º¼ÌĞø½«½øĞĞÒÔÏÂ²Ù×÷<br></span></b>
+			<br><b><span color=ff0000 class=redfont>æ³¨æ„ï¼šç»§ç»­å°†è¿›è¡Œä»¥ä¸‹æ“ä½œ<br></span></b>
 			<br>
-			<ul><li>½«µ±Ç°ÍøÕ¾ÉèÖÃÓëÊı¾İ¿â¶Ô±È£¬ÈôÓëÊı¾İ¿âÖĞµÄÅäÖÃ²»·û½«Ìæ»»µ±Ç°ÅäÖÃ
+			<ul><li>å°†å½“å‰ç½‘ç«™è®¾ç½®ä¸æ•°æ®åº“å¯¹æ¯”ï¼Œè‹¥ä¸æ•°æ®åº“ä¸­çš„é…ç½®ä¸ç¬¦å°†æ›¿æ¢å½“å‰é…ç½®
 			<%If LCase(Request("checkversion")) = "updateversion" Then
-			%><li><font color=blue><b>ÄúÑ¡ÔñÁË×Ô¶¯¸üĞÂ£¬ÈôÓĞ¸üĞÂ½«»áÇ¿ÖÆÌæ»»ÏàÓ¦µÄ¸üĞÂÎÄ¼ş</b></font></li>
+			%><li><font color=blue><b>æ‚¨é€‰æ‹©äº†è‡ªåŠ¨æ›´æ–°ï¼Œè‹¥æœ‰æ›´æ–°å°†ä¼šå¼ºåˆ¶æ›¿æ¢ç›¸åº”çš„æ›´æ–°æ–‡ä»¶</b></font></li>
 			<%end If%>
-			<li>Îª±£Ö¤¸üĞÂ°²È«£¬¼ì²â³ÌĞò½«Ç¿ÖÆÔİÍ£ÂÛÌ³ÔËĞĞ£¬Ö±µ½²Ù×÷Íê³É</li>
-			<li>¸üĞÂºó£¬¿ÉÄÜ»áÇ¿ÖÆÌæ»»Ò»Ğ©²å¼ş»òÀúÊ·Í¼Æ¬£¨±ÈÈçÍøÕ¾logo£©£¬Îñ±ØÊÂÏÈ±¸·İ</li>
+			<li>ä¸ºä¿è¯æ›´æ–°å®‰å…¨ï¼Œæ£€æµ‹ç¨‹åºå°†å¼ºåˆ¶æš‚åœè®ºå›è¿è¡Œï¼Œç›´åˆ°æ“ä½œå®Œæˆ</li>
+			<li>æ›´æ–°åï¼Œå¯èƒ½ä¼šå¼ºåˆ¶æ›¿æ¢ä¸€äº›æ’ä»¶æˆ–å†å²å›¾ç‰‡ï¼ˆæ¯”å¦‚ç½‘ç«™logoï¼‰ï¼ŒåŠ¡å¿…äº‹å…ˆå¤‡ä»½</li>
 			</li>
 			</ul>
 			<input type=hidden name=sure value="<%=server.htmlencode(request("sure"))%>">
@@ -241,52 +241,52 @@ a:hover{text-decoration:none;color:#0055aa;}
 			<input type=hidden name=startflag value="1">
 			<input type=hidden name=checkversion value="<%=server.htmlencode(request("checkversion"))%>">
 			
-			<input type=submit value=È·¶¨¼ÌĞø class=fmbtn>
+			<input type=submit value=ç¡®å®šç»§ç»­ class=fmbtn>
 			</form>
 		<%
 		else
-			OpenDatabase
-			Closebbs
+			OpenDatabase()
+			Closebbs()
 			If LCase(Request("checkversion")) = "checkversion" Then
-				Update62_initBBSdata
-				Update_CheckVersion
+				Update62_initBBSdata()
+				Update_CheckVersion()
 			Else
-				Update62_initBBSdata
+				Update62_initBBSdata()
 				If LCase(Request("checkversion")) = "updateversion" Then
-					Update62_CopyFile
+					Update62_CopyFile()
 				End If
 			End If
-			restartbbs
-			CloseDatabase
+			restartbbs()
+			CloseDatabase()
 		end if
 	Else
 		%>
 		<form action=Update.asp method="post">
 		<p>
-		×¢Òâ£º´ËÉı¼¶³ÌĞò½öÏŞLeadBBS 6.0/6.1¼°¸ü¸ß°æ±¾µÄÉı¼¶¸üĞÂ¡£
+		æ³¨æ„ï¼šæ­¤å‡çº§ç¨‹åºä»…é™LeadBBS 6.0/6.1åŠæ›´é«˜ç‰ˆæœ¬çš„å‡çº§æ›´æ–°ã€‚
 		</p>
 		<br />
-		<font color=blue>Èç¹ûÄúµÄ°æ±¾¸ü¾É£¬ÇëÏÈÖÁ¹Ù·½ÏÂÔØ6.0°æ±¾¸üĞÂ¡£</font>
+		<font color=blue>å¦‚æœæ‚¨çš„ç‰ˆæœ¬æ›´æ—§ï¼Œè¯·å…ˆè‡³å®˜æ–¹ä¸‹è½½6.0ç‰ˆæœ¬æ›´æ–°ã€‚</font>
 		<p>
 		<!--
-		<input class="fmchkbox" type="checkbox" name="leadbbs40" value="1" />ÎÒµÄÊı¾İ¿â»¹ÊÇ4.0°æ±¾<br />
+		<input class="fmchkbox" type="checkbox" name="leadbbs40" value="1" />æˆ‘çš„æ•°æ®åº“è¿˜æ˜¯4.0ç‰ˆæœ¬<br />
 		-->
 		</p>
-		<br /><font color=red>¾¯¸æ£ºÉı¼¶³ÌĞò½«»áÇ¿ÖÆÌæ»»±¾µØÎÄ¼ş£¬<b>Îñ±ØÏÈ×÷ºÃ±¸·İ</b>£¡</font><br />
+		<br /><font color=red>è­¦å‘Šï¼šå‡çº§ç¨‹åºå°†ä¼šå¼ºåˆ¶æ›¿æ¢æœ¬åœ°æ–‡ä»¶ï¼Œ<b>åŠ¡å¿…å…ˆä½œå¥½å¤‡ä»½</b>ï¼</font><br />
 		<br />
-		×¢Òâ£º´Ë³ÌĞò½«Íê³ÉÊı¾İ¿â¼°±¾µØÎÄ¼şµÄ¸üĞÂ£¬²»ĞèÒª¶îÍâ½øĞĞÊÖ¶¯¸üĞÂ¡£
-		<p>Êı¾İ¿âÁ´½Ó´®£º<input name=db value="<%If DEF_UsedDataBase <> 1 Then
+		æ³¨æ„ï¼šæ­¤ç¨‹åºå°†å®Œæˆæ•°æ®åº“åŠæœ¬åœ°æ–‡ä»¶çš„æ›´æ–°ï¼Œä¸éœ€è¦é¢å¤–è¿›è¡Œæ‰‹åŠ¨æ›´æ–°ã€‚
+		<p>æ•°æ®åº“é“¾æ¥ä¸²ï¼š<input name=db value="<%If DEF_UsedDataBase <> 1 Then
 				Response.Write server.htmlencode(DEF_AccessDatabase)
 			Else
 				Response.Write server.htmlencode(Server.MapPath(DEF_BBS_HomeUrl & DEF_AccessDatabase))
 			End If%>" size=40 class='fminpt input_3'>
 		</p>
 		<input name=sure value=1 type=hidden>
-		<p><input type=submit value="¿ªÊ¼¸üĞÂ" class="fmbtn btn_4"></p>
+		<p><input type=submit value="å¼€å§‹æ›´æ–°" class="fmbtn btn_4"></p>
 		</form>
 		<%
 	End If
-	Update_PageBottom
+	Update_PageBottom()
 
 End Sub
 
@@ -303,13 +303,13 @@ End Sub
 
 Dim SubmitFlag
 Dim FSFlag
-Dim GBL_LeadBBS_Setup_Data 'ÁÙÊ±¶ÁÈ¡µÄSetupRID¼ÇÂ¼Êı¾İÊı×é
+Dim GBL_LeadBBS_Setup_Data 'ä¸´æ—¶è¯»å–çš„SetupRIDè®°å½•æ•°æ®æ•°ç»„
 Dim SetupRID_1050
-'0 ÁÙÊ±±¸·İÄ¿Â¼Ãû³Æ
-'1 a2.asp/Const LMTDEF_MaxReAnnounceÖµ =
+'0 ä¸´æ—¶å¤‡ä»½ç›®å½•åç§°
+'1 a2.asp/Const LMTDEF_MaxReAnnounceå€¼ =
 '
-Dim GBL_Update_LineStr '»ñÈ¡µÄÁÙÊ±ÎÄ¼ş×Ö·û´®ĞĞ¡£
-Dim GBL_UpdateVersion 'ÄÚ²¿°æ±¾ºÅ
+Dim GBL_Update_LineStr 'è·å–çš„ä¸´æ—¶æ–‡ä»¶å­—ç¬¦ä¸²è¡Œã€‚
+Dim GBL_UpdateVersion 'å†…éƒ¨ç‰ˆæœ¬å·
 GBL_UpdateVersion = 0
 Dim Update_UpdateFileFlag
 Update_UpdateFileFlag = 0
@@ -350,19 +350,19 @@ Sub Update62_initBBSdata
 	Dim RID,ValueStr,ClassNum,saveData
 	ReDim SetupRID_1050(5,100)
 
-	CALL Update_ECHO("<div class=alertdone>³õÊ¼»¯¼ì²â¡£¡£¡£</div>",1)
-	'¼ì²âFSO
-	If Update_CheckFSO = 0 Then
-		CALL Update_ECHO("È¨ÏŞ²»×ã£º¿Õ¼ä²»Ö§³ÖFSO²Ù×÷.",1)
+	CALL Update_ECHO("<div class=alertdone>åˆå§‹åŒ–æ£€æµ‹ã€‚ã€‚ã€‚</div>",1)
+	'æ£€æµ‹FSO
+	If Update_CheckFSO() = 0 Then
+		CALL Update_ECHO("æƒé™ä¸è¶³ï¼šç©ºé—´ä¸æ”¯æŒFSOæ“ä½œ.",1)
 		Exit Sub
 	Else
-		CALL Update_ECHO("È¨ÏŞ¼ì²â£ºÍê³É.",0)
+		CALL Update_ECHO("æƒé™æ£€æµ‹ï¼šå®Œæˆ.",0)
 	End If
 	
-	'¼ì²âÊı¾İ¿â
+	'æ£€æµ‹æ•°æ®åº“
 	'Update62_UpdateDatabase
 
-	'³õÊ¼»¯±¸·İÎÄ¼şÄ¿Â¼Î»ÖÃ
+	'åˆå§‹åŒ–å¤‡ä»½æ–‡ä»¶ç›®å½•ä½ç½®
 	If Update_CheckSetupRIDExist(1050," and ClassNum=0") = 0 Then
 		RID = 1050
 		Randomize
@@ -371,13 +371,13 @@ Sub Update62_initBBSdata
 		ClassNum = 0
 		saveData = ""
 		CALL Update_InsertSetupRID(RID,ValueStr,ClassNum,saveData," and ClassNum=0")
-		CALL Update_ECHO("±¸·İÎÄ¼şÄ¿Â¼Î´½¨Á¢,³õÊ¼»¯Íê³É,ÁÙÊ±±¸·İÎÄ¼ş´æ·ÅÄ¿Â¼Îª<u>" & ValueStr & "</u>",0)
+		CALL Update_ECHO("å¤‡ä»½æ–‡ä»¶ç›®å½•æœªå»ºç«‹,åˆå§‹åŒ–å®Œæˆ,ä¸´æ—¶å¤‡ä»½æ–‡ä»¶å­˜æ”¾ç›®å½•ä¸º<u>" & ValueStr & "</u>",0)
 	Else
 		SetupRID_1050(0,0) = GBL_LeadBBS_Setup_Data(2,0)
-		CALL Update_ECHO("»ñÈ¡±¸·İÎÄ¼şÄ¿Â¼£º<u>" & SetupRID_1050(0,0) & "</u>",0)
+		CALL Update_ECHO("è·å–å¤‡ä»½æ–‡ä»¶ç›®å½•ï¼š<u>" & SetupRID_1050(0,0) & "</u>",0)
 	End If
 	SetupRID_1050(1,0) = ""
-	SetupRID_1050(2,0) = "ÁÙÊ±±¸·İÎÄ¼ş´æ·ÅÄ¿Â¼"
+	SetupRID_1050(2,0) = "ä¸´æ—¶å¤‡ä»½æ–‡ä»¶å­˜æ”¾ç›®å½•"
 	Update_CreateFolder(DEF_BBS_HomeUrl & SetupRID_1050(0,0) & "/")
 	
 	If Update_CheckSetupRIDExist(1002," and ClassNum=0") = 0 Then
@@ -385,124 +385,124 @@ Sub Update62_initBBSdata
 		ValueStr = "20100101001"
 		GBL_UpdateVersion = ValueStr
 		ClassNum = 0
-		saveData = "ÄÚ²¿°æ±¾ºÅ"
+		saveData = "å†…éƒ¨ç‰ˆæœ¬å·"
 		CALL Update_InsertSetupRID(RID,ValueStr,ClassNum,saveData," and ClassNum=0")
-		CALL Update_ECHO("³õÊ¼»¯ÄÚ²¿°æ±¾ºÅÎª<u>" & ValueStr & "</u>",0)
+		CALL Update_ECHO("åˆå§‹åŒ–å†…éƒ¨ç‰ˆæœ¬å·ä¸º<u>" & ValueStr & "</u>",0)
 	Else
 		GBL_UpdateVersion = cCur(GBL_LeadBBS_Setup_Data(2,0))
-		CALL Update_ECHO("»ñÈ¡ÄÚ²¿°æ±¾ºÅ£º<u>" & GBL_UpdateVersion & "</u>",0)
+		CALL Update_ECHO("è·å–å†…éƒ¨ç‰ˆæœ¬å·ï¼š<u>" & GBL_UpdateVersion & "</u>",0)
 	End If
 	
-	'»ñÈ¡ÎÄ¼şÅäÖÃ
-	If SubmitFlag = "" Then CALL Update_ECHO("<div class=alertdone>»ñÈ¡ÂÛÌ³ÅäÖÃĞÅÏ¢¡£¡£¡£</div>",1)
+	'è·å–æ–‡ä»¶é…ç½®
+	If SubmitFlag = "" Then CALL Update_ECHO("<div class=alertdone>è·å–è®ºå›é…ç½®ä¿¡æ¯ã€‚ã€‚ã€‚</div>",1)
 
 	CurN = 1
-	CALL Update_GetFileParaValue("Ìû×ÓÏà¹Ø$$$$:$a/a2.asp","Const LMT_EnableOtherGuestName",CurN,"¿ª·ÅÂÛÌ³ÊÇ·ñÔÊĞíÊ¹ÓÃ""ÓÎ¿Í""ÒÔÍâµÄÃû×Ö")
-	CALL Update_GetFileParaValue("a/a2.asp","Const LMT_BuyAnnounceMaxPoints",CurN,"¹ºÂòÌûÏûºÄµÄ×î´ó»ı·Ö")
-	CALL Update_GetFileParaValue("a/a2.asp","Const LMTDEF_MaxReAnnounce",CurN,"ÔÊĞíµÄ×î´ó»Ø¸´ÌûÊı")
-	CALL Update_GetFileParaValue("a/a2.asp","Const LMTDEF_MinAnnounceLength",CurN,"·¢ÌûĞèÒª×îÉÙ×ÖÊı")
-	CALL Update_GetFileParaValue("a/a2.asp","Const LMTDEF_NotReplyDate",CurN,"×îºó»Ø¸´Ê±¼äÖÁ½ñ¸ßÓÚ¶àÉÙÌìµÄÌû×ÓÔò½ûÖ¹»Ø¸´,¶Ô°æÖ÷¼°ÒÔÉÏÎŞĞ§")
-	CALL Update_GetFileParaValue("a/a2.asp","Const LMTDEF_NeedCachetValue",CurN,"Éè¶¨¶àÉÙÍşÍûÓÃ»§¿ÉÒÔ×Ô¼º¹éÀà×¨Ìâ(·¢ÌûÊ±)")
-	CALL Update_GetFileParaValue("a/a2.asp","Const LMTDEF_ColorSpend",CurN,"Éè¶¨Ìû×ÓÑÕÉ«ÏûºÄ¶àÉÙ²Æ¸»Öµ")
-	CALL Update_GetFileParaValue("a/a2.asp","Const LMTDEF_RepostMsg",CurN,"»Ø¸´Ìû×ÓÊÇ·ñÄ¬ÈÏ¶ÌÏûÏ¢Í¨ÖªÌûÖ÷,0£®Ä¬ÈÏ²»Í¨Öª 1.»Ø¸´È«²¿Í¨Öª 2.½ö±»ÒıÓÃÊ±²ÅÍ¨Öª")
+	CALL Update_GetFileParaValue("å¸–å­ç›¸å…³$$$$:$a/a2.asp","Const LMT_EnableOtherGuestName",CurN,"å¼€æ”¾è®ºå›æ˜¯å¦å…è®¸ä½¿ç”¨""æ¸¸å®¢""ä»¥å¤–çš„åå­—")
+	CALL Update_GetFileParaValue("a/a2.asp","Const LMT_BuyAnnounceMaxPoints",CurN,"è´­ä¹°å¸–æ¶ˆè€—çš„æœ€å¤§ç§¯åˆ†")
+	CALL Update_GetFileParaValue("a/a2.asp","Const LMTDEF_MaxReAnnounce",CurN,"å…è®¸çš„æœ€å¤§å›å¤å¸–æ•°")
+	CALL Update_GetFileParaValue("a/a2.asp","Const LMTDEF_MinAnnounceLength",CurN,"å‘å¸–éœ€è¦æœ€å°‘å­—æ•°")
+	CALL Update_GetFileParaValue("a/a2.asp","Const LMTDEF_NotReplyDate",CurN,"æœ€åå›å¤æ—¶é—´è‡³ä»Šé«˜äºå¤šå°‘å¤©çš„å¸–å­åˆ™ç¦æ­¢å›å¤,å¯¹ç‰ˆä¸»åŠä»¥ä¸Šæ— æ•ˆ")
+	CALL Update_GetFileParaValue("a/a2.asp","Const LMTDEF_NeedCachetValue",CurN,"è®¾å®šå¤šå°‘å¨æœ›ç”¨æˆ·å¯ä»¥è‡ªå·±å½’ç±»ä¸“é¢˜(å‘å¸–æ—¶)")
+	CALL Update_GetFileParaValue("a/a2.asp","Const LMTDEF_ColorSpend",CurN,"è®¾å®šå¸–å­é¢œè‰²æ¶ˆè€—å¤šå°‘è´¢å¯Œå€¼")
+	CALL Update_GetFileParaValue("a/a2.asp","Const LMTDEF_RepostMsg",CurN,"å›å¤å¸–å­æ˜¯å¦é»˜è®¤çŸ­æ¶ˆæ¯é€šçŸ¥å¸–ä¸»,0ï¼é»˜è®¤ä¸é€šçŸ¥ 1.å›å¤å…¨éƒ¨é€šçŸ¥ 2.ä»…è¢«å¼•ç”¨æ—¶æ‰é€šçŸ¥")
 	
-	CALL Update_GetFileParaValue("a/a.asp","Const LMT_RefreshEnable",CurN,"ÓÃ»§ÖØ¸´ä¯ÀÀÌû×ÓÊÇ·ñ¼ÆËãä¯ÀÀÁ¿")
-	CALL Update_GetFileParaValue("a/a.asp","Const LMTDEF_RepostMsg",CurN,"»Ø¸´Ìû×ÓÊÇ·ñÄ¬ÈÏ¶ÌÏûÏ¢Í¨ÖªÌûÖ÷,0£®Ä¬ÈÏ²»Í¨Öª 1.»Ø¸´È«²¿Í¨Öª(×¢ÒâÓë»ØÌû(a2.aspÎÄ¼ş)ÉèÖÃ±£³ÖÒ»Ö±)")
+	CALL Update_GetFileParaValue("a/a.asp","Const LMT_RefreshEnable",CurN,"ç”¨æˆ·é‡å¤æµè§ˆå¸–å­æ˜¯å¦è®¡ç®—æµè§ˆé‡")
+	CALL Update_GetFileParaValue("a/a.asp","Const LMTDEF_RepostMsg",CurN,"å›å¤å¸–å­æ˜¯å¦é»˜è®¤çŸ­æ¶ˆæ¯é€šçŸ¥å¸–ä¸»,0ï¼é»˜è®¤ä¸é€šçŸ¥ 1.å›å¤å…¨éƒ¨é€šçŸ¥(æ³¨æ„ä¸å›å¸–(a2.aspæ–‡ä»¶)è®¾ç½®ä¿æŒä¸€ç›´)")
 	
-	CALL Update_GetFileParaValue("a/Editannounce.asp","Const LMTDEF_MinAnnounceLength",CurN,"±à¼­Ìá½»µÄÌû×ÓÄÚÈİĞèÒª×îÉÙ×ÖÊı")
-	CALL Update_GetFileParaValue("a/Editannounce.asp","Const LMT_BuyAnnounceMaxPoints",CurN,"¹ºÂòÌûÏûºÄµÄ×î´ó»ı·Ö")
-	CALL Update_GetFileParaValue("a/Editannounce.asp","Const LMTDEF_NeedCachetValue",CurN,"Éè¶¨¶àÉÙÉùÍûÓÃ»§¿ÉÒÔ×Ô¼º¹éÀà×¨Ìâ(±à¼­Ê±)")
+	CALL Update_GetFileParaValue("a/Editannounce.asp","Const LMTDEF_MinAnnounceLength",CurN,"ç¼–è¾‘æäº¤çš„å¸–å­å†…å®¹éœ€è¦æœ€å°‘å­—æ•°")
+	CALL Update_GetFileParaValue("a/Editannounce.asp","Const LMT_BuyAnnounceMaxPoints",CurN,"è´­ä¹°å¸–æ¶ˆè€—çš„æœ€å¤§ç§¯åˆ†")
+	CALL Update_GetFileParaValue("a/Editannounce.asp","Const LMTDEF_NeedCachetValue",CurN,"è®¾å®šå¤šå°‘å£°æœ›ç”¨æˆ·å¯ä»¥è‡ªå·±å½’ç±»ä¸“é¢˜(ç¼–è¾‘æ—¶)")
 	
-	CALL Update_GetFileParaValue("¸½¼şÏÂÔØ·½Ê½$$$$:$a/file.asp","Const LMT_RedirectFile",CurN,"¸½¼şÏÔÊ¾·½Ê½£º0,¶ÁÈ¡ÏÂÔØ£¬Òş²ØÕæÊµµØÖ·µ«ĞÔÄÜÉÔ²î 1.×ªÖ·ÏÂÔØ ¸ßĞÔÄÜµ«±©Â¶ÕæÊµµØÖ·")
+	CALL Update_GetFileParaValue("é™„ä»¶ä¸‹è½½æ–¹å¼$$$$:$a/file.asp","Const LMT_RedirectFile",CurN,"é™„ä»¶æ˜¾ç¤ºæ–¹å¼ï¼š0,è¯»å–ä¸‹è½½ï¼Œéšè—çœŸå®åœ°å€ä½†æ€§èƒ½ç¨å·® 1.è½¬å€ä¸‹è½½ é«˜æ€§èƒ½ä½†æš´éœ²çœŸå®åœ°å€")
 	
-	CALL Update_GetFileParaValue("ÊÕ²ØÌû×ÓÊı$$$$:$a/Processor.asp","Const LMT_MaxCollectAnnounce",CurN,"×î¶àÔÊĞíÊÕ²ØÌû×ÓÊıÁ¿")
-	CALL Update_GetFileParaValue("¶ÌÏûÏ¢Í¨Öª$$$$:$a/Processor.asp","Const LMT_Prc_anonymity",CurN,"¹ÜÀíÕßÊÇ·ñÄäÃû¶ÌÏûÏ¢Í¨ÖªÓÃ»§£º 0 ÄäÃûÎªÏµÍ³ 1 Ô­²Ù×÷ÈË")
-	CALL Update_GetFileParaValue("a/Processor.asp","Const LMT_Prc_MsgFlag",CurN,"¹ÜÀíÔ±ÊÇ·ñ¶ÌÏûÏ¢Í¨ÖªÓÃ»§£º 0 Ä¬ÈÏÑ¡ÏîÎª²»Í¨Öª,µ«¿ÉÑ¡ÔñÊÇ·ñÍ¨Öª 1 Ä¬ÈÏ¶ÌÏûÏ¢Í¨Öª,Ò²¿ÉÑ¡ÔñÊÇ·ñÍ¨Öª 2.Ç¿ÖÆ¶ÌÏûÏ¢Í¨Öª,²»¿ÉÊÇ·ñÍ¨Öª")
+	CALL Update_GetFileParaValue("æ”¶è—å¸–å­æ•°$$$$:$a/Processor.asp","Const LMT_MaxCollectAnnounce",CurN,"æœ€å¤šå…è®¸æ”¶è—å¸–å­æ•°é‡")
+	CALL Update_GetFileParaValue("çŸ­æ¶ˆæ¯é€šçŸ¥$$$$:$a/Processor.asp","Const LMT_Prc_anonymity",CurN,"ç®¡ç†è€…æ˜¯å¦åŒ¿åçŸ­æ¶ˆæ¯é€šçŸ¥ç”¨æˆ·ï¼š 0 åŒ¿åä¸ºç³»ç»Ÿ 1 åŸæ“ä½œäºº")
+	CALL Update_GetFileParaValue("a/Processor.asp","Const LMT_Prc_MsgFlag",CurN,"ç®¡ç†å‘˜æ˜¯å¦çŸ­æ¶ˆæ¯é€šçŸ¥ç”¨æˆ·ï¼š 0 é»˜è®¤é€‰é¡¹ä¸ºä¸é€šçŸ¥,ä½†å¯é€‰æ‹©æ˜¯å¦é€šçŸ¥ 1 é»˜è®¤çŸ­æ¶ˆæ¯é€šçŸ¥,ä¹Ÿå¯é€‰æ‹©æ˜¯å¦é€šçŸ¥ 2.å¼ºåˆ¶çŸ­æ¶ˆæ¯é€šçŸ¥,ä¸å¯æ˜¯å¦é€šçŸ¥")
 	
-	CALL Update_GetFileParaValue("×î´óºÃÓÑÊı$$$$:$a/inc/AddFriend.asp","Const LMT_MaxFriendNum",CurN,"ÔÊĞíÌí¼ÓµÄ×î¶àºÃÓÑÊıÄ¿")
+	CALL Update_GetFileParaValue("æœ€å¤§å¥½å‹æ•°$$$$:$a/inc/AddFriend.asp","Const LMT_MaxFriendNum",CurN,"å…è®¸æ·»åŠ çš„æœ€å¤šå¥½å‹æ•°ç›®")
 
-	CALL Update_GetFileParaValue("ºì°üÌû×Ó$$$$:$a/inc/DelAnnounce.asp","AncIDStr = ",CurN,"ºì°üÖ÷ÌâIDÁĞ±í£¬¶ººÅ·Ö¸ô£¬»Ø¸´´ËÀàÌû×Ó½«½±ÀøËæ»úÉùÍû(1-3)£¬²¢ÇÒ´ËÀàÌû×Ó½«½ûÖ¹É¾³ı»Ø¸´(µ«¿É±à¼­)")
-	CALL Update_GetFileParaValue("a/a2.asp","AncIDStr = ",CurN,"ºì°üÌû×ÓÖ÷ÌâIDÁĞ±í£¬¶ººÅ·Ö¸ô£¬»Ø¸´´ËÀàÌû×Ó½«½±ÀøËæ»úÉùÍû(1-3)£¬×¢ÒâÓë[DelAnnounce.asp]ÅäÖÃ±£³ÖÒ»ÖÂ")
+	CALL Update_GetFileParaValue("çº¢åŒ…å¸–å­$$$$:$a/inc/DelAnnounce.asp","AncIDStr = ",CurN,"çº¢åŒ…ä¸»é¢˜IDåˆ—è¡¨ï¼Œé€—å·åˆ†éš”ï¼Œå›å¤æ­¤ç±»å¸–å­å°†å¥–åŠ±éšæœºå£°æœ›(1-3)ï¼Œå¹¶ä¸”æ­¤ç±»å¸–å­å°†ç¦æ­¢åˆ é™¤å›å¤(ä½†å¯ç¼–è¾‘)")
+	CALL Update_GetFileParaValue("a/a2.asp","AncIDStr = ",CurN,"çº¢åŒ…å¸–å­ä¸»é¢˜IDåˆ—è¡¨ï¼Œé€—å·åˆ†éš”ï¼Œå›å¤æ­¤ç±»å¸–å­å°†å¥–åŠ±éšæœºå£°æœ›(1-3)ï¼Œæ³¨æ„ä¸[DelAnnounce.asp]é…ç½®ä¿æŒä¸€è‡´")
 	
-	CALL Update_GetFileParaValue("Ä¬ÈÏ·¢ÌûÄ£Ê½$$$$:$a/inc/Editor_Fun.asp","Const Edt_MiniMode",CurN,"·¢Ìû½çÃæ£º0-´«Í³¼òÔ¼Ä£Ê½ 1.¶à¹¦ÄÜÄ£Ê½")
+	CALL Update_GetFileParaValue("é»˜è®¤å‘å¸–æ¨¡å¼$$$$:$a/inc/Editor_Fun.asp","Const Edt_MiniMode",CurN,"å‘å¸–ç•Œé¢ï¼š0-ä¼ ç»Ÿç®€çº¦æ¨¡å¼ 1.å¤šåŠŸèƒ½æ¨¡å¼")
 	
-	CALL Update_GetFileParaValue("¶àÃ½Ìå²¥·Å¸öÊı¼°ÊÇ·ñ×Ô¶¯²¥·Å$$$$:$a/inc/leadcode.js","var vnum = ",CurN,"1  forbid play,-2 allow 3 video to play at same time. 0: allow one")
+	CALL Update_GetFileParaValue("å¤šåª’ä½“æ’­æ”¾ä¸ªæ•°åŠæ˜¯å¦è‡ªåŠ¨æ’­æ”¾$$$$:$a/inc/leadcode.js","var vnum = ",CurN,"1  forbid play,-2 allow 3 video to play at same time. 0: allow one")
 	CALL Update_GetFileParaValue("a/inc/leadcode.js","var autoplay = ",CurN,"0.manual play 1.auto play")
 	
-	CALL Update_GetFileParaValue("ÆÀ¼ÛÌû×ÓÉèÖÃ$$$$:$a/inc/MakeGoodAnnounce.asp","Const DEF_AllowPunish",CurN,"ÊÇ·ñÔÊĞíÆÕÍ¨ÓÃ»§³Í·£·¢ÌûÓÃ»§£º1.ÔÊĞíÆÕ±éÓÃ»§³Í·£·¢ÌûÓÃ»§¡¡£°¡£½ûÖ¹")
-	CALL Update_GetFileParaValue("a/inc/MakeGoodAnnounce.asp","Const DEF_AllowOpinionNum",CurN,"ÔÊĞíÆÕÍ¨ÓÃ»§ÆÀ¼Û´ÎÊı 0,½ûÖ¹,-1 ÔÊĞíÎŞÏŞ >0 Ö¸¶¨´ÎÊı")
-	CALL Update_GetFileParaValue("a/inc/MakeGoodAnnounce.asp","Const DEF_MasterNolimit",CurN,"°æÖ÷¼°¹ÜÀíÔ±ÆÀ¼Û´ÎÊıÊÇ·ñÎŞÏŞ£º¡¡£±£¬ÎŞÏŞ£¬£°£¬ÏŞÖÆÍ¬ÆÕÍ¨ÓÃ»§´Î")
-	CALL Update_GetFileParaValue("a/inc/MakeGoodAnnounce.asp","Const DEF_AllowBoardMasterCachetValue",CurN,"ÊÇ·ñÔÊĞí°æÖ÷ÆÀ¼ÛÉùÍû£º1.ÊÇ 0.·ñ")
+	CALL Update_GetFileParaValue("è¯„ä»·å¸–å­è®¾ç½®$$$$:$a/inc/MakeGoodAnnounce.asp","Const DEF_AllowPunish",CurN,"æ˜¯å¦å…è®¸æ™®é€šç”¨æˆ·æƒ©ç½šå‘å¸–ç”¨æˆ·ï¼š1.å…è®¸æ™®éç”¨æˆ·æƒ©ç½šå‘å¸–ç”¨æˆ·ã€€ï¼ã€‚ç¦æ­¢")
+	CALL Update_GetFileParaValue("a/inc/MakeGoodAnnounce.asp","Const DEF_AllowOpinionNum",CurN,"å…è®¸æ™®é€šç”¨æˆ·è¯„ä»·æ¬¡æ•° 0,ç¦æ­¢,-1 å…è®¸æ— é™ >0 æŒ‡å®šæ¬¡æ•°")
+	CALL Update_GetFileParaValue("a/inc/MakeGoodAnnounce.asp","Const DEF_MasterNolimit",CurN,"ç‰ˆä¸»åŠç®¡ç†å‘˜è¯„ä»·æ¬¡æ•°æ˜¯å¦æ— é™ï¼šã€€ï¼‘ï¼Œæ— é™ï¼Œï¼ï¼Œé™åˆ¶åŒæ™®é€šç”¨æˆ·æ¬¡")
+	CALL Update_GetFileParaValue("a/inc/MakeGoodAnnounce.asp","Const DEF_AllowBoardMasterCachetValue",CurN,"æ˜¯å¦å…è®¸ç‰ˆä¸»è¯„ä»·å£°æœ›ï¼š1.æ˜¯ 0.å¦")
 	
-	CALL Update_GetFileParaValue("Í¶Æ±ÏŞÖÆ$$$$:$a/inc/Poll_fun.asp","Const LMT_PollNeedPoints",CurN,"ÓÃ»§Í¶Æ±Ìû×ÓĞèÒª´ïµ½µÄ»ı·Ö£¬¿ÉÒÔÎª¸º¡£")
+	CALL Update_GetFileParaValue("æŠ•ç¥¨é™åˆ¶$$$$:$a/inc/Poll_fun.asp","Const LMT_PollNeedPoints",CurN,"ç”¨æˆ·æŠ•ç¥¨å¸–å­éœ€è¦è¾¾åˆ°çš„ç§¯åˆ†ï¼Œå¯ä»¥ä¸ºè´Ÿã€‚")
 	
-	CALL Update_GetFileParaValue("RSS$$$$:$other/RSS.asp","Const RSS_ViewNumer",CurN,"×î¶àÔÊĞíÏÔÊ¾µÄRSS¼ÇÂ¼ÌõÊı")
+	CALL Update_GetFileParaValue("RSS$$$$:$other/RSS.asp","Const RSS_ViewNumer",CurN,"æœ€å¤šå…è®¸æ˜¾ç¤ºçš„RSSè®°å½•æ¡æ•°")
 	
-	CALL Update_GetFileParaValue("ËÑË÷$$$$:$Search/Search.asp","Const Sch_AllContent",CurN,"ÊÇ·ñÔÊĞíÈ«²¿ËÑË÷,¼´Í¬Ê±ËÑË÷±êÌâºÍÄÚÈİ£¬ÉèÎª99±íÊ¾²ÉÓÃhubbledotnetÒıÇæajaxµ÷ÓÃËÑË÷£¬ÉèÎª98²ÉÓÃ×é¼ş·½Ê½µ÷ÓÃhubbledotnetËÑË÷")
-	CALL Update_GetFileParaValue("Search/Search.asp","Const Sch_AncTitle",CurN,"ÊÇ·ñÔÊĞíÌû×Ó±êÌâËÑË÷")
-	CALL Update_GetFileParaValue("Search/Search.asp","Const Sch_AncContent",CurN,"ÊÇ·ñÔÊĞíÌû×ÓÄÚÈİËÑË÷")
-	CALL Update_GetFileParaValue("Search/Search.asp","Const Sch_LimitTime",CurN,"ÏŞÖÆËÑË÷Ê±¼ä(µ¥Î»Ãë)")
+	CALL Update_GetFileParaValue("æœç´¢$$$$:$Search/Search.asp","Const Sch_AllContent",CurN,"æ˜¯å¦å…è®¸å…¨éƒ¨æœç´¢,å³åŒæ—¶æœç´¢æ ‡é¢˜å’Œå†…å®¹ï¼Œè®¾ä¸º99è¡¨ç¤ºé‡‡ç”¨hubbledotnetå¼•æ“ajaxè°ƒç”¨æœç´¢ï¼Œè®¾ä¸º98é‡‡ç”¨ç»„ä»¶æ–¹å¼è°ƒç”¨hubbledotnetæœç´¢")
+	CALL Update_GetFileParaValue("Search/Search.asp","Const Sch_AncTitle",CurN,"æ˜¯å¦å…è®¸å¸–å­æ ‡é¢˜æœç´¢")
+	CALL Update_GetFileParaValue("Search/Search.asp","Const Sch_AncContent",CurN,"æ˜¯å¦å…è®¸å¸–å­å†…å®¹æœç´¢")
+	CALL Update_GetFileParaValue("Search/Search.asp","Const Sch_LimitTime",CurN,"é™åˆ¶æœç´¢æ—¶é—´(å•ä½ç§’)")
 	
-	CALL Update_GetFileParaValue("Search/inc/Search_fun.asp","Const DEF_BBS_MaxListPage",CurN,"ËÑË÷½á¹û×î¶àÏÔÊ¾Ò³Êı(¹ı´ó¿ÉÄÜÓ°ÏìĞÔÄÜ£¬Ä¬ÈÏÇëÉèÎª10)")
-	CALL Update_GetFileParaValue("Search/inc/Search_fun.asp","Const DEF_BBS_MaxWords",CurN,"ËÑË÷½á¹ûµÄÌû×ÓÄÚÈİÂÔÒªÏÔÊ¾³¤¶È(×î¶àÏÔÊ¾×Ö½Ú)")
+	CALL Update_GetFileParaValue("Search/inc/Search_fun.asp","Const DEF_BBS_MaxListPage",CurN,"æœç´¢ç»“æœæœ€å¤šæ˜¾ç¤ºé¡µæ•°(è¿‡å¤§å¯èƒ½å½±å“æ€§èƒ½ï¼Œé»˜è®¤è¯·è®¾ä¸º10)")
+	CALL Update_GetFileParaValue("Search/inc/Search_fun.asp","Const DEF_BBS_MaxWords",CurN,"æœç´¢ç»“æœçš„å¸–å­å†…å®¹ç•¥è¦æ˜¾ç¤ºé•¿åº¦(æœ€å¤šæ˜¾ç¤ºå­—èŠ‚)")
 	
-	CALL Update_GetFileParaValue("¶ÌÏûÏ¢$$$$:$User/LookMessage.asp","Const LMT_LookedMsgExpiresDay",CurN,"¶ÌÏûÏ¢ÔÄ¶ÁºóµÄ±£´æÆÚÏŞ(µ¥Î»Ìì)")
-	CALL Update_GetFileParaValue("User/SendMessage.asp","Const DEF_User_MaxReceiveUser",CurN,"¶¨ÒåÔÊĞíÍ¬Ê±·¢ËÍ¶ÌÏûÏ¢¸ø¶àÉÙ¸öÓÃ»§£¬Ä¬ÈÏÖµÎª5")
+	CALL Update_GetFileParaValue("çŸ­æ¶ˆæ¯$$$$:$User/LookMessage.asp","Const LMT_LookedMsgExpiresDay",CurN,"çŸ­æ¶ˆæ¯é˜…è¯»åçš„ä¿å­˜æœŸé™(å•ä½å¤©)")
+	CALL Update_GetFileParaValue("User/SendMessage.asp","Const DEF_User_MaxReceiveUser",CurN,"å®šä¹‰å…è®¸åŒæ—¶å‘é€çŸ­æ¶ˆæ¯ç»™å¤šå°‘ä¸ªç”¨æˆ·ï¼Œé»˜è®¤å€¼ä¸º5")
 	
-	CALL Update_GetFileParaValue("Ö§¸¶±¦$$$$:$User/alipay/alipay_Config.asp","partner = ",CurN,"Ö§¸¶±¦»ñÈ¡id£¬ÄúÏÈĞèÒªÒ»¸öÖ§¸¶±¦ÕËºÅ£¬ÔÙ´ÓÏàÓ¦ÍøÖ·»ñÈ¡id(<a href=https://www.alipay.com/himalayas/practicality_customer.htm?customer_external_id=C4335329546596834111&market_type=from_agent_contract&pro_codes=F7F62F29651356BB target=_blank>µã´Ë»ñÈ¡</a>)")
-	CALL Update_GetFileParaValue("User/alipay/alipay_Config.asp","key = ",CurN,"Ö§¸¶±¦»ñÈ¡µÄÃÜÔ¿£¬ÄúÏÈĞèÒªÒ»¸öÖ§¸¶±¦ÕËºÅ£¬ÔÙ´ÓÏàÓ¦ÍøÖ·»ñÈ¡ÃÜÔ¿(<a href=https://www.alipay.com/himalayas/practicality_customer.htm?customer_external_id=C4335329546596834111&market_type=from_agent_contract&pro_codes=F7F62F29651356BB target=_blank>µã´Ë»ñÈ¡</a>)")
+	CALL Update_GetFileParaValue("æ”¯ä»˜å®$$$$:$User/alipay/alipay_Config.asp","partner = ",CurN,"æ”¯ä»˜å®è·å–idï¼Œæ‚¨å…ˆéœ€è¦ä¸€ä¸ªæ”¯ä»˜å®è´¦å·ï¼Œå†ä»ç›¸åº”ç½‘å€è·å–id(<a href=https://www.alipay.com/himalayas/practicality_customer.htm?customer_external_id=C4335329546596834111&market_type=from_agent_contract&pro_codes=F7F62F29651356BB target=_blank>ç‚¹æ­¤è·å–</a>)")
+	CALL Update_GetFileParaValue("User/alipay/alipay_Config.asp","key = ",CurN,"æ”¯ä»˜å®è·å–çš„å¯†é’¥ï¼Œæ‚¨å…ˆéœ€è¦ä¸€ä¸ªæ”¯ä»˜å®è´¦å·ï¼Œå†ä»ç›¸åº”ç½‘å€è·å–å¯†é’¥(<a href=https://www.alipay.com/himalayas/practicality_customer.htm?customer_external_id=C4335329546596834111&market_type=from_agent_contract&pro_codes=F7F62F29651356BB target=_blank>ç‚¹æ­¤è·å–</a>)")
 	
-	CALL Update_GetFileParaValue("¶ÌÏûÏ¢$$$$:$User/inc/Fun_SendMessage.asp","Const LMT_SendMsgExpiresDate",CurN,"¶¨ÒåĞÂ·¢ËÍ¶ÌÏûÏ¢±£´æÌìÊı(¹ıÆÚ×Ô¶¯É¾³ı)")
-	CALL Update_GetFileParaValue("User/inc/UserTopic.asp","Const LMT_MaxMessageNumber",CurN,"ÓÃ»§ÊÕ¼şÏäÔÊĞíµÄ×î¶à½ÓÊÕ¼ÇÂ¼£¬³¬¹ı½«ÎŞ·¨½ÓÊÕĞÂÏûÏ¢¡£")
+	CALL Update_GetFileParaValue("çŸ­æ¶ˆæ¯$$$$:$User/inc/Fun_SendMessage.asp","Const LMT_SendMsgExpiresDate",CurN,"å®šä¹‰æ–°å‘é€çŸ­æ¶ˆæ¯ä¿å­˜å¤©æ•°(è¿‡æœŸè‡ªåŠ¨åˆ é™¤)")
+	CALL Update_GetFileParaValue("User/inc/UserTopic.asp","Const LMT_MaxMessageNumber",CurN,"ç”¨æˆ·æ”¶ä»¶ç®±å…è®¸çš„æœ€å¤šæ¥æ”¶è®°å½•ï¼Œè¶…è¿‡å°†æ— æ³•æ¥æ”¶æ–°æ¶ˆæ¯ã€‚")
 	
-	CALL Update_GetFileParaValue("¶àÃ½ÌåÖØ¸´²¥·ÅÉèÖÃ$$$$:$a/inc/leadcode.js","var playcount = ",CurN,"play loop count:0-100,0=always replay")
+	CALL Update_GetFileParaValue("å¤šåª’ä½“é‡å¤æ’­æ”¾è®¾ç½®$$$$:$a/inc/leadcode.js","var playcount = ",CurN,"play loop count:0-100,0=always replay")
 	
-	CALL Update_GetFileParaValue("×¢²áÑéÖ¤ÉèÖÃ$$$$:$User/" & DEF_RegisterFile,"Const LMT_RegVerifyQuestion = ",CurN,"×¢²áÑéÖ¤ÌáÊ¾ĞÅÏ¢£¬¿ÉÒÔÊÇHTML¸ñÊ½£¬±ÈÈçÊ¹ÓÃÍ¼Æ¬£¬Èô²»ÌîĞ´±íÊ¾²»¿ªÆô×¢²áÑéÖ¤ĞÅÏ¢¡£")
-	CALL Update_GetFileParaValue("User/" & DEF_RegisterFile,"Const LMT_RegVerifyAnswer = ",CurN,"×¢²áÑéÖ¤ĞèÒªÌîĞ´µÄ´ğ°¸¡£")
+	CALL Update_GetFileParaValue("æ³¨å†ŒéªŒè¯è®¾ç½®$$$$:$User/" & DEF_RegisterFile,"Const LMT_RegVerifyQuestion = ",CurN,"æ³¨å†ŒéªŒè¯æç¤ºä¿¡æ¯ï¼Œå¯ä»¥æ˜¯HTMLæ ¼å¼ï¼Œæ¯”å¦‚ä½¿ç”¨å›¾ç‰‡ï¼Œè‹¥ä¸å¡«å†™è¡¨ç¤ºä¸å¼€å¯æ³¨å†ŒéªŒè¯ä¿¡æ¯ã€‚")
+	CALL Update_GetFileParaValue("User/" & DEF_RegisterFile,"Const LMT_RegVerifyAnswer = ",CurN,"æ³¨å†ŒéªŒè¯éœ€è¦å¡«å†™çš„ç­”æ¡ˆã€‚")
 	
-	CALL Update_GetFileParaValue("QQ»¥ÁªÉèÖÃ$$$$:$app/qqlogin/oauth.asp","Const apiKey = ",CurN,"APP ID,ÄúĞèÒª´ÓÌÚÑ¶Æ½Ì¨ÉêÇë»ñÈ¡×ÊÁÏ£º(<a href=http://connect.qq.com/ target=_blank>µã´ËÉêÇë</a>)")
-	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","Const secretKey = ",CurN,"APP KEY,ÄúĞèÒª´ÓÌÚÑ¶Æ½Ì¨ÉêÇë»ñÈ¡")
-	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","Const callback = ",CurN,"CALL BACK,»Øµ÷µØÖ·£¬×¢ÒâÖ»ĞèÒªÌîĞ´ÓòÃû£¬²»°üÀ¨http¼°Ä¿Â¼¡£")
+	CALL Update_GetFileParaValue("QQäº’è”è®¾ç½®$$$$:$app/qqlogin/oauth.asp","Const apiKey = ",CurN,"APP ID,æ‚¨éœ€è¦ä»è…¾è®¯å¹³å°ç”³è¯·è·å–èµ„æ–™ï¼š(<a href=http://connect.qq.com/ target=_blank>ç‚¹æ­¤ç”³è¯·</a>)")
+	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","Const secretKey = ",CurN,"APP KEY,æ‚¨éœ€è¦ä»è…¾è®¯å¹³å°ç”³è¯·è·å–")
+	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","Const callback = ",CurN,"CALL BACK,å›è°ƒåœ°å€ï¼Œæ³¨æ„åªéœ€è¦å¡«å†™åŸŸåï¼Œä¸åŒ…æ‹¬httpåŠç›®å½•ã€‚")
 	
-	CALL Update_GetFileParaValue("ÌûÄÚ·ÖÏí´úÂëÉèÖÃ$$$$:$a/a.asp$$$$:$textarea","Const LMTDEF_ShareID = ",CurN,"¿ÉÒÔÌîĞ´¸÷Õ¾»ò×ÔĞĞ±àĞ´ÀàĞÍµÄ·ÖÏí´úÂë(HTML¸ñÊ½£¬×¢ÒâÊÖ¹¤É¾³ı»»ĞĞ·û),±£³ÖÎª¿ÕÔò¹Ø±Õ·ÖÏí´úÂë;")
+	CALL Update_GetFileParaValue("å¸–å†…åˆ†äº«ä»£ç è®¾ç½®$$$$:$a/a.asp$$$$:$textarea","Const LMTDEF_ShareID = ",CurN,"å¯ä»¥å¡«å†™å„ç«™æˆ–è‡ªè¡Œç¼–å†™ç±»å‹çš„åˆ†äº«ä»£ç (HTMLæ ¼å¼ï¼Œæ³¨æ„æ‰‹å·¥åˆ é™¤æ¢è¡Œç¬¦),ä¿æŒä¸ºç©ºåˆ™å…³é—­åˆ†äº«ä»£ç ;")
 	
-	CALL Update_GetFileParaValue("JmailÓÊ¼ş·¢ËÍSMTPĞÅÏ¢ÉèÖÃ$$$$:$User/inc/Mail_fun.asp","const DEF_MAIL_smtpUser = ",CurN,"µ±ÓÊ¼ş·şÎñÆ÷Ê¹ÓÃSMTP·¢ĞÅÑéÖ¤Ê±ÉèÖÃµÄµÇÂ¼ÕÊ»§¡£")
-	CALL Update_GetFileParaValue("User/inc/Mail_fun.asp","const DEF_MAIL_smtpPass = ",CurN,"Ê¹ÓÃSMTP·¢ĞÅÑéÖ¤Ê±ÉèÖÃµÄµÇÂ¼ÃÜÂë¡£")
-	CALL Update_GetFileParaValue("User/inc/Mail_fun.asp","const DEF_MAIL_smtpHost = ",CurN,"ÓÊ¼ş·şÎñÆ÷µØÖ·(IP»òÓòÃû)")
-	CALL Update_GetFileParaValue("User/inc/Mail_fun.asp","const DEF_MAIL_FromName = ",CurN,"·¢¼şÈËµÄÃû³Æ£¬¿ÉÒÔÌîĞ´ÄúÍøÕ¾µÄÃû³Æ")
+	CALL Update_GetFileParaValue("Jmailé‚®ä»¶å‘é€SMTPä¿¡æ¯è®¾ç½®$$$$:$User/inc/Mail_fun.asp","const DEF_MAIL_smtpUser = ",CurN,"å½“é‚®ä»¶æœåŠ¡å™¨ä½¿ç”¨SMTPå‘ä¿¡éªŒè¯æ—¶è®¾ç½®çš„ç™»å½•å¸æˆ·ã€‚")
+	CALL Update_GetFileParaValue("User/inc/Mail_fun.asp","const DEF_MAIL_smtpPass = ",CurN,"ä½¿ç”¨SMTPå‘ä¿¡éªŒè¯æ—¶è®¾ç½®çš„ç™»å½•å¯†ç ã€‚")
+	CALL Update_GetFileParaValue("User/inc/Mail_fun.asp","const DEF_MAIL_smtpHost = ",CurN,"é‚®ä»¶æœåŠ¡å™¨åœ°å€(IPæˆ–åŸŸå)")
+	CALL Update_GetFileParaValue("User/inc/Mail_fun.asp","const DEF_MAIL_FromName = ",CurN,"å‘ä»¶äººçš„åç§°ï¼Œå¯ä»¥å¡«å†™æ‚¨ç½‘ç«™çš„åç§°")
 	
-	CALL Update_GetFileParaValue("¸½¼ş:ÏŞÖÆÎ´µÇÂ¼ÓÃ»§»ñÈ¡$$$$:$a/file.asp","Const DEF_GuestEnable",CurN,"ÊÇ·ñÔÊĞíÓÎ¿Í²é¿´¸½¼ş£º0,½ûÖ¹£¬1.ÔÊĞí")
+	CALL Update_GetFileParaValue("é™„ä»¶:é™åˆ¶æœªç™»å½•ç”¨æˆ·è·å–$$$$:$a/file.asp","Const DEF_GuestEnable",CurN,"æ˜¯å¦å…è®¸æ¸¸å®¢æŸ¥çœ‹é™„ä»¶ï¼š0,ç¦æ­¢ï¼Œ1.å…è®¸")
 	
-	CALL Update_GetFileParaValue("ÌÚÑ¶Î¢²©»¥ÁªÉèÖÃ$$$$:$app/qqlogin/oauth.asp","const tqq_apikey = ",CurN,"ÌÚÑ¶Î¢²© API Key <a href=http://open.t.qq.com/apps_welcome.php target=_blank>http://open.t.qq.com/apps_welcome.php</a> ÉêÇë")
-	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","const tqq_secretKey = ",CurN,"ÌÚÑ¶Î¢²© secretKey")
+	CALL Update_GetFileParaValue("è…¾è®¯å¾®åšäº’è”è®¾ç½®$$$$:$app/qqlogin/oauth.asp","const tqq_apikey = ",CurN,"è…¾è®¯å¾®åš API Key <a href=http://open.t.qq.com/apps_welcome.php target=_blank>http://open.t.qq.com/apps_welcome.php</a> ç”³è¯·")
+	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","const tqq_secretKey = ",CurN,"è…¾è®¯å¾®åš secretKey")
 	
-	CALL Update_GetFileParaValue("Î¢²©(ĞÂÀË)»¥ÁªÉèÖÃ$$$$:$app/qqlogin/oauth.asp","const weibo_apikey = ",CurN,"ĞÂÀËÎ¢²© API Key <a href=http://open.weibo.com target=_blank>http://open.weibo.com</a> ÉêÇë")
-	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","const weibo_secretKey = ",CurN,"ĞÂÀËÎ¢²© secretKey")
+	CALL Update_GetFileParaValue("å¾®åš(æ–°æµª)äº’è”è®¾ç½®$$$$:$app/qqlogin/oauth.asp","const weibo_apikey = ",CurN,"æ–°æµªå¾®åš API Key <a href=http://open.weibo.com target=_blank>http://open.weibo.com</a> ç”³è¯·")
+	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","const weibo_secretKey = ",CurN,"æ–°æµªå¾®åš secretKey")
 	
-	CALL Update_GetFileParaValue("°Ù¶È»¥ÁªÉèÖÃ$$$$:$app/qqlogin/oauth.asp","const baidu_apikey = ",CurN,"°Ù¶È API Key <a href=http://developer.baidu.com/ target=_blank>http://developer.baidu.com/</a> ÉêÇë")
-	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","const baidu_secretKey = ",CurN,"°Ù¶È secretKey ×¢ÒâÔÚ°Ù¶ÈÉèÖÃºÃÕıÈ·µÄ»Øµ÷Ò³(²Î¿¼ http://developer.baidu.com/wiki/index.php?title=docs/oauth/redirect)£¬±ÈÈçĞèÒªÌîĞ´ÍêÕû: http://www.leadbbs.com/app/qqlogin/login.asp")
+	CALL Update_GetFileParaValue("ç™¾åº¦äº’è”è®¾ç½®$$$$:$app/qqlogin/oauth.asp","const baidu_apikey = ",CurN,"ç™¾åº¦ API Key <a href=http://developer.baidu.com/ target=_blank>http://developer.baidu.com/</a> ç”³è¯·")
+	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","const baidu_secretKey = ",CurN,"ç™¾åº¦ secretKey æ³¨æ„åœ¨ç™¾åº¦è®¾ç½®å¥½æ­£ç¡®çš„å›è°ƒé¡µ(å‚è€ƒ http://developer.baidu.com/wiki/index.php?title=docs/oauth/redirect)ï¼Œæ¯”å¦‚éœ€è¦å¡«å†™å®Œæ•´: http://www.leadbbs.com/app/qqlogin/login.asp")
 	
-	CALL Update_GetFileParaValue("ÈËÈËÍø»¥ÁªÉèÖÃ$$$$:$app/qqlogin/oauth.asp","const renren_apikey = ",CurN,"ÈËÈËÍø API Key <a href=http://app.renren.com/developers/newapp target=_blank>http://app.renren.com/developers/newapp</a> ÉêÇë")
-	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","const renren_secretKey = ",CurN,"ÈËÈËÍø secretKey")
+	CALL Update_GetFileParaValue("äººäººç½‘äº’è”è®¾ç½®$$$$:$app/qqlogin/oauth.asp","const renren_apikey = ",CurN,"äººäººç½‘ API Key <a href=http://app.renren.com/developers/newapp target=_blank>http://app.renren.com/developers/newapp</a> ç”³è¯·")
+	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","const renren_secretKey = ",CurN,"äººäººç½‘ secretKey")
 
-	CALL Update_GetFileParaValue("¿ªĞÄÍø»¥ÁªÉèÖÃ$$$$:$app/qqlogin/oauth.asp","const kaixin_apikey = ",CurN,"¿ªĞÄÍø API Key <a href=http://open.kaixin001.com/ target=_blank>http://open.kaixin001.com/</a> ÉêÇë")
-	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","const kaixin_secretKey = ",CurN,"¿ªĞÄÍø secretKey")
+	CALL Update_GetFileParaValue("å¼€å¿ƒç½‘äº’è”è®¾ç½®$$$$:$app/qqlogin/oauth.asp","const kaixin_apikey = ",CurN,"å¼€å¿ƒç½‘ API Key <a href=http://open.kaixin001.com/ target=_blank>http://open.kaixin001.com/</a> ç”³è¯·")
+	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","const kaixin_secretKey = ",CurN,"å¼€å¿ƒç½‘ secretKey")
 
-	CALL Update_GetFileParaValue("ÌìÒí(µçĞÅ)»¥ÁªÉèÖÃ$$$$:$app/qqlogin/oauth.asp","const tianyi_apikey = ",CurN,"ÌìÒí API Key <a href=http://open.189.cn/ target=_blank>http://open.189.cn/</a> ÉêÇë")
-	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","const tianyi_secretKey = ",CurN,"ÌìÒí secretKey")
+	CALL Update_GetFileParaValue("å¤©ç¿¼(ç”µä¿¡)äº’è”è®¾ç½®$$$$:$app/qqlogin/oauth.asp","const tianyi_apikey = ",CurN,"å¤©ç¿¼ API Key <a href=http://open.189.cn/ target=_blank>http://open.189.cn/</a> ç”³è¯·")
+	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","const tianyi_secretKey = ",CurN,"å¤©ç¿¼ secretKey")
 
-	CALL Update_GetFileParaValue("ÓÅ¿á»¥ÁªÉèÖÃ$$$$:$app/qqlogin/oauth.asp","const youku_apikey = ",CurN,"ÓÅ¿á API Key <a href=http://open.youku.com/ target=_blank>http://open.youku.com/</a> ÉêÇë")
-	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","const youku_secretKey = ",CurN,"ÓÅ¿á secretKey")
+	CALL Update_GetFileParaValue("ä¼˜é…·äº’è”è®¾ç½®$$$$:$app/qqlogin/oauth.asp","const youku_apikey = ",CurN,"ä¼˜é…· API Key <a href=http://open.youku.com/ target=_blank>http://open.youku.com/</a> ç”³è¯·")
+	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","const youku_secretKey = ",CurN,"ä¼˜é…· secretKey")
 
-	CALL Update_GetFileParaValue("ÍÁ¶¹»¥ÁªÉèÖÃ$$$$:$app/qqlogin/oauth.asp","const tudou_apikey = ",CurN,"ÍÁ¶¹ API Key <a href=http://open.tudou.com/ target=_blank>http://open.tudou.com/</a> ÉêÇë")
-	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","const tudou_secretKey = ",CurN,"ÍÁ¶¹ secretKey")
+	CALL Update_GetFileParaValue("åœŸè±†äº’è”è®¾ç½®$$$$:$app/qqlogin/oauth.asp","const tudou_apikey = ",CurN,"åœŸè±† API Key <a href=http://open.tudou.com/ target=_blank>http://open.tudou.com/</a> ç”³è¯·")
+	CALL Update_GetFileParaValue("app/qqlogin/oauth.asp","const tudou_secretKey = ",CurN,"åœŸè±† secretKey")
 	
-	CALL Update_GetFileParaValue("SMSÊÖ»ú¶ÌĞÅ·¢ËÍÉèÖÃ$$$$:$User/inc/Mail_fun.asp","const DEF_SMS_UID = ",CurN,"ÖĞ¹ú189µçĞÅÌìÒíµÄAppid»òÍø½¨ÊÖ»ú¶ÌĞÅ·¢ËÍUID£¬ÌìÒíÉêÇë: <a href=http://open.189.cn/ target=_blank>http://open.189.cn/</a>, Íø½¨ÉêÇë: <a href=http://sms.webchinese.cn/ target=_blank>http://sms.webchinese.cn/</a>")
-	CALL Update_GetFileParaValue("User/inc/Mail_fun.asp","const DEF_SMS_KEY = ",CurN,"189ÌìÒíµÄApp Secret »ò Íø½¨ÊÖ»ú¶ÌĞÅ·¢ËÍKEY (ÈôÊÇÖĞ¹úÌìÒí£¬È·±£×Ô¼ºÓĞ¶ÌĞÅÑéÖ¤ÂëÄÜÁ¦)")
+	CALL Update_GetFileParaValue("SMSæ‰‹æœºçŸ­ä¿¡å‘é€è®¾ç½®$$$$:$User/inc/Mail_fun.asp","const DEF_SMS_UID = ",CurN,"ä¸­å›½189ç”µä¿¡å¤©ç¿¼çš„Appidæˆ–ç½‘å»ºæ‰‹æœºçŸ­ä¿¡å‘é€UIDï¼Œå¤©ç¿¼ç”³è¯·: <a href=http://open.189.cn/ target=_blank>http://open.189.cn/</a>, ç½‘å»ºç”³è¯·: <a href=http://sms.webchinese.cn/ target=_blank>http://sms.webchinese.cn/</a>")
+	CALL Update_GetFileParaValue("User/inc/Mail_fun.asp","const DEF_SMS_KEY = ",CurN,"189å¤©ç¿¼çš„App Secret æˆ– ç½‘å»ºæ‰‹æœºçŸ­ä¿¡å‘é€KEY (è‹¥æ˜¯ä¸­å›½å¤©ç¿¼ï¼Œç¡®ä¿è‡ªå·±æœ‰çŸ­ä¿¡éªŒè¯ç èƒ½åŠ›)")
 	GBL_ParaCount = CurN - 1
 
-	'±£Ö¤»ò¸üĞÂÅäÖÃ
-	If SubmitFlag = "" Then CALL Update_ECHO("<div class=alertdone>¼ì²â²¢±£´æÅäÖÃ¡£¡£¡£</div>",1)
+	'ä¿è¯æˆ–æ›´æ–°é…ç½®
+	If SubmitFlag = "" Then CALL Update_ECHO("<div class=alertdone>æ£€æµ‹å¹¶ä¿å­˜é…ç½®ã€‚ã€‚ã€‚</div>",1)
 	Dim N,TmpNewStr,TmpNewStr2
 	Dim filename,tmp,title
 	
@@ -521,7 +521,7 @@ Sub Update62_initBBSdata
 				ClassNum = N
 				saveData = filename & " | " & SetupRID_1050(2,N)
 				CALL Update_InsertSetupRID(RID,ValueStr,ClassNum,saveData," and ClassNum=" & N)
-				If SubmitFlag = "" Then CALL Update_ECHO("ÅäÖÃÏî" & N & "(<span class=grayfont>" & SetupRID_1050(2,N) & "</span>)´æ´¢Íê³É£¬ÖµÎª£º<u>" & ValueStr & "</u>",0)
+				If SubmitFlag = "" Then CALL Update_ECHO("é…ç½®é¡¹" & N & "(<span class=grayfont>" & SetupRID_1050(2,N) & "</span>)å­˜å‚¨å®Œæˆï¼Œå€¼ä¸ºï¼š<u>" & ValueStr & "</u>",0)
 			Else
 				If SetupRID_1050(0,N) <> GBL_LeadBBS_Setup_Data(2,0) Then
 					If GBL_LeadBBS_Setup_Data(2,0) = "error" and SetupRID_1050(0,N) <> "error" Then
@@ -532,7 +532,7 @@ Sub Update62_initBBSdata
 						saveData = filename & " | " & SetupRID_1050(2,N)
 						CALL Update_InsertSetupRID(RID,ValueStr,ClassNum,saveData," and ClassNum=" & N)
 					End If
-					CALL Update_ECHO("µ±Ç°ÅäÖÃÏî<u>" & N & "</u>(<span class=grayfont>" & SetupRID_1050(2,N) & "</span>)ÓëÊµ¼Ê²»·û£¬ÒÑ´Ó´æ´¢Êı¾İ¶ÁÈ¡²¢¸üĞÂÏÖÓÃÅäÖÃ¡£",1)
+					CALL Update_ECHO("å½“å‰é…ç½®é¡¹<u>" & N & "</u>(<span class=grayfont>" & SetupRID_1050(2,N) & "</span>)ä¸å®é™…ä¸ç¬¦ï¼Œå·²ä»å­˜å‚¨æ•°æ®è¯»å–å¹¶æ›´æ–°ç°ç”¨é…ç½®ã€‚",1)
 					
 					If Right(SetupRID_1050(4,N),3) = " = " or Right(SetupRID_1050(4,N),2) = "= " or Right(SetupRID_1050(4,N),1) = "=" Then
 						TmpNewStr2 = ""
@@ -550,14 +550,14 @@ Sub Update62_initBBSdata
 					If Right(SetupRID_1050(3,N),2) = VbCrLf and Right(TmpNewStr,2) <> VbCrLf Then TmpNewStr = TmpNewStr & VbCrLf
 					CALL Update_ReplaceFileStr(filename,SetupRID_1050(3,N),TmpNewStr)
 				Else
-					If SubmitFlag = "" Then CALL Update_ECHO("µ±Ç°ÅäÖÃÏî<u>" & N & "</u>È·ÈÏÎŞÎó¡£(<span class=grayfont>" & SetupRID_1050(2,N) & "</span>)¡£",0)
+					If SubmitFlag = "" Then CALL Update_ECHO("å½“å‰é…ç½®é¡¹<u>" & N & "</u>ç¡®è®¤æ— è¯¯ã€‚(<span class=grayfont>" & SetupRID_1050(2,N) & "</span>)ã€‚",0)
 				End If
 			End If
 	Next
 	
-	'¼ì²â²¢±£´æBBSSetup.asp, Ubbcode_Setup.asp,User_Setup.ASP,Upload_Setup.asp,AD_Data.asp 
-	'¼ì²â²¢±£´æUser/inc/Contact_info.asp User_Reg.asp
-	CALL Update_ECHO("<div class=alertdone>¼ì²â²¢±£´æÅäÖÃÎÄ¼ş¡£¡£¡£</div>",1)
+	'æ£€æµ‹å¹¶ä¿å­˜BBSSetup.asp, Ubbcode_Setup.asp,User_Setup.ASP,Upload_Setup.asp,AD_Data.asp 
+	'æ£€æµ‹å¹¶ä¿å­˜User/inc/Contact_info.asp User_Reg.asp
+	CALL Update_ECHO("<div class=alertdone>æ£€æµ‹å¹¶ä¿å­˜é…ç½®æ–‡ä»¶ã€‚ã€‚ã€‚</div>",1)
 	Dim FileSetupData
 	FileSetupData = Array("inc/BBSSetup.asp", "inc/Ubbcode_Setup.asp","inc/User_Setup.ASP","inc/Upload_Setup.asp","inc/AD_Data.asp","User/inc/Contact_info.asp","User/inc/User_Reg.asp","article/inc/home_bannerlist.asp","article/inc/home_channellist.asp","article/inc/sitebottom_info.asp")
 	Dim FileContent
@@ -569,21 +569,21 @@ Sub Update62_initBBSdata
 			ClassNum = N
 			saveData = ADODB_LoadFile(DEF_BBS_HomeUrl & FileSetupData(N))
 			CALL Update_InsertSetupRID(RID,ValueStr,ClassNum,saveData," and ClassNum=" & N)
-			If SubmitFlag = "" Then CALL Update_ECHO("ÅäÖÃÎÄ¼ş(<span class=grayfont>" & FileSetupData(N)& "</span>)ÒÑ±£´æ¡£",0)
+			If SubmitFlag = "" Then CALL Update_ECHO("é…ç½®æ–‡ä»¶(<span class=grayfont>" & FileSetupData(N)& "</span>)å·²ä¿å­˜ã€‚",0)
 		Else
 			FileContent = ADODB_LoadFile(DEF_BBS_HomeUrl & FileSetupData(N))
 			If FileContent <> GBL_LeadBBS_Setup_Data(4,0) Then
-				ADODB_SaveToFile GBL_LeadBBS_Setup_Data(4,0),DEF_BBS_HomeUrl & FileSetupData(N)
-				If SubmitFlag = "" Then CALL Update_ECHO("ÅäÖÃÎÄ¼ş<u>" & FileSetupData(N) & "</u>Óë´æ´¢Êı¾İ²»·û£¬µ±Ç°ÅäÖÃÒÑÍê³É¸üĞÂ¡£",1)
+				Call ADODB_SaveToFile(GBL_LeadBBS_Setup_Data(4,0),DEF_BBS_HomeUrl & FileSetupData(N))
+				If SubmitFlag = "" Then CALL Update_ECHO("é…ç½®æ–‡ä»¶<u>" & FileSetupData(N) & "</u>ä¸å­˜å‚¨æ•°æ®ä¸ç¬¦ï¼Œå½“å‰é…ç½®å·²å®Œæˆæ›´æ–°ã€‚",1)
 			Else
-				If SubmitFlag = "" Then CALL Update_ECHO("ÅäÖÃÎÄ¼ş<u>" & FileSetupData(N) & "</u>Íê³É¼ì²â¡£",0)
+				If SubmitFlag = "" Then CALL Update_ECHO("é…ç½®æ–‡ä»¶<u>" & FileSetupData(N) & "</u>å®Œæˆæ£€æµ‹ã€‚",0)
 			End If
 		End If
 	Next
 	
 	'rem Licence Save
 	Dim Licence
-	Licence = Update_GetLicence
+	Licence = Update_GetLicence()
 	If Update_CheckSetupRIDExist(1001,"") = 0 Then
 		If Licence <> "error" Then
 			RID = 1001
@@ -627,9 +627,9 @@ Sub Update62_initBBSdata
 		End If
 	End If
 
-	'ÊÖ¶¯ÅäÖÃ²ÎÊı
+	'æ‰‹åŠ¨é…ç½®å‚æ•°
 	If SubmitFlag <> "" and LCase(Request("checkversion")) <> "checkversion" and LCase(Request("checkversion")) <> "updateversion" Then
-		Update_SetupFilePara
+		Update_SetupFilePara()
 		Exit Sub
 	End If
 
@@ -729,13 +729,13 @@ Sub Update_GetFileParaValue(f,fStr,Index,Note)
 		SetupRID_1050(2,Index) = Note
 		SetupRID_1050(3,Index) = GBL_Update_LineStr
 		SetupRID_1050(4,Index) = fStr
-		CALL Update_ECHO("»ñÈ¡ÅäÖÃ" & Index & "(<u>" & fileName & "/" & fileStr & "</u>)Ê§°Ü£ºÇë´Ó¹Ù·½ÖØĞÂÏÂÔØÔ­ÎÄ¼ş¸üĞÂ²¢Ìæ»»<u>" & fileName & "</u>.",1)
+		CALL Update_ECHO("è·å–é…ç½®" & Index & "(<u>" & fileName & "/" & fileStr & "</u>)å¤±è´¥ï¼šè¯·ä»å®˜æ–¹é‡æ–°ä¸‹è½½åŸæ–‡ä»¶æ›´æ–°å¹¶æ›¿æ¢<u>" & fileName & "</u>.",1)
 	Else
 		SetupRID_1050(1,Index) = f
 		SetupRID_1050(2,Index) = Note
 		SetupRID_1050(3,Index) = GBL_Update_LineStr
 		SetupRID_1050(4,Index) = fStr
-		If SubmitFlag = "" Then CALL Update_ECHO("ÌáÈ¡ÅäÖÃ" & Index & "Íê³É¡£",0)
+		If SubmitFlag = "" Then CALL Update_ECHO("æå–é…ç½®" & Index & "å®Œæˆã€‚",0)
 	End If
 	CurN = CurN + 1
 
@@ -770,7 +770,7 @@ Sub Update_ReplaceFileStr(FileName,OldStr,NewStr)
 		Else
 			fileContent = Replace(fileContent,OldStr,NewStr)
 		End If
-		ADODB_SaveToFile fileContent,DEF_BBS_HomeUrl & FileName
+		Call ADODB_SaveToFile(fileContent,DEF_BBS_HomeUrl & FileName)
 		Response.Write GBL_CHK_TempStr
 	End If
 
@@ -816,7 +816,7 @@ Sub Update_ReplaceFileStr_2(FileName,OldStr_start,OldStr_end,NewStr)
 			reStr = mid(fileContent,startN+len(OldStr_start),endN - (startN+len(OldStr_start)))
 			if OldStr_start & reStr & OldStr_end <> OldStr_start & NewStr & OldStr_end then
 				fileContent = Replace(fileContent,OldStr_start & reStr & OldStr_end,OldStr_start & NewStr & OldStr_end)
-				ADODB_SaveToFile fileContent,DEF_BBS_HomeUrl & FileName
+				Call ADODB_SaveToFile(fileContent,DEF_BBS_HomeUrl & FileName)
 				Response.Write GBL_CHK_TempStr
 				ChangeFlag = 1
 			else
@@ -874,7 +874,7 @@ End Sub
 Function Update_CreateFolder(folder)
 
 	If FSFlag = 0 Then
-		CALL Update_ECHO("¿Õ¼ä²»Ö§³ÖFSO,Ä¿Â¼²Ù×÷ºöÂÔ.",1)
+		CALL Update_ECHO("ç©ºé—´ä¸æ”¯æŒFSO,ç›®å½•æ“ä½œå¿½ç•¥.",1)
 		Exit Function
 	End If
 	Dim FS
@@ -1037,7 +1037,7 @@ Function ADODB_LoadFile(ByVal File)
 	If FSFlag = 1 Then
 		Set WriteFile = fs.OpenTextFile(Server.MapPath(File),1,True)
 		If Err Then
-			GBL_CHK_TempStr = "<br>¶ÁÈ¡ÎÄ¼şÊ§°Ü£º" & err.description & "<br>ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞ¶ÁÈ¡È¨ÏŞ."
+			GBL_CHK_TempStr = "<br>è¯»å–æ–‡ä»¶å¤±è´¥ï¼š" & err.description & "<br>å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰è¯»å–æƒé™."
 			err.Clear
 			Set Fs = Nothing
 			Exit Function
@@ -1045,7 +1045,7 @@ Function ADODB_LoadFile(ByVal File)
 		If Not WriteFile.AtEndOfStream Then
 			ADODB_LoadFile = WriteFile.ReadAll
 			If Err Then
-				GBL_CHK_TempStr = "¶ÁÈ¡ÎÄ¼şÊ§°Ü£º<p>" & err.description & "</p> ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞ¶ÁÈ¡È¨ÏŞ."
+				GBL_CHK_TempStr = "è¯»å–æ–‡ä»¶å¤±è´¥ï¼š<p>" & err.description & "</p> å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰è¯»å–æƒé™."
 				err.Clear
 				Set Fs = Nothing
 				Exit Function
@@ -1056,7 +1056,7 @@ Function ADODB_LoadFile(ByVal File)
 	Else
 		Set objStream = Server.CreateObject("ADODB.Stream")
 		If Err.Number=-2147221005 Then 
-			GBL_CHK_TempStr = "ÄúµÄÖ÷»ú²»Ö§³ÖADODB.Stream£¬ÎŞ·¨Íê³É²Ù×÷£¬ÇëÊÖ¹¤½øĞĞ"
+			GBL_CHK_TempStr = "æ‚¨çš„ä¸»æœºä¸æ”¯æŒADODB.Streamï¼Œæ— æ³•å®Œæˆæ“ä½œï¼Œè¯·æ‰‹å·¥è¿›è¡Œ"
 			Err.Clear
 			Set objStream = Nothing
 			Exit Function
@@ -1066,7 +1066,7 @@ Function ADODB_LoadFile(ByVal File)
 			.Mode = 3
 			.Open
 			.LoadFromFile Server.MapPath(File)
-			.Charset = "gb2312"
+			.Charset = "utf-8"
 			.Position = 2
 			ADODB_LoadFile = .ReadText
 			.Close
@@ -1074,7 +1074,7 @@ Function ADODB_LoadFile(ByVal File)
 		Set objStream = Nothing
 	End If
 	If Err Then
-		GBL_CHK_TempStr = "´íÎóĞÅÏ¢£º<p>" & err.description & "</p>ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞ¶ÁÈ¡È¨ÏŞ."
+		GBL_CHK_TempStr = "é”™è¯¯ä¿¡æ¯ï¼š<p>" & err.description & "</p>å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰è¯»å–æƒé™."
 		err.Clear
 		Set Fs = Nothing
 		Exit Function
@@ -1082,7 +1082,7 @@ Function ADODB_LoadFile(ByVal File)
 
 End Function
 
-'´æ´¢ÄÚÈİµ½ÎÄ¼ş
+'å­˜å‚¨å†…å®¹åˆ°æ–‡ä»¶
 Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 
 	On Error Resume Next
@@ -1107,7 +1107,7 @@ Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 	Else
 		Set objStream = Server.CreateObject("ADODB.Stream")
 		If Err.Number=-2147221005 Then 
-			GBL_CHK_TempStr = "ÄúµÄÖ÷»ú²»Ö§³ÖADODB.Stream£¬ÎŞ·¨Íê³É²Ù×÷£¬ÇëÊÖ¹¤½øĞĞ"
+			GBL_CHK_TempStr = "æ‚¨çš„ä¸»æœºä¸æ”¯æŒADODB.Streamï¼Œæ— æ³•å®Œæˆæ“ä½œï¼Œè¯·æ‰‹å·¥è¿›è¡Œ"
 			Err.Clear
 			Set objStream = Nothing
 			Exit Sub
@@ -1115,7 +1115,7 @@ Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 		With objStream
 			.Type = 2
 			.Open
-			.Charset = "gb2312"
+			.Charset = "utf-8"
 			.Position = objStream.Size
 			.WriteText = strBody
 			.SaveToFile Server.MapPath(File),2
@@ -1124,7 +1124,7 @@ Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 		Set objStream = Nothing
 	End If
 	If Err Then
-		GBL_CHK_TempStr = "´íÎóĞÅÏ¢£º<p>" & err.description & "</p>ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞĞ´ÈëÈ¨ÏŞ."
+		GBL_CHK_TempStr = "é”™è¯¯ä¿¡æ¯ï¼š<p>" & err.description & "</p>å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰å†™å…¥æƒé™."
 		err.Clear
 		Set Fs = Nothing
 		Exit Sub
@@ -1133,7 +1133,7 @@ Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 End Sub
 
 
-'´æ´¢ÄÚÈİµ½ÎÄ¼ş
+'å­˜å‚¨å†…å®¹åˆ°æ–‡ä»¶
 Sub ADODB_SaveToFileBinary(ByVal strBody,ByVal File)
 
 	On Error Resume Next
@@ -1141,7 +1141,7 @@ Sub ADODB_SaveToFileBinary(ByVal strBody,ByVal File)
 	
 		Set objStream = Server.CreateObject("ADODB.Stream")
 		If Err.Number=-2147221005 Then 
-			GBL_CHK_TempStr = "ÄúµÄÖ÷»ú²»Ö§³ÖADODB.Stream£¬ÎŞ·¨Íê³É²Ù×÷£¬ÇëÊÖ¹¤½øĞĞ"
+			GBL_CHK_TempStr = "æ‚¨çš„ä¸»æœºä¸æ”¯æŒADODB.Streamï¼Œæ— æ³•å®Œæˆæ“ä½œï¼Œè¯·æ‰‹å·¥è¿›è¡Œ"
 			Err.Clear
 			Set objStream = Nothing
 			Exit Sub
@@ -1149,7 +1149,7 @@ Sub ADODB_SaveToFileBinary(ByVal strBody,ByVal File)
 		With objStream
 			.Type = 1
 			.Open
-			'.Charset = "gb2312"
+			'.Charset = "utf-8"
 			.Position = objStream.Size
 			.Write = strBody
 			.SaveToFile Server.MapPath(File),2
@@ -1157,12 +1157,12 @@ Sub ADODB_SaveToFileBinary(ByVal strBody,ByVal File)
 		End With
 		Set objStream = Nothing
 	If Err Then
-		GBL_CHK_TempStr = "´íÎóĞÅÏ¢£º<p>" & err.description & "</p>ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞĞ´ÈëÈ¨ÏŞ."
+		GBL_CHK_TempStr = "é”™è¯¯ä¿¡æ¯ï¼š<p>" & err.description & "</p>å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰å†™å…¥æƒé™."
 		err.Clear
 		Set Fs = Nothing
 		Exit Sub
 	End If
-	Response.Write "<span class=grayfont>ÎÄ¼ş³¤¶È:" & LenB(strBody) & " Bytes</span>"
+	Response.Write "<span class=grayfont>æ–‡ä»¶é•¿åº¦:" & LenB(strBody) & " Bytes</span>"
 
 End Sub
 
@@ -1175,28 +1175,28 @@ Sub Update_SetupFilePara
 <input type=hidden name=startflag value="1">
 <br />
 <p>
-		<b>ÉèÖÃ£º<span class=grayfont>ÂÛÌ³À©Õ¹²ÎÊıÉèÖÃ</span></b>
+		<b>è®¾ç½®ï¼š<span class=grayfont>è®ºå›æ‰©å±•å‚æ•°è®¾ç½®</span></b>
 		<br>
-		<span class=grayfont>(ÏÂÃæÎªÍøÕ¾²ÎÊı£¬Çë×¢ÒâĞŞ¸Ä£¬´íÎóµÄÉèÖÃ½«»á·¢ÉúÑÏÖØ´íÎó)<br><br>
-		Çë²Î¿¼×¢ÊÍĞŞ¸Ä²ÎÊı£¬<span class=redfont>Ò»Ğ©ÉèÖÃÖµÎª×Ö·û´®µÄ£¬×¢Òâ±£Áôµ¥½ÇË«ÒıºÅ</font>¡£</span>
+		<span class=grayfont>(ä¸‹é¢ä¸ºç½‘ç«™å‚æ•°ï¼Œè¯·æ³¨æ„ä¿®æ”¹ï¼Œé”™è¯¯çš„è®¾ç½®å°†ä¼šå‘ç”Ÿä¸¥é‡é”™è¯¯)<br><br>
+		è¯·å‚è€ƒæ³¨é‡Šä¿®æ”¹å‚æ•°ï¼Œ<span class=redfont>ä¸€äº›è®¾ç½®å€¼ä¸ºå­—ç¬¦ä¸²çš„ï¼Œæ³¨æ„ä¿ç•™å•è§’åŒå¼•å·</font>ã€‚</span>
 </p>
 <%
 If Request.Form("SubmitFlag") = "yes" Then
-	Update_SetupFilePara_CheckLinkValue
+	Update_SetupFilePara_CheckLinkValue()
 End If%>
 <b><span class=redfont><%=GBL_CHK_TempStr%></span></b>
 <%
 If Request.Form("SubmitFlag") = "yes" Then
 	If GBL_CHK_TempStr <> "" Then
-		Update_SetupFilePara_Form
+		Update_SetupFilePara_Form()
 	Else
-		Update_CloseSite 'ÉèÖÃÓĞ´óÁ¿µÄi/o£¬ĞèÒªÔİÍ£ÂÛÌ³
-		Update_SetupFilePara_RefreshValue
-		Update_OpenSite
+		Update_CloseSite 'è®¾ç½®æœ‰å¤§é‡çš„i/oï¼Œéœ€è¦æš‚åœè®ºå›
+		Update_SetupFilePara_RefreshValue()
+		Update_OpenSite()
 		Exit Sub
 	End If
 Else
-	Update_SetupFilePara_Form
+	Update_SetupFilePara_Form()
 End If
 %>
 </form>
@@ -1227,7 +1227,7 @@ Sub Update_SetupFilePara_Form
 		End If
 		%>
 		<tr>
-			<td class=tdbox width=90><a name="paraitem<%=N%>">ÅäÖÃÏî<%=N%></a></td>
+			<td class=tdbox width=90><a name="paraitem<%=N%>">é…ç½®é¡¹<%=N%></a></td>
 			<td class=tdbox><input class=fminpt type="text" name="Form_SetupRID_<%=N%>" maxlength="2048" size="45" value="<%
 			if SetupRID_1050(0,N) = """""" then
 				Response.Write server.htmlencode(SetupRID_1050(0,N))
@@ -1240,8 +1240,8 @@ Sub Update_SetupFilePara_Form
 	Next%>
 	<td class=tdbox>&nbsp;</td>
 	<td class=tdbox>
-		<input type=submit name=Ìá½» value=Ìá½» class=fmbtn>
-		<input type=reset name=È¡Ïû value=È¡Ïû class=fmbtn>
+		<input type=submit name=æäº¤ value=æäº¤ class=fmbtn>
+		<input type=reset name=å–æ¶ˆ value=å–æ¶ˆ class=fmbtn>
 	</td>
 	</tr>
 	</table>
@@ -1255,21 +1255,21 @@ Sub Update_SetupFilePara_CheckLinkValue
 		Val = Request("Form_SetupRID_" & N)
 		Val = Replace(Replace(Val,chr(13),""),chr(10),"")
 		If Val = "" Then
-			GBL_CHK_TempStr = "ÅäÖÃÏî" & N & " ±ØĞëÌîĞ´"
+			GBL_CHK_TempStr = "é…ç½®é¡¹" & N & " å¿…é¡»å¡«å†™"
 			Exit Sub
 		End If
 		If inStr(Val,"<" & "%") > 0 or inStr(Val,"%" & ">") > 0 Then
-			GBL_CHK_TempStr = "ÅäÖÃÏî" & N & " ÌîĞ´´íÎó£¬²»ÄÜ°üÀ¨Ò»Ğ©ÆÁ±Î×Ö´®¡£"
+			GBL_CHK_TempStr = "é…ç½®é¡¹" & N & " å¡«å†™é”™è¯¯ï¼Œä¸èƒ½åŒ…æ‹¬ä¸€äº›å±è”½å­—ä¸²ã€‚"
 			Exit Sub
 		End If
 		
 		If inStr(SetupRID_1050(0,N),"""") > 0 Then
 			If Len(Val) > 1024 Then
-				GBL_CHK_TempStr = "ÅäÖÃÏî" & N & " ¹ı³¤¡£"
+				GBL_CHK_TempStr = "é…ç½®é¡¹" & N & " è¿‡é•¿ã€‚"
 				Exit Sub
 			End If
 			'If Left(Val,1) <> """" or Right(Val,1) <> """" Then
-			'	GBL_CHK_TempStr = "ÅäÖÃÏî" & N & " ´íÎó£¬´ËÖµÎª×Ö·û´®£¬±ØĞëÇ°ºóÊ¹ÓÃµ¥ÒıºÅ¡£"
+			'	GBL_CHK_TempStr = "é…ç½®é¡¹" & N & " é”™è¯¯ï¼Œæ­¤å€¼ä¸ºå­—ç¬¦ä¸²ï¼Œå¿…é¡»å‰åä½¿ç”¨å•å¼•å·ã€‚"
 			'	Exit Sub
 			'End If
 			if Val = """" then Val = ""
@@ -1282,7 +1282,7 @@ Sub Update_SetupFilePara_CheckLinkValue
 			Val = """" & tmp & """"
 		Else
 			If isNumeric(Val) = 0 or Len(Val) > 12 Then
-				GBL_CHK_TempStr = "ÅäÖÃÏî" & N & " ´íÎó£¬´ËÖµ±ØĞëÎªÕıÈ·µÄÊı×Ö¡£"
+				GBL_CHK_TempStr = "é…ç½®é¡¹" & N & " é”™è¯¯ï¼Œæ­¤å€¼å¿…é¡»ä¸ºæ­£ç¡®çš„æ•°å­—ã€‚"
 				Exit Sub
 			End If
 			Val = cCur(Val)
@@ -1328,7 +1328,7 @@ Sub Update_SetupFilePara_RefreshValue
 		saveData = filename & " | " & SetupRID_1050(2,N)
 		CALL Update_InsertSetupRID(RID,ValueStr,ClassNum,saveData," and ClassNum=" & N)
 	Next
-	CALL Update_ECHO("<br /><b><font color=green>³É¹¦Íê³ÉÊÖ¶¯ÅäÖÃ¡£</b></font>",1)
+	CALL Update_ECHO("<br /><b><font color=green>æˆåŠŸå®Œæˆæ‰‹åŠ¨é…ç½®ã€‚</b></font>",1)
 
 End Sub
 
@@ -1344,13 +1344,13 @@ Sub Update_CheckVersion
 		Update = BytesToBstr(Update_GetInternetFile(NetUrl & "update.txt"))
 		
 		If Right(Update,Len(CheckEndString)) <> CheckEndString Then
-			CALL Update_ECHO("<div class=alert>¿ÉÄÜÒòÍøÂçÎÊÌâÎŞ·¨Á¬½Ó¸üĞÂ·şÎñÆ÷£¬²Ù×÷ÖĞÖ¹¡£</div>",0)
+			CALL Update_ECHO("<div class=alert>å¯èƒ½å› ç½‘ç»œé—®é¢˜æ— æ³•è¿æ¥æ›´æ–°æœåŠ¡å™¨ï¼Œæ“ä½œä¸­æ­¢ã€‚</div>",0)
 			Exit Sub
 		End If
 	End If
 	Update = Split(Update,VbCrLf)
 	
-	CALL Update_ECHO("<div class=alertdone>¿ªÊ¼¼ì²âÊÇ·ñÓĞ²¹¶¡¸üĞÂ¡£¡£¡£</div>",0)
+	CALL Update_ECHO("<div class=alertdone>å¼€å§‹æ£€æµ‹æ˜¯å¦æœ‰è¡¥ä¸æ›´æ–°ã€‚ã€‚ã€‚</div>",0)
 	Dim UpdateFlag
 	UpdateFlag = 0
 	For M = 0 to Ubound(Update,1)
@@ -1367,15 +1367,15 @@ Sub Update_CheckVersion
 			If isNumeric(CurFile_Name) = 0 Then CurFile_Name = 0
 			CurFile_Name = cCur(CurFile_Name)
 			If CurFile_Name > cCur(GBL_UpdateVersion) Then
-				CALL Update_ECHO("<div class=alertdone>¼ì²âµ½ĞÂ²¹¶¡<u>" & CurFile_Name & "</u><span class=redfont>" & CurFile_Intro & "</span></div>",0)
+				CALL Update_ECHO("<div class=alertdone>æ£€æµ‹åˆ°æ–°è¡¥ä¸<u>" & CurFile_Name & "</u><span class=redfont>" & CurFile_Intro & "</span></div>",0)
 				UpdateFlag = 1
 			End If
 		End If
 	Next
 	If UpdateFlag = 0 Then
-		CALL Update_ECHO("<div class=alertdone>¼ì²â½áÊø£¬ÄúµÄÂÛÌ³ÒÑÊÇ×îĞÂ°æ±¾£¬ÎŞĞè¸üĞÂ¡£</div>",0)
+		CALL Update_ECHO("<div class=alertdone>æ£€æµ‹ç»“æŸï¼Œæ‚¨çš„è®ºå›å·²æ˜¯æœ€æ–°ç‰ˆæœ¬ï¼Œæ— éœ€æ›´æ–°ã€‚</div>",0)
 	Else
-		CALL Update_ECHO("<div class=alertdone>¼ì²âÍê³É£¬Çëµã»÷×óÀ¸µÄ²¹¶¡¸üĞÂ¿ªÊ¼¸üĞÂ¡£</div>",0)
+		CALL Update_ECHO("<div class=alertdone>æ£€æµ‹å®Œæˆï¼Œè¯·ç‚¹å‡»å·¦æ çš„è¡¥ä¸æ›´æ–°å¼€å§‹æ›´æ–°ã€‚</div>",0)
 	End If
 
 End Sub
@@ -1391,13 +1391,13 @@ Sub Update62_CopyFile
 		Update = BytesToBstr(Update_GetInternetFile(NetUrl & "update.txt"))
 		
 		If Right(Update,Len(CheckEndString)) <> CheckEndString Then
-			CALL Update_ECHO("<div class=alert>¿ÉÄÜÒòÍøÂçÎÊÌâÎŞ·¨Á¬½Ó¸üĞÂ·şÎñÆ÷£¬²Ù×÷ÖĞÖ¹¡£</div>",0)
+			CALL Update_ECHO("<div class=alert>å¯èƒ½å› ç½‘ç»œé—®é¢˜æ— æ³•è¿æ¥æ›´æ–°æœåŠ¡å™¨ï¼Œæ“ä½œä¸­æ­¢ã€‚</div>",0)
 			Exit Sub
 		End If
 	End If
 	Update = Split(Update,VbCrLf)
 	
-	CALL Update_ECHO("<div class=alertdone>¿ªÊ¼¼ì²âĞÂ²¹¶¡²¢×¼±¸²¹¶¡¸üĞÂ¡£¡£¡£</div>",0)
+	CALL Update_ECHO("<div class=alertdone>å¼€å§‹æ£€æµ‹æ–°è¡¥ä¸å¹¶å‡†å¤‡è¡¥ä¸æ›´æ–°ã€‚ã€‚ã€‚</div>",0)
 	Dim UpdateFlag
 	UpdateFlag = 0
 	For M = 0 to Ubound(Update,1)
@@ -1414,7 +1414,7 @@ Sub Update62_CopyFile
 			If isNumeric(CurFile_Name) = 0 Then CurFile_Name = 0
 			CurFile_Name = cCur(CurFile_Name)
 			If CurFile_Name > cCur(GBL_UpdateVersion) Then
-				CALL Update_ECHO("<div class=alertdone>¸üĞÂ²¹¶¡<u>" & CurFile_Name & "</u><span class=grayfont>" & CurFile_Intro & "</span>¡£</div>",0)
+				CALL Update_ECHO("<div class=alertdone>æ›´æ–°è¡¥ä¸<u>" & CurFile_Name & "</u><span class=grayfont>" & CurFile_Intro & "</span>ã€‚</div>",0)
 				If NetFlag = 0 Then
 					FileList = ADODB_LoadFile(NativeDir & CurFile_Name & ".txt")
 				Else
@@ -1427,28 +1427,28 @@ Sub Update62_CopyFile
 				RID = 1002
 				ValueStr = GBL_UpdateVersion
 				ClassNum = 0
-				saveData = "ÄÚ²¿°æ±¾ºÅ"
+				saveData = "å†…éƒ¨ç‰ˆæœ¬å·"
 				CALL Update_InsertSetupRID(RID,ValueStr,ClassNum,saveData," and ClassNum=0")
-				CALL Update_ECHO("³õÊ¼»¯ÄÚ²¿°æ±¾ºÅÎª<u>" & ValueStr & "</u>",0)
+				CALL Update_ECHO("åˆå§‹åŒ–å†…éƒ¨ç‰ˆæœ¬å·ä¸º<u>" & ValueStr & "</u>",0)
 				If UpdateFlag = 0 Then Update_CloseSite
 				UpdateFlag = 1
 				
 				If Update_UpdateFileFlag = 1 Then
-					Update_OpenSite
-					CloseDatabase
-					CALL Update_ECHO("<div class=alert>¸üĞÂÄ£¿é»ñµÃ¸üĞÂ£¬¸üĞÂÇ¿ÖÆÖÕÖ¹£¬¿Éµã»÷ÓÒ²à¸üĞÂ¹¦ÄÜ¼ÌĞø°æ±¾¸üĞÂ¡£</div>",0)
-					Update_PageBottom
-					pageend
+					Update_OpenSite()
+					CloseDatabase()
+					CALL Update_ECHO("<div class=alert>æ›´æ–°æ¨¡å—è·å¾—æ›´æ–°ï¼Œæ›´æ–°å¼ºåˆ¶ç»ˆæ­¢ï¼Œå¯ç‚¹å‡»å³ä¾§æ›´æ–°åŠŸèƒ½ç»§ç»­ç‰ˆæœ¬æ›´æ–°ã€‚</div>",0)
+					Update_PageBottom()
+					pageend()
 				End If
 			End If
 		End If
 	Next
 	If UpdateFlag = 0 Then
-		CALL Update_ECHO("<div class=alertdone>¾­¼ì²âÄúµÄÂÛÌ³ÒÑÊÇ×îĞÂ°æ±¾£¬ÎŞĞè¸üĞÂ¡£</div>",0)
+		CALL Update_ECHO("<div class=alertdone>ç»æ£€æµ‹æ‚¨çš„è®ºå›å·²æ˜¯æœ€æ–°ç‰ˆæœ¬ï¼Œæ— éœ€æ›´æ–°ã€‚</div>",0)
 	Else
-		Update_OpenSite
-		CALL Update_ECHO("<div class=alertdone>²¹¶¡ÒÑÍê³É¸üĞÂ£¬ÏÂÃæÖØĞÂ¿ªÊ¼¼ì²âÂÛÌ³ÅäÖÃ¡£</div>",0)
-		Update62_initBBSdata
+		Update_OpenSite()
+		CALL Update_ECHO("<div class=alertdone>è¡¥ä¸å·²å®Œæˆæ›´æ–°ï¼Œä¸‹é¢é‡æ–°å¼€å§‹æ£€æµ‹è®ºå›é…ç½®ã€‚</div>",0)
+		Update62_initBBSdata()
 	End If
 
 End Sub
@@ -1457,7 +1457,7 @@ Sub Update_CloseSite
 
 	Application.Lock
 	application(DEF_MasterCookies & "SiteEnableFlagzoieiu") = 0
-	application(DEF_MasterCookies & "SiteDisbleWhyszoieiu") = "<html><body>ÂÛÌ³´¦ÓÚÉı¼¶×´Ì¬£¬ÇëÉÔºò·ÃÎÊ¡£Èô³¤Ê±¼äÎŞ·¨·ÃÎÊ£¬ÇëÁªÏµ¹ÜÀíÔ±¡£</body></html>"
+	application(DEF_MasterCookies & "SiteDisbleWhyszoieiu") = "<html><body>è®ºå›å¤„äºå‡çº§çŠ¶æ€ï¼Œè¯·ç¨å€™è®¿é—®ã€‚è‹¥é•¿æ—¶é—´æ— æ³•è®¿é—®ï¼Œè¯·è”ç³»ç®¡ç†å‘˜ã€‚</body></html>"
 	Application.UnLock
 
 End Sub
@@ -1479,9 +1479,9 @@ function LD_GetUrl(dir)
 	dim p : p = Request.ServerVariables("SERVER_PORT")
 	if p <> "80" Then d = d & Server.UrlEncode(p)
 	
-	if dir = 1 then '·µ»ØÂÛÌ³°²×°Ä¿Â¼
+	if dir = 1 then 'è¿”å›è®ºå›å®‰è£…ç›®å½•
 		d = d & DEF_Installdir
-	elseif dir = 2 then '·µ»Øµ±Ç°ÎÄ¼şurl
+	elseif dir = 2 then 'è¿”å›å½“å‰æ–‡ä»¶url
 		d = d & Request.Servervariables("SCRIPT_NAME")
 	else
 		d = ""
@@ -1518,7 +1518,7 @@ Sub Update_ExeCuteCopyFIle(str)
 	Dim Extend,LineDir_Bak,NoteInfo,LineDir_truestr
 	dim FSize,sizetmp
 	
-	'¼ÇÂ¼µ±Ç°¸üĞÂ½ø¶È
+	'è®°å½•å½“å‰æ›´æ–°è¿›åº¦
 	dim cur_update : cur_update = Application(DEF_MasterCookies & "_cur_update") & ""
 	
 	Response.Write "cur_update:" & cur_update
@@ -1583,9 +1583,9 @@ Sub Update_ExeCuteCopyFIle(str)
 								if FSize > 0 then
 									sizetmp = strlength(GData)
 									if sizetmp <> FSize then
-										CALL Update_ECHO("<div class=alert>»ñÈ¡µÄÎÄ¼ş" & server.htmlencode(LineDir_Bak) & "´óĞ¡ÑéÖ¤´íÎó£¬Ô­´óĞ¡" & Fsize & "×Ö½Ú£¬µ±Ç°" & sizetmp & "×Ö½Ú£¬¿ÉÄÜÍøÂçÒì³£»òÆäËüÔ­Òò.</div>",0)
-										closedatabase
-										pageend								
+										CALL Update_ECHO("<div class=alert>è·å–çš„æ–‡ä»¶" & server.htmlencode(LineDir_Bak) & "å¤§å°éªŒè¯é”™è¯¯ï¼ŒåŸå¤§å°" & Fsize & "å­—èŠ‚ï¼Œå½“å‰" & sizetmp & "å­—èŠ‚ï¼Œå¯èƒ½ç½‘ç»œå¼‚å¸¸æˆ–å…¶å®ƒåŸå› .</div>",0)
+										closedatabase()
+										pageend()
 									end if
 								end if
 								ADODB_SaveToFile GData,DEF_BBS_HomeUrl & LineDir
@@ -1595,9 +1595,9 @@ Sub Update_ExeCuteCopyFIle(str)
 								if FSize > 0 then
 									sizetmp = lenb(GData)
 									if sizetmp <> FSize then
-										CALL Update_ECHO("<div class=alert>»ñÈ¡µÄÎÄ¼ş" & server.htmlencode(LineDir_Bak) & "´óĞ¡ÑéÖ¤´íÎó£¬Ô­´óĞ¡" & Fsize & "×Ö½Ú£¬µ±Ç°" & sizetmp & "×Ö½Ú£¬¿ÉÄÜÍøÂçÒì³£»òÆäËüÔ­Òò.</div>",0)
-										closedatabase
-										pageend								
+										CALL Update_ECHO("<div class=alert>è·å–çš„æ–‡ä»¶" & server.htmlencode(LineDir_Bak) & "å¤§å°éªŒè¯é”™è¯¯ï¼ŒåŸå¤§å°" & Fsize & "å­—èŠ‚ï¼Œå½“å‰" & sizetmp & "å­—èŠ‚ï¼Œå¯èƒ½ç½‘ç»œå¼‚å¸¸æˆ–å…¶å®ƒåŸå› .</div>",0)
+										closedatabase()
+										pageend()
 									end if
 								end if
 								ADODB_SaveToFileBinary GData,DEF_BBS_HomeUrl & LineDir
@@ -1636,8 +1636,8 @@ Sub Update_ExeCuteCopyFIle(str)
 					CALL DelFile(LineDir,0)
 					CALL Update_ECHO(NoteInfo,0)
 				case "rep":
-				'¸ñÊ½ rep ÎÄ¼ş~~~split~~~¿ªÍ·´®~~~split~~~½á¾Ö´®~~~split~~~Ä¿±ê´®
-				'¹¦ÄÜ:½« ÎÄ¼ş ÖĞµÄ¿ªÍ·´®µ½½á¾Ö´®Ö®¼äµÄ×Ö·û´®Ìæ»»ÎªÄ¿±ê´®
+				'æ ¼å¼ rep æ–‡ä»¶~~~split~~~å¼€å¤´ä¸²~~~split~~~ç»“å±€ä¸²~~~split~~~ç›®æ ‡ä¸²
+				'åŠŸèƒ½:å°† æ–‡ä»¶ ä¸­çš„å¼€å¤´ä¸²åˆ°ç»“å±€ä¸²ä¹‹é—´çš„å­—ç¬¦ä¸²æ›¿æ¢ä¸ºç›®æ ‡ä¸²
 					dim repstr
 					repstr = replace(ListIndex(N),"rep ","")
 					dim repArray
@@ -1649,7 +1649,7 @@ Sub Update_ExeCuteCopyFIle(str)
 					end if
 				case "ver":
 					CALL LDExeCute("Update LeadBBS_SiteInfo Set Version='" & replace(replace(LineDir_truestr,"~"," "),"'","''") & "'",1)
-					ReloadVesion					
+					ReloadVesion()
 					call Update_ReplaceFileStr_2("inc/bbssetup.asp","DEF_Version = """,VbCrLf & "Const DEF_LineHeight = ",replace(replace(LineDir_truestr,"~"," "),"'","''") & """")
 
 				case "sql":
@@ -1662,9 +1662,9 @@ Sub Update_ExeCuteCopyFIle(str)
 					End If
 					If inStr(sqlfile,"-@-@-split-@-@-") = 0 Then
 						CALL Update_ECHO(NoteInfo,0)
-						CALL Update_ECHO("<div class=alert>ÎŞ·¨»ñÈ¡¸üĞÂÎÄ¼ş£¬ÒÔÏÂÎª´íÎóĞÅÏ¢£º.</div><div class=errwindows>" & sqlfile & "</div>",0)
-						closedatabase
-						pageend
+						CALL Update_ECHO("<div class=alert>æ— æ³•è·å–æ›´æ–°æ–‡ä»¶ï¼Œä»¥ä¸‹ä¸ºé”™è¯¯ä¿¡æ¯ï¼š.</div><div class=errwindows>" & sqlfile & "</div>",0)
+						closedatabase()
+						pageend()
 					end if
 					sqlfile = split(sqlfile,"-@-@-split-@-@-")
 					if Ubound(sqlfile)>=1 Then
@@ -1855,7 +1855,7 @@ Function BytesToBstr(body)
 	.Write body 
 	.Position = 0
 	.Type = 2
-	.Charset = "GB2312"
+	.Charset = "utf-8"
 	
 	'.Charset = "UTF-8"
 	BytesToBstr = .ReadText
@@ -1884,11 +1884,11 @@ Function Update_GetInternetFile(ur)
 	on error resume next
 	xmlHttp.send()
 	If Err Then
-		Response.Write "<p>´íÎóÃèÊö: <font color=red>" & err.description & "</font></p>"
+		Response.Write "<p>é”™è¯¯æè¿°: <font color=red>" & err.description & "</font></p>"
 		Err.clear
 		Update_GetInternetFile = "err"
-		closedatabase
-		pageend
+		closedatabase()
+		pageend()
 		Exit Function
 	End If
 
@@ -1896,15 +1896,15 @@ Function Update_GetInternetFile(ur)
 		if xmlHttp.status=200 Then
 			Update_GetInternetFile = xmlhttp.Responsebody
 		else
-			CALL Update_ECHO("<div class=alert>ÎŞ·¨»ñÈ¡Ïà¹ØÎÄ¼ş" & server.htmlencode(ur) & "£¬´íÎóĞÅÏ¢:" & xmlHttp.status & "£¬¸üĞÂÖĞÖ¹.</div>",0)
-			closedatabase
-			pageend
+			CALL Update_ECHO("<div class=alert>æ— æ³•è·å–ç›¸å…³æ–‡ä»¶" & server.htmlencode(ur) & "ï¼Œé”™è¯¯ä¿¡æ¯:" & xmlHttp.status & "ï¼Œæ›´æ–°ä¸­æ­¢.</div>",0)
+			closedatabase()
+			pageend()
 		end if 
 	Else 
 		Update_GetInternetFile = "err"
-		CALL Update_ECHO("<div class=alert>ÎŞ·¨»ñÈ¡ÒÔÏÂÎÄ¼ş£¬¸üĞÂÖĞÖ¹£º" & htmlencode(ur) & ".</div>",0)
-		closedatabase
-		pageend
+		CALL Update_ECHO("<div class=alert>æ— æ³•è·å–ä»¥ä¸‹æ–‡ä»¶ï¼Œæ›´æ–°ä¸­æ­¢ï¼š" & htmlencode(ur) & ".</div>",0)
+		closedatabase()
+		pageend()
 	End If
 	Set xmlHttp = Nothing
 
@@ -2000,7 +2000,7 @@ function AlterTableColumn(PathName,TableName,ColumnName,flag,val)
 
 	'conn.close
 	'set Conn=nothing
-	AlterTableColumn = "Êı¾İ±í"&tablename&"±íÖĞ×Ö¶Î "&ColumnName&" ĞŞ¸Ä³£ÓÃÊôĞÔÍê³É."
+	AlterTableColumn = "æ•°æ®è¡¨"&tablename&"è¡¨ä¸­å­—æ®µ "&ColumnName&" ä¿®æ”¹å¸¸ç”¨å±æ€§å®Œæˆ."
 
 End function
 
@@ -2010,7 +2010,7 @@ Function StrLength(str)
 		StrLength = 0
 		Exit function
 	End If
-	If len("Àı×Ó") = 2 then
+	If len("ä¾‹å­") = 2 then
 		Dim l,t,c,i
 		l=len(str)
 		t=l

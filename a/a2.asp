@@ -1,29 +1,30 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/User_Setup.ASP -->
-<!-- #include file=../inc/Ubbcode.asp -->
-<!-- #include file=../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/Constellation.asp -->
-<!-- #include file=inc/MakeAnnounceTop.asp -->
-<!-- #include file=../inc/Limit_Fun.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Upload_Setup.asp"-->
+<!--#include file="../inc/User_Setup.ASP"-->
+<!--#include file="../inc/Ubbcode.asp"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/Constellation.asp"-->
+<!--#include file="inc/MakeAnnounceTop.asp"-->
+<!--#include file="../inc/Limit_Fun.asp"-->
 <%DEF_BBS_HomeUrl = "../"%>
-<!-- #include file=inc/Editor_Fun.asp -->
-<!-- #include file=../inc/Upload_Fun.asp -->
-<!-- #include file=inc/upload1_fun.asp -->
-<!-- #include file=../User/inc/Fun_SendMessage.asp -->
-<!-- #include file=../app/qqlogin/oauth.asp -->
-<!-- #include file=../User/inc/Bind_Fun.asp -->
-<!-- #include file=inc/get_remote_pic_fun.asp -->
+<!--#include file="inc/Editor_Fun.asp"-->
+<!--#include file="../inc/Upload_Fun.asp"-->
+<!--#include file="inc/upload1_fun.asp"-->
+<!--#include file="../User/inc/Fun_SendMessage.asp"-->
+<!--#include file="../app/qqlogin/oauth.asp"-->
+<!--#include file="../User/inc/Bind_Fun.asp"-->
+<!--#include file="inc/get_remote_pic_fun.asp"-->
 <%
-Const LMT_EnableOtherGuestName = 0 '¿ª·ÅÂÛÌ³ÊÇ·ñÔÊĞíÊ¹ÓÃ"ÓÎ¿Í"ÒÔÍâµÄÃû×Ö
-Const LMT_BuyAnnounceMaxPoints = 9 '¹ºÂòÌûÏûºÄµÄ×î´ó»ı·Ö
+Const LMT_EnableOtherGuestName = 0 'å¼€æ”¾è®ºå›æ˜¯å¦å…è®¸ä½¿ç”¨"æ¸¸å®¢"ä»¥å¤–çš„åå­—
+Const LMT_BuyAnnounceMaxPoints = 9 'è´­ä¹°å¸–æ¶ˆè€—çš„æœ€å¤§ç§¯åˆ†
 
 Dim LMT_EnableUpload
-Const LMTDEF_MaxReAnnounce = 1500 'ÔÊĞíµÄ×î´ó»Ø¸´ÌûÊı
-Const LMTDEF_MinAnnounceLength = 2 '·¢ÌûĞèÒª×îÉÙ×ÖÊı
-Const LMTDEF_NotReplyDate = 120 '×îºó»Ø¸´Ê±¼äÖÁ½ñ¸ßÓÚ¶àÉÙÌìµÄÌû×ÓÔò½ûÖ¹»Ø¸´,¶Ô°æÖ÷¼°ÒÔÉÏÎŞĞ§
-Const LMTDEF_NeedCachetValue = 1 'Éè¶¨¶àÉÙÍşÍûÓÃ»§¿ÉÒÔ×Ô¼º¹éÀà×¨Ìâ(·¢ÌûÊ±)
-Const LMTDEF_ColorSpend = 1 'Éè¶¨Ìû×ÓÑÕÉ«ÏûºÄ¶àÉÙ²Æ¸»Öµ
-Const LMTDEF_RepostMsg = 2 '»Ø¸´Ìû×ÓÊÇ·ñÄ¬ÈÏ¶ÌÏûÏ¢Í¨ÖªÌûÖ÷,0£®Ä¬ÈÏ²»Í¨Öª 1.»Ø¸´È«²¿Í¨Öª 2.½ö±»ÒıÓÃÊ±²ÅÍ¨Öª
+Const LMTDEF_MaxReAnnounce = 1500 'å…è®¸çš„æœ€å¤§å›å¤å¸–æ•°
+Const LMTDEF_MinAnnounceLength = 2 'å‘å¸–éœ€è¦æœ€å°‘å­—æ•°
+Const LMTDEF_NotReplyDate = 120 'æœ€åå›å¤æ—¶é—´è‡³ä»Šé«˜äºå¤šå°‘å¤©çš„å¸–å­åˆ™ç¦æ­¢å›å¤,å¯¹ç‰ˆä¸»åŠä»¥ä¸Šæ— æ•ˆ
+Const LMTDEF_NeedCachetValue = 1 'è®¾å®šå¤šå°‘å¨æœ›ç”¨æˆ·å¯ä»¥è‡ªå·±å½’ç±»ä¸“é¢˜(å‘å¸–æ—¶)
+Const LMTDEF_ColorSpend = 1 'è®¾å®šå¸–å­é¢œè‰²æ¶ˆè€—å¤šå°‘è´¢å¯Œå€¼
+Const LMTDEF_RepostMsg = 2 'å›å¤å¸–å­æ˜¯å¦é»˜è®¤çŸ­æ¶ˆæ¯é€šçŸ¥å¸–ä¸»,0ï¼é»˜è®¤ä¸é€šçŸ¥ 1.å›å¤å…¨éƒ¨é€šçŸ¥ 2.ä»…è¢«å¼•ç”¨æ—¶æ‰é€šçŸ¥
 
 Dim A_NotReplay
 Dim Re_ID,Form_TopicSortID,Form_BoardID,Form_RootID
@@ -59,11 +60,11 @@ Form_HTMLFlag = 2
 
 const PageSplitNum = 10
 
-Rem ĞÂ·¢±íÌû×ÓµÄ£É£ÄºÅ
+Rem æ–°å‘è¡¨å¸–å­çš„ï¼©ï¼¤å·
 Dim NewAnnounceID
 NewAnnounceID = 0
 
-rem È¡ºó¸üĞÂµÄÓÃ»§ĞÅÏ¢ ¸ñÊ½¡¡(ÓÃ»§Ãû|êÇ³Æ#ÓÃ»§ID)
+rem å–åæ›´æ–°çš„ç”¨æˆ·ä¿¡æ¯ æ ¼å¼ã€€(ç”¨æˆ·å|æ˜µç§°#ç”¨æˆ·ID)
 Dim GET_LastUser
 
 dim Form_remoteEnable : Form_remoteEnable = 0
@@ -74,11 +75,11 @@ Function DisplayAnnounceForm
 	Temp = GBL_CHK_TempStr
 	GBL_CHK_TempStr = ""
 	If Re_ID = 0 Then
-		CheckBoardAnnounceLimit
+		CheckBoardAnnounceLimit()
 	Else
-		CheckBoardReAnnounceLimit
+		CheckBoardReAnnounceLimit()
 	End If
-	CheckUserAnnounceLimit
+	CheckUserAnnounceLimit()
 	If GBL_CHK_TempStr <> "" Then Exit Function
 	If A_NotReplay = 1 Then Exit Function
 %>
@@ -93,7 +94,7 @@ function submitonce(theform)
 		
 	if(theform.ForumNumber.value=="")
 	{
-		alert("ÇëÊäÈëÑéÖ¤Âë!\n");
+		alert("è¯·è¾“å…¥éªŒè¯ç !\n");
 		ValidationPassed = false;
 		theform.ForumNumber.focus();
 		submitflag = 0;
@@ -104,14 +105,14 @@ function submitonce(theform)
 	lg = edt_getdoclen();
 	if(lg < <%=LMTDEF_MinAnnounceLength%>)
 	{
-		alert("·¢±íµÄÄÚÈİ³¤¶È²»·ûºÏÒªÇó \n\nÖÁÉÙÒªÇó<%=LMTDEF_MinAnnounceLength%>ÎÄ×Ö£¬Ä¿Ç°³¤¶È" + lg + "ÎÄ×Ö\n");
+		alert("å‘è¡¨çš„å†…å®¹é•¿åº¦ä¸ç¬¦åˆè¦æ±‚ \n\nè‡³å°‘è¦æ±‚<%=LMTDEF_MinAnnounceLength%>æ–‡å­—ï¼Œç›®å‰é•¿åº¦" + lg + "æ–‡å­—\n");
 		ValidationPassed = false;
 		submitflag = 0;
 		return;
 	}
 	if(lg > <%=LMT_MaxTextLength%>)
 	{
-		alert("·¢±íµÄÄÚÈİ³¬¹ıÁË<%=LMT_MaxTextLength%>ÎÄ×Ö£¬Ä¿Ç°³¤¶È" + lg + "ÎÄ×Ö\n");
+		alert("å‘è¡¨çš„å†…å®¹è¶…è¿‡äº†<%=LMT_MaxTextLength%>æ–‡å­—ï¼Œç›®å‰é•¿åº¦" + lg + "æ–‡å­—\n");
 		ValidationPassed = false;
 		submitflag = 0;
 		return;
@@ -124,7 +125,7 @@ function submitonce(theform)
 </script>
 <%If Form_Submitflag = "" and Re_ID > 0 Then%><img src=../images/null.gif height=4 width=2><br><%End If
 
-DisplayPreview
+DisplayPreview()
 
 If AjaxFlag = 0 Then Global_TableHead%>
 <div class=contentbox>
@@ -133,7 +134,7 @@ LMT_EnableUpload = 1
 If GBL_UserID < 1 Then LMT_EnableUpload = 0
 Select Case DEF_EnableUpload
 	Case 0: LMT_EnableUpload = 0
-	case 2: If CheckSupervisorUserName = 0 Then LMT_EnableUpload = 0
+	case 2: If CheckSupervisorUserName() = 0 Then LMT_EnableUpload = 0
 	Case 3: If GBL_BoardMasterFlag < 4 Then LMT_EnableUpload = 0
 	Case 4: If GetBinarybit(GBL_CHK_UserLimit,2) = 0 Then LMT_EnableUpload = 0
 	Case 5: If GBL_BoardMasterFlag < 4 and GetBinarybit(GBL_CHK_UserLimit,2) = 0 Then LMT_EnableUpload = 0
@@ -156,20 +157,20 @@ End If
 			<td><div class=value><%
 			If cCur(Re_ID)=0 Then
 				If Form_VoteFlag <> "" and Re_ID = 0 Then
-					Response.Write "·¢±íĞÂÍ¶Æ± ×¢Òâ: *Îª±ØÌîÏî"
+					Response.Write "å‘è¡¨æ–°æŠ•ç¥¨ æ³¨æ„: *ä¸ºå¿…å¡«é¡¹"
 				Else
-					Response.Write "·¢±íĞÂÖ÷Ìâ *Îª±ØÌîÏî"
+					Response.Write "å‘è¡¨æ–°ä¸»é¢˜ *ä¸ºå¿…å¡«é¡¹"
 				End If
 			Else
 				Response.Write LMT_TopicNameNoHTML_Temp
 			End If
 			If GBL_BoardMasterFlag < 4 and GetBinarybit(GBL_Board_BoardLimit,13) = 1 Then
-				Response.Write "<b>£¬ÄãÔÚ´Ë°æ·¢±íµÄÌû×ÓĞèÒªµÈ´ı¹ÜÀíÔ±ÉóºË²ÅÄÜÕı³£ÏÔÊ¾¡£</b>"
+				Response.Write "<b>ï¼Œä½ åœ¨æ­¤ç‰ˆå‘è¡¨çš„å¸–å­éœ€è¦ç­‰å¾…ç®¡ç†å‘˜å®¡æ ¸æ‰èƒ½æ­£å¸¸æ˜¾ç¤ºã€‚</b>"
 			End If%></div>
 			</td>
 		</tr>
 		</table>
-		<!-- #include file=inc/post_layer.asp -->
+		<!--#include file="inc/post_layer.asp"-->
 		<%If LMT_EnableUpload = 0 Then %>
 		<form action=a2.asp method=post id=LeadBBSFm name=LeadBBSFm onsubmit="submitonce(this);return ValidationPassed;">
 		<%Else%>
@@ -178,19 +179,20 @@ End If
 		<table border=0 cellpadding=0 cellspacing=0 width="100%" class=tablebox><%
 		If GBL_UserID = 0 Then%>
 		<tr>
-			<td width="<%=DEF_BBS_LeftTDWidth%>" class=tdleft>*ÓÃ»§Ãû</td>
+			<td width="<%=DEF_BBS_LeftTDWidth%>" class=tdleft>*ç”¨æˆ·å</td>
 			<td class=tdright>
 				<input maxlength=20 name=User type="text" value="<%=htmlencode(Form_UserName)%>" size="20" class='fminpt input_2'> <%
 				If GBL_CHK_User = "" Then
-					%>Ã»ÓĞ×¢²áµÄ<a href=../User/<%=DEF_RegisterFile%>>µã»÷ÕâÀï×¢²á</a>ĞÂÓÃ»§<%
+					%>æ²¡æœ‰æ³¨å†Œçš„<a href=../User/<%=DEF_RegisterFile%>>ç‚¹å‡»è¿™é‡Œæ³¨å†Œ</a>æ–°ç”¨æˆ·<%
 				End If
-				If GetBinarybit(GBL_Board_BoardLimit,9) = 1 Then%> ¿ÉÒÔ²»ÌîĞ´<%End If%></td>
+				If GetBinarybit(GBL_Board_BoardLimit,9) = 1 Then%> å¯ä»¥ä¸å¡«å†™<%End If%></td>
                 </tr>
         	<tr>
-			<td width="<%=DEF_BBS_LeftTDWidth%>" class=tdleft>ÃÜÂë</td>
+			<td width="<%=DEF_BBS_LeftTDWidth%>" class=tdleft>å¯†ç </td>
 			<td class=tdright>
-				<input maxlength=20 type=password name=Pass value="<%'=htmlencode(Form_UserPass)%>" size="20" class='fminpt input_2'><%
-				If GetBinarybit(GBL_Board_BoardLimit,9) = 1 Then%> ¿ÉÒÔ²»ÌîĞ´<%End If%>
+				<input maxlength=20 type=password name=Pass value="<%'=htmlencode(Form_UserPass)
+%>" size="20" class='fminpt input_2'><%
+				If GetBinarybit(GBL_Board_BoardLimit,9) = 1 Then%> å¯ä»¥ä¸å¡«å†™<%End If%>
 			</td>
 		</tr><%
 		End If%>
@@ -200,10 +202,10 @@ End If
 				<%If Re_ID = 0 Then
 					%>
 					<input id="Form_Color" name="Form_Color" value="<%=Form_Color%>" type="hidden" />
-					<div style="float:left">±êÌâ <span class="bluefont" title="ÏÖÓĞ²Æ¸»:<%=GBL_CHK_CharmPoint%>">»¨<%=LMTDEF_ColorSpend & DEF_PointsName(1)%>ÔöÉ«</span></div>
+					<div style="float:left">æ ‡é¢˜ <span class="bluefont" title="ç°æœ‰è´¢å¯Œ:<%=GBL_CHK_CharmPoint%>">èŠ±<%=LMTDEF_ColorSpend & DEF_PointsName(1)%>å¢è‰²</span></div>
 					<%If GBL_CHK_CharmPoint >= LMTDEF_ColorSpend Then%>
 					<div class="layer_item" style="float:left">
-						<div id="Form_Color_view" class="layer_item_title color_pannel" style="BACKGROUND-COLOR:<%=Form_Color%>;">Ñ¡Ôñ</div>
+						<div id="Form_Color_view" class="layer_item_title color_pannel" style="BACKGROUND-COLOR:<%=Form_Color%>;">é€‰æ‹©</div>
 					<div class="layer_iteminfo" onclick="this.style.display='none';">
 					<ul class="color_list">
 					<script type="text/javascript">
@@ -233,24 +235,24 @@ End If
 					else
 					document.write("<li style='COLOR: #" + Color_str[Color_n] + "; BACKGROUND-COLOR: #" + Color_str[Color_n] + "' onclick='titlecolor_set(\"" + Color_str[Color_n] + "\")'></li>");
 					</script>
-					<li onclick="titlecolor_set('');" style="width:90%;margin:6px 0px 0px 0px;"><span style="WHITE-SPACE: nowrap;font-size:9pt;">È¡ÏûÑ¡Ôñ</span></li>
+					<li onclick="titlecolor_set('');" style="width:90%;margin:6px 0px 0px 0px;"><span style="WHITE-SPACE: nowrap;font-size:9pt;">å–æ¶ˆé€‰æ‹©</span></li>
 					</ul>
 					</div>
 					</div>
 					<%
 					Else%>
-					<div id="Form_Color_view" class="layer_item_title color_pannel" style="BACKGROUND-COLOR:<%=Form_Color%>;"><span class="grayfont">Ñ¡Ôñ</span></div>
+					<div id="Form_Color_view" class="layer_item_title color_pannel" style="BACKGROUND-COLOR:<%=Form_Color%>;"><span class="grayfont">é€‰æ‹©</span></div>
 					<%
 					End If%><%
 				Else
-					%>Ìû×Ó±êÌâ<%
+					%>å¸–å­æ ‡é¢˜<%
 				End If%>
 				</td>
 			<td class=tdright>
 				<input name=submitflag value="true" type=hidden>
 				<input name=VoteFlag value="<%=htmlencode(Form_VoteFlag)%>" type=hidden>
 				<input name=BoardID value="<%=Form_BoardID%>" type=hidden>
-				<input name=ID value="<%=Re_ID%>" type=hidden><%If Form_VoteFlag = "" Then%>
+				<input name=ID value="<%=LngStr(Re_ID)%>" type=hidden><%If Form_VoteFlag = "" Then%>
 				<input tabindex="1" maxlength=255 type="text" id=Form_Title name=Form_Title size="49" value="<%
 				If (Form_Submitflag = "first" or Form_Submitflag = "") and Re_ID > 0 and Form_Title="" Then
 					If Left(LMT_TopicName,3) <> "Re:" Then
@@ -265,23 +267,23 @@ End If
 				<%If isNumeric(Form_Vote_ExpireDay) = 0 then Form_Vote_ExpireDay = 0
 				Form_Vote_ExpireDay = cCur(Form_Vote_ExpireDay)%>
 				<select name="Form_Vote_ExpireDay">
-					<option value=0>µ½ÆÚÊ±¼ä
-					<option value=0<%If Form_Vote_ExpireDay = 0 Then Response.Write " selected"%>>ÓÀ²»µ½ÆÚ
-					<option value=1<%If Form_Vote_ExpireDay = 1 Then Response.Write " selected"%>>Ò»Ìì
-					<option value=2<%If Form_Vote_ExpireDay = 2 Then Response.Write " selected"%>>Á½Ìì
-					<option value=3<%If Form_Vote_ExpireDay = 3 Then Response.Write " selected"%>>ÈıÌì
-					<option value=7<%If Form_Vote_ExpireDay = 7 Then Response.Write " selected"%>>Ò»ÖÜ
-					<option value=10<%If Form_Vote_ExpireDay = 10 Then Response.Write " selected"%>>Ê®Ìì
-					<option value=15<%If Form_Vote_ExpireDay = 15 Then Response.Write " selected"%>>°ë¸öÔÂ
-					<option value=20<%If Form_Vote_ExpireDay = 20 Then Response.Write " selected"%>>¶şÊ®Ìì
-					<option value=30<%If Form_Vote_ExpireDay = 30 Then Response.Write " selected"%>>Ò»¸öÔÂ
-					<option value=45<%If Form_Vote_ExpireDay = 45 Then Response.Write " selected"%>>Ò»¸öÔÂ°ë
-					<option value=60<%If Form_Vote_ExpireDay = 60 Then Response.Write " selected"%>>¶ş¸öÔÂ
-					<option value=90<%If Form_Vote_ExpireDay = 90 Then Response.Write " selected"%>>Èı¸öÔÂ
-					<option value=120<%If Form_Vote_ExpireDay = 120 Then Response.Write " selected"%>>ËÄ¸öÔÂ
-					<option value=180<%If Form_Vote_ExpireDay = 180 Then Response.Write " selected"%>>Áù¸öÔÂ
-					<option value=240<%If Form_Vote_ExpireDay = 240 Then Response.Write " selected"%>>°Ë¸öÔÂ
-					<option value=365<%If Form_Vote_ExpireDay = 365 Then Response.Write " selected"%>>Ò»Äê
+					<option value=0>åˆ°æœŸæ—¶é—´
+					<option value=0<%If Form_Vote_ExpireDay = 0 Then Response.Write " selected"%>>æ°¸ä¸åˆ°æœŸ
+					<option value=1<%If Form_Vote_ExpireDay = 1 Then Response.Write " selected"%>>ä¸€å¤©
+					<option value=2<%If Form_Vote_ExpireDay = 2 Then Response.Write " selected"%>>ä¸¤å¤©
+					<option value=3<%If Form_Vote_ExpireDay = 3 Then Response.Write " selected"%>>ä¸‰å¤©
+					<option value=7<%If Form_Vote_ExpireDay = 7 Then Response.Write " selected"%>>ä¸€å‘¨
+					<option value=10<%If Form_Vote_ExpireDay = 10 Then Response.Write " selected"%>>åå¤©
+					<option value=15<%If Form_Vote_ExpireDay = 15 Then Response.Write " selected"%>>åŠä¸ªæœˆ
+					<option value=20<%If Form_Vote_ExpireDay = 20 Then Response.Write " selected"%>>äºŒåå¤©
+					<option value=30<%If Form_Vote_ExpireDay = 30 Then Response.Write " selected"%>>ä¸€ä¸ªæœˆ
+					<option value=45<%If Form_Vote_ExpireDay = 45 Then Response.Write " selected"%>>ä¸€ä¸ªæœˆåŠ
+					<option value=60<%If Form_Vote_ExpireDay = 60 Then Response.Write " selected"%>>äºŒä¸ªæœˆ
+					<option value=90<%If Form_Vote_ExpireDay = 90 Then Response.Write " selected"%>>ä¸‰ä¸ªæœˆ
+					<option value=120<%If Form_Vote_ExpireDay = 120 Then Response.Write " selected"%>>å››ä¸ªæœˆ
+					<option value=180<%If Form_Vote_ExpireDay = 180 Then Response.Write " selected"%>>å…­ä¸ªæœˆ
+					<option value=240<%If Form_Vote_ExpireDay = 240 Then Response.Write " selected"%>>å…«ä¸ªæœˆ
+					<option value=365<%If Form_Vote_ExpireDay = 365 Then Response.Write " selected"%>>ä¸€å¹´
 				</select>
 				<%End If
 				If GBL_BoardMasterFlag >= 5 Then
@@ -289,15 +291,15 @@ End If
 					Form_TitleStyle = cCur(Form_TitleStyle)
 				%>
 				<select name="Form_TitleStyle">
-					<option value=0<%If Form_TitleStyle = 0 Then Response.Write " selected"%>>ÑùÊ½</option><%If GBL_BoardMasterFlag >= 9 Then%>
+					<option value=0<%If Form_TitleStyle = 0 Then Response.Write " selected"%>>æ ·å¼</option><%If GBL_BoardMasterFlag >= 9 Then%>
 					<option value=1<%If Form_TitleStyle = 1 Then Response.Write " selected"%>>HTML</option><%End If%>
-					<option value=2<%If Form_TitleStyle = 2 Then Response.Write " selected"%>>ºìÉ«</option>
-					<option value=3<%If Form_TitleStyle = 3 Then Response.Write " selected"%>>ÂÌÉ«</option>
-					<option value=4<%If Form_TitleStyle = 4 Then Response.Write " selected"%>>À¶É«</option>
-					<option value=5<%If Form_TitleStyle = 5 Then Response.Write " selected"%>>¼ÓÖØ</option>
-					<option value=6<%If Form_TitleStyle = 6 Then Response.Write " selected"%>>ÖØºì</option>
-					<option value=7<%If Form_TitleStyle = 7 Then Response.Write " selected"%>>ÖØÂÌ</option>
-					<option value=8<%If Form_TitleStyle = 8 Then Response.Write " selected"%>>ÖØÀ¶</option>
+					<option value=2<%If Form_TitleStyle = 2 Then Response.Write " selected"%>>çº¢è‰²</option>
+					<option value=3<%If Form_TitleStyle = 3 Then Response.Write " selected"%>>ç»¿è‰²</option>
+					<option value=4<%If Form_TitleStyle = 4 Then Response.Write " selected"%>>è“è‰²</option>
+					<option value=5<%If Form_TitleStyle = 5 Then Response.Write " selected"%>>åŠ é‡</option>
+					<option value=6<%If Form_TitleStyle = 6 Then Response.Write " selected"%>>é‡çº¢</option>
+					<option value=7<%If Form_TitleStyle = 7 Then Response.Write " selected"%>>é‡ç»¿</option>
+					<option value=8<%If Form_TitleStyle = 8 Then Response.Write " selected"%>>é‡è“</option>
 				</select>
 				<%
 				End If
@@ -318,7 +320,7 @@ End If
 					<select name="Form_GoodAssort" style="width:74">
 					<%
 						If isArray(TArray) = True Then
-							Response.Write "<Option value=0>Ñ¡Ôñ×¨Ìâ" & VbCrLf
+							Response.Write "<Option value=0>é€‰æ‹©ä¸“é¢˜" & VbCrLf
 							Num = Ubound(TArray,2)
 							For N = 0 To Num
 								If cCur(TArray(0,N)) = Form_GoodAssort Then
@@ -329,7 +331,7 @@ End If
 							Next
 						End If
 						If isArray(TArray2) = True Then
-							Response.Write "<Option value=0>=×Ü×¨Ìâ=" & VbCrLf
+							Response.Write "<Option value=0>=æ€»ä¸“é¢˜=" & VbCrLf
 							Num = Ubound(TArray2,2)
 							For N = 0 To Num
 								If cCur(TArray2(0,N)) = Form_GoodAssort Then
@@ -345,20 +347,20 @@ End If
 				</td>
 		</tr><%If Form_VoteFlag <> "" Then%>
 		<tr>
-			<td width="<%=DEF_BBS_LeftTDWidth%>" class=tdleft>*Í¶Æ±Ñ¡Ïî
-			<p>Ã¿ĞĞÒ»¸öÍ¶Æ±Ñ¡Ïî£¬×î¶à<%=DEF_VOTE_MaxNum%>¸öÑ¡Ïî£¬Ñ¡Ïî×î³¤24×Ö£¬³¬¹ı×÷·Ï£¬¿ÕĞĞ¹ıÂË
+			<td width="<%=DEF_BBS_LeftTDWidth%>" class=tdleft>*æŠ•ç¥¨é€‰é¡¹
+			<p>æ¯è¡Œä¸€ä¸ªæŠ•ç¥¨é€‰é¡¹ï¼Œæœ€å¤š<%=DEF_VOTE_MaxNum%>ä¸ªé€‰é¡¹ï¼Œé€‰é¡¹æœ€é•¿24å­—ï¼Œè¶…è¿‡ä½œåºŸï¼Œç©ºè¡Œè¿‡æ»¤
 			<p><%If isNumeric(Form_VoteType) = 0 then Form_VoteType = 0
-				Form_VoteType = cCur(Form_VoteType)%><table border=0 cellpadding=0 cellspacing=0><tr><td><input class=fmchkbox type=radio name=Form_VoteType value=0 <%If Form_VoteType = 0 Then Response.Write " checked"%>></td><td>µ¥Ñ¡Æ±</td>
-          		<td><input class=fmchkbox type=radio name=Form_VoteType value=1 <%If Form_VoteType = 1 Then Response.Write " checked"%>></td><td>¶àÑ¡Æ±</td></tr></table>
+				Form_VoteType = cCur(Form_VoteType)%><table border=0 cellpadding=0 cellspacing=0><tr><td><input class=fmchkbox type=radio name=Form_VoteType value=0 <%If Form_VoteType = 0 Then Response.Write " checked"%>></td><td>å•é€‰ç¥¨</td>
+          		<td><input class=fmchkbox type=radio name=Form_VoteType value=1 <%If Form_VoteType = 1 Then Response.Write " checked"%>></td><td>å¤šé€‰ç¥¨</td></tr></table>
 			</td>
 			<td class=tdright>
 				<textarea tabindex="3" cols=80 name=Form_VoteItem rows=8 style="width: 95%; word-break: break-all;" onkeydown="if(ctlkey(event)==false)return(false);" class=fmtxtra><%If Form_VoteItem <> "" Then Response.Write VbCrLf & htmlEncode(Form_VoteItem)%></textarea>
 				</td>
 		</tr><%End If%>
 		<tr>
-			<td width="<%=DEF_BBS_LeftTDWidth%>" class=tdleft>·¢Ìû±íÇé</td>
+			<td width="<%=DEF_BBS_LeftTDWidth%>" class=tdleft>å‘å¸–è¡¨æƒ…</td>
 			<td class=tdright>
-				<input name=Form_FaceIcon type=radio value=0>ÎŞ
+				<input name=Form_FaceIcon type=radio value=0>æ— 
 				<input name=Form_FaceIcon type=radio value=1<%If Form_FaceIcon=1 Then Response.WRite " CHECKED"%>><img src="../images/<%=GBL_DefineImage%>bf/FACE1.GIF" class=absmiddle>
 				<input name=Form_FaceIcon type=radio value=2<%If Form_FaceIcon=2 Then Response.WRite " CHECKED"%>><img src="../images/<%=GBL_DefineImage%>bf/FACE2.GIF" class=absmiddle>
 				<input name=Form_FaceIcon type=radio value=3<%If Form_FaceIcon=3 Then Response.WRite " CHECKED"%>><img src="../images/<%=GBL_DefineImage%>bf/FACE3.GIF" class=absmiddle>
@@ -372,35 +374,35 @@ End If
 		call DisplayLeadBBSEditor1(Form_HTMLFlag,Form_Content,0,1)
 		If Re_ID=0 and Form_VoteFlag = "" Then%>
 		<tr>
-			<td width="<%=DEF_BBS_LeftTDWidth%>" class=tdleft>¼ÓÃÜ±¾Ìû¹¦ÄÜ</td>
+			<td width="<%=DEF_BBS_LeftTDWidth%>" class=tdleft>åŠ å¯†æœ¬å¸–åŠŸèƒ½</td>
 			<td class=tdright>
 				<table border="0" cellspacing="0" cellpadding="0" class="blanktable"><tr><td><select name=Form_TopicType onchange="if(this.value<49)$id('NextContactDateDiv').style.display='none';if(this.value>=49)$id('NextContactDateDiv').style.display='block';">
-					<option value="0">ÇëÑ¡ÔñÏŞÖÆÌõ¼ş...
-					<%If DEF_EnableSpecialTopic = 1 and GetBinarybit(GBL_Board_BoardLimit,14) = 1 Then%><option value="7"<%If Form_TopicType = 7 Then Response.Write " selected"%>>»Ø¸´±¾Ìû²ÅÄÜ²é¿´<%End If%>
-					<option value="50"<%If Form_TopicType = 50 Then Response.Write " selected"%>>²é¿´±¾ÌûĞèÒª´ïµ½<%=DEF_PointsName(0)%>
-					<option value="51"<%If Form_TopicType = 51 Then Response.Write " selected"%>>»Ø¸´±¾ÌûĞèÒª´ïµ½<%=DEF_PointsName(0)%>
-					<option value="52"<%If Form_TopicType = 52 Then Response.Write " selected"%>>²é¿´±¾ÌûĞèÒª´ïµ½<%=DEF_PointsName(4)%>
-					<option value="53"<%If Form_TopicType = 53 Then Response.Write " selected"%>>»Ø¸´±¾ÌûĞèÒª´ïµ½<%=DEF_PointsName(4)%>
-					<option value="55"<%If Form_TopicType = 55 Then Response.Write " selected"%>>Ö»ÏŞÖ¸¶¨ÓÃ»§ÄÜ²é¿´´ËÌû£º
+					<option value="0">è¯·é€‰æ‹©é™åˆ¶æ¡ä»¶...
+					<%If DEF_EnableSpecialTopic = 1 and GetBinarybit(GBL_Board_BoardLimit,14) = 1 Then%><option value="7"<%If Form_TopicType = 7 Then Response.Write " selected"%>>å›å¤æœ¬å¸–æ‰èƒ½æŸ¥çœ‹<%End If%>
+					<option value="50"<%If Form_TopicType = 50 Then Response.Write " selected"%>>æŸ¥çœ‹æœ¬å¸–éœ€è¦è¾¾åˆ°<%=DEF_PointsName(0)%>
+					<option value="51"<%If Form_TopicType = 51 Then Response.Write " selected"%>>å›å¤æœ¬å¸–éœ€è¦è¾¾åˆ°<%=DEF_PointsName(0)%>
+					<option value="52"<%If Form_TopicType = 52 Then Response.Write " selected"%>>æŸ¥çœ‹æœ¬å¸–éœ€è¦è¾¾åˆ°<%=DEF_PointsName(4)%>
+					<option value="53"<%If Form_TopicType = 53 Then Response.Write " selected"%>>å›å¤æœ¬å¸–éœ€è¦è¾¾åˆ°<%=DEF_PointsName(4)%>
+					<option value="55"<%If Form_TopicType = 55 Then Response.Write " selected"%>>åªé™æŒ‡å®šç”¨æˆ·èƒ½æŸ¥çœ‹æ­¤å¸–ï¼š
 					<%If DEF_EnableSpecialTopic = 1 and GetBinarybit(GBL_Board_BoardLimit,14) = 1 Then%>
-					<option value="54"<%If Form_TopicType = 54 Then Response.Write " selected"%>>³öÊÛ±¾Ìû£¬»¨·Ñ<%=DEF_PointsName(0)%>
-					<option value="49"<%If Form_TopicType = 49 Then Response.Write " selected"%>>³öÊÛ±¾Ìû£¬»¨·Ñ<%=DEF_PointsName(1)%><%End If%>
-					<option value="1"<%If Form_TopicType = 1 Then Response.Write " selected"%>>½ö±¾°æ<%=DEF_PointsName(8)%>²ÅÄÜ²é¿´
-					<option value="2"<%If Form_TopicType = 2 Then Response.Write " selected"%>>½ö±¾°æ<%=DEF_PointsName(8)%>²ÅÄÜ»Ø¸´
-					<option value="3"<%If Form_TopicType = 3 Then Response.Write " selected"%>>½ö<%=DEF_PointsName(8)%>²ÅÄÜ²é¿´
-					<option value="4"<%If Form_TopicType = 4 Then Response.Write " selected"%>>½ö<%=DEF_PointsName(8)%>²ÅÄÜ»Ø¸´
-					<option value="5"<%If Form_TopicType = 5 Then Response.Write " selected"%>>½ö<%=DEF_PointsName(5)%>²ÅÄÜ²é¿´
-					<option value="6"<%If Form_TopicType = 6 Then Response.Write " selected"%>>½ö<%=DEF_PointsName(5)%>²ÅÄÜ»Ø¸´
+					<option value="54"<%If Form_TopicType = 54 Then Response.Write " selected"%>>å‡ºå”®æœ¬å¸–ï¼ŒèŠ±è´¹<%=DEF_PointsName(0)%>
+					<option value="49"<%If Form_TopicType = 49 Then Response.Write " selected"%>>å‡ºå”®æœ¬å¸–ï¼ŒèŠ±è´¹<%=DEF_PointsName(1)%><%End If%>
+					<option value="1"<%If Form_TopicType = 1 Then Response.Write " selected"%>>ä»…æœ¬ç‰ˆ<%=DEF_PointsName(8)%>æ‰èƒ½æŸ¥çœ‹
+					<option value="2"<%If Form_TopicType = 2 Then Response.Write " selected"%>>ä»…æœ¬ç‰ˆ<%=DEF_PointsName(8)%>æ‰èƒ½å›å¤
+					<option value="3"<%If Form_TopicType = 3 Then Response.Write " selected"%>>ä»…<%=DEF_PointsName(8)%>æ‰èƒ½æŸ¥çœ‹
+					<option value="4"<%If Form_TopicType = 4 Then Response.Write " selected"%>>ä»…<%=DEF_PointsName(8)%>æ‰èƒ½å›å¤
+					<option value="5"<%If Form_TopicType = 5 Then Response.Write " selected"%>>ä»…<%=DEF_PointsName(5)%>æ‰èƒ½æŸ¥çœ‹
+					<option value="6"<%If Form_TopicType = 6 Then Response.Write " selected"%>>ä»…<%=DEF_PointsName(5)%>æ‰èƒ½å›å¤
 					</select></td>
 				<td>
 				<span name=NextContactDateDiv id=NextContactDateDiv<%If Form_TopicType<49 Then Response.Write " style='display:none'"%>>
 					&nbsp; <input name=Form_NeedValue value="<%If cStr(Form_NeedValue) <> "0" Then Response.Write htmlencode(Form_NeedValue)%>" size=10 maxlength=10 class='fminpt input_1'></span>
 				</td>
 				<td>
-					&nbsp; <a href=#icon onclick="if(LeadBBSFm.Form_TopicType.value=='0'){alert('ÔÚ²åÈëÒş²Ø±êÇ©Ç°ÇëÑ¡ÔñÏŞÖÆÌõ¼ş.');}else{addcontent(0,'HIDDEN','/HIDDEN');}">²åÈëÒş²Ø±êÇ©</a></td></tr></table>
+					&nbsp; <a href=#icon onclick="if(LeadBBSFm.Form_TopicType.value=='0'){alert('åœ¨æ’å…¥éšè—æ ‡ç­¾å‰è¯·é€‰æ‹©é™åˆ¶æ¡ä»¶.');}else{addcontent(0,'HIDDEN','/HIDDEN');}">æ’å…¥éšè—æ ‡ç­¾</a></td></tr></table>
 		</tr><%End If%>
 		<tr>
-			<td class=tdleft valign=top>ÆäËüÑ¡Ïî</td>
+			<td class=tdleft valign=top>å…¶å®ƒé€‰é¡¹</td>
 			<td class=tdright>
 				<table><tr><td>
 				<%
@@ -411,16 +413,16 @@ End If
 					set ConnetBind = nothing
 				%></td><td>
 				<label>
-				<input class=fmchkbox type="checkbox" name="Form_NoUserUnderWriteFlag" value="checkbox"<%If Form_NoUserUnderWriteFlag=1 Then Response.Write " checked"%>>ÏÔÊ¾Ç©Ãû</label>
+				<input class=fmchkbox type="checkbox" name="Form_NoUserUnderWriteFlag" value="checkbox"<%If Form_NoUserUnderWriteFlag=1 Then Response.Write " checked"%>>æ˜¾ç¤ºç­¾å</label>
 				<%If Re_ID=0 and GBL_UserID>0 and GBL_BoardMasterFlag >= 5 and GetBinarybit(GBL_CHK_UserLimit,4) = 0 Then%>
 				<label>
-				<input class=fmchkbox type="checkbox" name="Form_AnnounceIsTop" value="checkbox"<%If Form_AnnounceIsTopFlag=1 Then Response.Write " checked"%>>Ìû×ÓÖÃ¶¥</label><%
+				<input class=fmchkbox type="checkbox" name="Form_AnnounceIsTop" value="checkbox"<%If Form_AnnounceIsTopFlag=1 Then Response.Write " checked"%>>å¸–å­ç½®é¡¶</label><%
 				End If%>
 				<label>
 				<input class=fmchkbox type="checkbox" name="Form_NotReplay" value="checkbox"<%If Form_NotReplay=1 Then Response.Write " checked"%>><%If Re_ID=0 Then
-					Response.Write "Ëø¶¨Ö÷Ìâ</label>"
+					Response.Write "é”å®šä¸»é¢˜</label>"
 				Else
-					%>Ëø¶¨Ìû×Ó</label>
+					%>é”å®šå¸–å­</label>
 					<label>
 					<input class=fmchkbox type="checkbox" name="Form_RepostMsg" value="checkbox"<%
 					If GBL_CHK_User = LMT_ReName Then
@@ -428,12 +430,12 @@ End If
 					ElseIf LMTDEF_RepostMsg=1 or (LMTDEF_RepostMsg=2 and Request.QueryString("repost") = "1") Then
 						Response.Write " checked=""checked"""
 					End If
-					%>>»Ø¸´¶ÌÏûÏ¢Í¨Öª</label><%
+					%>>å›å¤çŸ­æ¶ˆæ¯é€šçŸ¥</label><%
 				End If%>
 				
-				<%if remote_checkEnable = 1 then%>
-					<label title="ÌáÈ¡·Ç±¾Õ¾µÄÍ¼Æ¬²¢±£´æÖÁ±¾µØ,Ö»ÏŞUBB¸ñÊ½">
-					<input class=fmchkbox type="checkbox" name="Form_remoteEnable" value="1"<%If Form_remoteEnable=1 Then Response.Write " checked"%>>ÌáÈ¡·Ç±¾Õ¾Í¼Æ¬(×î¶à<%=Remote_MaxGet%>ÕÅ)
+				<%if remote_checkEnable() = 1 then%>
+					<label title="æå–éæœ¬ç«™çš„å›¾ç‰‡å¹¶ä¿å­˜è‡³æœ¬åœ°,åªé™UBBæ ¼å¼">
+					<input class=fmchkbox type="checkbox" name="Form_remoteEnable" value="1"<%If Form_remoteEnable=1 Then Response.Write " checked"%>>æå–éæœ¬ç«™å›¾ç‰‡(æœ€å¤š<%=Remote_MaxGet%>å¼ )
 					</label>
 				<%end if
 				%>
@@ -442,9 +444,9 @@ End If
 				<tr>
 				<td colspan="2">
 				<%If DEF_EnableAttestNumber > 2 and (DEF_AttestNumberPoints = 0 or GBL_CHK_Points < DEF_AttestNumberPoints) Then%>
-				<div style="line-height:400%">ÑéÖ¤Âë
+				<div style="line-height:400%">éªŒè¯ç 
 				<%
-					Response.Write displayVerifycode%></div><%
+					Response.Write displayVerifycode()%></div><%
 				End If%>
 				</td></tr>
 				</table>
@@ -454,8 +456,8 @@ End If
 			<td class=tdleft>
 			<td class=tdright>
 				<br />
-				<input name=submit2 type=submit value="·¢±íÌû×Ó" class="fmbtn btn_3">
-				<input id=Preview_btn type=button value="Ô¤ÀÀÌû×Ó" onclick="edt_preview();" class="fmbtn btn_3">
+				<input name=submit2 type=submit value="å‘è¡¨å¸–å­" class="fmbtn btn_3">
+				<input id=Preview_btn type=button value="é¢„è§ˆå¸–å­" onclick="edt_preview();" class="fmbtn btn_3">
 				<br><br>
 			</td>
 		</tr>
@@ -464,7 +466,7 @@ End If
 		</form>
 </div>
 <%
-Global_TableBottom
+Global_TableBottom()
 
 End Function
 
@@ -534,12 +536,12 @@ Function GetRequestValue
 		Form_HTMLFlag = GetFormData("Form_HTMLFlag")
 		If Form_HTMLFlag="2" Then
 			Form_HTMLFlag=2
-		ElseIf Form_HTMLFlag = "1" and ((GetBinarybit(GBL_CHK_UserLimit,16) = 1 and GBL_BoardMasterFlag >= 2) or CheckSupervisorUserName = 1) and GBL_UserID > 0 Then
+		ElseIf Form_HTMLFlag = "1" and ((GetBinarybit(GBL_CHK_UserLimit,16) = 1 and GBL_BoardMasterFlag >= 2) or CheckSupervisorUserName() = 1) and GBL_UserID > 0 Then
 			Form_HTMLFlag = 1
 		Else
 			Form_HTMLFlag = 0
 		End If
-		'If Re_ID<>0 and Form_Title = "" Then Form_Title="»Ø¸´:"
+		'If Re_ID<>0 and Form_Title = "" Then Form_Title="å›å¤:"
 	Else
 		Form_HTMLFlag = 2
 	End If
@@ -736,7 +738,7 @@ Function Borad_CheckBoardIDExist(ID)
 End Function
 
 
-Rem ¼ì²âÄ³ÓÃ»§ÃûÊÇ·ñ´æÔÚ
+Rem æ£€æµ‹æŸç”¨æˆ·åæ˜¯å¦å­˜åœ¨
 Function CheckUserNameExist(UserName)
 
 	Dim Rs
@@ -822,8 +824,8 @@ Function CheckAnnouceValue
 	GBL_CHK_TempStr = ""
 
 	If DEF_EnableAttestNumber > 2 and (DEF_AttestNumberPoints = 0 or GBL_CHK_Points < DEF_AttestNumberPoints) Then
-		If CheckRndNumber = 0 Then
-			GBL_CHK_TempStr = "<b><font color=ff0000>ÑéÖ¤ÂëÌîĞ´´íÎó!</font></b><br>"
+		If CheckRndNumber() = 0 Then
+			GBL_CHK_TempStr = "<b><font color=ff0000>éªŒè¯ç å¡«å†™é”™è¯¯!</font></b><br>"
 			GBL_CHK_Flag = 0
 			Exit Function
 		End If
@@ -842,7 +844,7 @@ Function CheckAnnouceValue
 		Form_GoodAssort = fix(cCur(Form_GoodAssort))
 		If Form_GoodAssort <> 0 Then
 			If CheckGoodAssortID(Form_GoodAssort) = 0 Then
-				GBL_CHK_TempStr = "´íÎó£¬ËùÊô×¨ÌâÑ¡Ôñ´íÎó.<br>" & VbCrLf
+				GBL_CHK_TempStr = "é”™è¯¯ï¼Œæ‰€å±ä¸“é¢˜é€‰æ‹©é”™è¯¯.<br>" & VbCrLf
 				CheckAnnouceValue = 0
 				Exit Function
 			End If
@@ -850,33 +852,33 @@ Function CheckAnnouceValue
 	End If
 
 	If Re_ID = 0 and GetBinarybit(GBL_Board_BoardLimit,23) = 1 and Form_GoodAssort < 1 Then
-			GBL_CHK_TempStr = "´Ë°æÃæ±ØĞëÑ¡ÔñËùÊô×¨Ìâ.<br>" & VbCrLf
+			GBL_CHK_TempStr = "æ­¤ç‰ˆé¢å¿…é¡»é€‰æ‹©æ‰€å±ä¸“é¢˜.<br>" & VbCrLf
 			CheckAnnouceValue = 0
 			Exit Function
 	End If
 		
 
 	If Len(Form_Content)>LMT_MaxTextLength Then
-		GBL_CHK_TempStr = "´íÎó£¬Ìû×ÓÄÚÈİ²»ÄÜ³¬¹ı" & DEF_MaxTextLength & "×Ö½Ú.<br>" & VbCrLf
+		GBL_CHK_TempStr = "é”™è¯¯ï¼Œå¸–å­å†…å®¹ä¸èƒ½è¶…è¿‡" & DEF_MaxTextLength & "å­—èŠ‚.<br>" & VbCrLf
 		CheckAnnouceValue = 0
 		Exit Function
 	End If
 
 	If GetBinarybit(GBL_Board_BoardLimit,9) = 0 Then
 		If GBL_UserID<1 Then
-			GBL_CHK_TempStr = "ÃÜÂë»òÓÃ»§Ãû´íÎó£¬»ò´ËÓÃ»§ÒÑ¾­±»·şÎñÆ÷ÔİÊ±ÆÁ±Î¡£<br>" & VbCrLf
+			GBL_CHK_TempStr = "å¯†ç æˆ–ç”¨æˆ·åé”™è¯¯ï¼Œæˆ–æ­¤ç”¨æˆ·å·²ç»è¢«æœåŠ¡å™¨æš‚æ—¶å±è”½ã€‚<br>" & VbCrLf
 			CheckAnnouceValue = 0
 			Exit Function
 		End If
-		If GBL_CHK_OnlineTime < DEF_NeedOnlineTime and DEF_NeedOnlineTime > 0 and CheckSupervisorUserName = 0 Then
-			GBL_CHK_TempStr = "ÂÛÌ³ÏŞÖÆÔÚÏßÊ±¼ä(" & DEF_PointsName(4) & ")" & Fix(DEF_NeedOnlineTime/60) & "·ÖÖÓÒÔÉÏÓÃ»§²ÅÄÜ·¢ÑÔ¡£<br>" & VbCrLf
+		If GBL_CHK_OnlineTime < DEF_NeedOnlineTime and DEF_NeedOnlineTime > 0 and CheckSupervisorUserName() = 0 Then
+			GBL_CHK_TempStr = "è®ºå›é™åˆ¶åœ¨çº¿æ—¶é—´(" & DEF_PointsName(4) & ")" & Fix(DEF_NeedOnlineTime/60) & "åˆ†é’Ÿä»¥ä¸Šç”¨æˆ·æ‰èƒ½å‘è¨€ã€‚<br>" & VbCrLf
 			CheckAnnouceValue = 0
 			Exit Function
 		End If
 	Else
 		If GBL_UserID <= 0 and Form_UserName <> "" Then
 			If CheckUserNameExist(Form_UserName) = 1 Then
-				GBL_CHK_TempStr = "×¢Òâ£ºÓÃ»§Ãû" & htmlencode(Form_UserName) & "ÒÑ¾­ÓĞÈËÊ¹ÓÃ£¬Çë²»ÒªÊ¹ÓÃ´ËÓÃ»§Ãû·¢Ìû¡£<br>" & VbCrLf
+				GBL_CHK_TempStr = "æ³¨æ„ï¼šç”¨æˆ·å" & htmlencode(Form_UserName) & "å·²ç»æœ‰äººä½¿ç”¨ï¼Œè¯·ä¸è¦ä½¿ç”¨æ­¤ç”¨æˆ·åå‘å¸–ã€‚<br>" & VbCrLf
 				CheckAnnouceValue = 0
 				Exit Function
 			End If
@@ -884,13 +886,13 @@ Function CheckAnnouceValue
 	End If
 
 	If isNumeric(Form_BoardID)=0 Then
-		GBL_CHK_TempStr = "·¢Éú´íÎó£¬Ò»ÇĞ×ÊÁÏĞèÒªÖØ·¢¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = "å‘ç”Ÿé”™è¯¯ï¼Œä¸€åˆ‡èµ„æ–™éœ€è¦é‡å‘ã€‚<br>" & VbCrLf
 		CheckAnnouceValue = 0
 		Exit Function
 	End If
 	Form_BoardID = cCur(Form_BoardID)
 	If Borad_CheckBoardIDExist(Form_BoardID) = 0 Then
-		GBL_CHK_TempStr = "·¢Éú´íÎó£¬Ò»ÇĞ×ÊÁÏĞèÒªÖØ·¢.<br>" & VbCrLf
+		GBL_CHK_TempStr = "å‘ç”Ÿé”™è¯¯ï¼Œä¸€åˆ‡èµ„æ–™éœ€è¦é‡å‘.<br>" & VbCrLf
 		CheckAnnouceValue = 0
 		Exit Function
 	End If
@@ -899,39 +901,39 @@ Function CheckAnnouceValue
 	Re_ID = cCur(Re_ID)
 	If Re_ID<>0 Then
 		If Borad_CheckAnnounceIDExist(Re_ID) = 0 Then
-			GBL_CHK_TempStr = "·¢Éú´íÎó£¬Òª»Ø¸´µÄÌû×Ó²»´æÔÚ£¬¿ÉÒÔÊÇ¸ÕÉ¾³ı»òÆäËüÔ­Òò.<br>" & VbCrLf
+			GBL_CHK_TempStr = "å‘ç”Ÿé”™è¯¯ï¼Œè¦å›å¤çš„å¸–å­ä¸å­˜åœ¨ï¼Œå¯ä»¥æ˜¯åˆšåˆ é™¤æˆ–å…¶å®ƒåŸå› .<br>" & VbCrLf
 			CheckAnnouceValue = 0
 			Exit Function
 		End If
 	End If
 	
 	If Trim(Replace(Replace(Replace(Replace(Form_Title & "","&nbsp;",""),chr(13),""),chr(10),""),chr(0),"")) = "" Then
-		GBL_CHK_TempStr = "Ìû×ÓÃû³Æ±ØĞëÌîĞ´.<br>" & VbCrLf
+		GBL_CHK_TempStr = "å¸–å­åç§°å¿…é¡»å¡«å†™.<br>" & VbCrLf
 		CheckAnnouceValue = 0
 		Exit Function
 	End If
 
 	If strLength(Form_Title)>255 Then
-		GBL_CHK_TempStr = "Ìû×ÓÃû³ÆÌ«³¤£¬×î¶àÔÊĞí255×Ö½Ú.<br>" & VbCrLf
+		GBL_CHK_TempStr = "å¸–å­åç§°å¤ªé•¿ï¼Œæœ€å¤šå…è®¸255å­—èŠ‚.<br>" & VbCrLf
 		CheckAnnouceValue = 0
 		Exit Function
 	End If
 
  	If Trim(Replace(Replace(Form_Content,"&nbsp;",""),VbCrLf,"")) = "" and (Re_ID = 0 or (htmlencode(Form_Title) = LMT_TopicNameNoHTML or Lcase(left(Form_Title,3)) = "re:")) Then
-		GBL_CHK_TempStr = "±ØĞëÌîĞ´Ìû×ÓÄÚÈİĞÅÏ¢.<br>" & VbCrLf
+		GBL_CHK_TempStr = "å¿…é¡»å¡«å†™å¸–å­å†…å®¹ä¿¡æ¯.<br>" & VbCrLf
 		CheckAnnouceValue = 0
 		Exit Function
 	ElseIf LMTDEF_MinAnnounceLength > 0 Then
 		If (Len(Form_Title) < LMTDEF_MinAnnounceLength or inStr(htmlencode(Form_Title),LMT_TopicNameNoHTML) or Lcase(left(Form_Title,3)) = "re:") Then
 			If Form_htmlflag = 2 Then
 				If Len(Trim(ResumeCode(Replace(Replace(Replace(Replace(Form_Content,VbCrLf,""),chr(13),""),chr(10),""),chr(0),"")))) < LMTDEF_MinAnnounceLength Then
-					GBL_CHK_TempStr = "´íÎó£¬Ìû×ÓÄÚÈİĞÅÏ¢¹ı¶Ì¡£<br>" & VbCrLf
+					GBL_CHK_TempStr = "é”™è¯¯ï¼Œå¸–å­å†…å®¹ä¿¡æ¯è¿‡çŸ­ã€‚<br>" & VbCrLf
 					CheckAnnouceValue = 0
 					Exit Function
 				End If
 			Else
 				If Len(Trim(ResumeCode(Replace(Replace(Replace(Replace(Form_Content,VbCrLf,""),chr(13),""),chr(10),""),chr(0),"")))) < LMTDEF_MinAnnounceLength Then
-					GBL_CHK_TempStr = "´íÎó£¬Ìû×ÓÄÚÈİĞÅÏ¢¹ı¶Ì¡£<br>" & VbCrLf
+					GBL_CHK_TempStr = "é”™è¯¯ï¼Œå¸–å­å†…å®¹ä¿¡æ¯è¿‡çŸ­ã€‚<br>" & VbCrLf
 					CheckAnnouceValue = 0
 					Exit Function
 				End If
@@ -940,13 +942,13 @@ Function CheckAnnouceValue
 	End If
 
 	If Form_TopicType = 54 and Form_NeedValue > LMT_BuyAnnounceMaxPoints Then
-		GBL_CHK_TempStr = "´íÎó£¬³öÊÛÌû×î¶àÖ»ÄÜ±ê¼Û" & LMT_BuyAnnounceMaxPoints & DEF_PointsName(0) & "¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = "é”™è¯¯ï¼Œå‡ºå”®å¸–æœ€å¤šåªèƒ½æ ‡ä»·" & LMT_BuyAnnounceMaxPoints & DEF_PointsName(0) & "ã€‚<br>" & VbCrLf
 		CheckAnnouceValue = 0
 		Exit Function
 	End If
 
 	If Form_TopicType = 49 and Form_NeedValue > LMT_BuyAnnounceMaxPoints Then
-		GBL_CHK_TempStr = "´íÎó£¬³öÊÛÌû×î¶àÖ»ÄÜ±ê¼Û" & LMT_BuyAnnounceMaxPoints & DEF_PointsName(1) & "¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = "é”™è¯¯ï¼Œå‡ºå”®å¸–æœ€å¤šåªèƒ½æ ‡ä»·" & LMT_BuyAnnounceMaxPoints & DEF_PointsName(1) & "ã€‚<br>" & VbCrLf
 		CheckAnnouceValue = 0
 		Exit Function
 	End If
@@ -954,7 +956,7 @@ Function CheckAnnouceValue
 	Dim TempURL,Loop_N,Temp
 	If Form_VoteFlag <> "" and Re_ID=0 Then
 		If Replace(Form_VoteItem,VbCrLf,"") = "" Then
-			GBL_CHK_TempStr = "´íÎó£¬Í¶Æ±Ñ¡Ïî±ØĞëÌîĞ´.<br>" & VbCrLf
+			GBL_CHK_TempStr = "é”™è¯¯ï¼ŒæŠ•ç¥¨é€‰é¡¹å¿…é¡»å¡«å†™.<br>" & VbCrLf
 			CheckAnnouceValue = 0
 			Exit Function
 		End If
@@ -968,7 +970,7 @@ Function CheckAnnouceValue
 			TempURL(Loop_N) = Trim(TempURL(Loop_N))
 			If TempURL(Loop_N) <> "" Then
 				If StrLength(TempURL(Loop_N)) > 48 Then
-					GBL_CHK_TempStr = "´íÎó£¬Í¶Æ±Ñ¡ÏîÄÚÈİÌ«³¤£¬²»ÄÜ³¬¹ı24×Ö.<br>" & VbCrLf
+					GBL_CHK_TempStr = "é”™è¯¯ï¼ŒæŠ•ç¥¨é€‰é¡¹å†…å®¹å¤ªé•¿ï¼Œä¸èƒ½è¶…è¿‡24å­—.<br>" & VbCrLf
 					Form_VoteItem = Form_VoteItem_Old
 					CheckAnnouceValue = 0
 					Exit Function
@@ -980,7 +982,7 @@ Function CheckAnnouceValue
 				End If
 				Temp = Temp + 1
 				If Temp > DEF_VOTE_MaxNum Then
-					GBL_CHK_TempStr = "´íÎó£¬Í¶Æ±Ñ¡Ïî²»ÄÜ³¬¹ı" & DEF_VOTE_MaxNum & "¸ö.<br>" & VbCrLf
+					GBL_CHK_TempStr = "é”™è¯¯ï¼ŒæŠ•ç¥¨é€‰é¡¹ä¸èƒ½è¶…è¿‡" & DEF_VOTE_MaxNum & "ä¸ª.<br>" & VbCrLf
 					Form_VoteItem = Form_VoteItem_Old
 					CheckAnnouceValue = 0
 					Exit Function
@@ -989,7 +991,7 @@ Function CheckAnnouceValue
 		Next
 		
 		If Temp < 2 Then
-			GBL_CHK_TempStr = "¼ÈÈ»ÊÇÍ¶Æ±£¬Çë²»ÒªÉÙÓÚÁ½¸öÑ¡Ïî.<br>" & VbCrLf
+			GBL_CHK_TempStr = "æ—¢ç„¶æ˜¯æŠ•ç¥¨ï¼Œè¯·ä¸è¦å°‘äºä¸¤ä¸ªé€‰é¡¹.<br>" & VbCrLf
 			Form_VoteItem = Form_VoteItem_Old
 			CheckAnnouceValue = 0
 			Exit Function
@@ -1000,7 +1002,7 @@ Function CheckAnnouceValue
 		If isNumeric(Form_Vote_ExpireDay) = 0 then Form_Vote_ExpireDay = 0
 		Form_Vote_ExpireDay = Fix(cCur(Form_Vote_ExpireDay))
 		If Form_Vote_ExpireDay < 0 or Form_Vote_ExpireDay > 365 Then
-			GBL_CHK_TempStr = "´íÎó£¬Í¶Æ±µ½ÆÚÊ±¼äÑ¡Ôñ´íÎó.<br>" & VbCrLf
+			GBL_CHK_TempStr = "é”™è¯¯ï¼ŒæŠ•ç¥¨åˆ°æœŸæ—¶é—´é€‰æ‹©é”™è¯¯.<br>" & VbCrLf
 			Form_VoteItem = Form_VoteItem_Old
 			CheckAnnouceValue = 0
 			Exit Function
@@ -1009,7 +1011,7 @@ Function CheckAnnouceValue
 		If isNumeric(Form_VoteType) = 0 then Form_VoteType = 0
 		Form_VoteType = Fix(cCur(Form_VoteType))
 		If Form_VoteType <> 0 and Form_VoteType <> 1 Then
-			GBL_CHK_TempStr = "´íÎó£¬Í¶Æ±ÀàĞÍÖ»ÄÜÊÇµ¥Ñ¡Æ±»ò¶àÑ¡Æ±.<br>" & VbCrLf
+			GBL_CHK_TempStr = "é”™è¯¯ï¼ŒæŠ•ç¥¨ç±»å‹åªèƒ½æ˜¯å•é€‰ç¥¨æˆ–å¤šé€‰ç¥¨.<br>" & VbCrLf
 			Form_VoteItem = Form_VoteItem_Old
 			CheckAnnouceValue = 0
 			Exit Function
@@ -1018,20 +1020,20 @@ Function CheckAnnouceValue
 
 	Loop_N = CheckIsRestSpaceTime(Form_Title)
 	Select Case Loop_N
-	Case 1: If CheckSupervisorUserName = 0 Then
-			GBL_CHK_TempStr = GBL_CHK_TempStr & "²»ÄÜÁ¬Ğø·¢Ì«¶àµÄÌû×Ó£¬ÇëĞİÏ¢" & DEF_RestSpaceTime & "ÃëÖÓºóÔÙ·¢Ìû!<br>"
+	Case 1: If CheckSupervisorUserName() = 0 Then
+			GBL_CHK_TempStr = GBL_CHK_TempStr & "ä¸èƒ½è¿ç»­å‘å¤ªå¤šçš„å¸–å­ï¼Œè¯·ä¼‘æ¯" & DEF_RestSpaceTime & "ç§’é’Ÿåå†å‘å¸–!<br>"
 			GBL_CHK_Flag = 0
 			Exit Function
 		End If
-	Case 2:	GBL_CHK_TempStr = GBL_CHK_TempStr & "Çë²»Òª·¢ÖØ¸´µÄÌû×Ó!<br>"
+	Case 2:	GBL_CHK_TempStr = GBL_CHK_TempStr & "è¯·ä¸è¦å‘é‡å¤çš„å¸–å­!<br>"
 		GBL_CHK_Flag = 0
 		Exit Function
 	Case 3: Exit Function
 	End Select
 
 	If Re_ID=0 and GBL_UserID>0 and (GBL_BoardMasterFlag >= 5) and Form_AnnounceIsTopFlag=1 and GetBinarybit(GBL_CHK_UserLimit,4) = 0 Then
-		If CheckMakeTopAnnounceOver = 1 then
-			GBL_CHK_TempStr = GBL_CHK_TempStr & "´íÎó,ÖÃ¶¥µÄÌû×ÓÌ«¶à£¬²»ÄÜÔÙ·¢±íÖ±½ÓÖÃ¶¥µÄÌû×Ó.<br>"
+		If CheckMakeTopAnnounceOver() = 1 then
+			GBL_CHK_TempStr = GBL_CHK_TempStr & "é”™è¯¯,ç½®é¡¶çš„å¸–å­å¤ªå¤šï¼Œä¸èƒ½å†å‘è¡¨ç›´æ¥ç½®é¡¶çš„å¸–å­.<br>"
 			GBL_CHK_Flag = 0
 			Exit Function
 		End If
@@ -1062,7 +1064,7 @@ Function CheckAnnouceValue
 	Form_Length = Len(Form_Content)
 	If Left(Form_Title,3) = "Re:" and Form_Title <> "Re:" & LMT_TopicNameNoHTML and Re_ID <> 0 Then Form_Title = Mid(Form_Title,4)
 	'If GBL_Board_ForumPass <> "" or GBL_Board_OtherLimit > 0 or GetBinarybit(GBL_Board_BoardLimit,2) = 1 or GetBinarybit(GBL_Board_BoardLimit,7) = 1 Then
-	'ÏŞÖÆ°æÃæ£¬»Ø¸´±êÌâÍ¬Ö÷ÌâµÄ±êÌâ
+	'é™åˆ¶ç‰ˆé¢ï¼Œå›å¤æ ‡é¢˜åŒä¸»é¢˜çš„æ ‡é¢˜
 	'Else
 		If Left(Form_Title,3) = "Re:" Then
 			If Form_HTMLFlag = 2 Then
@@ -1080,7 +1082,7 @@ Function CheckAnnouceValue
 	If Form_TitleStyle = 0 and Re_ID = 0 and Len(Form_Color) = 7 and GBL_CHK_CharmPoint >= LMTDEF_ColorSpend Then
 		Temp = "<font color=""" & htmlencode(Form_Color) & """>" & htmlencode(Form_Title) & "</font>"
 		If strLength(Temp)>255 Then
-			GBL_CHK_TempStr = "´íÎó£¬Ìû×ÓÃû³ÆÌ«³¤.<br>" & VbCrLf
+			GBL_CHK_TempStr = "é”™è¯¯ï¼Œå¸–å­åç§°å¤ªé•¿.<br>" & VbCrLf
 			CheckAnnouceValue = 0
 			Exit Function
 		End If
@@ -1094,7 +1096,7 @@ Function CheckAnnouceValue
 	If Form_TopicType = 55 Then
 		Form_NeedValue = GetUserID(Form_NeedValue)
 		If Form_NeedValue = 0 Then
-			GBL_CHK_TempStr = "´íÎó£¬ÉèÖÃÁË´ËÌûÖ»ÔÊĞíÄ³ÓÃ»§²é¿´£¬µ«´ËÓÃ»§²¢²»´æÔÚ¡£<br>" & VbCrLf
+			GBL_CHK_TempStr = "é”™è¯¯ï¼Œè®¾ç½®äº†æ­¤å¸–åªå…è®¸æŸç”¨æˆ·æŸ¥çœ‹ï¼Œä½†æ­¤ç”¨æˆ·å¹¶ä¸å­˜åœ¨ã€‚<br>" & VbCrLf
 			Form_NeedValue = Left(Form_NeedValue,20)
 			CheckAnnouceValue = 0
 			Exit Function
@@ -1137,7 +1139,7 @@ End Function
 
 Function CheckIsRestSpaceTime(Form_Title)
 
-	If CheckWriteEventSpace = 0 and GBL_CHK_User <> "" Then
+	If CheckWriteEventSpace() = 0 and GBL_CHK_User <> "" Then
 		CheckIsRestSpaceTime = 3
 		Exit Function
 	End If
@@ -1183,7 +1185,7 @@ Function CheckIsRestSpaceTime(Form_Title)
 		Exit Function
 	End If
 
-	If DateDiff("s", RestoreTime(ndatetime), DEF_Now) < DEF_RestSpaceTime and CheckSupervisorUserName = 0 Then
+	If DateDiff("s", RestoreTime(ndatetime), DEF_Now) < DEF_RestSpaceTime and CheckSupervisorUserName() = 0 Then
 		CheckIsRestSpaceTime = 1
 		'CALL LDExeCute("Update LeadBBS_Announce set ndatetime=" & GetTimeValue(DEF_Now) & " where id=" & Temp_ID,1)
 	Else
@@ -1198,30 +1200,22 @@ End Function
 
 Function SaveAnnounceValue
 
-	if cstr(GBL_ipaddress)="115.221.54.100" then
-		Response.Write "<p>Form_UserName:" & Form_UserName
-		Response.Write "<p>Form_UserID:" & Form_UserID
-	End If
 
 	If Form_UserName = "" Then
-		Form_UserName = "ÓÎ¿Í"
+		Form_UserName = "æ¸¸å®¢"
 		GBL_UserID = 0
 		Form_UserID = 0
 	ElseIf Form_UserID < 1 and LMT_EnableOtherGuestName = 0 Then
-		Form_UserName = "ÓÎ¿Í"
-	End If
-	if cstr(GBL_ipaddress)="115.221.54.100" then
-		Response.Write "<p>Form_UserName:" & Form_UserName
-		Response.Write "<p>Form_UserID:" & Form_UserID
+		Form_UserName = "æ¸¸å®¢"
 	End If
 	Form_UserID = cCur(Form_UserID)
-	If inStr(Lcase(Form_UserName),"<script") or inStr(Lcase(Form_UserName),"<\script") or inStr(Lcase(Form_UserName),"</script") or inStr(Lcase(Form_UserName),"\") or inStr(Lcase(Form_UserName),">") or inStr(Lcase(Form_UserName),"<") or inStr(Lcase(Form_UserName),"""") or inStr(Lcase(Form_UserName),",") or inStr(Lcase(Form_UserName),chr(10)) or inStr(Lcase(Form_UserName),chr(13)) Then Form_UserName = "ÓÎ¿Í"
+	If inStr(Lcase(Form_UserName),"<script") or inStr(Lcase(Form_UserName),"<\script") or inStr(Lcase(Form_UserName),"</script") or inStr(Lcase(Form_UserName),"\") or inStr(Lcase(Form_UserName),">") or inStr(Lcase(Form_UserName),"<") or inStr(Lcase(Form_UserName),"""") or inStr(Lcase(Form_UserName),",") or inStr(Lcase(Form_UserName),chr(10)) or inStr(Lcase(Form_UserName),chr(13)) Then Form_UserName = "æ¸¸å®¢"
 	Form_NoUserUnderWriteFlag = cCur(Form_NoUserUnderWriteFlag)
 	Form_UnderWriteFlag = cCur(Form_UnderWriteFlag)
 	Dim SQL,Rs,MaxRootID
 	Dim NewMaxAnnounceID
 	Dim TempURL,Loop_N,Temp
-	Rem ÎªÁË¼æÈİ£¬×îºÃ¼ÓÈëÑ¡È¡×î´óRootIDÖµ£¬Èç¹ûRootID´óÓÚMaxID£¬ÔòRootIDÈ¡´úMaxID(RootID<DEF_BBS_TOPMinID)
+	Rem ä¸ºäº†å…¼å®¹ï¼Œæœ€å¥½åŠ å…¥é€‰å–æœ€å¤§RootIDå€¼ï¼Œå¦‚æœRootIDå¤§äºMaxIDï¼Œåˆ™RootIDå–ä»£MaxID(RootID<DEF_BBS_TOPMinID)
 
 	If Form_UserID > 0 then
 		GET_LastUser = GetTrueName(Form_UserName,GBL_CHK_TrueName) & "#" & Form_UserID
@@ -1294,7 +1288,7 @@ Function SaveAnnounceValue
 	Form_ndatetime = GetTimeValue(DEF_Now)
 	Form_LastTime = Form_ndatetime
 	
-	Form_Content = UBB_FiltrateBadWords(Form_Content) 'Ôà×Ö¹ıÂË
+	Form_Content = UBB_FiltrateBadWords(Form_Content) 'è„å­—è¿‡æ»¤
 
 	If Form_UpFlag = 1 Then
 		LMT_Upload_ExtendID = NewAnnounceID
@@ -1358,13 +1352,13 @@ Function SaveAnnounceValue
 		Form_Color = ""
 	End if
 	If GBL_BoardMasterFlag < 4 and GetBinarybit(GBL_Board_BoardLimit,13) = 1 Then
-		Form_Title = "ĞÂÉóºËÌû×Ó..."
-		LMT_TopicNameNoHTML = "ĞÂÉóºËÌû×Ó..."
+		Form_Title = "æ–°å®¡æ ¸å¸–å­..."
+		LMT_TopicNameNoHTML = "æ–°å®¡æ ¸å¸–å­..."
 		LMT_LastInfo = ""
 	End If
 
-	'²»ĞèÒªÖ¸¶¨User
-	'´Ë·½·¨ËäÈ»·Ç³£¿ì£¬µ«µ±²¢·¢¶àÊ±£¬»á²úÉú´íÎóµÄÏÖÏó
+	'ä¸éœ€è¦æŒ‡å®šUser
+	'æ­¤æ–¹æ³•è™½ç„¶éå¸¸å¿«ï¼Œä½†å½“å¹¶å‘å¤šæ—¶ï¼Œä¼šäº§ç”Ÿé”™è¯¯çš„ç°è±¡
 	If DEF_UsedDataBase = 0 or DEF_UsedDatabase = 2 Then
 		Set Rs = LDExeCute("select @@IDENTITY as id",0)
 		NewAnnounceID = Rs(0)
@@ -1381,7 +1375,7 @@ Function SaveAnnounceValue
 	
 			Set Rs = LDExeCute(SQL,0)
 			If Rs.Eof Then
-				GBL_CHK_TempStr = "ÒâÍâ´íÎó£¬¸Õ·¢µÄÌû¿ÉÄÜÒÑ¾­É¾³ı»òÆäËüÒâÍâ´íÎó£¡<br>" & VbCrLf
+				GBL_CHK_TempStr = "æ„å¤–é”™è¯¯ï¼Œåˆšå‘çš„å¸–å¯èƒ½å·²ç»åˆ é™¤æˆ–å…¶å®ƒæ„å¤–é”™è¯¯ï¼<br>" & VbCrLf
 				Rs.Close
 				Set Rs = Nothing
 				Exit Function
@@ -1399,7 +1393,7 @@ Function SaveAnnounceValue
 		Set Rs=LDExeCute(SQL,0)
 		GBL_DBNum = GBL_DBNum + 1
 		If Rs.Eof Then
-			GBL_CHK_TempStr = "ÒâÍâ´íÎó£¬¸Õ·¢µÄÌû¿ÉÄÜÒÑ¾­É¾³ı»òÆäËüÒâÍâ´íÎó£¡<br>" & VbCrLf
+			GBL_CHK_TempStr = "æ„å¤–é”™è¯¯ï¼Œåˆšå‘çš„å¸–å¯èƒ½å·²ç»åˆ é™¤æˆ–å…¶å®ƒæ„å¤–é”™è¯¯ï¼<br>" & VbCrLf
 			Rs.Close
 			Set Rs = Nothing
 			Exit Function
@@ -1448,7 +1442,7 @@ Function SaveAnnounceValue
 		CALL LDExeCute(SQL_Temp,1)
 	End If
 
-	Rem ¸üĞÂMaxRootID
+	Rem æ›´æ–°MaxRootID
 	If Re_ID > 0 Then
 		If (DEF_EnableMakeTopAnc <> GetBinarybit(GBL_Board_BoardLimit,17)) and cCur(LMT_RootID)<DEF_BBS_TOPMinID Then
 			CALL LDExeCute("Update LeadBBS_Announce Set RootID=" & MaxRootID+1 & ",ChildNum=ChildNum+1,LastTime=" & GetTimeValue(DEF_Now) & ",LastUser='" & Replace(GET_LastUser,"'","''") & "',RootMaxID=" & NewMaxAnnounceID & ",LastInfo='" & Replace(Left(LMT_LastInfo,50),"'","''") & "' where ID=" & LMT_RootIDBak,1)
@@ -1458,7 +1452,7 @@ Function SaveAnnounceValue
 				UpdateBoardValue(GBL_board_ID)
 			Else
 				CALL LDExeCute(" Update LeadBBS_Boards Set AllMaxRootID=" & MaxRootID+1 & ",LastWriter='" & Replace(GET_LastUser,"'","''")  &"',LastWriteTime=" & Form_LastTime & ",LastAnnounceID=" & LMT_RootIDBak & ",LastTopicName='" & Replace(LMT_TopicNameNoHTML,"'","''") & "' where BoardID=" & GBL_board_ID,1)
-				UpdateBoardApplicationInfo GBL_Board_ID,MaxRootID+1,11
+				Call UpdateBoardApplicationInfo(GBL_Board_ID,MaxRootID+1,11)
 			End If
 			'UpdateBoardValue(GBL_board_ID)
 		Else
@@ -1467,11 +1461,11 @@ Function SaveAnnounceValue
 			If DEF_UsedDataBase = 1 Then CALL LDExeCute("Update LeadBBS_Topic Set ChildNum=ChildNum+1,LastTime=" & GetTimeValue(DEF_Now) & ",LastUser='" & Replace(GET_LastUser,"'","''") & "',RootMaxID=" & NewMaxAnnounceID & ",LastInfo='" & Replace(Left(LMT_LastInfo,50),"'","''") & "' where ID=" & LMT_RootIDBak,1)
 		End If
 
-		UpdateBoardApplicationInfo GBL_board_ID,GET_LastUser,3
-		UpdateBoardApplicationInfo GBL_board_ID,Form_LastTime,4
-		UpdateBoardApplicationInfo GBL_board_ID,LMT_RootIDBak,19
-		UpdateBoardApplicationInfo GBL_board_ID,LMT_TopicNameNoHTML,20
-		UpdateBoardAnnounceNum Application(DEF_MasterCookies & "BoardInfo" & GBL_board_ID)(28,0),0,1,1,0,GET_LastUser,Form_LastTime,LMT_RootIDBak,LMT_TopicNameNoHTML
+		Call UpdateBoardApplicationInfo(GBL_board_ID,GET_LastUser,3)
+		Call UpdateBoardApplicationInfo(GBL_board_ID,Form_LastTime,4)
+		Call UpdateBoardApplicationInfo(GBL_board_ID,LMT_RootIDBak,19)
+		Call UpdateBoardApplicationInfo(GBL_board_ID,LMT_TopicNameNoHTML,20)
+		Call UpdateBoardAnnounceNum(Application(DEF_MasterCookies & "BoardInfo" & GBL_board_ID)(28,0),0,1,1,0,GET_LastUser,Form_LastTime,LMT_RootIDBak,LMT_TopicNameNoHTML)
 		UpdateStatisticDataInfo 1,9,1
 		UpdateStatisticDataInfo 1,11,1
 		CALL LDExeCute("Update LeadBBS_User set Points=Points+" & DEF_BBS_AnnouncePoints & ",AnnounceNum=AnnounceNum+1,AnnounceNum2=AnnounceNum2+1,LastAnnounceID=" & NewAnnounceID & Form_Color & " Where ID = " & Form_UserID,1)
@@ -1493,7 +1487,7 @@ Function SaveAnnounceValue
 			End If
 		End If
 		
-		'Í¬Ê±Ìá¾µÏñÌû(×î¶à3¸ö)
+		'åŒæ—¶æé•œåƒå¸–(æœ€å¤š3ä¸ª)
 		SQL = sql_select("Select ID from LeadBBS_Announce where TopicType=39 and NeedValue=" & Re_ID,3)
 		Set Rs = LDExeCute(SQL,0)
 		If Not Rs.Eof Then
@@ -1528,31 +1522,31 @@ Function SaveAnnounceValue
 				UpdateBoardValue(GBL_board_ID)
 			Else
 				CALL LDExeCute("Update LeadBBS_Boards Set AllMaxRootID=" & Form_RootID & ",LastWriter='" & Replace(GET_LastUser,"'","''")  &"',LastWriteTime=" & Form_LastTime & ",LastAnnounceID=" & LMT_RootIDBak & ",LastTopicName='" & Replace(LMT_TopicNameNoHTML,"'","''") & "' where BoardID=" & GBL_board_ID,1)
-				UpdateBoardApplicationInfo GBL_Board_ID,Form_RootID,11
+				Call UpdateBoardApplicationInfo(GBL_Board_ID,Form_RootID,11)
 			End If
 		Else
 			CALL LDExeCute("Update LeadBBS_Boards Set LastWriter='" & Replace(GET_LastUser,"'","''")  &"',LastWriteTime=" & Form_LastTime & ",LastAnnounceID=" & LMT_RootIDBak & ",LastTopicName='" & Replace(LMT_TopicNameNoHTML,"'","''") & "' where BoardID=" & GBL_board_ID,1)
 		End If
-		UpdateBoardApplicationInfo GBL_board_ID,Form_RootID,11
-		UpdateBoardApplicationInfo GBL_board_ID,GET_LastUser,3
-		UpdateBoardApplicationInfo GBL_board_ID,Form_LastTime,4
-		UpdateBoardApplicationInfo GBL_board_ID,LMT_RootIDBak,19
-		UpdateBoardApplicationInfo GBL_board_ID,LMT_TopicNameNoHTML,20
+		Call UpdateBoardApplicationInfo(GBL_board_ID,Form_RootID,11)
+		Call UpdateBoardApplicationInfo(GBL_board_ID,GET_LastUser,3)
+		Call UpdateBoardApplicationInfo(GBL_board_ID,Form_LastTime,4)
+		Call UpdateBoardApplicationInfo(GBL_board_ID,LMT_RootIDBak,19)
+		Call UpdateBoardApplicationInfo(GBL_board_ID,LMT_TopicNameNoHTML,20)
 		UpdateStatisticDataInfo 1,9,1
 		UpdateStatisticDataInfo 1,10,1
 		UpdateStatisticDataInfo 1,11,1
-		UpdateBoardAnnounceNum Application(DEF_MasterCookies & "BoardInfo" & GBL_board_ID)(28,0),1,1,1,0,GET_LastUser,Form_LastTime,LMT_RootIDBak,LMT_TopicNameNoHTML
+		Call UpdateBoardAnnounceNum(Application(DEF_MasterCookies & "BoardInfo" & GBL_board_ID)(28,0),1,1,1,0,GET_LastUser,Form_LastTime,LMT_RootIDBak,LMT_TopicNameNoHTML)
 	End If
 	'on error resume next
 	If err Then
 		SaveAnnounceValue = 0
-		GBL_CHK_TempStr = "´íÎó£¬·şÎñÆ÷Ì«Ã¦»òÄúµÄÎÄµµ´óÌ«£¬ÇëÖØĞÂÌá½»±íµ¥!<br>" & VbCrLf
+		GBL_CHK_TempStr = "é”™è¯¯ï¼ŒæœåŠ¡å™¨å¤ªå¿™æˆ–æ‚¨çš„æ–‡æ¡£å¤§å¤ªï¼Œè¯·é‡æ–°æäº¤è¡¨å•!<br>" & VbCrLf
 		err.clear
 	Else
 		SaveAnnounceValue = 1
 	End If
 
-	Rem ÏÂÃæ±£´æÍ¶Æ±Ñ¡Ïî
+	Rem ä¸‹é¢ä¿å­˜æŠ•ç¥¨é€‰é¡¹
 	If Form_VoteFlag <> "" and Re_ID=0 Then
 		Form_Vote_ExpireDay = cCur(Form_Vote_ExpireDay)
 		If Form_Vote_ExpireDay <> 0 Then Form_Vote_ExpireDay = GetTimeValue(DateAdd("d",Form_Vote_ExpireDay,DEF_Now))
@@ -1564,7 +1558,7 @@ Function SaveAnnounceValue
 				CALL LDExeCute("insert into LeadBBS_VoteItem(AnnounceID,VoteType,VoteName,ExpiresTime) values(" & NewAnnounceID & "," & Form_VoteType & ",'" & Replace(UBB_FiltrateBadWords(TempURL(Loop_N)),"'","''") & "'," & Form_Vote_ExpireDay & ")",1)
 				Temp = Temp + 1
 				If Temp > DEF_VOTE_MaxNum Then
-					GBL_CHK_TempStr = "´íÎó£¬Í¶Æ±Ñ¡Ïî²»ÄÜ³¬¹ı" & DEF_VOTE_MaxNum & "¸ö.<br>" & VbCrLf
+					GBL_CHK_TempStr = "é”™è¯¯ï¼ŒæŠ•ç¥¨é€‰é¡¹ä¸èƒ½è¶…è¿‡" & DEF_VOTE_MaxNum & "ä¸ª.<br>" & VbCrLf
 					SaveAnnounceValue = 0
 					Exit Function
 				End If
@@ -1573,8 +1567,8 @@ Function SaveAnnounceValue
 	End If
 	
 	Dim sendedList : sendedList = "," & GBL_CHK_User & ","
-	Rem ÏÂÃæ¶ÌÏûÏ¢Í¨ÖªÌûÖ÷
-	If LMT_ReName = "ÓÎ¿Í" or LMT_ReName = "[LeadBBS]" Then LMT_ReName = ""
+	Rem ä¸‹é¢çŸ­æ¶ˆæ¯é€šçŸ¥å¸–ä¸»
+	If LMT_ReName = "æ¸¸å®¢" or LMT_ReName = "[LeadBBS]" Then LMT_ReName = ""
 	
 	dim retitle
 	retitle = Form_Title
@@ -1583,10 +1577,10 @@ Function SaveAnnounceValue
 	If Re_ID > 0 and LMT_ReName <> "" Then
 		If GetFormData("Form_RepostMsg") = "checkbox" Then
 			sendedList = sendedList & LMT_ReName & ","
-			SendNewMessage "[LeadBBS]",LMT_ReName,"ÂÛÌ³¶ÌĞÅ£ºÌû×Ó»Ø¸´Í¨Öª","[color=blue]ÄúËù·¢±íµÄÌû×ÓÊÜµ½»Ø¸´[/color][hr]" &_
-			"[b]ËùÔÚ°æÃæ£º[/b][url=../b/" & RW_b(GBL_Board_ID,0,"") & "]" & htmlencode(KillHTMLLabel(GBL_Board_BoardName)) & "[/url]" & VbCrLf & _
-			"[b]»Ø¸´×÷Õß£º[/b]" & GBL_CHK_User & VbCrLf & _
-			"[b]»Ø¸´Ìû×Ó£º[/b][url=../a/" & RW_a(GBL_Board_ID,NewAnnounceID,1,1,"") & "]" & htmlencode(retitle) & "[/url]",GBL_IPAddress
+			SendNewMessage "[LeadBBS]",LMT_ReName,"è®ºå›çŸ­ä¿¡ï¼šå¸–å­å›å¤é€šçŸ¥","[color=blue]æ‚¨æ‰€å‘è¡¨çš„å¸–å­å—åˆ°å›å¤[/color][hr]" &_
+			"[b]æ‰€åœ¨ç‰ˆé¢ï¼š[/b][url=../b/" & RW_b(GBL_Board_ID,0,"") & "]" & htmlencode(KillHTMLLabel(GBL_Board_BoardName)) & "[/url]" & VbCrLf & _
+			"[b]å›å¤ä½œè€…ï¼š[/b]" & GBL_CHK_User & VbCrLf & _
+			"[b]å›å¤å¸–å­ï¼š[/b][url=../a/" & RW_a(GBL_Board_ID,NewAnnounceID,1,1,"") & "]" & htmlencode(retitle) & "[/url]",GBL_IPAddress
 		End If
 	End If
 
@@ -1608,7 +1602,14 @@ Function SaveAnnounceValue
 	
 		if regEx.test(strng) = false then
 			'patrn = "@([a-z0-9\_]{1,20})"
-			patrn = "@([^\ \¡¡\.\""\'\[\]\(\)\<\>\&\\\/]{1,30})"
+			' README Â§43: Go's regexp engine only allows a backslash before an ASCII
+			' non-alphanumeric. The upstream pattern escapes U+3000 (ideographic space),
+			' which makes RegExp.Pattern raise 800A1399 and abort the request *after* the
+			' announce row is inserted -- the poster got an error page while the topic
+			' really was created, and everything below here (@-mention notifications,
+			' attachment binding, remote-image saving, the redirect to the new post)
+			' silently never ran. The class member is the character itself, unescaped.
+			patrn = "@([^\ ã€€\.\""\'\[\]\(\)\<\>\&\\\/]{1,30})"
 			
 			regEx.Pattern = patrn
 		end if
@@ -1638,10 +1639,10 @@ Function SaveAnnounceValue
 					end if
 					If touser <> "" Then
 						sendedList = sendedList & touser & ","
-						SendNewMessage "[LeadBBS]",touser,"ÂÛÌ³¶ÌĞÅ£ºÌû×ÓÖĞÌáµ½Äã","[color=blue]´ËÌûÖĞÌáµ½Äã[/color][hr]" &_
-						"[b]ËùÔÚ°æÃæ£º[/b][url=../b/" & RW_b(GBL_Board_ID,0,"") & "]" & htmlencode(KillHTMLLabel(GBL_Board_BoardName)) & "[/url]" & VbCrLf & _
-						"[b]×÷Õß£º[/b]" & GetTrueNameID(GBL_CHK_User,GBL_CHK_TrueName,GBL_UserID) & VbCrLf & _
-						"[b]Ìû×Ó£º[/b][url=../a/" & RW_a(GBL_Board_ID,NewAnnounceID,1,1,"") & "]" & htmlencode(retitle) & "[/url]",GBL_IPAddress
+						SendNewMessage "[LeadBBS]",touser,"è®ºå›çŸ­ä¿¡ï¼šå¸–å­ä¸­æåˆ°ä½ ","[color=blue]æ­¤å¸–ä¸­æåˆ°ä½ [/color][hr]" &_
+						"[b]æ‰€åœ¨ç‰ˆé¢ï¼š[/b][url=../b/" & RW_b(GBL_Board_ID,0,"") & "]" & htmlencode(KillHTMLLabel(GBL_Board_BoardName)) & "[/url]" & VbCrLf & _
+						"[b]ä½œè€…ï¼š[/b]" & GetTrueNameID(GBL_CHK_User,GBL_CHK_TrueName,GBL_UserID) & VbCrLf & _
+						"[b]å¸–å­ï¼š[/b][url=../a/" & RW_a(GBL_Board_ID,NewAnnounceID,1,1,"") & "]" & htmlencode(retitle) & "[/url]",GBL_IPAddress
 					End If
 				end if
 			End If
@@ -1650,7 +1651,7 @@ Function SaveAnnounceValue
 		Next
 	End If
 
-	Rem ÏÂÃæ·¢±íÍ¬²½
+	Rem ä¸‹é¢å‘è¡¨åŒæ­¥
 	dim weiBoFlag
 	If GetFormData("bindpost_1_1") = "1" Then
 		weiBoFlag = 1
@@ -1824,7 +1825,7 @@ Function CheckUserNameExist(username,truename,toid)
 	End if
 	Rs.Close
 	Set Rs = Nothing
-	If GetBinaryBit(UserLimit,13) = 1 and GBL_BoardMasterFlag < 4 Then '°æÖ÷»òÒÔÉÏÈ¨ÏŞÕß²»ÊÜ´ËÏŞÖÆ
+	If GetBinaryBit(UserLimit,13) = 1 and GBL_BoardMasterFlag < 4 Then 'ç‰ˆä¸»æˆ–ä»¥ä¸Šæƒé™è€…ä¸å—æ­¤é™åˆ¶
 		Set Rs = LDExeCute(sql_select("Select ID from LeadBBS_FriendUser where FriendUserID=" & GBL_UserID & " and UserID=" & ToUserID,1),0)
 		If Rs.Eof Then
 			CheckUserNameExist = ""
@@ -1843,10 +1844,10 @@ Global_TableHead%>
 		<tr class=tbhead>
 			<td><div class=value><%
 			If Re_ID=0 Then
-				Response.Write "¸Õ·¢µÄĞÂÌû×Ó"
+				Response.Write "åˆšå‘çš„æ–°å¸–å­"
 			Else
-				Response.Write "¸Õ·¢µÄ»Ø¸´Ìû×Ó"
-			End If%> ÒÑ¾­³É¹¦·¢±íµ½°æÃæ¡°<%=GBL_Board_BoardName%>¡±ÖĞ£¬Äú¿ÉÒÔÑ¡ÔñÒÔÏÂ²Ù×÷£º</div></td>
+				Response.Write "åˆšå‘çš„å›å¤å¸–å­"
+			End If%> å·²ç»æˆåŠŸå‘è¡¨åˆ°ç‰ˆé¢â€œ<%=GBL_Board_BoardName%>â€ä¸­ï¼Œæ‚¨å¯ä»¥é€‰æ‹©ä»¥ä¸‹æ“ä½œï¼š</div></td>
 		</tr>
 		</table>
 		<table border=0 cellpadding=0 cellspacing=0 width="100%" class=tablebox>
@@ -1857,12 +1858,12 @@ Global_TableHead%>
 			Dim UpdateFlag
 			UpdateFlag = UpdateUserLevel(Form_UserID)
 			If GBL_BoardMasterFlag < 4 and GetBinarybit(GBL_Board_BoardLimit,13) = 1 Then
-				Response.Write "ÇëÄÍĞÄµÈ´ıÂÛÌ³¹ÜÀíÔ±ÉóºËÄúµÄÌû×Ó¡£<br>"
+				Response.Write "è¯·è€å¿ƒç­‰å¾…è®ºå›ç®¡ç†å‘˜å®¡æ ¸æ‚¨çš„å¸–å­ã€‚<br>"
 			End If
 
 			
 			If Upd_ErrInfo <> "" Then Response.Write "<font color=Red class=redfont>" & Upd_ErrInfo & "</font><br>"%>
-			±¾Ò³Ãæ½«ÔÚ5Ãëºó×Ô¶¯·µ»ØÄúËù·¢±íµÄÌû×Ó£¬¿ÉÒÔ¼ÌĞøÑ¡ÔñÒÔÏÂ²Ù×÷£º<br>
+			æœ¬é¡µé¢å°†åœ¨5ç§’åè‡ªåŠ¨è¿”å›æ‚¨æ‰€å‘è¡¨çš„å¸–å­ï¼Œå¯ä»¥ç»§ç»­é€‰æ‹©ä»¥ä¸‹æ“ä½œï¼š<br>
 				<script language=javascript>
 				function a_topage()
 				{
@@ -1871,13 +1872,13 @@ Global_TableHead%>
 				setTimeout("a_topage()",5000);
 				</script>
 				<ul>
-					<li><a href=../Boards.asp>·µ»ØÊ×Ò³</a><br>
-					<li>·µ»Ø<a href=../b/<%=RW_b(GBL_Board_ID,0,"")%>><%=GBL_Board_BoardName%></a>ÂÛÌ³<br>
+					<li><a href=../Boards.asp>è¿”å›é¦–é¡µ</a><br>
+					<li>è¿”å›<a href=../b/<%=RW_b(GBL_Board_ID,0,"")%>><%=GBL_Board_BoardName%></a>è®ºå›<br>
 					<%
 					If (LMT_ChildNum + 2) > DEF_TopicContentMaxListNum Then%>
-					<li>·µ»Ø<a href=<%=RW_a(GBL_Board_ID,LMT_RootIDBak,1,1,"")%>>¸Õ·¢±íµÄÖ÷Ìâ</a><br>
+					<li>è¿”å›<a href=<%=RW_a(GBL_Board_ID,LMT_RootIDBak,1,1,"")%>>åˆšå‘è¡¨çš„ä¸»é¢˜</a><br>
 					<%End If%>
-					<li>µ½<a href=<%=RW_a(GBL_Board_ID,LMT_RootIDBak,1,1,"lastpage=1")%>>¸Õ·¢±íµÄÌû×Ó</a>
+					<li>åˆ°<a href=<%=RW_a(GBL_Board_ID,LMT_RootIDBak,1,1,"lastpage=1")%>>åˆšå‘è¡¨çš„å¸–å­</a>
 				</ul>
 			</td>
 		</tr>
@@ -1887,29 +1888,33 @@ Global_TableHead%>
 <%
 REM *******Chat Start*******
 If GBL_CheckLimitTitle(GBL_Board_ForumPass,GBL_Board_BoardLimit,GBL_Board_OtherLimit,GBL_Board_HiddenFlag) = 1 Then
-	Form_Title = "<font color=gray calss=grayfont>´ËÌû×Ó±êÌâÒÑÉèÖÃÎªÒş²Ø</font>"
+	Form_Title = "<font color=gray calss=grayfont>æ­¤å¸–å­æ ‡é¢˜å·²è®¾ç½®ä¸ºéšè—</font>"
 	Form_TitleStyle = 1
 Else
 	If Left(Form_Title,3) = "re:" and Form_Title <> "re:" Then Form_Title = Mid(Form_Title,4)
 End If
-CALL Chat_Appand_pop(3,"<span onclick=c_sc(this.innerHTML) style=cursor: pointer class=c_name>" & GBL_CHK_User & "</span>·¢±íÌû×Ó£º<a href=../../a/" & RW_a(GBL_Board_ID,LMT_RootIDBak,1,1,"") & " target=_blank>" & Replace(DisplayAnnounceTitle(Form_Title,Form_TitleStyle),"""","\""") & "</a>¡£")
+CALL Chat_Appand_pop(3,"<span onclick=c_sc(this.innerHTML) style=cursor: pointer class=c_name>" & GBL_CHK_User & "</span>å‘è¡¨å¸–å­ï¼š<a href=../../a/" & RW_a(GBL_Board_ID,LMT_RootIDBak,1,1,"") & " target=_blank>" & Replace(DisplayAnnounceTitle(Form_Title,Form_TitleStyle),"""","\""") & "</a>ã€‚")
 REM *******Chat End*********
 
 	
-	If UpdateFlag = 0 Then
+	' Upd_ErrInfo carries "é™„ä»¶ xxx è¶…è¿‡å¤§å°ï¼Œä¸Šä¼ å¤±è´¥!" and friends, and it is written into the
+	' confirmation page above. Redirecting here does Response.Clear first, so unless the poster
+	' happened to level up (UpdateFlag <> 0) that message was thrown away and the attachment
+	' vanished with no explanation at all -- the post appeared, the picture did not.
+	If UpdateFlag = 0 and Upd_ErrInfo = "" Then
 		Response.Clear
 		If AjaxFlag = 0 Then
-			CloseDatabase
+			CloseDatabase()
 			Response.Redirect RW_a(GBL_Board_ID,LMT_RootIDBak,1,0,"")
 		Else
 			Response.Write "success|" & NewAnnounceID
-			resetVerifyCode
+			resetVerifyCode()
 		End If
 	else
 		If AjaxFlag = 1 Then
 			Response.Clear
 			Response.Write "success|" & NewAnnounceID
-			resetVerifyCode
+			resetVerifyCode()
 		end if
 	End If
 	If AjaxFlag = 0 Then Global_TableBottom
@@ -1976,8 +1981,8 @@ Function GetTopicInfo
 		SQL = ""
 	Else
 		Select Case ac
-			Case "pre": SQL = sql_select("Select t1.ID,t1.RootID,t1.TopicType,t1.NeedValue,t1.ParentID,t1.ChildNum,t1.Title,t1.hits,t1.NotReplay,t1.Content,t1.UserName,t1.RootIDBak,t1.TitleStyle,t1.Opinion,t1.HtmlFlag,T2.UserLimit,T1.VisitIP,T1.RootMaxID,T1.RootMinID,T1.LastTime,T2.TrueName,T2.ID from LeadBBS_Announce as T1 left join LeadBBS_User as T2 on T1.UserID=T2.ID where t1.ParentID=0 and t1.boardid=" & GBL_board_ID & " and t1.RootID>" & rd & " order by t1.RootID ASC",1)
-			Case "nxt": SQL = sql_select("Select t1.ID,t1.RootID,t1.TopicType,t1.NeedValue,t1.ParentID,t1.ChildNum,t1.Title,t1.hits,t1.NotReplay,t1.Content,t1.UserName,t1.RootIDBak,t1.TitleStyle,t1.Opinion,t1.HtmlFlag,T2.UserLimit,T1.VisitIP,T1.RootMaxID,T1.RootMinID,T1.LastTime,T2.TrueName,T2.ID from LeadBBS_Announce as T1 left join LeadBBS_User as T2 on T1.UserID=T2.ID where t1.ParentID=0 and t1.boardid=" & GBL_board_ID & " and t1.RootID<" & rd & " order by t1.RootID DESC",1)
+			Case "pre": SQL = sql_select("Select t1.ID,t1.RootID,t1.TopicType,t1.NeedValue,t1.ParentID,t1.ChildNum,t1.Title,t1.hits,t1.NotReplay,t1.Content,t1.UserName,t1.RootIDBak,t1.TitleStyle,t1.Opinion,t1.HtmlFlag,T2.UserLimit,T1.VisitIP,T1.RootMaxID,T1.RootMinID,T1.LastTime,T2.TrueName,T2.ID as id_dup2 from LeadBBS_Announce as T1 left join LeadBBS_User as T2 on T1.UserID=T2.ID where t1.ParentID=0 and t1.boardid=" & GBL_board_ID & " and t1.RootID>" & rd & " order by t1.RootID ASC",1)
+			Case "nxt": SQL = sql_select("Select t1.ID,t1.RootID,t1.TopicType,t1.NeedValue,t1.ParentID,t1.ChildNum,t1.Title,t1.hits,t1.NotReplay,t1.Content,t1.UserName,t1.RootIDBak,t1.TitleStyle,t1.Opinion,t1.HtmlFlag,T2.UserLimit,T1.VisitIP,T1.RootMaxID,T1.RootMinID,T1.LastTime,T2.TrueName,T2.ID as id_dup2 from LeadBBS_Announce as T1 left join LeadBBS_User as T2 on T1.UserID=T2.ID where t1.ParentID=0 and t1.boardid=" & GBL_board_ID & " and t1.RootID<" & rd & " order by t1.RootID DESC",1)
 			Case Else: SQL = ""
 		End Select
 	End If
@@ -2005,7 +2010,7 @@ Function GetTopicInfo
 			LMT_TopicTitleStyle = Rs(12)
 			ac = Trim(Rs(16))
 			If GetBinarybit(Rs(15),7) = 1 or Form_Submitflag <> "first" or Request.QueryString("repost") <> "1" or LMT_TopicTitleStyle >= 60 or (Form_TopicType > 0 and Form_TopicType <> 80) Then
-				'TmpContent = "´ËÓÃ»§·¢ÑÔÒÑ¾­±»¹ÜÀíÔ±ÆÁ±Î£¬ÒıÓÃÄÚÈİÎŞĞ§¡£"
+				'TmpContent = "æ­¤ç”¨æˆ·å‘è¨€å·²ç»è¢«ç®¡ç†å‘˜å±è”½ï¼Œå¼•ç”¨å†…å®¹æ— æ•ˆã€‚"
 			Else
 				Select Case Rs(14)
 					Case 0: TmpContent = GetReContent(ResumeCode(Rs(9)))
@@ -2028,9 +2033,9 @@ Function GetTopicInfo
 					TmpContent = Mid(TmpContent,1,len(TmpContent)-2)
 				Loop
 				If Len(TmpContent)>100 Then
-					Form_Content = "[QUOTE][b]ÏÂÃæÒıÓÃÓÉ[@" & GetTrueNameID(LMT_ReName,Re_TrueName,Re_Uid) & "]·¢±íµÄÄÚÈİ£º[/b]" & VbCrLf & Left(TmpContent,100) & "...[/QUOTE]" & VbCrLf
+					Form_Content = "[QUOTE][b]ä¸‹é¢å¼•ç”¨ç”±[@" & GetTrueNameID(LMT_ReName,Re_TrueName,Re_Uid) & "]å‘è¡¨çš„å†…å®¹ï¼š[/b]" & VbCrLf & Left(TmpContent,100) & "...[/QUOTE]" & VbCrLf
 				Else
-					Form_Content = "[QUOTE][b]ÏÂÃæÒıÓÃÓÉ[@" & GetTrueNameID(LMT_ReName,Re_TrueName,Re_Uid) & "]·¢±íµÄÄÚÈİ£º[/b]" & VbCrLf & TmpContent & "[/QUOTE]" & VbCrLf
+					Form_Content = "[QUOTE][b]ä¸‹é¢å¼•ç”¨ç”±[@" & GetTrueNameID(LMT_ReName,Re_TrueName,Re_Uid) & "]å‘è¡¨çš„å†…å®¹ï¼š[/b]" & VbCrLf & TmpContent & "[/QUOTE]" & VbCrLf
 				End If
 				'If LMT_DefaultEdit = 0 Then Form_Content = UBB_Code(Form_Content)
 			End If
@@ -2051,13 +2056,13 @@ Function GetTopicInfo
 		If Rs.Eof Then
 			Rs.Close
 			Set Rs = Nothing
-			GBL_CHK_TempStr = "´íÎó,¸ÃÖ÷Ìâ²»´æÔÚ!<br>" & VbCrLf
+			GBL_CHK_TempStr = "é”™è¯¯,è¯¥ä¸»é¢˜ä¸å­˜åœ¨!<br>" & VbCrLf
 			Exit Function
 		Else
 			If cCur(Rs(11)) <> GBL_board_ID Then
 				Rs.Close
 				Set Rs = Nothing
-				GBL_CHK_TempStr = "´íÎó,¸ÃÖ÷Ìâ²»´æÔÚ!<br>" & VbCrLf
+				GBL_CHK_TempStr = "é”™è¯¯,è¯¥ä¸»é¢˜ä¸å­˜åœ¨!<br>" & VbCrLf
 				Exit Function
 			Else
 				LMT_RootID = Rs(0)
@@ -2081,7 +2086,7 @@ Function GetTopicInfo
 
 				ac = Trim(Rs(16))
 				If GetBinarybit(Rs(15),7) = 1 or Form_Submitflag <> "first" or Request.QueryString("repost") <> "1" or LMT_TopicTitleStyle >= 60 or (Form_TopicType > 0 and Form_TopicType <> 80) Then
-					'TmpContent = "´ËÓÃ»§·¢ÑÔÒÑ¾­±»¹ÜÀíÔ±ÆÁ±Î£¬ÒıÓÃÄÚÈİÎŞĞ§¡£"
+					'TmpContent = "æ­¤ç”¨æˆ·å‘è¨€å·²ç»è¢«ç®¡ç†å‘˜å±è”½ï¼Œå¼•ç”¨å†…å®¹æ— æ•ˆã€‚"
 				Else
 					Select Case Rs(14)
 						Case 0: TmpContent = GetReContent(ResumeCode(Rs(8)))
@@ -2105,9 +2110,9 @@ Function GetTopicInfo
 					Loop
 					If Form_Submitflag = "first" and Request.QueryString("repost") = "1" Then
 						If Len(TmpContent)>100 Then
-							Form_Content = "[QUOTE][b]ÏÂÃæÒıÓÃÓÉ[@" & GetTrueNameID(LMT_ReName,Re_TrueName,Re_Uid) & "]·¢±íµÄÄÚÈİ£º[/b]" & VbCrLf & VbCrLf & Left(TmpContent,100) & "...[/QUOTE]" & VbCrLf
+							Form_Content = "[QUOTE][b]ä¸‹é¢å¼•ç”¨ç”±[@" & GetTrueNameID(LMT_ReName,Re_TrueName,Re_Uid) & "]å‘è¡¨çš„å†…å®¹ï¼š[/b]" & VbCrLf & VbCrLf & Left(TmpContent,100) & "...[/QUOTE]" & VbCrLf
 						Else
-							Form_Content = "[QUOTE][b]ÏÂÃæÒıÓÃÓÉ[@" & GetTrueNameID(LMT_ReName,Re_TrueName,Re_Uid) & "]·¢±íµÄÄÚÈİ£º[/b]" & VbCrLf & VbCrLf & TmpContent & "[/QUOTE]" & VbCrLf
+							Form_Content = "[QUOTE][b]ä¸‹é¢å¼•ç”¨ç”±[@" & GetTrueNameID(LMT_ReName,Re_TrueName,Re_Uid) & "]å‘è¡¨çš„å†…å®¹ï¼š[/b]" & VbCrLf & VbCrLf & TmpContent & "[/QUOTE]" & VbCrLf
 						End If
 						'If LMT_DefaultEdit = 0 Then Form_Content = UBB_Code(Form_Content)
 					End If
@@ -2127,21 +2132,21 @@ Function GetTopicInfo
 				case 0,2:
 					SQL = sql_select("Select Title,Hits,ChildNum,ID,TitleStyle,NotReplay,RootIDBak,RootID,RootMaxID,RootMinID,UserName,TopicType,NeedValue,LastTime from LeadBBS_Announce where ParentID=0 and RootIDBak=" & RootIDBak & " order by ID ASC",1)
 				case Else
-					SQL = sql_select("Select Title,Hits,ChildNum,ID,TitleStyle,NotReplay,ID,RootID,RootMaxID,RootMinID,UserName,TopicType,NeedValue,LastTime from LeadBBS_Topic where ID=" & RootIDBak & " order by ID ASC",1)
+					SQL = sql_select("Select Title,Hits,ChildNum,ID,TitleStyle,NotReplay,ID as id_dup2,RootID,RootMaxID,RootMinID,UserName,TopicType,NeedValue,LastTime from LeadBBS_Topic where ID=" & RootIDBak & " order by ID ASC",1)
 			End select
 		Else
 			select case DEF_UsedDataBase
 				case 0,2:
 					SQL = sql_select("Select Title,Hits,ChildNum,ID,TitleStyle,NotReplay,RootIDBak,RootID,RootMaxID,RootMinID,UserName,TopicType,NeedValue,LastTime from LeadBBS_Announce where ParentID=0 and boardid=" & GBL_board_ID & " and RootID=" & LMT_RootID,1)
 				case Else
-					SQL = sql_select("Select Title,Hits,ChildNum,ID,TitleStyle,NotReplay,id,RootID,RootMaxID,RootMinID,UserName,TopicType,NeedValue,LastTime from LeadBBS_Topic where boardid=" & GBL_board_ID & " and RootID=" & LMT_RootID,1)
+					SQL = sql_select("Select Title,Hits,ChildNum,ID,TitleStyle,NotReplay,id as id_dup2,RootID,RootMaxID,RootMinID,UserName,TopicType,NeedValue,LastTime from LeadBBS_Topic where boardid=" & GBL_board_ID & " and RootID=" & LMT_RootID,1)
 			End select
 		End If
 		Set Rs = LDExeCute(SQL,0)
 		If Rs.Eof Then
 			Rs.Close
 			Set Rs = Nothing
-			GBL_CHK_TempStr = "´íÎó,¸ÃÖ÷ÌâÒÑ¾­É¾³ı!<br>" & VbCrLf
+			GBL_CHK_TempStr = "é”™è¯¯,è¯¥ä¸»é¢˜å·²ç»åˆ é™¤!<br>" & VbCrLf
 			Exit Function
 		Else
 			LMT_TopicName = Rs(0)
@@ -2161,7 +2166,7 @@ Function GetTopicInfo
 	End If
 
 	If Form_TopicType = 39 Then
-		GBL_CHK_TempStr = "¾µÏñÌûÎŞ·¨»Ø¸´¡£<br>" & VbCrLf
+		GBL_CHK_TempStr = "é•œåƒå¸–æ— æ³•å›å¤ã€‚<br>" & VbCrLf
 		A_NotReplay = 1
 		Exit Function
 	End If
@@ -2172,7 +2177,7 @@ Function GetTopicInfo
 				If GBL_CHK_User <> "" Then
 					If GBL_BoardMasterFlag < 5 Then
 						A_NotReplay = 1
-						If Form_Submitflag <> "" Then GBL_CHK_TempStr = "´íÎó,Ö»ÓĞ±¾°æ" & DEF_PointsName(8) & "²ÅÄÜ»Ø¸´´ËÌû!<br>" & VbCrLf
+						If Form_Submitflag <> "" Then GBL_CHK_TempStr = "é”™è¯¯,åªæœ‰æœ¬ç‰ˆ" & DEF_PointsName(8) & "æ‰èƒ½å›å¤æ­¤å¸–!<br>" & VbCrLf
 					End If
 				Else
 					A_NotReplay = 1
@@ -2180,28 +2185,28 @@ Function GetTopicInfo
 			Case 4:
 				If GBL_BoardMasterFlag < 4 Then
 					A_NotReplay = 1
-					If Form_Submitflag <> "" Then GBL_CHK_TempStr = "´íÎó,Ö»ÓĞ" & DEF_PointsName(8) & "²ÅÄÜ»Ø¸´´ËÌû!<br>" & VbCrLf
+					If Form_Submitflag <> "" Then GBL_CHK_TempStr = "é”™è¯¯,åªæœ‰" & DEF_PointsName(8) & "æ‰èƒ½å›å¤æ­¤å¸–!<br>" & VbCrLf
 				End If
 			Case 6:
 				If GBL_CHK_User = "" or GetBinarybit(GBL_CHK_UserLimit,2) <> 1 Then
 					A_NotReplay = 1
-					If Form_Submitflag <> "" Then GBL_CHK_TempStr = "´íÎó,Ö»ÓĞ" & DEF_PointsName(5) & "²ÅÄÜ»Ø¸´´ËÌû!<br>" & VbCrLf
+					If Form_Submitflag <> "" Then GBL_CHK_TempStr = "é”™è¯¯,åªæœ‰" & DEF_PointsName(5) & "æ‰èƒ½å›å¤æ­¤å¸–!<br>" & VbCrLf
 				End If
 			Case 51:
 				If GBL_CHK_Points < Form_NeedValue Then
 					A_NotReplay = 1
-					If Form_Submitflag <> "" Then GBL_CHK_TempStr = "´íÎó,ĞèÒª" & DEF_PointsName(0) & "" & Form_NeedValue & "ÒÔÉÏ²ÅÄÜ»Ø¸´´ËÌû!<br>" & VbCrLf
+					If Form_Submitflag <> "" Then GBL_CHK_TempStr = "é”™è¯¯,éœ€è¦" & DEF_PointsName(0) & "" & Form_NeedValue & "ä»¥ä¸Šæ‰èƒ½å›å¤æ­¤å¸–!<br>" & VbCrLf
 				End If
 			Case 53:
 				If GBL_CHK_OnlineTime < Form_NeedValue*60 Then
 					A_NotReplay = 1
-					If Form_Submitflag <> "" Then GBL_CHK_TempStr = "´íÎó,ĞèÒª" & DEF_PointsName(4) & Form_NeedValue & "ÒÔÉÏ²ÅÄÜ»Ø¸´´ËÌû!<br>" & VbCrLf
+					If Form_Submitflag <> "" Then GBL_CHK_TempStr = "é”™è¯¯,éœ€è¦" & DEF_PointsName(4) & Form_NeedValue & "ä»¥ä¸Šæ‰èƒ½å›å¤æ­¤å¸–!<br>" & VbCrLf
 				End If
 			Case 55:
 					If Form_NeedValue > 0 and Form_Submitflag <> "" Then
 						If Form_NeedValue <> GBL_UserID and GBL_CHK_User <> Topic_UserName Then
 							A_NotReplay = 1
-							GBL_CHK_TempStr = "´ËÌûÖ»ÔÊĞí·¢ÌûÈËºÍ½ÓÊÕÈË»Ø¸´"
+							GBL_CHK_TempStr = "æ­¤å¸–åªå…è®¸å‘å¸–äººå’Œæ¥æ”¶äººå›å¤"
 						End If
 					End If
 		End Select
@@ -2212,7 +2217,7 @@ Function GetTopicInfo
 		
 	If Len(LMT_LastTime) = 14 and GBL_BoardMasterFlag < 4 Then
 		If DateDiff("d",ReStoreTime(LMT_LastTime),Now) > LMTDEF_NotReplyDate Then
-			If Form_Submitflag <> "" Then GBL_CHK_TempStr = "´ËÖ÷Ìâ×îºó»Ø¸´Ê±¼ä³¬¹ı" & LMTDEF_NotReplyDate & "Ìì£¬²»ÄÜÔÙ×÷»Ø¸´£¡"
+			If Form_Submitflag <> "" Then GBL_CHK_TempStr = "æ­¤ä¸»é¢˜æœ€åå›å¤æ—¶é—´è¶…è¿‡" & LMTDEF_NotReplyDate & "å¤©ï¼Œä¸èƒ½å†ä½œå›å¤ï¼"
 			A_NotReplay = 1 '
 		End If
 	End If
@@ -2223,37 +2228,37 @@ Function GetTopicInfo
 			Case 1:
 				If GBL_CHK_User <> "" Then
 					If GBL_BoardMasterFlag < 5 Then
-						GBL_CHK_TempStr = "´ËÌûÖ»ÓĞ±¾°æ" & DEF_PointsName(8) & "²ÅÄÜÒıÓÃ»Ø¸´"
+						GBL_CHK_TempStr = "æ­¤å¸–åªæœ‰æœ¬ç‰ˆ" & DEF_PointsName(8) & "æ‰èƒ½å¼•ç”¨å›å¤"
 					End If
 				Else
-					GBL_CHK_TempStr = "´ËÌûÖ»ÓĞ±¾°æ" & DEF_PointsName(8) & "²ÅÄÜÒıÓÃ»Ø¸´"
+					GBL_CHK_TempStr = "æ­¤å¸–åªæœ‰æœ¬ç‰ˆ" & DEF_PointsName(8) & "æ‰èƒ½å¼•ç”¨å›å¤"
 				End If
 			Case 3:
 				If GBL_BoardMasterFlag < 4 Then
-					GBL_CHK_TempStr = "´ËÌûÖ»ÓĞ" & DEF_PointsName(8) & "²ÅÄÜÒıÓÃ»Ø¸´"
+					GBL_CHK_TempStr = "æ­¤å¸–åªæœ‰" & DEF_PointsName(8) & "æ‰èƒ½å¼•ç”¨å›å¤"
 				End If
 			Case 5:
 				If GBL_CHK_User = "" or GetBinarybit(GBL_CHK_UserLimit,2) <> 1 Then
-					GBL_CHK_TempStr = "´ËÌûÖ»ÓĞ" & DEF_PointsName(5) & "²ÅÄÜÒıÓÃ»Ø¸´"
+					GBL_CHK_TempStr = "æ­¤å¸–åªæœ‰" & DEF_PointsName(5) & "æ‰èƒ½å¼•ç”¨å›å¤"
 				End If
 			Case 7,54,49:
 				If Form_Submitflag = "first" and Request.QueryString("repost") = "1" Then
 					A_NotReplay = 1
-					GBL_CHK_TempStr = "´íÎó£¬´ËÌû²»ÄÜÒıÓÃ»Ø¸´£¡<br>" & VbCrLf
+					GBL_CHK_TempStr = "é”™è¯¯ï¼Œæ­¤å¸–ä¸èƒ½å¼•ç”¨å›å¤ï¼<br>" & VbCrLf
 				End If
 			Case 50:
 				If GBL_CHK_Points < RootTopicNeedValue Then
-					GBL_CHK_TempStr = "´ËÌûĞèÒª" & DEF_PointsName(0) & "" & RootTopicNeedValue & "²ÅÄÜÒıÓÃ»Ø¸´"
+					GBL_CHK_TempStr = "æ­¤å¸–éœ€è¦" & DEF_PointsName(0) & "" & RootTopicNeedValue & "æ‰èƒ½å¼•ç”¨å›å¤"
 				End If
 			Case 52:
 				If GBL_CHK_OnlineTime < RootTopicNeedValue*60 Then
-					GBL_CHK_TempStr = "´ËÌûĞèÒª" & DEF_PointsName(4) & RootTopicNeedValue & "²ÅÄÜÒıÓÃ»Ø¸´"
+					GBL_CHK_TempStr = "æ­¤å¸–éœ€è¦" & DEF_PointsName(4) & RootTopicNeedValue & "æ‰èƒ½å¼•ç”¨å›å¤"
 				End If
 			Case 115:
 					If Form_NeedValue > 0 Then
 						If Form_NeedValue <> GBL_UserID and GBL_CHK_User <> Topic_UserName Then
 							A_NotReplay = 1
-							GBL_CHK_TempStr = "´ËÌûÖ»ÔÊĞí·¢ÌûÈËºÍ½ÓÊÕÈË»Ø¸´"
+							GBL_CHK_TempStr = "æ­¤å¸–åªå…è®¸å‘å¸–äººå’Œæ¥æ”¶äººå›å¤"
 						End If
 					End If
 		End Select
@@ -2279,31 +2284,31 @@ Function UpdateUserLevel(UserID)
 	Set Rs = Nothing
 
 	For Temp_N = 0 To DEF_UserLevelNum
-		'×Ô¶¯ÖØĞÂ¼ÆËãµÈ¼¶
+		'è‡ªåŠ¨é‡æ–°è®¡ç®—ç­‰çº§
 		'If Points >= DEF_UserLevelPoints(Temp_N) Then UserLevel = Temp_N
 		If Points >= DEF_UserLevelPoints(Temp_N) and Temp_N >= UserLevel Then UserLevel = Temp_N
 	Next
 
 	Randomize
 
-	REM **** ¾É²Æ¸»»úÂÊÉè¶¨¿ªÊ¼ *****
+	REM **** æ—§è´¢å¯Œæœºç‡è®¾å®šå¼€å§‹ *****
 	'vvv = Fix(Rnd*1314)+1
 	'If vvv = 1314 Then
 	'	vvv = 1
-	'	Response.Write "<br>&nbsp;<font color=""blue"" class=""bluefont"">ÄãÀú¾­ĞÁ¿à£¬ÖÕÓÚÓöµ½" & DEF_PointsName(1) & "Ö®Éñ£¬´ÍÓèÄãĞÂµÄ" & DEF_PointsName(1) & "£¡</font><br>"
+	'	Response.Write "<br>&nbsp;<font color=""blue"" class=""bluefont"">ä½ å†ç»è¾›è‹¦ï¼Œç»ˆäºé‡åˆ°" & DEF_PointsName(1) & "ä¹‹ç¥ï¼Œèµäºˆä½ æ–°çš„" & DEF_PointsName(1) & "ï¼</font><br>"
 REM *******Chat Start*******
-	'CALL Chat_Appand_pop(3,"<b><span onclick=""c_sc(this.innerHTML)"" style=""cursor: pointer"" class=""c_name"">" & GBL_CHK_User & "</span>Àú¾­ĞÁ¿à£¬ÖÕÓÚÓöµ½" & DEF_PointsName(1) & "Ö®Éñ£¬²¢´ÍÓèĞÂµÄ" & DEF_PointsName(1) & "£¡</b>")
+	'CALL Chat_Appand_pop(3,"<b><span onclick=""c_sc(this.innerHTML)"" style=""cursor: pointer"" class=""c_name"">" & GBL_CHK_User & "</span>å†ç»è¾›è‹¦ï¼Œç»ˆäºé‡åˆ°" & DEF_PointsName(1) & "ä¹‹ç¥ï¼Œå¹¶èµäºˆæ–°çš„" & DEF_PointsName(1) & "ï¼</b>")
 REM *******Chat End*********
 	'Else
 	'	vvv = 0
 	'End If
-	REM **** ¾É²Æ¸»»úÂÊ½áÊø *****
+	REM **** æ—§è´¢å¯Œæœºç‡ç»“æŸ *****
 	
-	REM **** ÌØ¶¨Ìû½±ÀøÉè¶¨¿ªÊ¼ *****
+	REM **** ç‰¹å®šå¸–å¥–åŠ±è®¾å®šå¼€å§‹ *****
 	
-	'¶¨ÒåĞèÒª½±ÀøµÄÌû×ÓID±àºÅ,Ö»ÏŞÖ÷Ìâ±àºÅ
+	'å®šä¹‰éœ€è¦å¥–åŠ±çš„å¸–å­IDç¼–å·,åªé™ä¸»é¢˜ç¼–å·
 	Dim AncIDStr
-	AncIDStr = "" 'ºì°üÌû×ÓÖ÷ÌâIDÁĞ±í£¬¶ººÅ·Ö¸ô£¬»Ø¸´´ËÀàÌû×Ó½«½±ÀøËæ»úÉùÍû(1-3)£¬×¢ÒâÓë[DelAnnounce.asp]ÅäÖÃ±£³ÖÒ»ÖÂ
+	AncIDStr = "" 'çº¢åŒ…å¸–å­ä¸»é¢˜IDåˆ—è¡¨ï¼Œé€—å·åˆ†éš”ï¼Œå›å¤æ­¤ç±»å¸–å­å°†å¥–åŠ±éšæœºå£°æœ›(1-3)ï¼Œæ³¨æ„ä¸[DelAnnounce.asp]é…ç½®ä¿æŒä¸€è‡´
 
 	Dim Tn,vvv
 	vvv = 0
@@ -2336,16 +2341,16 @@ REM *******Chat End*********
 			Else
 				vvv = 1
 			End If
-			CALL LDExeCute("Update LeadBBS_Announce Set Opinion='" & "[LeadBBS]|0|ĞÒÔËÖ¸Êı" & Tmp & "¹²»ñµÃ" & DEF_PointsName(2) & "" & vvv & "' where ID=" & NewAnnounceID,1)
-			Response.Write "<br>&nbsp;<font color=red class=redfont>¹§Ï²£¬Òò»Ø¸´´ËÌû´ÍÓèÄúĞÂµÄ" & DEF_PointsName(2) & "£¡</font><br>"
+			CALL LDExeCute("Update LeadBBS_Announce Set Opinion='" & "[LeadBBS]|0|å¹¸è¿æŒ‡æ•°" & Tmp & "å…±è·å¾—" & DEF_PointsName(2) & "" & vvv & "' where ID=" & NewAnnounceID,1)
+			Response.Write "<br>&nbsp;<font color=red class=redfont>æ­å–œï¼Œå› å›å¤æ­¤å¸–èµäºˆæ‚¨æ–°çš„" & DEF_PointsName(2) & "ï¼</font><br>"
 			add_tips(DEF_PointsName(2) & "+" & vvv)
 		End If
 	End If
-	REM **** ÌØ¶¨Ìû½±ÀøÉè¶¨½áÊø *****
+	REM **** ç‰¹å®šå¸–å¥–åŠ±è®¾å®šç»“æŸ *****
 
 	If Save_UserLevel <> UserLevel or vvv >= 1 Then
 		CALL LDExeCute("Update LeadBBS_User set UserLevel=" & UserLevel & ",CachetValue=CachetValue+" & vvv & " where id=" & UserID,1)
-		add_tips("<span class=""greenfont"">" & "Éı¼¶ÁË£¬" & DEF_UserLevelString(UserLevel) & "£¡</span>")
+		add_tips("<span class=""greenfont"">" & "å‡çº§äº†ï¼Œ" & DEF_UserLevelString(UserLevel) & "ï¼</span>")
 		UpdateSessionValue 15,vvv,1
 	End If
 	If vvv >= 1 Then
@@ -2360,7 +2365,7 @@ Function UpdateBoardAnnounceNum(BoardList,TopicNum,AnnounceNum,TodayAnnounce,Goo
 
 	Dim SafeFlag
 	SafeFlag = 0
-	'ÃÜÂëÂÛÌ³ ÈÏÖ¤°æÃæ ×¨ÒµÓÃ»§°æÃæ ½öÏŞ°æÖ÷°æÃæ
+	'å¯†ç è®ºå› è®¤è¯ç‰ˆé¢ ä¸“ä¸šç”¨æˆ·ç‰ˆé¢ ä»…é™ç‰ˆä¸»ç‰ˆé¢
 	If GBL_Board_ForumPass <> "" or GetBinarybit(GBL_Board_BoardLimit,2) = 1 or GetBinarybit(GBL_Board_BoardLimit,15) = 1 or GetBinarybit(GBL_Board_BoardLimit,7) = 1 Then SafeFlag = 1
 	Dim SQL,N,Num
 	If BoardList = "" or (TopicNum = 0 and AnnounceNum = 0 and TodayAnnounce = 0 and GoodNum = 0) Then Exit Function
@@ -2379,7 +2384,7 @@ Function UpdateBoardAnnounceNum(BoardList,TopicNum,AnnounceNum,TodayAnnounce,Goo
 		SQL = SQL & " where BoardID=" & GBL_Board_ID
 		CALL LDExeCute(SQL,1)
 	Else
-		If SafeFlag = 0 Then '¼ÓÃÜ°æÃæ²»¸üĞÂÉÏ¼¶°æÃæ×îĞÂ·¢±í
+		If SafeFlag = 0 Then 'åŠ å¯†ç‰ˆé¢ä¸æ›´æ–°ä¸Šçº§ç‰ˆé¢æœ€æ–°å‘è¡¨
 			If LastWriter <> "" Then SQL = SQL & ",LastWriter='" & Replace(LastWriter,"'","''") & "'"
 			If cCur(LastWriteTime) > 0 Then SQL = SQL & ",LastWriteTime=" & LastWriteTime
 			If LastTopicName <> "" Then SQL = SQL & ",LastTopicName='" & Replace(LastTopicName,"'","''") & "'"
@@ -2398,22 +2403,22 @@ Function UpdateBoardAnnounceNum(BoardList,TopicNum,AnnounceNum,TodayAnnounce,Goo
 			Temp = Application(DEF_MasterCookies & "BoardInfo" & BoardList(N))
 		End If
 		If isArray(Temp) = True Then
-			'·¢ÌûÊıÁ¿Í³¼ÆĞÅÏ¢ÎŞÊÓ°æÃæ±£ÃÜÇé¿ö¸üĞÂ
+			'å‘å¸–æ•°é‡ç»Ÿè®¡ä¿¡æ¯æ— è§†ç‰ˆé¢ä¿å¯†æƒ…å†µæ›´æ–°
 			If TopicNum <> 0 Then
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(5,0))+TopicNum,5
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(29,0))+TopicNum,29
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(5,0))+TopicNum,5)
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(29,0))+TopicNum,29)
 			End If
 			If AnnounceNum <> 0 Then
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(6,0))+AnnounceNum,6
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(30,0))+AnnounceNum,30
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(6,0))+AnnounceNum,6)
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(30,0))+AnnounceNum,30)
 			End If
 			If TodayAnnounce <> 0 Then
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(18,0))+TodayAnnounce,18
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(31,0))+TodayAnnounce,31
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(18,0))+TodayAnnounce,18)
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(31,0))+TodayAnnounce,31)
 			End If
 			If GoodNum <> 0 Then
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(13,0))+GoodNum,13
-				UpdateBoardApplicationInfo BoardList(N),cCur(Temp(32,0))+GoodNum,32
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(13,0))+GoodNum,13)
+				Call UpdateBoardApplicationInfo(BoardList(N),cCur(Temp(32,0))+GoodNum,32)
 			End If
 			If (SafeFlag = 1 and GBL_Board_ID = cCur(BoardList(N))) or SafeFlag = 0 Then
 				If SafeFlag = 0 Then	
@@ -2451,14 +2456,14 @@ Sub Main
 		End Select
 	End If
 
-	GetBoardID
-	initDatabase
-	Free_UDT
-	GetRequestValue
-	CheckisBoardMaster
+	GetBoardID()
+	initDatabase()
+	Free_UDT()
+	GetRequestValue()
+	CheckisBoardMaster()
 	GBL_CHK_TempStr = ""
 	If Re_ID > 0 Then Form_VoteFlag = ""
-	GetTopicInfo
+	GetTopicInfo()
 
 	If GetBinarybit(GBL_Board_BoardLimit,16) = 1 Then
 		If LMT_DefaultEdit = 1 Then
@@ -2469,8 +2474,8 @@ Sub Main
 	End If
 
 	If LMT_TopicTitleStyle >= 60 and GBL_BoardMasterFlag < 4 Then
-		LMT_TopicNameNoHTML = "Ìû×ÓµÈ´ıÉóºËÖĞ..."
-		LMT_TopicName = "<font color=gray class=grayfont>Ìû×ÓµÈ´ıÉóºËÖĞ...</font>"
+		LMT_TopicNameNoHTML = "å¸–å­ç­‰å¾…å®¡æ ¸ä¸­..."
+		LMT_TopicName = "<font color=gray class=grayfont>å¸–å­ç­‰å¾…å®¡æ ¸ä¸­...</font>"
 		'LMT_TopicTitleStyle = 1
 		A_NotReplay = 1
 	Else
@@ -2488,28 +2493,28 @@ Sub Main
 		LMT_TopicNameNoHTML_Temp = htmlencode(LMT_TopicNameNoHTML_Temp)
 	End if
 	If Re_ID > 0 Then
-		CheckAccessLimit_TimeLimit
-		LMT_TopicNameNoHTML_Temp = "»Ø¸´£º" & LMT_TopicNameNoHTML_Temp
-		If AjaxFlag = 0 Then BBS_SiteHead DEF_SiteNameString & " - " & KillHTMLLabel(GBL_Board_BoardName) & " - »Ø¸´Ìû×Ó",GBL_board_ID,"»Ø¸´Ìû×Ó"
+		CheckAccessLimit_TimeLimit()
+		LMT_TopicNameNoHTML_Temp = "å›å¤ï¼š" & LMT_TopicNameNoHTML_Temp
+		If AjaxFlag = 0 Then BBS_SiteHead DEF_SiteNameString & " - " & KillHTMLLabel(GBL_Board_BoardName) & " - å›å¤å¸–å­",GBL_board_ID,"å›å¤å¸–å­"
 	Else
-		CheckAccessLimit_TimeLimit
+		CheckAccessLimit_TimeLimit()
 		If Form_VoteFlag <> "" and Re_ID = 0 Then
-			LMT_TopicNameNoHTML_Temp = "·¢±íĞÂÍ¶Æ±"
+			LMT_TopicNameNoHTML_Temp = "å‘è¡¨æ–°æŠ•ç¥¨"
 		Else
-			LMT_TopicNameNoHTML_Temp = "·¢±íĞÂÌû×Ó"
+			LMT_TopicNameNoHTML_Temp = "å‘è¡¨æ–°å¸–å­"
 		End If
 		If AjaxFlag = 0 Then BBS_SiteHead DEF_SiteNameString & " - " & KillHTMLLabel(GBL_Board_BoardName) & " - " & LMT_TopicNameNoHTML_Temp,GBL_board_ID,"" & LMT_TopicNameNoHTML_Temp & ""
 	End If
 
 	If AjaxFlag = 0 Then Boards_Body_Head("")
-	CheckAccessLimit
+	CheckAccessLimit()
 	If Form_Submitflag <> "" or Re_ID = 0 Then
 		If Re_ID = 0 Then
-			CheckBoardAnnounceLimit
+			CheckBoardAnnounceLimit()
 		Else
-			CheckBoardReAnnounceLimit
+			CheckBoardReAnnounceLimit()
 		End If
-		CheckUserAnnounceLimit
+		CheckUserAnnounceLimit()
 	End If
 	If GBL_CHK_TempStr = "" Then
 		If Form_Submitflag = "" Then
@@ -2523,47 +2528,47 @@ Sub Main
 				End If
 				'Form_Title = ""
 			End If
-			DisplayAnnounceForm
+			DisplayAnnounceForm()
 			GBL_CHK_TempStr = ""
 		Else
 			If A_NotReplay = 0 and LMT_ChildNum > LMTDEF_MaxReAnnounce and 1 <> 1 Then
-				Announce_ErrorMsg "»Ø¸´ÒÑ¾­´ïµ½×î´óÊıÄ¿,²»ÄÜÔÙ»Ø¸´Ìû×Ó,ÇëÁí¿ªÖ÷Ìâ¡£"
+				Announce_ErrorMsg "å›å¤å·²ç»è¾¾åˆ°æœ€å¤§æ•°ç›®,ä¸èƒ½å†å›å¤å¸–å­,è¯·å¦å¼€ä¸»é¢˜ã€‚"
 				GBL_CHK_TempStr = " "
 			ElseIf A_NotReplay = 1 and Form_Submitflag = "first" Then
-				Announce_ErrorMsg "´ËÌû´¦ÓÚËø¶¨×´Ì¬£¬²»ÔÊĞí»Ø¸´¡£"
+				Announce_ErrorMsg "æ­¤å¸–å¤„äºé”å®šçŠ¶æ€ï¼Œä¸å…è®¸å›å¤ã€‚"
 				GBL_CHK_TempStr = " "
 			Else
-				If CheckAnnouceValue = 1 Then
-					If SaveAnnounceValue = 1 Then
-						DisplayAnnounceAccessfull
+				If CheckAnnouceValue() = 1 Then
+					If SaveAnnounceValue() = 1 Then
+						DisplayAnnounceAccessfull()
 					Else
 						If AjaxFlag = 1 Then Response.Clear
 						If Form_Submitflag <> "first" Then
 							Announce_ErrorMsg AjaxFlagPrint & GBL_CHK_TempStr
 							GBL_CHK_TempStr = " "
 						End If
-						If AjaxFlag = 0 Then DisplayAnnounceForm
+						If AjaxFlag = 0 Then DisplayAnnounceForm()
 					End If
 				Else
 					If AjaxFlag = 1 Then Response.Clear
 					If Form_Submitflag <> "first" Then
 						Announce_ErrorMsg AjaxFlagPrint & GBL_CHK_TempStr
 					End If
-					If AjaxFlag = 0 Then DisplayAnnounceForm
+					If AjaxFlag = 0 Then DisplayAnnounceForm()
 				End If
 			End If
 		End If
-		If AjaxFlag = 0 Then UpdateOnlineUserAtInfo GBL_board_ID,GBL_Board_BoardName & "¡ú" & LMT_TopicNameNoHTML_Temp
+		If AjaxFlag = 0 Then UpdateOnlineUserAtInfo GBL_board_ID,GBL_Board_BoardName & "â†’" & LMT_TopicNameNoHTML_Temp
 	Else
 		If AjaxFlag = 1 Then Response.Clear
 		Announce_ErrorMsg AjaxFlagPrint & GBL_CHK_TempStr
 	End If
 	If Form_UpFlag = 1 Then Set Form_UpClass = Nothing
-	CloseDatabase
+	CloseDatabase()
 	If AjaxFlag = 0 Then Boards_Body_Bottom
 	If AjaxFlag = 0 Then SiteBottom
 
 End Sub
 
-Main
+Main()
 %>

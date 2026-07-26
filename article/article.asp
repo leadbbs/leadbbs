@@ -1,19 +1,19 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/User_Setup.ASP -->
-<!-- #include file=../inc/Board_Popfun.asp -->
-<!-- #include file=inc/popfun.asp -->
-<!-- #include file=../inc/Upload_Fun.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/User_Setup.ASP"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
+<!--#include file="inc/popfun.asp"-->
+<!--#include file="../inc/Upload_Fun.asp"-->
 <%
 DEF_BBS_homeUrl = "../"
 dim Form_ActionStr,Form_ActionCommand,Form_ActionStr_txt
 
 Sub Main
 
-	initdatabase
-	cms_article_getAction
+	initdatabase()
+	cms_article_getAction()
 	article_SiteHead(Form_ActionStr_txt)
-	main_body
-	Closedatabase
+	main_body()
+	Closedatabase()
 
 End Sub
 
@@ -28,7 +28,7 @@ cms_bodyBottom%>
 
 </div>
 <%
-cms_SiteBottom
+cms_SiteBottom()
 
 End Sub
 
@@ -49,7 +49,7 @@ sub cms_article_getAction
 	Form_ActionCommand = ""
 		tmp = FormClass_CheckFormValue(tmp,"","int","0","<~~~0|>~~~10000000000",12)
 		if tmp > 0 then
-			sql = sql_select("select t1.id,t1.title,t2.id,t2.classname,t1.content,t1.modifytime,t1.ndatetime,t1.author,t1.fromauthor,t1.htmlflag,t2.liststyle,t2.parentid from article_newsarticle as t1 left join article_newsclass as t2 on t1.classid=t2.id where t1.classid=" & cms_sql(tmp),2)
+			sql = sql_select("select t1.id,t1.title,t2.id as id_dup2,t2.classname,t1.content,t1.modifytime,t1.ndatetime,t1.author,t1.fromauthor,t1.htmlflag,t2.liststyle,t2.parentid from article_newsarticle as t1 left join article_newsclass as t2 on t1.classid=t2.id where t1.classid=" & cms_sql(tmp),2)
 			set rs = ldexecute(sql,0)
 			if not rs.eof then
 				readid = rs(0)
@@ -85,7 +85,7 @@ sub cms_article_getAction
 		tmp = requestFormData("articleid")
 		tmp = FormClass_CheckFormValue(tmp,"","int","0","<~~~0|>~~~10000000000",12)
 		if tmp > 0 then
-			sql = sql_select("select t1.id,t1.title,t2.id,t2.classname,t1.content,t1.modifytime,t1.ndatetime,t1.author,t1.fromauthor,t1.htmlflag,t2.liststyle,t2.parentid from article_newsarticle as t1 left join article_newsclass as t2 on t1.classid=t2.id where t1.id=" & cms_sql(tmp),1)
+			sql = sql_select("select t1.id,t1.title,t2.id as id_dup2,t2.classname,t1.content,t1.modifytime,t1.ndatetime,t1.author,t1.fromauthor,t1.htmlflag,t2.liststyle,t2.parentid from article_newsarticle as t1 left join article_newsclass as t2 on t1.classid=t2.id where t1.id=" & cms_sql(tmp),1)
 			set rs = ldexecute(sql,0)
 			if not rs.eof then
 				Form_ActionCommand = "readarticle"
@@ -170,14 +170,14 @@ sub cms_bodyhead_index(sideinfo)%>
 		
 		
 		%>
-		<!-- #include file=inc/inpage_info.asp -->
+		<!--#include file="inc/inpage_info.asp"-->
 		<div style="height:20px;"></div>
 		<%
 
 		
 End Sub
 
-'列出下级分类
+'鍒楀嚭涓嬬骇鍒嗙被
 sub cms_body_listNews_ChildClass(parentid)
 
 	dim rs,sql,getdata
@@ -248,7 +248,8 @@ sub cms_body_listNews(classid)
 			%>
 			<li class="piclist">
 			<a href="article.asp?articleid=<%=splitpage_getdata(0,n)%>&parentclass=<%=classid%>&parentname=<%=urlencode(class_name)%>">
-			<span class="pic"><%'=splitpage_getdata(3,n)%><%
+			<span class="pic"><%'=splitpage_getdata(3,n)
+%><%
 			if instr(splitpage_getdata(3,n),"|") then
 				dim tmp,tmp2,bigpic,smallpic,tmpvalue
 				tmp = split(splitpage_getdata(3,n),"|")
@@ -317,7 +318,8 @@ if lcase(left(article_content,8)) = "getplug:" then
 	'Dim MyProxy
 	'Set MyProxy = New Proxy_Class
 	'MyProxy.GetBody(trim(replace(article_content,"getplug:","")))
-	'Set MyProxy = Nothing%>
+	'Set MyProxy = Nothing
+%>
 	</div><%
 else
 %>
@@ -326,10 +328,10 @@ else
 
 <div class="cms_article_note"><%if ccur(article_ndatetime) <> 0 then response.write restoretime(article_ndatetime)%><%
 	If article_author <> "" Then
-	%>，作者：<%=article_author%>
+	%>锛屼綔鑰咃細<%=article_author%>
 	<%End If
 	If article_fromauthor <> "" Then
-	%>，来自：<%=article_fromauthor%><%
+	%>锛屾潵鑷細<%=article_fromauthor%><%
 	End If%></div>
 	<script src="<%=DEF_BBS_HomeUrl%>a/inc/leadcode.js<%=DEF_Jer%>" type="text/javascript"></script>
 	<div class=cms_listnews>
@@ -382,5 +384,5 @@ else
 
 end sub
 
-Main
+Main()
 %>

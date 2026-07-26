@@ -4,7 +4,7 @@ function checkInstalled
 	dim filestr
 	filestr = ADODB_LoadFile(DEF_BBS_HomeUrl & "inc/BBSSetup.asp")
 	if inStr(filestr,"Response.Redirect ""install/default.asp""") < 1 then
-		printline("<span style='color:white'><b>ÂÛÌ³°²×°ÒÑËø¶¨£¬ÈôÒªÖØĞÂ°²×°ÇëÉÏ´«Ìæ»»inc/BBSSetup.aspÎÄ¼ş.</b></span>")
+		printline("<span style='color:white'><b>è®ºå›å®‰è£…å·²é”å®šï¼Œè‹¥è¦é‡æ–°å®‰è£…è¯·ä¸Šä¼ æ›¿æ¢inc/BBSSetup.aspæ–‡ä»¶.</b></span>")
 		checkInstalled = true
 	else
 		checkInstalled = false
@@ -18,10 +18,10 @@ sub install_head
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"  xml:lang="zh-CN" lang="zh-CN">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-	<meta name="description" content="LeadBBS °²×°" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="LeadBBS å®‰è£…" />
 	<title>
-		LeadBBS 9.0 °²×°
+		LeadBBS 9.0 å®‰è£…
 	</title>
 	<link rel="stylesheet" id="css" type="text/css" href="scripts/install.css" title="cssfile" />
 	<script src="../inc/js/jquery.js" type="text/javascript"></script>
@@ -34,7 +34,7 @@ sub install_head
 	   top: (($(window).height() - $('.area').outerHeight())/2 + $(document).scrollTop())<0?0:(($(window).height() - $('.area').outerHeight())/2 + $(document).scrollTop())
 	 });
 	});
-	//³õÊ¼»¯º¯Êı
+	//åˆå§‹åŒ–å‡½æ•°
 	</script>
 	
 </head>
@@ -57,13 +57,13 @@ end sub
 
 sub install_step
 %>
-	<div class="install_title">LeadBBS 9.0°²×°Ïòµ¼</div>
+	<div class="install_title">LeadBBS 9.0å®‰è£…å‘å¯¼</div>
 	<div class="install_step">
-	<a href="javascript:;" id="step1"<%If Step >=0 then response.write " class=""on"""%>>Ò» ¿ªÊ¼</a>
-	<a href="javascript:;" id="step2"<%If Step >=2 then response.write " class=""on"""%>>¶ş °²×°¼ì²â</a>
-	<a href="javascript:;" id="step3"<%If Step >=3 then response.write " class=""on"""%>>Èı ÅäÖÃÊı¾İ¿â</a>
-	<a href="javascript:;" id="step4"<%If Step >=4 then response.write " class=""on"""%>>ËÄ ÅäÖÃ¹ÜÀí</a>
-	<a href="javascript:;" id="step5"<%If Step >=5 then response.write " class=""on"""%>>Îå Íê³É°²×°</a>
+	<a href="javascript:;" id="step1"<%If Step >=0 then response.write " class=""on"""%>>ä¸€ å¼€å§‹</a>
+	<a href="javascript:;" id="step2"<%If Step >=2 then response.write " class=""on"""%>>äºŒ å®‰è£…æ£€æµ‹</a>
+	<a href="javascript:;" id="step3"<%If Step >=3 then response.write " class=""on"""%>>ä¸‰ é…ç½®æ•°æ®åº“</a>
+	<a href="javascript:;" id="step4"<%If Step >=4 then response.write " class=""on"""%>>å›› é…ç½®ç®¡ç†</a>
+	<a href="javascript:;" id="step5"<%If Step >=5 then response.write " class=""on"""%>>äº” å®Œæˆå®‰è£…</a>
 	</div>
 <%
 end sub
@@ -111,15 +111,15 @@ Function CheckObjInstalled(strClassString,w)
 	Temp = Err
 	If Temp = 0 Then
 		CheckObjInstalled = True
-		if w = 1 then Response.Write strClassString & "£º<font color=green class=greenfont>¡Ì</font>"
+		if w = 1 then Response.Write strClassString & "ï¼š<font color=green class=greenfont>âˆš</font>"
 	ElseIf Temp = -2147221005 Then
-		Response.Write strClassString & "£º<font color=red class=redfont>×é¼şÎ´°²×°</font>"
+		Response.Write strClassString & "ï¼š<font color=red class=redfont>ç»„ä»¶æœªå®‰è£…</font>"
 		if w = 1 then CheckObjInstalled = False
 	ElseIf Temp = -2147221477 Then
-		if w = 1 then Response.Write strClassString & "£º<font color=green class=greenfont>¡ÌÖ§³Ö´Ë×é¼ş</font>"
+		if w = 1 then Response.Write strClassString & "ï¼š<font color=green class=greenfont>âˆšæ”¯æŒæ­¤ç»„ä»¶</font>"
 		CheckObjInstalled = True
 	ElseIf Temp = 1 Then
-		if w = 1 then Response.Write strClassString & "£º<font color=red>¡ÁÎ´ÖªµÄ´íÎó£¬×é¼ş¿ÉÄÜÎ´ÕıÈ·°²×°</font>"
+		if w = 1 then Response.Write strClassString & "ï¼š<font color=red>Ã—æœªçŸ¥çš„é”™è¯¯ï¼Œç»„ä»¶å¯èƒ½æœªæ­£ç¡®å®‰è£…</font>"
 		CheckObjInstalled = False
 	End If
 	Err.Clear
@@ -147,7 +147,7 @@ Function ADODB_LoadFile(ByVal File)
 	If FSFlag = 1 Then
 		Set WriteFile = fs.OpenTextFile(Server.MapPath(File),1,True)
 		If Err Then
-			GBL_CHK_TempStr = "<br>¶ÁÈ¡ÎÄ¼şÊ§°Ü£º" & err.description & "<br>ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞ¶ÁÈ¡È¨ÏŞ."
+			GBL_CHK_TempStr = "<br>è¯»å–æ–‡ä»¶å¤±è´¥ï¼š" & err.description & "<br>å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰è¯»å–æƒé™."
 			err.Clear
 			Set Fs = Nothing
 			Exit Function
@@ -155,7 +155,7 @@ Function ADODB_LoadFile(ByVal File)
 		If Not WriteFile.AtEndOfStream Then
 			ADODB_LoadFile = WriteFile.ReadAll
 			If Err Then
-				GBL_CHK_TempStr = "¶ÁÈ¡ÎÄ¼şÊ§°Ü£º<p>" & err.description & "</p> ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞ¶ÁÈ¡È¨ÏŞ."
+				GBL_CHK_TempStr = "è¯»å–æ–‡ä»¶å¤±è´¥ï¼š<p>" & err.description & "</p> å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰è¯»å–æƒé™."
 				err.Clear
 				Set Fs = Nothing
 				Exit Function
@@ -166,7 +166,7 @@ Function ADODB_LoadFile(ByVal File)
 	Else
 		Set objStream = Server.CreateObject("ADODB.Stream")
 		If Err.Number=-2147221005 Then 
-			GBL_CHK_TempStr = "ÄúµÄÖ÷»ú²»Ö§³ÖADODB.Stream£¬ÎŞ·¨Íê³É²Ù×÷£¬ÇëÊÖ¹¤½øĞĞ"
+			GBL_CHK_TempStr = "æ‚¨çš„ä¸»æœºä¸æ”¯æŒADODB.Streamï¼Œæ— æ³•å®Œæˆæ“ä½œï¼Œè¯·æ‰‹å·¥è¿›è¡Œ"
 			Err.Clear
 			Set objStream = Nothing
 			Exit Function
@@ -176,7 +176,7 @@ Function ADODB_LoadFile(ByVal File)
 			.Mode = 3
 			.Open
 			.LoadFromFile Server.MapPath(File)
-			.Charset = "gb2312"
+			.Charset = "utf-8"
 			.Position = 2
 			ADODB_LoadFile = .ReadText
 			.Close
@@ -184,7 +184,7 @@ Function ADODB_LoadFile(ByVal File)
 		Set objStream = Nothing
 	End If
 	If Err Then
-		GBL_CHK_TempStr = "´íÎóĞÅÏ¢£º<p>" & err.description & "</p>ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞ¶ÁÈ¡È¨ÏŞ."
+		GBL_CHK_TempStr = "é”™è¯¯ä¿¡æ¯ï¼š<p>" & err.description & "</p>å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰è¯»å–æƒé™."
 		err.Clear
 		Set Fs = Nothing
 		Exit Function
@@ -192,7 +192,7 @@ Function ADODB_LoadFile(ByVal File)
 
 End Function
 
-'´æ´¢ÄÚÈİµ½ÎÄ¼ş
+'å­˜å‚¨å†…å®¹åˆ°æ–‡ä»¶
 Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 
 	On Error Resume Next
@@ -216,7 +216,7 @@ Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 	Else
 		Set objStream = Server.CreateObject("ADODB.Stream")
 		If Err.Number=-2147221005 Then 
-			GBL_CHK_TempStr = "ÄúµÄÖ÷»ú²»Ö§³ÖADODB.Stream£¬ÎŞ·¨Íê³É²Ù×÷£¬ÇëÊÖ¹¤½øĞĞ"
+			GBL_CHK_TempStr = "æ‚¨çš„ä¸»æœºä¸æ”¯æŒADODB.Streamï¼Œæ— æ³•å®Œæˆæ“ä½œï¼Œè¯·æ‰‹å·¥è¿›è¡Œ"
 			Err.Clear
 			Set objStream = Nothing
 			Exit Sub
@@ -224,7 +224,7 @@ Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 		With objStream
 			.Type = 2
 			.Open
-			.Charset = "gb2312"
+			.Charset = "utf-8"
 			.Position = objStream.Size
 			.WriteText = strBody
 			.SaveToFile Server.MapPath(File),2
@@ -233,7 +233,7 @@ Sub ADODB_SaveToFile(ByVal strBody,ByVal File)
 		Set objStream = Nothing
 	End If
 	If Err Then
-		GBL_CHK_TempStr = "´íÎóĞÅÏ¢£º<p>" & err.description & "</p>ÆäËü¿ÉÄÜ£ºÈ·¶¨ÊÇ·ñ¶Ô´ËÎÄ¼şÓĞĞ´ÈëÈ¨ÏŞ."
+		GBL_CHK_TempStr = "é”™è¯¯ä¿¡æ¯ï¼š<p>" & err.description & "</p>å…¶å®ƒå¯èƒ½ï¼šç¡®å®šæ˜¯å¦å¯¹æ­¤æ–‡ä»¶æœ‰å†™å…¥æƒé™."
 		err.Clear
 		Set Fs = Nothing
 		Exit Sub
@@ -256,11 +256,11 @@ sub install_step1form
 
 %>
 <ol>
-<li>´Ë³ÌĞò½«ÔÚÄúµÄ¿Õ¼ä°²×°LeadBBS 9.0£¬È·±£¿Õ¼äÓµÓĞASP´úÂëÖ´ĞĞÈ¨ÏŞ¡£</li>
-<li>°²×°³ÌĞò½öÔÊĞí³É¹¦Ö´ĞĞÒ»´Î£¬ÈôÒªÔÙ´Î°²×°ÇëÖØĞÂÉÏ´«Ô­Ê¼ÎÄ¼ş¡£
-<li>´Ë³ÌĞò°æÈ¨ÏŞ¹éLeadBBS¹Ù·½ÂÛÌ³ËùÓĞ£¬¸öÈË¿ÉÃâ·ÑÊ¹ÓÃ´Ë³ÌĞò£®<br />ÉÌÒµÓÃÍ¾ÔòĞèÒªÏòÈí¼ş¿ª·¢Õß¹ºÂòÊÚÈ¨Ğí¿É¡£</li>
+<li>æ­¤ç¨‹åºå°†åœ¨æ‚¨çš„ç©ºé—´å®‰è£…LeadBBS 9.0ï¼Œç¡®ä¿ç©ºé—´æ‹¥æœ‰ASPä»£ç æ‰§è¡Œæƒé™ã€‚</li>
+<li>å®‰è£…ç¨‹åºä»…å…è®¸æˆåŠŸæ‰§è¡Œä¸€æ¬¡ï¼Œè‹¥è¦å†æ¬¡å®‰è£…è¯·é‡æ–°ä¸Šä¼ åŸå§‹æ–‡ä»¶ã€‚
+<li>æ­¤ç¨‹åºç‰ˆæƒé™å½’LeadBBSå®˜æ–¹è®ºå›æ‰€æœ‰ï¼Œä¸ªäººå¯å…è´¹ä½¿ç”¨æ­¤ç¨‹åºï¼<br />å•†ä¸šç”¨é€”åˆ™éœ€è¦å‘è½¯ä»¶å¼€å‘è€…è´­ä¹°æˆæƒè®¸å¯ã€‚</li>
 </ol>
-<a href="default.asp?step=2" class="install_submit">Í¬ÒâÒÔÉÏÒªÇó²¢¼ÌĞø°²×°</a>
+<a href="default.asp?step=2" class="install_submit">åŒæ„ä»¥ä¸Šè¦æ±‚å¹¶ç»§ç»­å®‰è£…</a>
 <%
 
 end sub
@@ -269,7 +269,7 @@ sub install_step2form
 
 	Dim flag,f,filestr,readflag
 %>
-<div class="contenttitle">ÒÔÏÂ¼ì²âÈ«²¿Í¨¹ı²ÅÄÜ¼ÌĞø°²×°</div>
+<div class="contenttitle">ä»¥ä¸‹æ£€æµ‹å…¨éƒ¨é€šè¿‡æ‰èƒ½ç»§ç»­å®‰è£…</div>
 <ol>
 <li><%
 f = CheckObjInstalled("Scripting.FileSystemObject",1)
@@ -280,50 +280,50 @@ if f = false then Check_com = false%></li>
 <li><%
 f = CheckObjInstalled("Scripting.Dictionary",1)
 if f = false then Check_com = false%></li>
-<li>¶ÁÈ¡È¨ÏŞ¼ì²â£º<%
+<li>è¯»å–æƒé™æ£€æµ‹ï¼š<%
 
 filestr = ADODB_LoadFile(DEF_BBS_HomeUrl & "inc/BBSSetup.asp")
 If GBL_CHK_TempStr <> "" Then
 	Check_com = false
 	readflag = false
-	Response.Write "<span class=""redfont"">¦Ö</span> <br /><span class=""grayfont"">(" & htmlEncode(GBL_CHK_TempStr) & ")</span>"
+	Response.Write "<span class=""redfont"">Ï‡</span> <br /><span class=""grayfont"">(" & htmlEncode(GBL_CHK_TempStr) & ")</span>"
 Else
 	If inStr(filestr,"DEF_UsedDataBase") > 0 then
 		readflag = true
-		Response.Write "<font color=green class=greenfont>¡Ì</font>"
+		Response.Write "<font color=green class=greenfont>âˆš</font>"
 	else
 		readflag = false
 		Check_com = false
-		Response.Write "<span class=""redfont"">¦Ö</span> <span class=""grayfont"">(Î´ÄÜÕıÈ·¶ÁÈ¡ÎÄ¼ş)</span>"
+		Response.Write "<span class=""redfont"">Ï‡</span> <span class=""grayfont"">(æœªèƒ½æ­£ç¡®è¯»å–æ–‡ä»¶)</span>"
 	end if
 End If
 %>
 </li>
-<li>Ğ´È¨ÏŞ¼ì²â£º<%
+<li>å†™æƒé™æ£€æµ‹ï¼š<%
 If readflag = false then
-	Response.Write "<span class=""redfont"">¦Ö</span> <span class=""grayfont"">(Ê×ÏÈ±ØĞë¾ß±¸ÓĞÕı³£µÄ¶ÁÈ¨ÏŞ)</span>"
+	Response.Write "<span class=""redfont"">Ï‡</span> <span class=""grayfont"">(é¦–å…ˆå¿…é¡»å…·å¤‡æœ‰æ­£å¸¸çš„è¯»æƒé™)</span>"
 else
 	call ADODB_SaveToFile(filestr,DEF_BBS_HomeUrl & "inc/BBSSetup.asp")
 	If GBL_CHK_TempStr <> "" Then
 		Check_com = false
-		Response.Write "<span class=""redfont"">¦Ö</span> <br /><span class=""grayfont"">(" & htmlEncode(GBL_CHK_TempStr) & ")</span>"
+		Response.Write "<span class=""redfont"">Ï‡</span> <br /><span class=""grayfont"">(" & htmlEncode(GBL_CHK_TempStr) & ")</span>"
 	Else
-		Response.Write "<font color=green class=greenfont>¡Ì</font>"
+		Response.Write "<font color=green class=greenfont>âˆš</font>"
 	End If
 end if
 %>
 </li>
 </ol>
-<div class="contenttitle">ÒÔÏÂ¼ì²âÂÛÌ³À©Õ¹ĞèÒª£¬¸ù¾İÊµ¼ÊÇé¿ö¿ÉÄÜ»áµ÷ÕûÄ¬ÈÏÅäÖÃ</div>
+<div class="contenttitle">ä»¥ä¸‹æ£€æµ‹è®ºå›æ‰©å±•éœ€è¦ï¼Œæ ¹æ®å®é™…æƒ…å†µå¯èƒ½ä¼šè°ƒæ•´é»˜è®¤é…ç½®</div>
 <ol>
 <li><%call CheckObjInstalled("Persits.Jpeg",1)%></li>
 <li><%call CheckObjInstalled("leadbbs.bbsCode",1)%></li>
 <li><%call CheckObjInstalled("JMail.SMTPMail",1)%></li>
 </ol>
 <%if Check_com = true then%>
-<a href="default.asp?step=3" class="install_submit">¼ÌĞø°²×°</a>
+<a href="default.asp?step=3" class="install_submit">ç»§ç»­å®‰è£…</a>
 <%else%>
-<a href="javascript:;" onclick="alert('Ö»ÓĞÍ¨¹ıµÚÒ»²¿·Ö¼ì²â²ÅÄÜ¼ÌĞø°²×°£¬ÇëÏÈ½â¾öÏàÓ¦¿Õ¼äÅäÖÃÎÊÌâ.');" class="install_submit_disbale">È«²¿Í¨¹ıµÚÒ»²¿·Ö¼ì²â²ÅÄÜ¼ÌĞø</a>
+<a href="javascript:;" onclick="alert('åªæœ‰é€šè¿‡ç¬¬ä¸€éƒ¨åˆ†æ£€æµ‹æ‰èƒ½ç»§ç»­å®‰è£…ï¼Œè¯·å…ˆè§£å†³ç›¸åº”ç©ºé—´é…ç½®é—®é¢˜.');" class="install_submit_disbale">å…¨éƒ¨é€šè¿‡ç¬¬ä¸€éƒ¨åˆ†æ£€æµ‹æ‰èƒ½ç»§ç»­</a>
 <%
 end if
 
@@ -345,7 +345,7 @@ sub OpenDatabase(constr)
 	Con.ConnectionString = constr
 	Con.Open
 	If Err Then
-		GBL_CHK_TempStr = "<p>´íÎóÃèÊö: <font color=red>" & err.description & "</font></p>"
+		GBL_CHK_TempStr = "<p>é”™è¯¯æè¿°: <font color=red>" & err.description & "</font></p>"
 	End If
 
 End Sub
@@ -414,7 +414,7 @@ sub install_step3form
 				end if
 				setupstr = setupstr & "uid=" & filterStr(uid) & ";pwd=" & filterStr(pwd) & ";database=" & filterStr(databasename) & ";"
 				constr = setupstr
-				'GBL_CHK_TempStr = "<font class=redfont>Ôİ²»Ö§³Ömssql°æ±¾°²×°.</font>"
+				'GBL_CHK_TempStr = "<font class=redfont>æš‚ä¸æ”¯æŒmssqlç‰ˆæœ¬å®‰è£….</font>"
 			case 1:
 				setupstr = "data/global.asa"
 				constr = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" & mapFile(DEF_BBS_HomeUrl & setupstr)
@@ -430,16 +430,16 @@ sub install_step3form
 				if mysql_port > 0 then
 					setupstr = setupstr & "PORT=" & mysql_port & ";"
 				end if
-				setupstr = setupstr & "DATABASE=" & filterStr(mysql_databasename) & ";UID=" & filterStr(mysql_uid) & ";PWD=" & filterStr(mysql_pwd) & ";charset=gbk;"
+				setupstr = setupstr & "DATABASE=" & filterStr(mysql_databasename) & ";UID=" & filterStr(mysql_uid) & ";PWD=" & filterStr(mysql_pwd) & ";charset=utf8;"
 				constr = setupstr
 		end select
 
 		If dtype = 0 or dtype = 1 or dtype = 2 Then
 			GBL_CHK_TempStr = ""
 			OpenDatabase(constr)
-			CloseDatabase
+			CloseDatabase()
 			If GBL_CHK_TempStr = "" Then
-				install_step4form
+				install_step4form()
 				exit sub
 			end if
 		End If
@@ -479,11 +479,11 @@ sub install_step3form
 		ValidationPassed = false;
 	}
 	</script>
-	<div class="contenttitle" id="databasecontenttitle">ÅäÖÃÊı¾İ¿â</div>
+	<div class="contenttitle" id="databasecontenttitle">é…ç½®æ•°æ®åº“</div>
 	<%If GBL_CHK_TempStr <> "" Then
 		%>
 		<div class="line">
-			Á¬½ÓÊı¾İ¿âÊ§°Ü£¬ÎŞ·¨¼ÌĞø°²×°£¬Çë¼ì²é´íÎóÔ­Òò£®
+			è¿æ¥æ•°æ®åº“å¤±è´¥ï¼Œæ— æ³•ç»§ç»­å®‰è£…ï¼Œè¯·æ£€æŸ¥é”™è¯¯åŸå› ï¼
 		</div>
 		<%
 		Response.Write GBL_CHK_TempStr
@@ -494,7 +494,7 @@ sub install_step3form
 
 <div id="selectdatabase">
 	<div class="line">
-	<span class="name">Êı¾İ¿âÀàĞÍ£º</span>
+	<span class="name">æ•°æ®åº“ç±»å‹ï¼š</span>
 	<input class=fmchkbox type=radio name=dtype value=1 <%If dtype = 1 Then Response.Write " checked"%> onclick="changedatabase(1)" />Microsoft Access(mdb)
 	<span>
 	<input class=fmchkbox type=radio name=dtype value=0 <%If dtype = 0 Then Response.Write " checked"%> onclick="changedatabase(0)" />Microsoft SQL Server
@@ -506,8 +506,8 @@ sub install_step3form
 	<div class="line" id="access"<%
 	if dtype <> 1 then response.Write " style=""display:none;"""
 	%>>
-	<span class="name">ÎÄ¼şÂ·¾­£º</span>
-	<input maxlength=255 type="text" id=Form_Title name=accessfile size="49" value="data/global.asa" disabled="true"> <span class="info">²»¿É¸ü¸Ä</span>
+	<span class="name">æ–‡ä»¶è·¯ç»ï¼š</span>
+	<input maxlength=255 type="text" id=Form_Title name=accessfile size="49" value="data/global.asa" disabled="true"> <span class="info">ä¸å¯æ›´æ”¹</span>
 	</div>
 
 	<div id="mssql"<%
@@ -515,32 +515,32 @@ sub install_step3form
 	%>>
 	<div class="line">
 	<span class="name">
-	SERVER£º
-	</span><input maxlength=30 type="text" name=server size="25" value="<%=htmlEncode(server)%>"> <span class="info">Êı¾İ¿â·şÎñÆ÷IPµØÖ·£¬ÓëWEBÍ¬»ú¿ÉÌîĞ´localhost</span>
+	SERVERï¼š
+	</span><input maxlength=30 type="text" name=server size="25" value="<%=htmlEncode(server)%>"> <span class="info">æ•°æ®åº“æœåŠ¡å™¨IPåœ°å€ï¼Œä¸WEBåŒæœºå¯å¡«å†™localhost</span>
 	</div>
 	
 	<div class="line">
 	<span class="name">
-	¶Ë¿Ú£º
-	</span><input maxlength=30 type="text" name=port size="25" value="<%if port > 0 then response.write htmlEncode(port)%>"> <span class="info">¶Ë¿ÚºÅ£¬ÈôÎªÄ¬ÈÏ²»ÓÃÌîĞ´</span>
+	ç«¯å£ï¼š
+	</span><input maxlength=30 type="text" name=port size="25" value="<%if port > 0 then response.write htmlEncode(port)%>"> <span class="info">ç«¯å£å·ï¼Œè‹¥ä¸ºé»˜è®¤ä¸ç”¨å¡«å†™</span>
 	</div>
 	
 	<div class="line">
 	<span class="name">
-	ÓÃ»§Ãû£º
-	</span><input maxlength=30 type="text" name=uid size="25" value="<%=htmlEncode(uid)%>"> <span class="info">·ÃÎÊÊı¾İ¿âµÄÓÃ»§Ãû(UID)</span>
+	ç”¨æˆ·åï¼š
+	</span><input maxlength=30 type="text" name=uid size="25" value="<%=htmlEncode(uid)%>"> <span class="info">è®¿é—®æ•°æ®åº“çš„ç”¨æˆ·å(UID)</span>
 	</div>
 	
 	<div class="line">
 	<span class="name">
-	ÃÜÂë£º
-	</span><input maxlength=30 type="password" name=pwd size="25" value="<%=htmlEncode(pwd)%>"> <span class="info">ÃÜÂë(PWD)</span>
+	å¯†ç ï¼š
+	</span><input maxlength=30 type="password" name=pwd size="25" value="<%=htmlEncode(pwd)%>"> <span class="info">å¯†ç (PWD)</span>
 	</div>
 	
 	<div class="line">
 	<span class="name">
-	Êı¾İ¿âÃû³Æ£º
-	</span><input maxlength=30 type="text" name=databasename size="25" value="<%=htmlEncode(databasename)%>"> <span class="info">ĞèÒªÖ¸¶¨Êı¾İ¿âÃû³Æ</span>
+	æ•°æ®åº“åç§°ï¼š
+	</span><input maxlength=30 type="text" name=databasename size="25" value="<%=htmlEncode(databasename)%>"> <span class="info">éœ€è¦æŒ‡å®šæ•°æ®åº“åç§°</span>
 	</div>
 	</div>
 	
@@ -552,7 +552,7 @@ sub install_step3form
 	
 	<div class="line">
 	<span class="name">
-	ODBC°æ±¾£º
+	ODBCç‰ˆæœ¬ï¼š
 	</span>
 	<input class=fmchkbox type=radio name=mysqlversion value=2 <%If mysqlversion = 2 Then Response.Write " checked"%> />Mysql ODBC 5.2 Driver
 	<input class=fmchkbox type=radio name=mysqlversion value=0 <%If mysqlversion = 0 Then Response.Write " checked"%> />Mysql ODBC 5.1 Driver
@@ -561,36 +561,36 @@ sub install_step3form
 	
 	<div class="line">
 	<span class="name">
-	SERVER£º
-	</span><input maxlength=30 type="text" name=mysql_server size="25" value="<%=htmlEncode(mysql_server)%>"> <span class="info">Êı¾İ¿â·şÎñÆ÷IPµØÖ·£¬Í¬WEBµÄ±¾»ú¿ÉÌîĞ´localhost</span>
+	SERVERï¼š
+	</span><input maxlength=30 type="text" name=mysql_server size="25" value="<%=htmlEncode(mysql_server)%>"> <span class="info">æ•°æ®åº“æœåŠ¡å™¨IPåœ°å€ï¼ŒåŒWEBçš„æœ¬æœºå¯å¡«å†™localhost</span>
 	</div>
 	
 	<div class="line">
 	<span class="name">
-	¶Ë¿Ú£º
-	</span><input maxlength=30 type="text" name=mysql_port size="25" value="<%if mysql_port > 0 then response.write htmlEncode(mysql_port)%>"> <span class="info">¶Ë¿ÚºÅ£¬ÈôÎªÄ¬ÈÏ²»ÓÃÌîĞ´</span>
+	ç«¯å£ï¼š
+	</span><input maxlength=30 type="text" name=mysql_port size="25" value="<%if mysql_port > 0 then response.write htmlEncode(mysql_port)%>"> <span class="info">ç«¯å£å·ï¼Œè‹¥ä¸ºé»˜è®¤ä¸ç”¨å¡«å†™</span>
 	</div>
 	
 	<div class="line">
 	<span class="name">
-	ÓÃ»§Ãû£º
-	</span><input maxlength=30 type="text" name=mysql_uid size="25" value="<%=htmlEncode(mysql_uid)%>"> <span class="info">·ÃÎÊÊı¾İ¿âµÄÓÃ»§Ãû(UID)</span>
+	ç”¨æˆ·åï¼š
+	</span><input maxlength=30 type="text" name=mysql_uid size="25" value="<%=htmlEncode(mysql_uid)%>"> <span class="info">è®¿é—®æ•°æ®åº“çš„ç”¨æˆ·å(UID)</span>
 	</div>
 	
 	<div class="line">
 	<span class="name">
-	ÃÜÂë£º
-	</span><input maxlength=30 type="password" name=mysql_pwd size="25" value="<%=htmlEncode(mysql_pwd)%>"> <span class="info">ÃÜÂë(PWD)</span>
+	å¯†ç ï¼š
+	</span><input maxlength=30 type="password" name=mysql_pwd size="25" value="<%=htmlEncode(mysql_pwd)%>"> <span class="info">å¯†ç (PWD)</span>
 	</div>
 	
 	<div class="line">
 	<span class="name">
-	Êı¾İ¿âÃû³Æ£º
-	</span><input maxlength=30 type="text" name=mysql_databasename size="25" value="<%=htmlEncode(mysql_databasename)%>"> <span class="info">ĞèÒªÖ¸¶¨Êı¾İ¿âÃû³Æ</span>
+	æ•°æ®åº“åç§°ï¼š
+	</span><input maxlength=30 type="text" name=mysql_databasename size="25" value="<%=htmlEncode(mysql_databasename)%>"> <span class="info">éœ€è¦æŒ‡å®šæ•°æ®åº“åç§°</span>
 	</div>
 	
 	</div>
-	<a href="javascript:;" onclick="submitonce(this);" class="install_submit">Ìá½»ÉèÖÃ</a>
+	<a href="javascript:;" onclick="submitonce(this);" class="install_submit">æäº¤è®¾ç½®</a>
 	</form>
 	<%
 
@@ -609,19 +609,19 @@ Sub install_step4form
 	
 	if request.form("submitflag") = "true2" then
 		if adminuser = "" then
-			GBL_CHK_TempStr = "ÇëÌîĞ´¹ÜÀíÔ±ÕËºÅ."
+			GBL_CHK_TempStr = "è¯·å¡«å†™ç®¡ç†å‘˜è´¦å·."
 		else
 			CheckUsername(adminuser)
 		end if
 		if adminpassword <> adminpassword2 then
-			GBL_CHK_TempStr = GBL_CHK_TempStr & " Á½´ÎÃÜÂëÊäÈëÎ´ÏàÍ¬."
+			GBL_CHK_TempStr = GBL_CHK_TempStr & " ä¸¤æ¬¡å¯†ç è¾“å…¥æœªç›¸åŒ."
 		Else
 			if adminpassword = "" or adminpassword2 = "" then
-				GBL_CHK_TempStr = GBL_CHK_TempStr & " ÇëÌîĞ´ÃÜÂë."
+				GBL_CHK_TempStr = GBL_CHK_TempStr & " è¯·å¡«å†™å¯†ç ."
 			End If
 		End If
 		if GBL_CHK_TempStr = "" then
-			install_step5form
+			install_step5form()
 			exit sub
 		end if
 	end if
@@ -635,7 +635,7 @@ Sub install_step4form
 	{
 		if(ValidationPassed == false)return;
 		submit_disable(theform);
-		alert("Ìá½»ºó£¬¿ÉÄÜĞèÒªÊı·ÖÖÓÊ±¼ä²ÅÄÜÍê³ÉÉèÖÃ£¬ÈôÓĞ´íÎó£¬ÇëÌæ»»BBSSetup.aspÎªÔ­Ê¼ÎÄ¼ş£¬ÖØĞÂ½øĞĞ°²×°.");
+		alert("æäº¤åï¼Œå¯èƒ½éœ€è¦æ•°åˆ†é’Ÿæ—¶é—´æ‰èƒ½å®Œæˆè®¾ç½®ï¼Œè‹¥æœ‰é”™è¯¯ï¼Œè¯·æ›¿æ¢BBSSetup.aspä¸ºåŸå§‹æ–‡ä»¶ï¼Œé‡æ–°è¿›è¡Œå®‰è£….");
 		$id('LeadBBSFm').submit();
 	}
 	function submit_disable(theform,tp)
@@ -644,11 +644,11 @@ Sub install_step4form
 	}
 	$id('step4').className = "on"
 	</script>
-	<div class="contenttitle" id="databasecontenttitle">ÉèÖÃ¹ÜÀíÔ±</div>
+	<div class="contenttitle" id="databasecontenttitle">è®¾ç½®ç®¡ç†å‘˜</div>
 	<%If GBL_CHK_TempStr <> "" Then
 		%>
 		<div class="line">
-			Ïà¹ØĞÅÏ¢ÌîĞ´Î´ÄÜÍ¨¹ıÑéÖ¤£®
+			ç›¸å…³ä¿¡æ¯å¡«å†™æœªèƒ½é€šè¿‡éªŒè¯ï¼
 		</div>
 		<%
 		Response.Write "<span class=redfont>" & GBL_CHK_TempStr & "</span>"
@@ -662,23 +662,23 @@ Sub install_step4form
 	
 	<div class="line">
 	<span class="name">
-	¹ÜÀíÔ±ÕËºÅ£º
-	</span><input maxlength=30 type="text" name=adminuser size="25" value="<%=htmlEncode(adminuser)%>"> <span class="info">´ËÓÃ»§Ãû½«³ÉÎªÂÛÌ³³¬¼¶¹ÜÀíÔ±²¢×¢²á</span>
+	ç®¡ç†å‘˜è´¦å·ï¼š
+	</span><input maxlength=30 type="text" name=adminuser size="25" value="<%=htmlEncode(adminuser)%>"> <span class="info">æ­¤ç”¨æˆ·åå°†æˆä¸ºè®ºå›è¶…çº§ç®¡ç†å‘˜å¹¶æ³¨å†Œ</span>
 	</div>
 	
 	<div class="line">
 	<span class="name">
-	ÃÜÂë£º
-	</span><input maxlength=20 type="password" name=adminpassword size="25" value="<%=htmlEncode(adminpassword)%>"> <span class="info">³¬¼¶¹ÜÀíÔ±ÃÜÂë</span>
+	å¯†ç ï¼š
+	</span><input maxlength=20 type="password" name=adminpassword size="25" value="<%=htmlEncode(adminpassword)%>"> <span class="info">è¶…çº§ç®¡ç†å‘˜å¯†ç </span>
 	</div>
 	
 	<div class="line">
 	<span class="name">
-	ÔÙ´ÎÊäÈëÃÜÂë£º
-	</span><input maxlength=20 type="password" name=adminpassword2 size="25" value="<%=htmlEncode(adminpassword2)%>"> <span class="info">Á½´ÎÃÜÂëÊäÈë±ØĞëÏàÍ¬</span>
+	å†æ¬¡è¾“å…¥å¯†ç ï¼š
+	</span><input maxlength=20 type="password" name=adminpassword2 size="25" value="<%=htmlEncode(adminpassword2)%>"> <span class="info">ä¸¤æ¬¡å¯†ç è¾“å…¥å¿…é¡»ç›¸åŒ</span>
 	</div>
 	
-	<a href="javascript:;" onclick="submitonce(this);" class="install_submit">Ìá½»ÉèÖÃ</a>
+	<a href="javascript:;" onclick="submitonce(this);" class="install_submit">æäº¤è®¾ç½®</a>
 	</form>
 
 <%
@@ -695,8 +695,8 @@ function exesql(sql,flag)
 		Con.ExeCute(SQL)
 	End If
 	If Err Then
-		'printline("<p>ÒÔÏÂSQLÓï¾äÖ´ĞĞ³ö´í£¬³ÌĞòÒâÍâÖĞÖ¹£¬ÇëÁªÏµ¹Ù·½½â¾ö£º</p><p><font color=gray>" & server.htmlencode(SQL) & "</font></P>")
-		printline("<p>´íÎóÃèÊö: <font color=red>" & err.description & "</font></p>")
+		'printline("<p>ä»¥ä¸‹SQLè¯­å¥æ‰§è¡Œå‡ºé”™ï¼Œç¨‹åºæ„å¤–ä¸­æ­¢ï¼Œè¯·è”ç³»å®˜æ–¹è§£å†³ï¼š</p><p><font color=gray>" & server.htmlencode(SQL) & "</font></P>")
+		printline("<p>é”™è¯¯æè¿°: <font color=red>" & err.description & "</font></p>")
 		Err.Clear
 	End If
 
@@ -730,18 +730,18 @@ sub install_step5form
 	OpenDatabase(constr)
 	
 	If GBL_CHK_TempStr <> "" Then
-		Response.Write "<span class=err>°²×°Ê§°Ü£¬Çë·µ»ØÖØĞÂ°²×°.</span>"&GBL_CHK_TempStr
-		CloseDatabase
+		Response.Write "<span class=err>å®‰è£…å¤±è´¥ï¼Œè¯·è¿”å›é‡æ–°å®‰è£….</span>"&GBL_CHK_TempStr
+		CloseDatabase()
 		exit sub
 	end if
 	
-	printline("<b>ÇëÄÍĞÄµÈºòÍê³É°²×°....</b>")
+	printline("<b>è¯·è€å¿ƒç­‰å€™å®Œæˆå®‰è£…....</b>")
 	dim filestr,arr,n
 	select case dtype
 		case 2:
 			filestr = ADODB_LoadFile("database/mysql.sql")
 			arr = split(filestr,";")
-			printline("¿ªÊ¼³õÊ¼»¯MYSQLÊı¾İ¿â...")
+			printline("å¼€å§‹åˆå§‹åŒ–MYSQLæ•°æ®åº“...")
 			%>
 			<div class=errstr>
 			<%
@@ -751,11 +751,11 @@ sub install_step5form
 			%>
 			</div>
 			<%
-			printline("ÒÑÍê³ÉMYSQL³õÊ¼»¯Êı¾İ¿â.")
+			printline("å·²å®ŒæˆMYSQLåˆå§‹åŒ–æ•°æ®åº“.")
 		case 0:
 			filestr = ADODB_LoadFile("database/mssql.sql")
 			arr = split(filestr,VbCrLf & "GO" & VbCrLf)
-			printline("¿ªÊ¼³õÊ¼»¯MSSQLÊı¾İ¿â...")
+			printline("å¼€å§‹åˆå§‹åŒ–MSSQLæ•°æ®åº“...")
 			%>
 			<div class=errstr>
 			<%
@@ -765,7 +765,7 @@ sub install_step5form
 			%>
 			</div>
 			<%
-			printline("ÒÑÍê³É³õÊ¼»¯MSSQLÊı¾İ¿â.")
+			printline("å·²å®Œæˆåˆå§‹åŒ–MSSQLæ•°æ®åº“.")
 	end select
 	
 	dim sql,rs
@@ -775,28 +775,28 @@ sub install_step5form
 		sql = "insert into leadbbs_user(username,pass,answer,applytime) values('" & filterStr(adminuser) & "','" & md5(adminpassword) & "','" & md5(adminpassword) & "'," & GetTimevalue(now) & ")"
 		call exesql(sql,1)
 	else
-		printline("¹ÜÀíÔ±ÕËºÅ" & htmlencode(adminuser) & "ÒÑ´æÔÚ£¬ÂÔ¹ıÌí¼Ó.")
+		printline("ç®¡ç†å‘˜è´¦å·" & htmlencode(adminuser) & "å·²å­˜åœ¨ï¼Œç•¥è¿‡æ·»åŠ .")
 	end if
 	rs.close
 	set rs = nothing
 	
-	printline("ÒÑ³õÊ¼»¯¹ÜÀíÔ±.")
+	printline("å·²åˆå§‹åŒ–ç®¡ç†å‘˜.")
 	
-	Update_InstallDir
+	Update_InstallDir()
 	filestr = ADODB_LoadFile(DEF_BBS_HomeUrl & "inc/BBSSetup.asp")
 	filestr = replace(filestr,"Const DEF_AccessDatabase = """"","Const DEF_AccessDatabase = """ & filterStr(setupstr) & """")
 	filestr = replace(filestr,"Const DEF_AccessDatabase = ""data/global.asa""","Const DEF_AccessDatabase = """ & filterStr(setupstr) & """")
 	filestr = replace(filestr,"const DEF_UsedDataBase = 1","const DEF_UsedDataBase = " & dtype)
 	filestr = replace(filestr,"const DEF_UsedDataBase = 0","const DEF_UsedDataBase = " & dtype)
 	filestr = replace(filestr,"const DEF_UsedDataBase = 2","const DEF_UsedDataBase = " & dtype)
-	printline("Íê³ÉÊı¾İ¿âÉèÖÃ.")
+	printline("å®Œæˆæ•°æ®åº“è®¾ç½®.")
 	
 	if CheckObjInstalled("Persits.Jpeg",0) = True then
 		filestr = replace(filestr,"const DEF_EnableGFL = 0","const DEF_EnableGFL = 1")
-		printline("ÒÑ¿ªÆôaspJpeg×é¼ş¹¦ÄÜÖ§³Ö.")
+		printline("å·²å¼€å¯aspJpegç»„ä»¶åŠŸèƒ½æ”¯æŒ.")
 	else
 		filestr = replace(filestr,"const DEF_EnableGFL = 1","const DEF_EnableGFL = 0")
-		printline("ÒÑ½ûÓÃaspJpeg×é¼ş¹¦ÄÜÖ§³Ö.")
+		printline("å·²ç¦ç”¨aspJpegç»„ä»¶åŠŸèƒ½æ”¯æŒ.")
 	End If
 
 	filestr = replace(filestr,"const DEF_SupervisorUserName = "",Admin,""","const DEF_SupervisorUserName = ""," & filterStr(adminuser) & ",""")
@@ -805,12 +805,12 @@ sub install_step5form
 	filestr = replace(filestr,"Response.Redirect ""install/default.asp""","")
 	call ADODB_SaveToFile(filestr,DEF_BBS_HomeUrl & "inc/BBSSetup.asp")
 	CALL Update_InsertSetupRID(1051,"inc/BBSSetup.asp",0,filestr," and ClassNum=" & 0)
-	printline("<b>Íê³É°²×°.</b>")
-	printline("<b>½¨ÒéÁ¢¼´Ê¹ÓÃ´´½¨µÄ¹ÜÀíÔ±½øÈëºóÌ¨ĞÂ½¨·ÖÀà¼°°æÃæĞÅÏ¢£®</b>")
+	printline("<b>å®Œæˆå®‰è£….</b>")
+	printline("<b>å»ºè®®ç«‹å³ä½¿ç”¨åˆ›å»ºçš„ç®¡ç†å‘˜è¿›å…¥åå°æ–°å»ºåˆ†ç±»åŠç‰ˆé¢ä¿¡æ¯ï¼</b>")
 	%>
-	<a href="<%=DEF_BBS_HomeUrl%>manage/" class="install_submit">µã»÷½øÈëºóÌ¨¹ÜÀí</a>
+	<a href="<%=DEF_BBS_HomeUrl%>manage/" class="install_submit">ç‚¹å‡»è¿›å…¥åå°ç®¡ç†</a>
 	<%
-	CloseDatabase
+	CloseDatabase()
 	
 
 end sub
@@ -833,14 +833,14 @@ Function CheckUsername(Form_UserName)
 						TempChar = ASC(Mid(Form_UserName,Loop_N,1))
 						If TempChar < 0 Then TempChar = TempChar + 65535
 							If TempChar = 32 Then
-								If TempURL > Len(Replace(Form_UserName," ","")) + 2 Then 'ÔÊĞí×î¶àÁ½¸ö¿Õ¸ñÇÒ²»Í¬Ê±ÔÚÒ»Æğ
+								If TempURL > Len(Replace(Form_UserName," ","")) + 2 Then 'å…è®¸æœ€å¤šä¸¤ä¸ªç©ºæ ¼ä¸”ä¸åŒæ—¶åœ¨ä¸€èµ·
 									CheckUsername = 0
-									GBL_CHK_TempStr = "ÓÃ»§Ãû×î¶àÖ»ÔÊĞíÊ¹ÓÃÁ½¸ö¿Õ¸ñ!<br>"
+									GBL_CHK_TempStr = "ç”¨æˆ·åæœ€å¤šåªå…è®¸ä½¿ç”¨ä¸¤ä¸ªç©ºæ ¼!<br>"
 									Exit Function
 								End If
 							Else
 								If TempChar < 45 or (TempChar>45 and TempChar<48) or (TempChar>57 and TempChar<65) or (TempChar>90 and TempChar < 95) or TempChar = 96 or (TempChar > 122 and TempChar < 33088) Then
-									GBL_CHK_TempStr = "ÓÃ»§Ãûº¬ÓĞ·Ç·¨×Ö·û(ÇëÊ¹ÓÃÊı×Ö,×ÖÄ¸,ÏÂ»®Ïß)!<br>"
+									GBL_CHK_TempStr = "ç”¨æˆ·åå«æœ‰éæ³•å­—ç¬¦(è¯·ä½¿ç”¨æ•°å­—,å­—æ¯,ä¸‹åˆ’çº¿)!<br>"
 									CheckUsername = 0
 									Exit Function
 								End If
@@ -848,7 +848,7 @@ Function CheckUsername(Form_UserName)
 						
 						
 						If TempChar > 65184 Then
-							GBL_CHK_TempStr = "·Ç·¨µÄÓÃ»§Ãû,º¬ÓĞ·Ç·¨×Ö·û,ÇëÈ·ÈÏ!<br>"
+							GBL_CHK_TempStr = "éæ³•çš„ç”¨æˆ·å,å«æœ‰éæ³•å­—ç¬¦,è¯·ç¡®è®¤!<br>"
 							CheckUsername = 0
 							Exit Function
 						End If
@@ -899,7 +899,7 @@ Function isTrueDate(TStr)
 	Dim T
 	T = TStr
 	If isNull(T) Then T = ""
-	T = Replace(Replace(Replace(Replace(Replace(Replace(Replace(T,"Äê","-"),"ÔÂ","-"),"ÈÕ"," "),"ÉÏÎç"," "),"ÏÂÎç"," "),"  "," "),"  "," ")
+	T = Replace(Replace(Replace(Replace(Replace(Replace(Replace(T,"å¹´","-"),"æœˆ","-"),"æ—¥"," "),"ä¸Šåˆ"," "),"ä¸‹åˆ"," "),"  "," "),"  "," ")
 	
 	Dim N1,N2
 	N1 = inStr(T,"-")
@@ -936,10 +936,17 @@ Sub Update_InstallDir
 	
 	dim OldStr_start,OldStr_end,NewStr
 	OldStr_start = "Const DEF_InstallDir = """
-	OldStr_end = """" & VbCrLf & "%" & ">"
+	' README Â§50: this searched for a quote followed by CRLF and "%>". This repository
+	' normalises its sources to LF, so the needle never matched, Update_ReplaceFileStr_2
+	' silently wrote nothing, and DEF_InstallDir kept the upstream default -- while the
+	' installer still printed the value it MEANT to write. Match either line ending.
+	OldStr_end = """" & VbLf & "%" & ">"
+	If inStr(ADODB_LoadFile("inc/BBSSetup.asp"), """" & VbCrLf & "%" & ">") > 0 Then
+		OldStr_end = """" & VbCrLf & "%" & ">"
+	End If
 	NewStr = InstallDir
 	call Update_ReplaceFileStr_2("inc/BBSSetup.asp",OldStr_start,OldStr_end,NewStr)
-	printline("°²×°Ä¿Â¼Íê³É¼ì²â£¬Î»ÖÃÎª: <u>" & InstallDir & "</u>¡£")
+	printline("å®‰è£…ç›®å½•å®Œæˆæ£€æµ‹ï¼Œä½ç½®ä¸º: <u>" & InstallDir & "</u>ã€‚")
 
 End Sub
 

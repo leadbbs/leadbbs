@@ -1,26 +1,26 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/Upload_Setup.asp -->
-<!-- #include file=../inc/Limit_Fun.asp -->
-<!-- #include file=../inc/Board_Popfun.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Upload_Setup.asp"-->
+<!--#include file="../inc/Limit_Fun.asp"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../"
-InitDatabase
-UpdateOnlineUserAtInfo GBL_board_ID,"É¾³ıÊÕ¼şĞÅÏ¢"
+InitDatabase()
+UpdateOnlineUserAtInfo GBL_board_ID,"åˆ é™¤æ”¶ä»¶ä¿¡æ¯"
 
 Dim FileID,Upd_SpendFlag
 FileID = Left(Request("FileID"),14)
 If isNumeric(FileID) = 0 or FileID = "" or InStr(FileID,",") > 0 Then FileID = 0
-FileID = cCur(FileID)
+FileID = LngStr(FileID)
 
 If FileID < 0 Then FileID = 0
 
 GBL_CHK_TempStr = ""
 If GBL_UserID=0 Then
-	GBL_CHK_TempStr = GBL_CHK_TempStr & "ÄãÃ»ÓĞµÇÂ¼<br>" & VbCrLf
+	GBL_CHK_TempStr = GBL_CHK_TempStr & "ä½ æ²¡æœ‰ç™»å½•<br>" & VbCrLf
 Else
-	If DEF_FSOString = "" Then GBL_CHK_TempStr = "·şÎñÆ÷²»Ö§³ÖÉ¾³ı¸½¼ş¹¦ÄÜ£®<br>" & VbCrLf
+	If DEF_FSOString = "" Then GBL_CHK_TempStr = "æœåŠ¡å™¨ä¸æ”¯æŒåˆ é™¤é™„ä»¶åŠŸèƒ½ï¼<br>" & VbCrLf
 End If
-siteHead("   É¾³ı¸½¼ş")
+siteHead("   åˆ é™¤é™„ä»¶")
 %>
 <script language=javascript>
 	window.moveTo(window.screen.width/2-225,window.screen.height/2-18);
@@ -32,14 +32,14 @@ siteHead("   É¾³ı¸½¼ş")
 	<%
 	Dim Rs,SQL,SQLendString,ClearFlag
 	If GBL_CHK_TempStr = "" Then
-		CheckisBoardMaster
+		CheckisBoardMaster()
 		If DEF_Upd_SpendFlag = 0 and GBL_BoardMasterFlag >=4 Then
 			Upd_SpendFlag = 0
 		Else
 			Upd_SpendFlag = 1
 		End If
 		
-		If CheckSupervisorUserName = 1 or (GetBinarybit(GBL_CHK_UserLimit,11) = 1 and GBL_BoardMasterFlag >=4) Then
+		If CheckSupervisorUserName() = 1 or (GetBinarybit(GBL_CHK_UserLimit,11) = 1 and GBL_BoardMasterFlag >=4) Then
 			SQL = sql_select("Select ID,PhotoDir,SPhotoDir,UserID from LeadBBS_Upload where id=" & FileID,1)
 		Else
 			SQL = sql_select("Select ID,PhotoDir,SPhotoDir,UserID from LeadBBS_Upload where UserID=" & GBL_UserID & " and id=" & FileID,1)
@@ -48,13 +48,13 @@ siteHead("   É¾³ı¸½¼ş")
 		If Rs.Eof Then
 			Rs.Close
 			Set Rs = Nothing
-			Response.Write "ÕÒ²»µ½¼ÇÂ¼£¡<br>" & VbCrLf
+			Response.Write "æ‰¾ä¸åˆ°è®°å½•ï¼<br>" & VbCrLf
 		Else
 			If Request.Form("DeleteSureFlag")="dk9@dl9s92lw_SWxl" Then
 				Dim UploadUserID
 				UploadUserID = Rs("UserID")
 				%>
-				³É¹¦É¾³ı±àºÅÎª<font color=ff0000 class=redfont><%=rs("ID")%></font>µÄÉÏ´«¸½¼ş!
+				æˆåŠŸåˆ é™¤ç¼–å·ä¸º<font color=ff0000 class=redfont><%=rs("ID")%></font>çš„ä¸Šä¼ é™„ä»¶!
 				<%
 				If Rs("PhotoDir") <> "" Then DeleteFiles(Server.Mappath(Replace(Replace(DEF_BBS_HomeUrl & DEF_BBS_UploadPhotoUrl & Rs("PhotoDir"),"/","\"),"\\","\")))
 				If Rs("SPhotoDir") <> "" Then DeleteFiles(Server.Mappath(Replace(Replace(DEF_BBS_HomeUrl & DEF_BBS_UploadPhotoUrl & Rs("SPhotoDir"),"/","\"),"\\","\")))
@@ -79,17 +79,17 @@ siteHead("   É¾³ı¸½¼ş")
 					<input type=hidden name=DeleteSureFlag value="dk9@dl9s92lw_SWxl">
 					<input type=hidden name=ClearFlag value="<%=htmlencode(ClearFlag)%>">
 					<input type=hidden name=FileID value="<%=htmlencode(FileID)%>">
-					<b>È·ÈÏÒªÉ¾³ı±àºÅÎª<font color=ff0000 class=redfont><%=htmlencode(rs("ID"))%></font>µÄ¸½¼şÂğ£¿</b>
-					<%If Upd_SpendFlag = 1 Then%><br>É¾³ı¸½¼ş½«<%
+					<b>ç¡®è®¤è¦åˆ é™¤ç¼–å·ä¸º<font color=ff0000 class=redfont><%=htmlencode(rs("ID"))%></font>çš„é™„ä»¶å—ï¼Ÿ</b>
+					<%If Upd_SpendFlag = 1 Then%><br>åˆ é™¤é™„ä»¶å°†<%
 						If DEF_UploadDeletePoints > 0 Then
-							Response.Write "<font color=red class=redfont>ÏûºÄ" & DEF_UploadDeletePoints & "" & DEF_PointsName(0) & "</font>"
+							Response.Write "<font color=red class=redfont>æ¶ˆè€—" & DEF_UploadDeletePoints & "" & DEF_PointsName(0) & "</font>"
 						ElseIf DEF_UploadDeletePoints < 0 Then
-							Response.Write "<font color=green class=greenfont title=±ØĞë×Ô¼ºÉ¾³ı²ÅÓĞÏàÓ¦µÄ±ä»¯>½±Àø" & 0-DEF_UploadDeletePoints & "" & DEF_PointsName(0) & "</font>"
+							Response.Write "<font color=green class=greenfont title=å¿…é¡»è‡ªå·±åˆ é™¤æ‰æœ‰ç›¸åº”çš„å˜åŒ–>å¥–åŠ±" & 0-DEF_UploadDeletePoints & "" & DEF_PointsName(0) & "</font>"
 						End If
-						Response.Write "£¨Ö»ÓĞÉ¾³ı×Ô¼ºÉÏ´«µÄ¸½¼ş²ÅÓĞĞ§£©"
+						Response.Write "ï¼ˆåªæœ‰åˆ é™¤è‡ªå·±ä¸Šä¼ çš„é™„ä»¶æ‰æœ‰æ•ˆï¼‰"
 					End If%>
-					<p><input type=submit value=È·¶¨ class=fmbtn>
-					<input type=button value=²»É¾ onclick="javascript:window.close();" class=fmbtn>
+					<p><input type=submit value=ç¡®å®š class=fmbtn>
+					<input type=button value=ä¸åˆ  onclick="javascript:window.close();" class=fmbtn>
 				</form>
 				<%
 				Rs.Close
@@ -114,12 +114,12 @@ siteHead("   É¾³ı¸½¼ş")
 	<title>
 		<%=DEF_SiteNameString%>
 	</title>
-	<meta HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+	<meta HTTP-EQUIV="Content-Type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" type="text/css" href="<%=DEF_BBS_homeurl%>/inc/style.css">
 </head>
 <%
 
-closeDataBase
+closeDataBase()
 
 Function DeleteFiles(path)
 
@@ -129,7 +129,7 @@ Function DeleteFiles(path)
 	Set fs = Server.CreateObject(DEF_FSOString)
 	If err <> 0 Then
 		Err.Clear
-		Response.Write "<br>·şÎñÆ÷²»Ö§³ÖFSO£¬Ó²ÅÌÎÄ¼şÎ´É¾³ı£®"
+		Response.Write "<br>æœåŠ¡å™¨ä¸æ”¯æŒFSOï¼Œç¡¬ç›˜æ–‡ä»¶æœªåˆ é™¤ï¼"
 		Exit Function
 	End If
 	If fs.FileExists(path) Then

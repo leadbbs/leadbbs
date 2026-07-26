@@ -1,13 +1,13 @@
-<%@ LANGUAGE=VBScript CodePage=936%>
+<%@ LANGUAGE=VBScript CodePage=65001%>
 <%Option Explicit
-Response.Charset = "gb2312"
-Session.CodePage=936%>
-<!-- #include file=inc/proxy_fun.asp -->
+Response.Charset = "utf-8"
+Session.CodePage=65001%>
+<!--#include file="inc/proxy_fun.asp"-->
 <%
-rem LeadBBS´úÀí²ÎÊý
-rem u - µØÖ·
-rem bin - ÊÇ·ñ¶þ½ø¶ÈÊä³ö(1)
-rem utf8 - ÊÇ·ñutf8±àÂëÊä³ö(1)
+rem LeadBBSä»£ç†å‚æ•°
+rem u - åœ°å€
+rem bin - æ˜¯å¦äºŒè¿›åº¦è¾“å‡º(1)
+rem utf8 - æ˜¯å¦utf8ç¼–ç è¾“å‡º(1)
 
 Sub Proxy_Main
 
@@ -38,5 +38,5 @@ Sub Proxy_Main
 
 End Sub
 
-Proxy_Main
+Proxy_Main()
 %>

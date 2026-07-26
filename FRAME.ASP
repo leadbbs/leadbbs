@@ -1,4 +1,4 @@
-<!-- #include file=inc/BBSsetup.asp -->
+<!--#include file="inc/BBSsetup.asp"-->
 <%
 
 function LD_GetUrl(dir)
@@ -7,9 +7,9 @@ function LD_GetUrl(dir)
 	dim p : p = Request.ServerVariables("SERVER_PORT")
 	if p <> "80" Then d = d & Server.UrlEncode(p)
 	
-	if dir = 1 then '返回论坛安装目录
+	if dir = 1 then '杩斿洖璁哄潧瀹夎鐩綍
 		d = d & DEF_Installdir
-	elseif dir = 2 then '返回当前文件url
+	elseif dir = 2 then '杩斿洖褰撳墠鏂囦欢url
 		d = d & Request.Servervariables("SCRIPT_NAME")
 	else
 		d = ""

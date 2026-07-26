@@ -1,6 +1,6 @@
 <!--#include file="../../app/qqlogin/oauth.asp"-->
 <%
-Const LMT_MaxMessageNumber = 5000 'ÓÃ»§ÊÕ¼þÏäÔÊÐíµÄ×î¶à½ÓÊÕ¼ÇÂ¼£¬³¬¹ý½«ÎÞ·¨½ÓÊÕÐÂÏûÏ¢¡£
+Const LMT_MaxMessageNumber = 5000 'ç”¨æˆ·æ”¶ä»¶ç®±å…è®¸çš„æœ€å¤šæŽ¥æ”¶è®°å½•ï¼Œè¶…è¿‡å°†æ— æ³•æŽ¥æ”¶æ–°æ¶ˆæ¯ã€‚
 
 Sub DisplayUserCenter(info)
 
@@ -16,75 +16,75 @@ Sub DisplayUserCenter(info)
 	<%
 	If info = "user" Then
 	%>
-			<div class="title">¸öÈË×¨Çø</div>
+			<div class="title">ä¸ªäººä¸“åŒº</div>
 			<div class="user_itemlist">
-			<div class="swap_collapse" onclick="swap_view('master_part_1',this);"><span>¸öÈËÐÅÏ¢</span></div>
+			<div class="swap_collapse" onclick="swap_view('master_part_1',this);"><span>ä¸ªäººä¿¡æ¯</span></div>
 			<ul id="master_part_1">
-			<%If GetBinarybit(GBL_CHK_UserLimit,1) = 1 or GBL_CHK_UserLimit = "" Then%><li><a href="<%=DEF_BBS_HomeUrl%>User/UserGetPass.asp?act=active"><span class=redfont>¼¤»îÎÒµÄÕÊºÅ</span></a></li><%End If%>
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/UserModify.asp">ÕÊºÅÉèÖÃ</a></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/<%=RW_User(0,"","","")%>">¸öÈËÐÅÏ¢</a></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/MyInfoBox.asp">¶ÌÏûÏ¢</a></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/<%=RW_User(0,"f","","")%>">ÎÒµÄºÃÓÑ</a></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/<%=RW_User(0,"bind","","")%>">¹ØÁªÕÊºÅ</a></li>
+			<%If GetBinarybit(GBL_CHK_UserLimit,1) = 1 or GBL_CHK_UserLimit = "" Then%><li><a href="<%=DEF_BBS_HomeUrl%>User/UserGetPass.asp?act=active"><span class=redfont>æ¿€æ´»æˆ‘çš„å¸å·</span></a></li><%End If%>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/UserModify.asp">å¸å·è®¾ç½®</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/<%=RW_User(0,"","","")%>">ä¸ªäººä¿¡æ¯</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/MyInfoBox.asp">çŸ­æ¶ˆæ¯</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/<%=RW_User(0,"f","","")%>">æˆ‘çš„å¥½å‹</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/<%=RW_User(0,"bind","","")%>">å…³è”å¸å·</a></li>
 			</ul>
-			<div class="swap_collapse" onclick="swap_view('master_part_2',this);"><span>Ìû×Ó/¸½¼þ</span></div>
+			<div class="swap_collapse" onclick="swap_view('master_part_2',this);"><span>å¸–å­/é™„ä»¶</span></div>
 			<ul id="master_part_2">
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/<%=RW_User(0,"n","","")%>">ÎÒµÄÌû×Ó</a></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/<%=RW_User(0,"l","","")%>">ÎÒµÄ¸½¼þ</a></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/<%=RW_User(0,"bag","","")%>">ÊÕ²Ø¼Ð</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/<%=RW_User(0,"n","","")%>">æˆ‘çš„å¸–å­</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/<%=RW_User(0,"l","","")%>">æˆ‘çš„é™„ä»¶</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/<%=RW_User(0,"bag","","")%>">æ”¶è—å¤¹</a></li>
 			</ul>
-			<div class="swap_collapse" onclick="swap_view('master_part_3',this);"><span>³äÖµ</span></div>
+			<div class="swap_collapse" onclick="swap_view('master_part_3',this);"><span>å……å€¼</span></div>
 			<ul id="master_part_3">
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/alipay/Payment.asp"><div class=ttt><%=DEF_PointsName(1)%>³äÖµ</div></A></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/alipay/Payment.asp"><div class=ttt><%=DEF_PointsName(1)%>å……å€¼</div></A></li>
 			</ul>
 			</div>
 	<%
 	ElseIf info = "forum" Then
 	%>
-			<div class=title>ÂÛÌ³ÐÅÏ¢</div>
+			<div class=title>è®ºå›ä¿¡æ¯</div>
 			<div class=user_itemlist>
 			<ul>
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/UserTop.asp">ÓÃ»§ÅÅÐÐ°ñ</a></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/UserOnline.asp">ÔÚÏßÓÃ»§</a></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/UserTop.asp?r">²éÕÒÓÃ»§</a></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/UserTop.asp?e">ÐÂÈëÓÃ»§</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/UserTop.asp">ç”¨æˆ·æŽ’è¡Œæ¦œ</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/UserOnline.asp">åœ¨çº¿ç”¨æˆ·</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/UserTop.asp?r">æŸ¥æ‰¾ç”¨æˆ·</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/UserTop.asp?e">æ–°å…¥ç”¨æˆ·</a></li>
 			</ul>
 			<hr class=splitline2>
 			<ul>
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/UserTop.asp?b">°æ¿éÅÅÐÐ</a></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>Search/List.asp?1">ÂÛÌ³Ìû×Ó</a></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>Search/Search.asp">Ìû×ÓËÑË÷</a></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>Search/UploadList.asp">ÂÛÌ³¸½¼þ</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/UserTop.asp?b">ç‰ˆå—æŽ’è¡Œ</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>Search/List.asp?1">è®ºå›å¸–å­</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>Search/Search.asp">å¸–å­æœç´¢</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>Search/UploadList.asp">è®ºå›é™„ä»¶</a></li>
 			</ul>
 			<hr class=splitline2>
 			<ul>
-			<li><a href="<%=DEF_BBS_HomeUrl%>user/help/help.asp">°ïÖúÖÐÐÄ</a></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>plug-ins/LeadCard/">ÂÛÌ³³äÖµ¿¨</a></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/help/about.asp">¹ÜÀíÍÅ¶Ó</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>user/help/help.asp">å¸®åŠ©ä¸­å¿ƒ</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>plug-ins/LeadCard/">è®ºå›å……å€¼å¡</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/help/about.asp">ç®¡ç†å›¢é˜Ÿ</a></li>
 			</ul>
 			</div>
 	<%
 	ElseIf info = "help" Then
 	%>
-			<div class=title>°ïÖúÖÐÐÄ</div>
+			<div class=title>å¸®åŠ©ä¸­å¿ƒ</div>
 			<div class=user_itemlist>
 			<ul>
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/Help/Help.asp">Ê¹ÓÃÊÖ²á</a></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/Help/Ubb.asp">UBB´úÂë</a></li>
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/Help/Ubb.asp?icon">ÂÛÌ³±íÇé</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/Help/Help.asp">ä½¿ç”¨æ‰‹å†Œ</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/Help/Ubb.asp">UBBä»£ç </a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/Help/Ubb.asp?icon">è®ºå›è¡¨æƒ…</a></li>
 			</ul>
 			<hr class=splitline2>
 			<ul>
-			<li><a href="<%=DEF_BBS_HomeUrl%>User/help/Ubb.asp?colo">ÑÕÉ«¶ÔÕÕ±í</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>User/help/Ubb.asp?colo">é¢œè‰²å¯¹ç…§è¡¨</a></li>
 			</ul>
 			</div>
 <%
 	ElseIf info = "plug" Then
 	%>
-			<div class=title>Ó¦ÓÃÖÐÐÄ</div>
+			<div class=title>åº”ç”¨ä¸­å¿ƒ</div>
 			<div class=user_itemlist>
 			<ul>
-			<li><a href="<%=DEF_BBS_HomeUrl%>app/default.asp">Ó¦ÓÃ</a></li>
+			<li><a href="<%=DEF_BBS_HomeUrl%>app/default.asp">åº”ç”¨</a></li>
 			</ul>
 			</div>
 <%
@@ -135,7 +135,7 @@ end if
 		Response.Write " target=""hidden_frame"""
 	End If
 	%>>
-	<div class=value2><span class=a>ÕÊºÅ£º</span><input name=user title="ÕÊºÅ¿ÉÒÔÊÇÓÃ»§Ãû¡¢ÓÊÏäµØÖ·»òÊÖ»úºÅÂë" tabindex=91 type=text maxlength=20 size=22 value="<%
+	<div class=value2><span class=a>å¸å·ï¼š</span><input name=user title="å¸å·å¯ä»¥æ˜¯ç”¨æˆ·åã€é‚®ç®±åœ°å€æˆ–æ‰‹æœºå·ç " tabindex=91 type=text maxlength=20 size=22 value="<%
 	If action = "bind" and command = "bind" Then
 	Else
 		If GBL_CHK_user = "" or isNull(GBL_CHK_user) Then
@@ -149,8 +149,8 @@ end if
 		Else
 			Response.Write htmlencode(GBL_CHK_user)
 		End If
-	End If%>" class='fminpt input_2'> <a href="<%=Url%>User/<%=DEF_RegisterFile%>">×¢²á</a>
-	<a href="<%=Url%>User/UserGetPass.asp?act=active"><span class=redfont>¼¤»î</span></a>
+	End If%>" class='fminpt input_2'> <a href="<%=Url%>User/<%=DEF_RegisterFile%>">æ³¨å†Œ</a>
+	<a href="<%=Url%>User/UserGetPass.asp?act=active"><span class=redfont>æ¿€æ´»</span></a>
 	<input type=hidden value="<%
 	
 		Dim HomeUrl,u
@@ -173,32 +173,34 @@ end if
 			End If
 			Response.Write htmlencode(u)
 		End If
-	'End If%>" name=u></div>
+	'End If
+%>" name=u></div>
 	<input type=hidden name=AjaxFlag value="<%=htmlencode(Left(AjaxFlag,1))%>">
 	<input type=hidden name=JsFlag value="1">
 	<input type=hidden name=action value="<%=htmlencode(action)%>">
 	<input type=hidden name=command value="<%=htmlencode(command)%>">
-	<div class=value2><span class=a>ÃÜÂë£º</span><input name=pass tabindex=92 type=password maxlength=20 size=22 value="<%'=htmlencode(GBL_CHK_pass)%>" class='fminpt input_2'>
-	<a href="<%=Url%>User/UserGetPass.asp">Íü¼ÇÃÜÂë£¿</a>
+	<div class=value2><span class=a>å¯†ç ï¼š</span><input name=pass tabindex=92 type=password maxlength=20 size=22 value="<%'=htmlencode(GBL_CHK_pass)
+%>" class='fminpt input_2'>
+	<a href="<%=Url%>User/UserGetPass.asp">å¿˜è®°å¯†ç ï¼Ÿ</a>
 	</div>
-	<div class=value2><span class=a>±£´æ£º</span><select name=CkiExp>
-			<option value="-99">°²È«Ä£Ê½
-			<option value="-1">ä¯ÀÀ½ø³Ì
-			<option value=7 selected>Ò»ÖÜ
-			<option value="3650">ÓÀ¾Ã
-		</select>ÃÜÂë±£´æÊ±¼ä
+	<div class=value2><span class=a>ä¿å­˜ï¼š</span><select name=CkiExp>
+			<option value="-99">å®‰å…¨æ¨¡å¼
+			<option value="-1">æµè§ˆè¿›ç¨‹
+			<option value=7 selected>ä¸€å‘¨
+			<option value="3650">æ°¸ä¹…
+		</select>å¯†ç ä¿å­˜æ—¶é—´
 	</div>
 	<br />
 	<div class=value2>
 	<input name=submitflag type=hidden value="ddddls-+++">
-	<input type=submit value="µÇÂ¼" class="fmbtn btn_2">
+	<input type=submit value="ç™»å½•" class="fmbtn btn_2">
 	</div>
 </form>
 	<br />
 <%if hasCon = 1 then %>
 </div>
 	<ul class="connectlogin" style="margin-top:0px;padding:0;width:45%;display:block;float:right;list-style:none;">
-	<li style="margin-left:15px;color:gray;font-size:14px;height:32px;line-height:32px;">Ê¹ÓÃºÏ×÷ÍøÕ¾ÕÊºÅµÇÂ¼</li>
+	<li style="margin-left:15px;color:gray;font-size:14px;height:32px;line-height:32px;">ä½¿ç”¨åˆä½œç½‘ç«™å¸å·ç™»å½•</li>
 	<%
 		dim Temp
 		dim maxN : maxN = 3
@@ -213,7 +215,7 @@ end if
 				if connect_allow(Temp) = 1 then
 					n = n + 1
 					if n > MaxN then exit for%>
-		<li style="margin-left:15px;font-size:14px;height:32px;line-height:32px;"><a href="<%=DEF_InstallDir%>app/qqlogin/login.asp?apptype=<%=connect_apptype(Temp)%>" title="Ê¹ÓÃ<%=connect_list(Temp)%>µÇÂ¼"><img src="<%=DEF_InstallDir%>images/app/big_<%=connect_apptype(Temp)%>.png" border="0" class="absmiddle" style="margin-right:16px;" /><%=connect_list(Temp)%></a></li>
+		<li style="margin-left:15px;font-size:14px;height:32px;line-height:32px;"><a href="<%=DEF_InstallDir%>app/qqlogin/login.asp?apptype=<%=connect_apptype(Temp)%>" title="ä½¿ç”¨<%=connect_list(Temp)%>ç™»å½•"><img src="<%=DEF_InstallDir%>images/app/big_<%=connect_apptype(Temp)%>.png" border="0" class="absmiddle" style="margin-right:16px;" /><%=connect_list(Temp)%></a></li>
 		<%		end if
 			next
 			%>
@@ -221,7 +223,7 @@ end if
 			<%
 			for Temp = last to ubound(connect_list)
 				if connect_allow(Temp) = 1 then%>
-			<a href="<%=DEF_InstallDir%>app/qqlogin/login.asp?apptype=<%=connect_apptype(Temp)%>"><img src="<%=DEF_InstallDir%>images/app/<%=connect_apptype(Temp)%>.png" border="0" class="absmiddle" style="margin-right:6px;" title="Ê¹ÓÃ<%=connect_list(Temp)%>µÇÂ¼" /></a>
+			<a href="<%=DEF_InstallDir%>app/qqlogin/login.asp?apptype=<%=connect_apptype(Temp)%>"><img src="<%=DEF_InstallDir%>images/app/<%=connect_apptype(Temp)%>.png" border="0" class="absmiddle" style="margin-right:6px;" title="ä½¿ç”¨<%=connect_list(Temp)%>ç™»å½•" /></a>
 		<%		end if
 			Next
 			%>
@@ -237,7 +239,7 @@ End Function
 Sub UserTopicTopInfo(info)
 %>
 <div class="area"><%
-	Global_TableHead
+	Global_TableHead()
 %>
 <div class="main user_table">
 	<%If info <> "" Then%>

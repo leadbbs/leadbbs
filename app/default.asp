@@ -1,23 +1,23 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/Board_popfun.asp -->
-<!-- #include file=../User/inc/UserTopic.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Board_popfun.asp"-->
+<!--#include file="../User/inc/UserTopic.asp"-->
 <%
 DEF_BBS_homeUrl="../"
 
-Main
+Main()
 
 Sub Main
 
-	BBS_SiteHead DEF_SiteNameString & " - Ó¦ÓÃ",0,"Ó¦ÓÃ"
+	BBS_SiteHead DEF_SiteNameString & " - åº”ç”¨",0,"åº”ç”¨"
 	UserTopicTopInfo("plug")
 
 	If GBL_CHK_User = "" then
-		Response.write "<div class=alert>ÄúÃ»ÓĞÊ¹ÓÃ´Ë¹¦ÄÜµÄÈ¨ÏŞ£¬ÇëÏÈµÇÂ½»òÕß×¢²áÎªÂÛÌ³»áÔ±¡£</div>"
+		Response.write "<div class=alert>æ‚¨æ²¡æœ‰ä½¿ç”¨æ­¤åŠŸèƒ½çš„æƒé™ï¼Œè¯·å…ˆç™»é™†æˆ–è€…æ³¨å†Œä¸ºè®ºå›ä¼šå‘˜ã€‚</div>"
 	Else
-		Main_ChineseCode
+		Main_ChineseCode()
 	End If
-	UserTopicBottomInfo
-	SiteBottom
+	UserTopicBottomInfo()
+	SiteBottom()
 
 End Sub
 
@@ -28,75 +28,75 @@ Sub Main_ChineseCode
 	var PLUG = [{
 	"id":1,
 	"class":0,
-	"name":"ºº×Ö¼òÌå·±Ìå×ª»»",
+	"name":"æ±‰å­—ç®€ä½“ç¹ä½“è½¬æ¢",
 	"url":"../plug-ins/ChineseCode/ChineseCode.htm",
 	"width":"500px",
 	"height":"400px",
-	"desc":"ÔÊĞí¼´Ê±½«ºº×Ö½øĞĞ¼ò·±Ìå×ª»»£®"
+	"desc":"å…è®¸å³æ—¶å°†æ±‰å­—è¿›è¡Œç®€ç¹ä½“è½¬æ¢ï¼"
 	},{
 	"id":2,
 	"class":0,
-	"name":"ÍòÄêÀú",
+	"name":"ä¸‡å¹´å†",
 	"url":"../plug-ins/ChineseCode/cal/cal.htm",
 	"width":"540px",
 	"height":"475px",
-	"desc":"Ö§³ÖÅ©Àú¼°»ù±¾½ÚÈÕ²é¿´£®"
+	"desc":"æ”¯æŒå†œå†åŠåŸºæœ¬èŠ‚æ—¥æŸ¥çœ‹ï¼"
 	},{
 	"id":3,
 	"class":1,
-	"name":"»Æ½ğ¿ó¹¤",
+	"name":"é»„é‡‘çŸ¿å·¥",
 	"url":"../plug-ins/flash_gold/default.asp?appflag=1",
 	"width":"580px",
 	"height":"900px",
-	"desc":"Ğ¡ÓÎÏ·£¬¿ìÀ´´´ÔìÄúµÄÍÚ¿ó¼ÇÂ¼°É£®"
+	"desc":"å°æ¸¸æˆï¼Œå¿«æ¥åˆ›é€ æ‚¨çš„æŒ–çŸ¿è®°å½•å§ï¼"
 	},{
 	"id":4,
-	"name":"ÁÄÌìÊÒ",
+	"name":"èŠå¤©å®¤",
 	"class":0,
 	"url":"../plug-ins/bbschat/default.asp?appflag=1",
 	"width":"500px",
 	"height":"900px",
-	"desc":"ÂÛÌ³×¨ÓÃÁÄÌìÊÒ£¬¼´Ê±²é¿´»áÔ±·¢Ìû¼°ÉÏÏÂÏßµÈÇé¿ö£¬ÔÊĞí¼´Ê±ÎÄ×ÖÁÄÌì£®"
+	"desc":"è®ºå›ä¸“ç”¨èŠå¤©å®¤ï¼Œå³æ—¶æŸ¥çœ‹ä¼šå‘˜å‘å¸–åŠä¸Šä¸‹çº¿ç­‰æƒ…å†µï¼Œå…è®¸å³æ—¶æ–‡å­—èŠå¤©ï¼"
 	},{
 	"id":5,
 	"class":0,
-	"name":"ÌæÎÄÕÂ¼ÓÉÏÆ´Òô",
+	"name":"æ›¿æ–‡ç« åŠ ä¸Šæ‹¼éŸ³",
 	"url":"../plug-ins/pinyin/default.htm",
 	"width":"100%",
 	"height":"900px",
-	"desc":"ÔÊĞí½«Ò»ÆªÎÄÕÂ¼ÓÉÏÍêÕûµÄÆ´Òô£¬·½±ãÑ§Ï°ÖĞÎÄµÄÅóÓÑÀÊ¶Á£®"
+	"desc":"å…è®¸å°†ä¸€ç¯‡æ–‡ç« åŠ ä¸Šå®Œæ•´çš„æ‹¼éŸ³ï¼Œæ–¹ä¾¿å­¦ä¹ ä¸­æ–‡çš„æœ‹å‹æœ—è¯»ï¼"
 	},{
 	"id":8,
 	"class":0,
-	"name":"ÂÛÌ³ÒôÀÖºĞ",
+	"name":"è®ºå›éŸ³ä¹ç›’",
 	"url":"../app/leadbbs/default.asp",
 	"width":"644px",
 	"height":"450px",
-	"desc":"ÂÛÌ³ÔÚÏßÒôÀÖ"
+	"desc":"è®ºå›åœ¨çº¿éŸ³ä¹"
 	},{
 	"id":9,
 	"class":0,
-	"name":"ÂÛÌ³»ÕÕÂÁìÈ¡",
+	"name":"è®ºå›å¾½ç« é¢†å–",
 	"url":"../app/leadbbs/default.asp?file=medal",
 	"width":"540px",
 	"height":"420px",
-	"desc":"ÂÛÌ³»ÕÕÂÁìÈ¡"
+	"desc":"è®ºå›å¾½ç« é¢†å–"
 	},{
 	"id":13,
 	"class":0,
-	"name":"ÊÓÆµÉÏ´«(ÓÅ¿á)",
+	"name":"è§†é¢‘ä¸Šä¼ (ä¼˜é…·)",
 	"url":"../app/tools/youku/default.asp",
 	"width":"100%",
 	"height":"750px",
-	"desc":"ÓÅ¿áÊÓÆµÉÏ´«¡£"
+	"desc":"ä¼˜é…·è§†é¢‘ä¸Šä¼ ã€‚"
 	},{
 	"id":15,
 	"class":0,
-	"name":"¶şÎ¬ÂëÉú³É",
+	"name":"äºŒç»´ç ç”Ÿæˆ",
 	"url":"tools/qrcode/index.htm",
 	"width":"460px",
 	"height":"360px",
-	"desc":"ÊäÈëÄÚÈİÉú³É¶şÎ¬Âë·½±ãÊÖ»ú»ñÈ¡"
+	"desc":"è¾“å…¥å†…å®¹ç”ŸæˆäºŒç»´ç æ–¹ä¾¿æ‰‹æœºè·å–"
 	}];
 	</script>
 	<style>
@@ -158,7 +158,7 @@ Sub Main_ChineseCode
 		$("#appmain").css("width",width);
 		$("#appmain").css("height",height);
 		$id("appFrame").src = url;
-		$id("appTitle").innerHTML = "<span class=\"title\">"+title+"</span> <a class=\"return\" href=\"javascript:;\" onclick=\"app_return();\">·µ»Ø</a> <a class=\"return\" href=\"javascript:;\" onclick=\"app_reload();\">Ë¢ĞÂ</a>";
+		$id("appTitle").innerHTML = "<span class=\"title\">"+title+"</span> <a class=\"return\" href=\"javascript:;\" onclick=\"app_return();\">è¿”å›</a> <a class=\"return\" href=\"javascript:;\" onclick=\"app_reload();\">åˆ·æ–°</a>";
     
 		$("#appTitle").ScrollTo(500);
 	}
@@ -188,8 +188,8 @@ Sub Main_ChineseCode
 	
 	function plug_init()
 	{
-		plug_init_class(0,"¹¤¾ß",1);
-		plug_init_class(1,"ÓÎÏ·");
+		plug_init_class(0,"å·¥å…·",1);
+		plug_init_class(1,"æ¸¸æˆ");
 	}
 	function plug_init_class(t,name,v)
 	{

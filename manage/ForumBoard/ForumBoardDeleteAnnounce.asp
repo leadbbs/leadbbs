@@ -1,14 +1,14 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../../inc/Upload_Setup.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
-<!-- #include file=../../inc/Limit_Fun.asp -->
-<!-- #include file=../../a/inc/DelUpload_Fun.asp -->
-<!-- #include file=../../b/inc/cache_fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../../inc/Upload_Setup.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
+<!--#include file="../../inc/Limit_Fun.asp"-->
+<!--#include file="../../a/inc/DelUpload_Fun.asp"-->
+<!--#include file="../../b/inc/cache_fun.asp"-->
 <%
 server.scriptTimeOut = 9999
 DEF_BBS_HomeUrl = "../../"
-InitDatabase
+InitDatabase()
 Dim GBL_ID,Form_ID
 
 Dim DelBoardID
@@ -19,28 +19,28 @@ DelBoardID = Fix(cCur(DelBoardID))
 If DelBoardID < 0 Then DelBoardID = 0
 
 GBL_CHK_TempStr=""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 Form_ID = GBL_ID
 Form_ID = cCur(Form_ID)
 If Form_ID < 0 Then Form_ID = 0
 If Form_ID = 0 or GBL_CHK_Flag = 0 Then
-	GBL_CHK_TempStr = GBL_CHK_TempStr & "ÄãÃ»ÓĞµÇÂ¼<br>" & VbCrLf
+	GBL_CHK_TempStr = GBL_CHK_TempStr & "ä½ æ²¡æœ‰ç™»å½•<br>" & VbCrLf
 End If
 
 Dim BoardName,BoardAssort
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
 	Dim Rs,SQL,SQLendString,ClearFlag
 	If GBL_CHK_TempStr = "" Then
-			If GBL_UserID<1 or CheckSupervisorUserName = 0 Then
+			If GBL_UserID<1 or CheckSupervisorUserName() = 0 Then
 				SQL = sql_select("Select BoardID,BoardName,BoardAssort from LeadBBS_Boards where BoardID=-111",1)
 			Else
 				SQL = sql_select("Select BoardID,BoardName,BoardAssort from LeadBBS_Boards where BoardID=" & DelBoardID,1)
 			End If
 			Set Rs = LDExeCute(SQL,0)
 			If Rs.Eof Then
-				Response.Write "ÕÒ²»µ½°æÃæ£¡<br>" & VbCrLf
+				Response.Write "æ‰¾ä¸åˆ°ç‰ˆé¢ï¼<br>" & VbCrLf
 				Rs.Close
 				Set Rs = Nothing
 			Else
@@ -58,11 +58,11 @@ frame_TopInfo
 					<form name=DellClientForm action=ForumBoardDeleteAnnounce.asp method=post>
 						<input type=hidden name=DeleteSureFlag value="dk9@dl9s92lw_SWxl">
 						<input type=hidden name=DelBoardID value="<%=htmlencode(DelBoardID)%>">
-						<b>´Ë²Ù×÷²»¿ÉÄæ£¬È·ÈÏÒªÉ¾³ı°æÃæ<font color=ff0000 class=redfont><%=htmlencode(BoardName)%></font>µÄËùÓĞÌû×ÓÂğ£¿</b><br>
-						Èç¹û´Ë°æÃæÌû×Ó¹ı¶à£¬É¾³ı½«ÊÇÒ»¸öÂş³¤µÄ¹ı³Ì£¬Ç¿ÁÒ½¨ÒéÔİÍ£ÂÛÌ³ºóÔÙ×÷É¾³ı<br>²Ù×÷£®
-						Èç¹ûÖ´ĞĞ³¬Ê±£¬¿ÉÒÔË¢ĞÂÀ´ÖØĞÂ¼ÌĞøÉ¾³ı²Ù×÷£®
-						<br><br><input type=submit value=È·¶¨ class=fmbtn>
-						<input type=button value=²»É¾ onclick="javascript:window.close();" class=fmbtn>
+						<b>æ­¤æ“ä½œä¸å¯é€†ï¼Œç¡®è®¤è¦åˆ é™¤ç‰ˆé¢<font color=ff0000 class=redfont><%=htmlencode(BoardName)%></font>çš„æ‰€æœ‰å¸–å­å—ï¼Ÿ</b><br>
+						å¦‚æœæ­¤ç‰ˆé¢å¸–å­è¿‡å¤šï¼Œåˆ é™¤å°†æ˜¯ä¸€ä¸ªæ¼«é•¿çš„è¿‡ç¨‹ï¼Œå¼ºçƒˆå»ºè®®æš‚åœè®ºå›åå†ä½œåˆ é™¤<br>æ“ä½œï¼
+						å¦‚æœæ‰§è¡Œè¶…æ—¶ï¼Œå¯ä»¥åˆ·æ–°æ¥é‡æ–°ç»§ç»­åˆ é™¤æ“ä½œï¼
+						<br><br><input type=submit value=ç¡®å®š class=fmbtn>
+						<input type=button value=ä¸åˆ  onclick="javascript:window.close();" class=fmbtn>
 					</form>
 					<%
 				End If
@@ -71,8 +71,8 @@ frame_TopInfo
 		Response.Write "<div clas=alert>" & GBL_CHK_TempStr & "</div>"
 	End If
 
-closeDataBase
-frame_BottomInfo
+closeDataBase()
+frame_BottomInfo()
 Manage_Sitebottom("none")
 
 Function DeleteBoardAnnounce(DelBoardID,BoardName)
@@ -82,7 +82,7 @@ Function DeleteBoardAnnounce(DelBoardID,BoardName)
 	NowID = 0
 	EndFlag = 0
 
-	Response.Write "½ø¶È(ĞèÒªÊ±¼ä¿ÉÄÜ»áºÜ³¤£¬ÇëµÈ´ı³öÏÖÍê³É)£º"
+	Response.Write "è¿›åº¦(éœ€è¦æ—¶é—´å¯èƒ½ä¼šå¾ˆé•¿ï¼Œè¯·ç­‰å¾…å‡ºç°å®Œæˆ)ï¼š"
 	NowID = 0
 	EndFlag = 0
 	Dim GetData,N
@@ -107,7 +107,7 @@ Function DeleteBoardAnnounce(DelBoardID,BoardName)
 	If RecordCount < 1 Then RecordCount = 1
 	CountIndex = 0
 	%>
-	<br><span style="font-size:9pt">ÏÂÃæ¿ªÊ¼É¾³ı°æÃæÌû×Ó£¬¹²ÓĞ<%=RecordCount%>¸öÖ÷Ìâ´ıÉ¾³ı
+	<br><span style="font-size:9pt">ä¸‹é¢å¼€å§‹åˆ é™¤ç‰ˆé¢å¸–å­ï¼Œå…±æœ‰<%=RecordCount%>ä¸ªä¸»é¢˜å¾…åˆ é™¤
 
 	<table width="400" border="0" cellspacing="1" cellpadding="1">
 		<tr> 
@@ -152,7 +152,7 @@ Function DeleteBoardAnnounce(DelBoardID,BoardName)
 		End If
 	Loop
 
-	Rem Çå³ıÊ§È¥Ö÷ÌâµÄ´íÎóÌû×Ó
+	Rem æ¸…é™¤å¤±å»ä¸»é¢˜çš„é”™è¯¯å¸–å­
 	DelUpload_DelList(" where BoardID=" & DelBoardID)
 	CALL LDExeCute("delete from LeadBBS_Announce where BoardID=" & DelBoardID,1)
 	If DEF_UsedDataBase = 1 Then CALL LDExeCute("delete from LeadBBS_Topic where BoardID=" & DelBoardID,1)
@@ -160,7 +160,7 @@ Function DeleteBoardAnnounce(DelBoardID,BoardName)
 	UpdateBoardValue(DelBoardID)
 	ReloadTopAnnounceInfo(0)
 	ReloadTopAnnounceInfo(BoardAssort)
-	Response.Write "Íê³É"
+	Response.Write "å®Œæˆ"
 	Set Rs = Nothing
 	%>
 	<script>img1.width=400;
@@ -276,7 +276,7 @@ Function DelAnnounce(DelID)
 		End If
 		CALL LDExeCute("Update LeadBBS_User set AnnounceNum=AnnounceNum-1,AnnounceGood=AnnounceGood-" & GoodNum & " Where ID =" & UserID,1)
 		'UpdateBoardValue(BoardID)
-		Rem ¸üĞÂMaxRootID
+		Rem æ›´æ–°MaxRootID
 
 		select case DEF_UsedDataBase
 		case 0,2:
@@ -305,7 +305,7 @@ Function DelAnnounce(DelID)
 		TmpTopicNum = 0
 		todayAnnounce = 0
 		Do While LoopFlag = 1
-			Rem Ö÷ÌâÌûÁô×Å×îºóÉ¾³ı£¬ÒÔÃâÉ¾³ıÖĞÑëÒâÍâÖĞÖ¹£¬µ¼ÖÂÖ÷ÌâËğ»µ
+			Rem ä¸»é¢˜å¸–ç•™ç€æœ€ååˆ é™¤ï¼Œä»¥å…åˆ é™¤ä¸­å¤®æ„å¤–ä¸­æ­¢ï¼Œå¯¼è‡´ä¸»é¢˜æŸå
 			SQL = sql_select("Select ID,BoardID,ParentID,UserID,ndatetime,GoodFlag,Opinion from LeadBBS_Announce where RootIDBak=" & RootIDBak & " and id>" & NowID & " order by ID",100)
 			Set Rs = LDExeCute(SQL,0)
 			If Not Rs.Eof Then
@@ -421,7 +421,7 @@ End Function
 Sub ReloadTopicAssort(BoardID)
 
 	Dim Rs
-	Set Rs = LDExeCute("select ID,AssortName,0,0,0 from LeadBBS_GoodAssort where BoardID=" & BoardID & " Order by BoardID,OrderID",0)
+	Set Rs = LDExeCute("select ID,AssortName,0,0 as c0_dup2,0 as c0_dup3 from LeadBBS_GoodAssort where BoardID=" & BoardID & " Order by BoardID,OrderID",0)
 	If Not Rs.Eof Then
 		Application.Lock
 		Application(DEF_MasterCookies & "BoardInfo" & BoardID & "_TI") = Rs.GetRows(-1)

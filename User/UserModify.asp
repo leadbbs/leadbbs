@@ -1,21 +1,21 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/User_Setup.asp -->
-<!-- #include file=../inc/Board_popfun.asp -->
-<!-- #include file=../inc/ubbcode.asp -->
-<!-- #include file=../inc/Limit_fun.asp -->
-<!-- #include file=inc/User_fun.asp -->
-<!-- #include file=inc/UserTopic.asp -->
-<!-- #include file=../inc/Constellation2.asp -->
-<!-- #include file=../a/inc/upload1_fun.asp -->
-<!-- #include file=inc/TruenameClass_fun.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/User_Setup.asp"-->
+<!--#include file="../inc/Board_popfun.asp"-->
+<!--#include file="../inc/ubbcode.asp"-->
+<!--#include file="../inc/Limit_fun.asp"-->
+<!--#include file="inc/User_fun.asp"-->
+<!--#include file="inc/UserTopic.asp"-->
+<!--#include file="../inc/Constellation2.asp"-->
+<!--#include file="../a/inc/upload1_fun.asp"-->
+<!--#include file="inc/TruenameClass_fun.asp"-->
 <%DEF_BBS_HomeUrl = "../"%>
-<!-- #include file=../inc/Upload_Fun.asp -->
+<!--#include file="../inc/Upload_Fun.asp"-->
 <%
 
 Dim Form_RevMessageFlag,Form_SoundFlag,Form_UserLimit,Form_Action,AjaxFlag,upload_step
 Dim EnableUpload,Form_SyncFlag
 
-Main
+Main()
 
 Sub Page_Expires
 
@@ -32,59 +32,59 @@ Sub Main
 	GBL_HeadResource = "<link rel=""stylesheet"" type=""text/css"" href=""" & DEF_BBS_HomeUrl & "inc/js/imgareaselect/imgareaselect-default.css"" />"
 	Form_Action = left(Request.QueryString("action"),20)
 	If Form_Action = "face" Then
-		User_FaceList
+		User_FaceList()
 		Exit Sub
 	End If
 	AjaxFlag = left(Request.QueryString("AjaxFlag"),20)
 	If AjaxFlag <> "1" then AjaxFlag = ""
-	Page_Expires
+	Page_Expires()
 	Form_FaceWidth = DEF_AllFaceMaxWidth
 	Form_FaceHeight = DEF_AllFaceMaxWidth
 
 	CursorLocation = 3
-	initDatabase
-	if AjaxFlag <> "1" Then BBS_SiteHead DEF_SiteNameString & " - ĞŞ¸Ä×ÊÁÏ",0,"ĞŞ¸Ä×ÊÁÏ"
-	UpdateOnlineUserAtInfo GBL_board_ID,"ĞŞ¸Ä×ÊÁÏ"
+	initDatabase()
+	if AjaxFlag <> "1" Then BBS_SiteHead DEF_SiteNameString & " - ä¿®æ”¹èµ„æ–™",0,"ä¿®æ”¹èµ„æ–™"
+	UpdateOnlineUserAtInfo GBL_board_ID,"ä¿®æ”¹èµ„æ–™"
 	GBL_CHK_TempStr=""
-	If GBL_UserID = 0 Then GBL_CHK_TempStr = GBL_CHK_TempStr & "Î´µÇÂ¼»òÃÜÂë´íÎó.<br>" & VbCrLf
+	If GBL_UserID = 0 Then GBL_CHK_TempStr = GBL_CHK_TempStr & "æœªç™»å½•æˆ–å¯†ç é”™è¯¯.<br>" & VbCrLf
 	
 	Form_RevMessageFlag = 0
 	
 	if AjaxFlag <> "1" Then UserTopicTopInfo("user")
 	
-	User_GetStartValue
+	User_GetStartValue()
 	
 	If GBL_CHK_Flag=1 Then
 		If GBL_CHK_TempStr = "" Then
 			If GetBinarybit(GBL_CHK_UserLimit,1) = 1 Then
-				Response.WRite "<div class='bbs_error'>´ËÓÃ»§ĞèÒªÏÈ¼¤»î£®</div>" & VbCrLf
+				Response.WRite "<div class='bbs_error'>æ­¤ç”¨æˆ·éœ€è¦å…ˆæ¿€æ´»ï¼</div>" & VbCrLf
 			else
-				CheckUserModifyLimit
-				CheckisBoardMaster
-				User_CheckEnableUpload
+				CheckUserModifyLimit()
+				CheckisBoardMaster()
+				User_CheckEnableUpload()
 				If GBL_CHK_TempStr = "" Then
 					GetUserData(GBL_UserID)
 					If Form_Submitflag="29d98Sasphouseasp8asphnet" Then
 						GBL_CHK_TempStr = ""
-						checkFormData
+						checkFormData()
 						If GBL_CHK_Flag = 0 Then
 							If ajaxflag <> "1" then
 								Response.Write "<div class='bbs_error'>" & GBL_CHK_TempStr & "</div>" & VbCrLf
 							else
 								Response.Write "<script>alert(""" & replace(GBL_CHK_TempStr,"<br>","") & """)</script>" & VbCrLf
 							end if
-							JoinForm
+							JoinForm()
 						Else
-							If SaveFormData = 1 Then
-								displayAccessFull
+							If SaveFormData() = 1 Then
+								displayAccessFull()
 							Else
 								Response.Write "<div class='bbs_error'>" & GBL_CHK_TempStr & "</div>" & VbCrLf
-								JoinForm
+								JoinForm()
 							End If
 						End If
 						If Form_UpFlag = 1 Then Set Form_UpClass = Nothing
 					Else
-						JoinForm
+						JoinForm()
 					End If
 				Else
 					Response.WRite "<div class='bbs_error'>" & GBL_CHK_TempStr & "</div>" & VbCrLf
@@ -95,13 +95,13 @@ Sub Main
 		End If
 	Else
 		If Form_Submitflag = "" Then
-			DisplayLoginForm("ÇëÏÈµÇÂ¼")
+			DisplayLoginForm("è¯·å…ˆç™»å½•")
 		Else
 			DisplayLoginForm("<span class=bbs_error>" & GBL_CHK_TempStr & "</span>")
 		End If
 	End If
 	
-	closeDataBase
+	closeDataBase()
 	if AjaxFlag <> "1" Then UserTopicBottomInfo
 	if AjaxFlag <> "1" Then SiteBottom
 
@@ -141,17 +141,17 @@ Function User_FaceList
 			<td colspan="4" align="center">
 				<%
 			If first-pagen>0 then
-				%><a href="javascritp:;" onclick="getAJAX('UserModify.asp?action=face','first=1',$$('ajaxitembody')[0].id);return false;"><<Ê×Ò³</a>
-				<a href="javascritp:;" onclick="getAJAX('UserModify.asp?action=face','first=<%=first-pagen%>',$$('ajaxitembody')[0].id);return false;">ÉÏÒ»Ò³</a> <%
+				%><a href="javascritp:;" onclick="getAJAX('UserModify.asp?action=face','first=1',$$('ajaxitembody')[0].id);return false;"><<é¦–é¡µ</a>
+				<a href="javascritp:;" onclick="getAJAX('UserModify.asp?action=face','first=<%=first-pagen%>',$$('ajaxitembody')[0].id);return false;">ä¸Šä¸€é¡µ</a> <%
 			Else
-				Response.Write "<span class=""grayfont""><<Ê×Ò³ ÉÏÒ»Ò³</span> " & VbCrLf
+				Response.Write "<span class=""grayfont""><<é¦–é¡µ ä¸Šä¸€é¡µ</span> " & VbCrLf
 			End If
 
 			If first+pagen<DEF_faceMaxNum then
-				%><a href="javascritp:;" onclick="getAJAX('UserModify.asp?action=face','first=<%=first+pagen%>',$$('ajaxitembody')[0].id);return false;">ÏÂÒ»Ò³</a>
-				<a href="javascritp:;" onclick="getAJAX('UserModify.asp?action=face','first=<%=DEF_faceMaxNum-pagen+1%>',$$('ajaxitembody')[0].id);return false;">Î²Ò³>></a><%
+				%><a href="javascritp:;" onclick="getAJAX('UserModify.asp?action=face','first=<%=first+pagen%>',$$('ajaxitembody')[0].id);return false;">ä¸‹ä¸€é¡µ</a>
+				<a href="javascritp:;" onclick="getAJAX('UserModify.asp?action=face','first=<%=DEF_faceMaxNum-pagen+1%>',$$('ajaxitembody')[0].id);return false;">å°¾é¡µ>></a><%
 			Else
-				Response.Write "<span class=""grayfont"">ÏÂÒ»Ò³ Î²Ò³</span>" & VbCrLf
+				Response.Write "<span class=""grayfont"">ä¸‹ä¸€é¡µ å°¾é¡µ</span>" & VbCrLf
 			End If%>
 			</td>
 		</tr>
@@ -211,7 +211,7 @@ Function GetUserData(ID)
 		Form_bmonth = month(Form_ApplyTime)
 	End If
 
-	REM ÌØÊâÊı¾İ
+	REM ç‰¹æ®Šæ•°æ®
 	Form_ApplyTime = Rs("ApplyTime")
 	Form_IP = Rs("IP")
 	Form_UserLevel = Rs("UserLevel")
@@ -261,35 +261,35 @@ Sub Modify_NavInfo
 
 	Response.Write "<div class='user_item_nav fire'><ul>"
 	If Form_Action = "base" or Form_Action = "" Then
-		Response.Write "	<li class=navactive><span>»ù±¾×ÊÁÏ</span></li>"
+		Response.Write "	<li class=navactive><span>åŸºæœ¬èµ„æ–™</span></li>"
 	Else
-		Response.Write "	<li><a href=""UserModify.asp"">»ù±¾×ÊÁÏ</a></li>"
+		Response.Write "	<li><a href=""UserModify.asp"">åŸºæœ¬èµ„æ–™</a></li>"
 	End If
 	If Form_Action = "uploadface" Then
-		Response.Write "	<li class=navactive>ÉèÖÃÍ·Ïñ</li>"
+		Response.Write "	<li class=navactive>è®¾ç½®å¤´åƒ</li>"
 	Else
-		Response.Write "	<li><a href=""UserModify.asp?action=uploadface"">ÉèÖÃÍ·Ïñ</a></li>"
+		Response.Write "	<li><a href=""UserModify.asp?action=uploadface"">è®¾ç½®å¤´åƒ</a></li>"
 	End If
 	
 	If Form_Action = "truename" Then
-		Response.Write "	<li class=navactive>¸öĞÔêÇ³Æ</li>"
+		Response.Write "	<li class=navactive>ä¸ªæ€§æ˜µç§°</li>"
 	Else
-		Response.Write "	<li><a href=""UserModify.asp?action=truename"">¸öĞÔêÇ³Æ</a></li>"
+		Response.Write "	<li><a href=""UserModify.asp?action=truename"">ä¸ªæ€§æ˜µç§°</a></li>"
 	End If
 	
 	if DEF_User_GetPassMode = 3 or DEF_User_GetPassMode = 4 then
 		If Form_Mail = "" Then
-			Response.Write "	<li><a href=""usergetpass.asp?act=send&moreact=bind&gettype=bind"">°ó¶¨ÓÊÏä</a></li>"
+			Response.Write "	<li><a href=""usergetpass.asp?act=send&moreact=bind&gettype=bind"">ç»‘å®šé‚®ç®±</a></li>"
 		Else
-			Response.Write "	<li><a href=""usergetpass.asp?act=send&moreact=bind&gettype=unbind&SendInfo=" & urlencode(Form_Mail) & """>½â³ıÓÊÏä°ó¶¨</a></li>"
+			Response.Write "	<li><a href=""usergetpass.asp?act=send&moreact=bind&gettype=unbind&SendInfo=" & urlencode(Form_Mail) & """>è§£é™¤é‚®ç®±ç»‘å®š</a></li>"
 		End If
 	end if
 	
 	if DEF_User_GetPassMode = 4 then
 		If old_Form_MobileTel = "" or old_Form_MobileTel & "" = "0" Then
-			Response.Write "	<li><a href=""usergetpass.asp?act=send&moreact=bind&gettype=bind"">°ó¶¨ÊÖ»ú</a></li>"
+			Response.Write "	<li><a href=""usergetpass.asp?act=send&moreact=bind&gettype=bind"">ç»‘å®šæ‰‹æœº</a></li>"
 		Else
-			Response.Write "	<li><a href=""usergetpass.asp?act=send&moreact=bind&gettype=unbind&SendInfo=" & urlencode(old_Form_MobileTel) & """>½â³ıÊÖ»ú°ó¶¨</a></li>"
+			Response.Write "	<li><a href=""usergetpass.asp?act=send&moreact=bind&gettype=unbind&SendInfo=" & urlencode(old_Form_MobileTel) & """>è§£é™¤æ‰‹æœºç»‘å®š</a></li>"
 		End If
 	end if
 	%>
@@ -302,7 +302,7 @@ Function JoinForm
 
 	select case Form_Action
 		case "truename":
-			Modify_NavInfo
+			Modify_NavInfo()
 			dim editTruenameClass
 			set editTruenameClass = new edit_Truename_Class
 			set editTruenameClass = Nothing
@@ -335,11 +335,11 @@ Function JoinForm
 		<%If Form_Action <> "uploadface" then%>
 			<tr>
 				<td>
-					*ÓÃ»§Ãû³Æ£º 
+					*ç”¨æˆ·åç§°ï¼š 
 				</td>
 				<td>
 					<%If inStr(Old_Form_UserName,"#") Then%>
-					<div class=value2>ÄúÊ¹ÓÃµÄÊÇÁÙÊ±ÓÃ»§Ãû <%Response.Write Server.HtmlEncode(Form_Username)%> ÇëÌîĞ´ĞÂµÄÓÃ»§Ãû£º
+					<div class=value2>æ‚¨ä½¿ç”¨çš„æ˜¯ä¸´æ—¶ç”¨æˆ·å <%Response.Write Server.HtmlEncode(Form_Username)%> è¯·å¡«å†™æ–°çš„ç”¨æˆ·åï¼š
 					</div>
 					<div class=value2><input onchange="reg_checkinfo('username',this.value);" class='fminpt input_3' maxlength=20 name=Form_UserName size=36 value="<% If Form_UserName<>"" and inStr(Form_UserName,"#") = 0 Then Response.Write Server.HtmlEncode(Form_UserName)%>">
 					<span id="reg_check_username"></span></div>
@@ -351,29 +351,29 @@ Function JoinForm
 			<%If inStr(GBL_CHK_User,"#") < 1 Then%>
 			<tr>
 				<td>
-					*¾ÉµÄÃÜÂë£º 
+					*æ—§çš„å¯†ç ï¼š 
 				</td>
 				<td>
-					<input class='fminpt input_2' maxLength=20 name="oldpass" size=14 type=password> ±ØĞëÕıÈ·ÌîĞ´
+					<input class='fminpt input_2' maxLength=20 name="oldpass" size=14 type=password> å¿…é¡»æ­£ç¡®å¡«å†™
 				</td>
 			</tr>
 			<%End If%>
 			<tr>
 				<td>
-					ĞÂµÄÃÜÂë£º 
+					æ–°çš„å¯†ç ï¼š 
 				</td>
 				<td>
 					<input class='fminpt input_2' maxLength=20 name="Form_password1" size=14 type=password Value="<% If Form_password1<>"" Then Response.Write Server.HtmlEncode(Form_password1)%>"> 
 					<%If inStr(Old_Form_UserName,"#") Then%>
-					Çë¸ü¸ÄÃÜÂë
+					è¯·æ›´æ”¹å¯†ç 
 					<%else%>
-					²»ĞŞ¸ÄÃÜÂë²»±ØÌîĞ´
+					ä¸ä¿®æ”¹å¯†ç ä¸å¿…å¡«å†™
 					<%end if%>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					ÑéÖ¤ÃÜÂë£º 
+					éªŒè¯å¯†ç ï¼š 
 				</td>
 				<td>
 					<input class='fminpt input_2' maxlength=20 name="Form_password2" size=14 type=password Value="<% If Form_password2<>"" Then Response.Write Server.HtmlEncode(Form_password2)%>">
@@ -383,7 +383,7 @@ Function JoinForm
 			<%If Old_Form_Answer = "" Then%>
 			<tr>
 				<td>
-					ÃÜÂëÌáÊ¾£º 
+					å¯†ç æç¤ºï¼š 
 				</td>
 				<td>
 	<script type="text/javascript">
@@ -396,11 +396,11 @@ Function JoinForm
 	-->
 	</script><div class=value2>
 					<select name="sel_question" onchange="if(this.value!=''&&this.value!='99')$id('Form_Question').value=this.value;if(this.value=='99'){this.style.display='none';$id('Form_Question').style.display='block';}else{$id('Form_Question').style.display='none';}">
-						<option value="" selected>--Ñ¡ÔñÎÊÌâ--</option>
-						<option value="ÎÒµÄ¼ÒÏçÊÇ£¿">ÎÒµÄ¼ÒÏçÊÇ£¿</option>
-						<option value="ÎÒÂèÂèµÄÃû×Ö£¿">ÎÒÂèÂèµÄÃû×Ö£¿</option>
-						<option value="×îÏ²»¶³ÔµÄÊ³Æ·£¿">×îÏ²»¶³ÔµÄÊ³Æ·£¿</option>
-						<option value="99">×Ô¶¨Òå...</option>
+						<option value="" selected>--é€‰æ‹©é—®é¢˜--</option>
+						<option value="æˆ‘çš„å®¶ä¹¡æ˜¯ï¼Ÿ">æˆ‘çš„å®¶ä¹¡æ˜¯ï¼Ÿ</option>
+						<option value="æˆ‘å¦ˆå¦ˆçš„åå­—ï¼Ÿ">æˆ‘å¦ˆå¦ˆçš„åå­—ï¼Ÿ</option>
+						<option value="æœ€å–œæ¬¢åƒçš„é£Ÿå“ï¼Ÿ">æœ€å–œæ¬¢åƒçš„é£Ÿå“ï¼Ÿ</option>
+						<option value="99">è‡ªå®šä¹‰...</option>
 					</select>
 					</div>
 					<div class=value2><input class='fminpt input_3' type="text" style="display:none;" maxlength=20 id=Form_Question name=Form_Question size=36 value="<% If Form_Question<>"" Then Response.Write Server.HtmlEncode(Form_Question)%>">
@@ -409,18 +409,18 @@ Function JoinForm
 			</tr>
 			<tr>
 				<td>
-					*ÌáÊ¾´ğ°¸£º
+					*æç¤ºç­”æ¡ˆï¼š
 				</td>
 				<td>
 					<input class='fminpt input_3' maxlength=20 name=Form_Answer size=36 value="<% If Form_Answer<>"" Then Response.Write Server.HtmlEncode(Form_Answer)%>">
-					ÄúÎ´ÉèÖÃÃÜÂë±£»¤£¬ÇëÏÈÍêÉÆ×ÊÁÏ
+					æ‚¨æœªè®¾ç½®å¯†ç ä¿æŠ¤ï¼Œè¯·å…ˆå®Œå–„èµ„æ–™
 				</td>
 			</tr>
 			<%End If%>
 			<!--
 			<tr>
 				<td>
-					*µç×ÓÓÊ¼ş£º 
+					*ç”µå­é‚®ä»¶ï¼š 
 				</td>
 				<td>
 					<input class='fminpt input_3' onchange="reg_checkinfo('email',this.value);" maxLength=60 name=Form_mail size=36 Value="<% If Form_mail<>"" Then Response.Write Server.HtmlEncode(Form_mail)%>">
@@ -430,7 +430,7 @@ Function JoinForm
 			-->
 			<tr>
 				<td>
-					Ö÷Ò³µØÖ·£º
+					ä¸»é¡µåœ°å€ï¼š
 				</td>
 				<td>
 					<input class='fminpt input_3' maxlength=250 name=Form_homepage size=36 Value="<% If Form_homepage<>"" Then Response.Write Server.HtmlEncode(Form_homepage)%>">
@@ -438,7 +438,7 @@ Function JoinForm
 			</tr>
 			<tr>
 				<td>
-					¼ÒÍ¥µØÖ·£º
+					å®¶åº­åœ°å€ï¼š
 				</td>
 				<td>
 					<input class='fminpt input_3' maxlength=150 name=Form_address size=36 Value="<% If Form_address<>"" Then Response.Write Server.HtmlEncode(Form_address)%>">
@@ -446,7 +446,7 @@ Function JoinForm
 			</tr><!--
 			<tr>
 				<td>
-					ICQ£º
+					ICQï¼š
 				</td>
 				<td>
 					<input class='fminpt input_2' maxlength=10 name=Form_icq size=14 Value="<% If Form_icq<>"" and Form_icq <> "0" Then Response.Write Server.HtmlEncode(Form_icq)%>">
@@ -454,7 +454,7 @@ Function JoinForm
 			</tr>
 			<tr>
 				<td>
-					ÊÖ»ú£º
+					æ‰‹æœºï¼š
 				</td>
 				<td>
 					<input class='fminpt input_2' maxlength=15 name=Form_MobileTel <%
@@ -466,7 +466,7 @@ Function JoinForm
 			</tr>-->
 			<tr>
 				<td>
-					QQ£º
+					QQï¼š
 				</td>
 				<td>
 					<input class='fminpt input_2' maxlength=14 name=Form_oicq size=14 Value="<% If Form_oicq<>"" and Form_oicq <> "0" Then Response.Write Server.HtmlEncode(Form_oicq)%>">
@@ -474,26 +474,26 @@ Function JoinForm
 			</tr>
 			<tr>
 				<td>
-					ĞÔ±ğ£º
+					æ€§åˆ«ï¼š
 				</td>
 				<td>
 					<label>
-						<input class=fmchkbox type=radio name=Form_sex value=ÄĞ <%If Form_sex = "ÄĞ" Then Response.Write " checked"%>>ÄĞ</label>
+						<input class=fmchkbox type=radio name=Form_sex value=ç”· <%If Form_sex = "ç”·" Then Response.Write " checked"%>>ç”·</label>
 					<label>
-						<input class=fmchkbox type=radio name=Form_sex value=Å® <%If Form_sex = "Å®" Then Response.Write " checked"%>>Å®</label>
+						<input class=fmchkbox type=radio name=Form_sex value=å¥³ <%If Form_sex = "å¥³" Then Response.Write " checked"%>>å¥³</label>
 					<label>
-						<input class=fmchkbox type=radio name=Form_sex value=ÃÜ <%If Form_sex = "ÃÜ" Then Response.Write " checked"%>>±£ÃÜ</label>
+						<input class=fmchkbox type=radio name=Form_sex value=å¯† <%If Form_sex = "å¯†" Then Response.Write " checked"%>>ä¿å¯†</label>
 				</td>
 			</tr><%
 		End If
 		
-		UploadFace
+		UploadFace()
 
 		If Form_Action <> "uploadface" then
 			If DEF_UserEnableUserTitle = 1 and Form_UserLevel >= DEF_UserUserTitleNeedLevel Then%>
 			<tr>
 				<td>
-					ÓÃ»§Í·ÏÎ£º
+					ç”¨æˆ·å¤´è¡”ï¼š
 				</td>
 				<td>
 					<input maxlength=18 name=Form_UserTitle size=36 class='fminpt input_2' Value="<% If Form_UserTitle<>"" Then Response.Write Server.HtmlEncode(Form_UserTitle)%>">
@@ -501,21 +501,21 @@ Function JoinForm
 			</tr><%End If%>
 			<tr>
 				<td>
-					ÉúÈÕ£º 
+					ç”Ÿæ—¥ï¼š 
 				</td>
 				<TD align="left">
 					<input class='fminpt input_1' maxlength=4 name=Form_byear size=4 Value="<% If Form_byear<>"" Then
 						Response.Write Server.HtmlEncode(Form_byear)
 					Else
 						Response.Write "19"
-					End If%>"> Äê 
+					End If%>"> å¹´ 
 					<input class='fminpt input_1' maxlength=2 name=Form_bmonth size=2 Value="<% If Form_bmonth<>"" Then Response.Write Server.HtmlEncode(Form_bmonth)%>">
-					ÔÂ <input class='fminpt input_1' maxlength=2 name=Form_bday size=2 Value="<% If Form_bday<>"" Then Response.Write Server.HtmlEncode(Form_bday)%>">
-					ÈÕ</td>
+					æœˆ <input class='fminpt input_1' maxlength=2 name=Form_bday size=2 Value="<% If Form_bday<>"" Then Response.Write Server.HtmlEncode(Form_bday)%>">
+					æ—¥</td>
 			</tr>
 			<tr>
 				<td>
-					¸öÈËÇ©Ãû£º
+					ä¸ªäººç­¾åï¼š
 				</td>
 				<td>
 					<textarea class=fmtxtra name=Form_Underwrite rows=5 cols=34><%If Form_Underwrite <> "" Then Response.Write VbCrLf & htmlEncode(Form_Underwrite)%></textarea>
@@ -523,44 +523,44 @@ Function JoinForm
 			</tr>
 			<tr>
 				<td>
-					ÊÇ·ñÒşÉí£º
+					æ˜¯å¦éšèº«ï¼š
 				</td>
 				<td>
-					<input class=fmchkbox type=radio name=Form_ShowFlag value=0 <%If Form_ShowFlag = "0" Then Response.Write " checked"%>>Õı³£ÉÏÏß
-					<input class=fmchkbox type=radio name=Form_ShowFlag value=1 <%If Form_ShowFlag = "1" Then Response.Write " checked"%>>ÒşÉí
-				</td>
-			</tr>
-			<tr>
-				<td>
-					ÊÇ·ñ±£ÃÜ£º
-				</td>
-				<td>
-					<input class=fmchkbox type=radio name=Form_NotSecret value=0 <%If Form_NotSecret = "0" Then Response.Write " checked"%>>ĞÅÏ¢±£ÃÜ
-					<input class=fmchkbox type=radio name=Form_NotSecret value=1 <%If Form_NotSecret = "1" Then Response.Write " checked"%>>ĞÅÏ¢¹«¿ª
+					<input class=fmchkbox type=radio name=Form_ShowFlag value=0 <%If Form_ShowFlag = "0" Then Response.Write " checked"%>>æ­£å¸¸ä¸Šçº¿
+					<input class=fmchkbox type=radio name=Form_ShowFlag value=1 <%If Form_ShowFlag = "1" Then Response.Write " checked"%>>éšèº«
 				</td>
 			</tr>
 			<tr>
 				<td>
-					¶Ì Ïû Ï¢£º
+					æ˜¯å¦ä¿å¯†ï¼š
 				</td>
 				<td>
-					<div class=value2>1.½ÓÊÕÏŞÖÆÉèÖÃ
-					<label><input class=fmchkbox type=radio name=Form_RevMessageFlag value=0 <%If Form_RevMessageFlag = "0" Then Response.Write " checked"%>>½ÓÊÕËùÓĞÈËµÄ¶ÌÏûÏ¢</label>
-					<label><input class=fmchkbox type=radio name=Form_RevMessageFlag value=1 <%If Form_RevMessageFlag = "1" Then Response.Write " checked"%>>½öÏŞ½ÓÊÕºÃÓÑ¶ÌÏûÏ¢</label>
+					<input class=fmchkbox type=radio name=Form_NotSecret value=0 <%If Form_NotSecret = "0" Then Response.Write " checked"%>>ä¿¡æ¯ä¿å¯†
+					<input class=fmchkbox type=radio name=Form_NotSecret value=1 <%If Form_NotSecret = "1" Then Response.Write " checked"%>>ä¿¡æ¯å…¬å¼€
+				</td>
+			</tr>
+			<tr>
+				<td>
+					çŸ­ æ¶ˆ æ¯ï¼š
+				</td>
+				<td>
+					<div class=value2>1.æ¥æ”¶é™åˆ¶è®¾ç½®
+					<label><input class=fmchkbox type=radio name=Form_RevMessageFlag value=0 <%If Form_RevMessageFlag = "0" Then Response.Write " checked"%>>æ¥æ”¶æ‰€æœ‰äººçš„çŸ­æ¶ˆæ¯</label>
+					<label><input class=fmchkbox type=radio name=Form_RevMessageFlag value=1 <%If Form_RevMessageFlag = "1" Then Response.Write " checked"%>>ä»…é™æ¥æ”¶å¥½å‹çŸ­æ¶ˆæ¯</label>
 					</div>
-					<div class=value2>2.ÓïÒôÌáÊ¾ÉèÖÃ 
-					<label><input class=fmchkbox type=radio name=Form_SoundFlag value=0 <%If Form_SoundFlag = "0" Then Response.Write " checked"%>>¿ªÆôÓïÒôÌáÊ¾ĞÂÏûÏ¢</label>
-					<label><input class=fmchkbox type=radio name=Form_SoundFlag value=1 <%If Form_SoundFlag = "1" Then Response.Write " checked"%>>½ûÖ¹ÓïÒôÌáÊ¾ĞÂÏûÏ¢</label>
+					<div class=value2>2.è¯­éŸ³æç¤ºè®¾ç½® 
+					<label><input class=fmchkbox type=radio name=Form_SoundFlag value=0 <%If Form_SoundFlag = "0" Then Response.Write " checked"%>>å¼€å¯è¯­éŸ³æç¤ºæ–°æ¶ˆæ¯</label>
+					<label><input class=fmchkbox type=radio name=Form_SoundFlag value=1 <%If Form_SoundFlag = "1" Then Response.Write " checked"%>>ç¦æ­¢è¯­éŸ³æç¤ºæ–°æ¶ˆæ¯</label>
 					</div>
 					
 				</td>
 			</tr>
 			<tr>
 				<td>
-					ÍøÕ¾Í¬²½£º
+					ç½‘ç«™åŒæ­¥ï¼š
 				</td>
 				<td>
-					<label><input class=fmchkbox type=checkbox name=Form_SyncFlag value=1 <%If Form_SyncFlag = 1 Then Response.Write " checked"%>>Ä¬ÈÏ²»Í¬²½ÖÁ°ó¶¨ÍøÕ¾</label>
+					<label><input class=fmchkbox type=checkbox name=Form_SyncFlag value=1 <%If Form_SyncFlag = 1 Then Response.Write " checked"%>>é»˜è®¤ä¸åŒæ­¥è‡³ç»‘å®šç½‘ç«™</label>
 				</td>
 			</tr>
 		<%end if%>
@@ -568,40 +568,40 @@ Function JoinForm
 				<td>&nbsp;</td>
 				<TD height="30">
 					<div id="submitdiv" style="<%If DEF_EnableGFL = 0 and Form_Action = "uploadface" Then response.write "display:none;"%>">
-					<input name=submit id=submit type=submit value="ĞŞ¸Ä" onclick="form_onsubmit(this.form)" class="fmbtn btn_2">
-					<input name=b1 type=reset value="ÖØĞ´" class="fmbtn btn_2">
+					<input name=submit id=submit type=submit value="ä¿®æ”¹" onclick="form_onsubmit(this.form)" class="fmbtn btn_2">
+					<input name=b1 type=reset value="é‡å†™" class="fmbtn btn_2">
 					</div>
 				</td>
 			</tr>
 			</table>
 </form>
-<div class=title>Ê¹ÓÃËµÃ÷£º</div>
+<div class=title>ä½¿ç”¨è¯´æ˜ï¼š</div>
 <ol>
 <%If Form_Action <> "uploadface" then%>
-<li>ÊÇ·ñ±£ÃÜÑ¡ÔñÉèÎª±£ÃÜ£¬¿ÉÒÔÒş²Ø×Ô¼ºµÄµØÖ·£¬ÉúÈÕ£¬£Ñ£Ñ£¬ÓÊÏä×ÊÁÏ£¬²¢ÇÒ²»ÏÔÊ¾×îºóµÇÂ¼µÄ¾ßÌåÊ±¼ä£¬IPµØÖ·Ê¼ÖÕ±£ÃÜ£¬²»³öÏÖÔÚÉúÈÕÓÃ»§Ò»À¸</li>
-<li>ÉèÎªÒşÉí×´Ì¬£¬Ã¿´ÎµÇÂ¼ÉÏÏßºó±ãÊÇÒşÉíÓÃ»§</li>
-<li>´ïµ½<%=DEF_UserUserTitleNeedLevel%>¼¶µÄ×¢²áÓÃ»§ÔÊĞí×Ô¶¨ÒåÍ·ÏÎ£¬ÔÊĞíËæÒâĞŞ¸Ä</li>
-<li>¶ÌÏûÏ¢ÉèÖÃÎªÖ»½ÓÊÕºÃÓÑÑ¡Ïî£¬¶Ô°æÖ÷¼°ÒÔÉÏÈ¨ÏŞÓÃ»§ÎŞĞ§</li>
-<li>Ä³Ğ©ÉèÖÃ¸Ä¶¯£¬ĞèÒªÉÔºò»òÖØĞÂµÇÂ¼²ÅÄÜÉúĞ§</li>
+<li>æ˜¯å¦ä¿å¯†é€‰æ‹©è®¾ä¸ºä¿å¯†ï¼Œå¯ä»¥éšè—è‡ªå·±çš„åœ°å€ï¼Œç”Ÿæ—¥ï¼Œï¼±ï¼±ï¼Œé‚®ç®±èµ„æ–™ï¼Œå¹¶ä¸”ä¸æ˜¾ç¤ºæœ€åç™»å½•çš„å…·ä½“æ—¶é—´ï¼ŒIPåœ°å€å§‹ç»ˆä¿å¯†ï¼Œä¸å‡ºç°åœ¨ç”Ÿæ—¥ç”¨æˆ·ä¸€æ </li>
+<li>è®¾ä¸ºéšèº«çŠ¶æ€ï¼Œæ¯æ¬¡ç™»å½•ä¸Šçº¿åä¾¿æ˜¯éšèº«ç”¨æˆ·</li>
+<li>è¾¾åˆ°<%=DEF_UserUserTitleNeedLevel%>çº§çš„æ³¨å†Œç”¨æˆ·å…è®¸è‡ªå®šä¹‰å¤´è¡”ï¼Œå…è®¸éšæ„ä¿®æ”¹</li>
+<li>çŸ­æ¶ˆæ¯è®¾ç½®ä¸ºåªæ¥æ”¶å¥½å‹é€‰é¡¹ï¼Œå¯¹ç‰ˆä¸»åŠä»¥ä¸Šæƒé™ç”¨æˆ·æ— æ•ˆ</li>
+<li>æŸäº›è®¾ç½®æ”¹åŠ¨ï¼Œéœ€è¦ç¨å€™æˆ–é‡æ–°ç™»å½•æ‰èƒ½ç”Ÿæ•ˆ</li>
 <%End If%>
 <%If Form_Action = "uploadface" then%>
-<li>´ïµ½<%=DEF_UploadFaceNeedPoints%><%=DEF_PointsName(0)%><%If DEF_NeedOnlineTime > 0 Then Response.Write "ÇÒÔÚÏß" & Fix(DEF_NeedOnlineTime/60) & "·ÖÖÓ"%>²ÅÄÜÊ¹ÓÃ×Ô¶¨ÒåÉÏ´«Í¼Æ¬×÷ÎªÍ·Ïñ</li>
+<li>è¾¾åˆ°<%=DEF_UploadFaceNeedPoints%><%=DEF_PointsName(0)%><%If DEF_NeedOnlineTime > 0 Then Response.Write "ä¸”åœ¨çº¿" & Fix(DEF_NeedOnlineTime/60) & "åˆ†é’Ÿ"%>æ‰èƒ½ä½¿ç”¨è‡ªå®šä¹‰ä¸Šä¼ å›¾ç‰‡ä½œä¸ºå¤´åƒ</li>
 <%
 If DEF_EnableAttestNumber > 2 and DEF_AttestNumberPoints > 0 Then
-	%><li>ÒÑÉè¶¨<%=DEF_PointsName(0) & DEF_AttestNumberPoints%>ÒÔÉÏ·¢ÌûÃâÑéÖ¤Âë"<%
+	%><li>å·²è®¾å®š<%=DEF_PointsName(0) & DEF_AttestNumberPoints%>ä»¥ä¸Šå‘å¸–å…éªŒè¯ç "<%
 End If
 %>
 <%
 	If DEF_AllDefineFace = 0 Then
-		Response.Write "<li>½ûÖ¹×Ô¶¨ÒåÍ·Ïñ"
+		Response.Write "<li>ç¦æ­¢è‡ªå®šä¹‰å¤´åƒ"
 	ElseIf DEF_AllDefineFace = 2 Then
-		Response.Write "<li>ÔÊĞíÕ¾ÄÚÍ¼Æ¬×÷ÎªÍ·Ïñ£¬½ûÖ¹ÒıÓÃÕ¾ÍâÍ¼Æ¬×÷ÎªÍ·Ïñ"
+		Response.Write "<li>å…è®¸ç«™å†…å›¾ç‰‡ä½œä¸ºå¤´åƒï¼Œç¦æ­¢å¼•ç”¨ç«™å¤–å›¾ç‰‡ä½œä¸ºå¤´åƒ"
 	ElseIf DEF_AllDefineFace = 3 Then
-		Response.Write "<li>ÔÊĞíÕ¾ÍâÍ¼Æ¬×÷ÎªÍ·Ïñ£¬½ûÖ¹ÉÏ´«×Ô¶¨ÒåÍ·Ïñ"
+		Response.Write "<li>å…è®¸ç«™å¤–å›¾ç‰‡ä½œä¸ºå¤´åƒï¼Œç¦æ­¢ä¸Šä¼ è‡ªå®šä¹‰å¤´åƒ"
 	End If%>
 	<%
 End If%>
-<li>±à¼­Í¼Æ¬Ê±£¬¹öÂÖ½øĞĞËõ·Å</li>
+<li>ç¼–è¾‘å›¾ç‰‡æ—¶ï¼Œæ»šè½®è¿›è¡Œç¼©æ”¾</li>
 </ol>
 <%
 
@@ -613,17 +613,17 @@ Sub UploadFace
 			<tr>
 				<td colspan=2>
 				<%If EnableUpload = 1 Then%>
-				<a href="javascript:;" class="grayfont" onclick="$('#upload_type').value=1;<%if DEF_EnableGFL = 0 then%>$('#submitdiv').hide();<%end if%>$('#face_http3').show();$('#face_http').hide();$('#face_http2').show();$('#face_system').hide();$('#face_upload').show();">ÉÏ´«Í·Ïñ</a> &nbsp; 
+				<a href="javascript:;" class="grayfont" onclick="$('#upload_type').value=1;<%if DEF_EnableGFL = 0 then%>$('#submitdiv').hide();<%end if%>$('#face_http3').show();$('#face_http').hide();$('#face_http2').show();$('#face_system').hide();$('#face_upload').show();">ä¸Šä¼ å¤´åƒ</a> &nbsp; 
 				<%End If%>
-				<a href="javascript:;" class="grayfont" onclick="$('#upload_type').value=2;$('#submitdiv').show();$('#face_http3').show();$('#face_http2').hide();$('#face_http2').hide();$('#face_system').show();$('#face_upload').hide();">Ê¹ÓÃÏµÍ³Í·Ïñ</a> &nbsp; 
+				<a href="javascript:;" class="grayfont" onclick="$('#upload_type').value=2;$('#submitdiv').show();$('#face_http3').show();$('#face_http2').hide();$('#face_http2').hide();$('#face_system').show();$('#face_upload').hide();">ä½¿ç”¨ç³»ç»Ÿå¤´åƒ</a> &nbsp; 
 				<%If DEF_AllDefineFace <> 0 Then%>
-					<a href="javascript:;" class="grayfont" onclick="$('#upload_type').value=3;$('#submitdiv').show();$('#face_http3').hide();$('#face_http2').show();$('#face_http').show();$('#face_system').hide();$('#face_upload').hide();">Ê¹ÓÃÍøÂçÍ¼Æ¬</a>
+					<a href="javascript:;" class="grayfont" onclick="$('#upload_type').value=3;$('#submitdiv').show();$('#face_http3').hide();$('#face_http2').show();$('#face_http').show();$('#face_system').hide();$('#face_upload').hide();">ä½¿ç”¨ç½‘ç»œå›¾ç‰‡</a>
 				<%End If%>
 				</td>
 			</tr>
 			<tr id="face_system"<%If EnableUpload = 1 Then response.write " style=""display:none"""%>>
 				<td>
-					ÏµÍ³Í·Ïñ£º
+					ç³»ç»Ÿå¤´åƒï¼š
 				</td>
 				<td>
 					<input name=upload_type id=upload_type type=hidden value="-1">
@@ -634,14 +634,14 @@ Sub UploadFace
 					<input name=upload_y2 id=upload_y2 type=hidden value="">
 					<input name=upload_filename id=upload_filename type=hidden value="">
 					<input class='fminpt input_1' onchange="javascript:changeface();" maxlength=4 name=Form_userphoto size=4 Value="<% If Form_userphoto<>"" Then Response.Write Server.HtmlEncode(string(4-len(cstr(Form_userphoto)),"0")&Form_userphoto)%>">
-					<a href="UserModify.asp?action=face" target=_blank onclick="return(pub_command('Ñ¡ÔñÍ·Ïñ',this,'anc_delbody',''));">Í·ÏñÒ»ÀÀ±í</a>
+					<a href="UserModify.asp?action=face" target=_blank onclick="return(pub_command('é€‰æ‹©å¤´åƒ',this,'anc_delbody',''));">å¤´åƒä¸€è§ˆè¡¨</a>
 				</td>
 			</tr>
 		<%
 			If DEF_AllDefineFace <> 0 Then%>
 			<tr id="face_http" style="display:none;">
 				<td>
-					×Ô¶¨ÒåÍ·ÏñµØÖ·£º
+					è‡ªå®šä¹‰å¤´åƒåœ°å€ï¼š
 				</td>
 				<td>
 					<input class='fminpt input_4' onchange="javascript:changeface2();" maxlength=250 id="Form_FaceUrl" name=Form_FaceUrl size=36 Value="<%=HtmlEncode(Form_FaceUrl)%>">
@@ -652,12 +652,18 @@ Sub UploadFace
 				
 			If EnableUpload = 1 Then%>
 			<tr height=30 id="face_upload">
-				<td> <span id="uptext" name="uptext">ÉÏ´«Í·Ïñ£º</span></td>
+				<td> <span id="uptext" name="uptext">ä¸Šä¼ å¤´åƒï¼š</span></td>
 				<td>
 					<span id=FileStr><input type="file" id="file" size="11" name="userface" class="fminpt uninit_upload" onchange="submituploadajax();"></span>
-					<span class=grayfont>µã»÷ä¯ÀÀÑ¡ÔñÒ»ÕÅGIF»òJPGÍ¼Æ¬ÉÏ´«²¢±à¼­£¬ÏŞ<%=FormatNumber((DEF_FaceMaxBytes/1024),0)%>K</span>
+					<span class=grayfont>ç‚¹å‡»æµè§ˆé€‰æ‹©ä¸€å¼ GIFæˆ–JPGå›¾ç‰‡ä¸Šä¼ å¹¶ç¼–è¾‘ï¼Œé™<%=FormatNumber((DEF_FaceMaxBytes/1024),0)%>K</span>
 					
 					<script type="text/javascript">
+					// Upstream defect (breaks on IIS too): this form's onsubmit ends with
+					// `return ValidationPassed`, but that variable is only declared in
+					// article/inc/form_fun.asp, BoardStyle.asp and UserGetPass_Fun.asp --
+					// none of which this page includes. Undefined is falsy, so the avatar
+					// form could never submit. Declare it here.
+					if (typeof ValidationPassed == 'undefined') var ValidationPassed = true;
 					init_uploadform();
 					</script>
   					<script type="text/javascript" src="<%=DEF_BBS_HomeUrl%>inc/js/imgareaselect/imgareaselect.js?ver=<%=DEF_Jer%>"></script>
@@ -668,16 +674,16 @@ Sub UploadFace
 			If DEF_AllDefineFace <> 0 Then%>
 			<tr id="face_http2" style="display:none;">
 				<td>
-					Í·Ïñ´óĞ¡£º
+					å¤´åƒå¤§å°ï¼š
 				</td>
 				<td>
-					¿í: <input class='fminpt input_1' onchange="javascript:changeface2();" maxlength=<%=len(DEF_AllFaceMaxWidth)%> name=Form_FaceWidth size=3 Value="<%=HtmlEncode(Form_FaceWidth)%>">(20-<%=DEF_AllFaceMaxWidth%>)
-					¸ß: <input class='fminpt input_1' onchange="javascript:changeface2();" maxlength=<%=len(DEF_AllFaceMaxWidth)%> name=Form_FaceHeight size=3 Value="<%=HtmlEncode(Form_FaceHeight)%>">(20-<%=DEF_AllFaceMaxWidth*2%>)
+					å®½: <input class='fminpt input_1' onchange="javascript:changeface2();" maxlength=<%=len(DEF_AllFaceMaxWidth)%> name=Form_FaceWidth size=3 Value="<%=HtmlEncode(Form_FaceWidth)%>">(20-<%=DEF_AllFaceMaxWidth%>)
+					é«˜: <input class='fminpt input_1' onchange="javascript:changeface2();" maxlength=<%=len(DEF_AllFaceMaxWidth)%> name=Form_FaceHeight size=3 Value="<%=HtmlEncode(Form_FaceHeight)%>">(20-<%=DEF_AllFaceMaxWidth*2%>)
 				</td>
 			</tr>
 			<tr id="face_http3">
 				<td valign=top>
-					Í·ÏñÔ¤ÀÀ£º</td>
+					å¤´åƒé¢„è§ˆï¼š</td>
 				<td valign=top>
 					<div>
 					<%If DEF_AllDefineFace = 0 or Form_FaceUrl & "" = "" Then
@@ -710,8 +716,8 @@ Function displayAccessFull
 	
 	If AjaxFlag <> "1" then %>
 	<p>
-	<%If GBL_CHK_TempStr <> "" Then Response.Write "<font color=red class=redfont><b>´íÎóÌáÊ¾:" & GBL_CHK_TempStr & "</b></font><p>"%>
-	<b><font color=Green class=greenfont>ÄúµÄ×ÊÁÏÒÑ³É¹¦ĞŞ¸Ä£¡</font></b><br><%
+	<%If GBL_CHK_TempStr <> "" Then Response.Write "<font color=red class=redfont><b>é”™è¯¯æç¤º:" & GBL_CHK_TempStr & "</b></font><p>"%>
+	<b><font color=Green class=greenfont>æ‚¨çš„èµ„æ–™å·²æˆåŠŸä¿®æ”¹ï¼</font></b><br><%
 	End if
 
 End Function
@@ -736,7 +742,7 @@ Function SaveFormData
 		end if
 			
 			If EnableUpload = 1 Then
-				if User_ModifyUserFace = 2 then
+				if User_ModifyUserFace() = 2 then
 					sql = "update LeadBBS_User set Userphoto=" & Replace(Form_Userphoto,"'","''")
 					If DEF_AllDefineFace <> 0 Then
 						sql = sql & ",FaceUrl='" & Replace(Form_FaceUrl,"'","''") & "'"
@@ -782,7 +788,7 @@ Function SaveFormData
 			If Rs.Eof Then
 				Rs.Close
 				Set Rs = Nothing
-				GBL_CHK_TempStr = GBL_CHK_TempStr & "·¢ÉúÒâÍâ´íÎó<br>" & VbCrLf
+				GBL_CHK_TempStr = GBL_CHK_TempStr & "å‘ç”Ÿæ„å¤–é”™è¯¯<br>" & VbCrLf
 				SaveFormData = 0
 				Exit Function
 			End If
@@ -816,7 +822,7 @@ Function SaveFormData
 				If temp > 1950 and temp < 2050 Then
 					Form_NongLiBirth = ",NongLiBirth=" & Replace(GetNongLiTimeValue(ConvertToNongLi(RestoreTime(Form_birthday))),"'","''")
 				Else
-					'ÆäËü³öÉúÄê×÷ÁËÂÔ´¦Àí
+					'å…¶å®ƒå‡ºç”Ÿå¹´ä½œäº†ç•¥å¤„ç†
 					Form_NongLiBirth = ",NongLiBirth=" & Replace(GetTimeValue(DateAdd("m",-1,RestoreTime(Form_birthday))),"'","''")
 				End If
 				Form_birthday = ",birthday=" & Replace(Form_birthday,"'","''")
@@ -843,7 +849,7 @@ Function SaveFormData
 			",ICQ=" & Replace(Form_ICQ,"'","''") & _
 			",OICQ=" & Replace(Form_OICQ,"'","''")
 
-			'9.0+ÓÊÏä¼°ÊÖ»úÎŞ·¨ÓÃ»§Ö±½ÓĞŞ¸Ä
+			'9.0+é‚®ç®±åŠæ‰‹æœºæ— æ³•ç”¨æˆ·ç›´æ¥ä¿®æ”¹
 			'if (old_Form_MobileTel = "" or old_Form_MobileTel & "" = "0") and Form_MobileTel <> "" then
 			'	sql = sql & ",MobileTel=" & Replace(Form_MobileTel,"'","''")
 			'end if
@@ -945,14 +951,14 @@ function User_ModifyUserFace
 		GBL_CHK_TempStr = ""
 		If Tmp = "image" and (inStr(FileType,"pjpeg") or inStr(FileType,"png") or inStr(FileType,"jpeg") or inStr(FileType,"gif")) Then
 		Else
-			GBL_CHK_TempStr = "Í·ÏñÎÄ¼ş¸ñÊ½´íÎó,¸ü¸ÄÍ·ÏñÊ§°Ü."
+			GBL_CHK_TempStr = "å¤´åƒæ–‡ä»¶æ ¼å¼é”™è¯¯,æ›´æ”¹å¤´åƒå¤±è´¥."
 		End If
 	Else
 		FileSize = DEF_FaceMaxBytes - 1
 	End If
 	
 	If FileSize > DEF_FaceMaxBytes Then
-		GBL_CHK_TempStr = "Í·ÏñÎÄ¼ş´óĞ¡³¬¹ıÁËÖ¸¶¨´óĞ¡,¸ü¸ÄÍ·ÏñÊ§°Ü."
+		GBL_CHK_TempStr = "å¤´åƒæ–‡ä»¶å¤§å°è¶…è¿‡äº†æŒ‡å®šå¤§å°,æ›´æ”¹å¤´åƒå¤±è´¥."
 	End If
 	
 	if ajaxflag = "1" and upload_step = "1" then
@@ -962,6 +968,11 @@ function User_ModifyUserFace
 		end if
 		dim tmpFile : tmpFile = FileName
 		If inStrRev(tmpFile,".")>0 Then tmpFile = Mid(tmpFile,inStrRev(tmpFile,".")+1)
+		' The comparison below is exact, so an upper-case extension -- IMG_1234.JPG straight
+		' off a camera or phone, or this repository's own images/face/0001.GIF -- fell through
+		' to Processor_Msg("error"), which the page reports as a bare "error" with no reason.
+		' See README Â§48.
+		tmpFile = LCase(tmpFile)
 		If tmpFile = "gif" or tmpFile = "jpg" or tmpFile = "jpeg" or tmpFile = "jpe" or tmpFile = "bmp" or tmpFile = "png" Then
 			tmpFile = DEF_BBS_HomeUrl & "temp/uface_" & GBL_UserID & "." & tmpFile
 			file.saveas Server.MapPath(tmpFile)
@@ -986,7 +997,7 @@ function User_ModifyUserFace
 		NewFileName = LCase(Mid(NewFileName,InstrRev(Replace(NewFileName & "","/","\"), "\") + 1))
 	End If
 	If inStr(NewFileName,".") = 0 Then
-		GBL_CHK_TempStr = "Ã»ÓĞÕıÈ·µØÑ¡ÔñÒªÉÏ´«µÄÎÄ¼ş, ×¢ÒâÉÏ´«µÄÎÄ¼ş¸ñÊ½."
+		GBL_CHK_TempStr = "æ²¡æœ‰æ­£ç¡®åœ°é€‰æ‹©è¦ä¸Šä¼ çš„æ–‡ä»¶, æ³¨æ„ä¸Šä¼ çš„æ–‡ä»¶æ ¼å¼."
 		Processor_Msg("error")
 		Exit function
 	End If
@@ -1066,26 +1077,29 @@ function User_ModifyUserFace
 		End If
 		If Temp = 1 or Temp = 3 or Temp = 4 Then
 			If GBL_Width < 20 or GBL_Height < 20 Then
-				GBL_CHK_TempStr = "Í¼Ïñ¿í¶È»ò¸ß¶ÈÌ«Ğ¡»ò±ÈÀı²»Ïà³Æ,×îĞ¡ÒªÇó20ÏñËØ"
-				DeleteFiles PhotoDir & pic_name2
+				GBL_CHK_TempStr = "å›¾åƒå®½åº¦æˆ–é«˜åº¦å¤ªå°æˆ–æ¯”ä¾‹ä¸ç›¸ç§°,æœ€å°è¦æ±‚20åƒç´ "
+				Call DeleteFiles(PhotoDir & pic_name2)
 			Else
-				CheckUploadDatabase PhotoDir & pic_name2,""
+				' README Â§49: a parenthesis-less call to a Sub that lives in another include is
+				' silently DROPPED by AxonASP (Â§6/Â§28) -- the avatar row was never written and the
+				' page still reported "ok".
+				Call CheckUploadDatabase(PhotoDir & pic_name2,"")
 				CALL LDExeCute("Update LeadBBS_User Set FaceUrl='" & Replace(UploadPhotoUrl2,"'","''") & "',FaceWidth=" & GBL_Width & ",FaceHeight=" & GBL_Height & " where ID=" & GBL_UserID,1)
 			End If
 			DeleteFiles(PhotoDir & Old_pic_name)
 		Else
 			If Temp = 2 Then
 				If GBL_Width < 20 or GBL_Height < 20 Then
-					GBL_CHK_TempStr = "Í¼Ïñ¿í¶È»ò¸ß¶ÈÌ«Ğ¡»ò±ÈÀı²»Ïà³Æ,×îĞ¡ÒªÇó20ÏñËØ"
-					DeleteFiles PhotoDir & pic_name2
+					GBL_CHK_TempStr = "å›¾åƒå®½åº¦æˆ–é«˜åº¦å¤ªå°æˆ–æ¯”ä¾‹ä¸ç›¸ç§°,æœ€å°è¦æ±‚20åƒç´ "
+					Call DeleteFiles(PhotoDir & pic_name2)
 					DeleteFiles(PhotoDir & Old_pic_name)
-					DeleteFiles Temp_File
+					Call DeleteFiles(Temp_File)
 				Else
-					CheckUploadDatabase PhotoDir & Old_pic_name,""
+					Call CheckUploadDatabase(PhotoDir & Old_pic_name,"")   ' Â§49
 					CALL LDExeCute("Update LeadBBS_User Set FaceUrl='" & Replace(UploadPhotoUrl,"'","''") & "',FaceWidth=" & GBL_Width & ",FaceHeight=" & GBL_Height & " where ID=" & GBL_UserID,1)
 				End If
 			Else
-				GBL_CHK_TempStr = "·ÇÍ¼ÏñÎÄ¼ş,ÉÏ´«´íÎó!"
+				GBL_CHK_TempStr = "éå›¾åƒæ–‡ä»¶,ä¸Šä¼ é”™è¯¯!"
 				DeleteFiles(PhotoDir & Old_pic_name)
 			End If
 		End If
@@ -1094,11 +1108,10 @@ function User_ModifyUserFace
 			call MoveFiles(Temp_File,replace(PhotoDir & pic_name2,"s.","."))
 			'CheckUploadDatabase PhotoDir & Old_pic_name,""
 			If DEF_EnableGFL = 0 then Processor_Msg(UploadPhotoUrl)
-			CheckUploadDatabase replace(PhotoDir & pic_name2,"s.","."),""
-			response.write "Update LeadBBS_User Set FaceUrl='" & Replace(UploadPhotoUrl,"'","''") & "',FaceWidth=" & GBL_Width & ",FaceHeight=" & GBL_Height & " where ID=" & GBL_UserID
+			Call CheckUploadDatabase(replace(PhotoDir & pic_name2,"s.","."),"")   ' Â§49
 			CALL LDExeCute("Update LeadBBS_User Set FaceUrl='" & Replace(UploadPhotoUrl,"'","''") & "',FaceWidth=" & GBL_Width & ",FaceHeight=" & GBL_Height & " where ID=" & GBL_UserID,1)
 		Else
-			GBL_CHK_TempStr = "·ÇÍ¼ÏñÎÄ¼ş,ÉÏ´«´íÎó"
+			GBL_CHK_TempStr = "éå›¾åƒæ–‡ä»¶,ä¸Šä¼ é”™è¯¯"
 			DeleteFiles(PhotoDir & Old_pic_name)
 		End If
 	End If
@@ -1119,7 +1132,7 @@ Function GetSaveFileName(name)
 	name = Lcase(name)
 	name = "1" & Mid(name,inStrRev(name,"."))
 	ExtendFileName = Trim(Mid(name,inStrRev(name,".")))
-	TempNum = Right("0" & day(DEF_Now),2) & "_" & Right(GetTimeValue(DEF_Now),6)
+	TempNum = Right("0" & day(DEF_Now),2) & "_" & Right(LngStr(GetTimeValue(DEF_Now)),6)
 
 	If inStr(DEF_UploadFileType,":" & ExtendFileName & ":") < 1 Then ExtendFileName = ".LeadBBS"
 	If inStr(":.htw:.ida:.asp:.asa:.idq:.cer:.cdx:.htr:.idc:.shtm:.shtml:.stm:.printer:.asax:.ascx:.ashx:.asmx:.aspx:.axd:.vsdisco:.rem:.soap:.config:.cs:.csproj:.vb:.vbproj:.webinfo:.licx:.resx:.resources:.php:.cgi:",":" & ExtendFileName & ":") Then ExtendFileName = ".LeadBBS"
@@ -1143,9 +1156,9 @@ Function GetSaveFileName(name)
 
 	If FSFlag = 0 Then
 		Err.Clear
-		GetSaveFileName = Left(GetTimeValue(DEF_Now),8) & GetSaveFileName
-		Pic_Name2 = Left(GetTimeValue(DEF_Now),8) & Pic_Name2
-		PhotoDir = Server.MapPath(PhotoDirectory) & "\"
+		GetSaveFileName = Left(LngStr(GetTimeValue(DEF_Now)),8) & GetSaveFileName
+		Pic_Name2 = Left(LngStr(GetTimeValue(DEF_Now)),8) & Pic_Name2
+		PhotoDir = Server.MapPath(PhotoDirectory) & "/"
 		Set Fs = Nothing
 		Dim Rs
 		Set Rs = LDExeCute(sql_select("Select ID,PhotoDir from LeadBBS_UserFace Where UserID=" & GBL_UserID,1),0)
@@ -1167,25 +1180,25 @@ Function GetSaveFileName(name)
 	End If
 
 	Dim TDir,FS
-	TDir = Server.MapPath(PhotoDirectory) & "\"
+	TDir = Server.MapPath(PhotoDirectory) & "/"
 	If Not FS.FolderExists(TDir) then
 		GetSaveFileName = 0
-		GBL_Chk_TempStr = "´íÎó£¬´æ·ÅÍ¼±êµÄÄ¿Â¼²»´æÔÚ£¬ÇëÁªÏµÍøÕ¾ÖĞĞÄ£¡"
+		GBL_Chk_TempStr = "é”™è¯¯ï¼Œå­˜æ”¾å›¾æ ‡çš„ç›®å½•ä¸å­˜åœ¨ï¼Œè¯·è”ç³»ç½‘ç«™ä¸­å¿ƒï¼"
 	End If
 	
-	TDir = TDir & year(DEF_Now) & "\"
+	TDir = TDir & year(DEF_Now) & "/"
 	UploadPhotoUrl = UploadPhotoUrl & year(DEF_Now) & "/"
 	If Not FS.FolderExists(TDir) then
 		FS.CreateFolder(TDir)
 	End If
 
-	TDir = TDir & Right("0" & month(DEF_Now),2) & "\"
+	TDir = TDir & Right("0" & month(DEF_Now),2) & "/"
 	UploadPhotoUrl = UploadPhotoUrl & Right("0" & month(DEF_Now),2) & "/"
 	If Not FS.FolderExists(TDir) then
 		FS.CreateFolder(TDir)
 	End If
 	
-	'TDir = TDir & Right("0" & day(DEF_Now),2) & "\"
+	'TDir = TDir & Right("0" & day(DEF_Now),2) & "/"
 	'UploadPhotoUrl = UploadPhotoUrl & Right("0" & day(DEF_Now),2) & "/"
 	'If Not FS.FolderExists(TDir) then
 	'	FS.CreateFolder(TDir)
@@ -1220,7 +1233,7 @@ Function DeleteFiles(path)
 	Set fs = Server.CreateObject(DEF_FSOString)
 	If err <> 0 Then
 		Err.Clear
-		'Response.Write "<br>·şÎñÆ÷²»Ö§³ÖFSO£¬Ó²ÅÌÎÄ¼şÎ´É¾³ı£®"
+		'Response.Write "<br>æœåŠ¡å™¨ä¸æ”¯æŒFSOï¼Œç¡¬ç›˜æ–‡ä»¶æœªåˆ é™¤ï¼"
 		Exit Function
 	End If
 	If fs.FileExists(path) Then

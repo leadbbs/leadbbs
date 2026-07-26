@@ -1,7 +1,7 @@
-<%@ LANGUAGE=VBScript CodePage=936%>
+<%@ LANGUAGE=VBScript CodePage=65001%>
 <%Option Explicit
-Response.Charset = "gb2312"
-Session.CodePage=936
+Response.Charset = "utf-8"
+Session.CodePage=65001
 Response.Buffer = True
 Const DEF_ManageDir = "manage"
 Response.Redirect "install/default.asp"
@@ -16,7 +16,7 @@ If application(DEF_MasterCookies & "SiteEnableFlagzoieiu") = 0 and application(D
 End If
 
 Dim DEF_BBS_HomeUrl,DEF_SiteHomeUrl
-const DEF_BBS_Name="LeadBBSÂÛÌ³"
+const DEF_BBS_Name="LeadBBSè®ºå›"
 DEF_BBS_HomeUrl = ""
 DEF_SiteHomeUrl = ""
 const DEF_BBS_MaxLayer = 10
@@ -33,7 +33,7 @@ DEF_BBS_DisplayTopicLength = 56
 DEF_BBS_ScreenWidth = "770"
 const DEF_BBS_LeftTDWidth = "180"
 const DEF_MasterCookies = "leadbbs"
-const DEF_SiteNameString = "LeadBBS ÂÛÌ³"
+const DEF_SiteNameString = "LeadBBS è®ºå›"
 const DEF_SupervisorUserName = ",Admin,"
 const DEF_MaxTextLength = 26384
 Dim DEF_MaxListNum
@@ -57,24 +57,24 @@ const DEF_BBS_EmailMode = 0
 Const DEF_EnableAttestNumber = 2
 Const DEF_AttestNumberPoints = 200
 Dim DEF_BoardStyleString,DEF_BoardStyleStringNum
-DEF_BoardStyleString = Array("Ä¬ÈÏÉèÖÃ","1","2","3")
+DEF_BoardStyleString = Array("é»˜è®¤è®¾ç½®","1","2","3")
 DEF_BoardStyleStringNum = Ubound(DEF_BoardStyleString,1)
 Const DEF_EnableUnderWrite = 1
 Const DEF_NeedOnlineTime = 0
 Const DEF_EnableForbidIP = 0
-Const DEF_TopAdString = "<a href=""http://ww.leadbbs.com/"" target=""_blank""><img src=""/images/temp/banner17.gif"" width=""468"" height=""60"" alt=""¿Õ¼ä¹ã¸æ"" /></a>"
+Const DEF_TopAdString = "<a href=""http://ww.leadbbs.com/"" target=""_blank""><img src=""/images/temp/banner17.gif"" width=""468"" height=""60"" alt=""ç©ºé—´å¹¿å‘Š"" /></a>"
 Const DEF_AccessDatabase = "data/global.asa"
 Const DEF_DefaultStyle = 1002
 Const DEF_EnableFlashUBB = 1
 Const DEF_EnableImagesUBB = 1
-Const DEF_AnnounceFontSize = "14px;font-family:ËÎÌå;"
+Const DEF_AnnounceFontSize = "14px;font-family:å®‹ä½“;"
 Const DEF_EditAnnounceDelay = 300
 Const DEF_DisplayOnlineUser = 1
 Const DEF_EnableSpecialTopic = 1
 Const DEF_UBBiconNumber = 99
 Const DEF_EnableDelAnnounce = 0
 Dim DEF_PointsName
-DEF_PointsName = Array("»ý·Ö","²Æ¸»","ÉùÍû","µÈ¼¶","¾­Ñé","ÈÏÖ¤»áÔ±","×Ü°æÖ÷","Çø°æÖ÷","ÂÛÌ³°æÖ÷","»ÕÕÂ","ÌØÊâÓÃ»§")
+DEF_PointsName = Array("ç§¯åˆ†","è´¢å¯Œ","å£°æœ›","ç­‰çº§","ç»éªŒ","è®¤è¯ä¼šå‘˜","æ€»ç‰ˆä¸»","åŒºç‰ˆä¸»","è®ºå›ç‰ˆä¸»","å¾½ç« ","ç‰¹æ®Šç”¨æˆ·")
 Const DEF_EnableMakeTopAnc = 1
 Const DEF_EnableDatabaseCache = 0
 Const DEF_WriteEventSpace = 2
@@ -91,7 +91,7 @@ Const DEF_DownKey = "sLvGA3pLXuii"
 Const DEF_UpdateInterval = 300
 Const DEF_BottomInfo = " "
 Dim DEF_GBL_Description
-DEF_GBL_Description = "LeadBBSÂÛÌ³"
+DEF_GBL_Description = "LeadBBSè®ºå›"
 Const DEF_Sideparameter = 1049088
-Const DEF_InstallDir = "/leadbbs/"
+Const DEF_InstallDir = "/"
 %>

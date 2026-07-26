@@ -1,22 +1,22 @@
-<!-- #include file=../../inc/BBSSetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../../User/inc/UserTopic.asp -->
-<!-- #include file=Chat_Fun.asp -->
-<!-- #include file=../../inc/Limit_Fun.asp -->
+<!--#include file="../../inc/BBSSetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../../User/inc/UserTopic.asp"-->
+<!--#include file="Chat_Fun.asp"-->
+<!--#include file="../../inc/Limit_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
-Const C_LMT_MaxChannel = 4 '×î¶àÆµµÀ
+Const C_LMT_MaxChannel = 4 'æœ€å¤šé¢‘é“
 
-Main
+Main()
 
 Sub Main
 
 	Chat_EnablePageRequest = 0
-	initDatabase
+	initDatabase()
 	
 	dim appflag : appflag = request("appflag")
 	if appflag <> "1" then
-		BBS_SiteHead DEF_SiteNameString & " - ÁÄÌì",0,"<span class=""navigate_string_step"">ÁÄÌì</span>"
+		BBS_SiteHead DEF_SiteNameString & " - èŠå¤©",0,"<span class=""navigate_string_step"">èŠå¤©</span>"
 	else
 		%>
 		<html><head>
@@ -28,7 +28,7 @@ Sub Main
 		<div>
 		<%
 	end if
-	UpdateOnlineUserAtInfo GBL_board_ID,"ÁÄÌì"
+	UpdateOnlineUserAtInfo GBL_board_ID,"èŠå¤©"
 	
 	if appflag <> "1" then UserTopicTopInfo("plug")
 	
@@ -36,33 +36,33 @@ Sub Main
 	Chat_Flag = 0
 	If GBL_CHK_Flag = 1 Then
 		GBL_CHK_TempStr = ""
-		CheckUserAnnounceLimit
+		CheckUserAnnounceLimit()
 		If GBL_CHK_TempStr <> "" Then
 			GBL_CHK_Flag = 0
-			Response.Write "<div class=""alert"">ÄãµÄÓÃ»§ÊôÓÚ½ûÑÔ»òÆÁ±Î£¬»òÎ´¾­¹ıÈÏÖ¤£®</div>"
+			Response.Write "<div class=""alert"">ä½ çš„ç”¨æˆ·å±äºç¦è¨€æˆ–å±è”½ï¼Œæˆ–æœªç»è¿‡è®¤è¯ï¼</div>"
 		Else
-			CheckisBoardMaster
+			CheckisBoardMaster()
 			If GBL_BoardMasterFlag >= 2 or GBL_CHK_Points >= 0 Then
 				Chat_SessionCreate(GBL_CHK_User)
-				Chat_ChatRoom
+				Chat_ChatRoom()
 				Chat_Flag = 1
 			Else
 				GBL_CHK_Flag = 0
-				Response.Write "<div class=""alert"">ÔİÊ±ÏŞ¶¨Ö»ÓĞ" & DEF_PointsName(8) & "»ò" & DEF_PointsName(5) & "»ò0ÒÔÉÏ" & DEF_PointsName(0) & "µÄ³ÉÔ±²ÅÄÜ·ÃÎÊ£®</div>"
+				Response.Write "<div class=""alert"">æš‚æ—¶é™å®šåªæœ‰" & DEF_PointsName(8) & "æˆ–" & DEF_PointsName(5) & "æˆ–0ä»¥ä¸Š" & DEF_PointsName(0) & "çš„æˆå‘˜æ‰èƒ½è®¿é—®ï¼</div>"
 			End If
 		End If
 	Else
 		If Request("submitflag")="" Then
-			DisplayLoginForm("ÇëÏÈµÇÂ¼")
+			DisplayLoginForm("è¯·å…ˆç™»å½•")
 		Else
 			DisplayLoginForm(GBL_CHK_TempStr)
 		End If
 	End If
 	if appflag <> "1" then UserTopicBottomInfo
-	closeDataBase
+	closeDataBase()
 	If Chat_Flag = 1 Then Chat_initMessage
 	If appflag <> "1" then
-		SiteBottom
+		SiteBottom()
 	else
 	%>
 		<script type="text/javascript">
@@ -95,6 +95,7 @@ Sub Chat_initMessage
 	Index = World_Index + 2
 	If Index <> World_Index and Index <> -1 Then
 		Temp = Application(DEF_MasterCookies & "_Chat_World")
+		If Not isArray(Temp) Then Exit Sub   ' cold cache: no world-chat backlog to render yet
 		Response.Write "<script>"
 		If Index > World_Index Then
 			For n = Index to Chat_MaxCache-1
@@ -118,7 +119,7 @@ End Sub
 
 Sub c_ViewOnlineUser
 
-	Response.Write "<span style=""color:#787878"" onclick=""alert(c_onlinelist.innerHTML);"">ÔÚÏßÈËÔ±£¬µã»÷Ñ¡ÔñË½ÁÄ¶ÔÏó</span></b><table id=""c_onlinelist"">" & VbCrLf
+	Response.Write "<span style=""color:#787878"" onclick=""alert(c_onlinelist.innerHTML);"">åœ¨çº¿äººå‘˜ï¼Œç‚¹å‡»é€‰æ‹©ç§èŠå¯¹è±¡</span></b><table id=""c_onlinelist"">" & VbCrLf
 	Dim Thing
 	Dim tmp,tmp1
 	tmp = len(DEF_MasterCookies & "_Chat_S_Data_")
@@ -219,17 +220,17 @@ function c_adduser(usr)
 	<tr><td width="<%=Chat_Width-3%>" valign="top">
 	
 	<table border="0" cellpadding="0" cellspacing="0"><tr>
-	<td><input TYPE="button" value="ÊÀ½ç" class="c_button" style="color:#787878;background-color:#C3C3C3;" onclick="c_viewbutton(1);" hidefocus="true" id="c_Button1"></td>
-	<td><input TYPE="button" value="Ë½ÁÄ" class="c_button" style="" onclick="c_viewbutton(2);" hidefocus="true" id="c_Button2"></td>
-	<td><input TYPE="button" value="ÂÛÌ³" class="c_button" style="" onclick="c_viewbutton(3);" hidefocus="true" id="c_Button3"></td>
-	<td><input TYPE="button" value="ÔÚÏß" class="c_button" style="" onclick="c_viewbutton(4);" hidefocus="true" id="c_Button4"></td>
+	<td><input TYPE="button" value="ä¸–ç•Œ" class="c_button" style="color:#787878;background-color:#C3C3C3;" onclick="c_viewbutton(1);" hidefocus="true" id="c_Button1"></td>
+	<td><input TYPE="button" value="ç§èŠ" class="c_button" style="" onclick="c_viewbutton(2);" hidefocus="true" id="c_Button2"></td>
+	<td><input TYPE="button" value="è®ºå›" class="c_button" style="" onclick="c_viewbutton(3);" hidefocus="true" id="c_Button3"></td>
+	<td><input TYPE="button" value="åœ¨çº¿" class="c_button" style="" onclick="c_viewbutton(4);" hidefocus="true" id="c_Button4"></td>
 	</tr></table>
 	<span id="uptext" name="uptext"> </span>
 	<table border="0" cellpadding="1" cellspacing="0" height="377" width="<%=Chat_Width%>" class="c_window" id="c_Winout_1">
 	<tr><td>
 		<div class="c_scrollbar" id="c_out_1_Table">
 			<div class="c_content" id="c_out_1">
-				<br /><span style="color:#787878">´Ë´°¿ÚÏÔÊ¾×îĞÂÁÄÌì»òÏà¹ØĞÅÏ¢.</span><br /><br />
+				<br /><span style="color:#787878">æ­¤çª—å£æ˜¾ç¤ºæœ€æ–°èŠå¤©æˆ–ç›¸å…³ä¿¡æ¯.</span><br /><br />
 			</div>
 		</div>
 	</td></tr>
@@ -259,19 +260,19 @@ function c_adduser(usr)
 			<input TYPE="hidden" name="inputCommand" id="inputCommand" value="">
 			<input TYPE="hidden" name="ToUser" id="ToUser" value="">
 			<select name="SelChannel" id="SelChannel" style="width:80" onchange="c_changeChannel(this);">
-			<option value="99">Ë½ÁÄ¡­</option>
-			<option value="98">ÃÜ:Î´Ñ¡Ôñ</option>
-			<option value="3">ÍÅ¶Ó³ÉÔ±</option>
+			<option value="99">ç§èŠâ€¦</option>
+			<option value="98">å¯†:æœªé€‰æ‹©</option>
+			<option value="3">å›¢é˜Ÿæˆå‘˜</option>
 			<option value="2"><%=DEF_PointsName(9)%></option>
-			<option value="1" selected>ÊÀ½ç</option>
+			<option value="1" selected>ä¸–ç•Œ</option>
 			</select>
 		</td><td style="padding-right:6px;">
 			<input name="input" type="text" id="input" maxlength="<%=Chat_MaxInput%>" class="fminpt input_3" size="40">
 		</td><td style="padding-right:6px;">
-			<input TYPE="button" value="·¢ËÍ" onclick="messageSubmit();" class="fmbtn btn_2">
+			<input TYPE="button" value="å‘é€" onclick="messageSubmit();" class="fmbtn btn_2">
 		</td>
 		<td>
-			<span style="cursor:pointer" id="c_moreclick" onclick="c_viewmorefun(this);">[Òş²Ø¹¦ÄÜ]</span>
+			<span style="cursor:pointer" id="c_moreclick" onclick="c_viewmorefun(this);">[éšè—åŠŸèƒ½]</span>
 		</td>
 		</tr></table>
 	</td>
@@ -281,14 +282,14 @@ function c_adduser(usr)
 	<tr><td><input TYPE="hidden" name="c_myname" id="c_myname" value="<%=htmlencode(GBL_CHK_User)%>"><div id="c_morefun">
 	<table border="0" cellspacing="0" cellpadding="0"><tr><td>
 		<table border="0" cellspacing="0" cellpadding="0"><tr>
-		<td><span style="cursor:pointer" onclick="IconPage();"><img src="../../images/UBBicon/em15.GIF" style="cursor:pointer" align="middle" border="0" title="ÏÔÊ¾±íÇé"></span></td>
-		<td>&nbsp;<span style="cursor:pointer" onclick="window.open('help/action.html','','width=600,height=450,scrollbars=yes,status=yes');">ÁÄÌì¶¯×÷</a></td>
+		<td><span style="cursor:pointer" onclick="IconPage();"><img src="../../images/UBBicon/em15.GIF" style="cursor:pointer" align="middle" border="0" title="æ˜¾ç¤ºè¡¨æƒ…"></span></td>
+		<td>&nbsp;<span style="cursor:pointer" onclick="window.open('help/action.html','','width=600,height=450,scrollbars=yes,status=yes');">èŠå¤©åŠ¨ä½œ</a></td>
 		<td>&nbsp;<%
 		If Chat_DEF_ColorSpend > 0 Then
-			Response.Write "»¨·Ñ" & Chat_DEF_ColorSpend & DEF_PointsName(0)
+			Response.Write "èŠ±è´¹" & Chat_DEF_ColorSpend & DEF_PointsName(0)
 		Else
-			Response.Write "Ãâ·Ñ"
-		End If%>ÔöÉ«</td><td><select size="1" name="c_Color" onchange="addcontent('[color=' + this.value + ']','[/color]');" <%If GBL_CHK_Points < Chat_DEF_ColorSpend Then Response.Write " disabled=""true"""%>>
+			Response.Write "å…è´¹"
+		End If%>å¢è‰²</td><td><select size="1" name="c_Color" onchange="addcontent('[color=' + this.value + ']','[/color]');" <%If GBL_CHK_Points < Chat_DEF_ColorSpend Then Response.Write " disabled=""true"""%>>
 				<option value="">--</option>
 				<script type="text/javascript">
 				var Color_n,Color_l,Color_str = "f0f8ff faebd7 00ffff 7fffd4 f0ffff f5f5dc ffe4c4 ffebcd 0000ff 8a2be2 a52a2a deb887 5f9ea0 7fff00 d2691e ff7f50 000000 1e90ff 696969 6495ed fff8dc dc143c 00ffff 00008b 008b8b b8860b a9a9a9 006400 bdb76b 8b008b 556b2f ff8c00 9932cc 8b0000 e9967a 8fbc8f 483d8b 2f4f4f 00ced1 9400d3 ff1493 00bfff b22222 fffaf0 228b22 ff00ff dcdcdc f8f8ff ffd700 daa520 808080 008000 adff2f f0fff0 ff69b4 cd5c5c 4b0082 fffff0 f0e68c e6e6fa fff0f5 7cfc00 fffacd add8e6 f08080 e0ffff fafad2 90ee90 d3d3d3 ffb6c1 ffa07a 20b2aa 87cefa 778899 b0c4de ffffe0 00ff00 32cd32 faf0e6 ff00ff 800000 66cdaa 0000cd ba55d3 9370db 3cb371 7b68ee 00fa9a 48d1cc c71585 191970 f5fffa ffe4e1 ffe4b5 ffdead 000080 fdf5e6 808000 6b8e23 ffa500 ff4500 da70d6 eee8aa 98fb98 afeeee db7093 ffefd5 ffdab9 cd853f ffc0cb dda0dd b0e0e6 800080 ff0000 bc8f8f 4169e1 8b4513 fa8072 f4a460 2e8b57 fff5ee a0522d c0c0c0 87ceeb 6a5acd 708090 fffafa 00ff7f 4682b4 d2b48c 008080 d8bfd8 ff6347 40e0d0 ee82ee f5deb3 ffffff f5f5f5 ffff00 9acd32";
@@ -375,7 +376,7 @@ function addcontent(str1,str2)
 {
 	var obj = $id("input");
 	var str=str1 + str2;
-	if(obj.value.length + str.length > c_maxinput){alert("·¢ËÍÄÚÈİ¹ı³¤£¬²Ù×÷Ê§°Ü!");return;}
+	if(obj.value.length + str.length > c_maxinput){alert("å‘é€å†…å®¹è¿‡é•¿ï¼Œæ“ä½œå¤±è´¥!");return;}
 	obj.focus();
 	if ((document.selection)&&(document.selection.type== "Text"))
 	{
@@ -421,9 +422,9 @@ function addcontent(str1,str2)
 function c_viewmorefun(cl)
 {
 	if($id("c_morefun").style.display=="none")
-	{$id('c_morefun').style.display="";cl.innerHTML="[Òş²Ø¹¦ÄÜ]";}
+	{$id('c_morefun').style.display="";cl.innerHTML="[éšè—åŠŸèƒ½]";}
 	else
-	{$id('c_morefun').style.display="none";cl.innerHTML="[¸ü¶à¹¦ÄÜ]";}
+	{$id('c_morefun').style.display="none";cl.innerHTML="[æ›´å¤šåŠŸèƒ½]";}
 	focusMes();
 }
 </script>
@@ -486,7 +487,7 @@ function c_changeChannel(obj)
 			break;
 		case "98":
 			var usr=$id("SelChannel").options[1].innerHTML.substring(2,$id("SelChannel").options[1].innerHTML.length);
-			if(usr!="Î´Ñ¡Ôñ"){$id("ToUser").value=usr;}
+			if(usr!="æœªé€‰æ‹©"){$id("ToUser").value=usr;}
 			else{c_InputUser();}
 			break;
 	}
@@ -496,10 +497,10 @@ function c_changeChannel(obj)
 
 function c_InputUser()
 {
-	var input=prompt('ÇëÊäÈëË½ÁÄ¶ÔÏó',"");
+	var input=prompt('è¯·è¾“å…¥ç§èŠå¯¹è±¡',"");
 	if(input!=null){
 		if(""==input){
-			alert("ÇëÊäÈëÕıÈ·µÄÓÃ»§Ãû!");
+			alert("è¯·è¾“å…¥æ­£ç¡®çš„ç”¨æˆ·å!");
 			c_InputUser();
 			return;
 		}else{
@@ -514,13 +515,13 @@ function c_InputUser()
 }
 
 
-//Ñ¡ÔñË½ÁÄ¶ÔÏó
+//é€‰æ‹©ç§èŠå¯¹è±¡
 function c_sc(usr)
 {
-	$id("SelChannel").options[1].innerHTML="ÃÜ:" + usr;
+	$id("SelChannel").options[1].innerHTML="å¯†:" + usr;
 	$id("SelChannel").value="98";
 	$id("ToUser").value=usr;
-	if($id('layer_SelChannel'))$id('layer_SelChannel').innerHTML="ÃÜ:" + usr;
+	if($id('layer_SelChannel'))$id('layer_SelChannel').innerHTML="å¯†:" + usr;
 	focusMes();
 }
 	
@@ -536,7 +537,7 @@ function messageSubmit()
 		var nowtime = c_gettime();
 		if(nowtime-c_sendtime<delay && nowtime>c_sendtime)
 		{
-			addMessage('2',"<span class=\"redfont\">ÇëÉÔºòÔÙ·¢ËÍÏûÏ¢£¡</span>");
+			addMessage('2',"<span class=\"redfont\">è¯·ç¨å€™å†å‘é€æ¶ˆæ¯ï¼</span>");
 		}
 		else
 		{
@@ -587,7 +588,7 @@ function c_setcommand_face(usr,fstr)
 	var myname = "",i = 1,n;
 	if($id("c_myname"))myname = $id("c_myname").value.toLowerCase();
 	if(usr!="" || $id("SelChannel").value=="98")i=3;
-	if(usr==myname)i=2;//¶Ô×Ô¼º
+	if(usr==myname)i=2;//å¯¹è‡ªå·±
 	for(n=0;n<c_dil;n++)
 	{
 		if((" " + c_di[n][0] + " ").indexOf(" " + fstr + " ")>-1)
@@ -671,35 +672,35 @@ function addMessage(pos,mes)
 	{
 		case "1":
 			tp = "c_out_1";
-			c = "<span class=\"cnl_world\">¡¾ÊÀ½ç¡¿";
+			c = "<span class=\"cnl_world\">ã€ä¸–ç•Œã€‘";
 			mes = mes + "</span>";
 			mes = c + C_IO_UBB(mes);
 			break;
 		case "2":
 			tp = "c_out_1";
-			c = "<span class=\"cnl_alert\">¡¾ÌáÊ¾¡¿";
+			c = "<span class=\"cnl_alert\">ã€æç¤ºã€‘";
 			mes = mes + "</span>";
 			mes = c + C_IO_UBB(mes);
 			break;
 		case "3":
 			tp = "c_out_1";
-			c = "<span class=\"cnl_bbs\">¡¾ÂÛÌ³¡¿";
+			c = "<span class=\"cnl_bbs\">ã€è®ºå›ã€‘";
 			mes = mes + "</span>";
 			mes = c + C_IO_UBB(mes);
 			addMessage_2("c_out_3",mes)
 			break;
 		case "4":
 			tp = "c_out_1";
-			c = "<span class=\"cnl_alert\">¡¾¹«¸æ¡¿";
+			c = "<span class=\"cnl_alert\">ã€å…¬å‘Šã€‘";
 			mes = c + C_IO_UBB(mes);
 			break;
 		case "5":
 		case "6":
 			tp = "c_out_1";
 			if(pos=="5")
-			c = "<span class=\"cnl_person\">¡¾Ë½ÁÄ¡¿";
+			c = "<span class=\"cnl_person\">ã€ç§èŠã€‘";
 			else
-			c = "<span class=\"cnl_isend\">¡¾Ë½ÁÄ¡¿";
+			c = "<span class=\"cnl_isend\">ã€ç§èŠã€‘";
 			mes = mes + "</span>";
 			mes = c + C_IO_UBB(mes);
 			addMessage_2("c_out_2",mes);
@@ -707,33 +708,33 @@ function addMessage(pos,mes)
 			break;
 		case "7":
 			tp = "c_out_1";
-			c = "<span class=\"cnl_useron\">¡¾»áÔ±¡¿";
+			c = "<span class=\"cnl_useron\">ã€ä¼šå‘˜ã€‘";
 			c_adduser(mes);
-			mes = c + "<span onclick=\"c_sc(this.innerHTML)\" style=\"cursor:pointer\" class=\"c_name\">" + mes + "</span>ÉÏÏßÁË!";
+			mes = c + "<span onclick=\"c_sc(this.innerHTML)\" style=\"cursor:pointer\" class=\"c_name\">" + mes + "</span>ä¸Šçº¿äº†!";
 			mes = mes + "</span>";
 			break;
 		case "8":
 			tp = "c_out_1";
-			c = "<span class=\"cnl_useroff\">¡¾»áÔ±¡¿";
+			c = "<span class=\"cnl_useroff\">ã€ä¼šå‘˜ã€‘";
 			c_removeuser(mes);
-			mes = c + "<span class=\"c_name\">" + mes + "</span>Àë¿ªÁË!";
+			mes = c + "<span class=\"c_name\">" + mes + "</span>ç¦»å¼€äº†!";
 			mes = mes + "</span>";
 			break;
 		case "9":
 			tp = "c_out_1";
-			c = "<span class=\"cnl_alert\">¡¾ÌáÊ¾¡¿";
+			c = "<span class=\"cnl_alert\">ã€æç¤ºã€‘";
 			switch(mes)
 			{
 				case "stop":
-						mes = "´ËÓÃ»§±»ÖØ¸´µÇÂ¼Í£Ö¹¶¯×÷£¬ÈôÒª¼ÌĞøÇë<a href=\"#\" onclick=\"top.window.location.reload();\" >[Ë¢ĞÂ].</a>";
+						mes = "æ­¤ç”¨æˆ·è¢«é‡å¤ç™»å½•åœæ­¢åŠ¨ä½œï¼Œè‹¥è¦ç»§ç»­è¯·<a href=\"#\" onclick=\"top.window.location.reload();\" >[åˆ·æ–°].</a>";
 						window.clearTimeout(C_IOfun);
 						break;
 				case "guest":
-						mes = "¹ı¾ÃÎŞ¶¯×÷»òÎ´µÇÂ¼¶øÖÕÖ¹£¬Òª¼ÌĞøÇë<a href=\"#\" onclick=\"top.window.location.reload();\" >[Ë¢ĞÂ].</a>";
+						mes = "è¿‡ä¹…æ— åŠ¨ä½œæˆ–æœªç™»å½•è€Œç»ˆæ­¢ï¼Œè¦ç»§ç»­è¯·<a href=\"#\" onclick=\"top.window.location.reload();\" >[åˆ·æ–°].</a>";
 						window.clearTimeout(C_IOfun);
 						break;
 				case "reset":
-						mes = "ÏµÍ³ÖØÆô£¬ÈôÒª¼ÌĞøÇë<a href=\"#\" onclick=\"top.window.location.reload();\" >[Ë¢ĞÂ].</a>";
+						mes = "ç³»ç»Ÿé‡å¯ï¼Œè‹¥è¦ç»§ç»­è¯·<a href=\"#\" onclick=\"top.window.location.reload();\" >[åˆ·æ–°].</a>";
 						window.clearTimeout(C_IOfun);
 						c_reset = 1;
 						break;
@@ -780,7 +781,7 @@ function C_IO(ur,lb,id)
 	var HR = getHttp();
 	HR.onreadystatechange = function() {processAJAX(lb);};
 	HR.open("POST", "Chat_IO.asp" , true);
-	HR.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=gb2312");
+	HR.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=utf-8");
 	HR.send("user=" + c_User);
 	function processAJAX(lb)
 	{
@@ -790,13 +791,13 @@ function C_IO(ur,lb,id)
 			{
 				if(HR.responseText=="busy")
 				{
-					addMessage("2","<b>×¢Òâ: </b>ÇëÇó¹ıÆµ£¬´Ë´°¿ÚÒÑÔİÍ£´¦Àí£¬Èô¿ªÆô¶à´°¿Ú£¬Çë¹Ø±ÕÆäËü´°¿ÚÔÙ<a href=\"#\" onclick=\"top.window.location.reload();\" >[Ë¢ĞÂ].</a><br />");
+					addMessage("2","<b>æ³¨æ„: </b>è¯·æ±‚è¿‡é¢‘ï¼Œæ­¤çª—å£å·²æš‚åœå¤„ç†ï¼Œè‹¥å¼€å¯å¤šçª—å£ï¼Œè¯·å…³é—­å…¶å®ƒçª—å£å†<a href=\"#\" onclick=\"top.window.location.reload();\" >[åˆ·æ–°].</a><br />");
 					window.clearTimeout(C_IOfun);
 					return;
 				}
 				if(C_err==1)
 				{
-					addMessage("2","<b><span class=\"greenfont\">ÁÄÌìÊÒÖØĞÂÁ¬½Ó³É¹¦¡£</span></b><br />");
+					addMessage("2","<b><span class=\"greenfont\">èŠå¤©å®¤é‡æ–°è¿æ¥æˆåŠŸã€‚</span></b><br />");
 					C_err = 0;
 					C_errtime = 1;
 				}
@@ -814,7 +815,7 @@ function C_IO(ur,lb,id)
 	}
 	if(C_err==1)
 	{
-		addMessage("2","<b>´íÎó: </b>[" + C_errstr + "]£¬" + ((C_errtime==1)?"ÒÑ¶Ï¿ªÁ¬½Ó":"Á¬½ÓÊ§°Ü") + "£¬½«ÔÚ" + (C_errtime*10>60?parseInt(C_errtime*10/60)+"·Ö":C_errtime*10+"Ãë") + "ºó³¢ÊÔÁ¬½Ó¡£<br />");
+		addMessage("2","<b>é”™è¯¯: </b>[" + C_errstr + "]ï¼Œ" + ((C_errtime==1)?"å·²æ–­å¼€è¿æ¥":"è¿æ¥å¤±è´¥") + "ï¼Œå°†åœ¨" + (C_errtime*10>60?parseInt(C_errtime*10/60)+"åˆ†":C_errtime*10+"ç§’") + "åå°è¯•è¿æ¥ã€‚<br />");
 		window.clearTimeout(C_IOfun);
 		C_Level -= 1;
 		C_IOfun = window.setTimeout(C_IO,C_errtime*10*1000);
@@ -846,9 +847,9 @@ function C_IO_UBB(str)
 	str = str.replace(/\[(\/?(sup|sub))\]/gim,"<$1>");
 	str = str.replace(/\[em([0-9]{1,4})\]/gi,"<img src=\"../../images/UBBicon/em$1.GIF\" align=\"absmiddle\">");//[em**]
 	str = str.replace(/\[color=([#0-9a-z]{1,12})\](.+?)\[\/color\]/gim,"<font color=\"$1\">$2</font>");//[color]
-	str = str.replace(/\[color=([#0-9a-z]{1,12})\]\[\/color\]/gim,"<font color=\"$1\">¡­</font>");//[color]
+	str = str.replace(/\[color=([#0-9a-z]{1,12})\]\[\/color\]/gim,"<font color=\"$1\">â€¦</font>");//[color]
 	str = str.replace(/\[bgColor=([#0-9a-z]{1,12}),([#0-9a-z]{1,12})\](.+?)\[\/bgColor\]/gim,"<font style=\"BACKGROUND-COLOR: $1\" color=\"$2\">$3</font>");//[bgcolor]
-	str = str.replace(/( |\n|\r|\t|\v|\<br\>|\£º|\:|¡¡)(http:\/\/|ftp:\/\/|https:\/\/|mms:\/\/|rtsp:\/\/|www.)([^# \f\n\r\t\v\<¡¡]*)/gi,function($0,$1,$2,$3){var u=$2;if(u.substr(0,4).toLowerCase()=='www.')u='http://'+u;return($1+'<a href=\"' + C_IO_filter(u+$3) + '\" target=\"_blank\">' + u+$3 + '</a>');});//[url]
+	str = str.replace(/( |\n|\r|\t|\v|\<br\>|\ï¼š|\:|ã€€)(http:\/\/|ftp:\/\/|https:\/\/|mms:\/\/|rtsp:\/\/|www.)([^# \f\n\r\t\v\<ã€€]*)/gi,function($0,$1,$2,$3){var u=$2;if(u.substr(0,4).toLowerCase()=='www.')u='http://'+u;return($1+'<a href=\"' + C_IO_filter(u+$3) + '\" target=\"_blank\">' + u+$3 + '</a>');});//[url]
 	return str;
 }
 
@@ -866,7 +867,7 @@ function C_IO_filter(str)
 C_IOfun = window.setTimeout(C_IO,c_GetDelay);
 <%If Request.QueryString("c") = "2" Then Response.Write "c_viewbutton(2);" & VbCrLf%>
 
-//window.onbeforeunload = function(){return("Àë¿ªÒ³Ãæ½«Çå³ıµ±Ç°ÁÄÌì¼ÇÂ¼");}
+//window.onbeforeunload = function(){return("ç¦»å¼€é¡µé¢å°†æ¸…é™¤å½“å‰èŠå¤©è®°å½•");}
 </script>
     
 <%End Function%>

@@ -21,7 +21,7 @@ Private Sub Class_Initialize
 
 	T2 = ""
 	Dim TArray,N
-	B_Now = Left(GetTimeValue(DEF_Now),8)
+	B_Now = Left(LngStr(GetTimeValue(DEF_Now)),8)
 	TArray = Application(DEF_MasterCookies & "BoardInfo" & GBL_Board_ID & "_TI")
 	If isArray(TArray) = False Then
 		Num = 0
@@ -56,7 +56,7 @@ End Sub
 Public Sub Showhead
 
 	Response.Write "<tr class=""tbhead"">"
-	%>	<td width="30" class="forum_options<%If CFlag = 1 Then Response.Write "_sim"%>" title="»ù±¾/ÏêÏ¸" onclick="forum_options(this);">&nbsp;
+	%>	<td width="30" class="forum_options<%If CFlag = 1 Then Response.Write "_sim"%>" title="åŸºæœ¬/è¯¦ç»†" onclick="forum_options(this);">&nbsp;
 	<script src="<%=DEF_BBS_HomeUrl%>inc/js/boardlist.js" type="text/javascript"></script>
 	<script>
 	var foption=<%
@@ -79,10 +79,10 @@ Public Sub Showhead
 	}
 	</script>
 	</td>
-	<%Response.Write "	<td><div class=""value"">Ö÷Ìâ</div></td>"
-	Response.Write "	<td width=""110"" class=""author""><div class=""value"">×÷Õß/»Ø¸´ÈË</div></td>"
-	Response.Write "	<td width=""74"" class=""hits""><div class=""value"">»Ø¸´/ÔÄ¶Á</div></td>"
-	'Response.Write "	<td width=""110"" class=""reply""><div class=""value"">×îºó¸üĞÂ</div></td>"
+	<%Response.Write "	<td><div class=""value"">ä¸»é¢˜</div></td>"
+	Response.Write "	<td width=""110"" class=""author""><div class=""value"">ä½œè€…/å›å¤äºº</div></td>"
+	Response.Write "	<td width=""74"" class=""hits""><div class=""value"">å›å¤/é˜…è¯»</div></td>"
+	'Response.Write "	<td width=""110"" class=""reply""><div class=""value"">æœ€åæ›´æ–°</div></td>"
 	Response.Write "</tr>"
 
 End Sub
@@ -101,7 +101,7 @@ Public Sub leadbbs(AllFlag,TopicID,ChildNum,Title,FaceIcon,G6,G7,G8,G9,G10,G11,G
 			Else
 				Response.Write "3"
 			End If
-			Response.Write """ id=""forum_linehead""><div class=""value"">ÆÕÍ¨Ö÷Ìâ</div></td></tr>"
+			Response.Write """ id=""forum_linehead""><div class=""value"">æ™®é€šä¸»é¢˜</div></td></tr>"
 			allflg = 2
 		End If
 	end if
@@ -111,47 +111,47 @@ Public Sub leadbbs(AllFlag,TopicID,ChildNum,Title,FaceIcon,G6,G7,G8,G9,G10,G11,G
 	If AllFlag = 1 or AllFlag = 2 Then
 		If AllFlag = 1 Then
 			Temp = "alltop"
-			Temp2 = "×ÜÖÃ¶¥"
+			Temp2 = "æ€»ç½®é¡¶"
 			TClass = "TopicType_alltop"
 		Else
 			Temp = "parttop"
-			Temp2 = "ÇøÖÃ¶¥"
+			Temp2 = "åŒºç½®é¡¶"
 			TClass = "TopicType_parttop"
 		End If
 		allflg = 1
 	Else
 		If G11 >= DEF_BTMI and AllFlag <> -1 and EFlag < 0 Then
 			Temp = "intop"
-			Temp2 = "°æÃæÖÃ¶¥"
+			Temp2 = "ç‰ˆé¢ç½®é¡¶"
 			TClass = "TopicType_intop"
 			allflg = 1
 		Else
 			If G17 = 80 Then
 				'If G18 >= 20 Then
 				'	Temp = "vthot"
-				'	Temp2 = "ÈÈÃÅÍ¶Æ±"
+				'	Temp2 = "çƒ­é—¨æŠ•ç¥¨"
 				'Else
 					Temp = "vt"
-					Temp2 = "Í¶Æ±"
+					Temp2 = "æŠ•ç¥¨"
 					TClass = "TopicType_vt"
 				'End If
 			Else
 				If G14 = 1 Then
 					Temp = "lock"
-					Temp2 = "Ëø¶¨"
+					Temp2 = "é”å®š"
 					TClass = "TopicType_lock"
 				ElseIf ChildNum >= 20 Then
 					Temp = "hot"
-					Temp2 = "ÈÈÃÅÌû"
+					Temp2 = "çƒ­é—¨å¸–"
 					TClass = "TopicType_hot"
 				Else
 					If Left(G21,8) = B_Now Then
 						Temp = "tpcnew"
-						Temp2 = "ĞÂÌû"
+						Temp2 = "æ–°å¸–"
 						TClass = "TopicType_tpcnew"
 					Else
 						Temp = "tpc"
-						Temp2 = "ÆÕÍ¨Ìû"
+						Temp2 = "æ™®é€šå¸–"
 						TClass = "TopicType_topic"
 					End If
 				End If
@@ -164,23 +164,23 @@ Public Sub leadbbs(AllFlag,TopicID,ChildNum,Title,FaceIcon,G6,G7,G8,G9,G10,G11,G
 	Response.Write "</td><td class=""tdcontent b_list_topicname""><span class=""topicdiv""><span class=""word-break-all"">"
 
 	If ChildNum > 0 Then
-		Response.Write "<img src=""../images/" & GDI & "clsExpand.gif"" id=""LeadImg" & TopicID & """ class=""b_getlist absmiddle b_getlist_exist"" onclick=""Show2('Lead" & TopicID & "','LeadImg" & TopicID & "'," & TopicID & ")"" style=""cursor: pointer"" alt=""Õ¹¿ª/ÊÕÆğ"" />"
+		Response.Write "<img src=""../images/" & GDI & "clsExpand.gif"" id=""LeadImg" & TopicID & """ class=""b_getlist absmiddle b_getlist_exist"" onclick=""Show2('Lead" & TopicID & "','LeadImg" & TopicID & "'," & TopicID & ")"" style=""cursor: pointer"" alt=""å±•å¼€/æ”¶èµ·"" />"
 	Else
 		Response.Write "<img src=""../images/" & GDI & "Expand_blank.gif"" class=""b_getlist absmiddle b_getlist_none"" />"
 	End If
 
 	If G8 > 1024 Then
-		G8 = "Ö÷ÌâÄÚÈİ£º" & Fix(G8/1024) & "KB"
+		G8 = "ä¸»é¢˜å†…å®¹ï¼š" & Fix(G8/1024) & "KB"
 	Else
-		G8 = "Ö÷ÌâÄÚÈİ£º" & G8 & "×Ö½Ú"
+		G8 = "ä¸»é¢˜å†…å®¹ï¼š" & G8 & "å­—èŠ‚"
 	End If
-	If G17 <> 39 and G20 <> "" Then G8 = G8 & VbCrLf & "×îºó»Ø¸´£º" & HtmlEncode(G20)
+	If G17 <> 39 and G20 <> "" Then G8 = G8 & VbCrLf & "æœ€åå›å¤ï¼š" & HtmlEncode(G20)
 	
-	G8 = G8 & VbCrLf & "·¢±íÊ±¼ä£º" & ConvertSimTimeString(Mid(G21,1,4) & "-" & Mid(G21,5,2) & "-" & Mid(G21,7,2) & " " & Mid(G21,9,2) & ":" & Mid(G21,11,2))
+	G8 = G8 & VbCrLf & "å‘è¡¨æ—¶é—´ï¼š" & ConvertSimTimeString(Mid(G21,1,4) & "-" & Mid(G21,5,2) & "-" & Mid(G21,7,2) & " " & Mid(G21,9,2) & ":" & Mid(G21,11,2))
 
 	Temp1 = Fix((ChildNum+1)/DEF_TCMLN)
 	If Temp1 < ((ChildNum+1)/DEF_TCMLN) Then Temp1 = Temp1 + 1
-	If DEF_DTL < 255 Then '255³¤¶ÈºöÂÔÅĞ¶Ï ÍêÕûÏÔÊ¾
+	If DEF_DTL < 255 Then '255é•¿åº¦å¿½ç•¥åˆ¤æ–­ å®Œæ•´æ˜¾ç¤º
 		If ChildNum >= DEF_TCMLN Then
 			Temp = DEF_DTL - Len(Temp1 & "") - 3
 		Else
@@ -213,7 +213,7 @@ Public Sub leadbbs(AllFlag,TopicID,ChildNum,Title,FaceIcon,G6,G7,G8,G9,G10,G11,G
 		T2 = ""
 	End If
 
-If DEF_DTL < 255 Then '255³¤¶ÈºöÂÔÅĞ¶Ï ÍêÕûÏÔÊ¾
+If DEF_DTL < 255 Then '255é•¿åº¦å¿½ç•¥åˆ¤æ–­ å®Œæ•´æ˜¾ç¤º
 	If G19 = 1 Then
 		If StrLength(Title) > Temp Then Title = LeftTrueHTML(Title,Temp-3)
 	Else
@@ -221,7 +221,7 @@ If DEF_DTL < 255 Then '255³¤¶ÈºöÂÔÅĞ¶Ï ÍêÕûÏÔÊ¾
 	End If
 End If
 
-	If G9 = "[LeadBBS]" Then G9 = "ÏµÍ³"
+	If G9 = "[LeadBBS]" Then G9 = "ç³»ç»Ÿ"
 	Dim old_TopicID
 	old_TopicID = TopicID
 	If G17 = 39 Then
@@ -244,8 +244,8 @@ End If
 		End If%>" onclick="delbody_view(this);" /></span><%
 		Index = Index + 1
 	End If
-	If T2 <> "" Then Response.Write "<a href=""" & RW_b(G16,1,"&e=1&eid=" & G22) & """ class=""subjectfont""><span>¡¾</span>" & T2 & "<span>¡¿</span></a>"
-	If FaceIcon > 0 Then Response.Write "<img src=""../images/" & GBL_DefineImage & "bf/face" & FaceIcon & ".gif"" class=""absmiddle"" alt=""±íÇé"" /> "
+	If T2 <> "" Then Response.Write "<a href=""" & RW_b(G16,1,"&e=1&eid=" & G22) & """ class=""subjectfont""><span>ã€</span>" & T2 & "<span>ã€‘</span></a>"
+	If FaceIcon > 0 Then Response.Write "<img src=""../images/" & GBL_DefineImage & "bf/face" & FaceIcon & ".gif"" class=""absmiddle"" alt=""è¡¨æƒ…"" /> "
 	If G17 <> 80 and G17 <> 54 and G17 <> 114 and G17 <> 49 and G17 <> 109 and G18 > 0 Then Response.Write "<img src=""../images/" & GDI & "TC/" & G18 & ".gif"" class=""infotype absmiddle"" alt="""" />"
 	
 	RewriteStr = RW_a(G16,TopicID,1,splitpage_page+1,"")
@@ -258,11 +258,11 @@ End If
 	Response.Write "</a></span>"
 
 	RewriteStr = RW_a(G20,NeedValue,1,splitpage_page+1,"")
-	If G17 = 39 Then Response.Write " <a href=""../a/" & RewriteStr & """><span class=""grayfont"">[¾µÏñ]</span></a>"
+	If G17 = 39 Then Response.Write " <a href=""../a/" & RewriteStr & """><span class=""grayfont"">[é•œåƒ]</span></a>"
 	
-	If Left(G21,8) = B_Now or Left(G6,8) = B_Now Then Response.Write "<img src=""../images/new.gif"" class=""absmiddle new"" alt=""ĞÂ¸üĞÂ"" />"
+	If Left(G21,8) = B_Now or Left(G6,8) = B_Now Then Response.Write "<img src=""../images/new.gif"" class=""absmiddle new"" alt=""æ–°æ›´æ–°"" />"
 
-	If ccur(G15) = 1 Then Response.Write "<img src=""../images/" & GDI & "jh1.GIF"" title=""¾«»ªÌû×Ó"" class=""absmiddle"" alt=""¾«»ª"" />"
+	If ccur(G15) = 1 Then Response.Write "<img src=""../images/" & GDI & "jh1.GIF"" title=""ç²¾åå¸–å­"" class=""absmiddle"" alt=""ç²¾å"" />"
 
 	'If G17 <> 39 and G20 <> "" Then Response.Write "<br /><span class=""grayfont note"">" & HtmlEncode(G20) & "</span>"
 	
@@ -334,7 +334,7 @@ End If
 				Response.Write "<a href=""../User/" & RW_User(G10,"","","") & """ class=""lastuser"">" & HtmlEncode(GetTrueName(G9,T2_TrueName)) & "</a>"
 			End If
 		Else
-			If G13 <> "ÓÎ¿Í" Then
+			If G13 <> "æ¸¸å®¢" Then
 				if inStr(replace(replace(G13,"QQ#",""),"LD#",""),"#") then
 					Response.Write "<a href=""../User/" & RW_User(urlEncode(Mid(G13,inStrRev(G13,"#")+1)),"","","") & """ class=""lastuser"">" & HtmlEncode(Mid(G13,1,inStrRev(G13,"#")-1)) & "</a>"
 				else
@@ -349,10 +349,10 @@ End If
 
 	If G18 = null Then G18 = 0
 	If G17 = 80 Then
-		Response.Write "¹²" & G18 & "Æ±"
+		Response.Write "å…±" & G18 & "ç¥¨"
 	Else
-		If G7 >= 10000 Then G7 = "<span class=""bluefont"" title=""ÈËÆø:" & G7 & """>" & Fix(G7/10000) & "</span>Íò"
-		If ChildNum >= 10000 Then ChildNum = "<span class=""bluefont"" title=""»ØÌû:" & ChildNum & """>" & Fix(ChildNum/10000) & "</span>Íò"
+		If G7 >= 10000 Then G7 = "<span class=""bluefont"" title=""äººæ°”:" & G7 & """>" & Fix(G7/10000) & "</span>ä¸‡"
+		If ChildNum >= 10000 Then ChildNum = "<span class=""bluefont"" title=""å›å¸–:" & ChildNum & """>" & Fix(ChildNum/10000) & "</span>ä¸‡"
 		Response.Write "<em>" & ChildNum & "/" & G7 & "</em>"
 	End If
 	If Left(G6,8) = B_Now Then
@@ -361,7 +361,7 @@ End If
 		G6 = ConvertSimTimeString(Mid(G6,1,4) & "-" & Mid(G6,5,2) & "-" & Mid(G6,7,2) & " " & Mid(G6,9,2) & ":" & Mid(G6,11,2))
 	End If
 
-	Response.Write "<br /><em title=""×îºó¸üĞÂ"" class=""lastupdate"">" & G6 & "</em>"
+	Response.Write "<br /><em title=""æœ€åæ›´æ–°"" class=""lastupdate"">" & G6 & "</em>"
 	Response.Write "</td>"
 
 	'Response.Write "<td class=""tdcontent reply""></td></tr>"

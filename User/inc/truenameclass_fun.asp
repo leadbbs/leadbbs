@@ -4,18 +4,18 @@
 	
 	Private Sub Class_Initialize
 
-		truename_get
+		truename_get()
 		if truename <> "" then
-			'Response.Write "<div class=bbs_error>ÄúµÄêÇ³ÆÊÇ <u class=bluefont>" & htmlencode(truename) & "</u>£¬ÎŞ·¨ÔÙ´ÎÉêÇë¸ü¸Ä¡£</div>"
+			'Response.Write "<div class=bbs_error>æ‚¨çš„æ˜µç§°æ˜¯ <u class=bluefont>" & htmlencode(truename) & "</u>ï¼Œæ— æ³•å†æ¬¡ç”³è¯·æ›´æ”¹ã€‚</div>"
 			'exit sub
 		end if
 		submitflag = request.form("submitflag")
 		truename = trim(request.form("truename"))
 		if truename = "" then truename_get
 		if submitflag = "" or truename = "" then
-			truename_class_form
+			truename_class_form()
 		else
-			truename_class_submit
+			truename_class_submit()
 		end if
 	
 	End Sub
@@ -42,19 +42,19 @@
 		<input name=SubmitFlag type=hidden value="1">
 		<table border=0 cellpadding="0" class="blanktable">
 		<tr><td>
-		*ÇëÊäÈëêÇ³Æ
+		*è¯·è¾“å…¥æ˜µç§°
 		</td></tr>
 		<tr><td>
 		<input class='fminpt input_3' maxLength=20 name="truename" value="<%=htmlencode(truename)%>" size=14 type=input>
 		</td></tr>
 		<tr><td>
-		<input name=submit id=submit type=submit value="Ìá½»" class="fmbtn btn_2">
+		<input name=submit id=submit type=submit value="æäº¤" class="fmbtn btn_2">
 		</td></tr>
 		<tr><td>
 		<hr class=splitline>
-		<span class="grayfont"><b>×¢£º</b><br />
-		ÉèÖÃêÇ³Æ¿ÉÒÔ¸üºÃµÄ±£»¤ÄúµÄÕËºÅÒşË½£¬ÂÛÌ³ÓÅÏÈÊ¹ÓÃêÇ³Æ×÷ÎªÄúµÄ³ÆºôÀ´Õ¹Ê¾¡£<br />
-		êÇ³ÆÔÊĞíÊ¹ÓÃÖØ¸´µÄÃû³Æ¡£
+		<span class="grayfont"><b>æ³¨ï¼š</b><br />
+		è®¾ç½®æ˜µç§°å¯ä»¥æ›´å¥½çš„ä¿æŠ¤æ‚¨çš„è´¦å·éšç§ï¼Œè®ºå›ä¼˜å…ˆä½¿ç”¨æ˜µç§°ä½œä¸ºæ‚¨çš„ç§°å‘¼æ¥å±•ç¤ºã€‚<br />
+		æ˜µç§°å…è®¸ä½¿ç”¨é‡å¤çš„åç§°ã€‚
 		</span>
 		</td></tr>
 		</table>
@@ -96,19 +96,19 @@
 	private sub truename_class_submit
 	
 		dim sql
-		if check_usernameFilter(truename,"êÇ³Æ") = 0 then
+		if check_usernameFilter(truename,"æ˜µç§°") = 0 then
 			Response.Write "<div class=bbs_error>" & GBL_CHK_Tempstr & "</div>"
-			truename_class_form
+			truename_class_form()
 			exit sub
 		end if
 		if check_username_exist(truename) = 1 then
-			Response.Write "<div class=bbs_error>´ËÃû³ÆÒÑÓĞÆäËüÓÃ»§Ê¹ÓÃ£¬ÇëÊ¹ÓÃÆäËüêÇ³Æ¡£</div>"
-			truename_class_form
+			Response.Write "<div class=bbs_error>æ­¤åç§°å·²æœ‰å…¶å®ƒç”¨æˆ·ä½¿ç”¨ï¼Œè¯·ä½¿ç”¨å…¶å®ƒæ˜µç§°ã€‚</div>"
+			truename_class_form()
 			exit sub
 		end if
 		sql = "update leadbbs_user set truename='" & replace(truename,"'","''") & "' where id=" & GBL_UserID
 		call ldexecute(sql,1)
-		Response.Write "<div class=bbs_ok>ÄúµÄêÇ³ÆÒÑ³É¹¦ÉèÖÃÎª <u>" & htmlencode(truename) & "</u>¡£</div>"
+		Response.Write "<div class=bbs_ok>æ‚¨çš„æ˜µç§°å·²æˆåŠŸè®¾ç½®ä¸º <u>" & htmlencode(truename) & "</u>ã€‚</div>"
 	
 	end sub
 

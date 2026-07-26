@@ -1,5 +1,5 @@
-<!-- #include file=../../inc/ubbCode.asp -->
-<!-- #include file=typeset_string_fun.asp -->
+<!--#include file="../../inc/ubbCode.asp"-->
+<!--#include file="typeset_string_fun.asp"-->
 <%
 Dim DoingFlag,Form_NotReplay,Form_TitleStyle,Form_Title,Form_UserLimit,Form_AncUserID,Form_AncUserName
 
@@ -7,15 +7,15 @@ Function CheckTypeSetSure
 
 	Dim UserID
 	If LMT_AncID = 0 Then
-		Processor_ErrMsg "´íÎó£¬ÇëÌá¹©Òª×Ô¶¯ÅÅ°æµÄÌû×ÓµÄID£¡" & VbCrLf
+		Call Processor_ErrMsg("é”™è¯¯ï¼Œè¯·æä¾›è¦è‡ªåŠ¨æ’ç‰ˆçš„å¸–å­çš„IDï¼" & VbCrLf)
 		CheckTypeSetSure = 0
 		Exit Function
 	End if
 	Dim Rs,SQL
-	SQL = sql_select("Select TA.BoardID,TA.UserID,TA.NotReplay,TA.TitleStyle,TA.ParentID,TA.RootIDBAK,TA.Title,TU.UserLimit,TA.UserID,TA.UserName from LeadBBS_Announce as TA left join LeadBBS_User as TU on TA.UserID=TU.ID where TA.id=" & LMT_AncID,1)
+	SQL = sql_select("Select TA.BoardID,TA.UserID,TA.NotReplay,TA.TitleStyle,TA.ParentID,TA.RootIDBAK,TA.Title,TU.UserLimit,TA.UserID as userid_dup2,TA.UserName from LeadBBS_Announce as TA left join LeadBBS_User as TU on TA.UserID=TU.ID where TA.id=" & LMT_AncID,1)
 	Set Rs = LDExeCute(SQL,0)
 	If Rs.Eof Then
-		Processor_ErrMsg "´íÎó£¬Î´Ñ¡ÔñÒª´¦ÀíµÄÌû×Ó£¡" & VbCrLf
+		Call Processor_ErrMsg("é”™è¯¯ï¼Œæœªé€‰æ‹©è¦å¤„ç†çš„å¸–å­ï¼" & VbCrLf)
 		Rs.Close
 		Set Rs = Nothing
 		CheckTypeSetSure = 0
@@ -42,14 +42,14 @@ Function CheckTypeSetSure
 		Temp = Application(DEF_MasterCookies & "BoardInfo" & GBL_Board_ID)
 	End If
 	If isArray(Temp) = False Then
-		Processor_ErrMsg "ÂÛÌ³·¢Éú´íÎó£¬ÇëÁªÏµ¹ÜÀíÔ±£¡" & VbCrLf
+		Call Processor_ErrMsg("è®ºå›å‘ç”Ÿé”™è¯¯ï¼Œè¯·è”ç³»ç®¡ç†å‘˜ï¼" & VbCrLf)
 		CheckTypeSetSure = 0
 		Set Rs = Nothing
 	End If
 	GBL_Board_BoardAssort = cCur(Temp(1,0))
 	GBL_Board_MasterList = Temp(10,0)
 	
-	CheckisBoardMaster
+	CheckisBoardMaster()
 	If GBL_UserID >= 1 and (GBL_BoardMasterFlag >= 5 and GetBinarybit(GBL_CHK_UserLimit,4) = 0) Then
 		CheckTypeSetSure = 1
 		DoingFlag = Request.Form("DoingFlag")
@@ -65,7 +65,7 @@ Function CheckTypeSetSure
 			CheckTypeSetSure = 1
 		Else
 			CheckTypeSetSure = 0
-			Processor_ErrMsg "´íÎó£¬È¨ÏŞ²»×ã£¡"
+			Call Processor_ErrMsg("é”™è¯¯ï¼Œæƒé™ä¸è¶³ï¼")
 		End If
 	End If
 
@@ -74,50 +74,50 @@ End Function
 Sub DisplayTypeSetAnnounce
 
 	If LMT_AncID = 0 Then
-		Processor_ErrMsg "´íÎó£¬ÇëÌá¹©Òª×Ô¶¯ÅÅ°æµÄÌû×ÓµÄID£¡" & VbCrLf
+		Call Processor_ErrMsg("é”™è¯¯ï¼Œè¯·æä¾›è¦è‡ªåŠ¨æ’ç‰ˆçš„å¸–å­çš„IDï¼" & VbCrLf)
 		Exit Sub
 	End if
 	If Request.Form("SureFlag")="1" Then
-		If CheckWriteEventSpace = 0 Then
-			Processor_ErrMsg "<font color=red class=redfont>ÄúµÄ²Ù×÷¹ıÆµ£¬ÇëÉÔºòË¢ĞÂÔÙÊÔ£¡</font>"
+		If CheckWriteEventSpace() = 0 Then
+			Call Processor_ErrMsg("<font color=red class=redfont>æ‚¨çš„æ“ä½œè¿‡é¢‘ï¼Œè¯·ç¨å€™åˆ·æ–°å†è¯•ï¼</font>")
 			Exit Sub
 		End If
 		Select Case DoingFlag
 			Case 1:	If Form_NotReplay = 0 Then
 						Form_NotReplay = 1
-						Processor_Done "³É¹¦Ëø¶¨Ìû×Ó¡£"
+						Call Processor_Done("æˆåŠŸé”å®šå¸–å­ã€‚")
 					Else
 						Form_NotReplay = 0
-						Processor_Done "³É¹¦Íê³ÉÌû×Ó½âËø¡£"
+						Call Processor_Done("æˆåŠŸå®Œæˆå¸–å­è§£é”ã€‚")
 					End If
 					CALL LDExeCute("Update LeadBBS_Announce Set NotReplay=" & Form_NotReplay & " where ID=" & LMT_AncID,1)
 					If DEF_UsedDataBase = 1 Then CALL LDExeCute("Update LeadBBS_Topic Set NotReplay=" & Form_NotReplay & " where ID=" & LMT_AncID,1)
 			Case 2:	If Form_TitleStyle >= 60 Then	
 					Form_TitleStyle = Form_TitleStyle - 60
 					If inStr(application(DEF_MasterCookies & "TopAncList"),"," & LMT_AncID & ",") Then
-						UpdateAnnounceApplicationInfo LMT_AncID,2,Form_Title,0,0
-						UpdateAnnounceApplicationInfo LMT_AncID,16,Form_TitleStyle,0,0
+						Call UpdateAnnounceApplicationInfo(LMT_AncID,2,Form_Title,0,0)
+						Call UpdateAnnounceApplicationInfo(LMT_AncID,16,Form_TitleStyle,0,0)
 					Else
 						If inStr(application(DEF_MasterCookies & "TopAncList" & GBL_Board_BoardAssort),"," & LMT_AncID & ",") Then
-							UpdateAnnounceApplicationInfo LMT_AncID,2,Form_Title,0,GBL_Board_BoardAssort
-							UpdateAnnounceApplicationInfo LMT_AncID,16,Form_TitleStyle,0,GBL_Board_BoardAssort
+							Call UpdateAnnounceApplicationInfo(LMT_AncID,2,Form_Title,0,GBL_Board_BoardAssort)
+							Call UpdateAnnounceApplicationInfo(LMT_AncID,16,Form_TitleStyle,0,GBL_Board_BoardAssort)
 						End If
 					End If
 					If Form_TitleStyle = 1 Then Form_Title = KillHTMLLabel(Form_Title)
-					Processor_Done "Ìû×Ó³É¹¦Í¨¹ıÉóºË²Ù×÷¡£"
+					Call Processor_Done("å¸–å­æˆåŠŸé€šè¿‡å®¡æ ¸æ“ä½œã€‚")
 				Else
 					Form_TitleStyle = Form_TitleStyle + 60
-					Form_Title = "ĞÂÉóºËÌû×Ó..."
+					Form_Title = "æ–°å®¡æ ¸å¸–å­..."
 					If inStr(application(DEF_MasterCookies & "TopAncList"),"," & LMT_AncID & ",") Then
-						UpdateAnnounceApplicationInfo LMT_AncID,2,Form_Title,0,0
-						UpdateAnnounceApplicationInfo LMT_AncID,16,Form_TitleStyle,0,0
+						Call UpdateAnnounceApplicationInfo(LMT_AncID,2,Form_Title,0,0)
+						Call UpdateAnnounceApplicationInfo(LMT_AncID,16,Form_TitleStyle,0,0)
 					Else
 						If inStr(application(DEF_MasterCookies & "TopAncList" & GBL_Board_BoardAssort),"," & LMT_AncID & ",") Then
-							UpdateAnnounceApplicationInfo LMT_AncID,2,Form_Title,0,GBL_Board_BoardAssort
-							UpdateAnnounceApplicationInfo LMT_AncID,16,Form_TitleStyle,0,GBL_Board_BoardAssort
+							Call UpdateAnnounceApplicationInfo(LMT_AncID,2,Form_Title,0,GBL_Board_BoardAssort)
+							Call UpdateAnnounceApplicationInfo(LMT_AncID,16,Form_TitleStyle,0,GBL_Board_BoardAssort)
 						End If
 					End If
-					Processor_Done "Ìû×Ó¹Ø±Õ³É¹¦¡£"
+					Call Processor_Done("å¸–å­å…³é—­æˆåŠŸã€‚")
 				End If
 				CALL LDExeCute("Update LeadBBS_Announce Set TitleStyle=" & Form_TitleStyle & " where ID=" & LMT_AncID,1)
 				If DEF_UsedDataBase = 1 Then CALL LDExeCute("Update LeadBBS_Topic Set TitleStyle=" & Form_TitleStyle & " where ID=" & LMT_AncID,1)
@@ -126,14 +126,14 @@ Sub DisplayTypeSetAnnounce
 				If Form_AncUserID > 0 and inStr(LCase(DEF_SupervisorUserName),"," & LCase(Form_AncUserName) & ",") = 0 Then
 					If Form_TitleStyle <> 30 Then
 						If GetBinarybit(Form_UserLimit,3) = 1 or GetBinarybit(Form_UserLimit,7) = 1 Then
-							Processor_Done "¸ÃÓÃ»§ÒÑ±»½ûÑÔ»òÆÁ±Î·¢ÑÔ£¬²»ĞèÒªÖØ¸´²Ù×÷£¡"
+							Call Processor_Done("è¯¥ç”¨æˆ·å·²è¢«ç¦è¨€æˆ–å±è”½å‘è¨€ï¼Œä¸éœ€è¦é‡å¤æ“ä½œï¼")
 						Else
 							Form_UserLimit = SetBinarybit(Form_UserLimit,3,1)
 							CALL UpdateSpecialUserTable2(Form_UserLimit,Form_AncUserID,Form_AncUserName,3,4)
 							CALL LDExeCute("Update LeadBBS_User Set UserLimit=" & Form_UserLimit & " where ID=" & Form_AncUserID,1)
-							CALL LDExeCute("Update LeadBBS_Announce Set TitleStyle=30,OtherInfo='´ËÌûÓÉ" & Replace(GBL_CHK_User,"'","''") & "ÓÚ" & RestoreTime(GetTimeValue(DEF_Now)) & "±ê¼Ç²¢½ûÑÔÓÃ»§£¡' where ID=" & LMT_AncID,1)
+							CALL LDExeCute("Update LeadBBS_Announce Set TitleStyle=30,OtherInfo='æ­¤å¸–ç”±" & Replace(GBL_CHK_User,"'","''") & "äº" & RestoreTime(GetTimeValue(DEF_Now)) & "æ ‡è®°å¹¶ç¦è¨€ç”¨æˆ·ï¼' where ID=" & LMT_AncID,1)
 							If DEF_UsedDataBase = 1 Then CALL LDExeCute("Update LeadBBS_Topic Set TitleStyle=30 where ID=" & LMT_AncID,1)
-							Processor_Done "³É¹¦½ûÑÔÓÃ»§£º" & htmlencode(Form_AncUserName) & "£¬²¢±ê¼Ç´ËÌû£¡"
+							Call Processor_Done("æˆåŠŸç¦è¨€ç”¨æˆ·ï¼š" & htmlencode(Form_AncUserName) & "ï¼Œå¹¶æ ‡è®°æ­¤å¸–ï¼")
 						End If
 					Else
 						If GetBinarybit(Form_UserLimit,3) = 1 Then
@@ -143,22 +143,22 @@ Sub DisplayTypeSetAnnounce
 						End If
 						CALL LDExeCute("Update LeadBBS_Announce Set TitleStyle=0,OtherInfo='' where ID=" & LMT_AncID,1)
 						If DEF_UsedDataBase = 1 Then CALL LDExeCute("Update LeadBBS_Topic Set TitleStyle=0 where ID=" & LMT_AncID,1)
-						Processor_Done "³É¹¦½â³ı½ûÑÔÓÃ»§£º" & htmlencode(Form_AncUserName) & "£¬²¢½â³ı±ê¼Ç´ËÌû£¡"
+						Call Processor_Done("æˆåŠŸè§£é™¤ç¦è¨€ç”¨æˆ·ï¼š" & htmlencode(Form_AncUserName) & "ï¼Œå¹¶è§£é™¤æ ‡è®°æ­¤å¸–ï¼")
 					End If
 				Else
-					Processor_Done "ÎŞ×ã¹»È¨ÏŞ£¬²Ù×÷ÒÑÖÕÖ¹£¡"
+					Call Processor_Done("æ— è¶³å¤Ÿæƒé™ï¼Œæ“ä½œå·²ç»ˆæ­¢ï¼")
 				End If
 			Case Else:
 				GBL_CHK_TempStr = ""
 				ReMakeIDDoc(LMT_AncID)
 				If GBL_CHK_TempStr <> "" Then
-					Processor_ErrMsg GBL_CHK_TempStr & VbCrLf
+					Call Processor_ErrMsg(GBL_CHK_TempStr & VbCrLf)
 				Else
-					Processor_Done "³É¹¦¶ÔÌû×ÓÍê³É×Ô¶¯ÅÅ°æ¡£"
+					Call Processor_Done("æˆåŠŸå¯¹å¸–å­å®Œæˆè‡ªåŠ¨æ’ç‰ˆã€‚")
 				End If
 		End Select
 	Else
-		Processor_Head
+		Processor_Head()
 		%>
 		<form name=DellClientForm action=Processor.asp?Action=TypeSet&b=<%=GBL_Board_ID%> onSubmit="submit_disable(this);" method="post"<%
 	If AjaxFlag = 1 Then
@@ -168,29 +168,29 @@ Sub DisplayTypeSetAnnounce
 			<input type=hidden name=SureFlag value="1">
 			<input type=hidden name=JsFlag value="1">
 			<input type=hidden name=AjaxFlag value="<%=AjaxFlag%>">
-			<input type=hidden name=ID value="<%=LMT_AncID%>">
+			<input type=hidden name=ID value="<%=LngStr(LMT_AncID)%>">
 			<input type=hidden name=BoardID value="<%=GBL_Board_ID%>">
 			<div class="value2">
 			<%If GBL_UserID >= 1 and (GBL_BoardMasterFlag >= 5 and GetBinarybit(GBL_CHK_UserLimit,4) = 0) Then%>
-			<b>ÇëÑ¡Ôñ²Ù×÷£º</b><br>
-			<label><input type=radio class="fmchkbox" name=DoingFlag value=0 checked>×Ô¶¯ÅÅ°æ</label><br>
+			<b>è¯·é€‰æ‹©æ“ä½œï¼š</b><br>
+			<label><input type=radio class="fmchkbox" name=DoingFlag value=0 checked>è‡ªåŠ¨æ’ç‰ˆ</label><br>
 			<p id="para_typeset">
 			<hr class=splitline>
-			<label><input type=checkbox class=fmchkbox name=kill_headspace value=yes checked>Ïû³ıĞĞÊ×¿Õ¸ñ</label>
-			<label title="¿ÉÒÔÏû³ıĞĞ¾à£¬×ÖÌå£¬ÎÄ×Ö´óĞ¡£¬¶ÔÆë·½Ê½£¬¶àÓàµÄ»»ĞĞ"><input type=checkbox class=fmchkbox name=kill_lineheight value=yes>Ïû³ıÎÄ×ÖÑùÊ½ºÍ¶àÓà»»ĞĞ</label>
+			<label><input type=checkbox class=fmchkbox name=kill_headspace value=yes checked>æ¶ˆé™¤è¡Œé¦–ç©ºæ ¼</label>
+			<label title="å¯ä»¥æ¶ˆé™¤è¡Œè·ï¼Œå­—ä½“ï¼Œæ–‡å­—å¤§å°ï¼Œå¯¹é½æ–¹å¼ï¼Œå¤šä½™çš„æ¢è¡Œ"><input type=checkbox class=fmchkbox name=kill_lineheight value=yes>æ¶ˆé™¤æ–‡å­—æ ·å¼å’Œå¤šä½™æ¢è¡Œ</label>
 			<hr class=splitline>
 			</p>
-			<label><input type=radio class="fmchkbox"  name=DoingFlag value=1><%If Form_NotReplay = 0 Then%>Ëø¶¨Ìû×Ó<%Else%>½â³ıËø¶¨<%End If%></label>
+			<label><input type=radio class="fmchkbox"  name=DoingFlag value=1><%If Form_NotReplay = 0 Then%>é”å®šå¸–å­<%Else%>è§£é™¤é”å®š<%End If%></label>
 			<br>
-			<label><input type=radio class="fmchkbox"  name=DoingFlag value=2><%If Form_TitleStyle >= 60 Then%>Í¨¹ıÉóºË<%Else%>ÆÁ±Î´ËÌû<%End If%></label><br>
+			<label><input type=radio class="fmchkbox"  name=DoingFlag value=2><%If Form_TitleStyle >= 60 Then%>é€šè¿‡å®¡æ ¸<%Else%>å±è”½æ­¤å¸–<%End If%></label><br>
 			<%Else%>
-			<b>È·ÈÏÒª×Ô¶¯ÅÅ°æ±àºÅÎª<font color=ff0000 class=redfont><%=LMT_AncID%></font>µÄÌû×ÓÄÚÈİÂğ£¿</b>
+			<b>ç¡®è®¤è¦è‡ªåŠ¨æ’ç‰ˆç¼–å·ä¸º<font color=ff0000 class=redfont><%=LngStr(LMT_AncID)%></font>çš„å¸–å­å†…å®¹å—ï¼Ÿ</b>
 			<%End If
 			If GBL_BoardMasterFlag >= 7 Then%>
-			<label><input type=radio class="fmchkbox"  name=DoingFlag value=3><%If Form_TitleStyle = 30 Then%>½â³ı½ûÑÔ<%Else%>Òò´ËÌû½ûÑÔ´ËÓÃ»§<%End If
+			<label><input type=radio class="fmchkbox"  name=DoingFlag value=3><%If Form_TitleStyle = 30 Then%>è§£é™¤ç¦è¨€<%Else%>å› æ­¤å¸–ç¦è¨€æ­¤ç”¨æˆ·<%End If
 			End If%></label>
 			</div>
-			<br><p><input type=submit value=È·¶¨ class="fmbtn btn_2">
+			<br><p><input type=submit value=ç¡®å®š class="fmbtn btn_2">
 		</form>
 		<%Processor_Bottom
 	End If
@@ -225,7 +225,7 @@ Function ReMakeIDDoc(ID)
 		ReMakeIDDoc = 0
 		Rs.Close
 		Set Rs = Nothing
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "ÕÒ²»µ½´ËÌû×Ó£¡<br>" & VbCrLf
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "æ‰¾ä¸åˆ°æ­¤å¸–å­ï¼<br>" & VbCrLf
 		Exit Function
 	Else
 		htmlflag = Rs("htmlflag")
@@ -233,7 +233,7 @@ Function ReMakeIDDoc(ID)
 			ReMakeIDDoc = 0
 			Rs.Close
 			Set Rs = Nothing
-			GBL_CHK_TempStr = GBL_CHK_TempStr & "¸å¼şÊäÈëÀàĞÍ²»ÊÇ´¿ÎÄ±¾»òUBB¸ñÊ½£¬²»ÄÜ½øĞĞ×Ô¶¯ÅÅ°æ£¡<br>" & VbCrLf
+			GBL_CHK_TempStr = GBL_CHK_TempStr & "ç¨¿ä»¶è¾“å…¥ç±»å‹ä¸æ˜¯çº¯æ–‡æœ¬æˆ–UBBæ ¼å¼ï¼Œä¸èƒ½è¿›è¡Œè‡ªåŠ¨æ’ç‰ˆï¼<br>" & VbCrLf
 			Exit Function
 		End if
 		
@@ -242,7 +242,7 @@ Function ReMakeIDDoc(ID)
 		Set Rs = Nothing
 		
 		If htmlflag = 2 and inStr(Content,"[CODE]") > 0 Then
-			GBL_CHK_TempStr = "¸å¼şº¬ÓĞ´úÂë±êÇ©[CODE]£¬×Ô¶¯ÅÅ°æÒÑÈ¡Ïû¡£<br>" & VbCrLf
+			GBL_CHK_TempStr = "ç¨¿ä»¶å«æœ‰ä»£ç æ ‡ç­¾[CODE]ï¼Œè‡ªåŠ¨æ’ç‰ˆå·²å–æ¶ˆã€‚<br>" & VbCrLf
 			Exit Function
 		End If
 		
@@ -255,7 +255,7 @@ Function ReMakeIDDoc(ID)
 				CALL LDExeCute("Update LeadBBS_Announce Set Content='" & Replace(NewTemp,"'","''") & "',htmlflag=" & htmlflag & " where ID=" & ID,1)
 			End If
 		End If
-		If CheckSupervisorUserName = 0 Then
+		If CheckSupervisorUserName() = 0 Then
 			CALL LDExeCute("Update LeadBBS_User Set LastWriteTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
 			UpdateSessionValue 13,GetTimeValue(DEF_Now),0
 		End If
@@ -273,7 +273,7 @@ sub UpdateBoardLastAnnounce
 
 	If LastAnnounceID = LMT_AncID or LastAnnounceID = Form_RootIDBAK Then
 		CALL LDExeCute("Update LeadBBS_Boards Set LastTopicName='" & Replace(Form_Title,"'","''") & "' where BoardID=" & GBL_Board_ID,1)
-		UpdateBoardApplicationInfo GBL_Board_ID,Form_Title,20
+		Call UpdateBoardApplicationInfo(GBL_Board_ID,Form_Title,20)
 	End If
 
 End sub
@@ -316,7 +316,7 @@ Sub UpdateSpecialUserTable2(UserLimit,UserID,UserName,N,assort)
 	Dim Rs
 	Dim Flag
 	
-	Rem ÈÏÖ¤ÓÃ»§
+	Rem è®¤è¯ç”¨æˆ·
 	Flag = GetBinarybit(UserLimit,N)
 	If Flag = 0 Then
 		CALL LDExeCute("Delete from LeadBBS_SpecialUser where Assort=" & assort & " and UserID=" & UserID,1)

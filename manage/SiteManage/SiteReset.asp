@@ -1,25 +1,25 @@
-<!-- #include file=../../inc/BBSSetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSSetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
 Dim GBL_SiteDisbleWhyString,GBL_REQ_Flag
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
-DisplayUserNavigate("ÍøÕ¾ÖØĞÂÆô¶¯")
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
+DisplayUserNavigate("ç½‘ç«™é‡æ–°å¯åŠ¨")
 If GBL_CHK_Flag=1 Then
-	LoginAccuessFul
+	LoginAccuessFul()
 Else
-	DisplayLoginForm
+	DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Function LoginAccuessFul
@@ -28,21 +28,21 @@ Function LoginAccuessFul
 		Application.Lock
 		If Request("Flag2") <> "" Then
 			Application.Contents.RemoveAll()
-			Response.Write "<div class=frameline>³É¹¦³¹µ×ÊÍ·ÅÂÛÌ³±äÁ¿£®</div>"
+			Response.Write "<div class=frameline>æˆåŠŸå½»åº•é‡Šæ”¾è®ºå›å˜é‡ï¼</div>"
 		Else
-			FreeApplicationMemory
-			Response.Write "<div class=frameline>³É¹¦Íê³ÉÂÛÌ³±äÁ¿ÖØÖÃ£®</div>"
+			FreeApplicationMemory()
+			Response.Write "<div class=frameline>æˆåŠŸå®Œæˆè®ºå›å˜é‡é‡ç½®ï¼</div>"
 		End If
 		If Request("Flag") <> "" then
 			application(DEF_MasterCookies & "SiteEnableFlagzoieiu") = 0
-			application(DEF_MasterCookies & "SiteDisbleWhyszoieiu") = "ÂÛÌ³ÒÑ¾­¹Ø±Õ"
-			Response.Write "<div class=frameline>ÂÛÌ³ÖØÆô³É¹¦£¬²¢ÇÒÒÑ¾­Õı³£¹Ø±Õ£¬Èç¹ûÏëÕı³£·´°²×°ÂÛÌ³£¬Çë²»ÒªÔÙ·ÃÎÊÈÎºÎ¹ÜÀíÔ±Ò³Ãæ£®</div>"
+			application(DEF_MasterCookies & "SiteDisbleWhyszoieiu") = "è®ºå›å·²ç»å…³é—­"
+			Response.Write "<div class=frameline>è®ºå›é‡å¯æˆåŠŸï¼Œå¹¶ä¸”å·²ç»æ­£å¸¸å…³é—­ï¼Œå¦‚æœæƒ³æ­£å¸¸åå®‰è£…è®ºå›ï¼Œè¯·ä¸è¦å†è®¿é—®ä»»ä½•ç®¡ç†å‘˜é¡µé¢ï¼</div>"
 		Else
-			Response.Write "<div class=frameline>ÂÛÌ³ÖØÆô³É¹¦£®</div>"
+			Response.Write "<div class=frameline>è®ºå›é‡å¯æˆåŠŸï¼</div>"
 		End If
 		Application.UnLock
 	Else
-		DisplayStringForm
+		DisplayStringForm()
 	End If
 
 End Function
@@ -51,24 +51,24 @@ Function DisplayStringForm
 
 %>
 <div class=frameline>
-ÇëÈ·¶¨ÊÇ·ñĞèÒªÖØĞÂÆô¶¯ÂÛÌ³£¿ÖØÆôºóÂÛÌ³Ò»ÇĞ×´Ì¬½«ÖØÖÃ<br>
-£¨Ïàµ±ÓÚWeb·şÎñÆ÷ÖØÆôºóµÄ½á¹û£©<br>
-±ÈÈçÔÚÏßÈËÊı½«¹éÁã£¬²¢ÊÍ·ÅÒ»Ğ©ÂÛÌ³Õ¼ÓÃµÄÄÚ´æ£®
+è¯·ç¡®å®šæ˜¯å¦éœ€è¦é‡æ–°å¯åŠ¨è®ºå›ï¼Ÿé‡å¯åè®ºå›ä¸€åˆ‡çŠ¶æ€å°†é‡ç½®<br>
+ï¼ˆç›¸å½“äºWebæœåŠ¡å™¨é‡å¯åçš„ç»“æœï¼‰<br>
+æ¯”å¦‚åœ¨çº¿äººæ•°å°†å½’é›¶ï¼Œå¹¶é‡Šæ”¾ä¸€äº›è®ºå›å ç”¨çš„å†…å­˜ï¼
 </div>
 <form action=SiteReset.asp method="post">
-	<div class=alert>È·ÈÏĞÅÏ¢£º ÕæµÄÖØĞÂÆô¶¯ÂÛÌ³Ã´£¿</div>
+	<div class=alert>ç¡®è®¤ä¿¡æ¯ï¼š çœŸçš„é‡æ–°å¯åŠ¨è®ºå›ä¹ˆï¼Ÿ</div>
 	<div class=frameline>
-	<input class=fmchkbox type="checkbox" name=Flag value="yes">Ñ¡ÖĞÔòÔÚÖØÆôºó×Ô¶¯¹Ø±ÕÍøÕ¾·ÃÎÊ,Èç¹ûÄãĞèÒªÕæÕıµÄ·´°²×°Õâ¸öÂÛÌ³,ÇëÔÚ´Ë²Ù×÷ºó,²»ÒªÔÙ½øĞĞÆäËüµÄ¹ÜÀíÔ±²Ù×÷,ÒÔ±£·şÎñÆ÷ÄÚ´æ³¹µ×ÊÍ·Å.
+	<input class=fmchkbox type="checkbox" name=Flag value="yes">é€‰ä¸­åˆ™åœ¨é‡å¯åè‡ªåŠ¨å…³é—­ç½‘ç«™è®¿é—®,å¦‚æœä½ éœ€è¦çœŸæ­£çš„åå®‰è£…è¿™ä¸ªè®ºå›,è¯·åœ¨æ­¤æ“ä½œå,ä¸è¦å†è¿›è¡Œå…¶å®ƒçš„ç®¡ç†å‘˜æ“ä½œ,ä»¥ä¿æœåŠ¡å™¨å†…å­˜å½»åº•é‡Šæ”¾.
 	</div>
 	<div class=frameline>
-	<input class=fmchkbox type="checkbox" name=Flag2 value="yes">Ñ¡ÖĞÔò³¹µ×ÊÍ·ÅÄÚ´æÕ¼ÓÃ(²¿·Ö·şÎñÆ÷²»Ö§³Ö)
+	<input class=fmchkbox type="checkbox" name=Flag2 value="yes">é€‰ä¸­åˆ™å½»åº•é‡Šæ”¾å†…å­˜å ç”¨(éƒ¨åˆ†æœåŠ¡å™¨ä¸æ”¯æŒ)
 	</div>
 	<div class=frameline>
 	<input name=submitflag type=hidden value="Dieos9xsl29LO_8">
-	<input type=submit value="ÖØÆôÂÛÌ³" class="fmbtn"> <input type=reset value="È¡Ïû" class="fmbtn">
+	<input type=submit value="é‡å¯è®ºå›" class="fmbtn"> <input type=reset value="å–æ¶ˆ" class="fmbtn">
 	</div>
 </form>
-<div class=frametitle><b>ÖØÆôºó£¬ÒÔÏÂÂÛÌ³Êı¾İ½«±»ÊÍ·Å£º</b></div>
+<div class=frametitle><b>é‡å¯åï¼Œä»¥ä¸‹è®ºå›æ•°æ®å°†è¢«é‡Šæ”¾ï¼š</b></div>
 <div class=frameline>
 <table>
 	<%
@@ -77,9 +77,9 @@ Function DisplayStringForm
 		If Left(Thing,Len(DEF_MasterCookies)) = DEF_MasterCookies Then
 			Response.Write "<tr><td><font color=Gray class=grayfont>" & thing & "</font></td><td>&nbsp;"
 			If isObject(Application.Contents(Thing)) Then
-				Response.Write "¶ÔÏó"
+				Response.Write "å¯¹è±¡"
 			ElseIf isArray(Application.Contents(Thing)) Then
-				Response.Write "Êı×é"
+				Response.Write "æ•°ç»„"
 			Else
 				Response.Write Application.Contents(Thing)
 			End If
@@ -92,22 +92,20 @@ End Function
 
 Function FreeApplicationMemory
 
-	Response.Write "<div class=frametitle>ÊÍ·ÅÂÛÌ³Êı¾İÁĞ±í£º</div><div class=frameline><table>" & VbCrLf
+	Response.Write "<div class=frametitle>é‡Šæ”¾è®ºå›æ•°æ®åˆ—è¡¨ï¼š</div><div class=frameline><table>" & VbCrLf
 	Dim Thing
 	For Each Thing in Application.Contents
 		If Left(Thing,Len(DEF_MasterCookies)) = DEF_MasterCookies Then
 			Response.Write "<tr><td><font color=Gray class=grayfont>" & thing & "</font></td><td>&nbsp;"
 			If isObject(Application.Contents(Thing)) Then
 				Application.Contents(Thing).close
-				Set Application.Contents(Thing) = Nothing
 				Application.Contents(Thing) = null
 				Application.Contents.Remove(Thing)
-				Response.Write "¶ÔÏó³É¹¦¹Ø±Õ"
+				Response.Write "å¯¹è±¡æˆåŠŸå…³é—­"
 			ElseIf isArray(Application.Contents(Thing)) Then
-				Set Application.Contents(Thing) = Nothing
 				Application.Contents(Thing) = null
 				Application.Contents.Remove(Thing)
-				Response.Write "Êı×é³É¹¦ÊÍ·Å"
+				Response.Write "æ•°ç»„æˆåŠŸé‡Šæ”¾"
 			Else
 				Response.Write htmlencode(Application.Contents(Thing))
 				Application.Contents(Thing) = null

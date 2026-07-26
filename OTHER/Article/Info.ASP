@@ -1,17 +1,17 @@
-<!-- #include file=../../inc/BBSSetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
+<!--#include file="../../inc/BBSSetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
 <%
 
 DEF_BBS_HomeUrl = "../../"
-OpenDatabase
-DisplayLeadBBSInfo
-closeDataBase
+OpenDatabase()
+DisplayLeadBBSInfo()
+closeDataBase()
 
 '----------------------------------------------------------------------------------------
-'----- LeadBBSÂÛÌ³ĞÅÏ¢µ÷ÓÃ³ÌĞò(2003-09-30 by SpiderMan) for LeadBBS v2.88 v2.77 v3.14
-'----- µ÷ÓÃ¾ÙÀı: <script language=javascript src=http://°²×°Ä¿Â¼/other/Article/Topic.asp?img=/images/del.gif></script>
-'----- ²ÎÊıimg£ºÖ¸¶¨ÏÔÊ¾ÔÚÇ°ÃæµÄĞŞÊÎÍ¼Æ¬µØÖ·£¬²»Ö¸¶¨Ôò²»ÏÔÊ¾Í¼Æ¬£¬ÒªÇó´óĞ¡16x16
-'----- ²ÎÊıexectime£ºÊÇ·ñÏÔÊ¾Ö´ĞĞÊ±¼ä£¬no:²»ÏÔÊ¾£¬ÆäËü±íÊ¾ÏÔÊ¾
+'----- LeadBBSè®ºå›ä¿¡æ¯è°ƒç”¨ç¨‹åº(2003-09-30 by SpiderMan) for LeadBBS v2.88 v2.77 v3.14
+'----- è°ƒç”¨ä¸¾ä¾‹: <script language=javascript src=http://å®‰è£…ç›®å½•/other/Article/Topic.asp?img=/images/del.gif></script>
+'----- å‚æ•°imgï¼šæŒ‡å®šæ˜¾ç¤ºåœ¨å‰é¢çš„ä¿®é¥°å›¾ç‰‡åœ°å€ï¼Œä¸æŒ‡å®šåˆ™ä¸æ˜¾ç¤ºå›¾ç‰‡ï¼Œè¦æ±‚å¤§å°16x16
+'----- å‚æ•°exectimeï¼šæ˜¯å¦æ˜¾ç¤ºæ‰§è¡Œæ—¶é—´ï¼Œno:ä¸æ˜¾ç¤ºï¼Œå…¶å®ƒè¡¨ç¤ºæ˜¾ç¤º
 '----------------------------------------------------------------------------------------
 
 Function DisplayLeadBBSInfo
@@ -59,10 +59,10 @@ Function DisplayLeadBBSInfo
 	If img <> "" Then img = "<img src=" & Replace(img,"\","\\") & " align=middle width=16 height=16>"
 
 	Response.Write "document.write("""
-	Response.Write img & "Ìû×Ó×ÜÊı£º" & GBL_AnnounceNum & "Ìû"
-	Response.Write "<br>" & img & "¾«»ªÌû×Ó£º" & GBL_GoodNum & "Ìû"
-	Response.Write "<br>" & img & "×¢²áÓÃ»§£º" & GBL_UserCount & "ÈË"
-	Response.Write "<br>" & img & "ÓÃ»§ÔÚÏß£º"
+	Response.Write img & "å¸–å­æ€»æ•°ï¼š" & GBL_AnnounceNum & "å¸–"
+	Response.Write "<br>" & img & "ç²¾åå¸–å­ï¼š" & GBL_GoodNum & "å¸–"
+	Response.Write "<br>" & img & "æ³¨å†Œç”¨æˆ·ï¼š" & GBL_UserCount & "äºº"
+	Response.Write "<br>" & img & "ç”¨æˆ·åœ¨çº¿ï¼š"
 	
 	If isNumeric(application(DEF_MasterCookies & "SiteOlTime")) = False Then
 		Application.Lock
@@ -71,22 +71,22 @@ Function DisplayLeadBBSInfo
 	End If
 	GBL_OnlineTime = GBL_OnlineTime + application(DEF_MasterCookies & "SiteOlTime")
 	Temp = (GBL_OnlineTime)/(24*60*60)
-	Response.Write Fix(Temp) & "Ìì"
+	Response.Write Fix(Temp) & "å¤©"
 	'GBL_OnlineTime=GBL_OnlineTime-Fix(Temp)*24*60*60
 	'Temp = GBL_OnlineTime/(60*60)
-	'Response.Write Fix(Temp) & "Ê±"
+	'Response.Write Fix(Temp) & "æ—¶"
 	'GBL_OnlineTime=GBL_OnlineTime-Fix(Temp)*60*60
 	'Temp = GBL_OnlineTime/60
-	'Response.Write Fix(Temp) & "·Ö"
+	'Response.Write Fix(Temp) & "åˆ†"
 	
-	Response.Write "<br>" & img & "Ò³Ãæ·ÃÎÊ£º" & (GBL_PageCount+application(DEF_MasterCookies & "SitePageCount")) & "´Î"
-	Response.Write "<br>" & img & "µ±Ç°ÔÚÏß£º" & application(DEF_MasterCookies & "ActiveUsers") & "ÈË"
-	Response.Write "<br>" & img & "×î¸ßÔÚÏß£º" & GBL_MaxOnline & "ÈË"
-	'Response.Write "<br>" & img & "×î¸ßÈÕ·¢Ìû£º" & GBL_MaxAnnounce & "Ìû"
-	Response.Write "<br>" & img & "½ñÈÕ·¢Ìû£º<b><font color=Red class=redfont>" & GBL_TodayAnnounce & "</font></b>Ìû"
-	Response.Write "<br>" & img & "ÉÏ´«¸½¼ş£º" & GBL_UploadNum & "¸ö"
+	Response.Write "<br>" & img & "é¡µé¢è®¿é—®ï¼š" & (GBL_PageCount+application(DEF_MasterCookies & "SitePageCount")) & "æ¬¡"
+	Response.Write "<br>" & img & "å½“å‰åœ¨çº¿ï¼š" & application(DEF_MasterCookies & "ActiveUsers") & "äºº"
+	Response.Write "<br>" & img & "æœ€é«˜åœ¨çº¿ï¼š" & GBL_MaxOnline & "äºº"
+	'Response.Write "<br>" & img & "æœ€é«˜æ—¥å‘å¸–ï¼š" & GBL_MaxAnnounce & "å¸–"
+	Response.Write "<br>" & img & "ä»Šæ—¥å‘å¸–ï¼š<b><font color=Red class=redfont>" & GBL_TodayAnnounce & "</font></b>å¸–"
+	Response.Write "<br>" & img & "ä¸Šä¼ é™„ä»¶ï¼š" & GBL_UploadNum & "ä¸ª"
 
-	If Request.QueryString("exectime") <> "no" Then Response.Write "<br>" & img & "Ö´ĞĞÊ±¼ä£º" & FormatNumber(cCur(Timer - DEF_PageExeTime1),4,True)*1000 & "ºÁÃë"
+	If Request.QueryString("exectime") <> "no" Then Response.Write "<br>" & img & "æ‰§è¡Œæ—¶é—´ï¼š" & FormatNumber(cCur(Timer - DEF_PageExeTime1),4,True)*1000 & "æ¯«ç§’"
 	Response.Write """);"
 
 End Function%>

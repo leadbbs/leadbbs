@@ -1,5 +1,5 @@
 <%
-Const LMT_SendMsgExpiresDate = 90 '¶¨ÒåĞÂ·¢ËÍ¶ÌÏûÏ¢±£´æÌìÊı(¹ıÆÚ×Ô¶¯É¾³ı)
+Const LMT_SendMsgExpiresDate = 90 'å®šä¹‰æ–°å‘é€çŸ­æ¶ˆæ¯ä¿å­˜å¤©æ•°(è¿‡æœŸè‡ªåŠ¨åˆ é™¤)
 dim GBL_Msg_ToUser : GBL_Msg_ToUser = ","
 
 Sub SendNewMessage(fromUser,ToUser,Title,Content,GBL_IPAddress)
@@ -8,7 +8,7 @@ Sub SendNewMessage(fromUser,ToUser,Title,Content,GBL_IPAddress)
 	GBL_Msg_ToUser = GBL_Msg_ToUser & ToUser & ","
 	dim Expire
 	If LMT_SendMsgExpiresDate > 0 Then
-		Expire = CLng(Left(GetTimeValue(DateAdd("d",LMT_SendMsgExpiresDate,Now)),8))
+		Expire = CLng(Left(LngStr(GetTimeValue(DateAdd("d",LMT_SendMsgExpiresDate,Now))),8))
 	Else
 		Expire = 0
 	End If
@@ -16,8 +16,8 @@ Sub SendNewMessage(fromUser,ToUser,Title,Content,GBL_IPAddress)
 		CALL LDExeCute("inSert into LeadBBS_InfoBox(FromUser,ToUser,Title,Content,IP,SendTime,ReadFlag,ExpiresDate)" & _
 			" Values('" & Replace(fromUser,"'","''") & "','','" & Replace(Title,"'","''") & "'" & _
 			",'" & Replace(Replace(Content & "","\" & VbCrLf,"\\" & VbCrLf & VbCrLf),"'","''") & "','" & GBL_IPAddress & "'," & GetTimeValue(DEF_Now) & ",0,0)",1)
-		ReloadPubMessageInfo
-		GBL_CHK_TempStr = "<p align=left>&nbsp; &nbsp; <font color=008800 class=greenfont>³É¹¦·¢ËÍÏûÏ¢¸øËùÓĞÓÃ»§¡£</font><br>"
+		ReloadPubMessageInfo()
+		GBL_CHK_TempStr = "<p align=left>&nbsp; &nbsp; <font color=008800 class=greenfont>æˆåŠŸå‘é€æ¶ˆæ¯ç»™æ‰€æœ‰ç”¨æˆ·ã€‚</font><br>"
 	Else
 		Dim N,TmpArr
 		TmpArr = Split(ToUser,",")
@@ -26,12 +26,12 @@ Sub SendNewMessage(fromUser,ToUser,Title,Content,GBL_IPAddress)
 			CALL LDExeCute("inSert into LeadBBS_InfoBox(FromUser,ToUser,Title,Content,IP,SendTime,ReadFlag,ExpiresDate)" & _
 				" Values('" & Replace(fromUser,"'","''") & "','" & Replace(TmpArr(N),"'","''") & "','" & Replace(Title,"'","''") & "'" & _
 				",'" & Replace(Content,"'","''") & "','" & GBL_IPAddress & "'," & GetTimeValue(DEF_Now) & ",0," & Expire & ")",1)
-			GBL_CHK_TempStr = GBL_CHK_TempStr & "<font color=008800 class=greenfont>³É¹¦·¢ËÍ¶ÌÏûÏ¢¡£</font><br>" & VbCrLf
+			GBL_CHK_TempStr = GBL_CHK_TempStr & "<font color=008800 class=greenfont>æˆåŠŸå‘é€çŸ­æ¶ˆæ¯ã€‚</font><br>" & VbCrLf
 			CALL LDExeCute("Update LeadBBS_User Set MessageFlag=1 where UserName='" & Replace(ToUser,"'","''") & "' and MessageFlag=0",1)
 			If GBL_CHK_User = ToUser Then UpdateSessionValue 6,1,0
 		Next
 REM *******Chat Start*******
-CALL Chat_Appand_Session("<span onclick=c_sc(this.innerHTML) style=cursor:hand class=c_name>" & htmlencode(fromUser) & "</span>¸øÄã·¢ËÍÁËÒ»·âÁôÑÔ£º<a href=../../User/MyInfoBox.asp target=_blank>" & htmlencode(Title) & "</a>¡£<br>",ToUser)
+CALL Chat_Appand_Session("<span onclick=c_sc(this.innerHTML) style=cursor:hand class=c_name>" & htmlencode(fromUser) & "</span>ç»™ä½ å‘é€äº†ä¸€å°ç•™è¨€ï¼š<a href=../../User/MyInfoBox.asp target=_blank>" & htmlencode(Title) & "</a>ã€‚<br>",ToUser)
 REM *******Chat End*********
 	End If
 

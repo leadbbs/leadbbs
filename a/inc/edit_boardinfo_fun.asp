@@ -8,27 +8,27 @@ Class class_editboardintro
 		bbs_ok = ""
 		bbs_error = ""
 		if GBL_BoardMasterFlag < 5 or GBL_Board_id < 1 then
-			Global_ErrMsg "È¨ÏŞ²»×ã»ò²ÎÊı´íÎó¡£" & VbCrLf
+			Call Global_ErrMsg("æƒé™ä¸è¶³æˆ–å‚æ•°é”™è¯¯ã€‚" & VbCrLf)
 			exit sub
 		end if
 
 		bbs_HTMLFlag = 2
 		submitflag = GetFormData("submitflag")
 		if submitflag <> "1" then
-			class_getdata
+			class_getdata()
 			if GBL_Board_id < 1 then
-				Global_ErrMsg "²ÎÊı´íÎó¡£" & VbCrLf
+				Call Global_ErrMsg("å‚æ•°é”™è¯¯ã€‚" & VbCrLf)
 				exit sub
 			end if
-			class_form
+			class_form()
 		else
-			class_getvalue
+			class_getvalue()
 			if GBL_CHK_TempStr <> "" then
-				class_form
+				class_form()
 				exit sub
 			end if
-			class_save
-			class_form
+			class_save()
+			class_form()
 		end if
 	
 	End Sub
@@ -45,7 +45,7 @@ Class class_editboardintro
 		End If
 		bbs_Content = GetFormData("Form_Content")
 		if len(bbs_Content) > LMT_MaxTextLength then
-			bbs_error = "ÄÚÈİ¹ı³¤¡£" & VbCrLf
+			bbs_error = "å†…å®¹è¿‡é•¿ã€‚" & VbCrLf
 		end if
 
 	end sub
@@ -58,7 +58,7 @@ Class class_editboardintro
 		If Rs.Eof Then
 			bbs_Content = ""
 			GBL_Board_id = 0
-			bbs_error = "²ÎÊı´íÎó¡£" & VbCrLf
+			bbs_error = "å‚æ•°é”™è¯¯ã€‚" & VbCrLf
 		else
 			bbs_Content = rs(0)
 			bbs_BoardLimit = rs(1)
@@ -110,7 +110,7 @@ Class class_editboardintro
 				<input name="b" type="hidden" value="<%=gbl_board_id%>">
 				<input name="id" type="hidden" value="-1">
 				<input name="submitflag" type="hidden" value="1">
-				<input name=submit2 type=submit value="Íê³É±à¼­" class="fmbtn btn_3">
+				<input name=submit2 type=submit value="å®Œæˆç¼–è¾‘" class="fmbtn btn_3">
 				<br /><br />
 			</td>
 		</tr>
@@ -136,8 +136,8 @@ Class class_editboardintro
 		SQL = "update LeadBBS_boards set BoardIntro2='" & replace(bbs_htmlflag & "|" & bbs_Content,"'","''") & "',BoardLimit=" & GBL_Board_BoardLimit & " where boardID=" & GBL_Board_id
 		call LDExeCute(SQL,1)		
 		
-		ReloadBoardInfo(GBL_Board_id)
-		bbs_ok = "±à¼­³É¹¦¡£"
+		Call ReloadBoardInfo(GBL_Board_id)
+		bbs_ok = "ç¼–è¾‘æˆåŠŸã€‚"
 	
 	end sub
 	
@@ -149,7 +149,7 @@ Class class_editboardintro
 		Set fs = Server.CreateObject(DEF_FSOString)
 		If err <> 0 Then
 			Err.Clear
-			Response.Write "<p>·şÎñÆ÷²»Ö§³ÖFSO£®</p>"
+			Response.Write "<p>æœåŠ¡å™¨ä¸æ”¯æŒFSOï¼</p>"
 			Exit Function
 		End If
 		If fs.FileExists(path) Then

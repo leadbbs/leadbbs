@@ -1,11 +1,11 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_popfun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
-siteHead("   ѡ��ͷ��")%>
+siteHead("   选择头像")%>
 <html>
 <head>
-	<meta http-equiv='Content-Type' content='text/html; charset=gb2312'>
+	<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 	<script>
 	function closeit()
 	{
@@ -43,7 +43,7 @@ siteHead("   ѡ��ͷ��")%>
 </script>
 </head>
 <body bgcolor=ffffff onload="closeit()">
-<%DisplayFacelist%>
+<%DisplayFacelist()%>
 <body>
 </html>
 <%
@@ -57,7 +57,7 @@ Function DisplayFacelist
 	If first<1 or first>DEF_faceMaxNum then first=1
 	If first<>1 then first=cint(first)
 	%>
-	<center>��̳ͷ��ο�<table align=center cellpadding="0" cellspacing="5">
+	<center>论坛头像参考<table align=center cellpadding="0" cellspacing="5">
 		<tr>
 			<td colspan=4 bgcolor=000000>
 				<img src=<%=DEF_BBS_HomeUrl%>images/Null.gif width=2 height=1></td>
@@ -66,16 +66,16 @@ Function DisplayFacelist
 			<td colspan=4>
 				<%
 			If first-pagen>0 then
-				Response.Write "<a href=facelist.asp?first=1><<��ҳ</a>" & VbCrLf
-				Response.Write "<a href=facelist.asp?first="&first-pagen&">��һҳ</a> " & VbCrLf
+				Response.Write "<a href=facelist.asp?first=1><<首页</a>" & VbCrLf
+				Response.Write "<a href=facelist.asp?first="&first-pagen&">上一页</a> " & VbCrLf
 			Else
-				Response.Write "<font color=999999 class=grayfont><<��ҳ ��һҳ</font> " & VbCrLf
+				Response.Write "<font color=999999 class=grayfont><<首页 上一页</font> " & VbCrLf
 			End If
 
 			If first+pagen<DEF_faceMaxNum then
-				Response.Write "<a href=facelist.asp?first="&first+pagen&">��һҳ</a> <a href=facelist.asp?first="&DEF_faceMaxNum-pagen+1&">βҳ>></a>" & VbCrLf
+				Response.Write "<a href=facelist.asp?first="&first+pagen&">下一页</a> <a href=facelist.asp?first="&DEF_faceMaxNum-pagen+1&">尾页>></a>" & VbCrLf
 			Else
-				Response.Write "<font color=999999 class=grayfont>��һҳ βҳ</font>" & VbCrLf
+				Response.Write "<font color=999999 class=grayfont>下一页 尾页</font>" & VbCrLf
 			End If%>
 			</td>
 		</tr>
@@ -100,6 +100,6 @@ Function DisplayFacelist
 	</table>
 	</center>
 	<center>
-		<a href=#1 onclick='returnvalue();'>ȡ��</a></center>
+		<a href=#1 onclick='returnvalue();'>取消</a></center>
 
 <%End Function%>

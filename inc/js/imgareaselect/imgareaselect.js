@@ -1377,16 +1377,16 @@ var zoomimg = function(evt,a)
 						{
 							if(s=="ok")
 							{
-								alert("³É¹¦¸üĞÂÍ·Ïñ£¡");
+								alert("æˆåŠŸæ›´æ–°å¤´åƒï¼");
 								//document.location="usermodify.asp?action=uploadface";
 								return;
 							}
 							else
 							{
 								if(s=="ok2")
-								alert("³É¹¦ĞŞ¸Ä.");
+								alert("æˆåŠŸä¿®æ”¹.");
 								else{
-									alert("ÉÏ´«Ê§°Ü£¬ÇëÈ·ÈÏÊÇ·ñÎªÍ¼ÏñÎÄ¼ş£®");
+									alert("ä¸Šä¼ å¤±è´¥ï¼Œè¯·ç¡®è®¤æ˜¯å¦ä¸ºå›¾åƒæ–‡ä»¶ï¼");
 									$id("upload_filename").value="";
 								}
 							}

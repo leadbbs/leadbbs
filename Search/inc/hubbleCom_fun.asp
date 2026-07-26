@@ -61,11 +61,11 @@ Class hubblesearch_class
 			key_onlygood = 0
 		End If
 		
-		search_getUserInfo
+		search_getUserInfo()
 		
-		search_hubbleform
+		search_hubbleform()
 		
-		search_hubblesearch
+		search_hubblesearch()
 	
 	end sub
 	
@@ -121,7 +121,7 @@ Class hubblesearch_class
 		
 		if(theform.key.value=="")
 		{
-			alert("ÇëÊäÈëÒªËÑË÷µÄÄÚÈİ£¡\n");
+			alert("è¯·è¾“å…¥è¦æœç´¢çš„å†…å®¹ï¼\n");
 			ValidationPassed = false;
 			theform.key.focus();
 			return;
@@ -135,20 +135,20 @@ Class hubblesearch_class
 	function delbody_view(obj)
 	{
 		layer_create("anc_msgbody");
-		$id('anc_msgbody').innerHTML="<div class=ajaxbox><ul><li>ÔÊĞíÊäÈë¶à¸ö´ÊÓïËÑË÷£¨²»Í¬×Ö´ÊÖ®¼äÓÃÒ»¸ö¿Õ¸ñ¸ô¿ª£©£¬±ÈÈçËÑË÷º¬ÓĞ£¢<span class=grayfont>ÒôÀÖ</span>£¢²¢ÇÒº¬ÓĞ£¢<span class=grayfont>µËÀö¾ı</span>£¢¿ÉÒÔÊäÈë£¢<span class=grayfont>ÒôÀÖ µËÀö¾ı</span>£¢</li><li>Ä¬ÈÏ×î¶à·µ»Ø<%=DEF_HubbleMaxPage%>Ò³¼ÇÂ¼£¬ÈôÅÅĞò·½Ê½Ñ¡ÔñÎª£¢ÎŞĞò£¢¾ÍÄÜÍ»ÆÆÒ³ÊıÏŞÖÆ£®</li></ul></div>";
+		$id('anc_msgbody').innerHTML="<div class=ajaxbox><ul><li>å…è®¸è¾“å…¥å¤šä¸ªè¯è¯­æœç´¢ï¼ˆä¸åŒå­—è¯ä¹‹é—´ç”¨ä¸€ä¸ªç©ºæ ¼éš”å¼€ï¼‰ï¼Œæ¯”å¦‚æœç´¢å«æœ‰ï¼‚<span class=grayfont>éŸ³ä¹</span>ï¼‚å¹¶ä¸”å«æœ‰ï¼‚<span class=grayfont>é‚“ä¸½å›</span>ï¼‚å¯ä»¥è¾“å…¥ï¼‚<span class=grayfont>éŸ³ä¹ é‚“ä¸½å›</span>ï¼‚</li><li>é»˜è®¤æœ€å¤šè¿”å›<%=DEF_HubbleMaxPage%>é¡µè®°å½•ï¼Œè‹¥æ’åºæ–¹å¼é€‰æ‹©ä¸ºï¼‚æ— åºï¼‚å°±èƒ½çªç ´é¡µæ•°é™åˆ¶ï¼</li></ul></div>";
 		layer_view('',obj,'','','anc_msgbody','','',0,'',0,0);
 	}
 	</script>
 			<form name="searchform" id="searchform" action=Search.asp onSubmit="submitonce(this);return ValidationPassed;">
 			
 				<div class=value2>
-				<input value="<%=htmlencode(keywords)%>" type="text" name=key size=22 maxlength=255 class='fminpt input_3 searchkey'><input name=submit2 type=submit value="ËÑË÷" class="fmbtn btn_2 searchbtn"><%
+				<input value="<%=htmlencode(keywords)%>" type="text" name=key size=22 maxlength=255 class='fminpt input_3 searchkey'><input name=submit2 type=submit value="æœç´¢" class="fmbtn btn_2 searchbtn"><%
 				If viewed = 0 then%>
-				<a href=javascript:; class=greenfont onclick="this.style.display='none';$id('search_advance').style.display='block';">¸ß¼¶ËÑË÷</a><%
+				<a href=javascript:; class=greenfont onclick="this.style.display='none';$id('search_advance').style.display='block';">é«˜çº§æœç´¢</a><%
 				end if%>
 				<span class="layerico">
 				<a href=javascript:; class=greenfont onclick="delbody_view(this);">
-				ËÑË÷¼¼ÇÉ
+				æœç´¢æŠ€å·§
 				</a>
 				</span>
 				</div>
@@ -156,30 +156,30 @@ Class hubblesearch_class
 				<div id="search_advance"<%
 				If viewed = 0 then response.write " style=""display:none;"""
 				%>>
-					<div class=value2>ËÑË÷·¶Î§£º
+					<div class=value2>æœç´¢èŒƒå›´ï¼š
 						<input name=key_mode class=fmchkbox type=radio value=0<%
 						If key_mode = 0 Then Response.Write " checked"
-						%>>È«²¿
+						%>>å…¨éƒ¨
 						<input name=key_mode class=fmchkbox type=radio value=1<%
 						If key_mode = 1 Then Response.Write " checked"
-						%>>½ö±êÌâ
+						%>>ä»…æ ‡é¢˜
 						<input name=mode class=fmchkbox type=radio value=2<%
-						If key_mode = 2 Then Response.Write " checked"%>>½öÄÚÈİ
+						If key_mode = 2 Then Response.Write " checked"%>>ä»…å†…å®¹
 						
 					</div>
 					<div class=value2 id="search_boardlist">
-					ÌØ¶¨°æ¿é£º<!-- #include file=../../inc/incHTM/BoardForMoveList.asp -->	
+					ç‰¹å®šç‰ˆå—ï¼š<!--#include file="../../inc/incHTM/BoardForMoveList.asp"-->	
 					<label>
 					<input class="fmchkbox" type="checkbox" name="key_onlytitle" value="1"<%
 						If key_onlytitle=1 then
 						%> checked="checked"<%
-						End If%> />ÏŞÖ÷Ìâ
+						End If%> />é™ä¸»é¢˜
 					</label>
 					<label>
 					<input class="fmchkbox" type="checkbox" name="key_onlygood" value="1"<%
 						If key_onlygood=1 then
 						%> checked="checked"<%
-						End If%> />ÏŞ¾«»ª
+						End If%> />é™ç²¾å
 					</label>								
 					</div>
 					<script language=javascript>
@@ -194,22 +194,22 @@ Class hubblesearch_class
 						search_initboard();
 					</script>
 					<div class=value2>
-					Ö¸¶¨ÓÃ»§£º
+					æŒ‡å®šç”¨æˆ·ï¼š
 					<input value="<%=htmlencode(key_user)%>" type="text" name=key_user size=30 maxlength=255 class='fminpt input_2'>
-					»ò ÓÃ»§ID£º
+					æˆ– ç”¨æˆ·IDï¼š
 					<input value="<%if key_userid > 0 then response.write key_userid%>" type="text" name=key_userid size=30 maxlength=255 class='fminpt input_1'>
 					</div>
 					<div class=value2>
-					ÅÅĞò·½Ê½£º
+					æ’åºæ–¹å¼ï¼š
 					
 						<input name=key_order class=fmchkbox type=radio value=0<%
 						If key_order = 0 Then Response.Write " checked"
-						%>>ĞÂÌûÓÅÏÈ
+						%>>æ–°å¸–ä¼˜å…ˆ
 						<input name=key_order class=fmchkbox type=radio value=1<%
 						If key_order = 1 Then Response.Write " checked"
-						%>>¾ÉÌûÓÅÏÈ
+						%>>æ—§å¸–ä¼˜å…ˆ
 						<input name=key_order class=fmchkbox type=radio value=2<%
-						If key_order = 2 Then Response.Write " checked"%>>ÎŞĞò
+						If key_order = 2 Then Response.Write " checked"%>>æ— åº
 					</div>
 				</div>
 			</form>
@@ -273,9 +273,9 @@ Class hubblesearch_class
 		
 		if recNum < 0 then
 			%>
-			<div class="title">Ã»ÓĞÕÒµ½Óë ¡°<span class=redfont><%=htmlencode(keywords)%></span>¡± Ïà¹ØµÄÄÚÈİ¡£
+			<div class="title">æ²¡æœ‰æ‰¾åˆ°ä¸ â€œ<span class=redfont><%=htmlencode(keywords)%></span>â€ ç›¸å…³çš„å†…å®¹ã€‚
 			</div>
-			<div class="value2">½¨Òé³¢ÊÔÆäËü´Ê»ã»ò¼ò»¯ËÑË÷´Ê¡£
+			<div class="value2">å»ºè®®å°è¯•å…¶å®ƒè¯æ±‡æˆ–ç®€åŒ–æœç´¢è¯ã€‚
 			</div>
 			<%
 			exit sub
@@ -380,7 +380,7 @@ Class hubblesearch_class
 		<%
 		For N = For1 to For2
 		
-		'ÒòÎ´Í¬²½£¬µ¼ÖÂËÑË÷½á¹ûÊı¾İÒâÍâ´¦Àí
+		'å› æœªåŒæ­¥ï¼Œå¯¼è‡´æœç´¢ç»“æœæ•°æ®æ„å¤–å¤„ç†
 		if isNull(GetData(N,14)) or isNumeric(GetData(N,14)) = 0 then
 		'else
 			GetData(N,8) = 0
@@ -429,16 +429,16 @@ Class hubblesearch_class
 			If ((ChildNum+1) mod DEF_TopicContentMaxListNum) > 0 Then Temp1 = Temp1 + 1
 
 			If GBL_NoneLimitFlag = 0 and GBL_CheckLimitTitle(ForumPass,BoardLimit,OtherLimit,HiddenFlag) = 1 Then
-				Title = "<span calss=grayfont>´ËÌû×Ó±êÌâÒÑÉèÖÃÎªÒş²Ø</span>"
+				Title = "<span calss=grayfont>æ­¤å¸–å­æ ‡é¢˜å·²è®¾ç½®ä¸ºéšè—</span>"
 				TitleStyle = 1
 			End If
-			If GBL_CheckLimitContent(ForumPass,BoardLimit,OtherLimit,HiddenFlag) = 1 Then Content = "<span calss=grayfont>´ËÌû×ÓÄÚÈİÊôÓÚÏŞÖÆ°æÃæ£¬Çëµã»÷Ö÷Ìâ²é¿´</span>"
+			If GBL_CheckLimitContent(ForumPass,BoardLimit,OtherLimit,HiddenFlag) = 1 Then Content = "<span calss=grayfont>æ­¤å¸–å­å†…å®¹å±äºé™åˆ¶ç‰ˆé¢ï¼Œè¯·ç‚¹å‡»ä¸»é¢˜æŸ¥çœ‹</span>"
 	
-			If TopicType <> 80 and TopicType <> 0 Then Content = "<span calss=grayfont>´ËÌû×ÓÄÚÈİÓĞËùÏŞÖÆ£¬Çëµã»÷Ö÷Ìâ²é¿´...</span>"
+			If TopicType <> 80 and TopicType <> 0 Then Content = "<span calss=grayfont>æ­¤å¸–å­å†…å®¹æœ‰æ‰€é™åˆ¶ï¼Œè¯·ç‚¹å‡»ä¸»é¢˜æŸ¥çœ‹...</span>"
 	
 			If left(Title,3) = "re:" and Title <> "re:" Then Title = Mid(Title,4)
 
-			If Title = "" Then Title = "±êÌâ"
+			If Title = "" Then Title = "æ ‡é¢˜"
 			Response.Write Title
 			Response.Write "</a></span>"
 	
@@ -448,7 +448,7 @@ Class hubblesearch_class
 			End If
 	
 			If ccur(GoodFlag) = 1 Then
-				Response.Write "<img src=../images/" & GBL_DefineImage & "jh1.GIF border=0 title=¾«»ªÌû×Ó align=absbottom>"
+				Response.Write "<img src=../images/" & GBL_DefineImage & "jh1.GIF border=0 title=ç²¾åå¸–å­ align=absbottom>"
 			End If
 	
 			If BoardName <> "" Then Response.Write " <span class=grayfont>-</span> <a href=../b/" & RW_b(BoardID,0,"") & "><span class=greenfont>" & BoardName & "</span></a>"
@@ -461,7 +461,7 @@ Class hubblesearch_class
 			Response.Write "<div class=value>"
 			Response.Write Content
 			response.write "</div>"
-			Response.Write "<div class=value2><span class=grayfont>×÷Õß£º"
+			Response.Write "<div class=value2><span class=grayfont>ä½œè€…ï¼š"
 			If UserID > 0 Then
 				Response.Write "<a href=../User/" & RW_User(UserID,"","","") & "><span class=greenfont>" & htmlencode(GetTrueName(UserName,TrueName)) & "</span></a>"
 			Else
@@ -470,9 +470,9 @@ Class hubblesearch_class
 	
 			Temp = RestoreTime(NDateTime)
 			If DateDiff("d",Temp,DEF_Now)<1 Then
-				Response.Write " ·¢±íÓÚ <span class=redfont>" & Temp & "</span>"
+				Response.Write " å‘è¡¨äº <span class=redfont>" & Temp & "</span>"
 			Else
-				Response.Write " ·¢±íÓÚ " & Temp
+				Response.Write " å‘è¡¨äº " & Temp
 			End If
 			Response.Write "</span></div>"
 			If N = For2 Then Response.Write "<hr class=splitline>"

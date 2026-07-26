@@ -1,44 +1,44 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
-<!-- #include file=inc/ForumBoard_fun.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
+<!--#include file="inc/ForumBoard_fun.asp"-->
 <%
 Server.ScriptTimeOut = 300
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
-DisplayUserNavigate("ĞŞ¸´ÂÛÌ³×òÈÕ·¢ÌûÁ¿")
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
+DisplayUserNavigate("ä¿®å¤è®ºå›æ˜¨æ—¥å‘å¸–é‡")
 
 If GBL_CHK_Flag=1 Then
 	If Request.Form("submitflag") = "yes" then
-		UpdateBoardYesterdayAnnounceNum
-		Response.Write "<div class=alertdone>ĞŞ¸´×òÈÕ·¢ÌûÁ¿³É¹¦£¡</div>" & VbCrLf
+		UpdateBoardYesterdayAnnounceNum()
+		Response.Write "<div class=alertdone>ä¿®å¤æ˜¨æ—¥å‘å¸–é‡æˆåŠŸï¼</div>" & VbCrLf
 	Else
 		%>
-		<div class=frameline>×¢Òâ£º´Ë¹¦ÄÜ½«ĞŞ¸´ÒÔÏÂÄÚÈİ£º</div>
+		<div class=frameline>æ³¨æ„ï¼šæ­¤åŠŸèƒ½å°†ä¿®å¤ä»¥ä¸‹å†…å®¹ï¼š</div>
 		<ol class=listli>
-			<li>Í³¼ÆÃ¿¸ö°æÃæµÄ×òÈÕ·¢ÌûÁ¿£¬ÖØĞÂ¼ÆËã×òÈÕ·¢±íµÄÌû×Ó</li>
-			<li>2.Èç¹û·şÎñÆ÷Ê±¼äµ÷Õû£¬ÈÔÈ»ÒÀ·¢ÌûµÄÊ±¼äÀ´ÖØĞÂÍ³¼Æ×òÈÕµÄÌû×Ó(24Ğ¡Ê±)</li>
+			<li>ç»Ÿè®¡æ¯ä¸ªç‰ˆé¢çš„æ˜¨æ—¥å‘å¸–é‡ï¼Œé‡æ–°è®¡ç®—æ˜¨æ—¥å‘è¡¨çš„å¸–å­</li>
+			<li>2.å¦‚æœæœåŠ¡å™¨æ—¶é—´è°ƒæ•´ï¼Œä»ç„¶ä¾å‘å¸–çš„æ—¶é—´æ¥é‡æ–°ç»Ÿè®¡æ˜¨æ—¥çš„å¸–å­(24å°æ—¶)</li>
 		</ol>
-		<div class=alert>È·ÈÏĞÅÏ¢£ºÈ·¶¨¿ªÊ¼ÖØĞÂÍ³¼Æ×òÈÕ·¢ÌûÂğ£¿µã»÷ºóÄÍĞÄµÈ´ı³ÌĞòÍê³ÉÖ´ĞĞ¡£</div>
+		<div class=alert>ç¡®è®¤ä¿¡æ¯ï¼šç¡®å®šå¼€å§‹é‡æ–°ç»Ÿè®¡æ˜¨æ—¥å‘å¸–å—ï¼Ÿç‚¹å‡»åè€å¿ƒç­‰å¾…ç¨‹åºå®Œæˆæ‰§è¡Œã€‚</div>
 		<div class=frameline>
 			<form action=RepairYesterdayAnc.asp method=post name=LeadBBSFm id=LeadBBSFm>
 			<input name=submitflag value=yes type=hidden>
-			<input type=button value="µã»÷È·ÈÏ¿ªÊ¼Í³¼Æ×òÈÕ·¢ÌûÁ¿" onclick="javascript:LeadBBSFm.submit();this.disabled=true;" class=fmbtn>
+			<input type=button value="ç‚¹å‡»ç¡®è®¤å¼€å§‹ç»Ÿè®¡æ˜¨æ—¥å‘å¸–é‡" onclick="javascript:LeadBBSFm.submit();this.disabled=true;" class=fmbtn>
 			</form>
 		</div>
 		<%
 	End If
 Else
-DisplayLoginForm
+DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 
@@ -60,8 +60,8 @@ Function UpdateBoardYesterdayAnnounceNum
 		YesterdayAnnounceNum = 0
 	Else
 		Dim N,StartTime1,StartTime2,GoodNum
-		StartTime1 = Left(GetTimeValue(DateAdd("d",-1,DEF_Now)),8) & "000000"
-		StartTime2 = Left(GetTimeValue(DEF_Now),8) & "000000"
+		StartTime1 = Left(LngStr(GetTimeValue(DateAdd("d",-1,DEF_Now))),8) & "000000"
+		StartTime2 = Left(LngStr(GetTimeValue(DEF_Now)),8) & "000000"
 		For N = 0 to BoardNum
 			Set Rs = LDExeCute("select count(*) from LeadBBS_Announce where BoardID=" & getData(0,N) & " and ndatetime>=" & StartTime1 & " and ndatetime<" & StartTime2,0)
 			If Rs.Eof Then
@@ -74,7 +74,7 @@ Function UpdateBoardYesterdayAnnounceNum
 			End If
 			Rs.Close
 			Set Rs = Nothing
-			Response.Write GetData(1,N) & "×òÈÕ·¢Ìû¹²" & GoodNum & "Ìõ<br>" & VbCrLf
+			Response.Write GetData(1,N) & "æ˜¨æ—¥å‘å¸–å…±" & GoodNum & "æ¡<br>" & VbCrLf
 		Next
 	End If
 	Dim MaxAnnounce
@@ -93,8 +93,8 @@ Function UpdateBoardYesterdayAnnounceNum
 		End If
 	End If
 	CALL LDExeCute("Update LeadBBS_SiteInfo Set YesterdayAnc=" & YesterdayAnnounceNum,1)
-	ReloadStatisticData
-	Response.Write "<p>Íê³É¸üĞÂ£¬×òÈÕ·¢ÌûÁ¿¹²¼Æ" & YesterdayAnnounceNum & "Ìõ<br>"
+	ReloadStatisticData()
+	Response.Write "<p>å®Œæˆæ›´æ–°ï¼Œæ˜¨æ—¥å‘å¸–é‡å…±è®¡" & YesterdayAnnounceNum & "æ¡<br>"
 
 End Function
 %>

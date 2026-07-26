@@ -1,14 +1,14 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/Limit_Fun.asp -->
-<!-- #include file=../inc/Upload_Setup.asp -->
-<!-- #include file=../article/inc/cms_setup.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/Limit_Fun.asp"-->
+<!--#include file="../inc/Upload_Setup.asp"-->
+<!--#include file="../article/inc/cms_setup.asp"-->
 <%
 DEF_BBS_HomeUrl = "../"
-Const LMT_RedirectFile = 1 '¸½¼şÏÔÊ¾·½Ê½£º0,¶ÁÈ¡ÏÂÔØ£¬Òş²ØÕæÊµµØÖ·µ«ĞÔÄÜÉÔ²î 1.×ªÖ·ÏÂÔØ ¸ßĞÔÄÜµ«±©Â¶ÕæÊµµØÖ·
-Const DEF_GuestEnable = 1 'ÊÇ·ñÔÊĞíÓÎ¿Í²é¿´¸½¼ş£º0,½ûÖ¹£¬1.ÔÊĞí
+Const LMT_RedirectFile = 1 'é™„ä»¶æ˜¾ç¤ºæ–¹å¼ï¼š0,è¯»å–ä¸‹è½½ï¼Œéšè—çœŸå®åœ°å€ä½†æ€§èƒ½ç¨å·® 1.è½¬å€ä¸‹è½½ é«˜æ€§èƒ½ä½†æš´éœ²çœŸå®åœ°å€
+Const DEF_GuestEnable = 1 'æ˜¯å¦å…è®¸æ¸¸å®¢æŸ¥çœ‹é™„ä»¶ï¼š0,ç¦æ­¢ï¼Œ1.å…è®¸
 
-Main
+Main()
 
 Sub Main
 
@@ -57,7 +57,7 @@ Private Sub GetUpladInfo
 	If Request.QueryString("s") <> DEF_DownKey Then
 		Response.Redirect DEF_BBS_HomeUrl & "images/logo.gif"
 	End If
-	InitDatabase
+	Call InitDatabase()
 
 	If Request.querystring("type") <> "1" then
 		GetType = 0
@@ -92,14 +92,14 @@ Private Sub GetUpladInfo
 
 	If GBL_Board_ID > 0 and CheckFlag = 1 Then
 		GBL_CHK_TempStr = ""
-		Borad_GetBoardIDValue(GBL_Board_ID)
-		CheckisBoardMaster
-		CheckAccessLimit
-		CheckAccessLimit_TimeLimit
+		Call Borad_GetBoardIDValue(GBL_Board_ID)
+		Call CheckisBoardMaster()
+		Call CheckAccessLimit()
+		Call CheckAccessLimit_TimeLimit()
 
 		If GBL_CHK_TempStr <> "" Then
-			ErrStr = "¸½¼şÏÂÔØÊ§°Ü£¬" & GBL_CHK_TempStr
-			CloseDatabase
+			ErrStr = "é™„ä»¶ä¸‹è½½å¤±è´¥ï¼Œ" & GBL_CHK_TempStr
+			Call CloseDatabase()
 			'Exit Sub
 			Response.Redirect DEF_BBS_HomeUrl & "images/visitlimit.gif"
 		End If
@@ -108,7 +108,7 @@ Private Sub GetUpladInfo
 	'If PhotoDir <> "" and FileType <> 0 and VisitIP <> GBL_IPAddress Then
 	'If PhotoDir <> "" and VisitIP <> GBL_IPAddress Then
 	'	If DEF_DownSpend > 0 and DEF_DownSpend > GBL_CHK_Points Then
-	'		ErrStr = "ÏÂÔØ¸½¼şÊ§°Ü,Ã»ÓĞ×ã¹»µÄ" & DEF_PointsName(0) & "!"
+	'		ErrStr = "ä¸‹è½½é™„ä»¶å¤±è´¥,æ²¡æœ‰è¶³å¤Ÿçš„" & DEF_PointsName(0) & "!"
 	'	Else
 	'		If DEF_DownSpend > 0 and GBL_UserID <> UserID Then
 	'			CALL LDExeCute("Update LeadBBS_User Set Points=Points-" & DEF_DownSpend & " where id=" & GBL_UserID,1)
@@ -120,10 +120,10 @@ Private Sub GetUpladInfo
 	'	End If
 	'End If
 	If DEF_GuestEnable = 0 and GBL_UserID < 1 Then
-		CloseDatabase
+		Call CloseDatabase()
 		Response.Redirect DEF_BBS_HomeUrl & "images/guest.gif"
 	End If
-	CloseDatabase
+	Call CloseDatabase()
 	'If CheckFlag = 0 and isTrueDate(GBL_CookieTime) = 0 Then Response.Redirect DEF_BBS_HomeUrl & "images/logo.gif"
 	If isTrueDate(GBL_CookieTime) = 0 Then GBL_CookieTime = DEF_now
 	'If CheckFlag = 0 and Abs(DateDiff("s",GBL_CookieTime,DEF_Now)) > 1800 Then Response.Redirect DEF_BBS_HomeUrl & "images/logo.gif"
@@ -132,11 +132,11 @@ End Sub
 
 Public Sub GetFile
 
-	GetUpladInfo
+	GetUpladInfo()
 	If ErrStr <> "" Then Exit Sub
 	ErrStr = ""
 	If ID = 0 Then
-		ErrStr = "»ñÈ¡¸½¼şÊ§°Ü."
+		ErrStr = "è·å–é™„ä»¶å¤±è´¥."
 		Exit Sub
 	End If
 	
@@ -187,7 +187,7 @@ Public Sub GetFile
 	'On Error Resume Next 
 	Set Fso = Server.CreateObject(DEF_FSOString) 
 	If Not Fso.FileExists(strFilename) Then 
-		ErrStr = "ÎŞ´Ë¸½¼ş£¬¿ÉÄÜÒÑ±»É¾³ı!"
+		ErrStr = "æ— æ­¤é™„ä»¶ï¼Œå¯èƒ½å·²è¢«åˆ é™¤!"
 		Set FSO = Nothing
 		S.Close
 		Set S = Nothing
@@ -195,23 +195,23 @@ Public Sub GetFile
 	End If
 	
 	Set F = Fso.GetFile(strFilename) 
-	intFilelength = F.Size '»ñÈ¡ÎÄ¼ş´óĞ¡
+	intFilelength = F.Size 'è·å–æ–‡ä»¶å¤§å°
 	
-	'¹ı´óÎÄ¼şÏÂÔØÏŞÖÆ
+	'è¿‡å¤§æ–‡ä»¶ä¸‹è½½é™åˆ¶
 	If FileType <> 0 and intFilelength > 2048000 Then
-		If CheckWriteEventSpace = 0 Then
-			ErrStr = "ÏÂÔØ¸½¼şÊ§°Ü(²Ù×÷¹ıÆµ)."
+		If CheckWriteEventSpace() = 0 Then
+			ErrStr = "ä¸‹è½½é™„ä»¶å¤±è´¥(æ“ä½œè¿‡é¢‘)."
 			Set F = Nothing
 			S.Close
 			Set S = Nothing
 			Set FSO = Nothing
 			Exit Sub
 		End If
-		UpdateSessionValue 13,GetTimeValue(DEF_Now),0 '´óÎÄ¼şÏÂÔØ,·ÀË¢ĞÂ
+		Call UpdateSessionValue(13,GetTimeValue(DEF_Now),0) 'å¤§æ–‡ä»¶ä¸‹è½½,é˜²åˆ·æ–°
 	End If
 	S.LoadFromFile(strFilename) 
 	If Err Then 
-		ErrStr = "»ñÈ¡¸½¼ş²úÉúÎ´Öª´íÎó£¬ÇëÁªÏµ¹ÜÀíÔ±£®"
+		ErrStr = "è·å–é™„ä»¶äº§ç”ŸæœªçŸ¥é”™è¯¯ï¼Œè¯·è”ç³»ç®¡ç†å‘˜ï¼"
 		S.Close
 		Set F = Nothing
 		Set S = Nothing
@@ -227,16 +227,16 @@ Public Sub GetFile
 			Response.AddHeader "Content-Disposition","attachment;filename=" & FileName
 		End If
 		'Response.AddHeader "Content-Length",intFilelength 
-		Response.CharSet = "GB2312" 
+		Response.CharSet = "utf-8" 
 		Response.ContentType = "application/octet-stream"
 	Else
 		Response.AddHeader "Content-Disposition","filename=" & FileName
 		'Response.AddHeader "Content-Length",intFilelength 
-		Response.CharSet = "GB2312"
+		Response.CharSet = "utf-8"
 		Response.ContentType = "image/" & Ext
 	End If
 	If intFilelength < 512 * 1024 Then
-		Response.BinaryWrite S.Read
+		Response.BinaryWrite S.Read(-1)
 	Else
 		Do while intFilelength > 0 and Response.IsClientConnected = true
 			Response.BinaryWrite S.Read(512*1024)

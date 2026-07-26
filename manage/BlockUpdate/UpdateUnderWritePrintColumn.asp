@@ -1,46 +1,46 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../../inc/Ubbcode.asp -->
-<!-- #include file=../../inc/Upload_Setup.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
-<!-- #include file=UpdateRootMaxMinAnnounceID.asp -->
-<!-- #include file=UpdateUserAnnounce.asp -->
-<!-- #include file=DeleteBlankUser.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../../inc/Ubbcode.asp"-->
+<!--#include file="../../inc/Upload_Setup.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
+<!--#include file="UpdateRootMaxMinAnnounceID.asp"-->
+<!--#include file="UpdateUserAnnounce.asp"-->
+<!--#include file="DeleteBlankUser.asp"-->
 
 <%
 DEF_BBS_HomeUrl = "../../"
 server.scripttimeout=99999
-Rem ¸üÐÂÂÛÌ³UBB±àÂë
-Rem µ±ÂÛÌ³²ÉÓÃÐÂµÄUBB±àºÅÂë,Ô­À´µÄUBBÎÄÕÂ¿ÉÒÔÖØÐÂ×ª»»¸ñÊ½£®
+Rem æ›´æ–°è®ºå›UBBç¼–ç 
+Rem å½“è®ºå›é‡‡ç”¨æ–°çš„UBBç¼–å·ç ,åŽŸæ¥çš„UBBæ–‡ç« å¯ä»¥é‡æ–°è½¬æ¢æ ¼å¼ï¼Ž
 Rem -------------------------------------------------------
-Rem ------------µ±ÄãµÄUBB±àÂë¸ü¸Ä»ò¹ýÂ©ÎÄ×Ö¸ü¸Äºó----------
-Rem ------------ÐèÒªÁ¢¼´ÉúÐ§£¬ÇëÓÃ´ËÎÄ¼þ¸üÐÂ---------------
-Rem ------------¸üÐÂÊ±¼äÂþ³¤£¬½¨Á¢ÏÈµ½ºóÌ¨¹Ø±ÕÂÛÌ³---------
+Rem ------------å½“ä½ çš„UBBç¼–ç æ›´æ”¹æˆ–è¿‡æ¼æ–‡å­—æ›´æ”¹åŽ----------
+Rem ------------éœ€è¦ç«‹å³ç”Ÿæ•ˆï¼Œè¯·ç”¨æ­¤æ–‡ä»¶æ›´æ–°---------------
+Rem ------------æ›´æ–°æ—¶é—´æ¼«é•¿ï¼Œå»ºç«‹å…ˆåˆ°åŽå°å…³é—­è®ºå›---------
 Rem -------------------------------------------------------
 
 Dim GBL_MANAGE_Flag
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-initDatabase
-Main
-CloseDatabase
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+initDatabase()
+Main()
+CloseDatabase()
 Manage_Sitebottom("none")
 
 Sub Main
 
 	GBL_MANAGE_Flag = left(Request("flag"),50)
-	If CheckSupervisorPass = 0 or GBL_UserID = 0 Then Exit Sub
+	If CheckSupervisorPass() = 0 or GBL_UserID = 0 Then Exit Sub
 	
 	Select Case GBL_MANAGE_Flag
 		case "underwrite":
 			'UpdatePrintUnderWriteColumn
 		case "UpdateUserAnnounce"
-			UpdateUserAnnounce
+			UpdateUserAnnounce()
 		case "UpdateRootMaxMinAnnounceID"
-			BlockUpdate
+			BlockUpdate()
 		case "DeleteBlankUser"
-			DeleteBlank_page
+			DeleteBlank_page()
 		case Else
-			UpdateContentColumn
+			UpdateContentColumn()
 	End select
 
 End Sub
@@ -50,12 +50,12 @@ Sub UpdatePrintUnderWriteColumn()
 	If Request.Form("SureFlag") <> "E72ksiOkw2" Then
 		%>
 			<p><form action=UpdateUnderWritePrintColumn.asp method=post>
-			<b><font color=ff0000 class=redfont>È·¶¨´Ë²Ù×÷Âð?<br>
+			<b><font color=ff0000 class=redfont>ç¡®å®šæ­¤æ“ä½œå—?<br>
 			<br>
 			<input type=hidden name=SureFlag value="E72ksiOkw2">
 			<input type=hidden name=flag value="<%=htmlencode(GBL_MANAGE_Flag)%>">
 			
-			<input type=submit value=È·¶¨½øÐÐ class=fmbtn>
+			<input type=submit value=ç¡®å®šè¿›è¡Œ class=fmbtn>
 			</form>
 		<%
 	Else
@@ -88,14 +88,14 @@ Sub UpdatePrintUnderWriteColumn()
 		Application.UnLock
 		If Request("executepage") = "" Then
 		%>
-		<p style="font-size:9pt">ÏÂÃæ¿ªÊ¼ÖØÐÂÉú³ÉÓÃ»§Ç©Ãû£¬¹²ÓÐ<%=RecordCount%>¸öÓÃ»§´ý¸üÐÂ
+		<p style="font-size:9pt">ä¸‹é¢å¼€å§‹é‡æ–°ç”Ÿæˆç”¨æˆ·ç­¾åï¼Œå…±æœ‰<%=RecordCount%>ä¸ªç”¨æˆ·å¾…æ›´æ–°
 	
 		<table width="400" cellspacing="0" cellpadding="0" style="border:#006600 1px solid;">
 			<tr> 
 				<td>
 				<td><img src=../pic/progressbar.gif width=0 height=16 id=img1 name=img1 align=middle>
 		</td></tr></table> <span id=txt1 name=txt1 style="font-size:9pt">0</span><span style="font-size:9pt">%</span>
-		<span id=tm1 name=tm1 style="font-size:9pt">ÕýÔÚ¹ÀËãÐèÒªÊ±¼ä...</span>
+		<span id=tm1 name=tm1 style="font-size:9pt">æ­£åœ¨ä¼°ç®—éœ€è¦æ—¶é—´...</span>
 		<script src="<%=DEF_BBS_HomeUrl%>inc/js/bar.js?ver=<%=DEF_Jer%>" type="text/javascript"></script>
 		<script>
 			Upl_url = "Io_Info.asp?id=<%=Urlencode(GBL_CHK_User)%>";
@@ -146,7 +146,7 @@ Sub UpdatePrintUnderWriteColumn()
 				Application.Contents.Remove("Io_" & GBL_CHK_User)
 			End If
 		Loop
-		%>Íê³É
+		%>å®Œæˆ
 		<%Application.Contents.Remove("Io_" & GBL_CHK_User)
 		
 	End If
@@ -184,30 +184,30 @@ Sub UpdateContentColumn()
 	'check str1 str2
 	GBL_CHK_TempStr = ""
 	If Len(Str1) < 5 and Str1 <> "" Then
-		GBL_CHK_TempStr = "Îª±ÜÃâÎÞÎ½µÄ´íÎóÌæ»»£¬ÒªÇó±»Ìæ»»µÄ×Ö·û´®±ØÐë³¤ÓÚ5¸ö×Ö"
+		GBL_CHK_TempStr = "ä¸ºé¿å…æ— è°“çš„é”™è¯¯æ›¿æ¢ï¼Œè¦æ±‚è¢«æ›¿æ¢çš„å­—ç¬¦ä¸²å¿…é¡»é•¿äºŽ5ä¸ªå­—"
 	End If
 	
 	If Str1 = "" Then
-		GBL_CHK_TempStr = GBL_CHK_TempStr & "´íÎó£¬Î´ÌîÐ´ ÒªÌæ»»µÄ×Ö·û´®."
+		GBL_CHK_TempStr = GBL_CHK_TempStr & "é”™è¯¯ï¼Œæœªå¡«å†™ è¦æ›¿æ¢çš„å­—ç¬¦ä¸²."
 	End If
 
 	If Request("SureFlag") <> "E72ksiOkw2" or GBL_CHK_TempStr <> "" Then
 		%>
 			<p><font color=red><b><%=GBL_CHK_TempStr%></b></font></p>
-			ÒÔÏÂ²Ù×÷½«ÅúÁ¿Ìæ»»Ìû×ÓÄÚÈÝ
+			ä»¥ä¸‹æ“ä½œå°†æ‰¹é‡æ›¿æ¢å¸–å­å†…å®¹
 			<p>
-			´Ë²Ù×÷Ö÷ÒªÓÃÀ´ÅúÁ¿Ìæ»»Ò»Ð©ÍøÖ·¸Ä±ä£¬»òÊÇÂ·¾¶±ä»»£¬×¢Òâ¾¡Á¿½«ÐèÒªÌæ»»µÄ×Ö·û´®ºÍÄ¿±ê×Ö·û´®ÌîÐ´¸´ÔÓ£¬±ÜÃâÎÞ¹ØÄÚÈÝ±»Ìæ»»
+			æ­¤æ“ä½œä¸»è¦ç”¨æ¥æ‰¹é‡æ›¿æ¢ä¸€äº›ç½‘å€æ”¹å˜ï¼Œæˆ–æ˜¯è·¯å¾„å˜æ¢ï¼Œæ³¨æ„å°½é‡å°†éœ€è¦æ›¿æ¢çš„å­—ç¬¦ä¸²å’Œç›®æ ‡å­—ç¬¦ä¸²å¡«å†™å¤æ‚ï¼Œé¿å…æ— å…³å†…å®¹è¢«æ›¿æ¢
 			<br><b>
-			<font color=blue>Îª±ÜÃâÎÞÎ½µÄÊý¾ÝÎþÉü£¨±ÈÈçÄãÒâÍâÌæ»»´íÎó£©£¬½¨ÒéÏÈ±¸·ÝÊý¾Ý¿âÔÙ½øÐÐ´Ë²Ù×÷</font></b>
+			<font color=blue>ä¸ºé¿å…æ— è°“çš„æ•°æ®ç‰ºç‰²ï¼ˆæ¯”å¦‚ä½ æ„å¤–æ›¿æ¢é”™è¯¯ï¼‰ï¼Œå»ºè®®å…ˆå¤‡ä»½æ•°æ®åº“å†è¿›è¡Œæ­¤æ“ä½œ</font></b>
 			<p><form action=UpdateUnderWritePrintColumn.asp method=post>
-			ÒªÌæ»»µÄ×Ö·û´®£º<input maxlength=255 name=Str1 value="<%=htmlencode(Str1)%>" size="40" class=fminpt><br>
-			Ìæ»»³ÉµÄÄ¿±ê×Ö·û´®£º<input maxlength=255 name=Str2 value="<%=htmlencode(Str2)%>" size="40" class=fminpt><br>
-			<br><b><font color=ff0000 class=redfont>´Ë²Ù×÷ÒÀÊý¾ÝÁ¿¿ÉÄÜÐèÒª·Ç³£³¤µÄÊ±¼ä£¬È·¶¨´Ë²Ù×÷Âð?<br>
+			è¦æ›¿æ¢çš„å­—ç¬¦ä¸²ï¼š<input maxlength=255 name=Str1 value="<%=htmlencode(Str1)%>" size="40" class=fminpt><br>
+			æ›¿æ¢æˆçš„ç›®æ ‡å­—ç¬¦ä¸²ï¼š<input maxlength=255 name=Str2 value="<%=htmlencode(Str2)%>" size="40" class=fminpt><br>
+			<br><b><font color=ff0000 class=redfont>æ­¤æ“ä½œä¾æ•°æ®é‡å¯èƒ½éœ€è¦éžå¸¸é•¿çš„æ—¶é—´ï¼Œç¡®å®šæ­¤æ“ä½œå—?<br>
 			<br>
 			<input type=hidden name=SureFlag value="E72ksiOkw2">
 			<input type=hidden name=Flag value="content">
 			
-			<input type=submit value=È·¶¨½øÐÐ class=fmbtn>
+			<input type=submit value=ç¡®å®šè¿›è¡Œ class=fmbtn>
 			</form>
 		<%
 	Else
@@ -236,7 +236,7 @@ Sub UpdateContentColumn()
 
 		If Request("executepage") = "" Then
 		%>
-		<p style="font-size:9pt">ÏÂÃæ½«Ìæ»»Ìû×ÓÄÚÈÝ´øÓÐ<u><%=htmlencode(Str1)%></u>µÄ×Ö´®Ìæ»»Îª<%=htmlencode(Str2)%>£¬¹²ÓÐ<%=RecordCount%>¸öÌû×Ó´ý¸üÐÂ
+		<p style="font-size:9pt">ä¸‹é¢å°†æ›¿æ¢å¸–å­å†…å®¹å¸¦æœ‰<u><%=htmlencode(Str1)%></u>çš„å­—ä¸²æ›¿æ¢ä¸º<%=htmlencode(Str2)%>ï¼Œå…±æœ‰<%=RecordCount%>ä¸ªå¸–å­å¾…æ›´æ–°
 	
 		<table width="400" border="0" cellspacing="1" cellpadding="1">
 			<tr> 
@@ -245,7 +245,7 @@ Sub UpdateContentColumn()
 			<tr> 
 				<td bgcolor=ffffff height=9><img src=../pic/progressbar.gif width=0 height=16 id=img1 name=img1 align=middle></td></tr></table>
 		</td></tr></table> <span id=txt1 name=txt1 style="font-size:9pt">0</span><span style="font-size:9pt">%</span>
-		<span id=tm1 name=tm1 style="font-size:9pt">ÕýÔÚ¹ÀËãÐèÒªÊ±¼ä...</span>
+		<span id=tm1 name=tm1 style="font-size:9pt">æ­£åœ¨ä¼°ç®—éœ€è¦æ—¶é—´...</span>
 		<script src="<%=DEF_BBS_HomeUrl%>inc/js/bar.js?ver=<%=DEF_Jer%>" type="text/javascript"></script>
 		<script>
 			Upl_url = "Io_Info.asp?id=<%=Urlencode(GBL_CHK_User)%>";
@@ -302,8 +302,8 @@ Sub UpdateContentColumn()
 				Application.Contents.Remove("Io_" & GBL_CHK_User)
 			End If
 		Loop
-		%>Íê³É
-		×Ü¹²Ìæ»»<%=ReplaceNum%>¸ö
+		%>å®Œæˆ
+		æ€»å…±æ›¿æ¢<%=ReplaceNum%>ä¸ª
 		<%Application.Contents.Remove("Io_" & GBL_CHK_User)
 		
 	End If

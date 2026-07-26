@@ -1,4 +1,4 @@
-<!-- #include file=AD_Data.asp -->
+<!--#include file="AD_Data.asp"-->
 <%
 Function AD_GetAdString
 

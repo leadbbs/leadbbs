@@ -10,9 +10,33 @@ Public Sub GetBody(url)
 	end if
 	
 	Dim xmlHttp
+	' AxonASP registers "Msxml2.ServerXMLHTTP" but not the VERSIONED ProgID
+	' "Msxml2.ServerXMLHTTP.3.0", so the versioned form raised 800401F3 (Invalid class
+	' string) and a/proxy.asp â€” which the editor's remote-image fetch and the apijson
+	' plug-in both call â€” answered 500 for every request. Try the versioned name first so
+	' an IIS deployment is unchanged, then fall back.
+	On Error Resume Next
 	Set xmlHttp = Server.CreateObject("Msxml2.ServerXMLHTTP.3.0")
+	If Err.Number <> 0 Then
+		Err.Clear
+		Set xmlHttp = Server.CreateObject("Msxml2.ServerXMLHTTP")
+	End If
+	If Err.Number <> 0 Then
+		Err.Clear
+		Set xmlHttp = Server.CreateObject("MSXML2.XMLHTTP")
+	End If
+	If Err.Number <> 0 Or Not IsObject(xmlHttp) Then
+		Err.Clear
+		On Error Goto 0
+		Exit Sub
+	End If
+	Err.Clear
+	' setTimeouts/setOption exist only on ServerXMLHTTP; ignore if the fallback lacks them
 	xmlHttp.setTimeouts 5000,5000,5000,15000
+	Err.Clear
 	xmlHttp.setOption 2, 13056
+	Err.Clear
+	On Error Goto 0
 	xmlHttp.open "GET", url, False, "", "" 
 	
 	dim domain
@@ -38,7 +62,23 @@ Public Sub GetBody(url)
 			'if type & "" <> "" then Response.ContentType = server.htmlencode(type)
 			Response.binaryWrite xmlhttp.Responsebody
 		else
-			Response.Write BytesToBstr(xmlhttp.Responsebody)
+			' AxonASP returns ServerXMLHTTP.responseBody as a Variant ARRAY, not the binary
+			' string ADODB.Stream.Write expects, so BytesToBstr wrote the literal "[Array]"
+			' and the proxy answered that for every text fetch. responseText is already a
+			' decoded String here; fall back to the byte path only if it is empty.
+			dim txt : txt = ""
+			on error resume next
+			txt = xmlHttp.responseText
+			on error goto 0
+			if txt <> "" then
+				if request.querystring("utf8") = "1" then
+					Response.Charset = "UTF-8"
+					response.codepage = 65001
+				end if
+				Response.Write txt
+			else
+				Response.Write BytesToBstr(xmlhttp.Responsebody)
+			end if
 		end if
 	'end if 
 	Else 
@@ -60,7 +100,7 @@ private Function BytesToBstr(body)
 	.Write body 
 	.Position = 0
 	.Type = 2
-	.Charset = "GB2312"
+	.Charset = "utf-8"
 	
 	if request.querystring("utf8") = "1" then
 		Response.Charset="UTF-8"
@@ -88,9 +128,9 @@ private function LD_GetUrl(dir)
 	dim p : p = Request.ServerVariables("SERVER_PORT")
 	if p <> "80" Then d = d & Server.UrlEncode(p)
 	
-	if dir = 1 then '·µ»ØÂÛÌ³°²×°Ä¿Â¼
+	if dir = 1 then 'è¿”å›è®ºå›å®‰è£…ç›®å½•
 		d = d & DEF_Installdir
-	elseif dir = 2 then '·µ»Øµ±Ç°ÎÄ¼şurl
+	elseif dir = 2 then 'è¿”å›å½“å‰æ–‡ä»¶url
 		d = d & Request.Servervariables("SCRIPT_NAME")
 	else
 		d = ""

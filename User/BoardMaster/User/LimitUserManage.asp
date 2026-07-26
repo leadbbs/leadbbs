@@ -1,16 +1,16 @@
-<!-- #include file=../../../inc/BBSsetup.asp -->
-<!-- #include file=../../../inc/Board_popfun.asp -->
-<!-- #include file=../../../inc/Upload_Setup.asp -->
-<!-- #include file=../../../inc/Limit_fun.asp -->
-<!-- #include file=../inc/BoardMaster_Fun.asp -->
-<!-- #include file=../../../User/inc/Fun_SendMessage.asp -->
+<!--#include file="../../../inc/BBSsetup.asp"-->
+<!--#include file="../../../inc/Board_popfun.asp"-->
+<!--#include file="../../../inc/Upload_Setup.asp"-->
+<!--#include file="../../../inc/Limit_fun.asp"-->
+<!--#include file="../inc/BoardMaster_Fun.asp"-->
+<!--#include file="../../../User/inc/Fun_SendMessage.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../../"
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-CheckisBoardMasterFlag
+CheckisBoardMasterFlag()
 
-BBS_SiteHead DEF_SiteNameString & " - ×¢²áĞÂÓÃ»§",0,"" & DEF_PointsName(6) & "¹ÜÀí"
+BBS_SiteHead DEF_SiteNameString & " - æ³¨å†Œæ–°ç”¨æˆ·",0,"" & DEF_PointsName(6) & "ç®¡ç†"
 
 Dim LMT_Action
 
@@ -23,7 +23,7 @@ rem for fob ip
 Dim GBL_IPStart,GBL_IPEnd
 Dim GBL_AnnounceID,GBL_MessageID
 
-rem for modifyuser
+rem for modifyuser()
 Dim GBL_ModifyMode,GBL_UserName_FaceUrl
 Dim GBL_UserName_UnderWrite,GBL_UserName_UserTitle
 GBL_ModifyMode = 0
@@ -41,32 +41,32 @@ If GBL_CHK_Flag=1 and BDM_isBoardMasterFlag = 1 and BDM_SpecialPopedomFlag = 1 T
 				Case Else
 					UserTopicTopInfo(3)
 			End Select
-			NewSpecialUser
+			NewSpecialUser()
 		Case "fobip"
 			UserTopicTopInfo(6)
-			DisplayNewForbidIP
+			DisplayNewForbidIP()
 		Case "modifyuser"
 			UserTopicTopInfo(7)
-			DisplayModifyUser
+			DisplayModifyUser()
 		Case "clear"
 			UserTopicTopInfo(10)
-			View_ClearExpiresInfo
+			View_ClearExpiresInfo()
 		Case Else
 			LMT_Action = ""
 			UserTopicTopInfo(2)
-			SpecialUserBrowser
+			SpecialUserBrowser()
 	End Select
 Else
 	UserTopicTopInfo(0)
 	If Request("submitflag")="" Then
-		DisplayLoginForm("ÇëÏÈµÇÂ¼")
+		DisplayLoginForm("è¯·å…ˆç™»å½•")
 	Else
 		DisplayLoginForm("<span class=""redfont"">" & GBL_CHK_TempStr & "</span>")
 	End If
 End If
-UserTopicBottomInfo
-closeDataBase
-SiteBottom
+UserTopicBottomInfo()
+closeDataBase()
+SiteBottom()
 If GBL_ShowBottomSure = 1 Then Response.Write GBL_SiteBottomString
 
 Function SpecialUserBrowser
@@ -209,39 +209,39 @@ Function SpecialUserBrowser
 	
 		PageSplictString = PageSplictString & "<div class=j_page>"
 		if FirstID>MinRecordID and FirstID<>0 then
-			PageSplictString = PageSplictString & "<a href=LimitUserManage.asp" & EndwriteQueryString & "&Start=0&SubmitFlag=3829EwoqIaNfoG>Ê×Ò³</a> " & VbCrLf
+			PageSplictString = PageSplictString & "<a href=LimitUserManage.asp" & EndwriteQueryString & "&Start=0&SubmitFlag=3829EwoqIaNfoG>é¦–é¡µ</a> " & VbCrLf
 		else
-			'PageSplictString = PageSplictString & "<font color=999999 class=grayfont>Ê×Ò³</font> " & VbCrLf
+			'PageSplictString = PageSplictString & "<font color=999999 class=grayfont>é¦–é¡µ</font> " & VbCrLf
 		end if
 	
 		if FirstID > MinRecordID and FirstID<>0 then
-			PageSplictString = PageSplictString & " <a href=LimitUserManage.asp" & EndwriteQueryString & "&Start=" & FirstID & "&UpDownPageFlag=1&SubmitFlag=3829EwoqIaNfoG>ÉÏÒ³</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=LimitUserManage.asp" & EndwriteQueryString & "&Start=" & LngStr(FirstID) & "&UpDownPageFlag=1&SubmitFlag=3829EwoqIaNfoG>ä¸Šé¡µ</a> " & VbCrLf
 		else
-			'PageSplictString = PageSplictString & " <font color=999999 class=grayfont>ÉÏÒ³</font> " & VbCrLf
+			'PageSplictString = PageSplictString & " <font color=999999 class=grayfont>ä¸Šé¡µ</font> " & VbCrLf
 		end if
 	
 		if LastID<MaxRecordID and LastID<>0 then
-			PageSplictString = PageSplictString & " <a href=LimitUserManage.asp" & EndwriteQueryString & "&Start=" & LastID & "&SubmitFlag=3829EwoqIaNfoG>ÏÂÒ³</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=LimitUserManage.asp" & EndwriteQueryString & "&Start=" & LngStr(LastID) & "&SubmitFlag=3829EwoqIaNfoG>ä¸‹é¡µ</a> " & VbCrLf
 		else
-			'PageSplictString = PageSplictString & " <font color=999999 class=grayfont>ÏÂÒ³</font> " & VbCrLf
+			'PageSplictString = PageSplictString & " <font color=999999 class=grayfont>ä¸‹é¡µ</font> " & VbCrLf
 		end if
 	
 		if LastID < MaxRecordID and LastID<>0 then
-			PageSplictString = PageSplictString & " <a href=LimitUserManage.asp" & EndwriteQueryString & "&Start=" & MaxRecordID+1 & "&UpDownPageFlag=1&SubmitFlag=3829EwoqIaNfoG>Î²Ò³</a> " & VbCrLf
+			PageSplictString = PageSplictString & " <a href=LimitUserManage.asp" & EndwriteQueryString & "&Start=" & LngStr(MaxRecordID+1) & "&UpDownPageFlag=1&SubmitFlag=3829EwoqIaNfoG>å°¾é¡µ</a> " & VbCrLf
 		else
-			'PageSplictString = PageSplictString & " <font color=999999 class=grayfont>Î²Ò³</font> " & VbCrLf
+			'PageSplictString = PageSplictString & " <font color=999999 class=grayfont>å°¾é¡µ</font> " & VbCrLf
 		end if
-		'PageSplictString = PageSplictString & "¹²<b>" & recordCount & "</b>ÌõĞÅÏ¢"
+		'PageSplictString = PageSplictString & "å…±<b>" & recordCount & "</b>æ¡ä¿¡æ¯"
 		'If (recordCount mod DEF_MaxListNum)=0 Then
-		'	PageSplictString = PageSplictString & " ¼Æ<b>" & clng(recordCount/DEF_MaxListNum) & "</b>Ò³"
+		'	PageSplictString = PageSplictString & " è®¡<b>" & clng(recordCount/DEF_MaxListNum) & "</b>é¡µ"
 		'Else
 		'	If recordCount>=DEF_MaxListNum Then
-		'		PageSplictString = PageSplictString & " ¼Æ<b>" & clng(recordCount/DEF_MaxListNum)+1 & "</b>Ò³"
+		'		PageSplictString = PageSplictString & " è®¡<b>" & clng(recordCount/DEF_MaxListNum)+1 & "</b>é¡µ"
 		'	Else
-		'		PageSplictString = PageSplictString & " ¼Æ<b>1</b>Ò³"
+		'		PageSplictString = PageSplictString & " è®¡<b>1</b>é¡µ"
 		'	End If
 		'End If
-		'PageSplictString = PageSplictString & " Ã¿Ò³<b>" & DEF_MaxListNum & "</b>Ìõ¼ÇÂ¼"
+		'PageSplictString = PageSplictString & " æ¯é¡µ<b>" & DEF_MaxListNum & "</b>æ¡è®°å½•"
 		PageSplictString = PageSplictString & "</div>"
 		Dim ColN
 		ColN = 6
@@ -257,7 +257,7 @@ Function SpecialUserBrowser
 		<tr class=tbinhead>		
 		<td width=50%>
 		<form action=LimitUserManage.asp?assort=<%=assort%> method=post>
-		ÓÃ»§Ãû£º<input size=6 name=key value="<%=htmlencode(key)%>" class="fminpt input_1"> <input type=submit name=submit value=ËÑË÷ class="fmbtn btn_1"></form>
+		ç”¨æˆ·åï¼š<input size=6 name=key value="<%=htmlencode(key)%>" class="fminpt input_1"> <input type=submit name=submit value=æœç´¢ class="fmbtn btn_1"></form>
 		</td>
 		<td align=right width=50%>
 		<div class=value><%=PageSplictString%></div>
@@ -266,13 +266,13 @@ Function SpecialUserBrowser
 
 		<tr class=tbinhead>
 			<td width=64><div class=value>ID</div></td>
-			<td width=122><div class=value>Ãû³Æ</div></td>
-			<td width=82><div class=value>¸üĞÂÊ±¼ä</div></td>
-			<td width=64><div class=value>ÀàĞÍ</div></td><%If Assort = 1 Then%>
-			<td width=104><div class=value>°æÃæ</div></td><%End If
+			<td width=122><div class=value>åç§°</div></td>
+			<td width=82><div class=value>æ›´æ–°æ—¶é—´</div></td>
+			<td width=64><div class=value>ç±»å‹</div></td><%If Assort = 1 Then%>
+			<td width=104><div class=value>ç‰ˆé¢</div></td><%End If
 			If Assort = 6 Then%>
-			<td width=80><div class=value>¼¤»îÂë</div></td><%End If%>
-			<td><div class=value>ËµÃ÷¼°ÓĞĞ§Ê±¼ä</div></td>
+			<td width=80><div class=value>æ¿€æ´»ç </div></td><%End If%>
+			<td><div class=value>è¯´æ˜åŠæœ‰æ•ˆæ—¶é—´</div></td>
 		</tr>
 <%
 		for n= MinN to MaxN Step StepValue
@@ -285,17 +285,17 @@ Function SpecialUserBrowser
 			<td class=tdbox><%=RestoreTime(Left(GetData(3,n),8))%></td>
 			<td class=tdbox><%Select Case GetData(4,n)
 				Case 0: Response.Write DEF_PointsName(5)
-				Case 1: Response.Write "°æÖ÷"
+				Case 1: Response.Write "ç‰ˆä¸»"
 				Case 2: Response.Write DEF_PointsName(6)
-				Case 3: Response.Write "ÆÁ±Î·¢ÑÔ"
-				Case 4: Response.Write "½ûÖ¹·¢ÑÔ"
-				Case 5: Response.Write "½ûÖ¹ĞŞ¸Ä"
-				Case 6: Response.Write "µÈ´ıÈÏÖ¤"
+				Case 3: Response.Write "å±è”½å‘è¨€"
+				Case 4: Response.Write "ç¦æ­¢å‘è¨€"
+				Case 5: Response.Write "ç¦æ­¢ä¿®æ”¹"
+				Case 6: Response.Write "ç­‰å¾…è®¤è¯"
 				End Select%></td><%If Assort = 1 Then%>
 			<td class=tdbox><a href=../ForumBoard/ForumBoardModify.asp?GBL_ModifyID=<%=GetData(6,n)%>><%=GetData(5,n)%></a></td><%End If
 			If Assort = 6 Then
 				If cCur(GetData(6,n)) = 0 Then
-					Response.Write "<td width=80 class=tdbox>ÎŞ</td>"
+					Response.Write "<td width=80 class=tdbox>æ— </td>"
 				Else%>
 			<td class=tdbox><a href=../../User/UserGetPass.asp?act=active&user=<%=htmlencode(GetData(2,n))%>><%=GetData(6,n)%></a></td><%
 				End If
@@ -303,9 +303,9 @@ Function SpecialUserBrowser
 			<td class=tdbox><%
 			If GetData(7,n) <> "" Then Response.Write htmlencode(GetData(7,n)) & "<br>"
 			If cCur(GetData(8,n)) > 0 Then
-				Response.Write "<font color=gray class=grayfont>µ½ÆÚ£º" & RestoreTime(GetData(8,n))
+				Response.Write "<font color=gray class=grayfont>åˆ°æœŸï¼š" & RestoreTime(GetData(8,n))
 			Else
-				Response.Write "<font color=gray class=grayfont>ÓÀ¾ÃÓĞĞ§"
+				Response.Write "<font color=gray class=grayfont>æ°¸ä¹…æœ‰æ•ˆ"
 			End If%>	</td>
                     </tr><%
 			i=i+1
@@ -316,7 +316,7 @@ Function SpecialUserBrowser
 		<%=PageSplictString%>
 	<%
 	Else
-		Response.Write "<br>" & GBL_CHK_TempStr & "		<p>ÔİÎŞÏà¹Ø¼ÇÂ¼¡£" & VbCrLf
+		Response.Write "<br>" & GBL_CHK_TempStr & "		<p>æš‚æ— ç›¸å…³è®°å½•ã€‚" & VbCrLf
 	End If
 
 End Function
@@ -325,36 +325,36 @@ End Function
 Function LimitUserManage_NavInfo(Assort)
 
 	Dim DoStr
-	DoStr = "²Ù×÷"
+	DoStr = "æ“ä½œ"
 
 	Response.Write "<div class='user_item_nav fire'><ul>"
-	Response.Write "<li><div class=name>ÏŞÖÆÓÃ»§¹ÜÀí</div></li>"
+	Response.Write "<li><div class=name>é™åˆ¶ç”¨æˆ·ç®¡ç†</div></li>"
 	If Assort = 3 Then
-		DoStr = "½â³ı"
-		Response.Write "	<li><div class=navactive><span>ÆÁ±Î·¢ÑÔ</span></div></li>"
+		DoStr = "è§£é™¤"
+		Response.Write "	<li><div class=navactive><span>å±è”½å‘è¨€</span></div></li>"
 	Else
-		Response.Write "	<li><a href=LimitUserManage.asp?assort=3>ÆÁ±Î·¢ÑÔ</a></li>"
+		Response.Write "	<li><a href=LimitUserManage.asp?assort=3>å±è”½å‘è¨€</a></li>"
 	End If
 
 	If Assort = 4 Then
-		DoStr = "½â³ı"
-		Response.Write "	<li><div class=navactive>½ûÖ¹·¢ÑÔ</div></li>"
+		DoStr = "è§£é™¤"
+		Response.Write "	<li><div class=navactive>ç¦æ­¢å‘è¨€</div></li>"
 	Else
-		Response.Write "	<li><a href=LimitUserManage.asp?assort=4>½ûÖ¹·¢ÑÔ</a></li>"
+		Response.Write "	<li><a href=LimitUserManage.asp?assort=4>ç¦æ­¢å‘è¨€</a></li>"
 	End If
 
 	If Assort = 5 Then
-		DoStr = "½â³ı"
-		Response.Write "	<li><div class=navactive>½ûÖ¹ĞŞ¸Ä</div></li>"
+		DoStr = "è§£é™¤"
+		Response.Write "	<li><div class=navactive>ç¦æ­¢ä¿®æ”¹</div></li>"
 	Else
-		Response.Write "	<li><a href=LimitUserManage.asp?assort=5>½ûÖ¹ĞŞ¸Ä</a></li>"
+		Response.Write "	<li><a href=LimitUserManage.asp?assort=5>ç¦æ­¢ä¿®æ”¹</a></li>"
 	End If
 
 	If Assort = 6 Then
-		DoStr = "¼¤»î"
-		Response.Write "	<li><div class=navactive>Î´¼¤»îÓÃ»§</div></li>"
+		DoStr = "æ¿€æ´»"
+		Response.Write "	<li><div class=navactive>æœªæ¿€æ´»ç”¨æˆ·</div></li>"
 	Else
-		Response.Write "	<li><a href=LimitUserManage.asp?assort=6>Î´¼¤»îÓÃ»§</a></li>"
+		Response.Write "	<li><a href=LimitUserManage.asp?assort=6>æœªæ¿€æ´»ç”¨æˆ·</a></li>"
 	End If
 
 	Response.Write "</ul></div>"
@@ -377,24 +377,24 @@ Function NewSpecialUser
 
 	If isNumeric(GBL_Assort) = 0 Then GBL_Assort = -1
 	GBL_Assort = fix(cCur(GBL_Assort))
-	',0-ÈÏÖ¤»áÔ±,1-°æÖ÷,2-×Ü°æÖ÷,3-ÆÁ±ÎÓÃ»§,4-½ûÑÔÓÃ»§,5-½ûĞŞ¸ÄÓÃ»§,6-·ÇÕıÊ½ÓÃ»§
+	',0-è®¤è¯ä¼šå‘˜,1-ç‰ˆä¸»,2-æ€»ç‰ˆä¸»,3-å±è”½ç”¨æˆ·,4-ç¦è¨€ç”¨æˆ·,5-ç¦ä¿®æ”¹ç”¨æˆ·,6-éæ­£å¼ç”¨æˆ·
 	If GBL_Assort <> 3 and GBL_Assort <> 4 and GBL_Assort <> 5 and GBL_Assort <> 6 Then
 		GBL_Assort = -1
 	End If
 
 	If Request.Form("submitflag") <> "" Then
-		CheckNewSpecialUser
+		CheckNewSpecialUser()
 		If GBL_CHK_TempStr = "" Then
-			SaveNewSpecialUser
-			If CheckSupervisorUserName = 0 Then
+			SaveNewSpecialUser()
+			If CheckSupervisorUserName() = 0 Then
 				CALL LDExeCute("Update LeadBBS_User Set LastWriteTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
 			End If
 			Response.Write GBL_CHK_TempStr
 		Else
-			DisplayNewSpecialUserForm
+			DisplayNewSpecialUserForm()
 		End If
 	Else
-		DisplayNewSpecialUserForm
+		DisplayNewSpecialUserForm()
 	End If
 
 End Function
@@ -411,23 +411,23 @@ Function SaveNewSpecialUser
 		Rs.Close
 		Set Rs = Nothing
 		CALL LDExeCute("Delete from LeadBBS_SpecialUser Where Assort=" & GBL_Assort & " and UserID=" & GBL_UserName_UserID,1)
-		GBL_CHK_TempStr = "<br><br><font color=008800 class=greenfont>ÒòÊı¾İ¿âÖĞ´æÔÚÒ»Ğ©²»¶ÔÓ¦£¬ÒÑ¾­³É¹¦ĞŞ¸´£¡<br>" & VbCrLf
+		GBL_CHK_TempStr = "<br><br><font color=008800 class=greenfont>å› æ•°æ®åº“ä¸­å­˜åœ¨ä¸€äº›ä¸å¯¹åº”ï¼Œå·²ç»æˆåŠŸä¿®å¤ï¼<br>" & VbCrLf
 	End If
 	
 	SQL = "Insert Into LeadBBS_SpecialUser(UserID,UserName,BoardID,Assort,ndatetime,ExpiresTime,WhyString) Values(" & GBL_UserName_UserID & ",'" & Replace(GBL_UserName,"'","''") & "',0," & GBL_Assort & "," & GBL_ndatetime & "," & GBL_ExpiresTime & ",'" & Replace(GBL_WhyString,"'","''") & "')"
 	CALL LDExeCute(SQL,0)
-	GBL_CHK_TempStr = "<font color=008800 class=greenfont>²Ù×÷³É¹¦Íê³É£¬Ìí¼Ó³É¹¦,²¢ÇÒÒÑ¾­Í¨ÖªÓÃ»§£¡<br>" & VbCrLf
+	GBL_CHK_TempStr = "<font color=008800 class=greenfont>æ“ä½œæˆåŠŸå®Œæˆï¼Œæ·»åŠ æˆåŠŸ,å¹¶ä¸”å·²ç»é€šçŸ¥ç”¨æˆ·ï¼<br>" & VbCrLf
 
 End Function
 
 Function CheckNewSpecialUser
 
-	If CheckWriteEventSpace = 0 Then
-		Response.Write "<b><font color=Red Class=redfont>ÄúµÄ²Ù×÷¹ıÆµ£¬ÇëÉÔºòÔÙ×÷Ìá½»!</font></b> <br>" & VbCrLf
+	If CheckWriteEventSpace() = 0 Then
+		Response.Write "<b><font color=Red Class=redfont>æ‚¨çš„æ“ä½œè¿‡é¢‘ï¼Œè¯·ç¨å€™å†ä½œæäº¤!</font></b> <br>" & VbCrLf
 		Exit Function
 	End If
 	If GBL_Assort <> 3 and GBL_Assort <> 4 and GBL_Assort <> 5 and GBL_Assort <> 6 Then
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÓÃ»§ÀàĞÍÑ¡Ôñ´íÎó£¬ÇëÕıÈ·Ñ¡Ôñ£¡"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç”¨æˆ·ç±»å‹é€‰æ‹©é”™è¯¯ï¼Œè¯·æ­£ç¡®é€‰æ‹©ï¼"
 		Exit function
 	End If
 	
@@ -435,12 +435,12 @@ Function CheckNewSpecialUser
 	GBL_ExpiresTime = fix(cCur(GBL_ExpiresTime))
 	If GBL_ExpiresTime < 0 or GBL_ExpiresTime > 30 Then GBL_ExpiresTime = -1
 	If GBL_ExpiresTime = -1 Then
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÆÁ±ÎÆÚÏŞÑ¡Ôñ´íÎó£¬ÇëÕıÈ·Ñ¡Ôñ£¡"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šå±è”½æœŸé™é€‰æ‹©é”™è¯¯ï¼Œè¯·æ­£ç¡®é€‰æ‹©ï¼"
 		Exit function
 	End If
 
 	If GBL_UserName = "" Then
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÇëÌîĞ´ÓÃ»§Ãû£¡"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šè¯·å¡«å†™ç”¨æˆ·åï¼"
 		Exit function
 	End If
 		
@@ -460,64 +460,64 @@ Function DisplayNewSpecialUserForm
 
 	Dim N
 	If GBL_CHK_TempStr <> "" Then Response.Write "<p><font color=ff0000 class=redfont><b>" & GBL_CHK_TempStr & "</b></font></p>"%>
-	<div class="title">ÓÃ»§È¨ÏŞ²Ù×÷£º</div>
+	<div class="title">ç”¨æˆ·æƒé™æ“ä½œï¼š</div>
           <form action=LimitUserManage.asp method=post id=fobform name=fobform>
-          	<div class="value2">ÌîĞ´ÓÃ»§£º<input name=GBL_UserName value="<%=htmlencode(GBL_UserName)%>" class=fminpt></div>
+          	<div class="value2">å¡«å†™ç”¨æˆ·ï¼š<input name=GBL_UserName value="<%=htmlencode(GBL_UserName)%>" class=fminpt></div>
           	<input name=submitflag type=hidden value="LKOkxk2">
           	<input name=action type=hidden value="specialuser">
           	<div class="value2">
-          	²Ù×÷Ñ¡Ôñ£º<select name=GBL_Assort>
-          				<option value=-1>==ÇëÑ¡Ôñ==</option>
-          				<option value=3<%If GBL_Assort = 3 Then Response.Write " selected"%>>ÆÁ±ÎÓÃ»§ÒÑ·¢±íµÄÄÚÈİ</option>
-          				<option value=4<%If GBL_Assort = 4 Then Response.Write " selected"%>>½ûÖ¹ÓÃ»§·¢±íĞÂÑÔÂÛ</option>
-          				<option value=5<%If GBL_Assort = 5 Then Response.Write " selected"%>>½ûÖ¹ÓÃ»§ĞŞ¸ÄÌû×ÓºÍ¸öÈË×ÊÁÏ</option>
-          				<option value=6<%If GBL_Assort = 6 Then Response.Write " selected"%>>Ç¿ÆÈÓÃ»§³ÉÎªÎ´¼¤»îÓÃ»§</option>
+          	æ“ä½œé€‰æ‹©ï¼š<select name=GBL_Assort>
+          				<option value=-1>==è¯·é€‰æ‹©==</option>
+          				<option value=3<%If GBL_Assort = 3 Then Response.Write " selected"%>>å±è”½ç”¨æˆ·å·²å‘è¡¨çš„å†…å®¹</option>
+          				<option value=4<%If GBL_Assort = 4 Then Response.Write " selected"%>>ç¦æ­¢ç”¨æˆ·å‘è¡¨æ–°è¨€è®º</option>
+          				<option value=5<%If GBL_Assort = 5 Then Response.Write " selected"%>>ç¦æ­¢ç”¨æˆ·ä¿®æ”¹å¸–å­å’Œä¸ªäººèµ„æ–™</option>
+          				<option value=6<%If GBL_Assort = 6 Then Response.Write " selected"%>>å¼ºè¿«ç”¨æˆ·æˆä¸ºæœªæ¿€æ´»ç”¨æˆ·</option>
           			</select>
           	</div>
           	<div class="value2">
-          	ÓĞĞ§Ê±¼ä£º<select name=GBL_ExpiresTime>
+          	æœ‰æ•ˆæ—¶é—´ï¼š<select name=GBL_ExpiresTime>
           					<%For N = 1 to 30
           						If N = GBL_ExpiresTime Then
-          							Response.Write "<option value=" & N & " selected>ÓĞĞ§ÆÚ" & Right("0" & N,2) & "Ìì</option>"
+          							Response.Write "<option value=" & N & " selected>æœ‰æ•ˆæœŸ" & Right("0" & N,2) & "å¤©</option>"
           						Else
-          							Response.Write "<option value=" & N & ">ÓĞĞ§ÆÚ" & Right("0" & N,2) & "Ìì</option>"
+          							Response.Write "<option value=" & N & ">æœ‰æ•ˆæœŸ" & Right("0" & N,2) & "å¤©</option>"
           						End If
           					Next%>
-          					<option value=0<%If GBL_ExpiresTime = 0 Then Response.Write " Selected"%>>ÓÀ¾ÃÓĞĞ§</option>
+          					<option value=0<%If GBL_ExpiresTime = 0 Then Response.Write " Selected"%>>æ°¸ä¹…æœ‰æ•ˆ</option>
           				</select>
 		</div>
 		<div class="value2">
-          	Ô­Òò×¢Ã÷£º<input name=GBL_WhyString MaxLength=100 size=30 value="<%=htmlencode(GBL_WhyString)%>" class=fminpt>
+          	åŸå› æ³¨æ˜ï¼š<input name=GBL_WhyString MaxLength=100 size=30 value="<%=htmlencode(GBL_WhyString)%>" class=fminpt>
           	<select onchange="document.fobform.GBL_WhyString.value=this.value;">
-          		<option value="">=====Ò»Ğ©³£¼ûÔ­ÒòÇëÑ¡Ôñ=====</option>
-          		<option value="ÄÚÈİÑÏÖØÎ¥¹æ">ÄÚÈİÑÏÖØÎ¥¹æ</option>
-          		<option value="¶ÔÂÛÌ³½øĞĞ¶ñÒâ¹¥»÷">¶ÔÂÛÌ³½øĞĞ¶ñÒâ¹¥»÷</option>
-          		<option value="¶ñÒâ¹àË®">¶ñÒâ¹àË®</option>
-          		<option value="ÓÃ»§Ãû×Ö²»·ûºÏÒªÇó">ÓÃ»§Ãû×Ö²»·ûºÏÒªÇó</option>
-          		<option value="ÈÅÂÒÂÛÌ³ÖÈĞò">ÈÅÂÒÂÛÌ³ÖÈĞò</option>
+          		<option value="">=====ä¸€äº›å¸¸è§åŸå› è¯·é€‰æ‹©=====</option>
+          		<option value="å†…å®¹ä¸¥é‡è¿è§„">å†…å®¹ä¸¥é‡è¿è§„</option>
+          		<option value="å¯¹è®ºå›è¿›è¡Œæ¶æ„æ”»å‡»">å¯¹è®ºå›è¿›è¡Œæ¶æ„æ”»å‡»</option>
+          		<option value="æ¶æ„çŒæ°´">æ¶æ„çŒæ°´</option>
+          		<option value="ç”¨æˆ·åå­—ä¸ç¬¦åˆè¦æ±‚">ç”¨æˆ·åå­—ä¸ç¬¦åˆè¦æ±‚</option>
+          		<option value="æ‰°ä¹±è®ºå›ç§©åº">æ‰°ä¹±è®ºå›ç§©åº</option>
           	</select>
           	</div>
           	<div class="value2">
-          	<input type=submit value="Ìá½»" class="fmbtn btn_2"> <input type=reset value="È¡Ïû" class="fmbtn btn_2">
+          	<input type=submit value="æäº¤" class="fmbtn btn_2"> <input type=reset value="å–æ¶ˆ" class="fmbtn btn_2">
           	</div></form>
           	<p>
-          	<div class="title">×¢ÊÍ£º</div>
+          	<div class="title">æ³¨é‡Šï¼š</div>
           	<div class="value2">
           	<ol>
-          	<li>ÆÁ±ÎÓÃ»§ÒÑ·¢±íµÄÄÚÈİ£º´Ë²Ù×÷½«ÆÁ±Î¸ÃÓÃ»§ËùÓĞµÄÂÛÌ³Ìû×ÓÄÚÈİ</li>
-          	<li>½ûÖ¹ÓÃ»§·¢±íĞÂÒéÂÛ¾­£º´Ë²Ù×÷½«½ûÖ¹¸ÃÓÃ»§·¢ËÍ¶ÌÏûÏ¢·¢ÌûºÍÍ¶Æ±£¬ÆÀ¼ÛÌû×ÓµÈ¹¦ÄÜ</li>
-          	<li>½ûÖ¹ÓÃ»§ĞŞ¸ÄÌû×ÓºÍ¸öÈË×ÊÁÏ£º´Ë²Ù×÷½«½ûÖ¹¸ÃÓÃ»§ĞŞ¸ÄÒÑ¾­·¢±í¹ıµÄÌû×Ó¼°¸öÈË×ÊÁÏ</li>
-          	<li>Ç¿ÆÈÓÃ»§³ÉÎªÎ´¼¤»îÓÃ»§£º¸ÃÓÃ»§ÖØĞÂ³ÉÎªÎ´¼¤»îÓÃ»§£¬ÇÒÖ»ÓĞ¹ÜÀíÈËÔ±²ÅÄÜÖØĞÂ¼¤»î</li>
+          	<li>å±è”½ç”¨æˆ·å·²å‘è¡¨çš„å†…å®¹ï¼šæ­¤æ“ä½œå°†å±è”½è¯¥ç”¨æˆ·æ‰€æœ‰çš„è®ºå›å¸–å­å†…å®¹</li>
+          	<li>ç¦æ­¢ç”¨æˆ·å‘è¡¨æ–°è®®è®ºç»ï¼šæ­¤æ“ä½œå°†ç¦æ­¢è¯¥ç”¨æˆ·å‘é€çŸ­æ¶ˆæ¯å‘å¸–å’ŒæŠ•ç¥¨ï¼Œè¯„ä»·å¸–å­ç­‰åŠŸèƒ½</li>
+          	<li>ç¦æ­¢ç”¨æˆ·ä¿®æ”¹å¸–å­å’Œä¸ªäººèµ„æ–™ï¼šæ­¤æ“ä½œå°†ç¦æ­¢è¯¥ç”¨æˆ·ä¿®æ”¹å·²ç»å‘è¡¨è¿‡çš„å¸–å­åŠä¸ªäººèµ„æ–™</li>
+          	<li>å¼ºè¿«ç”¨æˆ·æˆä¸ºæœªæ¿€æ´»ç”¨æˆ·ï¼šè¯¥ç”¨æˆ·é‡æ–°æˆä¸ºæœªæ¿€æ´»ç”¨æˆ·ï¼Œä¸”åªæœ‰ç®¡ç†äººå‘˜æ‰èƒ½é‡æ–°æ¿€æ´»</li>
           	</ol>
           	</div>
 <%End Function
 
-Rem ¼ì²âÄ³ÓÃ»§ÃûÊÇ·ñ´æÔÚ
+Rem æ£€æµ‹æŸç”¨æˆ·åæ˜¯å¦å­˜åœ¨
 Function CheckUserNameExist(UserName)
 
 	If UserName <> "" and inStr(UserName,",") = 0 and inStr(Lcase(DEF_SupervisorUserName),"," & Lcase(UserName) & ",") > 0 Then
-		'×÷ÕâÑùµÄÍ¬ÑùÌáÊ¾ÊÇÎªÁËÒÔ·À¹ÜÀíÔ±Ãû×Ö±»Ğ¹Â©£¬Êµ¼ÊÓ¦¸ÃÌáÊ¾¹ÜÀíÔ±²»ÄÜ±»ÆÁ±Î
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÓÃ»§Ãû" & htmlencode(UserName) & "²»´æÔÚ£¡"
+		'ä½œè¿™æ ·çš„åŒæ ·æç¤ºæ˜¯ä¸ºäº†ä»¥é˜²ç®¡ç†å‘˜åå­—è¢«æ³„æ¼ï¼Œå®é™…åº”è¯¥æç¤ºç®¡ç†å‘˜ä¸èƒ½è¢«å±è”½
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç”¨æˆ·å" & htmlencode(UserName) & "ä¸å­˜åœ¨ï¼"
 		CheckUserNameExist = 0
 		Exit Function
 	End If
@@ -528,7 +528,7 @@ Function CheckUserNameExist(UserName)
 		Set Rs = Nothing
 		CheckUserNameExist = 0
 		GBL_UserName_UserLimit = 0
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÓÃ»§Ãû" & htmlencode(UserName) & "²»´æÔÚ£¡"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç”¨æˆ·å" & htmlencode(UserName) & "ä¸å­˜åœ¨ï¼"
 		Exit Function
 	Else
 		GBL_UserName_UserLimit = cCur(Rs(1))
@@ -537,12 +537,12 @@ Function CheckUserNameExist(UserName)
 	End if
 	Rs.Close
 	Set Rs = Nothing
-	',0-ÈÏÖ¤»áÔ±,1-°æÖ÷,2-×Ü°æÖ÷,3-ÆÁ±ÎÓÃ»§,4-½ûÑÔÓÃ»§,5-½ûĞŞ¸ÄÓÃ»§,6-·ÇÕıÊ½ÓÃ»§
+	',0-è®¤è¯ä¼šå‘˜,1-ç‰ˆä¸»,2-æ€»ç‰ˆä¸»,3-å±è”½ç”¨æˆ·,4-ç¦è¨€ç”¨æˆ·,5-ç¦ä¿®æ”¹ç”¨æˆ·,6-éæ­£å¼ç”¨æˆ·
 	Dim TmpStr
 	Select Case GBL_Assort
 		'Case 0: 
 		'		If GetBinarybit(GBL_UserName_UserLimit,2) = 1 Then
-		'			GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÓÃ»§" & htmlencode(UserName) & "ÒÑ¾­ÊÇ" & DEF_PointsName(5) & "£¬²»±ØÖØ¸´Ìí¼Ó£¡"
+		'			GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç”¨æˆ·" & htmlencode(UserName) & "å·²ç»æ˜¯" & DEF_PointsName(5) & "ï¼Œä¸å¿…é‡å¤æ·»åŠ ï¼"
 		'			CheckUserNameExist = 0
 		'			Exit Function
 		'		Else
@@ -550,54 +550,54 @@ Function CheckUserNameExist(UserName)
 		'		End If
 		Case 3:
 				If GetBinarybit(GBL_UserName_UserLimit,7) = 1 Then
-					GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÓÃ»§" & htmlencode(UserName) & "µÄ·¢ÑÔÄÚÈİ¼°Ç©ÃûÒÑ¾­±»ÆÁ±Î£¬²»±ØÖØ¸´Ìí¼Ó£¡"
+					GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç”¨æˆ·" & htmlencode(UserName) & "çš„å‘è¨€å†…å®¹åŠç­¾åå·²ç»è¢«å±è”½ï¼Œä¸å¿…é‡å¤æ·»åŠ ï¼"
 					CheckUserNameExist = 0
 					Exit Function
 				Else
 					GBL_UserName_UserLimit = SetBinaryBit(GBL_UserName_UserLimit,7,1)
-					TmpStr = "ÄúµÄËùÓĞ·¢ÑÔÄÚÈİÒÑ¾­±»ÆÁ±Î."
+					TmpStr = "æ‚¨çš„æ‰€æœ‰å‘è¨€å†…å®¹å·²ç»è¢«å±è”½."
 				End If
 		Case 4:
 				If GetBinarybit(GBL_UserName_UserLimit,3) = 1 Then
-					GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÓÃ»§" & htmlencode(UserName) & "ÒÑ¾­±»½ûÑÔ¼°·¢ËÍ¶ÌÏûÏ¢£¬²»±ØÖØ¸´Ìí¼Ó£¡"
+					GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç”¨æˆ·" & htmlencode(UserName) & "å·²ç»è¢«ç¦è¨€åŠå‘é€çŸ­æ¶ˆæ¯ï¼Œä¸å¿…é‡å¤æ·»åŠ ï¼"
 					CheckUserNameExist = 0
 					Exit Function
 				Else
 					GBL_UserName_UserLimit = SetBinaryBit(GBL_UserName_UserLimit,3,1)
-					TmpStr = "ÄúÒÑ¾­±»½ûÑÔ·¢ÑÔ."
+					TmpStr = "æ‚¨å·²ç»è¢«ç¦è¨€å‘è¨€."
 				End If
 		Case 5:
 				If GetBinarybit(GBL_UserName_UserLimit,4) = 1 Then
-					GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÓÃ»§" & htmlencode(UserName) & "ÒÑ¾­±»½ûÖ¹ĞŞ¸ÄÌû×Ó¼°¸öÈË×ÊÁÏ£¬²»±ØÖØ¸´Ìí¼Ó£¡"
+					GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç”¨æˆ·" & htmlencode(UserName) & "å·²ç»è¢«ç¦æ­¢ä¿®æ”¹å¸–å­åŠä¸ªäººèµ„æ–™ï¼Œä¸å¿…é‡å¤æ·»åŠ ï¼"
 					CheckUserNameExist = 0
 					Exit Function
 				Else
 					GBL_UserName_UserLimit = SetBinaryBit(GBL_UserName_UserLimit,4,1)
-					TmpStr = "ÄúÒÑ¾­±»½ûÑÔĞŞ¸Ä."
+					TmpStr = "æ‚¨å·²ç»è¢«ç¦è¨€ä¿®æ”¹."
 				End If
 		Case 6:
 				If GetBinarybit(GBL_UserName_UserLimit,1) = 1 Then
-					GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÓÃ»§" & htmlencode(UserName) & "ÒÑ¾­´¦ÓÚÎ´¼¤»î×´Ì¬£¬²»±ØÖØ¸´Ìí¼Ó£¡"
+					GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç”¨æˆ·" & htmlencode(UserName) & "å·²ç»å¤„äºæœªæ¿€æ´»çŠ¶æ€ï¼Œä¸å¿…é‡å¤æ·»åŠ ï¼"
 					CheckUserNameExist = 0
 					Exit Function
 				Else
 					GBL_UserName_UserLimit = SetBinaryBit(GBL_UserName_UserLimit,1,1)
-					TmpStr = "ÄúÄ¿Ç°´¦ÓÚÎ´¼¤»î."
+					TmpStr = "æ‚¨ç›®å‰å¤„äºæœªæ¿€æ´»."
 				End If
 		Case Else:
-				GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÓÃ»§" & htmlencode(UserName) & "ÒÑ¾­´¦ÓÚÎ´¼¤»î×´Ì¬£¬²»±ØÖØ¸´Ìí¼Ó£¡"
+				GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç”¨æˆ·" & htmlencode(UserName) & "å·²ç»å¤„äºæœªæ¿€æ´»çŠ¶æ€ï¼Œä¸å¿…é‡å¤æ·»åŠ ï¼"
 				CheckUserNameExist = 0
 				Exit Function
 	End Select
 	If GBL_ExpiresTime > 0 Then
 		Rs = GetTimeValue(DateAdd("d",GBL_ExpiresTime,DEF_Now))
 	Else
-		Rs = "ÓÀ¾ÃÓĞĞ§"
+		Rs = "æ°¸ä¹…æœ‰æ•ˆ"
 	End If
-	SendNewMessage GBL_CHK_User,UserName,"ÂÛÌ³¶ÌĞÅ£ºÄúµÄÈ¨ÏŞ·¢Éú¸Ä±äÍ¨Öª","[color=blue]ÄúµÄÈ¨ÏŞÒò¹ÜÀíÈËÔ±²Ù×÷¶ø²úÉú±ä»¯[/color][hr]" & VbCrLf &_
-	"[b]²Ù×÷Ô­Òò£º[/b]" & GBL_WhyString & VbCrLf & _
-	"[b]ÓĞĞ§Ö±µ½£º[/b]" & Rs & VbCrLf & _
-	"[b]²Ù×÷½á¹û£º[/b]" & TmpStr & VbCrLf,GBL_IPAddress
+	SendNewMessage GBL_CHK_User,UserName,"è®ºå›çŸ­ä¿¡ï¼šæ‚¨çš„æƒé™å‘ç”Ÿæ”¹å˜é€šçŸ¥","[color=blue]æ‚¨çš„æƒé™å› ç®¡ç†äººå‘˜æ“ä½œè€Œäº§ç”Ÿå˜åŒ–[/color][hr]" & VbCrLf &_
+	"[b]æ“ä½œåŸå› ï¼š[/b]" & GBL_WhyString & VbCrLf & _
+	"[b]æœ‰æ•ˆç›´åˆ°ï¼š[/b]" & Rs & VbCrLf & _
+	"[b]æ“ä½œç»“æœï¼š[/b]" & TmpStr & VbCrLf,GBL_IPAddress
 	GBL_CHK_TempStr = ""
 	CALL LDExeCute("Update LeadBBS_User Set UserLimit=" & GBL_UserName_UserLimit & " where ID=" & GBL_UserName_UserID,1)
 	CheckUserNameExist = 1
@@ -607,8 +607,12 @@ End Function
 rem fob ip
 Function DisplayNewForbidIP
 
-	If DEF_EnableForbidIP = 10 Then
-		Response.Write "<div class=""title redfont"">ÏµÍ³ÒÑ¾­½ûÖ¹ÆÁ±ÎIP¹¦ÄÜ£¬ĞèÒªÆÁ±ÎIPµØÖ·ÇëÁªÏµ¹ÜÀíÔ±¿ªÆô£®</div>"
+	' Upstream typo: the guard read "= 10", a value DEF_EnableForbidIP never takes (it is 0 or
+	' 1), so with IP blocking switched OFF this page still offered the moderator a full block
+	' form â€” which then wrote a row that inc/Board_Popfun.asp never enforces. The standalone
+	' NewForbidIP.asp gets the same test right (= 0).
+	If DEF_EnableForbidIP = 0 Then
+		Response.Write "<div class=""title redfont"">ç³»ç»Ÿå·²ç»ç¦æ­¢å±è”½IPåŠŸèƒ½ï¼Œéœ€è¦å±è”½IPåœ°å€è¯·è”ç³»ç®¡ç†å‘˜å¼€å¯ï¼</div>"
 		Exit Function
 	End If
 	GBL_UserName = Trim(Left(Request.Form("GBL_UserName"),14))
@@ -631,15 +635,15 @@ Function DisplayNewForbidIP
 	If GBL_ExpiresTime < 0 or GBL_ExpiresTime > 30 Then GBL_ExpiresTime = -1
 
 	If Request.Form("submitflag") <> "" Then
-		CheckNewIP
+		CheckNewIP()
 		If GBL_CHK_TempStr = "" Then
-			SaveNewIP
+			SaveNewIP()
 			Response.Write GBL_CHK_TempStr
 		Else
-			DisplayNewIPForm
+			DisplayNewIPForm()
 		End If
 	Else
-		DisplayNewIPForm
+		DisplayNewIPForm()
 	End If
 
 End Function
@@ -657,15 +661,15 @@ Function SaveNewIP
 		Set Rs = Nothing
 		SQL = "Insert Into LeadBBS_ForbidIP(IPStart,IPEnd,IPNumber,ExpiresTime,WhyString) Values(" & GBL_IPStart & "," & GBL_IPEnd & "," & Number & "," & GBL_ExpiresTime & ",'" & Replace(GBL_WhyString,"'","''") & "')"
 		CALL LDExeCute(SQL,0)
-		GBL_CHK_TempStr = "<font color=008800 class=greenfont>³É¹¦ÆÁ±Î´ËIP¶Î,¹²¼Æ" & Number & "¸ö!<br>" & VbCrLf
-		'GBL_CHK_TempStr = GBL_CHK_TempStr & "ÆğÊ¼IPµØÖ·£º" & GBL_IPStart & "<br>" & VbCrLf
-		'GBL_CHK_TempStr = GBL_CHK_TempStr & "ÖÕÖ¹IPµØÖ·£º" & GBL_IPEnd & "</font><br>" & VbCrLf
+		GBL_CHK_TempStr = "<font color=008800 class=greenfont>æˆåŠŸå±è”½æ­¤IPæ®µ,å…±è®¡" & Number & "ä¸ª!<br>" & VbCrLf
+		'GBL_CHK_TempStr = GBL_CHK_TempStr & "èµ·å§‹IPåœ°å€ï¼š" & GBL_IPStart & "<br>" & VbCrLf
+		'GBL_CHK_TempStr = GBL_CHK_TempStr & "ç»ˆæ­¢IPåœ°å€ï¼š" & GBL_IPEnd & "</font><br>" & VbCrLf
 	Else
 		Rs.Close
 		Set Rs = Nothing
-		GBL_CHK_TempStr = "<font color=ff0000 class=redfont>´íÎóÌáÊ¾£º´ËIPµØÖ·¶ÎÒÑ¾­ÔÚÆÁ±ÎÁĞ±íÖĞ,²»ÓÃÖØ¸´Ìí¼Ó!</font><br>" & VbCrLf
+		GBL_CHK_TempStr = "<font color=ff0000 class=redfont>é”™è¯¯æç¤ºï¼šæ­¤IPåœ°å€æ®µå·²ç»åœ¨å±è”½åˆ—è¡¨ä¸­,ä¸ç”¨é‡å¤æ·»åŠ !</font><br>" & VbCrLf
 	End If
-	If CheckSupervisorUserName = 0 Then
+	If CheckSupervisorUserName() = 0 Then
 		CALL LDExeCute("Update LeadBBS_User Set LastWriteTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
 	End If
 
@@ -673,8 +677,8 @@ End Function
 
 Function CheckNewIP
 
-	If CheckWriteEventSpace = 0 Then
-		Response.Write "<b><span Class=redfont>ÄúµÄ²Ù×÷¹ıÆµ£¬ÇëÉÔºòÔÙ×÷Ìá½»!</span></b>" & VbCrLf
+	If CheckWriteEventSpace() = 0 Then
+		Response.Write "<b><span Class=redfont>æ‚¨çš„æ“ä½œè¿‡é¢‘ï¼Œè¯·ç¨å€™å†ä½œæäº¤!</span></b>" & VbCrLf
 		Exit Function
 	End If
 	If GBL_MessageID <> "" or Request.Form("submitflag") = "LKOkxk4" Then
@@ -698,17 +702,17 @@ Function CheckNewIP
 	GBL_ExpiresTime = fix(cCur(GBL_ExpiresTime))
 	If GBL_ExpiresTime < 0 or GBL_ExpiresTime > 30 Then GBL_ExpiresTime = -1
 	If GBL_ExpiresTime = -1 Then
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÆÁ±ÎÆÚÏŞÑ¡Ôñ´íÎó£¬ÇëÕıÈ·Ñ¡Ôñ£¬¿ÉÄÜÊÇ´ËÓÃ»§IPµØÖ·²»·ûºÏ¹æ»®£¡"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šå±è”½æœŸé™é€‰æ‹©é”™è¯¯ï¼Œè¯·æ­£ç¡®é€‰æ‹©ï¼Œå¯èƒ½æ˜¯æ­¤ç”¨æˆ·IPåœ°å€ä¸ç¬¦åˆè§„åˆ’ï¼"
 		Exit function
 	End If
 
 	If Len(Tmp_IPStart) <> 15 Then
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÆğÊ¼£É£ĞµØÖ·´íÎó£¬¿ÉÄÜÊÇ´ËÓÃ»§IPµØÖ·²»·ûºÏ¹æ»®"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šèµ·å§‹ï¼©ï¼°åœ°å€é”™è¯¯ï¼Œå¯èƒ½æ˜¯æ­¤ç”¨æˆ·IPåœ°å€ä¸ç¬¦åˆè§„åˆ’"
 		Exit function
 	End If
 
 	If Len(Tmp_IPStart) <> 15 Then
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÖÕÖ¹£É£ĞµØÖ·´íÎó£¬¿ÉÄÜÊÇ´ËÓÃ»§IPµØÖ·²»·ûºÏ¹æ»®"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç»ˆæ­¢ï¼©ï¼°åœ°å€é”™è¯¯ï¼Œå¯èƒ½æ˜¯æ­¤ç”¨æˆ·IPåœ°å€ä¸ç¬¦åˆè§„åˆ’"
 		Exit function
 	End If
 	
@@ -716,28 +720,28 @@ Function CheckNewIP
 	NewGBL_IPStart = Left(Replace(Tmp_IPStart,".",""),14)
 	NewGBL_IPEnd = Left(Replace(Tmp_IPEnd,".",""),14)
 	If isNumeric(NewGBL_IPStart) = 0 Then
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÆğÊ¼£É£ĞµØÖ·´íÎó£¬±ØĞëÊÇÊı×Ö£¬¿ÉÄÜÊÇ´ËÓÃ»§IPµØÖ·²»·ûºÏ¹æ»®"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šèµ·å§‹ï¼©ï¼°åœ°å€é”™è¯¯ï¼Œå¿…é¡»æ˜¯æ•°å­—ï¼Œå¯èƒ½æ˜¯æ­¤ç”¨æˆ·IPåœ°å€ä¸ç¬¦åˆè§„åˆ’"
 		Exit function
 	End If
 	
 	If isNumeric(NewGBL_IPEnd) = 0 Then
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÖÕÖ¹£É£ĞµØÖ·´íÎó£¬±ØĞëÊÇÊı×Ö£¬¿ÉÄÜÊÇ´ËÓÃ»§IPµØÖ·²»·ûºÏ¹æ»®"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç»ˆæ­¢ï¼©ï¼°åœ°å€é”™è¯¯ï¼Œå¿…é¡»æ˜¯æ•°å­—ï¼Œå¯èƒ½æ˜¯æ­¤ç”¨æˆ·IPåœ°å€ä¸ç¬¦åˆè§„åˆ’"
 		Exit function
 	End If
 	
 	NewGBL_IPStart = cCur(NewGBL_IPStart)
 	NewGBL_IPEnd = cCur(NewGBL_IPEnd)
 	If NewGBL_IPStart > NewGBL_IPEnd Then
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÖÕÖ¹£É£ĞµØÖ·²»ÄÜ±ÈÆğÊ¼£É£ĞµØÖ·Ğ¡£¬¿ÉÄÜÊÇ´ËÓÃ»§IPµØÖ·²»·ûºÏ¹æ»®"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç»ˆæ­¢ï¼©ï¼°åœ°å€ä¸èƒ½æ¯”èµ·å§‹ï¼©ï¼°åœ°å€å°ï¼Œå¯èƒ½æ˜¯æ­¤ç”¨æˆ·IPåœ°å€ä¸ç¬¦åˆè§„åˆ’"
 		Exit function
 	End If
 	
 	If NewGBL_IPStart > 255255255255 Then
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÆğÊ¼£É£ĞµØÖ·´íÎó£¬×î´óIPµØÖ·Îª255.255.255.255£¬¿ÉÄÜÊÇ´ËÓÃ»§IPµØÖ·²»·ûºÏ¹æ»®"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šèµ·å§‹ï¼©ï¼°åœ°å€é”™è¯¯ï¼Œæœ€å¤§IPåœ°å€ä¸º255.255.255.255ï¼Œå¯èƒ½æ˜¯æ­¤ç”¨æˆ·IPåœ°å€ä¸ç¬¦åˆè§„åˆ’"
 		Exit function
 	End If
 	If NewGBL_IPEnd > 255255255255 Then
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÖÕÖ¹£É£ĞµØÖ·´íÎó£¬×î´óIPµØÖ·Îª255.255.255.255£¬¿ÉÄÜÊÇ´ËÓÃ»§IPµØÖ·²»·ûºÏ¹æ»®"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç»ˆæ­¢ï¼©ï¼°åœ°å€é”™è¯¯ï¼Œæœ€å¤§IPåœ°å€ä¸º255.255.255.255ï¼Œå¯èƒ½æ˜¯æ­¤ç”¨æˆ·IPåœ°å€ä¸ç¬¦åˆè§„åˆ’"
 		Exit function
 	End If
 
@@ -758,44 +762,44 @@ Function DisplayNewIPForm
 
 			<%If Request.Form("submitflag") = "LKOkxk2" or Request.Form("submitflag") = "" Then%>
 	<div class=title>
-	¸ù¾İÔÚÏßÓÃ»§ÃûÀ´ÆÁ±Î£ºÊäÈëĞèÒªÆÁ±Î£É£ĞµØÖ·µÄÔÚÏßÓÃ»§Ãû³Æ
+	æ ¹æ®åœ¨çº¿ç”¨æˆ·åæ¥å±è”½ï¼šè¾“å…¥éœ€è¦å±è”½ï¼©ï¼°åœ°å€çš„åœ¨çº¿ç”¨æˆ·åç§°
 	</div>
 	<form action=LimitUserManage.asp method=post id=fobform name=fobform>
 		<div class="value2">
-			ÔÚÏßµÄÓÃ»§Ãû£º<input name=GBL_UserName value="<%=htmlencode(GBL_UserName)%>" class=fminpt><br>
+			åœ¨çº¿çš„ç”¨æˆ·åï¼š<input name=GBL_UserName value="<%=htmlencode(GBL_UserName)%>" class=fminpt><br>
 			<input name=submitflag type=hidden value="LKOkxk2">
 			<input name=action type=hidden value="fobip">
 		</div>
 		<div class="value2">
-			ÆÁ±ÎÊ±¼äÑ¡Ôñ£º<select name=GBL_ExpiresTime>
+			å±è”½æ—¶é—´é€‰æ‹©ï¼š<select name=GBL_ExpiresTime>
 						<%For N = 1 to 30
 							If N = GBL_ExpiresTime Then
-								Response.Write "<option value=" & N & " selected>ÆÁ±Î" & Right("0" & N,2) & "Ìì</option>"
+								Response.Write "<option value=" & N & " selected>å±è”½" & Right("0" & N,2) & "å¤©</option>"
 							Else
-								Response.Write "<option value=" & N & ">ÆÁ±Î" & Right("0" & N,2) & "Ìì</option>"
+								Response.Write "<option value=" & N & ">å±è”½" & Right("0" & N,2) & "å¤©</option>"
 							End If
 						Next%>
-						<option value=0<%If GBL_ExpiresTime = 0 Then Response.Write " Selected"%>>ÓÀ¾ÃÆÁ±Î</option>
+						<option value=0<%If GBL_ExpiresTime = 0 Then Response.Write " Selected"%>>æ°¸ä¹…å±è”½</option>
 					</select>
 		</div>
 		<div class="value2">
-			ÆÁ±ÎÔ­Òò×¢Ã÷£º<input name=GBL_WhyString MaxLength=100 size=30 value="<%=htmlencode(GBL_WhyString)%>" class=fminpt>
+			å±è”½åŸå› æ³¨æ˜ï¼š<input name=GBL_WhyString MaxLength=100 size=30 value="<%=htmlencode(GBL_WhyString)%>" class=fminpt>
 			<select onchange="document.fobform.GBL_WhyString.value=this.value;">
-				<option value="">===Ò»Ğ©³£¼ûÔ­ÒòÇëÑ¡Ôñ===</option>
-				<option value="·¢±í·´¶¯»òÉ«ÇéÄÚÈİ">·¢±í·´¶¯»òÉ«ÇéÄÚÈİ</option>
-				<option value="¶ÔÂÛÌ³½øĞĞ¶ñÒâ¹¥»÷(ºÚ¿ÍĞĞÎª)">¶ÔÂÛÌ³½øĞĞ¶ñÒâ¹¥»÷(ºÚ¿ÍĞĞÎª)</option>
-				<option value="²»Í£µÄ¶ñÒâ¹àË®»ò×¢²áĞÂÓÃ»§">²»Í£µÄ¶ñÒâ¹àË®»ò×¢²áĞÂÓÃ»§</option>
+				<option value="">===ä¸€äº›å¸¸è§åŸå› è¯·é€‰æ‹©===</option>
+				<option value="å‘è¡¨ååŠ¨æˆ–è‰²æƒ…å†…å®¹">å‘è¡¨ååŠ¨æˆ–è‰²æƒ…å†…å®¹</option>
+				<option value="å¯¹è®ºå›è¿›è¡Œæ¶æ„æ”»å‡»(é»‘å®¢è¡Œä¸º)">å¯¹è®ºå›è¿›è¡Œæ¶æ„æ”»å‡»(é»‘å®¢è¡Œä¸º)</option>
+				<option value="ä¸åœçš„æ¶æ„çŒæ°´æˆ–æ³¨å†Œæ–°ç”¨æˆ·">ä¸åœçš„æ¶æ„çŒæ°´æˆ–æ³¨å†Œæ–°ç”¨æˆ·</option>
 			</select>
 		</div>
 		<div class="value2">
-			<input type=submit value="Ìá½»" class="fmbtn btn_2"> <input type=reset value="È¡Ïû" class="fmbtn btn_2">
+			<input type=submit value="æäº¤" class="fmbtn btn_2"> <input type=reset value="å–æ¶ˆ" class="fmbtn btn_2">
 		</div>
 		</form>
 		
 		<div class="title">
-		ÌáÊ¾£º
+		æç¤ºï¼š
 		</div>
-		<div class="value2"><span class=grayfont>´Ë²Ù×÷Ö»¶Ôµ±Ç°ÔÚÏßµÄÓÃ»§²Å»áÉúĞ§</span>
+		<div class="value2"><span class=grayfont>æ­¤æ“ä½œåªå¯¹å½“å‰åœ¨çº¿çš„ç”¨æˆ·æ‰ä¼šç”Ÿæ•ˆ</span>
 		</div>
 		<%End If%>
 
@@ -803,85 +807,85 @@ Function DisplayNewIPForm
 		<br>
 		<hr class=splitline>
 		<div class="title">
-		¸ù¾İ·¢±íÌû×ÓÀ´ÆÁ±Î£ºÊäÈëÄ³ÓÃ»§Ëù·¢±íÌû×ÓµÄ±àºÅ
+		æ ¹æ®å‘è¡¨å¸–å­æ¥å±è”½ï¼šè¾“å…¥æŸç”¨æˆ·æ‰€å‘è¡¨å¸–å­çš„ç¼–å·
 		</div>
           	<form action=LimitUserManage.asp method=post id=fobform name=fobform>
           	<div class="value2">
-			ÂÛÌ³Ìû×Ó±àºÅ£º<input name=GBL_AnnounceID value="<%=htmlencode(GBL_AnnounceID)%>" class=fminpt>
+			è®ºå›å¸–å­ç¼–å·ï¼š<input name=GBL_AnnounceID value="<%=htmlencode(GBL_AnnounceID)%>" class=fminpt>
 		</div>
 			<input name=submitflag type=hidden value="LKOkxk3">
 			<input name=action type=hidden value="fobip">
 		<div class="value2">
-			ÆÁ±ÎÊ±¼äÑ¡Ôñ£º<select name=GBL_ExpiresTime>
+			å±è”½æ—¶é—´é€‰æ‹©ï¼š<select name=GBL_ExpiresTime>
 						<%For N = 1 to 30
 							If N = GBL_ExpiresTime Then
-								Response.Write "<option value=" & N & " selected>ÆÁ±Î" & Right("0" & N,2) & "Ìì</option>"
+								Response.Write "<option value=" & N & " selected>å±è”½" & Right("0" & N,2) & "å¤©</option>"
 							Else
-								Response.Write "<option value=" & N & ">ÆÁ±Î" & Right("0" & N,2) & "Ìì</option>"
+								Response.Write "<option value=" & N & ">å±è”½" & Right("0" & N,2) & "å¤©</option>"
 							End If
 						Next%>
-						<option value=0<%If GBL_ExpiresTime = 0 Then Response.Write " Selected"%>>ÓÀ¾ÃÆÁ±Î</option>
+						<option value=0<%If GBL_ExpiresTime = 0 Then Response.Write " Selected"%>>æ°¸ä¹…å±è”½</option>
 					</select>
 		</div>
 		<div class="value2">
-			ÆÁ±ÎÔ­Òò×¢Ã÷£º<input name=GBL_WhyString MaxLength=100 size=30 value="<%=htmlencode(GBL_WhyString)%>" class=fminpt>
+			å±è”½åŸå› æ³¨æ˜ï¼š<input name=GBL_WhyString MaxLength=100 size=30 value="<%=htmlencode(GBL_WhyString)%>" class=fminpt>
 			<select onchange="document.fobform.GBL_WhyString.value=this.value;">
-				<option value="">===Ò»Ğ©³£¼ûÔ­ÒòÇëÑ¡Ôñ===</option>
-				<option value="·¢±í·´¶¯»òÉ«ÇéÄÚÈİ">·¢±í·´¶¯»òÉ«ÇéÄÚÈİ</option>
-				<option value="¶ÔÂÛÌ³½øĞĞ¶ñÒâ¹¥»÷(ºÚ¿ÍĞĞÎª)">¶ÔÂÛÌ³½øĞĞ¶ñÒâ¹¥»÷(ºÚ¿ÍĞĞÎª)</option>
-				<option value="²»Í£µÄ¶ñÒâ¹àË®»ò×¢²áĞÂÓÃ»§">²»Í£µÄ¶ñÒâ¹àË®»ò×¢²áĞÂÓÃ»§</option>
+				<option value="">===ä¸€äº›å¸¸è§åŸå› è¯·é€‰æ‹©===</option>
+				<option value="å‘è¡¨ååŠ¨æˆ–è‰²æƒ…å†…å®¹">å‘è¡¨ååŠ¨æˆ–è‰²æƒ…å†…å®¹</option>
+				<option value="å¯¹è®ºå›è¿›è¡Œæ¶æ„æ”»å‡»(é»‘å®¢è¡Œä¸º)">å¯¹è®ºå›è¿›è¡Œæ¶æ„æ”»å‡»(é»‘å®¢è¡Œä¸º)</option>
+				<option value="ä¸åœçš„æ¶æ„çŒæ°´æˆ–æ³¨å†Œæ–°ç”¨æˆ·">ä¸åœçš„æ¶æ„çŒæ°´æˆ–æ³¨å†Œæ–°ç”¨æˆ·</option>
 			</select>
 		</div>
 		<div class="value2">
-			<input type=submit value="Ìá½»" class="fmbtn btn_2"> <input type=reset value="È¡Ïû" class="fmbtn btn_2">
+			<input type=submit value="æäº¤" class="fmbtn btn_2"> <input type=reset value="å–æ¶ˆ" class="fmbtn btn_2">
 		</div></form>
 		
 		<div class="title">
-		ÌáÊ¾£º
+		æç¤ºï¼š
 		</div>
-		<div class="value2"><span class=grayfont>Ìû×ÓµÄ±àºÅ£¬ÔÚ°æÃæÁĞ±íÖĞ£¬½«Êó±ê·ÅÔÚ×îÇ°ÃæµÄÍ¼±êÉÏ¿ÉÒÔÏÔÊ¾Ö÷ÌâÌû±àºÅÔÚ²é¿´Ìû×ÓÄÚÈİÊ±£¬½«Êó±ê·ÅÔÚĞÄÇé·ûºÅÉÏ£¬¿ÉÒÔÏÔÊ¾Ö÷ÌâÌû»ò»Ø¸´ÌûµÄ±àºÅ</span>
+		<div class="value2"><span class=grayfont>å¸–å­çš„ç¼–å·ï¼Œåœ¨ç‰ˆé¢åˆ—è¡¨ä¸­ï¼Œå°†é¼ æ ‡æ”¾åœ¨æœ€å‰é¢çš„å›¾æ ‡ä¸Šå¯ä»¥æ˜¾ç¤ºä¸»é¢˜å¸–ç¼–å·åœ¨æŸ¥çœ‹å¸–å­å†…å®¹æ—¶ï¼Œå°†é¼ æ ‡æ”¾åœ¨å¿ƒæƒ…ç¬¦å·ä¸Šï¼Œå¯ä»¥æ˜¾ç¤ºä¸»é¢˜å¸–æˆ–å›å¤å¸–çš„ç¼–å·</span>
 		</div><%End If%>
 			
 
 		<%If Request.Form("submitflag") = "LKOkxk4" or Request.Form("submitflag") = "" Then%>
 		<br>
 		<hr class=splitline>
-		<div class="title">¸ù¾İ¶ÌÏûÏ¢±àºÅÀ´ÆÁ±Î£ºÊäÈëÄ³ÓÃ»§Ëù·¢ËÍ¶ÌÏûÏ¢µÄ±àºÅ
+		<div class="title">æ ¹æ®çŸ­æ¶ˆæ¯ç¼–å·æ¥å±è”½ï¼šè¾“å…¥æŸç”¨æˆ·æ‰€å‘é€çŸ­æ¶ˆæ¯çš„ç¼–å·
 		</div>
 			<form action=LimitUserManage.asp method=post id=fobform name=fobform>
 		<div class="value2">
-			¶ÌÏûÏ¢µÄ±àºÅ£º<input name=GBL_MessageID value="<%=htmlencode(GBL_MessageID)%>" class=fminpt>
+			çŸ­æ¶ˆæ¯çš„ç¼–å·ï¼š<input name=GBL_MessageID value="<%=htmlencode(GBL_MessageID)%>" class=fminpt>
 		</div>
 			<input name=submitflag type=hidden value="LKOkxk4">
 			<input name=action type=hidden value="fobip">
 		<div class="value2">
-			ÆÁ±ÎÊ±¼äÑ¡Ôñ£º<select name=GBL_ExpiresTime>
+			å±è”½æ—¶é—´é€‰æ‹©ï¼š<select name=GBL_ExpiresTime>
 						<%For N = 1 to 30
 							If N = GBL_ExpiresTime Then
-								Response.Write "<option value=" & N & " selected>ÆÁ±Î" & Right("0" & N,2) & "Ìì</option>"
+								Response.Write "<option value=" & N & " selected>å±è”½" & Right("0" & N,2) & "å¤©</option>"
 							Else
-								Response.Write "<option value=" & N & ">ÆÁ±Î" & Right("0" & N,2) & "Ìì</option>"
+								Response.Write "<option value=" & N & ">å±è”½" & Right("0" & N,2) & "å¤©</option>"
 							End If
 						Next%>
-						<option value=0<%If GBL_ExpiresTime = 0 Then Response.Write " Selected"%>>ÓÀ¾ÃÆÁ±Î</option>
+						<option value=0<%If GBL_ExpiresTime = 0 Then Response.Write " Selected"%>>æ°¸ä¹…å±è”½</option>
 					</select>
 		</div>
 		<div class="value2">
-			ÆÁ±ÎÔ­ÒòËµÃ÷£º<input name=GBL_WhyString MaxLength=100 size=30 value="<%=htmlencode(GBL_WhyString)%>" class=fminpt>
+			å±è”½åŸå› è¯´æ˜ï¼š<input name=GBL_WhyString MaxLength=100 size=30 value="<%=htmlencode(GBL_WhyString)%>" class=fminpt>
 			<select onchange="document.fobform.GBL_WhyString.value=this.value;">
-				<option value="">===Ò»Ğ©³£¼ûÔ­ÒòÇëÑ¡Ôñ===</option>
-				<option value="·¢±í·´¶¯»òÉ«ÇéÄÚÈİ">·¢±í·´¶¯»òÉ«ÇéÄÚÈİ</option>
-				<option value="¶ÔÂÛÌ³½øĞĞ¶ñÒâ¹¥»÷(ºÚ¿ÍĞĞÎª)">¶ÔÂÛÌ³½øĞĞ¶ñÒâ¹¥»÷(ºÚ¿ÍĞĞÎª)</option>
-				<option value="²»Í£µÄ¶ñÒâ¹àË®»ò×¢²áĞÂÓÃ»§">²»Í£µÄ¶ñÒâ¹àË®»ò×¢²áĞÂÓÃ»§</option>
+				<option value="">===ä¸€äº›å¸¸è§åŸå› è¯·é€‰æ‹©===</option>
+				<option value="å‘è¡¨ååŠ¨æˆ–è‰²æƒ…å†…å®¹">å‘è¡¨ååŠ¨æˆ–è‰²æƒ…å†…å®¹</option>
+				<option value="å¯¹è®ºå›è¿›è¡Œæ¶æ„æ”»å‡»(é»‘å®¢è¡Œä¸º)">å¯¹è®ºå›è¿›è¡Œæ¶æ„æ”»å‡»(é»‘å®¢è¡Œä¸º)</option>
+				<option value="ä¸åœçš„æ¶æ„çŒæ°´æˆ–æ³¨å†Œæ–°ç”¨æˆ·">ä¸åœçš„æ¶æ„çŒæ°´æˆ–æ³¨å†Œæ–°ç”¨æˆ·</option>
 			</select>
 		</div>
 		<div class="value2">
-			<input type=submit value="Ìá½»" class="fmbtn btn_2"> <input type=reset value="È¡Ïû" class="fmbtn btn_2">
+			<input type=submit value="æäº¤" class="fmbtn btn_2"> <input type=reset value="å–æ¶ˆ" class="fmbtn btn_2">
 		</div></form>
 		<div class="title">
-		ÌáÊ¾£º
+		æç¤ºï¼š
 		</div>
-		<div class="value2"><span class=grayfont>¶ÌÏûÏ¢±àºÅ¿ÉÒÔÔÚ²é¿´ÊÕ¼şÏäÁĞ±íÖĞÏÔÊ¾</span>
+		<div class="value2"><span class=grayfont>çŸ­æ¶ˆæ¯ç¼–å·å¯ä»¥åœ¨æŸ¥çœ‹æ”¶ä»¶ç®±åˆ—è¡¨ä¸­æ˜¾ç¤º</span>
 		</div>
 		<%End If%>
 
@@ -892,7 +896,7 @@ Function FormatIPaddress(KIP)
 
 	Dim IP
 	IP = KIP
-	Rem ³ıÈ¥Á½Ê×µÄ¿Õµã£¬²¢¸ñÊ½»¯³ÉXXX.XXX.XXX.XXX
+	Rem é™¤å»ä¸¤é¦–çš„ç©ºç‚¹ï¼Œå¹¶æ ¼å¼åŒ–æˆXXX.XXX.XXX.XXX
 	Dim Temp1,Temp2,TempN,Temp
 	IP = Trim(IP & "")
 	If inStr(IP,".") = 0 or Len(IP) = "" Then
@@ -942,7 +946,7 @@ Function FormatIPaddress(KIP)
 		TempN = TempN + 1
 	Next
 	FormatIPaddress = IP
-	Rem ·µ»ØµÄIPµØÖ·¸ÕºÃÊÇ15Î»£¬Èç¹û²»ÊÇ15¸ö×Ö·ûÔòÊÇ´íÎóÎŞĞ§µÄIPµØÖ·
+	Rem è¿”å›çš„IPåœ°å€åˆšå¥½æ˜¯15ä½ï¼Œå¦‚æœä¸æ˜¯15ä¸ªå­—ç¬¦åˆ™æ˜¯é”™è¯¯æ— æ•ˆçš„IPåœ°å€
 
 End Function
 
@@ -950,8 +954,8 @@ End Function
 Function CheckUserIPInfo(UserName)
 
 	If UserName <> "" and inStr(UserName,",") = 0 and inStr(Lcase(DEF_SupervisorUserName),"," & Lcase(UserName) & ",") > 0 Then
-		'×÷ÕâÑùµÄÍ¬ÑùÌáÊ¾ÊÇÎªÁËÒÔ·À¹ÜÀíÔ±Ãû×Ö±»Ğ¹Â©£¬Êµ¼ÊÓ¦¸ÃÌáÊ¾¹ÜÀíÔ±²»ÄÜ±»ÆÁ±Î
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÓÃ»§Ãû" & htmlencode(UserName) & "²»´æÔÚ£¡"
+		'ä½œè¿™æ ·çš„åŒæ ·æç¤ºæ˜¯ä¸ºäº†ä»¥é˜²ç®¡ç†å‘˜åå­—è¢«æ³„æ¼ï¼Œå®é™…åº”è¯¥æç¤ºç®¡ç†å‘˜ä¸èƒ½è¢«å±è”½
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç”¨æˆ·å" & htmlencode(UserName) & "ä¸å­˜åœ¨ï¼"
 		CheckUserIPInfo = 0
 		Exit Function
 	End If
@@ -962,7 +966,7 @@ Function CheckUserIPInfo(UserName)
 		Rs.Close
 		Set Rs = Nothing
 		CheckUserIPInfo = 0
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÓÃ»§Ãû" & htmlencode(UserName) & "²»´æÔÚ£¡"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç”¨æˆ·å" & htmlencode(UserName) & "ä¸å­˜åœ¨ï¼"
 		Exit Function
 	Else
 		GBL_UserName_UserID = cCur(Rs(0))
@@ -976,7 +980,7 @@ Function CheckUserIPInfo(UserName)
 		Rs.Close
 		Set Rs = Nothing
 		CheckUserIPInfo = 0
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÓÃ»§Ãû" & htmlencode(UserName) & "Ä¿Ç°²»ÔÚÏß£¬ÎŞ·¨Íê³ÉÆÁ±Î£¬ÇëÊ¹ÓÃÆäËüµÄ·½Ê½À´ÆÁ±Î£¡"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç”¨æˆ·å" & htmlencode(UserName) & "ç›®å‰ä¸åœ¨çº¿ï¼Œæ— æ³•å®Œæˆå±è”½ï¼Œè¯·ä½¿ç”¨å…¶å®ƒçš„æ–¹å¼æ¥å±è”½ï¼"
 		Exit Function
 	Else
 		GBL_IPStart = Rs(0)
@@ -989,17 +993,17 @@ Function CheckUserIPInfo(UserName)
 
 End Function
 
-Rem ¼ì²âÄ³Ìû×Ó
+Rem æ£€æµ‹æŸå¸–å­
 Function CheckAnnounceID(AnnounceID)
 
 	If isNumeric(AnnounceID) = False Then
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÌû×Ó²¢²»´æÔÚ»òÎŞÈ¨ÆÁ±Î£¡"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šå¸–å­å¹¶ä¸å­˜åœ¨æˆ–æ— æƒå±è”½ï¼"
 		CheckAnnounceID = 0
 		Exit Function
 	End If
 	AnnounceID = Fix(cCur(AnnounceID))
 	If AnnounceID < 1 Then
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£º±àºÅ" & htmlencode(AnnounceID) & "µÄÌû×Ó²¢²»´æÔÚ»òÎŞÈ¨ÆÁ±Î£¡"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç¼–å·" & htmlencode(AnnounceID) & "çš„å¸–å­å¹¶ä¸å­˜åœ¨æˆ–æ— æƒå±è”½ï¼"
 		CheckAnnounceID = 0
 		Exit Function
 	End If
@@ -1010,7 +1014,7 @@ Function CheckAnnounceID(AnnounceID)
 		Rs.Close
 		Set Rs = Nothing
 		CheckAnnounceID = 0
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£º±àºÅ" & htmlencode(AnnounceID) & "µÄÌû×Ó²¢²»´æÔÚ»òÎŞÈ¨ÆÁ±Î£¡"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç¼–å·" & htmlencode(AnnounceID) & "çš„å¸–å­å¹¶ä¸å­˜åœ¨æˆ–æ— æƒå±è”½ï¼"
 		Exit Function
 	Else
 		GBL_IPStart = Rs(0)
@@ -1021,8 +1025,8 @@ Function CheckAnnounceID(AnnounceID)
 	Set Rs = Nothing
 
 	If GBL_UserName <> "" and inStr(GBL_UserName,",") = 0 and inStr(Lcase(DEF_SupervisorUserName),"," & Lcase(GBL_UserName) & ",") > 0 Then
-		'×÷ÕâÑùµÄÍ¬ÑùÌáÊ¾ÊÇÎªÁËÒÔ·À¹ÜÀíÔ±Ãû×Ö±»Ğ¹Â©£¬Êµ¼ÊÓ¦¸ÃÌáÊ¾¹ÜÀíÔ±²»ÄÜ±»ÆÁ±Î
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£º±àºÅ" & htmlencode(AnnounceID) & "µÄÌû×Ó²¢²»´æÔÚ»òÎŞÈ¨ÆÁ±Î£¡"
+		'ä½œè¿™æ ·çš„åŒæ ·æç¤ºæ˜¯ä¸ºäº†ä»¥é˜²ç®¡ç†å‘˜åå­—è¢«æ³„æ¼ï¼Œå®é™…åº”è¯¥æç¤ºç®¡ç†å‘˜ä¸èƒ½è¢«å±è”½
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç¼–å·" & htmlencode(AnnounceID) & "çš„å¸–å­å¹¶ä¸å­˜åœ¨æˆ–æ— æƒå±è”½ï¼"
 		CheckAnnounceID = 0
 		Exit Function
 	End If
@@ -1031,17 +1035,17 @@ Function CheckAnnounceID(AnnounceID)
 End Function
 
 
-Rem ¼ì²âÄ³Ìû×Ó
+Rem æ£€æµ‹æŸå¸–å­
 Function CheckMessageID(MessageID)
 
 	If isNumeric(MessageID) = False Then
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£º¶ÌÏûÏ¢²¢²»´æÔÚ»òÎŞÈ¨ÆÁ±Î£¡"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šçŸ­æ¶ˆæ¯å¹¶ä¸å­˜åœ¨æˆ–æ— æƒå±è”½ï¼"
 		CheckMessageID = 0
 		Exit Function
 	End If
 	MessageID = Fix(cCur(MessageID))
 	If MessageID < 1 Then
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£º±àºÅ" & htmlencode(MessageID) & "µÄ¶ÌÏûÏ¢²¢²»´æÔÚ»òÎŞÈ¨ÆÁ±Î£¡"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç¼–å·" & htmlencode(MessageID) & "çš„çŸ­æ¶ˆæ¯å¹¶ä¸å­˜åœ¨æˆ–æ— æƒå±è”½ï¼"
 		CheckMessageID = 0
 		Exit Function
 	End If
@@ -1052,7 +1056,7 @@ Function CheckMessageID(MessageID)
 		Rs.Close
 		Set Rs = Nothing
 		CheckMessageID = 0
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£º±àºÅ" & htmlencode(MessageID) & "µÄ¶ÌÏûÏ¢²¢²»´æÔÚ»òÎŞÈ¨ÆÁ±Î£¡"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç¼–å·" & htmlencode(MessageID) & "çš„çŸ­æ¶ˆæ¯å¹¶ä¸å­˜åœ¨æˆ–æ— æƒå±è”½ï¼"
 		Exit Function
 	Else
 		GBL_IPStart = Rs(0)
@@ -1063,8 +1067,8 @@ Function CheckMessageID(MessageID)
 	Set Rs = Nothing
 
 	If GBL_UserName <> "" and inStr(GBL_UserName,",") = 0 and inStr(Lcase(DEF_SupervisorUserName),"," & Lcase(GBL_UserName) & ",") > 0 Then
-		'×÷ÕâÑùµÄÍ¬ÑùÌáÊ¾ÊÇÎªÁËÒÔ·À¹ÜÀíÔ±Ãû×Ö±»Ğ¹Â©£¬Êµ¼ÊÓ¦¸ÃÌáÊ¾¹ÜÀíÔ±²»ÄÜ±»ÆÁ±Î
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£º±àºÅ" & htmlencode(MessageID) & "µÄ¶ÌÏûÏ¢²¢²»´æÔÚ»òÎŞÈ¨ÆÁ±Î£¡"
+		'ä½œè¿™æ ·çš„åŒæ ·æç¤ºæ˜¯ä¸ºäº†ä»¥é˜²ç®¡ç†å‘˜åå­—è¢«æ³„æ¼ï¼Œå®é™…åº”è¯¥æç¤ºç®¡ç†å‘˜ä¸èƒ½è¢«å±è”½
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç¼–å·" & htmlencode(MessageID) & "çš„çŸ­æ¶ˆæ¯å¹¶ä¸å­˜åœ¨æˆ–æ— æƒå±è”½ï¼"
 		CheckMessageID = 0
 		Exit Function
 	End If
@@ -1072,59 +1076,59 @@ Function CheckMessageID(MessageID)
 
 End Function
 
-rem modifyuser
+rem modifyuser()
 
 Function DisplayModifyUser
 
 	If Request.Form("submitflag") <> "" Then
-		CheckModifyUserForm
+		CheckModifyUserForm()
 		If GBL_CHK_TempStr = "" Then
-			ModifyUser
+			ModifyUser()
 			Response.Write GBL_CHK_TempStr
 			GBL_CHK_TempStr = ""
-			DisplayModifyUserForm
+			DisplayModifyUserForm()
 		Else
-			DisplayModifyUserForm
+			DisplayModifyUserForm()
 		End If
 	Else
-		DisplayModifyUserForm
+		DisplayModifyUserForm()
 	End If
 
 End Function
 
 Function ModifyUser
 
-	Response.Write "<p><b>¿ªÊ¼Çå³ıÓÃ»§<u>" & htmlencode(GBL_UserName) & "</u>µÄÏÂÁĞ×ÊÁÏ£º</b></p>" & VbCrLf
+	Response.Write "<p><b>å¼€å§‹æ¸…é™¤ç”¨æˆ·<u>" & htmlencode(GBL_UserName) & "</u>çš„ä¸‹åˆ—èµ„æ–™ï¼š</b></p>" & VbCrLf
 	If inStr(GBL_ModifyMode,",1,") Then
 		If GBL_UserName_FaceUrl & "" = "" Then
-			Response.Write "<p><font color=Red class=redfont>Çå³ıÁ´½ÓÍ·Ïñ£º ´ËÓÃ»§Í·ÏñÒÑ¾­ÊÇÄ¬ÈÏÍ·Ïñ£¬ÂÔ¹ı²Ù×÷¡£</font></p>"
+			Response.Write "<p><font color=Red class=redfont>æ¸…é™¤é“¾æ¥å¤´åƒï¼š æ­¤ç”¨æˆ·å¤´åƒå·²ç»æ˜¯é»˜è®¤å¤´åƒï¼Œç•¥è¿‡æ“ä½œã€‚</font></p>"
 			DeleteUploadFace(GBL_UserName_UserID)
 		Else
 			CALL LDExeCute("Update LeadBBS_User Set FaceUrl='' where ID=" & GBL_UserName_UserID,1)
-			Response.Write "<p><font color=Green class=greenfont>Çå³ıÁ´½ÓÍ·Ïñ£º ³É¹¦Çå³ı¡£</font></p>"
+			Response.Write "<p><font color=Green class=greenfont>æ¸…é™¤é“¾æ¥å¤´åƒï¼š æˆåŠŸæ¸…é™¤ã€‚</font></p>"
 			DeleteUploadFace(GBL_UserName_UserID)
 		End If
 	End If
 
 	If inStr(GBL_ModifyMode,",2,") Then
 		If GBL_UserName_UnderWrite & "" = "" Then
-			Response.Write "<p><font color=Red class=redfont>Çå³ıÓÃ»§Ç©Ãû£º ´ËÓÃ»§ÎŞÇ©ÃûÄÚÈİ£¬ÂÔ¹ı²Ù×÷¡£</font></p>"
+			Response.Write "<p><font color=Red class=redfont>æ¸…é™¤ç”¨æˆ·ç­¾åï¼š æ­¤ç”¨æˆ·æ— ç­¾åå†…å®¹ï¼Œç•¥è¿‡æ“ä½œã€‚</font></p>"
 		Else
 			CALL LDExeCute("Update LeadBBS_User Set UnderWrite='',PrintUnderWrite='' where ID=" & GBL_UserName_UserID,1)
-			Response.Write "<p><font color=Green class=greenfont>Çå³ıÓÃ»§Ç©Ãû£º ³É¹¦Çå³ı¡£</font></p>"
+			Response.Write "<p><font color=Green class=greenfont>æ¸…é™¤ç”¨æˆ·ç­¾åï¼š æˆåŠŸæ¸…é™¤ã€‚</font></p>"
 		End If
 	End If
 
 	If inStr(GBL_ModifyMode,",3,") Then
 		If GBL_UserName_UserTitle & "" = "" Then
-			Response.Write "<p><font color=Red class=redfont>Çå³ıÓÃ»§Í·ÏÎ£º ´ËÓÃ»§ÎŞÍ·ÏÎ£¬ÂÔ¹ı²Ù×÷¡£</font></p>"
+			Response.Write "<p><font color=Red class=redfont>æ¸…é™¤ç”¨æˆ·å¤´è¡”ï¼š æ­¤ç”¨æˆ·æ— å¤´è¡”ï¼Œç•¥è¿‡æ“ä½œã€‚</font></p>"
 		Else
 			CALL LDExeCute("Update LeadBBS_User Set UserTitle='' where ID=" & GBL_UserName_UserID,1)
-			Response.Write "<p><font color=Green class=greenfont>Çå³ıÓÃ»§Í·ÏÎ£º ³É¹¦Çå³ı¡£</font></p>"
+			Response.Write "<p><font color=Green class=greenfont>æ¸…é™¤ç”¨æˆ·å¤´è¡”ï¼š æˆåŠŸæ¸…é™¤ã€‚</font></p>"
 		End If
 	End If
 
-	If CheckSupervisorUserName = 0 Then
+	If CheckSupervisorUserName() = 0 Then
 		CALL LDExeCute("Update LeadBBS_User Set LastWriteTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
 	End If
 
@@ -1132,25 +1136,25 @@ End Function
 
 Function CheckModifyUserForm
 
-	If CheckWriteEventSpace = 0 Then
-		Response.Write "<b><font color=Red Class=redfont>ÄúµÄ²Ù×÷¹ıÆµ£¬ÇëÉÔºòÔÙ×÷Ìá½»!</font></b> <br>" & VbCrLf
+	If CheckWriteEventSpace() = 0 Then
+		Response.Write "<b><font color=Red Class=redfont>æ‚¨çš„æ“ä½œè¿‡é¢‘ï¼Œè¯·ç¨å€™å†ä½œæäº¤!</font></b> <br>" & VbCrLf
 		Exit Function
 	End If
 	
 	GBL_ModifyMode = Replace("," & Left(Request.Form("GBL_ModifyMode"),10) & ","," ","")
 	GBL_UserName = Left(Request.Form("GBL_UserName"),20)
 	If isNumeric(Replace(GBL_ModifyMode,",","")) = 0 Then
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£º²Ù×÷Ñ¡ÏîÑ¡Ôñ´íÎó£¡"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šæ“ä½œé€‰é¡¹é€‰æ‹©é”™è¯¯ï¼"
 		Exit Function
 	End If
 
 	If GBL_UserName = "" Then
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÇëÊäÈëÓÃ»§Ãû£¡"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šè¯·è¾“å…¥ç”¨æˆ·åï¼"
 		Exit Function
 	End If
 	
 	If CheckModifyUserNameExist(GBL_UserName) = 0 Then
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÓÃ»§Ãû²»´æÔÚ£¡"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç”¨æˆ·åä¸å­˜åœ¨ï¼"
 		Exit Function
 	End If
 
@@ -1160,40 +1164,40 @@ Function DisplayModifyUserForm
 
 	If GBL_CHK_TempStr <> "" Then Response.Write "<div class=""title redfont"">" & GBL_CHK_TempStr & "</div>"
 	If Request.Form("submitflag") = "LKOkxk2" or Request.Form("submitflag") = "" Then%>
-	<div class="title">ÇåÀíÓÃ»§×ÊÁÏ</div>
+	<div class="title">æ¸…ç†ç”¨æˆ·èµ„æ–™</div>
 	<form action=LimitUserManage.asp method=post id=fobform name=fobform>
 	<div class="value2">
-		ÓÃ »§ Ãû£º <input name=GBL_UserName value="<%=htmlencode(GBL_UserName)%>" class=fminpt>
+		ç”¨ æˆ· åï¼š <input name=GBL_UserName value="<%=htmlencode(GBL_UserName)%>" class=fminpt>
 	</div>
 		<input name=submitflag type=hidden value="LKOkxk2">
 		<input name=action type=hidden value="modifyuser">
 	<div class="value2">
-		Ñ¡Ôñ²Ù×÷£º<input name=GBL_ModifyMode value=1<%If inStr(GBL_ModifyMode,",1,") Then Response.Write " checked"%> type=checkbox>Çå³ıÁ´½ÓÍ·Ïñ
-		<input name=GBL_ModifyMode value=2<%If inStr(GBL_ModifyMode,",2,") Then Response.Write " checked"%> type=checkbox>Çå³ıÓÃ»§Ç©Ãû
-		<input name=GBL_ModifyMode value=3<%If inStr(GBL_ModifyMode,",3,") Then Response.Write " checked"%> type=checkbox>Çå³ıÓÃ»§Í·ÏÎ
+		é€‰æ‹©æ“ä½œï¼š<input name=GBL_ModifyMode value=1<%If inStr(GBL_ModifyMode,",1,") Then Response.Write " checked"%> type=checkbox>æ¸…é™¤é“¾æ¥å¤´åƒ
+		<input name=GBL_ModifyMode value=2<%If inStr(GBL_ModifyMode,",2,") Then Response.Write " checked"%> type=checkbox>æ¸…é™¤ç”¨æˆ·ç­¾å
+		<input name=GBL_ModifyMode value=3<%If inStr(GBL_ModifyMode,",3,") Then Response.Write " checked"%> type=checkbox>æ¸…é™¤ç”¨æˆ·å¤´è¡”
 	</div>
 	<div class="value2">
-		<input type=submit value="Ìá½»" class="fmbtn btn_2"> <input type=reset value="È¡Ïû" class="fmbtn btn_2">
+		<input type=submit value="æäº¤" class="fmbtn btn_2"> <input type=reset value="å–æ¶ˆ" class="fmbtn btn_2">
 	</div>
 	</form>
 	<br>
-	<div class="title">ÌáÊ¾£º</div>
+	<div class="title">æç¤ºï¼š</div>
 	<ol>
-	<li>Çå³ıÓÃ»§Á´½ÓÍ·Ïñºó£¬´ËÓÃ»§Í·Ïñ»Ö¸´ÎªÂÛÌ³ÒÑÓĞµÄÄ¬ÈÏÍ·Ïñ£®</li>
-	<li>Çå³ıÓÃ»§Ç©Ãû½«»áÊ¹Ö¸¶¨µÄÓÃ»§Ç©ÃûÄÚÈİÈ«²¿ÒÆ³ı</li>
-	<li>Çå³ıÓÃ»§Í·ÏÎ½«»áÊ¹Ö¸¶¨µÄÓÃ»§Í·ÏÎÃûÈ¡Ïû</li>
-	<li>Ä³Ğ©ÌØ¶¨ÓÃ»§×ÊÁÏ²»ÔÊĞíĞŞ¸Ä</li>
+	<li>æ¸…é™¤ç”¨æˆ·é“¾æ¥å¤´åƒåï¼Œæ­¤ç”¨æˆ·å¤´åƒæ¢å¤ä¸ºè®ºå›å·²æœ‰çš„é»˜è®¤å¤´åƒï¼</li>
+	<li>æ¸…é™¤ç”¨æˆ·ç­¾åå°†ä¼šä½¿æŒ‡å®šçš„ç”¨æˆ·ç­¾åå†…å®¹å…¨éƒ¨ç§»é™¤</li>
+	<li>æ¸…é™¤ç”¨æˆ·å¤´è¡”å°†ä¼šä½¿æŒ‡å®šçš„ç”¨æˆ·å¤´è¡”åå–æ¶ˆ</li>
+	<li>æŸäº›ç‰¹å®šç”¨æˆ·èµ„æ–™ä¸å…è®¸ä¿®æ”¹</li>
 	</ol>
 	<%End If%>
 
 <%End Function
 
-Rem ¼ì²âÄ³ÓÃ»§ÃûÊÇ·ñ´æÔÚ
+Rem æ£€æµ‹æŸç”¨æˆ·åæ˜¯å¦å­˜åœ¨
 Function CheckModifyUserNameExist(UserName)
 
 	If UserName <> "" and inStr(UserName,",") = 0 and inStr(Lcase(DEF_SupervisorUserName),"," & Lcase(UserName) & ",") > 0 Then
-		'×÷ÕâÑùµÄÍ¬ÑùÌáÊ¾ÊÇÎªÁËÒÔ·À¹ÜÀíÔ±Ãû×Ö±»Ğ¹Â©£¬Êµ¼ÊÓ¦¸ÃÌáÊ¾¹ÜÀíÔ±²»ÄÜ±»ÆÁ±Î
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÓÃ»§Ãû" & htmlencode(UserName) & "²»´æÔÚ£¡"
+		'ä½œè¿™æ ·çš„åŒæ ·æç¤ºæ˜¯ä¸ºäº†ä»¥é˜²ç®¡ç†å‘˜åå­—è¢«æ³„æ¼ï¼Œå®é™…åº”è¯¥æç¤ºç®¡ç†å‘˜ä¸èƒ½è¢«å±è”½
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç”¨æˆ·å" & htmlencode(UserName) & "ä¸å­˜åœ¨ï¼"
 		CheckModifyUserNameExist = 0
 		Exit Function
 	End If
@@ -1204,7 +1208,7 @@ Function CheckModifyUserNameExist(UserName)
 		Rs.Close
 		Set Rs = Nothing
 		CheckModifyUserNameExist = 0
-		GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÓÃ»§Ãû" & htmlencode(UserName) & "²»´æÔÚ£¡"
+		GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç”¨æˆ·å" & htmlencode(UserName) & "ä¸å­˜åœ¨ï¼"
 		Exit Function
 	Else
 		GBL_UserName_UserID = cCur(Rs(0))
@@ -1224,7 +1228,7 @@ End Function
 Function DeleteUploadFace(DelUserID)
 
 	If DEF_FSOString = "" Then
-		Response.Write "<p><span class=redfont>ÂÛÌ³²»Ö§³ÖÔÚÏßÉ¾³ıÎÄ¼ş£¬ÂÔ¹ıÉÏ´«Í·ÏñÉ¾³ı£®</span>"
+		Response.Write "<p><span class=redfont>è®ºå›ä¸æ”¯æŒåœ¨çº¿åˆ é™¤æ–‡ä»¶ï¼Œç•¥è¿‡ä¸Šä¼ å¤´åƒåˆ é™¤ï¼</span>"
 		Exit Function
 	End If
 	Dim SQL,Rs
@@ -1233,14 +1237,14 @@ Function DeleteUploadFace(DelUserID)
 	If Rs.Eof Then
 		Rs.Close
 		Set Rs = Nothing
-		Response.Write "<p><b><span class=redfont>ÓÃ»§ÎŞÉÏ´«Í·Ïñ£¬ÂÔ¹ıÉ¾³ı!</span></b>"
+		Response.Write "<p><b><span class=redfont>ç”¨æˆ·æ— ä¸Šä¼ å¤´åƒï¼Œç•¥è¿‡åˆ é™¤!</span></b>"
 	Else
 		If Rs("PhotoDir") <> "" Then DeleteFiles(Server.Mappath(DEF_BBS_HomeUrl & DEF_BBS_UploadPhotoUrl & "face/" & Rs("PhotoDir")))
 		If Rs("SPhotoDir") <> "" Then DeleteFiles(Server.Mappath(DEF_BBS_HomeUrl & DEF_BBS_UploadPhotoUrl & "face/" & Rs("SPhotoDir")))
 		Rs.Close
 		Set Rs = Nothing
 		CALL LDExeCute("Delete from LeadBBS_UserFace where UserID=" & DelUserID,1)
-		Response.Write "<p><b><span class=greenfont>Íê³ÉÓÃ»§ÉÏ´«Í·ÏñµÄÉ¾³ı!</span></b>"
+		Response.Write "<p><b><span class=greenfont>å®Œæˆç”¨æˆ·ä¸Šä¼ å¤´åƒçš„åˆ é™¤!</span></b>"
 	End If
 
 End Function
@@ -1264,30 +1268,30 @@ rem clear
 Sub View_ClearExpiresInfo
 
 	If Request.Form("DeleteSure")="E72ksiOkw2" Then
-		If DeleteForbidIPandUser = 1 Then
-			Response.Write "<p><font color=008800 class=greenfont><b>ÒÑ¾­³É¹¦½â³ıËùÓĞµ½ÆÚµÄÌØÊâÓÃ»§¼°ÆÁ±ÎµÄ£É£ĞµØÖ·£¡</b></font></p>"
+		If DeleteForbidIPandUser() = 1 Then
+			Response.Write "<p><font color=008800 class=greenfont><b>å·²ç»æˆåŠŸè§£é™¤æ‰€æœ‰åˆ°æœŸçš„ç‰¹æ®Šç”¨æˆ·åŠå±è”½çš„ï¼©ï¼°åœ°å€ï¼</b></font></p>"
 		else
 			Response.Write "<p><font color=ff0000 class=redfont><b>" & GBL_CHK_TempStr & "</b></font></p>"
 		End If
 	Else
 		%>
 		<form action=LimitUserManage.asp method=post>
-		<div class="title">ÇåÀíµ½ÆÚÆÁ±ÎÓÃ»§£¬ÆÁ±ÎIPµØÖ·</div>
+		<div class="title">æ¸…ç†åˆ°æœŸå±è”½ç”¨æˆ·ï¼Œå±è”½IPåœ°å€</div>
 		<div class="value2">
-		<span class=redfont>È·ÈÏĞÅÏ¢£º½ñÌìÊÇ<%=year(DEF_Now)%>Äê<%=month(DEF_Now)%>ÔÂ<%=day(DEF_Now)%>£¬´Ë¶¯×÷½«Çå³ı½ñÈÕÖ®Ç°ÒÑµ½ÆÚµÄĞÅÏ¢£¬°üÀ¨ÈçÏÂ£º<span>
+		<span class=redfont>ç¡®è®¤ä¿¡æ¯ï¼šä»Šå¤©æ˜¯<%=year(DEF_Now)%>å¹´<%=month(DEF_Now)%>æœˆ<%=day(DEF_Now)%>ï¼Œæ­¤åŠ¨ä½œå°†æ¸…é™¤ä»Šæ—¥ä¹‹å‰å·²åˆ°æœŸçš„ä¿¡æ¯ï¼ŒåŒ…æ‹¬å¦‚ä¸‹ï¼š<span>
 		</div>
 		<ol>
-		<li>½â³ı±»ÆÁ±ÎµÄIPµØÖ·</li>
-		<li>½â³ı±»ÆÁ±Î·¢ÑÔÄÚÈİµÄÓÃ»§</li>
-		<li>½â³ı±»½ûÑÔµÄÓÃ»§</li>
-		<li>½â³ı±»½ûÖ¹ĞŞ¸ÄµÄÓÃ»§</li>
-		<li>»Ö¸´µ½ÆÚÁËµÄ<%=DEF_PointsName(5)%>µ½ÆÕÍ¨ÓÃ»§×´Ì¬</li>
-		<li>Çå³ıÔÚ¼¤»îÓĞĞ§ÆÚÒÑ¹ıµ«ÈÔÎ´¼¤»îµÄ×¢²áÓÃ»§</li>
+		<li>è§£é™¤è¢«å±è”½çš„IPåœ°å€</li>
+		<li>è§£é™¤è¢«å±è”½å‘è¨€å†…å®¹çš„ç”¨æˆ·</li>
+		<li>è§£é™¤è¢«ç¦è¨€çš„ç”¨æˆ·</li>
+		<li>è§£é™¤è¢«ç¦æ­¢ä¿®æ”¹çš„ç”¨æˆ·</li>
+		<li>æ¢å¤åˆ°æœŸäº†çš„<%=DEF_PointsName(5)%>åˆ°æ™®é€šç”¨æˆ·çŠ¶æ€</li>
+		<li>æ¸…é™¤åœ¨æ¿€æ´»æœ‰æ•ˆæœŸå·²è¿‡ä½†ä»æœªæ¿€æ´»çš„æ³¨å†Œç”¨æˆ·</li>
 		</ol>
 		<input type=hidden name=DeleteSure value="E72ksiOkw2">
 		<input type=hidden name=action value="clear">
 		<div class="value2">
-		<input type=submit value=¿ªÊ¼ÇåÀí class="fmbtn btn_3">
+		<input type=submit value=å¼€å§‹æ¸…ç† class="fmbtn btn_3">
 		</div>
 		</form>
 	<%End If
@@ -1299,19 +1303,19 @@ Function DeleteForbidIPandUser
 
 	Server.ScriptTimeOut = 6000
 	'If UserName <> "" and inStr(UserName,",") = 0 and inStr(Lcase(DEF_SupervisorUserName),"," & Lcase(UserName) & ",") > 0 Then
-	'	GBL_CHK_TempStr = "´íÎóÌáÊ¾£ºÓÃ»§Ãû" & htmlencode(UserName) & "²»´æÔÚ£¡"
+	'	GBL_CHK_TempStr = "é”™è¯¯æç¤ºï¼šç”¨æˆ·å" & htmlencode(UserName) & "ä¸å­˜åœ¨ï¼"
 	'	DeleteForbidIPandUser = 0
 	'	Exit Function
 	'End If
 	
-	Response.Write "<div class=title>¸üĞÂÍê³É£º</div>"
+	Response.Write "<div class=title>æ›´æ–°å®Œæˆï¼š</div>"
 	Dim ExpiresTime
 	ExpiresTime = GetTimeValue(year(DEF_Now) & "-" & Month(DEF_Now) & "-" & Day(DEF_Now))
 	Dim Rs
 	Set Rs = LDExeCute("Select T2.ID,T2.UserLimit,T2.UserName,T1.Assort from LeadBBS_SpecialUser as T1 Left join LeadBBS_User As T2 on T1.UserID=T2.ID where T1.ExpiresTime>0 and T1.ExpiresTime<" & ExpiresTime,0)
 	If Rs.Eof Then
 		DeleteForbidIPandUser = 1
-		Response.Write "<div class=value2>ÎŞÈÎºÎµ½ÆÚµÄÌØÊâÓÃ»§£¬²»ĞèÒª¸üĞÂ£®</div>"
+		Response.Write "<div class=value2>æ— ä»»ä½•åˆ°æœŸçš„ç‰¹æ®Šç”¨æˆ·ï¼Œä¸éœ€è¦æ›´æ–°ï¼</div>"
 	End If
 	Dim GBL_UserName_UserID,GBL_UserName_UserLimit,GBL_UserName,GBL_Assort
 	Do while Not Rs.Eof
@@ -1320,39 +1324,39 @@ Function DeleteForbidIPandUser
 		GBL_UserName = Rs(2)
 		GBL_Assort = cCur(Rs(3))
 		
-		',0-ÈÏÖ¤»áÔ±,1-°æÖ÷,2-×Ü°æÖ÷,3-ÆÁ±ÎÓÃ»§,4-½ûÑÔÓÃ»§,5-½ûĞŞ¸ÄÓÃ»§,6-·ÇÕıÊ½ÓÃ»§
+		',0-è®¤è¯ä¼šå‘˜,1-ç‰ˆä¸»,2-æ€»ç‰ˆä¸»,3-å±è”½ç”¨æˆ·,4-ç¦è¨€ç”¨æˆ·,5-ç¦ä¿®æ”¹ç”¨æˆ·,6-éæ­£å¼ç”¨æˆ·
 		Select Case GBL_Assort
 			Case 0:
 					If GetBinarybit(GBL_UserName_UserLimit,2) = 1 Then
-						Response.Write "<div class=value2>ÓÃ»§" & htmlencode(GBL_UserName) & "ÒÑ¾­½â³ı" & DEF_PointsName(5) & "×´Ì¬£¡</div>"
+						Response.Write "<div class=value2>ç”¨æˆ·" & htmlencode(GBL_UserName) & "å·²ç»è§£é™¤" & DEF_PointsName(5) & "çŠ¶æ€ï¼</div>"
 						GBL_UserName_UserLimit = SetBinaryBit(GBL_UserName_UserLimit,2,0)
 						CALL LDExeCute("Update LeadBBS_User Set UserLimit=" & GBL_UserName_UserLimit & " where ID=" & GBL_UserName_UserID,1)
 						CALL LDExeCute("Delete from LeadBBS_SpecialUser Where Assort=" & GBL_Assort & " and UserID=" & GBL_UserName_UserID,1)
 					End If
 			Case 3:
 					If GetBinarybit(GBL_UserName_UserLimit,7) = 1 Then
-						Response.Write "<div class=value2>ÓÃ»§" & htmlencode(GBL_UserName) & "ÒÑ¾­½â³ıÆÁ±Î·¢ÑÔÄÚÈİ¼°Ç©Ãû£¡</div>"
+						Response.Write "<div class=value2>ç”¨æˆ·" & htmlencode(GBL_UserName) & "å·²ç»è§£é™¤å±è”½å‘è¨€å†…å®¹åŠç­¾åï¼</div>"
 						GBL_UserName_UserLimit = SetBinaryBit(GBL_UserName_UserLimit,7,0)
 						CALL LDExeCute("Update LeadBBS_User Set UserLimit=" & GBL_UserName_UserLimit & " where ID=" & GBL_UserName_UserID,1)
 						CALL LDExeCute("Delete from LeadBBS_SpecialUser Where Assort=" & GBL_Assort & " and UserID=" & GBL_UserName_UserID,1)
 					End If
 			Case 4:
 					If GetBinarybit(GBL_UserName_UserLimit,3) = 1 Then
-						Response.Write "<div class=value2>ÓÃ»§" & htmlencode(GBL_UserName) & "ÒÑ¾­½â³ı½ûÑÔ¼°·¢ËÍ¶ÌÏûÏ¢£¡</div>"
+						Response.Write "<div class=value2>ç”¨æˆ·" & htmlencode(GBL_UserName) & "å·²ç»è§£é™¤ç¦è¨€åŠå‘é€çŸ­æ¶ˆæ¯ï¼</div>"
 						GBL_UserName_UserLimit = SetBinaryBit(GBL_UserName_UserLimit,3,0)
 						CALL LDExeCute("Update LeadBBS_User Set UserLimit=" & GBL_UserName_UserLimit & " where ID=" & GBL_UserName_UserID,1)
 						CALL LDExeCute("Delete from LeadBBS_SpecialUser Where Assort=" & GBL_Assort & " and UserID=" & GBL_UserName_UserID,1)
 					End If
 			Case 5:
 					If GetBinarybit(GBL_UserName_UserLimit,4) = 1 Then
-						Response.Write "<div class=value2>ÓÃ»§" & htmlencode(GBL_UserName) & "ÒÑ¾­½â³ı½ûÖ¹ĞŞ¸ÄÌû×Ó¼°×ÔÎÒ×ÊÁÏ£¡</div>"
+						Response.Write "<div class=value2>ç”¨æˆ·" & htmlencode(GBL_UserName) & "å·²ç»è§£é™¤ç¦æ­¢ä¿®æ”¹å¸–å­åŠè‡ªæˆ‘èµ„æ–™ï¼</div>"
 						GBL_UserName_UserLimit = SetBinaryBit(GBL_UserName_UserLimit,4,0)
 						CALL LDExeCute("Update LeadBBS_User Set UserLimit=" & GBL_UserName_UserLimit & " where ID=" & GBL_UserName_UserID,1)
 						CALL LDExeCute("Delete from LeadBBS_SpecialUser Where Assort=" & GBL_Assort & " and UserID=" & GBL_UserName_UserID,1)
 					End If
 			Case 6:
 					If GetBinarybit(GBL_UserName_UserLimit,1) = 1 Then
-						Response.Write "<div class=value2>Î´¼¤»îÓÃ»§" & htmlencode(GBL_UserName) & "ÒÑ¾­±»³É¹¦É¾³ı£¡</div>"
+						Response.Write "<div class=value2>æœªæ¿€æ´»ç”¨æˆ·" & htmlencode(GBL_UserName) & "å·²ç»è¢«æˆåŠŸåˆ é™¤ï¼</div>"
 						GBL_UserName_UserLimit = SetBinaryBit(GBL_UserName_UserLimit,1,0)
 						CALL LDExeCute("delete from LeadBBS_User where ID=" & GBL_UserName_UserID,1)
 						CALL LDExeCute("Update LeadBBS_SiteInfo Set UserCount=UserCount-1",1)
@@ -1365,9 +1369,9 @@ Function DeleteForbidIPandUser
 	Loop
 	Rs.Close
 	Set Rs = Nothing
-	Response.Write "<div class=value2><span Class=greenfont>µ½ÆÚÌØÊâÓÃ»§¸üĞÂÍê³É£®</span></div>"
+	Response.Write "<div class=value2><span Class=greenfont>åˆ°æœŸç‰¹æ®Šç”¨æˆ·æ›´æ–°å®Œæˆï¼</span></div>"
 	Set Rs = LDExeCute("Delete From LeadBBS_ForbidIP where ExpiresTime>0 and ExpiresTime<" & ExpiresTime,0)
-	Response.Write "<div class=value2><span class=greenfont>¿ªÆôµ½ÆÚµÄ±»ÆÁ±Î£É£ĞµØÖ·ÒÑ¾­³É¹¦Íê³É£®</span></div>"
+	Response.Write "<div class=value2><span class=greenfont>å¼€å¯åˆ°æœŸçš„è¢«å±è”½ï¼©ï¼°åœ°å€å·²ç»æˆåŠŸå®Œæˆï¼</span></div>"
 	DeleteForbidIPandUser = 1
 
 End Function

@@ -196,7 +196,7 @@ background: url(../images/style/3/bg_menu.jpg) #000;
 .layer_item_title,.layer_item_title_normal{cursor:pointer;font-size:14px;}
 
 
-.layer_item_title::after,.layer_item_title_normal::after{font-size:.688em;content:'กล';margin-left:.35em;font-family:"wf_icons_normal";}
+.layer_item_title::after,.layer_item_title_normal::after{font-size:.688em;content:'โจ';margin-left:.35em;font-family:"wf_icons_normal";}
 .head_item_title{padding-right:1px;font-size:14px;}
 .layer_onclickitem {float:left;border:1px #e1e2e6 solid;padding:10px;position: absolute;z-index:1;background:#f3faf6;display:none;}
 .layer_onclickitem a{color:#008080;}

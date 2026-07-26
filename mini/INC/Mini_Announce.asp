@@ -42,7 +42,7 @@ Class Mini_Announce
 			End If
 			if ThisBoardid <> GBL_board_ID then
 				GBL_board_ID = ThisBoardid
-				Borad_GetBoardIDValue(GBL_board_ID)
+				Call Borad_GetBoardIDValue(GBL_board_ID)
 			end if
 		End If
 	
@@ -50,10 +50,10 @@ Class Mini_Announce
 	
 	Public Sub DisplayTopic
 
-		CheckisBoardMaster
-		Response.Write CheckAccessLimit
+		Call CheckisBoardMaster()
+		Response.Write CheckAccessLimit()
 		If GBL_CHK_TempStr <> "" Then
-			MiniPageDefine.Error("²éÑ¯´íÎó£¬" & GBL_CHK_TempStr & "<br />¸ü¶à¿ÉÄÜµÄÔ­Òò£ºÖ÷ÌâÏŞÖÆ²é¿´; Ìû×Ó²»´æÔÚ¡£")
+			MiniPageDefine.Error("æŸ¥è¯¢é”™è¯¯ï¼Œ" & GBL_CHK_TempStr & "<br />æ›´å¤šå¯èƒ½çš„åŸå› ï¼šä¸»é¢˜é™åˆ¶æŸ¥çœ‹; å¸–å­ä¸å­˜åœ¨ã€‚")
 			Exit Sub
 		End If
 		
@@ -114,15 +114,15 @@ Class Mini_Announce
             	<div class="bm_user">
 			<%
 			If cCur(GetData(1,n)) = 0 Then
-				Response.Write "<em class=""floor"">Â¥Ö÷</em> "
+				Response.Write "<em class=""floor"">æ¥¼ä¸»</em> "
 			Else
-				Response.Write "<em class=""floor"">" & class_page*Anc_listNum+N & "Â¥</em> "
+				Response.Write "<em class=""floor"">" & class_page*Anc_listNum+N & "æ¥¼</em> "
 			End If
 			If isNull(GetData(9,n)) Then GetData(9,n) = 0
 	
 			If (GetData(8,n) = 0 or GetData(8,n) = 2) Then GetData(5,n) = PrintTrueText(GetData(5,n))
 	
-			If GetData(11,n) >=60 Then GetData(5,n) = GetFobStr("´ËÌûÓĞ´ı¹ÜÀíÈËÔ±ÉóºË²ÅÄÜ²é¿´")
+			If GetData(11,n) >=60 Then GetData(5,n) = GetFobStr("æ­¤å¸–æœ‰å¾…ç®¡ç†äººå‘˜å®¡æ ¸æ‰èƒ½æŸ¥çœ‹")
 			If GetBinarybit(GetData(9,n),7) = 1 Then%>
 					</div>
 				</div>
@@ -131,7 +131,7 @@ Class Mini_Announce
 						<div class="mes">
 							<div id="postmessage_<%=GetData(0,n)%>" class="postmessage">
 				<%
-				Response.Write "<span style=""line-height:15pt;"">" & GetFobStr("¸ÃÓÃ»§·¢ÑÔÒÑ¾­±»ÆÁ±Î") & "</span>"
+				Response.Write "<span style=""line-height:15pt;"">" & GetFobStr("è¯¥ç”¨æˆ·å‘è¨€å·²ç»è¢«å±è”½") & "</span>"
 				%>
 							</div>
 						</div>
@@ -141,10 +141,10 @@ Class Mini_Announce
 				
 			Else
 				If GetData(10,n) > 0 and cCur(GetData(1,n)) = 0 and GetData(10,n) <> 80 Then
-					If GetData(10,n) > 0 Then GetData(5,n) = GetFobStr("´ËÌûÄÚÈİÒÑ¾­¼ÓÃÜ£¬Òª²é¿´Çëµã»÷ÍêÕûÄ£Ê½")
+					If GetData(10,n) > 0 Then GetData(5,n) = GetFobStr("æ­¤å¸–å†…å®¹å·²ç»åŠ å¯†ï¼Œè¦æŸ¥çœ‹è¯·ç‚¹å‡»å®Œæ•´æ¨¡å¼")
 				End If
 				
-				Response.Write "<em id=""authorposton" & GetData(0,n) & """ class=""post-date""><font class=""xs0 xg1"">" & HtmlEncode(GetTrueName(GetData(7,N),GetData(12,n))) & " ÓÚ " & RestoreTime(GetData(6,N)) & "</font></em>" & VbCrLf
+				Response.Write "<em id=""authorposton" & GetData(0,n) & """ class=""post-date""><font class=""xs0 xg1"">" & HtmlEncode(GetTrueName(GetData(7,N),GetData(12,n))) & " äº " & RestoreTime(GetData(6,N)) & "</font></em>" & VbCrLf
 				%>
 					</div>
 				</div>
@@ -168,7 +168,7 @@ Class Mini_Announce
 						</div>
 					</div>
 					<div class="box pd2 mbn">
-					<a class="button2 button" href="default.asp?action=p&b=<%=gbl_board_id%>&id=<%=GetData(0,n)%>" data-ajax=false>»Ø¸´</a>
+					<a class="button2 button" href="default.asp?action=p&b=<%=gbl_board_id%>&id=<%=GetData(0,n)%>" data-ajax=false>å›å¤</a>
 					</div>
 				</div>
 				<%
@@ -200,12 +200,29 @@ Class Mini_Announce
 	
 	Private Function GetFobStr(Str)
 	
-		GetFobStr = "<font color=888888 class=grayfont>¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­Òş²ØÄÚÈİ¡­<br>" & _
+		GetFobStr = "<font color=888888 class=grayfont>â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦éšè—å†…å®¹â€¦<br>" & _
 					"<font color=blue class=bluefont>" & Str & "</font><br>" & _
-					"¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­¡­</font><br>"
+					"â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦â€¦</font><br>"
 	
 	End Function
 	
 
 End Class
+
+' AxonASP: mini/ renders post content with PrintTrueText but never had a copy of it,
+' and LeadBBS defines the helper separately in each page that uses it (article.asp,
+' LookMessage.asp, PrintMessage.asp, ClearTopAnc.asp). Without it every mini topic view
+' 500'd with 800A01C2. Same body as the article.asp copy.
+Function PrintTrueText(tempString)
+
+	If tempString<>"" Then
+		PrintTrueText=Replace(Replace(Replace(Replace(Replace(Replace(htmlEncode(tempString),VbCrLf & " ","<br />" & "&nbsp;"),"[P] ","[P]&nbsp;"),VbCrLf,"<br />" & VbCrLf),"   "," &nbsp; "),"  "," &nbsp;"),chr(9)," &nbsp; &nbsp; &nbsp;")
+		If Left(PrintTrueText,1) = chr(32) Then
+			PrintTrueText = "&nbsp;" & Mid(PrintTrueText,2)
+		End If
+	Else
+		PrintTrueText=""
+	End If
+
+End Function
 %>

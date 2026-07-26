@@ -1,6 +1,6 @@
 
 var sAction = "INSERT";
-var sTitle = "²åÈë";
+var sTitle = "æ’å…¥";
 
 var oControl;
 var oSeletion;
@@ -19,13 +19,13 @@ var sHSpace = "";
 
 var sCheckFlag = "file";
 
-// Ö»ÔÊÐíÊäÈëÊý×Ö
+// åªå…è®¸è¾“å…¥æ•°å­—
 function IsDigit(e){
 	var evt = window.event?window.event:e,target=evt.srcElement||evt.target;
   return ((evt.keyCode >= 48) && (evt.keyCode <= 57));
 }
 
-// ËÑË÷ÏÂÀ­¿òÖµÓëÖ¸¶¨ÖµÆ¥Åä£¬²¢Ñ¡ÔñÆ¥ÅäÏî
+// æœç´¢ä¸‹æ‹‰æ¡†å€¼ä¸ŽæŒ‡å®šå€¼åŒ¹é…ï¼Œå¹¶é€‰æ‹©åŒ¹é…é¡¹
 function SearchSelectValue(o_Select, s_Value){
 	for (var i=0;i<o_Select.length;i++){
 		if (o_Select.options[i].value == s_Value){
@@ -36,7 +36,7 @@ function SearchSelectValue(o_Select, s_Value){
 	return false;
 }
 
-// È¥¿Õ¸ñ£¬left,right,all¿ÉÑ¡
+// åŽ»ç©ºæ ¼ï¼Œleft,right,allå¯é€‰
 function BaseTrim(str){
 	  lIdx=0;rIdx=str.length;
 	  if (BaseTrim.arguments.length==2)
@@ -57,7 +57,7 @@ function BaseTrim(str){
       return str
 }
 
-// ×ªÎªÊý×ÖÐÍ£¬²¢ÎÞÇ°µ¼0£¬²»ÄÜ×ªÔò·µ»Ø""
+// è½¬ä¸ºæ•°å­—åž‹ï¼Œå¹¶æ— å‰å¯¼0ï¼Œä¸èƒ½è½¬åˆ™è¿”å›ž""
 function ToInt(str){
 	str=BaseTrim(str);
 	if (str!=""){
@@ -71,11 +71,11 @@ function ToInt(str){
 	return str;
 }
 
-// ³õÊ¼Öµ
+// åˆå§‹å€¼
 function editor_InitimgDocument(){
 
 	sAction = "INSERT";
-	sTitle = "²åÈë";
+	sTitle = "æ’å…¥";
 	
 	sFromUrl = "http://";
 	sAlt = "";
@@ -103,7 +103,7 @@ function editor_InitimgDocument(){
 			if (oSelection.item(0).tagName == "IMG")
 			{
 				sAction = "MODI";
-				sTitle = "ÐÞ¸Ä";
+				sTitle = "ä¿®æ”¹";
 				sCheckFlag = "url";
 				oControl = oSelection.item(0);
 				sFromUrl = oControl.src;
@@ -138,7 +138,7 @@ function editor_InitimgDocument(){
 
 editor_InitimgDocument();
 
-// ±¾´°¿Ú·µ»ØÖµ
+// æœ¬çª—å£è¿”å›žå€¼
 function editor_imgReturnValue(){
 	sFromUrl = $id("img_d_fromurl").value;
 	//sAlt = img_d_alt.value;
@@ -177,7 +177,7 @@ function editor_imgReturnValue(){
 		}
 		if(sFromUrl==""||sFromUrl=="http://")
 		{
-			alert("ÇëÊäÈëÍ¼Æ¬µØÖ·.");
+			alert("è¯·è¾“å…¥å›¾ç‰‡åœ°å€.");
 			return false;
 			return;
 		}
@@ -189,9 +189,9 @@ function editor_imgReturnValue(){
 	return true;
 }
 
-// µãÈ·¶¨Ê±Ö´ÐÐ
+// ç‚¹ç¡®å®šæ—¶æ‰§è¡Œ
 function editor_imgok(){
-	// Êý×ÖÐÍÊäÈëµÄÓÐÐ§ÐÔ
+	// æ•°å­—åž‹è¾“å…¥çš„æœ‰æ•ˆæ€§
 	$id("img_d_border").value = ToInt($id("img_d_border").value);
 	$id("img_d_width").value = ToInt($id("img_d_width").value);
 	$id("img_d_height").value = ToInt($id("img_d_height").value);

@@ -1,13 +1,13 @@
-<!-- #include file=../inc/BBSsetup.asp -->
-<!-- #include file=../inc/Board_popfun.asp -->
+<!--#include file="../inc/BBSsetup.asp"-->
+<!--#include file="../inc/Board_popfun.asp"-->
 <%DEF_BBS_HomeUrl = "../"%>
-<!-- #include file=inc/Mini_Board.asp -->
-<!-- #include file=inc/Mini_Announce.asp -->
-<!-- #include file=../article/inc/splitpage_fun.asp -->
-<!-- #include file=../article/inc/form_fun.asp -->
-<!-- #include file=../inc/Limit_Fun.asp -->
-<!-- #include file=../inc/UBBCode_Setup.asp -->
-<!-- #include file=../inc/User_Setup.asp -->
+<!--#include file="inc/Mini_Board.asp"-->
+<!--#include file="inc/Mini_Announce.asp"-->
+<!--#include file="../article/inc/splitpage_fun.asp"-->
+<!--#include file="../article/inc/form_fun.asp"-->
+<!--#include file="../inc/Limit_Fun.asp"-->
+<!--#include file="../inc/UBBCode_Setup.asp"-->
+<!--#include file="../inc/User_Setup.asp"-->
 <%
 dim Form_UpFlag,init_Upload
 Form_UpFlag = 0
@@ -44,25 +44,25 @@ Class Mini_Parameter
 
 	Public BoardID,page,Action,ID,backPage,TopicID,TopicName
 
-	'³õÊ¼»¯È«¾Ö±äÁ¿£¬´ÓµØÖ·À¸»ñÈ¡È«²¿²ÎÊı
+	'åˆå§‹åŒ–å…¨å±€å˜é‡ï¼Œä»åœ°å€æ è·å–å…¨éƒ¨å‚æ•°
 	Private Sub Class_Initialize
 		BoardID = 0
 		page = 0
 		Action = "h"
 
 		BoardID = toNum(Request.QueryString("b"),0)
-		Action = FormClass_CheckFormValue(left(Request.QueryString("action"),1),"ÊÇ·ñÔÚÏà¹ØÒ³ÁĞ³ö´Ë·ÖÀà£º","string","h","a|b|h|l|r|p",2)
+		Action = FormClass_CheckFormValue(left(Request.QueryString("action"),1),"æ˜¯å¦åœ¨ç›¸å…³é¡µåˆ—å‡ºæ­¤åˆ†ç±»ï¼š","string","h","a|b|h|l|r|p",2)
 		page = toNum(Request.QueryString("page"),0)
 		If BoardID > 0 Then
 			GBL_board_ID = BoardID
-			Borad_GetBoardIDValue(GBL_board_ID)
+			Call Borad_GetBoardIDValue(GBL_board_ID)
 		End If
 		ID = toNum(Request.QueryString("ID"),0)
 		backPage = toNum(Request.QueryString("backPage"),0)
 	
 	End Sub
 	
-	'¸ù¾İ±äÁ¿ÖØĞÂÉú³ÉĞÂµÄµØÖ·À¸²ÎÊı
+	'æ ¹æ®å˜é‡é‡æ–°ç”Ÿæˆæ–°çš„åœ°å€æ å‚æ•°
 	Public Function GetPar(BoardID,ID,bPage,p,Act)
 	
 		GetPar = "Action=" & Act & "&b=" & BoardID
@@ -87,7 +87,7 @@ Class Mini_DisplayBoard
 	
 	End Sub
 	
-	'ÏÔÊ¾ÂÛÌ³ÁĞ±í
+	'æ˜¾ç¤ºè®ºå›åˆ—è¡¨
 	Public Sub BoardList()
 	
 		Dim Rs,GetData,BoardNum
@@ -173,22 +173,22 @@ Class Mini_DisplayBoard
 		For N = 0 to BoardNum
 			Temp = Application(DEF_MasterCookies & "BoardInfo" & LowArray(N))
 			If isArray(Temp) = False Then
-				ReloadBoardInfo(LowArray(N))
+				Call ReloadBoardInfo(LowArray(N))
 				Temp = Application(DEF_MasterCookies & "BoardInfo" & LowArray(N))
 			End If
 			If isArray(Temp) = True Then
 				If Temp(8,0) = 0 Then
 					If N >= BoardNum Then
 						If LastAssosrt = CurrentAssosrt Then
-							WriteStr = "" & replace(String(LoopN, "©¦"),"©¦","<span class=blockquote></span>") & ""
+							WriteStr = "" & replace(String(LoopN, "â”‚"),"â”‚","<span class=blockquote></span>") & ""
 						Else
-							WriteStr = "" & replace(String(LoopN, "©¦"),"©¦","<span class=blockquote></span>") & ""
+							WriteStr = "" & replace(String(LoopN, "â”‚"),"â”‚","<span class=blockquote></span>") & ""
 						End If
 					Else
 						If LastAssosrt = CurrentAssosrt Then
 							WriteStr = ""
 						Else
-							WriteStr = "" & replace(String(LoopN, "©¦"),"©¦","<span class=blockquote></span>") & ""
+							WriteStr = "" & replace(String(LoopN, "â”‚"),"â”‚","<span class=blockquote></span>") & ""
 						End If
 					End If
 					WriteStr = WriteStr & KillHTMLLabel(Temp(0,0))
@@ -211,7 +211,7 @@ End Class
 
 Class Mini_PageDefine
 
-	'ÏÔÊ¾Ò³ÃæÍ·²¿´úÂë
+	'æ˜¾ç¤ºé¡µé¢å¤´éƒ¨ä»£ç 
 	Public Sub PageHead(BoardID,s,headStr)
 		dim tmp,str
 		select case M_Par.Action
@@ -282,31 +282,31 @@ Class Mini_PageDefine
     <h1><%=Str%></h1>
     <%
 	if M_Par.Action <> "h" then%>
-		<a class="button" href="default.asp?action=<%=tmp%>" data-direction="reverse" id="returnUR">·µ»Ø</a>
+		<a class="button" href="default.asp?action=<%=tmp%>" data-direction="reverse" id="returnUR">è¿”å›</a>
 	<%
 	else
 			if request.querystring("new") = "1" then
 				%>
-				<a class="button" href="default.asp?action=<%=tmp%>" data-direction="reverse" id="returnUR">·µ»Ø</a>
+				<a class="button" href="default.asp?action=<%=tmp%>" data-direction="reverse" id="returnUR">è¿”å›</a>
 				<%
 			else
 				%>
-				<a class="button" href="default.asp?action=b&new=1">ĞÂÌû</a>
+				<a class="button" href="default.asp?action=b&new=1">æ–°å¸–</a>
 				<%
 			end if
 	end if
 	if gbl_userid <= 0 then
 	%><a class="ui-btn-right" href="default.asp?action=l&b=<%=gbl_board_id%>" data-ajax=false>
-                        µÇÂ¼/×¢²á
+                        ç™»å½•/æ³¨å†Œ
                     </a>
 	<%
 	else
 		if M_Par.Action <> "h" and gbl_board_id > 0 and M_Par.Action <> "p" then%>
 	<a class="ui-btn-right" href="default.asp?action=p&b=<%=gbl_board_id%>&id=<%=M_Par.ID%>" data-ajax=false>
                         <%If M_Par.ID > 0 then
-                        	response.write "»Ø¸´"
+                        	response.write "å›å¤"
                         else
-                        	response.write "·¢Ìû"
+                        	response.write "å‘å¸–"
                         end if%>
                     </a>
 	<%
@@ -331,10 +331,10 @@ if M_Par.Action = "a" then%>
 
 	End Sub
 
-	'ÏÔÊ¾Ò³ÃæÎ²²¿´úÂë
+	'æ˜¾ç¤ºé¡µé¢å°¾éƒ¨ä»£ç 
 	Public Sub PageBottom
 
-		Mini_Spend
+		Mini_Spend()
 
 	End Sub
 	
@@ -349,20 +349,24 @@ if M_Par.Action = "a" then%>
     </p>
         <h3>
 				<div class="createtime">
-				<%'if OPEN_DEBUG = 1 and DEBUG_User = GBL_CHK_User Then %>
+				<%'if OPEN_DEBUG = 1 and DEBUG_User = GBL_CHK_User Then 
+%>
 				<div style="text-align:left;background:white;color:black;display:1none;"><ul><%=sqlstring%></ul></div>
-				<%'End If%>
+				<%'End If
+%>
 				</div>
 <div id="bottom_ad">
-	<%'Response.Write "<!--"%>
-	<!-- #include file=../inc/incHtm/Bottom_AD.asp -->
-	<%'Response.Write "-->"%>
+	<%'Response.Write "<!--"
+%>
+	<!--#include file="../inc/incHtm/Bottom_AD.asp"-->
+	<%'Response.Write "-->"
+%>
 	</div>
         </h3>
 </div>
 <%
-tips_out
-getinfo
+Call tips_out()
+Call getinfo()
 %>
 		</body>
 		</html>
@@ -376,7 +380,7 @@ getinfo
 			If GBL_UserID > 0 then
 				response.redirect "default.asp?" & Timer
 			else
-				If GBL_CHK_Tempstr = "" then GBL_CHK_Tempstr = "µÇÂ¼Ê§°Ü£¬Çë×ĞÏ¸ÊäÈëÓÃ»§ÃûºÍÃÜÂë£®"
+				If GBL_CHK_Tempstr = "" then GBL_CHK_Tempstr = "ç™»å½•å¤±è´¥ï¼Œè¯·ä»”ç»†è¾“å…¥ç”¨æˆ·åå’Œå¯†ç ï¼"
 			end if
 		end if
 	%>
@@ -384,19 +388,19 @@ getinfo
 	
 	    	<a data-icon="star"><%=GBL_CHK_Tempstr%></a>
 	    	<form id="leadform" action="default.asp?action=l&submit=1" method="POST" data-ajax="true">
-	    	<input name="user" placeHolder="ÕËºÅ" type="text" data-theme="x" class="usernameInput" />
-   		<input name="pass" placeHolder="ÃÜÂë" type="password" data-theme="x" class="passwordInput"/>
+	    	<input name="user" placeHolder="è´¦å·" type="text" data-theme="x" class="usernameInput" />
+   		<input name="pass" placeHolder="å¯†ç " type="password" data-theme="x" class="passwordInput"/>
 	   	 	<input name=submitflag type=hidden value="ddddls-+++">
 	   	 	<input type="checkbox" name="CkiExp" id="remember" data-inline="true" data-theme="x" value="7">
-        		<label for="remember">¼Ç×¡ÎÒ</label>
-				<input class="formSubmit" href="#" data-role="button" data-inline="false" value="Á¢¼´µÇÂ¼" type="submit" data-theme=x-master>
+        		<label for="remember">è®°ä½æˆ‘</label>
+				<input class="formSubmit" href="#" data-role="button" data-inline="false" value="ç«‹å³ç™»å½•" type="submit" data-theme=x-master>
 			</form>
-			<a id="loginButton" class="formSubmit" href="default.asp?action=r" data-role="button" data-theme=x-master>×¢²áĞÂÓÃ»§</a>
+			<a id="loginButton" class="formSubmit" href="default.asp?action=r" data-role="button" data-theme=x-master>æ³¨å†Œæ–°ç”¨æˆ·</a>
 	
 	
 	
 	        <%If GetBinarybit(DEF_Sideparameter,10) = 1 Then%>
-<p class="separator"><span>»òÊ¹ÓÃºÏ×÷ÍøÕ¾ÕÊºÅµÇÂ¼</span></p>
+<p class="separator"><span>æˆ–ä½¿ç”¨åˆä½œç½‘ç«™å¸å·ç™»å½•</span></p>
 <div class="third-part-login">
 <a id="qq_log" data-role="button" data-theme=x data-inline=true href="javascript:;" onclick="document.location.href='<%=DEF_BBS_HomeUrl%>app/qqlogin/login.asp?u=<%=urlencode(Request.Servervariables("SCRIPT_NAME"))%>';" data-ajax=false><img src="<%=DEF_BBS_HomeUrl%>images/app/big_1.png" border="0" alt="qq" /></a>
 </div>
@@ -417,7 +421,7 @@ End If%>
 		
 		if(theform.ForumNumber.value=="")
 		{
-			alert("ÇëÊäÈëÑéÖ¤Âë!\n");
+			alert("è¯·è¾“å…¥éªŒè¯ç !\n");
 			ValidationPassed = false;
 			theform.ForumNumber.focus();
 			submitflag = 0;
@@ -438,13 +442,13 @@ if(ValidationPassed==false)return false;
 var options = { 
 target:'#return', 
 url:$('#LeadBBSFm').attr("action")+"?ajaxflag=1", 
-contentType: "application/x-www-form-urlencoded; charset=gb2312",
+contentType: "application/x-www-form-urlencoded; charset=utf-8",
 data: $('#LeadBBSFm').serialize(),
 type:'POST', 
 success: function (data) {
 								if(data=="ok"||data.substr(0,7)=="success")
                         {
-                        	$("#return").html("<div class=bbs_ok>²Ù×÷Íê³É£¬<a href=javascript:; onclick=location.reload()>µã´ËË¢ĞÂ£®</div>");
+                        	$("#return").html("<div class=bbs_ok>æ“ä½œå®Œæˆï¼Œ<a href=javascript:; onclick=location.reload()>ç‚¹æ­¤åˆ·æ–°ï¼</div>");
                         	resetAnnounce();
                         	
                         }
@@ -505,25 +509,25 @@ function resetAnnounce()
 												End If
 												If ShowTestNumber > 2 Then%>
 												<div data-role="fieldcontain">
-																				<i>* </i>ÑéÖ¤Âë<br />
+																				<i>* </i>éªŒè¯ç <br />
 																<label id="loginform_ShowTestNumber">
-																	<%Response.Write displayVerifycode%>
+																	<%Response.Write displayVerifycode()%>
 																</label>
 												</div>
 												<%End If%>
-												<input name="Form_username" placeHolder="ÕËºÅ" type="text" data-theme="x" class="usernameInput" />
+												<input name="Form_username" placeHolder="è´¦å·" type="text" data-theme="x" class="usernameInput" />
 												
-												<input name="Form_password1" maxlength="14" placeHolder="ÃÜÂë" type="password" data-theme="x" />
-												<input name="Form_password2" maxlength="32" placeHolder="ÖØ¸´ÃÜÂë" type="password" data-theme="x" />
-												<input name="Form_mail" id="loginform_email" maxlength="100" placeHolder="µç×ÓÓÊ¼ş" type="text" data-theme="x" />
-												<input name="Form_Question" id="loginform_sel_question" maxlength="32" placeHolder="ÎÊÌâÌáÊ¾(ÈÎÒâÌîĞ´)" type="text" data-theme="x" />
-												<input name="Form_Answer" id="loginform_Form_Answer" maxlength="32" placeHolder="ÎÊÌâ´ğ°¸" type="text" data-theme="x" />
-												<input name="Form_OICQ" id="loginform_qq" maxlength="32" placeHolder="QQ(¿É²»ÌîĞ´)" type="text" data-theme="x" />
-												<input name="Form_MobileTel" id="loginform_mobiletel" maxlength="32" placeHolder="ÊÖ»úºÅÂë(¿É²»ÌîĞ´)" type="text" data-theme="x" />
+												<input name="Form_password1" maxlength="14" placeHolder="å¯†ç " type="password" data-theme="x" />
+												<input name="Form_password2" maxlength="32" placeHolder="é‡å¤å¯†ç " type="password" data-theme="x" />
+												<input name="Form_mail" id="loginform_email" maxlength="100" placeHolder="ç”µå­é‚®ä»¶" type="text" data-theme="x" />
+												<input name="Form_Question" id="loginform_sel_question" maxlength="32" placeHolder="é—®é¢˜æç¤º(ä»»æ„å¡«å†™)" type="text" data-theme="x" />
+												<input name="Form_Answer" id="loginform_Form_Answer" maxlength="32" placeHolder="é—®é¢˜ç­”æ¡ˆ" type="text" data-theme="x" />
+												<input name="Form_OICQ" id="loginform_qq" maxlength="32" placeHolder="QQ(å¯ä¸å¡«å†™)" type="text" data-theme="x" />
+												<input name="Form_MobileTel" id="loginform_mobiletel" maxlength="32" placeHolder="æ‰‹æœºå·ç (å¯ä¸å¡«å†™)" type="text" data-theme="x" />
 
 												
 												<div class="alert" id="return" style="text-align:center;margin-top:12px;"></div>
-												<input class="formSubmit" href="#" data-role="button" data-inline="false" value="Á¢¼´×¢²á" type="submit" data-theme=x-master>
+												<input class="formSubmit" href="#" data-role="button" data-inline="false" value="ç«‹å³æ³¨å†Œ" type="submit" data-theme=x-master>
 			</form>
 	</div>
 	<%
@@ -533,7 +537,7 @@ function resetAnnounce()
 	%>
 		<div class=error><%=str%>
 		<div class=clear></div>
-			<a href=javascript;; data-role="button" data-ajax=false data-rel="back" data-inline="true">·µ»Ø</a>
+			<a href=javascript;; data-role="button" data-ajax=false data-rel="back" data-inline="true">è¿”å›</a>
 		</div>
 	<%
 	End sub
@@ -568,9 +572,9 @@ function resetAnnounce()
 		end if
 		if boardid <> gbl_board_id then
 			gbl_board_id = boardid
-			GetBoardIDValue(gbl_board_id)
+			Call Borad_GetBoardIDValue(gbl_board_id)	'was GetBoardIDValue(): no such routine (typo) -- silently did nothing
 			gbl_chk_tempstr = ""
-			CheckAccessLimit
+			Call CheckAccessLimit()
 			if gbl_chk_tempstr <> "" then getAnnounceTopic = ""
 		end if
 	
@@ -595,11 +599,11 @@ function resetAnnounce()
 		If GBL_CHK_User = "" Then
 		%>
 		<h2>
-		µÇÂ¼²ÅÄÜ·¢Ìû£¬<a href="default.asp?action=l"><µã´ËµÇÂ¼></a> / <a href="default.asp?action=r"><µã´Ë×¢²á></a>
+		ç™»å½•æ‰èƒ½å‘å¸–ï¼Œ<a href="default.asp?action=l"><ç‚¹æ­¤ç™»å½•></a> / <a href="default.asp?action=r"><ç‚¹æ­¤æ³¨å†Œ></a>
 		</h2>
 		<%
 		Else%>
-		»¶Ó­ <%=htmlencode(GBL_CHK_User)%> ·¢±í<%If RID = 0 Then%>ĞÂÌû<%Else%>»Ø¸´<%End If%>
+		æ¬¢è¿ <%=htmlencode(GBL_CHK_User)%> å‘è¡¨<%If RID = 0 Then%>æ–°å¸–<%Else%>å›å¤<%End If%>
 		<%
 		End If
 	%><div id="return"></div>
@@ -607,9 +611,9 @@ function resetAnnounce()
         <form action="<%=DEF_BBS_HomeUrl%>a/a2.asp" data-ajax=false method="post" id="LeadBBSFm" name="LeadBBSFm">
        <div class="inbox bt mtn">
         <%If TopicName <> "" Then%>
-        		<input maxlength="255" type="text" name="Form_Title" class="txt" size="25" value="<%Response.Write "Re:" & htmlencode(KillHTMLLabel(TopicName))%>" placeholder="±êÌâ" />
+        		<input maxlength="255" type="text" name="Form_Title" class="txt" size="25" value="<%Response.Write "Re:" & htmlencode(KillHTMLLabel(TopicName))%>" placeholder="æ ‡é¢˜" />
 				<%Else%>
-				<input maxlength="255" type="text" name="Form_Title" value="" class="txt" size="25" placeholder="±êÌâ" />
+				<input maxlength="255" type="text" name="Form_Title" value="" class="txt" size="25" placeholder="æ ‡é¢˜" />
 				<%End If%>
 			</div>
 				<div class=clear></div>
@@ -628,13 +632,13 @@ function resetAnnounce()
 				If DEF_EnableAttestNumber > 2 and (DEF_AttestNumberPoints = 0 or GBL_CHK_Points < DEF_AttestNumberPoints) Then%>
 				
 				<div class="inbox bt mtn">
-				<div style="line-height:400%;display:inline-block;">ÑéÖ¤Âë
+				<div style="line-height:400%;display:inline-block;">éªŒè¯ç 
 				<%
-					Response.Write displayVerifycode%></div>
+					Response.Write displayVerifycode()%></div>
 				</div><%
 				End If%>
 				<div class=clear></div>
-            <input class="formSubmit" href="#" data-role="button" data-inline="false" value="·¢±í" type="submit" data-theme=x-master>
+            <input class="formSubmit" href="#" data-role="button" data-inline="false" value="å‘è¡¨" type="submit" data-theme=x-master>
             <%End If%>
         </form>
 	</div>
@@ -647,7 +651,7 @@ function resetAnnounce()
 		
 		if(theform.ForumNumber.value=="")
 		{
-			alert("ÇëÊäÈëÑéÖ¤Âë!\n");
+			alert("è¯·è¾“å…¥éªŒè¯ç !\n");
 			ValidationPassed = false;
 			theform.ForumNumber.focus();
 			submitflag = 0;
@@ -671,13 +675,13 @@ if(ValidationPassed==false)return false;
 var options = { 
 target:'#return', 
 url:$('#LeadBBSFm').attr("action")+"?ajaxflag=1", 
-contentType: "application/x-www-form-urlencoded; charset=gb2312",
+contentType: "application/x-www-form-urlencoded; charset=utf-8",
 data: $('#LeadBBSFm').serialize(),
 type:'POST', 
 success: function (data) {
 								if(data=="ok"||data.substr(0,7)=="success")
                         {
-                        	$("#return").html("<div class=bbs_ok>³É¹¦·¢±í£¬<a href=javascript:; data-ajax=false onclick=location.reload()>µã´ËË¢ĞÂ£®</a></div>");
+                        	$("#return").html("<div class=bbs_ok>æˆåŠŸå‘è¡¨ï¼Œ<a href=javascript:; data-ajax=false onclick=location.reload()>ç‚¹æ­¤åˆ·æ–°ï¼</a></div>");
                         	$.mobile.changePage($("#returnUR").attr("href"));
                         	resetAnnounce();
                         	
@@ -722,8 +726,8 @@ Dim FullStr
 
 Sub Main
 
-	Page_Expires
-	initDatabase
+	Page_Expires()
+	initDatabase()
 	Set M_Par = New Mini_Parameter
 	Set MiniPageDefine = New Mini_PageDefine
 	
@@ -738,13 +742,13 @@ Sub Main
 			Set M_Anc = Nothing
 			
 			FullStr = "<a href=""../a/" & RW_a(M_Par.BoardID,M_Par.ID,M_Par.Page+1,M_Par.backPage+1,"")
-			FullStr = FullStr & """ id=""goToWeb"" data-ajax=false>µçÄÔ°æ</a>"
+			FullStr = FullStr & """ id=""goToWeb"" data-ajax=false>ç”µè„‘ç‰ˆ</a>"
 				
 		Case "b"
 			Dim M_Board
 			Set M_Board = New Mini_Board
 			if request.querystring("new") = "1" then
-				MiniPageDefine.PageHead 0,"×îĞÂÌû×Ó",""
+				MiniPageDefine.PageHead 0,"æœ€æ–°å¸–å­",""
 				M_Board.List(1)
 			else
 				MiniPageDefine.PageHead M_Par.BoardID,"",GBL_Board_BoardName 
@@ -753,20 +757,20 @@ Sub Main
 			Set M_Board = Nothing
 			
 			FullStr = "<a href=""../b/" & RW_b(M_Par.BoardID,M_Par.page,"")
-			FullStr = FullStr & """ id=""goToWeb"" data-ajax=false>µçÄÔ°æ</a>"
+			FullStr = FullStr & """ id=""goToWeb"" data-ajax=false>ç”µè„‘ç‰ˆ</a>"
 		case "l"
-			MiniPageDefine.PageHead M_Par.BoardID,"µÇÂ¼","µÇÂ¼"
+			MiniPageDefine.PageHead M_Par.BoardID,"ç™»å½•","ç™»å½•"
 			MiniPageDefine.LoginForm
-			FullStr = "<a href=""../Boards.asp?homesel=1"" id=""goToWeb"" data-ajax=false>µçÄÔ°æ</a>"
+			FullStr = "<a href=""../Boards.asp?homesel=1"" id=""goToWeb"" data-ajax=false>ç”µè„‘ç‰ˆ</a>"
 		case "r"
-			MiniPageDefine.PageHead M_Par.BoardID,"×¢²áĞÂÓÃ»§","×¢²áĞÂÓÃ»§"
+			MiniPageDefine.PageHead M_Par.BoardID,"æ³¨å†Œæ–°ç”¨æˆ·","æ³¨å†Œæ–°ç”¨æˆ·"
 			MiniPageDefine.RegForm
-			FullStr = "<a href=""../Boards.asp?homesel=1"" id=""goToWeb"" data-ajax=false>µçÄÔ°æ</a>"
+			FullStr = "<a href=""../Boards.asp?homesel=1"" id=""goToWeb"" data-ajax=false>ç”µè„‘ç‰ˆ</a>"
 		case "p"
 			if M_Par.ID > 0 then M_Par.TopicName = MiniPageDefine.getAnnounceTopic(M_Par.ID)
-			MiniPageDefine.PageHead M_Par.BoardID,"·¢Ìû","·¢Ìû"
+			MiniPageDefine.PageHead M_Par.BoardID,"å‘å¸–","å‘å¸–"
 			call MiniPageDefine.AnnounceForm(-1,"")
-			FullStr = "<a href=""../Boards.asp?homesel=1"" id=""goToWeb"" data-ajax=false>µçÄÔ°æ</a>"
+			FullStr = "<a href=""../Boards.asp?homesel=1"" id=""goToWeb"" data-ajax=false>ç”µè„‘ç‰ˆ</a>"
 		Case Else
 			MiniPageDefine.PageHead M_Par.BoardID,"<img id=""leadbbs_logo"" src=""" & ld_geturl(1) & "mini/inc/images/logo.png"">",DEF_SiteNameString
 			Dim MiniBoard
@@ -774,17 +778,17 @@ Sub Main
 			MiniBoard.BoardList
 			Set MiniBoard = Nothing
 
-			FullStr = "<a href=""../Boards.asp?homesel=1"" id=""goToWeb"" data-ajax=false>µçÄÔ°æ</a>"
+			FullStr = "<a href=""../Boards.asp?homesel=1"" id=""goToWeb"" data-ajax=false>ç”µè„‘ç‰ˆ</a>"
 	End Select
 
-	CloseDatabase
+	CloseDatabase()
 	Set M_Par = Nothing
 	MiniPageDefine.PageBottom
 	Set MiniPageDefine = Nothing
 
 End Sub
 
-Main
+Main()
 
 
 sub getinfo

@@ -7,14 +7,14 @@ Response.CacheControl = "no-cache"
 
 const DEF_NeedAnswer = 1
 
-Dim DEF_pageHeader : DEF_pageHeader = "<" & "%" & "@ LANGUAGE=" & "VBScript CodePage=936%" & ">" & VbCrLf & "<" & "%Response.Charset = ""gb2312""%" & ">"
+Dim DEF_pageHeader : DEF_pageHeader = "<" & "%" & "@ LANGUAGE=" & "VBScript CodePage=65001%" & ">" & VbCrLf & "<" & "%Response.Charset = ""utf-8""%" & ">"
 
 Sub displayVerifycode
 
 	Dim Url
 	Url = filterUrlstr(Left(Request("dir"),100))
 	If Request("dir") = "" Then
-		If inStr(request.querystring,"dir=") then
+		If inStr(Request.ServerVariables("QUERY_STRING"),"dir=") then
 			Url = ""
 		Else
 			Url = DEF_BBS_HomeUrl
@@ -23,7 +23,7 @@ Sub displayVerifycode
 %>
 		<input name="ForumNumber" id="ForumNumber" maxlength="4" value="<%=htmlencode(Session(DEF_MasterCookies & "RndNum_par") & "")%>" onfocus="verify_load(0,'<%=url%>');" class="fminpt input_1" />
 		<img src="<%=Url%>images/blank.gif" id="verifycode" align="middle" onclick="verify_load(1,'<%=url%>');" /> 
-		<a href="javascript:;" id=verify_click onclick="this.style.display='none';verify_load(1,'<%=url%>');return false;">µã´ËÏÔÊ¾ÑéÖ¤Âë</a>
+		<a href="javascript:;" id=verify_click onclick="this.style.display='none';verify_load(1,'<%=url%>');return false;">ç‚¹æ­¤æ˜¾ç¤ºéªŒè¯ç </a>
 		<noscript>     
 		<div class="verifycode"><img src="<%=Url%>User/number.asp?r=1" id="verifycode" class="verifycode" align="middle" onclick="verify_load(1,'<%=url%>');" /></div>
 		</noscript>
@@ -34,7 +34,7 @@ Function DisplayLoginForm
 	<table class=login_table>
 	<tr>
 	<td>
-	<div class=title>¹ÜÀíÔ±µÇÂ½</div>
+	<div class=title>ç®¡ç†å‘˜ç™»é™†</div>
 	<%
 	If Request("submitflag") = "" Then
 	Else
@@ -56,26 +56,28 @@ Function DisplayLoginForm
 	}
 	</script>
 <form action=<%=DEF_BBS_HomeUrl & DEF_ManageDir%>/Default.asp method="post" onSubmit="submitonce(this);" target="_top">
-	<div class="value2">ÓÃ»§Ãû¡¡£º <input name=user type=text maxlength=20 size=22 value="<%=htmlencode(GBL_CHK_user)%>" class="fminpt input_2"></div>
-	<div class="value2">ÃÜÂë¡¡¡¡£º <input name=pass type=password maxlength=20 size=22 value="<%'=htmlencode(GBL_CHK_pass)%>" class="fminpt input_2"></div>
+	<div class="value2">ç”¨æˆ·åã€€ï¼š <input name=user type=text maxlength=20 size=22 value="<%=htmlencode(GBL_CHK_user)%>" class="fminpt input_2"></div>
+	<div class="value2">å¯†ç ã€€ã€€ï¼š <input name=pass type=password maxlength=20 size=22 value="<%'=htmlencode(GBL_CHK_pass)
+%>" class="fminpt input_2"></div>
 	<%If DEF_NeedAnswer = 1 Then%>
-	<div class="value2">ÎÊÌâ´ğ°¸£º <input name=MPass type=password maxlength=20 size=22 value="<%'=htmlencode(GBL_CHK_pass)%>" class="fminpt input_2"> <span class="note">ÌîĞ´ÕÒ»ØÃÜÂëÓÃµÄ´ğ°¸</span></div>
+	<div class="value2">é—®é¢˜ç­”æ¡ˆï¼š <input name=MPass type=password maxlength=20 size=22 value="<%'=htmlencode(GBL_CHK_pass)
+%>" class="fminpt input_2"> <span class="note">å¡«å†™æ‰¾å›å¯†ç ç”¨çš„ç­”æ¡ˆ</span></div>
 	<%End If%>
-	<div class="value2">ÑéÖ¤Âë¡¡£º <%displayVerifycode%><br>
-	<div class="value2">ÓĞĞ§ÆÚ¡¡£º <select name="CkiExp" id="CkiExp">
-				<option value="-99">°²È«</option>
-				<option value="-1">ÎŞĞ§</option>
-				<option value="365">Ò»Äê</option>
-				<option value=1>Ò»Ìì</option>
-				<option value=2>Á½Ìì</option>
-				<option value=7>Ò»ÖÜ</option>
-				<option value=31>Ò»ÔÂ</option>
-			</select> <span class="note">Cookie±£ÁôÊ±¼ä</span>
+	<div class="value2">éªŒè¯ç ã€€ï¼š <%displayVerifycode()%><br>
+	<div class="value2">æœ‰æ•ˆæœŸã€€ï¼š <select name="CkiExp" id="CkiExp">
+				<option value="-99">å®‰å…¨</option>
+				<option value="-1">æ— æ•ˆ</option>
+				<option value="365">ä¸€å¹´</option>
+				<option value=1>ä¸€å¤©</option>
+				<option value=2>ä¸¤å¤©</option>
+				<option value=7>ä¸€å‘¨</option>
+				<option value=31>ä¸€æœˆ</option>
+			</select> <span class="note">Cookieä¿ç•™æ—¶é—´</span>
 	</div>
 	<div class="splitline"></div>
 	<div class="value2">
-	¡¡¡¡¡¡¡¡¡¡ <input name=submitflag type=hidden value="ddddls-+++"> <input type=submit value="µÇÂ¼" class="fmbtn">
-	<input type=reset value="È¡Ïû" class="fmbtn">
+	ã€€ã€€ã€€ã€€ã€€ <input name=submitflag type=hidden value="ddddls-+++"> <input type=submit value="ç™»å½•" class="fmbtn">
+	<input type=reset value="å–æ¶ˆ" class="fmbtn">
 	</div>
 </form>
 	</td>
@@ -85,17 +87,6 @@ Function DisplayLoginForm
 
 End Function
 
-Function DisplayUserNavigate(str)
-
-	Dim NewUrl
-	NewUrl = DEF_BBS_HomeUrl
-	If Left(NewUrl,3) = "../" or Left(NewUrl,3) = "..\" Then NewUrl = Mid(NewUrl,4)
-	If DEF_SiteHomeUrl = "" Then DEF_SiteHomeUrl = DEF_BBS_HomeUrl & "Boards.asp"
-	Response.Write "<div class=frame_navtitle>"
-	Response.Write "<a href=""" & NewUrl & "Default.asp"" target=_top>ÂÛÌ³¹ÜÀíÏµÍ³</a> &gt;&gt; " & Str
-	Response.Write "</div>"
-
-End Function
 
 Sub frame_TopInfo
 
@@ -123,7 +114,7 @@ Function CheckSupervisorPass
 		If Session(DEF_MasterCookies & "Manager") <> "manage" Then
 			GBL_CHK_Flag = 0
 			checkSupervisorPass = 0
-			GBL_CHK_TempStr = "²Ù×÷³¬Ê±,ÇëÖØĞÂµÇÂ¼£¡" & VbCrLf
+			GBL_CHK_TempStr = "æ“ä½œè¶…æ—¶,è¯·é‡æ–°ç™»å½•ï¼" & VbCrLf
 			Exit Function
 		end if
 		sumitflag = Request.querystring("submitflag")
@@ -135,15 +126,15 @@ Function CheckSupervisorPass
 		If referer <> Cstr(Request.ServerVariables("SERVER_NAME")) Then
 			GBL_CHK_Flag = 0
 			CheckSupervisorPass = 0
-			GBL_CHK_TempStr = "´Ë²Ù×÷Ö»ÓĞ¹ÜÀíÔ±²ÅÄÜ²Ù×÷£¡<br>" & VbCrLf
+			GBL_CHK_TempStr = "æ­¤æ“ä½œåªæœ‰ç®¡ç†å‘˜æ‰èƒ½æ“ä½œï¼<br>" & VbCrLf
 			Exit Function
 		End If
 		Dim NumCheck
-		NumCheck = CheckRndNumber
+		NumCheck = CheckRndNumber()
 		If NumCheck = 0 Then
 			GBL_CHK_Flag = 0
 			CheckSupervisorPass = 0
-			GBL_CHK_TempStr = "ÑéÖ¤Âë´íÎó£¡<br>" & VbCrLf
+			GBL_CHK_TempStr = "éªŒè¯ç é”™è¯¯ï¼<br>" & VbCrLf
 			Exit Function
 		End If
 	End If
@@ -152,7 +143,7 @@ Function CheckSupervisorPass
 	Else
 		GBL_CHK_Flag = 0
 		checkSupervisorPass = 0
-		GBL_CHK_TempStr = "´Ë¹¦ÄÜÖ»ÓĞ¹ÜÀíÔ±²ÅÄÜ²Ù×÷[1]£¡<br>" & VbCrLf
+		GBL_CHK_TempStr = "æ­¤åŠŸèƒ½åªæœ‰ç®¡ç†å‘˜æ‰èƒ½æ“ä½œ[1]ï¼<br>" & VbCrLf
 		Exit Function
 	End If
 
@@ -161,7 +152,7 @@ Function CheckSupervisorPass
 		If CheckUserAnswer(GBL_CHK_User,Left(MPass,22)) = 0 Then
 			GBL_CHK_Flag = 0
 			checkSupervisorPass = 0
-			GBL_CHK_TempStr = "´Ë¹¦ÄÜÖ»ÓĞ¹ÜÀíÔ±²ÅÄÜ²Ù×÷[2]£¡<br>" & VbCrLf
+			GBL_CHK_TempStr = "æ­¤åŠŸèƒ½åªæœ‰ç®¡ç†å‘˜æ‰èƒ½æ“ä½œ[2]ï¼<br>" & VbCrLf
 			Exit Function
 		End If
 		Session(DEF_MasterCookies & "Manager") = "manage"
@@ -225,7 +216,7 @@ Sub Manage_sitehead(headString,classStr)
 
 <html xmlns="http://www.w3.org/1999/xhtml"  xml:lang="zh-CN" lang="zh-CN">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="description" content="<%=htmlencode(DEF_GBL_Description)%>" />
 	<title>
 		<%=Replace(headString,"<","&lt;")%> - Powered by <%=DEF_Version%>

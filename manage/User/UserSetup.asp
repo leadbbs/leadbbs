@@ -1,15 +1,15 @@
-<!-- #include file=../../inc/BBSsetup.asp -->
-<!-- #include file=../../inc/User_setup.asp -->
-<!-- #include file=../../inc/Board_popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
-<!-- #include file=../../User/inc/Fun_SendMessage.asp -->
+<!--#include file="../../inc/BBSsetup.asp"-->
+<!--#include file="../../inc/User_setup.asp"-->
+<!--#include file="../../inc/Board_popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
+<!--#include file="../../User/inc/Fun_SendMessage.asp"-->
 <%
 Server.ScriptTimeOut = 99999
 DEF_BBS_HomeUrl = "../../"
 Const MaxLinkNum = 255
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-checkSupervisorPass
+checkSupervisorPass()
 
 Dim Form_DEF_UserEnableUserTitle,Form_DEF_UserUserTitleNeedLevel,Form_LMT_UserNameEnableEnglishWords
 Dim Form_LMT_UserNameEnableChineseChar,Form_LMT_UserNameEnableChineseWords
@@ -22,26 +22,26 @@ Dim Form_DEF_seller_email,Form_DEF_seller_minpoints,Form_DEF_seller_exchangescal
 ReDim Form_DEF_OfficerIntro(DEF_UserOfficerNum),Form_DEF_OfficerName(DEF_UserOfficerNum)
 Dim Form_DEF_OfficerIntro_temp,Form_DEF_OfficerName_temp
 
-GetDefaultValue
+GetDefaultValue()
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
-frame_TopInfo
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
+frame_TopInfo()
 If GBL_CHK_Flag=1 Then
 	select case request("action")
 		case "medal":
-			DisplayUserNavigate("ÎªÓÃ»§Ôö¼Ó/É¾³ı" & DEF_PointsName(9))
+			DisplayUserNavigate("ä¸ºç”¨æˆ·å¢åŠ /åˆ é™¤" & DEF_PointsName(9))
 			dim MedalManage
 			set MedalManage = new Medal_Manage
 			set MedalManage = nothing
 		case else
-			DisplayUserNavigate("ÓÃ»§×¢²á²ÎÊıÉèÖÃ")
-			UserSetup
+			DisplayUserNavigate("ç”¨æˆ·æ³¨å†Œå‚æ•°è®¾ç½®")
+			UserSetup()
 	end select
 Else
-	DisplayLoginForm
+	DisplayLoginForm()
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Function UserSetup
@@ -50,32 +50,32 @@ Function UserSetup
 <form name="pollform3sdx" method="post" action="UserSetup.asp">
 <input type="hidden" name="SubmitFlag" value=yes>
 <p>
-		ÉèÖÃ£º<a href=../SiteManage/SiteSetup.asp>ÂÛÌ³³£ÓÃ²ÎÊı</a> <a href=../SiteManage/UploadSetup.asp>ÉÏ´«²ÎÊı</a>
-		<span class=grayfont>ÓÃ»§×¢²á²ÎÊı</span>
-		<a href=../SiteManage/UbbcodeSetup.asp>UBB±àÂë²ÎÊı</a>
-		<br><span class=grayfont>(ÏÂÃæÊÇÄúÍøÕ¾µÄÓÃ»§×¢²á²ÎÊı£¬´íÎóµÄÉèÖÃ½«»á·¢ÉúÑÏÖØ´íÎó)<br><br>
-		Èç¹ûÔÚÉèÖÃºó·¢ÏÖÍøÕ¾²»ÄÜÕı³£ÔËĞĞ£¬Çë½«LeadBBS×îĞÂ°æµÄUser_Setup.asp¸²¸Ç»ØÈ¥</span>
+		è®¾ç½®ï¼š<a href=../SiteManage/SiteSetup.asp>è®ºå›å¸¸ç”¨å‚æ•°</a> <a href=../SiteManage/UploadSetup.asp>ä¸Šä¼ å‚æ•°</a>
+		<span class=grayfont>ç”¨æˆ·æ³¨å†Œå‚æ•°</span>
+		<a href=../SiteManage/UbbcodeSetup.asp>UBBç¼–ç å‚æ•°</a>
+		<br><span class=grayfont>(ä¸‹é¢æ˜¯æ‚¨ç½‘ç«™çš„ç”¨æˆ·æ³¨å†Œå‚æ•°ï¼Œé”™è¯¯çš„è®¾ç½®å°†ä¼šå‘ç”Ÿä¸¥é‡é”™è¯¯)<br><br>
+		å¦‚æœåœ¨è®¾ç½®åå‘ç°ç½‘ç«™ä¸èƒ½æ­£å¸¸è¿è¡Œï¼Œè¯·å°†LeadBBSæœ€æ–°ç‰ˆçš„User_Setup.aspè¦†ç›–å›å»</span>
 </p>
 <%If Request.Form("SubmitFlag") <> "" Then
-	CheckLinkValue
+	CheckLinkValue()
 End If%>
 <b><span class=redfont><%=GBL_CHK_TempStr%></span></b>
 <p>
 <%
 If Request.Form("SubmitFlag") <> "" Then
 	If GBL_CHK_TempStr <> "" Then
-		DisplayDatabaseLink
+		DisplayDatabaseLink()
 	Else
-		MakeDataBaseLinkFile
+		MakeDataBaseLinkFile()
 		Exit Function
 	End If
 Else
-	DisplayDatabaseLink
+	DisplayDatabaseLink()
 End If
 %>
 <br>
-<input type=submit name=Ìá½» value=Ìá½» class=fmbtn>
-<input type=reset name=È¡Ïû value=È¡Ïû class=fmbtn>
+<input type=submit name=æäº¤ value=æäº¤ class=fmbtn>
+<input type=reset name=å–æ¶ˆ value=å–æ¶ˆ class=fmbtn>
 </form>
 <%
 
@@ -83,7 +83,7 @@ End Function
 
 Function CheckLinkValue
 
-	GetFormValue
+	GetFormValue()
 
 End Function
 
@@ -93,14 +93,14 @@ Function DisplayDatabaseLink
 		%>
 		<table border=0 cellpadding=0 cellspacing=0 width="100%" class=frame_table>
 		<tr>
-			<td class=tdbox width=120>×Ô¶¨Í·ÏÎ</td>
+			<td class=tdbox width=120>è‡ªå®šå¤´è¡”</td>
 			<td class=tdbox><table border=0 cellpadding=0 cellspacing=0><tr>
-				<td><input class=fmchkbox type=radio name=Form_DEF_UserEnableUserTitle value=0<%If Form_DEF_UserEnableUserTitle = 0 Then%> checked<%End If%>></td><td>½ûÖ¹</td>
-          		<td><input class=fmchkbox type=radio name=Form_DEF_UserEnableUserTitle value=1<%If Form_DEF_UserEnableUserTitle = 1 Then%> checked<%End If%>></td><td>ÔÊĞí (<span class=grayfont>ÊÇ·ñÔÊĞíÓÃ»§×Ô¶¨ÒåÍ·ÏÎ</span>)</td>
+				<td><input class=fmchkbox type=radio name=Form_DEF_UserEnableUserTitle value=0<%If Form_DEF_UserEnableUserTitle = 0 Then%> checked<%End If%>></td><td>ç¦æ­¢</td>
+          		<td><input class=fmchkbox type=radio name=Form_DEF_UserEnableUserTitle value=1<%If Form_DEF_UserEnableUserTitle = 1 Then%> checked<%End If%>></td><td>å…è®¸ (<span class=grayfont>æ˜¯å¦å…è®¸ç”¨æˆ·è‡ªå®šä¹‰å¤´è¡”</span>)</td>
           		</tr></table></td>
 		</tr>
 		<tr>
-			<td class=tdbox>Í·ÏÎ<%=DEF_PointsName(3)%></td>
+			<td class=tdbox>å¤´è¡”<%=DEF_PointsName(3)%></td>
 			<td class=tdbox>
 				<select name=Form_DEF_UserUserTitleNeedLevel><%
 				For N = 0 to DEF_UserLevelNum
@@ -109,116 +109,116 @@ Function DisplayDatabaseLink
 					Else
 						Response.write "				<option value=" & N & ">" & N & "." & DEF_UserLevelString(N) & "</option>" & VbCrLf
 					End If
-				Next%>(<span class=grayfont>ÓÃ»§×Ô¶¨ÒåÍ·ÏÎËùĞèÒªµÄ<%=DEF_PointsName(3)%></span>)
-				</select> ÈçÔÊĞí×Ô¶¨ÒåÍ·ÏÎ£¬ÇëÖ¸¶¨×Ô¶¨ÒåÍ·ÏÎËùÒªÇó´ïµ½µÄ<%=DEF_PointsName(3)%></td>
+				Next%>(<span class=grayfont>ç”¨æˆ·è‡ªå®šä¹‰å¤´è¡”æ‰€éœ€è¦çš„<%=DEF_PointsName(3)%></span>)
+				</select> å¦‚å…è®¸è‡ªå®šä¹‰å¤´è¡”ï¼Œè¯·æŒ‡å®šè‡ªå®šä¹‰å¤´è¡”æ‰€è¦æ±‚è¾¾åˆ°çš„<%=DEF_PointsName(3)%></td>
 		</tr>
 		<tr>
-			<td class=tdbox>ÓÃ »§ Ãû</td>
+			<td class=tdbox>ç”¨ æˆ· å</td>
 			<td class=tdbox><table border=0 cellpadding=0 cellspacing=0><tr>
-				<td><input class=fmchkbox type=radio name=Form_LMT_UserNameEnableEnglishWords value=0<%If Form_LMT_UserNameEnableEnglishWords = 0 Then%> checked<%End If%>></td><td>½ûÖ¹Ê¹ÓÃÎ÷ÎÄ×Ö·û(×ÖÄ¸Êı×Ö)</td>
-          		<td><input class=fmchkbox type=radio name=Form_LMT_UserNameEnableEnglishWords value=1<%If Form_LMT_UserNameEnableEnglishWords = 1 Then%> checked<%End If%>></td><td>ÔÊĞíÊ¹ÓÃÎ÷ÎÄ×Ö·û(×ÖÄ¸Êı×Ö)</td>
+				<td><input class=fmchkbox type=radio name=Form_LMT_UserNameEnableEnglishWords value=0<%If Form_LMT_UserNameEnableEnglishWords = 0 Then%> checked<%End If%>></td><td>ç¦æ­¢ä½¿ç”¨è¥¿æ–‡å­—ç¬¦(å­—æ¯æ•°å­—)</td>
+          		<td><input class=fmchkbox type=radio name=Form_LMT_UserNameEnableEnglishWords value=1<%If Form_LMT_UserNameEnableEnglishWords = 1 Then%> checked<%End If%>></td><td>å…è®¸ä½¿ç”¨è¥¿æ–‡å­—ç¬¦(å­—æ¯æ•°å­—)</td>
           		</tr></table></td>
 		</tr>
 		<tr>
-			<td class=tdbox>ÓÃ »§ Ãû</td>
+			<td class=tdbox>ç”¨ æˆ· å</td>
 			<td class=tdbox><table border=0 cellpadding=0 cellspacing=0><tr>
-				<td><input class=fmchkbox type=radio name=Form_LMT_UserNameEnableChineseChar value=0<%If Form_LMT_UserNameEnableChineseChar = 0 Then%> checked<%End If%>></td><td>½ûÖ¹Ê¹ÓÃÖĞÎÄ·ûºÅ(±êµã,ÈÕÎÄµÈ×Ö·û)</td>
-          		<td><input class=fmchkbox type=radio name=Form_LMT_UserNameEnableChineseChar value=1<%If Form_LMT_UserNameEnableChineseChar = 1 Then%> checked<%End If%>></td><td>ÔÊĞíÊ¹ÓÃÖĞÎÄ·ûºÅ(±êµã,ÈÕÎÄµÈ×Ö·û)</td>
+				<td><input class=fmchkbox type=radio name=Form_LMT_UserNameEnableChineseChar value=0<%If Form_LMT_UserNameEnableChineseChar = 0 Then%> checked<%End If%>></td><td>ç¦æ­¢ä½¿ç”¨ä¸­æ–‡ç¬¦å·(æ ‡ç‚¹,æ—¥æ–‡ç­‰å­—ç¬¦)</td>
+          		<td><input class=fmchkbox type=radio name=Form_LMT_UserNameEnableChineseChar value=1<%If Form_LMT_UserNameEnableChineseChar = 1 Then%> checked<%End If%>></td><td>å…è®¸ä½¿ç”¨ä¸­æ–‡ç¬¦å·(æ ‡ç‚¹,æ—¥æ–‡ç­‰å­—ç¬¦)</td>
           		</tr></table></td>
 		</tr>
 		<tr>
-			<td class=tdbox>ÓÃ »§ Ãû</td>
+			<td class=tdbox>ç”¨ æˆ· å</td>
 			<td class=tdbox><table border=0 cellpadding=0 cellspacing=0><tr>
-				<td><input class=fmchkbox type=radio name=Form_LMT_UserNameEnableChineseWords value=0<%If Form_LMT_UserNameEnableChineseWords = 0 Then%> checked<%End If%>></td><td>½ûÖ¹Ê¹ÓÃÖĞÎÄºº×Ö</td>
-          		<td><input class=fmchkbox type=radio name=Form_LMT_UserNameEnableChineseWords value=1<%If Form_LMT_UserNameEnableChineseWords = 1 Then%> checked<%End If%>></td><td>ÔÊĞíÊ¹ÓÃÖĞÎÄºº×Ö</td>
+				<td><input class=fmchkbox type=radio name=Form_LMT_UserNameEnableChineseWords value=0<%If Form_LMT_UserNameEnableChineseWords = 0 Then%> checked<%End If%>></td><td>ç¦æ­¢ä½¿ç”¨ä¸­æ–‡æ±‰å­—</td>
+          		<td><input class=fmchkbox type=radio name=Form_LMT_UserNameEnableChineseWords value=1<%If Form_LMT_UserNameEnableChineseWords = 1 Then%> checked<%End If%>></td><td>å…è®¸ä½¿ç”¨ä¸­æ–‡æ±‰å­—</td>
           		</tr></table></td>
 		</tr>
 		<tr>
-			<td class=tdbox>×¢²á<%=DEF_PointsName(0)%></td>
-			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_User_RegPoints" maxlength="4" size="10" value="<%=htmlencode(Form_DEF_User_RegPoints)%>"><span class=grayfont>(¸Õ×¢²áÓÃ»§¾ÍÓµÓĞµÄ<%=DEF_PointsName(0)%>µãÊı£¬Ä¬ÈÏÎª0)</span></td>
+			<td class=tdbox>æ³¨å†Œ<%=DEF_PointsName(0)%></td>
+			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_User_RegPoints" maxlength="4" size="10" value="<%=htmlencode(Form_DEF_User_RegPoints)%>"><span class=grayfont>(åˆšæ³¨å†Œç”¨æˆ·å°±æ‹¥æœ‰çš„<%=DEF_PointsName(0)%>ç‚¹æ•°ï¼Œé»˜è®¤ä¸º0)</span></td>
 		</tr>
 		<tr>
-			<td class=tdbox>¿ª¹Ø×¢²á</td>
+			<td class=tdbox>å¼€å…³æ³¨å†Œ</td>
 			<td class=tdbox><table border=0 cellpadding=0 cellspacing=0><tr>
-				<td><input class=fmchkbox type=radio name=Form_LMT_EnableRegNewUsers value=0<%If Form_LMT_EnableRegNewUsers = 0 Then%> checked<%End If%>></td><td>½ûÖ¹×¢²áĞÂÓÃ»§</td>
-          		<td><input class=fmchkbox type=radio name=Form_LMT_EnableRegNewUsers value=1<%If Form_LMT_EnableRegNewUsers = 1 Then%> checked<%End If%>></td><td>ÔÊĞíĞÂÓÃ»§×¢²á</td>
+				<td><input class=fmchkbox type=radio name=Form_LMT_EnableRegNewUsers value=0<%If Form_LMT_EnableRegNewUsers = 0 Then%> checked<%End If%>></td><td>ç¦æ­¢æ³¨å†Œæ–°ç”¨æˆ·</td>
+          		<td><input class=fmchkbox type=radio name=Form_LMT_EnableRegNewUsers value=1<%If Form_LMT_EnableRegNewUsers = 1 Then%> checked<%End If%>></td><td>å…è®¸æ–°ç”¨æˆ·æ³¨å†Œ</td>
           		</tr></table></td>
 		</tr>
 		<tr>
-			<td class=tdbox>ÓÃ»§Ãû³¤</td>
-			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_ShortestUserName" maxlength="2" size="10" value="<%=htmlencode(Form_DEF_ShortestUserName)%>"><span class=grayfont>(ÔÊĞí×¢²áµÄÓÃ»§ÃûµÄ×î¶Ì×Ö·û¸öÊı£¬µ¥Î»×Ö½Ú)</span></td>
+			<td class=tdbox>ç”¨æˆ·åé•¿</td>
+			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_ShortestUserName" maxlength="2" size="10" value="<%=htmlencode(Form_DEF_ShortestUserName)%>"><span class=grayfont>(å…è®¸æ³¨å†Œçš„ç”¨æˆ·åçš„æœ€çŸ­å­—ç¬¦ä¸ªæ•°ï¼Œå•ä½å­—èŠ‚)</span></td>
 		</tr>
 		<tr>
-			<td class=tdbox>×î¶ÌÃÜÂë</td>
-			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_UserShortestPassword" maxlength="2" size="10" value="<%=htmlencode(Form_DEF_UserShortestPassword)%>"><span class=grayfont>(ÔÊĞíÊ¹ÓÃµÄÓÃ»§ÃÜÂëµÄ×î¶Ì×Ö·û¸öÊı£¬µ¥Î»×Ö½Ú£¬Õë¶ÔÆÕÍ¨ÓÃ»§)</span></td>
+			<td class=tdbox>æœ€çŸ­å¯†ç </td>
+			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_UserShortestPassword" maxlength="2" size="10" value="<%=htmlencode(Form_DEF_UserShortestPassword)%>"><span class=grayfont>(å…è®¸ä½¿ç”¨çš„ç”¨æˆ·å¯†ç çš„æœ€çŸ­å­—ç¬¦ä¸ªæ•°ï¼Œå•ä½å­—èŠ‚ï¼Œé’ˆå¯¹æ™®é€šç”¨æˆ·)</span></td>
 		</tr>
 		<tr>
-			<td class=tdbox>¹ÜÀíÃÜÂë</td>
-			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_UserShortestPasswordMaster" maxlength="2" size="10" value="<%=htmlencode(Form_DEF_UserShortestPasswordMaster)%>"><span class=grayfont>(ÔÊĞíÊ¹ÓÃµÄ<%=DEF_PointsName(8)%>ÒÔÉÏ³ÉÔ±µÄ×î¶ÌÃÜÂë×Ö·û¸öÊı)</span></td>
+			<td class=tdbox>ç®¡ç†å¯†ç </td>
+			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_UserShortestPasswordMaster" maxlength="2" size="10" value="<%=htmlencode(Form_DEF_UserShortestPasswordMaster)%>"><span class=grayfont>(å…è®¸ä½¿ç”¨çš„<%=DEF_PointsName(8)%>ä»¥ä¸Šæˆå‘˜çš„æœ€çŸ­å¯†ç å­—ç¬¦ä¸ªæ•°)</span></td>
 		</tr>
 		<tr>
-			<td class=tdbox>×¢²á¼ä¸ô</td>
-			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_RegNewUserTotalRestTime" maxlength="6" size="10" value="<%=htmlencode(Form_DEF_RegNewUserTotalRestTime)%>"><span class=grayfont>(ÏŞÖÆÂÛÌ³ÔÚ´ËÊ±¼äÄÚÖ»ÔÊĞí×¢²áÒ»ÃûĞÂÓÃ»§£¬µ¥Î»Ãë)</span></td>
+			<td class=tdbox>æ³¨å†Œé—´éš”</td>
+			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_RegNewUserTotalRestTime" maxlength="6" size="10" value="<%=htmlencode(Form_DEF_RegNewUserTotalRestTime)%>"><span class=grayfont>(é™åˆ¶è®ºå›åœ¨æ­¤æ—¶é—´å†…åªå…è®¸æ³¨å†Œä¸€åæ–°ç”¨æˆ·ï¼Œå•ä½ç§’)</span></td>
 		</tr>
 		<tr>
-			<td class=tdbox>×¢²áÈÏÖ¤</td>
+			<td class=tdbox>æ³¨å†Œè®¤è¯</td>
 			<td class=tdbox><table border=0 cellpadding=0 cellspacing=0><tr>
 				<td>
 				<label>
 				<input class=fmchkbox type=radio name=Form_DEF_UserNewRegAttestMode value=0<%If Form_DEF_UserNewRegAttestMode = 0 Then%> checked<%End If%>>
-				ÎŞ¼¤»î,×¢²á¼´ÎªÕıÊ½»áÔ±
+				æ— æ¿€æ´»,æ³¨å†Œå³ä¸ºæ­£å¼ä¼šå‘˜
 				</label>
 				</td>
 				</tr><tr>
           		<td>
           		<label><input class=fmchkbox type=radio name=Form_DEF_UserNewRegAttestMode value=1<%If Form_DEF_UserNewRegAttestMode = 1 Then%> checked<%End If%>>
-          		½ö<span title="»¹ĞèÒªÖÁÀ©Õ¹²ÎÊıÉèÖÃÖĞÅäÖÃSMTPÓÊ¼ş·¢ËÍ²ÎÊı">ÓÊ¼ş¼¤»î(´ËÏîÎñ±Ø¿ªÆôÓÊ¼ş·¢ËÍ¹¦ÄÜ)</span>
+          		ä»…<span title="è¿˜éœ€è¦è‡³æ‰©å±•å‚æ•°è®¾ç½®ä¸­é…ç½®SMTPé‚®ä»¶å‘é€å‚æ•°">é‚®ä»¶æ¿€æ´»(æ­¤é¡¹åŠ¡å¿…å¼€å¯é‚®ä»¶å‘é€åŠŸèƒ½)</span>
           		</label>
           		</td>
           		</tr><tr>
           		<td>
           		<label><input class=fmchkbox type=radio name=Form_DEF_UserNewRegAttestMode value=3<%If Form_DEF_UserNewRegAttestMode = 3 Then%> checked<%End If%>>
-          		½ö<span title="ĞèÒªÖÁÀ©Õ¹²ÎÊıÉèÖÃÖĞÅäÖÃSMS¶ÌĞÅ·¢ËÍ">ÊÖ»ú¼¤»î(´ËÏî±ØĞëÅäÖÃºÃ¶ÌĞÅ·¢ËÍĞÅÏ¢)</span>
+          		ä»…<span title="éœ€è¦è‡³æ‰©å±•å‚æ•°è®¾ç½®ä¸­é…ç½®SMSçŸ­ä¿¡å‘é€">æ‰‹æœºæ¿€æ´»(æ­¤é¡¹å¿…é¡»é…ç½®å¥½çŸ­ä¿¡å‘é€ä¿¡æ¯)</span>
           		</label>
           		</td>
           		</tr><tr>
           		<td><label><input class=fmchkbox type=radio name=Form_DEF_UserNewRegAttestMode value=4<%If Form_DEF_UserNewRegAttestMode = 4 Then%> checked<%End If%>>
-          		Í¬Ê±ÔÊĞíÊÖ»ú»òÓÊÏä×¢²á¼¤»î
+          		åŒæ—¶å…è®¸æ‰‹æœºæˆ–é‚®ç®±æ³¨å†Œæ¿€æ´»
           		</label>
           		</td>
           		</tr><tr>
           		<td><label><input class=fmchkbox type=radio name=Form_DEF_UserNewRegAttestMode value=2<%If Form_DEF_UserNewRegAttestMode = 2 Then%> checked<%End If%>>
-          		ÆäËü¼¤»î(¹ÜÀíÔ±ºóÌ¨¸ü¸Ä)</label></td>
+          		å…¶å®ƒæ¿€æ´»(ç®¡ç†å‘˜åå°æ›´æ”¹)</label></td>
           		</tr></table></td>
 		</tr>
 		<tr>
-			<td class=tdbox>¼¤»îÊ±¼ä</td>
-			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_UserActivationExpiresDay" maxlength="3" size="10" value="<%=htmlencode(Form_DEF_UserActivationExpiresDay)%>"><span class=grayfont>(×¢²áºó£¬ÓÃ»§±ØĞëÔÚÖ¸¶¨ÌìÊıÄÚ¼¤»î£¬·ñÔòÏµÍ³½«×÷É¾³ıÓÃ»§´¦Àí£¬µ¥Î»£ºÌì£¬ÌîĞ´0±íÊ¾ÎŞÏŞÖÆ£¬ÓÀ¾Ã±£Áô)</span></td>
+			<td class=tdbox>æ¿€æ´»æ—¶é—´</td>
+			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_UserActivationExpiresDay" maxlength="3" size="10" value="<%=htmlencode(Form_DEF_UserActivationExpiresDay)%>"><span class=grayfont>(æ³¨å†Œåï¼Œç”¨æˆ·å¿…é¡»åœ¨æŒ‡å®šå¤©æ•°å†…æ¿€æ´»ï¼Œå¦åˆ™ç³»ç»Ÿå°†ä½œåˆ é™¤ç”¨æˆ·å¤„ç†ï¼Œå•ä½ï¼šå¤©ï¼Œå¡«å†™0è¡¨ç¤ºæ— é™åˆ¶ï¼Œæ°¸ä¹…ä¿ç•™)</span></td>
 		</tr>
 		<tr>
-			<td class=tdbox>ÃÜÂëÕÒ»Ø<br>
-			°ó¶¨/½â°ó</td>
+			<td class=tdbox>å¯†ç æ‰¾å›<br>
+			ç»‘å®š/è§£ç»‘</td>
 			<td class=tdbox><table border=0 cellpadding=0 cellspacing=0><tr>
-				<td><input class=fmchkbox type=radio name=Form_DEF_User_GetPassMode value=0<%If Form_DEF_User_GetPassMode = 0 Then%> checked<%End If%>></td><td>½ûÖ¹ÕÒ»Ø</td>
-          		<td><input class=fmchkbox type=radio name=Form_DEF_User_GetPassMode value=1<%If Form_DEF_User_GetPassMode = 1 Then%> checked<%End If%>></td><td>¼´Ê±ÃÜÂë¸ü¸Ä(ÃÜ±£ÕÒ»Ø)</td>
-          		<td><input class=fmchkbox type=radio name=Form_DEF_User_GetPassMode value=2<%If Form_DEF_User_GetPassMode = 2 Then%> checked<%End If%>></td><td>¼´Ê±ÃÜÂë¸ü¸Ä(ÃÜ±£ÕÒ»Ø) ÈôÎ´¼¤»îÍ¬Ê±·¢ËÍÓÊ¼şÖØĞÂÍ¨Öª¼¤»îÂë</td>
-          		<td><input class=fmchkbox type=radio name=Form_DEF_User_GetPassMode value=3<%If Form_DEF_User_GetPassMode = 3 Then%> checked<%End If%>></td><td>ÔÊĞíÃÜ±£¼°·¢ËÍÓÊ¼şÕÒ»Ø,ÔÊĞí°ó¶¨(½â°ó)ÓÊÏä</td>
-          		<td><input class=fmchkbox type=radio name=Form_DEF_User_GetPassMode value=4<%If Form_DEF_User_GetPassMode = 4 Then%> checked<%End If%>></td><td>ÔÊĞíÃÜ±£¼°ÊÖ»úºÅÂëºÍÓÊÏäÕÒ»Ø,ÔÊĞí°ó¶¨(½â°ó)ÓÊÏäºÍÊÖ»ú</td>
+				<td><input class=fmchkbox type=radio name=Form_DEF_User_GetPassMode value=0<%If Form_DEF_User_GetPassMode = 0 Then%> checked<%End If%>></td><td>ç¦æ­¢æ‰¾å›</td>
+          		<td><input class=fmchkbox type=radio name=Form_DEF_User_GetPassMode value=1<%If Form_DEF_User_GetPassMode = 1 Then%> checked<%End If%>></td><td>å³æ—¶å¯†ç æ›´æ”¹(å¯†ä¿æ‰¾å›)</td>
+          		<td><input class=fmchkbox type=radio name=Form_DEF_User_GetPassMode value=2<%If Form_DEF_User_GetPassMode = 2 Then%> checked<%End If%>></td><td>å³æ—¶å¯†ç æ›´æ”¹(å¯†ä¿æ‰¾å›) è‹¥æœªæ¿€æ´»åŒæ—¶å‘é€é‚®ä»¶é‡æ–°é€šçŸ¥æ¿€æ´»ç </td>
+          		<td><input class=fmchkbox type=radio name=Form_DEF_User_GetPassMode value=3<%If Form_DEF_User_GetPassMode = 3 Then%> checked<%End If%>></td><td>å…è®¸å¯†ä¿åŠå‘é€é‚®ä»¶æ‰¾å›,å…è®¸ç»‘å®š(è§£ç»‘)é‚®ç®±</td>
+          		<td><input class=fmchkbox type=radio name=Form_DEF_User_GetPassMode value=4<%If Form_DEF_User_GetPassMode = 4 Then%> checked<%End If%>></td><td>å…è®¸å¯†ä¿åŠæ‰‹æœºå·ç å’Œé‚®ç®±æ‰¾å›,å…è®¸ç»‘å®š(è§£ç»‘)é‚®ç®±å’Œæ‰‹æœº</td>
           		</tr></table></td>
 		</tr>
 		<tr>
-			<td class=tdbox><%=DEF_PointsName(3)%>¶¨Òå</td>
+			<td class=tdbox><%=DEF_PointsName(3)%>å®šä¹‰</td>
 			<td class=tdbox>
 				<table border=0 cellpadding=1 cellspacing=0>
 				<tr>
 					<td>&nbsp;<%=DEF_PointsName(3)%></td>
-					<td>&nbsp;³ÆºÅ</td>
-					<td>&nbsp;ÒªÇó·¢±íÎÄÕÂ</td>
+					<td>&nbsp;ç§°å·</td>
+					<td>&nbsp;è¦æ±‚å‘è¡¨æ–‡ç« </td>
 				</td><%
 			For n = 0 to DEF_UserLevelNum
 				%>
 				<tr>
-					<td>&nbsp;<%=Right(" " & N,2)%>¼¶</td>
+					<td>&nbsp;<%=Right(" " & N,2)%>çº§</td>
 					<td>&nbsp;<input class=fminpt type="text" name="Form_DEF_UserLevelString<%=N%>" maxlength="64" size="20" value="<%=htmlencode(Form_DEF_UserLevelString(n))%>"></td>
 					<td>&nbsp;<input class=fminpt type="text" name="Form_DEF_UserLevelPoints<%=N%>" maxlength="14" size="10" value="<%=htmlencode(Form_DEF_UserLevelPoints(n))%>"></td>
 				</td>
@@ -226,7 +226,7 @@ Function DisplayDatabaseLink
 			Next
 			%>
 				</table>
-				&nbsp;<span class=grayfont>·¢±íÎÄÕÂÖ¸µÄÊÇÔø¾­·¢±í¹ıµÄÎÄÕÂ(°üÀ¨É¾³ıÊıÁ¿)</span></td>
+				&nbsp;<span class=grayfont>å‘è¡¨æ–‡ç« æŒ‡çš„æ˜¯æ›¾ç»å‘è¡¨è¿‡çš„æ–‡ç« (åŒ…æ‹¬åˆ é™¤æ•°é‡)</span></td>
 		</tr>
 		<tr>
 			<td class=tdbox><%=DEF_PointsName(9)%></td>
@@ -234,10 +234,10 @@ Function DisplayDatabaseLink
 				<a name=#medal></a>
 				<table border=0 cellpadding=1 cellspacing=0 id=medal_table>
 				<tr>
-					<td>±àºÅ</td>
-					<td>Ãû³Æ</td>
-					<td>½éÉÜ</td>
-					<td>Í¼Æ¬</td>
+					<td>ç¼–å·</td>
+					<td>åç§°</td>
+					<td>ä»‹ç»</td>
+					<td>å›¾ç‰‡</td>
 				</tr><%
 			For n = 0 to DEF_UserOfficerNum
 				%>
@@ -260,7 +260,7 @@ Function DisplayDatabaseLink
 				curN+=1;
 				if (curN > <%=MaxLinkNum%>)
 				{
-					alert("ÊıÁ¿ÒÑµ½ÉÏÏŞ.");
+					alert("æ•°é‡å·²åˆ°ä¸Šé™.");
 					return;
 				}
 				var newmedal = "<tr><td>"+curN+"</td>";
@@ -274,38 +274,38 @@ Function DisplayDatabaseLink
 			</script>
 			<br>
 			<p><b>
-			<a href=javascript:; onclick="medal_add();">Ìí¼ÓĞÂÏî</a>
-			- <a href="../SiteManage/siteInfo.asp?action=upload&p_filepath=images/others/&p_filename=medal_icons.png&p_fileinfo=<%=urlencode("¸üĞÂ" & DEF_PointsName(9) & "Í¼Æ¬,±ØĞëÊÇpngÎÄ¼ş")%>" target=_blank>ĞŞ¸Ä<%=DEF_PointsName(9)%>Í¼Æ¬</a></b>
+			<a href=javascript:; onclick="medal_add();">æ·»åŠ æ–°é¡¹</a>
+			- <a href="../SiteManage/siteInfo.asp?action=upload&p_filepath=images/others/&p_filename=medal_icons.png&p_fileinfo=<%=urlencode("æ›´æ–°" & DEF_PointsName(9) & "å›¾ç‰‡,å¿…é¡»æ˜¯pngæ–‡ä»¶")%>" target=_blank>ä¿®æ”¹<%=DEF_PointsName(9)%>å›¾ç‰‡</a></b>
 			
 			</p>
-				&nbsp;<span class=grayfont><%=DEF_PointsName(9)%>Ãû³ÆÔÊĞíÊ¹ÓÃhtml´úÂë£¬µ«²»ÔÊĞíÊ¹ÓÃÒıºÅ£®ÈôÃû³ÆÎª¿Õ£¬Ôò´Ë<%=DEF_PointsName(9)%>Ê§Ğ§(ÒÔºó¿ÉÒÔ²¹ÌîÃû³ÆÖØĞÂÉúĞ§)</span></td>
+				&nbsp;<span class=grayfont><%=DEF_PointsName(9)%>åç§°å…è®¸ä½¿ç”¨htmlä»£ç ï¼Œä½†ä¸å…è®¸ä½¿ç”¨å¼•å·ï¼è‹¥åç§°ä¸ºç©ºï¼Œåˆ™æ­¤<%=DEF_PointsName(9)%>å¤±æ•ˆ(ä»¥åå¯ä»¥è¡¥å¡«åç§°é‡æ–°ç”Ÿæ•ˆ)</span></td>
 
 		</tr>
 		<tr>
-			<td class=tdbox>¹ıÂËÃû×Ö</td>
+			<td class=tdbox>è¿‡æ»¤åå­—</td>
 			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_FiltrateUserNameString" maxlength="1024" size="50" value="<%=htmlencode(Form_DEF_FiltrateUserNameString)%>">
-			<br><span class=grayfont>(Ê¹ÓÃ|·Ö¸ô£¬×¢²áÓÃ»§Ãû¼°ÓÃ»§Í·ÏÎºÍÇ©Ãû½«²»ÄÜ°üº¬´ËÀàÃû×Ö)</span></td>
+			<br><span class=grayfont>(ä½¿ç”¨|åˆ†éš”ï¼Œæ³¨å†Œç”¨æˆ·ååŠç”¨æˆ·å¤´è¡”å’Œç­¾åå°†ä¸èƒ½åŒ…å«æ­¤ç±»åå­—)</span></td>
 		</tr>
 		<tr>
-			<td class=tdbox>Ñé Ö¤ Âë</td>
+			<td class=tdbox>éªŒ è¯ ç </td>
 			<td class=tdbox><table border=0 cellpadding=0 cellspacing=0><tr>
-				<td><input class=fmchkbox type=radio name=Form_Def_UserTestNumber value=0<%If Form_Def_UserTestNumber = 0 Then%> checked<%End If%>></td><td>ÂÛÌ³ÏµÍ³Ä¬ÈÏ(¼Ì³ĞÂÛÌ³²ÎÊıÉèÖÃ)</td><tr>
-          		<tr><td><input class=fmchkbox type=radio name=Form_Def_UserTestNumber value=1<%If Form_Def_UserTestNumber = 1 Then%> checked<%End If%>></td><td>¿Ï¶¨Ê¹ÓÃ×¢²áÑéÖ¤Âë</td></tr>
-          		<tr><td><input class=fmchkbox type=radio name=Form_Def_UserTestNumber value=2<%If Form_Def_UserTestNumber = 2 Then%> checked<%End If%>></td><td>¿Ï¶¨²»Ê¹ÓÃ×¢²áÑéÖ¤Âë</td></tr>
+				<td><input class=fmchkbox type=radio name=Form_Def_UserTestNumber value=0<%If Form_Def_UserTestNumber = 0 Then%> checked<%End If%>></td><td>è®ºå›ç³»ç»Ÿé»˜è®¤(ç»§æ‰¿è®ºå›å‚æ•°è®¾ç½®)</td><tr>
+          		<tr><td><input class=fmchkbox type=radio name=Form_Def_UserTestNumber value=1<%If Form_Def_UserTestNumber = 1 Then%> checked<%End If%>></td><td>è‚¯å®šä½¿ç”¨æ³¨å†ŒéªŒè¯ç </td></tr>
+          		<tr><td><input class=fmchkbox type=radio name=Form_Def_UserTestNumber value=2<%If Form_Def_UserTestNumber = 2 Then%> checked<%End If%>></td><td>è‚¯å®šä¸ä½¿ç”¨æ³¨å†ŒéªŒè¯ç </td></tr>
           		</table></td>
 		</tr>
 		<tr>
-			<td class=tdbox>Ö§¸¶±¦ÕËºÅ</td>
+			<td class=tdbox>æ”¯ä»˜å®è´¦å·</td>
 			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_seller_email" maxlength="150" size="50" value="<%=htmlencode(Form_DEF_seller_email)%>">
-			<br><span class=grayfont>ÌîĞ´ÍøÕ¾³äÖµ<%=DEF_PointsName(1)%>ÈëÕËÕËºÅ,Ò»°ãÊÇEMAILµØÖ·,²»ÌîĞ´±íÊ¾²»¿ªÆôÖ§¸¶¹¦ÄÜ</span></td>
+			<br><span class=grayfont>å¡«å†™ç½‘ç«™å……å€¼<%=DEF_PointsName(1)%>å…¥è´¦è´¦å·,ä¸€èˆ¬æ˜¯EMAILåœ°å€,ä¸å¡«å†™è¡¨ç¤ºä¸å¼€å¯æ”¯ä»˜åŠŸèƒ½</span></td>
 		</tr>
 		<tr>
-			<td class=tdbox>Ö§¸¶±¦Ò»´Î×îÉÙ³äÖµ</td>
-			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_seller_minpoints" maxlength="6" size="10" value="<%=htmlencode(Form_DEF_seller_minpoints)%>"><span class=grayfont>(µ¥Î»,RMBÔª)</span></td>
+			<td class=tdbox>æ”¯ä»˜å®ä¸€æ¬¡æœ€å°‘å……å€¼</td>
+			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_seller_minpoints" maxlength="6" size="10" value="<%=htmlencode(Form_DEF_seller_minpoints)%>"><span class=grayfont>(å•ä½,RMBå…ƒ)</span></td>
 		</tr>
 		<tr>
-			<td class=tdbox>Ö§¸¶±¦Ôª¶Ò»»ÂÊ</td>
-			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_seller_exchangescale" maxlength="6" size="10" value="<%=htmlencode(Form_DEF_seller_exchangescale)%>"><span class=grayfont>(Ò»ÔªRMB¶Ò»»¶àÉÙ<%=DEF_PointsName(1)%>)</span></td>
+			<td class=tdbox>æ”¯ä»˜å®å…ƒå…‘æ¢ç‡</td>
+			<td class=tdbox><input class=fminpt type="text" name="Form_DEF_seller_exchangescale" maxlength="6" size="10" value="<%=htmlencode(Form_DEF_seller_exchangescale)%>"><span class=grayfont>(ä¸€å…ƒRMBå…‘æ¢å¤šå°‘<%=DEF_PointsName(1)%>)</span></td>
 		</tr>
 		</table>
 		<%
@@ -399,39 +399,39 @@ Function GetFormValue
 	Form_DEF_seller_minpoints = Trim(Request.Form("Form_DEF_seller_minpoints"))
 	Form_DEF_seller_exchangescale = Trim(Request.Form("Form_DEF_seller_exchangescale"))
 	
-	If isNumeric(Form_DEF_UserEnableUserTitle) = 0 Then GBL_CHK_TempStr = "ÊÇ·ñÔÊĞíÓÃ»§×Ô¶¨ÒåÍ·ÏÎ±ØĞëÎªÊı×Ö<br>" & VbCrLf
-	If isNumeric(Form_DEF_UserUserTitleNeedLevel) = 0 Then GBL_CHK_TempStr = "Ö¸¶¨×Ô¶¨ÒåÍ·ÏÎËùÒªÇó´ïµ½µÄ" & DEF_PointsName(3) & "±ØĞëÎªÊı×Ö<br>" & VbCrLf
-	If isNumeric(Form_LMT_UserNameEnableEnglishWords) = 0 Then GBL_CHK_TempStr = "ÊÇ·ñÔÊĞíÓÃ»§ÃûÊ¹ÓÃÎ÷ÎÄ×Ö·û(×ÖÄ¸Êı×Ö)±ØĞëÎªÊı×Ö<br>" & VbCrLf
-	If isNumeric(Form_LMT_UserNameEnableChineseChar) = 0 Then GBL_CHK_TempStr = "ÊÇ·ñÔÊĞíÓÃ»§Ê¹ÓÃÖĞÎÄ·ûºÅ(±êµã,ÈÕÎÄµÈ×Ö·û)±ØĞëÎªÊı×Ö<br>" & VbCrLf
-	If isNumeric(Form_LMT_UserNameEnableChineseWords) = 0 Then GBL_CHK_TempStr = "ÊÇ·ñÔÊĞíÓÃ»§Ê¹ÓÃÖĞÎÄºº×Ö±ØĞëÎªÊı×Ö<br>" & VbCrLf
-	If isNumeric(Form_DEF_User_RegPoints) = 0 Then GBL_CHK_TempStr = "×¢²áÓÃ»§¾ÍÓµÓĞµÄ" & DEF_PointsName(0) & "µãÊı±ØĞëÎªÊı×Ö<br>" & VbCrLf
-	If isNumeric(Form_LMT_EnableRegNewUsers) = 0 Then GBL_CHK_TempStr = "¿ª¹Ø×¢²á±ØĞëÎªÊı×Ö<br>" & VbCrLf
-	If isNumeric(Form_DEF_ShortestUserName) = 0 Then GBL_CHK_TempStr = "»§ÃûµÄ×î¶Ì×Ö·û¸öÊı±ØĞëÎªÊı×Ö<br>" & VbCrLf
-	If isNumeric(Form_DEF_RegNewUserTotalRestTime) = 0 Then GBL_CHK_TempStr = "×¢²á¼ä¸ô±ØĞëÎªÊı×Ö<br>" & VbCrLf
-	If isNumeric(Form_DEF_UserNewRegAttestMode) = 0 Then GBL_CHK_TempStr = "×¢²áÈÏÖ¤·½Ê½±ØĞëÎªÊı×Ö<br>" & VbCrLf
-	If isNumeric(Form_DEF_UserActivationExpiresDay) = 0 Then GBL_CHK_TempStr = "¼¤»îÊ±¼ä±ØĞëÎªÊı×Ö<br>" & VbCrLf
-	If isNumeric(Form_DEF_User_GetPassMode) = 0 Then GBL_CHK_TempStr = "ÃÜÂëÕÒ»Ø±ØĞëÎªÊı×Ö<br>" & VbCrLf
+	If isNumeric(Form_DEF_UserEnableUserTitle) = 0 Then GBL_CHK_TempStr = "æ˜¯å¦å…è®¸ç”¨æˆ·è‡ªå®šä¹‰å¤´è¡”å¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
+	If isNumeric(Form_DEF_UserUserTitleNeedLevel) = 0 Then GBL_CHK_TempStr = "æŒ‡å®šè‡ªå®šä¹‰å¤´è¡”æ‰€è¦æ±‚è¾¾åˆ°çš„" & DEF_PointsName(3) & "å¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
+	If isNumeric(Form_LMT_UserNameEnableEnglishWords) = 0 Then GBL_CHK_TempStr = "æ˜¯å¦å…è®¸ç”¨æˆ·åä½¿ç”¨è¥¿æ–‡å­—ç¬¦(å­—æ¯æ•°å­—)å¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
+	If isNumeric(Form_LMT_UserNameEnableChineseChar) = 0 Then GBL_CHK_TempStr = "æ˜¯å¦å…è®¸ç”¨æˆ·ä½¿ç”¨ä¸­æ–‡ç¬¦å·(æ ‡ç‚¹,æ—¥æ–‡ç­‰å­—ç¬¦)å¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
+	If isNumeric(Form_LMT_UserNameEnableChineseWords) = 0 Then GBL_CHK_TempStr = "æ˜¯å¦å…è®¸ç”¨æˆ·ä½¿ç”¨ä¸­æ–‡æ±‰å­—å¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
+	If isNumeric(Form_DEF_User_RegPoints) = 0 Then GBL_CHK_TempStr = "æ³¨å†Œç”¨æˆ·å°±æ‹¥æœ‰çš„" & DEF_PointsName(0) & "ç‚¹æ•°å¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
+	If isNumeric(Form_LMT_EnableRegNewUsers) = 0 Then GBL_CHK_TempStr = "å¼€å…³æ³¨å†Œå¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
+	If isNumeric(Form_DEF_ShortestUserName) = 0 Then GBL_CHK_TempStr = "æˆ·åçš„æœ€çŸ­å­—ç¬¦ä¸ªæ•°å¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
+	If isNumeric(Form_DEF_RegNewUserTotalRestTime) = 0 Then GBL_CHK_TempStr = "æ³¨å†Œé—´éš”å¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
+	If isNumeric(Form_DEF_UserNewRegAttestMode) = 0 Then GBL_CHK_TempStr = "æ³¨å†Œè®¤è¯æ–¹å¼å¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
+	If isNumeric(Form_DEF_UserActivationExpiresDay) = 0 Then GBL_CHK_TempStr = "æ¿€æ´»æ—¶é—´å¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
+	If isNumeric(Form_DEF_User_GetPassMode) = 0 Then GBL_CHK_TempStr = "å¯†ç æ‰¾å›å¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
 	For n = 0 to DEF_UserLevelNum
 		If inStr(Form_DEF_UserLevelString(n),"%") Then
-			GBL_CHK_TempStr = "µÚ" & N & DEF_PointsName(3) & "Ãû³Æ²»ÄÜ°üº¬°Ù·ÖºÅ<br>" & VbCrLf
+			GBL_CHK_TempStr = "ç¬¬" & N & DEF_PointsName(3) & "åç§°ä¸èƒ½åŒ…å«ç™¾åˆ†å·<br>" & VbCrLf
 		End If
 		If isNumeric(Form_DEF_UserLevelPoints(n)) = 0 Then
-			GBL_CHK_TempStr = "µÚ" & N & DEF_PointsName(3) & "ÒªÇó·¢±íÎÄÕÂÊıÁ¿±ØĞëÎªÊı×Ö<br>" & VbCrLf
+			GBL_CHK_TempStr = "ç¬¬" & N & DEF_PointsName(3) & "è¦æ±‚å‘è¡¨æ–‡ç« æ•°é‡å¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
 			Exit Function
 		End If
 	Next
 	For n = 0 to DEF_UserOfficerNum
 		If inStr(Form_DEF_UserOfficerString(n),"%") Then
-			GBL_CHK_TempStr = "µÚ" & N & "±àºÅ" & DEF_PointsName(9) & "²»ÄÜ°üº¬°Ù·ÖºÅ<br>" & VbCrLf
+			GBL_CHK_TempStr = "ç¬¬" & N & "ç¼–å·" & DEF_PointsName(9) & "ä¸èƒ½åŒ…å«ç™¾åˆ†å·<br>" & VbCrLf
 		End If
 	Next
-	If inStr(Form_DEF_FiltrateUserNameString,"%") Then GBL_CHK_TempStr = "¹ıÂËÃû×Ö²»ÄÜ°üº¬°Ù·ÖºÅ<br>" & VbCrLf
-	If isNumeric(Form_DEF_UserShortestPassword) = 0 Then GBL_CHK_TempStr = "»§ÃûÃÜÂëµÄ×î¶Ì×Ö·û¸öÊı±ØĞëÎªÊı×Ö<br>" & VbCrLf
-	If isNumeric(Form_DEF_UserShortestPasswordMaster) = 0 Then GBL_CHK_TempStr = "ÂÛÌ³¹ÜÀí³ÉÔ±»§ÃûÃÜÂëµÄ×î¶Ì×Ö·û¸öÊı±ØĞëÎªÊı×Ö<br>" & VbCrLf
-	If inStr(Form_DEF_seller_email,"%") Then GBL_CHK_TempStr = "Ö§¸¶±¦ÕËºÅ²»ÄÜ°üº¬°Ù·ÖºÅ<br>" & VbCrLf
+	If inStr(Form_DEF_FiltrateUserNameString,"%") Then GBL_CHK_TempStr = "è¿‡æ»¤åå­—ä¸èƒ½åŒ…å«ç™¾åˆ†å·<br>" & VbCrLf
+	If isNumeric(Form_DEF_UserShortestPassword) = 0 Then GBL_CHK_TempStr = "æˆ·åå¯†ç çš„æœ€çŸ­å­—ç¬¦ä¸ªæ•°å¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
+	If isNumeric(Form_DEF_UserShortestPasswordMaster) = 0 Then GBL_CHK_TempStr = "è®ºå›ç®¡ç†æˆå‘˜æˆ·åå¯†ç çš„æœ€çŸ­å­—ç¬¦ä¸ªæ•°å¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
+	If inStr(Form_DEF_seller_email,"%") Then GBL_CHK_TempStr = "æ”¯ä»˜å®è´¦å·ä¸èƒ½åŒ…å«ç™¾åˆ†å·<br>" & VbCrLf
 	If isNumeric(Form_Def_UserTestNumber) = 0 Then Form_Def_UserTestNumber = 0
-	If isNumeric(Form_DEF_seller_minpoints) = 0 Then GBL_CHK_TempStr = "Ö§¸¶±¦Ò»´Î×îÉÙ³äÖµ±ØĞëÎªÊı×Ö<br>" & VbCrLf
-	If isNumeric(Form_DEF_seller_exchangescale) = 0 Then GBL_CHK_TempStr = "Ö§¸¶±¦Ôª¶Ò»»ÂÊ±ØĞëÎªÊı×Ö<br>" & VbCrLf
+	If isNumeric(Form_DEF_seller_minpoints) = 0 Then GBL_CHK_TempStr = "æ”¯ä»˜å®ä¸€æ¬¡æœ€å°‘å……å€¼å¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
+	If isNumeric(Form_DEF_seller_exchangescale) = 0 Then GBL_CHK_TempStr = "æ”¯ä»˜å®å…ƒå…‘æ¢ç‡å¿…é¡»ä¸ºæ•°å­—<br>" & VbCrLf
 
 End Function
 
@@ -506,9 +506,9 @@ Function MakeDataBaseLinkFile
 	ADODB_SaveToFile TempStr,"../../inc/User_Setup.ASP"
 	CALL Update_InsertSetupRID(1051,"inc/User_Setup.ASP",2,TempStr," and ClassNum=" & 2)
 	If GBL_CHK_TempStr = "" Then
-		Response.Write "<br><span class=greenfont>2.³É¹¦Íê³ÉÉèÖÃ£¡</span>"
+		Response.Write "<br><span class=greenfont>2.æˆåŠŸå®Œæˆè®¾ç½®ï¼</span>"
 	Else
-		%><%=GBL_CHK_TempStr%><br>·şÎñÆ÷²»Ö§³ÖÔÚÏßĞ´ÈëÎÄ¼ş¹¦ÄÜ£¬ÇëÊ¹ÓÃFTPµÈ¹¦ÄÜ£¬½«<span class=redfont>inc/User_Setup.ASP</span>ÎÄ¼şÌæ»»³É¿òÖĞÄÚÈİ(×¢Òâ±¸·İ)<p>
+		%><%=GBL_CHK_TempStr%><br>æœåŠ¡å™¨ä¸æ”¯æŒåœ¨çº¿å†™å…¥æ–‡ä»¶åŠŸèƒ½ï¼Œè¯·ä½¿ç”¨FTPç­‰åŠŸèƒ½ï¼Œå°†<span class=redfont>inc/User_Setup.ASP</span>æ–‡ä»¶æ›¿æ¢æˆæ¡†ä¸­å†…å®¹(æ³¨æ„å¤‡ä»½)<p>
 		<textarea name="fileContent" cols="80" rows="30" class=fmtxtra><%=Server.htmlencode(TempStr)%></textarea><%
 		GBL_CHK_TempStr = ""
 	End If
@@ -524,10 +524,10 @@ class Medal_Manage
 	
 		form_submitflag = request("form_submitflag")
 		if form_submitflag <> "" then
-			medal_checklist
-			medal_viewform
+			medal_checklist()
+			medal_viewform()
 		else
-			medal_viewform
+			medal_viewform()
 		end if
 	
 	End Sub
@@ -561,7 +561,7 @@ class Medal_Manage
 		if rs.eof then
 			rs.close
 			set rs = nothing
-			Response.Write "<br><span class=redfont>ÓÃ»§<u>" & htmlencode(uname) & "</u>²»´æÔÚ£¬²Ù×÷ºöÂÔ.</span>"
+			Response.Write "<br><span class=redfont>ç”¨æˆ·<u>" & htmlencode(uname) & "</u>ä¸å­˜åœ¨ï¼Œæ“ä½œå¿½ç•¥.</span>"
 			exit sub
 		end if
 		uid = rs(0)
@@ -583,7 +583,7 @@ class Medal_Manage
 		end if
 		if form_addflag = 0 then
 			if inStr("," & old_officer & ",","," & form_medalindex & ",") then
-				Response.Write "<br><span class=greenfont>ÓÃ»§<u>" & htmlencode(uname) & "</u>ÒÑÓĞ´Ë" & DEF_PointsName(9) & "£¬²»ÓÃÔÙ´ÎÌí¼Ó£¬²Ù×÷ºöÂÔ.</span>"
+				Response.Write "<br><span class=greenfont>ç”¨æˆ·<u>" & htmlencode(uname) & "</u>å·²æœ‰æ­¤" & DEF_PointsName(9) & "ï¼Œä¸ç”¨å†æ¬¡æ·»åŠ ï¼Œæ“ä½œå¿½ç•¥.</span>"
 			else
 				if officer <> "" then
 					officer = officer & "," & form_medalindex
@@ -591,23 +591,23 @@ class Medal_Manage
 					officer = form_medalindex
 				end if
 				if len(officer)>255 then
-					Response.Write "<br><span class=redfont>ÓÃ»§<u>" & htmlencode(uname) & "</u>ÓµÓĞµÄ" & DEF_PointsName(9) & "ÒÑ¾­Ì«¶à£¬ÎŞ·¨ÔÙÌí¼Ó.</span>"
+					Response.Write "<br><span class=redfont>ç”¨æˆ·<u>" & htmlencode(uname) & "</u>æ‹¥æœ‰çš„" & DEF_PointsName(9) & "å·²ç»å¤ªå¤šï¼Œæ— æ³•å†æ·»åŠ .</span>"
 					exit sub
 				end if
 				if(Officer<>old_Officer) then
 					sql = "update leadbbs_user set Officer='" & replace(Officer,"'","''") & "' where id=" & uid
 					call ldexecute(sql,1)
-					Response.Write "<br><span class=bluefont>ÓÃ»§<u>" & htmlencode(uname) & "</u>³É¹¦Ìí¼Ó" & DEF_PointsName(9) & ".</span>"
+					Response.Write "<br><span class=bluefont>ç”¨æˆ·<u>" & htmlencode(uname) & "</u>æˆåŠŸæ·»åŠ " & DEF_PointsName(9) & ".</span>"
 					if form_messageflag = 1 then
-						SdM_Title = "Äã»ñµÃĞÂµÄ " & DEF_PointsName(9) & "!"
-						SdM_Content = "Òò»úÔµÇÉºÏ£¬Äã»ñµÃÁË " & DEF_PointsName(9) & "(" & htmlencode(medalname) & ") £¬ÌØ´ËÍ¨Öª¡£"
-						SendNewMessage SdM_fromUser,SdM_ToUser,SdM_Title,SdM_Content,GBL_IPAddress
+						SdM_Title = "ä½ è·å¾—æ–°çš„ " & DEF_PointsName(9) & "!"
+						SdM_Content = "å› æœºç¼˜å·§åˆï¼Œä½ è·å¾—äº† " & DEF_PointsName(9) & "(" & htmlencode(medalname) & ") ï¼Œç‰¹æ­¤é€šçŸ¥ã€‚"
+						Call SendNewMessage(SdM_fromUser,SdM_ToUser,SdM_Title,SdM_Content,GBL_IPAddress)
 					end if
 				end if
 			end if
 		else
 			if inStr("," & old_officer & ",","," & form_medalindex & ",") < 1 then
-				Response.Write "<br><span class=greenfont>ÓÃ»§<u>" & htmlencode(uname) & "</u>ÎŞ´Ë" & DEF_PointsName(9) & "£¬ÎŞĞèÉ¾³ı£¬²Ù×÷ºöÂÔ.</span>"
+				Response.Write "<br><span class=greenfont>ç”¨æˆ·<u>" & htmlencode(uname) & "</u>æ— æ­¤" & DEF_PointsName(9) & "ï¼Œæ— éœ€åˆ é™¤ï¼Œæ“ä½œå¿½ç•¥.</span>"
 			else
 				if officer <> "" then
 					if left(officer,1) <> "," then officer = "," & officer
@@ -623,18 +623,18 @@ class Medal_Manage
 					end if
 				end if
 				if len(officer)>255 then
-					Response.Write "<br><span class=redfont>ÓÃ»§<u>" & htmlencode(uname) & "</u>ÓµÓĞµÄ" & DEF_PointsName(9) & "ÒÑ¾­Ì«¶à.</span>"
+					Response.Write "<br><span class=redfont>ç”¨æˆ·<u>" & htmlencode(uname) & "</u>æ‹¥æœ‰çš„" & DEF_PointsName(9) & "å·²ç»å¤ªå¤š.</span>"
 					exit sub
 				end if
 				
 				if(Officer<>old_Officer) then
 					sql = "update leadbbs_user set Officer='" & replace(Officer,"'","''") & "' where id=" & uid
 					call ldexecute(sql,1)
-					Response.Write "<br><span class=bluefont>ÓÃ»§<u>" & htmlencode(uname) & "</u>É¾³ıÏàÓ¦" & DEF_PointsName(9) & "³É¹¦.</span>"
+					Response.Write "<br><span class=bluefont>ç”¨æˆ·<u>" & htmlencode(uname) & "</u>åˆ é™¤ç›¸åº”" & DEF_PointsName(9) & "æˆåŠŸ.</span>"
 					if form_messageflag = 1 then
-						SdM_Title = "ÄãµÄ " & DEF_PointsName(9) & " È¡ÏûÍ¨Öª!"
-						SdM_Content = "ÒòÔµÊıÒÑ¾¡£¬ÄãµÄ " & DEF_PointsName(9) & "(" & htmlencode(medalname) & ") ÒÑ±»ÏµÍ³È¡Ïû£¬ÌØ´ËÍ¨Öª¡£"
-						SendNewMessage SdM_fromUser,SdM_ToUser,SdM_Title,SdM_Content,GBL_IPAddress
+						SdM_Title = "ä½ çš„ " & DEF_PointsName(9) & " å–æ¶ˆé€šçŸ¥!"
+						SdM_Content = "å› ç¼˜æ•°å·²å°½ï¼Œä½ çš„ " & DEF_PointsName(9) & "(" & htmlencode(medalname) & ") å·²è¢«ç³»ç»Ÿå–æ¶ˆï¼Œç‰¹æ­¤é€šçŸ¥ã€‚"
+						Call SendNewMessage(SdM_fromUser,SdM_ToUser,SdM_Title,SdM_Content,GBL_IPAddress)
 					end if
 				end if
 			end if
@@ -646,21 +646,21 @@ class Medal_Manage
 	
 		%>
 		<form action=UserSetup.asp?action=medal method=post name=form1 id=form1>
-		ÊäÈëĞèÒª¸üĞÂ¡¡<%=DEF_PointsName(9)%>¡¡µÄÓÃ»§ÁĞ±í(±ØĞëÊÇÓÃ»§Ãû¶ø²»ÊÇêÇ³Æ)£¬ÒÔµ¥½Ç,(¶ººÅ)·Ö¸ô
+		è¾“å…¥éœ€è¦æ›´æ–°ã€€<%=DEF_PointsName(9)%>ã€€çš„ç”¨æˆ·åˆ—è¡¨(å¿…é¡»æ˜¯ç”¨æˆ·åè€Œä¸æ˜¯æ˜µç§°)ï¼Œä»¥å•è§’,(é€—å·)åˆ†éš”
 		<textarea name=form_namelist rows=15 cols=51 class=fmtxtra></textarea>
 		<br><br>
 		<p>
-		Ñ¡Ôñ²Ù×÷£º
-		<input type=radio name=form_addflag value="0" checked=checked>ÎªÓÃ»§Ìí¼Ó´Ë<%=DEF_PointsName(9)%>(Èô²»´æÔÚ)
-		<input type=radio name=form_addflag value="1">ÎªÓÃ»§É¾³ı´Ë<%=DEF_PointsName(9)%>(Èô´æÔÚ)
+		é€‰æ‹©æ“ä½œï¼š
+		<input type=radio name=form_addflag value="0" checked=checked>ä¸ºç”¨æˆ·æ·»åŠ æ­¤<%=DEF_PointsName(9)%>(è‹¥ä¸å­˜åœ¨)
+		<input type=radio name=form_addflag value="1">ä¸ºç”¨æˆ·åˆ é™¤æ­¤<%=DEF_PointsName(9)%>(è‹¥å­˜åœ¨)
 		</p>
 				<p>
-		ÊÇ·ñÂÛÌ³¶ÌÏûÏ¢Í¨Öª£º
-		<input type=radio name=form_messageflag value="1" checked=checked>Í¨Öª
-		<input type=radio name=form_messageflag value="0">²»Í¨Öª
+		æ˜¯å¦è®ºå›çŸ­æ¶ˆæ¯é€šçŸ¥ï¼š
+		<input type=radio name=form_messageflag value="1" checked=checked>é€šçŸ¥
+		<input type=radio name=form_messageflag value="0">ä¸é€šçŸ¥
 		</p>
 		<p>
-		Ñ¡Ôñ<%=DEF_PointsName(9)%>£º<%
+		é€‰æ‹©<%=DEF_PointsName(9)%>ï¼š<%
 		Dim Temp_N
 	For Temp_N = 0 to DEF_UserOfficerNum
 		%>
@@ -670,7 +670,7 @@ class Medal_Manage
 	</p><br>
 		<p>
 		<input name=form_submitflag type=hidden value="yes">
-		<input type=submit value="Ìá½»" class=fmbtn> <input type=reset value="È¡Ïû" class=fmbtn>
+		<input type=submit value="æäº¤" class=fmbtn> <input type=reset value="å–æ¶ˆ" class=fmbtn>
 		</p>
 		</form>
 		<%

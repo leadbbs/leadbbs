@@ -1,8 +1,8 @@
-<%Const LMT_MaxFriendNum = 200 'ÔÊĞíÌí¼ÓµÄ×î¶àºÃÓÑÊıÄ¿
+<%Const LMT_MaxFriendNum = 200 'å…è®¸æ·»åŠ çš„æœ€å¤šå¥½å‹æ•°ç›®
 Function CheckAddFriendSure
 
 	If GetBinarybit(GBL_CHK_UserLimit,1) = 1 Then
-		Processor_ErrMsg "ÄúµÄÈ¨ÏŞ²»×ã£¬·ÇÕıÊ½ÓÃ»§ÎŞ´Ë¹¦ÄÜ£¡" & VbCrLf
+		Call Processor_ErrMsg("æ‚¨çš„æƒé™ä¸è¶³ï¼Œéæ­£å¼ç”¨æˆ·æ— æ­¤åŠŸèƒ½ï¼" & VbCrLf)
 		CheckAddFriendSure = 0
 		Exit Function
 	End If
@@ -31,7 +31,7 @@ Function DisplayAddFriend
 		Set Rs = Nothing
 
 		If SQL > LMT_MaxFriendNum Then
-			Processor_ErrMsg "´íÎó£¬Äã¹â×¢µÄÓÃ»§ÒÑ³¬¹ı" & LMT_MaxFriendNum & "ÈË£¬²»ÄÜÔÙÌí¼Ó£¡" & VbCrLf
+			Call Processor_ErrMsg("é”™è¯¯ï¼Œä½ å…‰æ³¨çš„ç”¨æˆ·å·²è¶…è¿‡" & LMT_MaxFriendNum & "äººï¼Œä¸èƒ½å†æ·»åŠ ï¼" & VbCrLf)
 			Set Rs = Nothing
 			Exit Function
 		End if
@@ -43,7 +43,7 @@ Function DisplayAddFriend
 		end if
 		Set Rs = LDExeCute(SQL,0)
 		If Rs.Eof Then
-			Processor_ErrMsg "ÇëÕıÈ·ÌîĞ´Òª¹Ø×¢µÄÓÃ»§£¡" & VbCrLf
+			Call Processor_ErrMsg("è¯·æ­£ç¡®å¡«å†™è¦å…³æ³¨çš„ç”¨æˆ·ï¼" & VbCrLf)
 			Rs.Close
 			Set Rs = Nothing
 			Exit Function
@@ -57,8 +57,8 @@ Function DisplayAddFriend
 		SQL = sql_select("Select ID from LeadBBS_FriendUser where FriendUserID=" & FriendID & " and UserID=" & GBL_UserID,1)
 		Set Rs = LDExeCute(SQL,0)
 		If Not Rs.Eof Then
-			//Processor_ErrMsg "<b>" & htmlencode(FriendName) & "</b> ÒÑ¾­¹Ø×¢¹ı£¬ÎŞ·¨ÔÙ´Î²Ù×÷£¡" & VbCrLf
-			Processor_ErrMsg "<div id=collect_msg><b>" & htmlencode(FriendName) & "</b> ÒÑÔÚ¹Ø×¢ÁĞ±í£¬ÎŞ·¨ÖØ¸´Ìí¼Ó£¡<br /><a href=""javascript:p_url = '" & DEF_BBS_HomeUrl & "User/DeleteMessage.asp';" & VbCrLf & "p_para='AjaxFlag=1&FriendFlag=1&DeleteSureFlag=dk9@dl9s92lw_SWxl&MessageID=';" & VbCrLf & "p_command = '$id(\'collect_msg\').innerHTML=tmp';" & VbCrLf & "p_type = 1;" & VbCrLf & "p_once(" & Rs(0) & ");"">µã»÷È¡Ïû¶ÔTaµÄ¹Ø×¢¡£</a></div>" & VbCrLf
+			//Processor_ErrMsg "<b>" & htmlencode(FriendName) & "</b> å·²ç»å…³æ³¨è¿‡ï¼Œæ— æ³•å†æ¬¡æ“ä½œï¼" & VbCrLf
+			Call Processor_ErrMsg("<div id=collect_msg><b>" & htmlencode(FriendName) & "</b> å·²åœ¨å…³æ³¨åˆ—è¡¨ï¼Œæ— æ³•é‡å¤æ·»åŠ ï¼<br /><a href=""javascript:p_url = '" & DEF_BBS_HomeUrl & "User/DeleteMessage.asp';" & VbCrLf & "p_para='AjaxFlag=1&FriendFlag=1&DeleteSureFlag=dk9@dl9s92lw_SWxl&MessageID=';" & VbCrLf & "p_command = '$id(\'collect_msg\').innerHTML=tmp';" & VbCrLf & "p_type = 1;" & VbCrLf & "p_once(" & Rs(0) & ");"">ç‚¹å‡»å–æ¶ˆå¯¹Taçš„å…³æ³¨ã€‚</a></div>" & VbCrLf)
 			Rs.Close
 			Set Rs = Nothing
 			Exit Function
@@ -68,19 +68,19 @@ Function DisplayAddFriend
 
 		CALL LDExeCute("insert into LeadBBS_FriendUser(FriendUserID,UserID) Values(" & FriendID & "," & GBL_UserID & ")",1)
 		Set Rs = Nothing
-		If CheckSupervisorUserName = 0 Then
+		If CheckSupervisorUserName() = 0 Then
 			CALL LDExeCute("Update LeadBBS_User Set LastWriteTime=" & GetTimeValue(DEF_Now) & " where ID=" & GBL_UserID,1)
 			UpdateSessionValue 13,GetTimeValue(DEF_Now),0
 		End If
-		SendNewMessage Prc_User,FriendUserName,"ÂÛÌ³¶ÌĞÅ£ºÌí¼Ó¹Ø×¢Í¨Öª","[url=../User/" & RW_User(GBL_UserID,"","","") & "]" & GetTrueName(GBL_CHK_User,GBL_CHK_TrueName) & "[/url]¹Ø×¢ÁËÄã." & VbCrLf,GBL_IPAddress
-		Processor_Done "³É¹¦¹Ø×¢" & htmlencode(FriendName) & "£¡"
+		SendNewMessage Prc_User,FriendUserName,"è®ºå›çŸ­ä¿¡ï¼šæ·»åŠ å…³æ³¨é€šçŸ¥","[url=../User/" & RW_User(GBL_UserID,"","","") & "]" & GetTrueName(GBL_CHK_User,GBL_CHK_TrueName) & "[/url]å…³æ³¨äº†ä½ ." & VbCrLf,GBL_IPAddress
+		Call Processor_Done("æˆåŠŸå…³æ³¨" & htmlencode(FriendName) & "ï¼")
 	Else
-		Processor_Head
+		Processor_Head()
 		
 		Dim Url
 		Url = filterUrlstr(htmlencode(Left(Request("dir"),100)))
 		If Request("dir") = "" Then
-			If inStr(request.querystring,"dir=") then
+			If inStr(Request.ServerVariables("QUERY_STRING"),"dir=") then
 				Url = ""
 			Else
 				Url = DEF_BBS_HomeUrl
@@ -99,11 +99,11 @@ Function DisplayAddFriend
 			<input type=hidden name=ID value="<%=Request("ID")%>">
 			<input type=hidden name=BoardID value="<%=Request("B")%>">
 			<div class=value2>
-			¹Ø×¢µÄÃû×Ö£º
+			å…³æ³¨çš„åå­—ï¼š
 			<input type=input name=FriendName value="<%=FriendName%>" class='fminpt input_2'>
 			<input type=hidden name=FriendNameID value="<%=FriendID%>">
 			</div>
-			<div class=value2><br /><input type=submit value=¹Ø×¢Ta class="fmbtn btn_3"></div>
+			<div class=value2><br /><input type=submit value=å…³æ³¨Ta class="fmbtn btn_3"></div>
 		</form>
 		<%Processor_Bottom
 	End If

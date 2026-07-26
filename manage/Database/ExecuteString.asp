@@ -1,29 +1,29 @@
-<!-- #include file=../../inc/BBSSetup.asp -->
-<!-- #include file=../../inc/Board_Popfun.asp -->
-<!-- #include file=../inc/bbsmanage_Fun.asp -->
+<!--#include file="../../inc/BBSSetup.asp"-->
+<!--#include file="../../inc/Board_Popfun.asp"-->
+<!--#include file="../inc/bbsmanage_Fun.asp"-->
 <%
 DEF_BBS_HomeUrl = "../../"
 Dim GBL_ID
-initDatabase
+initDatabase()
 GBL_CHK_TempStr = ""
-GBL_ID = checkSupervisorPass
+GBL_ID = checkSupervisorPass()
 Server.ScriptTimeOut = 600
 
 Dim GBL_EXEString
 
-Manage_sitehead DEF_SiteNameString & " - ¹ÜÀíÔ±",""
+Manage_sitehead DEF_SiteNameString & " - ç®¡ç†å‘˜",""
 
-'GBL_CHK_TempStr = "ÂÛÌ³ÒÑ¾­½ûÖ¹´ËÎ£ÏÕ¹¦ÄÜ."
+'GBL_CHK_TempStr = "è®ºå›å·²ç»ç¦æ­¢æ­¤å±é™©åŠŸèƒ½."
 
-frame_TopInfo
-DisplayUserNavigate("Ö±½ÓÖ´ĞĞSQLÓï¾ä")
+frame_TopInfo()
+DisplayUserNavigate("ç›´æ¥æ‰§è¡ŒSQLè¯­å¥")
 If GBL_CHK_Flag=1 and GBL_CHK_TempStr = "" Then
-	LoginAccuessFul
+	LoginAccuessFul()
 Else
 	Response.Write "<div class=alert>" & GBL_CHK_TempStr & "</div>"
 End If
-frame_BottomInfo
-closeDataBase
+frame_BottomInfo()
+closeDataBase()
 Manage_Sitebottom("none")
 
 Function LoginAccuessFul
@@ -37,7 +37,7 @@ Function LoginAccuessFul
 			Time1=Timer
 			GBL_EXEString = Request("GBL_EXEString")
 			If inStr(Lcase(GBL_EXEString),"leadbbs_log") Then
-				Response.Write "<p><br>´íÎó£¬²»ÄÜ¶ÔÂÛÌ³ÈÕÖ¾½øĞĞÈÎºÎ²Ù×÷£¡"
+				Response.Write "<p><br>é”™è¯¯ï¼Œä¸èƒ½å¯¹è®ºå›æ—¥å¿—è¿›è¡Œä»»ä½•æ“ä½œï¼"
 				Exit Function
 			End If
 			Con.CommandTimeout = 600
@@ -76,21 +76,21 @@ Function LoginAccuessFul
 					RowCount = Rs(0)
 					Rs.Close
 				case Else
-					RowCount = "<font color=ff0000>Î´Öª</font>"
+					RowCount = "<font color=ff0000>æœªçŸ¥</font>"
 			End select
 			Set Rs = Nothing
 			If err.number<>0 Then
-				Response.Write "<p><br><span style=""FONT-FAMILY: ËÎÌå; FONT-SIZE: 12px;""><font color=ff0000><b>Êı¾İ¿âÃüÁî²Ù×÷Ê§°Ü£º</b></font><p>"&err.description & "</span>"
+				Response.Write "<p><br><span style=""FONT-FAMILY: å®‹ä½“; FONT-SIZE: 12px;""><font color=ff0000><b>æ•°æ®åº“å‘½ä»¤æ“ä½œå¤±è´¥ï¼š</b></font><p>"&err.description & "</span>"
 				err.clear
 			Else
-				Response.Write "<p><br><span style=""FONT-FAMILY: ËÎÌå; FONT-SIZE: 12px;""><font color=008800><b>ÏÂÁĞÊı¾İ¿âÃüÁî²Ù×÷³É¹¦£¬¹²Ó°Ïì<font color=ff0000>" & RowCount & "</font>ĞĞÊı¾İ£¬ºÄÊ±" & (Time2-Time1)*1000 & "ºÁÃë!</b></font></span><hr size=1>" & PrintTrueText(GBL_EXEString) & "<hr size=1>" & VbCrLf
+				Response.Write "<p><br><span style=""FONT-FAMILY: å®‹ä½“; FONT-SIZE: 12px;""><font color=008800><b>ä¸‹åˆ—æ•°æ®åº“å‘½ä»¤æ“ä½œæˆåŠŸï¼Œå…±å½±å“<font color=ff0000>" & RowCount & "</font>è¡Œæ•°æ®ï¼Œè€—æ—¶" & (Time2-Time1)*1000 & "æ¯«ç§’!</b></font></span><hr size=1>" & PrintTrueText(GBL_EXEString) & "<hr size=1>" & VbCrLf
 			End If
 		Else
-			Response.Write "<p><br><font color=ff0000><b>ÃüÁî²»ÄÜÎª¿Õ!</b></font>"
+			Response.Write "<p><br><font color=ff0000><b>å‘½ä»¤ä¸èƒ½ä¸ºç©º!</b></font>"
 		End If
-		DisplayStringForm
+		DisplayStringForm()
 	Else
-		DisplayStringForm
+		DisplayStringForm()
 	End If
 
 End Function
@@ -99,11 +99,11 @@ Function DisplayStringForm
 %>
 <p>
 <form action=ExecuteString.asp method="post">
-	´ıÖ´ĞĞSQLÓï¾ä(¾¯¸æ£ºÖ´ĞĞÓï¾äÒªÍò·ÖĞ¡ĞÄ!) <p>
+	å¾…æ‰§è¡ŒSQLè¯­å¥(è­¦å‘Šï¼šæ‰§è¡Œè¯­å¥è¦ä¸‡åˆ†å°å¿ƒ!) <p>
 	<textarea name=GBL_EXEString rows=8 cols=61 class=fmtxtra><%If GBL_EXEString <> "" Then Response.Write VbCrLf & htmlEncode(GBL_EXEString)%></textarea>
 	<input name=submitflag type=hidden value="Dieos9xsl29LO_8">
 	<p>
-	<input type=submit value="Ö´ĞĞ" class=fmbtn> <input type=reset value="È¡Ïû" class=fmbtn>
+	<input type=submit value="æ‰§è¡Œ" class=fmbtn> <input type=reset value="å–æ¶ˆ" class=fmbtn>
 </form>
 <%
 End Function
@@ -187,6 +187,6 @@ function AlterTableColumn(PathName,TableName,ColumnName,flag,val)
 
 	'conn.close
 	'set Conn=nothing
-	AlterTableColumn = "Êı¾İ±í"&tablename&"±íÖĞ×Ö¶Î "&ColumnName&" ĞŞ¸Ä³£ÓÃÊôĞÔÍê³É."
+	AlterTableColumn = "æ•°æ®è¡¨"&tablename&"è¡¨ä¸­å­—æ®µ "&ColumnName&" ä¿®æ”¹å¸¸ç”¨å±æ€§å®Œæˆ."
 
 End function%>
