@@ -6,7 +6,8 @@ components the forum depends on, and which ones needed a workaround — so featu
 deliberate map, not a guess.
 
 - **Corpus:** 271 real source files (`.asp`/`.asa`/`.inc`), excluding the case-compat symlink farm
-  and the git-ignored `_test/`/`_diag/` scratch dirs.
+  and throwaway scratch pages dropped into the web root for a single probe and deleted after
+  (the surviving, gated helpers live in `test/browser/helpers/`).
 - **Counts** are raw regex occurrences (`uses`) and the number of distinct files touched (`files`).
 - **Status legend:**
   - ✅ **Works** — supported by AxonASP, exercised by the running site.
@@ -118,7 +119,8 @@ emitted URLs (`test/browser/07-links.mjs`), the **eleven headless-Chromium suite
 
 ## COM components (`Server.CreateObject`)
 
-Probed live (`_test/probe2.asp`). AxonASP ships shims for the common ASP components; the Windows-only
+Probed live with a throwaway page in the web root, since this can only be answered by asking a
+running server. AxonASP ships shims for the common ASP components; the Windows-only
 ones LeadBBS touches are all in non-essential paths.
 
 | ProgID | Status | Used for | Essential? |

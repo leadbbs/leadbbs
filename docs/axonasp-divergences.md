@@ -350,7 +350,9 @@ nothing**, because the `a2.asp` post form is `enctype="multipart/form-data"`. (T
 earlier urlencoded curl/fetch tests took a different code path, which is why this hid
 for so long.) Fixed the three bare binary reads: the multipart parser, the attachment
 download stream in `a/file.asp`, and the canvas image bytes in `User/inc/canvas.asp`.
-`test/e2e_writeflows.sh` now includes a multipart post check so this cannot regress.
+Every browser suite now posts through the real form, so the multipart path is exercised on
+each run rather than by a single dedicated check — `01-core` posts a topic and a reply that
+way, and `24-attachment` carries a real image through it.
 
 
 ### 21. Windows path separators in application-built paths
@@ -668,7 +670,7 @@ Worth reporting upstream along with §32.
 The parentheses are only grouping in VBScript, but AxonASP treats the parenthesised group as the
 whole argument and discards everything concatenated after it — **silent output truncation**.
 LeadBBS itself never uses the form (the only two occurrences in the tree are commented out), so
-this cost the port nothing; it bit the loopback SQL oracle in `_test/q.asp`, whose column
+this cost the port nothing; it bit the loopback SQL oracle in `test/browser/helpers/q.asp`, whose column
 separator vanished and made two-column results unparseable. Worth reporting upstream.
 
 

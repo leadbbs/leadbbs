@@ -13,9 +13,10 @@ application was written against, each with a minimal repro:
 **[docs/axonasp-divergences.md](docs/axonasp-divergences.md)**. If you are porting any Classic ASP
 application to AxonASP, read that file first.
 
-**History is deliberately two commits.** The first is `leadbbs92.zip` unpacked and untouched. The
-second is everything this port changed. `git diff HEAD~1` is the entire port, auditable in one
-view.
+**The first two commits are the whole story.** The first is `leadbbs92.zip` unpacked and
+untouched; the second is everything the port changed. `git diff 1c4e3dc bd58969` is the entire
+port, auditable in one view — and stays so no matter what lands on top of it. Commits after those
+two are ordinary maintenance.
 
 ---
 
